@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-17T21:28:05.865665+00:00",
+  "generated_at": "2026-05-17T21:33:25.578890+00:00",
   "active": [
     {
       "id": "control-rule-based",
@@ -868,8 +868,8 @@
       "summary": {
         "n_closed": 4,
         "n_open": 0,
-        "total_pnl_gbp": -556.14,
-        "avg_pnl_pct": -5.81,
+        "total_pnl_gbp": 0.0,
+        "avg_pnl_pct": 0.0,
         "hit_rate": 0.0,
         "n_predictions": 0
       },
@@ -880,19 +880,19 @@
         },
         {
           "date": "2026-05-17",
-          "equity": 9881.2
+          "equity": 10000.0
         },
         {
           "date": "2026-05-17",
-          "equity": 9760.78
+          "equity": 10000.0
         },
         {
           "date": "2026-05-17",
-          "equity": 9611.95
+          "equity": 10000.0
         },
         {
           "date": "2026-05-17",
-          "equity": 9443.86
+          "equity": 10000.0
         }
       ],
       "executed": [
@@ -911,12 +911,12 @@
           "take_profit_pct": 5.0,
           "thesis": "Momentum stub pick. 5-day return +14.74%, RSI 70.7 (in healthy 50\u201375 band), price above 20-day MA. Bracket: -3.0% stop / +5.0% take-profit.",
           "exit_date": "2026-05-17",
-          "exit_price": 246.33,
-          "pnl_gbp": -118.79999999999964,
-          "pnl_pct": -5.086117211883002,
-          "exit_reason": "stop",
-          "outcome_notes": null,
-          "risks_observed": null,
+          "exit_price": 0.0,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "cancelled",
+          "outcome_notes": "Cancelled at the Sunday test run before market open \u2014 clear-slot wiped pending bracket orders. No real position ever existed.",
+          "risks_observed": "Test artifact only; not a real trade. Real momentum results begin with Monday cron.",
           "created_at": "2026-05-17T21:24:03.724548+00:00",
           "updated_at": "2026-05-17T21:28:01.091968+00:00"
         },
@@ -935,12 +935,12 @@
           "take_profit_pct": 5.0,
           "thesis": "Momentum stub pick. 5-day return +14.08%, RSI 63.3 (in healthy 50\u201375 band), price above 20-day MA. Bracket: -3.0% stop / +5.0% take-profit.",
           "exit_date": "2026-05-17",
-          "exit_price": 363.39,
-          "pnl_gbp": -120.41999999999996,
-          "pnl_pct": -5.233922703802218,
-          "exit_reason": "stop",
-          "outcome_notes": null,
-          "risks_observed": null,
+          "exit_price": 0.0,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "cancelled",
+          "outcome_notes": "Cancelled at the Sunday test run before market open \u2014 clear-slot wiped pending bracket orders. No real position ever existed.",
+          "risks_observed": "Test artifact only; not a real trade. Real momentum results begin with Monday cron.",
           "created_at": "2026-05-17T21:24:04.050458+00:00",
           "updated_at": "2026-05-17T21:28:01.730847+00:00"
         },
@@ -959,12 +959,12 @@
           "take_profit_pct": 5.0,
           "thesis": "Momentum stub pick. 5-day return +12.43%, RSI 56.8 (in healthy 50\u201375 band), price above 20-day MA. Bracket: -3.0% stop / +5.0% take-profit.",
           "exit_date": "2026-05-17",
-          "exit_price": 55.99,
-          "pnl_gbp": -148.8299999999998,
-          "pnl_pct": -6.088560885608851,
-          "exit_reason": "stop",
-          "outcome_notes": null,
-          "risks_observed": null,
+          "exit_price": 0.0,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "cancelled",
+          "outcome_notes": "Cancelled at the Sunday test run before market open \u2014 clear-slot wiped pending bracket orders. No real position ever existed.",
+          "risks_observed": "Test artifact only; not a real trade. Real momentum results begin with Monday cron.",
           "created_at": "2026-05-17T21:24:04.360715+00:00",
           "updated_at": "2026-05-17T21:28:02.745326+00:00"
         },
@@ -983,12 +983,12 @@
           "take_profit_pct": 5.0,
           "thesis": "Momentum stub pick. 5-day return +10.89%, RSI 72.0 (in healthy 50\u201375 band), price above 20-day MA. Bracket: -3.0% stop / +5.0% take-profit.",
           "exit_date": "2026-05-17",
-          "exit_price": 176.7,
-          "pnl_gbp": -168.0900000000001,
-          "pnl_pct": -6.818541370036391,
-          "exit_reason": "stop",
-          "outcome_notes": null,
-          "risks_observed": null,
+          "exit_price": 0.0,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "cancelled",
+          "outcome_notes": "Cancelled at the Sunday test run before market open \u2014 clear-slot wiped pending bracket orders. No real position ever existed.",
+          "risks_observed": "Test artifact only; not a real trade. Real momentum results begin with Monday cron.",
           "created_at": "2026-05-17T21:24:04.650739+00:00",
           "updated_at": "2026-05-17T21:28:03.396984+00:00"
         }
