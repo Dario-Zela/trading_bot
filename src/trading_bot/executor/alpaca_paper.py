@@ -68,8 +68,22 @@ class AlpacaPaperExecutor(Executor):
             # Alpaca paper trades in USD. We approximate 1:1 GBP→USD for sizing
             # (Wave 2 simplification; Wave 3 will introduce real FX conversion).
             allocation_usd = allocation_gbp
-            quantity = round(allocation_usd / entry_estimate, 4)
+            # Bracket orders require whole shares on Alpaca — fractional orders
+            # are restricted to "simple" (non-bracketed) orders. Round down so
+            # we never over-allocate; if the result rounds to zero the position
+            # is skipped.
+            is_bracket = (
+                intent.stop_loss_pct is not None and intent.take_profit_pct is not None
+            )
+            if is_bracket:
+                quantity = float(int(allocation_usd / entry_estimate))
+            else:
+                quantity = round(allocation_usd / entry_estimate, 4)
             if quantity <= 0:
+                log.warning(
+                    "Computed qty 0 for %s at $%.2f (allocation $%.2f) — skipping",
+                    intent.ticker, entry_estimate, allocation_usd,
+                )
                 continue
 
             client_order_id = f"{strategy_id}-{uuid.uuid4().hex[:12]}"
