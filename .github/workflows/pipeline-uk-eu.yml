@@ -1,0 +1,110 @@
+name: UK/EU pipeline
+
+# LSE is open 08:00–16:30 UK year-round. Entry 5 min after open, exit 30 min
+# before close. UTC times year-round are picked for BST (UK summer); in GMT
+# the wall-clock runs 1h later — acceptable for daily-bar strategies, same
+# convention as pipeline-us.yml.
+
+on:
+  schedule:
+    # 07:35 UTC weekdays — entry (08:35 BST / 07:35 GMT)
+    - cron: '35 7 * * 1-5'
+    # 15:00 UTC weekdays — exit (16:00 BST / 15:00 GMT)
+    - cron: '0 15 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'entry / exit'
+        required: true
+        type: choice
+        options:
+          - entry
+          - exit
+
+concurrency:
+  group: pipeline-uk-eu
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Decide mode
+        id: mode
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "mode=${{ inputs.mode }}" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.schedule }}" = "35 7 * * 1-5" ]; then
+            echo "mode=entry" >> $GITHUB_OUTPUT
+          else
+            echo "mode=exit" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install Python package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Install Claude Code CLI
+        if: steps.mode.outputs.mode == 'entry' || steps.mode.outputs.mode == 'exit'
+        run: |
+          curl -fsSL https://claude.ai/install.sh | bash
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          claude --version
+
+      - name: Run pipeline (${{ steps.mode.outputs.mode }})
+        env:
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          NOTIFY_EMAIL_TO: ${{ secrets.NOTIFY_EMAIL_TO }}
+          NOTIFY_EMAIL_FROM: ${{ secrets.NOTIFY_EMAIL_FROM }}
+          # UK strategies don't use Alpaca but the data tools may (news API)
+          ALPACA_API_KEY__1: ${{ secrets.ALPACA_API_KEY__1 }}
+          ALPACA_API_SECRET__1: ${{ secrets.ALPACA_API_SECRET__1 }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: |
+          case "${{ steps.mode.outputs.mode }}" in
+            exit)
+              python -m trading_bot.pipeline exit --region uk-eu
+              python -m trading_bot.pipeline reflect --region uk-eu || echo "Reflection step failed (non-fatal)"
+              python -m trading_bot.dashboard.build
+              python -m trading_bot.pipeline summary --region uk-eu
+              ;;
+            *)
+              python -m trading_bot.pipeline entry --region uk-eu
+              ;;
+          esac
+
+      - name: Commit state and dashboard back
+        run: |
+          git config user.name "trading-bot[bot]"
+          git config user.email "trading-bot@users.noreply.github.com"
+          git add state docs || true
+          if git diff --cached --quiet; then
+            echo "No state changes to commit"
+            exit 0
+          fi
+          git commit -m "pipeline-uk-eu ${{ steps.mode.outputs.mode }} run — $(date -u +%Y-%m-%dT%H:%MZ)"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin main || git rebase --abort || true
+            if git push; then
+              exit 0
+            fi
+            echo "Push attempt $i failed, retrying..."
+            sleep 2
+          done
+          echo "Could not push state after 3 attempts"
+          exit 1

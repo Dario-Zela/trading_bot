@@ -1,0 +1,36 @@
+id: momentum-trader-uk
+display_name: "Momentum trader (UK)"
+description: |
+  UK counterpart of momentum-trader. LLM-driven, FTSE 100 universe, shadow
+  tier only (no Alpaca for UK shares). Same trend-following bias as the US
+  version: buy recent winners with confirming RSI + above-MA + volume.
+
+implementation: llm
+
+active: true
+tier: shadow
+region: uk-eu
+
+capital_gbp: 10000
+max_positions: 4
+max_position_pct: 30
+min_position_gbp: 50
+
+use_stops: true
+use_take_profits: true
+
+stop_loss_pct: -3.0
+take_profit_pct: 5.0
+
+universe: ftse100
+
+tools:
+  - get_universe
+  - get_history
+  - get_technicals
+  - get_macro_view
+
+model_assignment:
+  wide_scoring: haiku
+  deep_analysis: sonnet
+  final_select: sonnet

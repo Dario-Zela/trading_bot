@@ -62,6 +62,10 @@ def _flatten(df: pd.DataFrame, tickers: list[str], lookback_days: int) -> dict[s
     tickers / version: single-ticker is flat columns; multi-ticker can be
     MultiIndex (ticker, price) or (price, ticker). We normalise to flat
     Open/High/Low/Close/Volume columns before iterating.
+
+    Currency normalisation: LSE-listed tickers (`.L`) are quoted in pence,
+    not pounds. We divide OHLC by 100 so downstream sizing math is in £.
+    Volume stays in raw share count.
     """
     out: dict[str, list[Bar]] = {}
     is_single = len(tickers) == 1
@@ -71,6 +75,7 @@ def _flatten(df: pd.DataFrame, tickers: list[str], lookback_days: int) -> dict[s
         if sub is None or sub.empty:
             continue
         sub = sub.dropna().tail(lookback_days)
+        price_scale = 0.01 if ticker.endswith(".L") else 1.0
         bars: list[Bar] = []
         for ts in sub.index:
             try:
@@ -78,10 +83,10 @@ def _flatten(df: pd.DataFrame, tickers: list[str], lookback_days: int) -> dict[s
                     Bar(
                         ticker=ticker,
                         bar_date=_to_date(ts),
-                        open=float(sub.at[ts, "Open"]),
-                        high=float(sub.at[ts, "High"]),
-                        low=float(sub.at[ts, "Low"]),
-                        close=float(sub.at[ts, "Close"]),
+                        open=float(sub.at[ts, "Open"]) * price_scale,
+                        high=float(sub.at[ts, "High"]) * price_scale,
+                        low=float(sub.at[ts, "Low"]) * price_scale,
+                        close=float(sub.at[ts, "Close"]) * price_scale,
                         volume=int(sub.at[ts, "Volume"]),
                     )
                 )

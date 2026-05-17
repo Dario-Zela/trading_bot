@@ -1,0 +1,22 @@
+id: control-rule-based-uk
+display_name: "Control — rule-based gainers (UK)"
+description: |
+  UK counterpart of control-rule-based. Buys top-5 highest previous-day
+  gainers from the FTSE 100. Shadow tier only — Alpaca does not trade
+  UK-listed shares. Baseline that every UK LLM strategy must beat.
+
+implementation: rule_based
+
+active: true
+tier: shadow
+region: uk-eu
+
+capital_gbp: 10000
+max_positions: 5
+max_position_pct: 30
+min_position_gbp: 50
+
+use_stops: false
+use_take_profits: false
+
+universe: ftse100
