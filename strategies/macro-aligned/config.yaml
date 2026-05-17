@@ -1,0 +1,33 @@
+id: macro-aligned
+display_name: "Macro aligned"
+description: |
+  LLM-driven. Reads the weekly macro view first; only buys stocks in sectors
+  the macro agent is bullish on; avoids bearish sectors. Regime-aware top-down
+  strategy. Activated in Wave 4 (depends on weekly macro agent existing).
+
+implementation: llm
+
+active: false
+tier: shadow
+region: us
+
+capital_gbp: 10000
+max_positions: 5
+max_position_pct: 30
+min_position_gbp: 50
+
+use_stops: true
+use_take_profits: true
+
+tools:
+  - get_universe
+  - get_history
+  - get_technicals
+  - get_recent_news
+  - get_sector_strength
+  - get_macro_view
+
+model_assignment:
+  wide_scoring: haiku
+  deep_analysis: sonnet
+  final_select: sonnet

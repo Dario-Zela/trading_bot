@@ -1,0 +1,89 @@
+name: US pipeline
+
+# US market: 14:30–21:00 UK (always — ET is UK-5).
+# Entry 5 min after open. Exit 30 min before close.
+# Wave 1 uses fixed UTC crons aligned to UK summer (BST). In GMT the wall-clock
+# is 1h earlier; for daily-bar strategies the offset doesn't matter. DST-correct
+# scheduling is a Wave 2 follow-up.
+
+on:
+  schedule:
+    # 13:35 UTC weekdays — entry (14:35 BST / 13:35 GMT)
+    - cron: '35 13 * * 1-5'
+    # 19:30 UTC weekdays — exit (20:30 BST / 19:30 GMT)
+    - cron: '30 19 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'entry or exit'
+        required: true
+        type: choice
+        options:
+          - entry
+          - exit
+
+concurrency:
+  group: pipeline-us
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Decide mode
+        id: mode
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "mode=${{ inputs.mode }}" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.schedule }}" = "35 13 * * 1-5" ]; then
+            echo "mode=entry" >> $GITHUB_OUTPUT
+          else
+            echo "mode=exit" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Run pipeline (${{ steps.mode.outputs.mode }})
+        env:
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          NOTIFY_EMAIL_TO: ${{ secrets.NOTIFY_EMAIL_TO }}
+          NOTIFY_EMAIL_FROM: ${{ secrets.NOTIFY_EMAIL_FROM }}
+        run: |
+          if [ "${{ steps.mode.outputs.mode }}" = "exit" ]; then
+            python -m trading_bot.pipeline exit --region us --email
+          else
+            python -m trading_bot.pipeline entry --region us
+          fi
+
+      - name: Rebuild dashboard
+        if: steps.mode.outputs.mode == 'exit'
+        run: python -m trading_bot.dashboard.build
+
+      - name: Commit state and dashboard back
+        run: |
+          git config user.name "trading-bot[bot]"
+          git config user.email "trading-bot@users.noreply.github.com"
+          git add state docs || true
+          if git diff --cached --quiet; then
+            echo "No state changes to commit"
+          else
+            git commit -m "pipeline ${{ steps.mode.outputs.mode }} run — $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push
+          fi

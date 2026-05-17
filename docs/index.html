@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trading Bot Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>
+    :root {
+      --sidebar-width: 280px;
+    }
+    body { margin: 0; }
+    .app {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) 1fr;
+      min-height: 100vh;
+    }
+    .sidebar {
+      background: var(--pico-card-background-color);
+      border-right: 1px solid var(--pico-muted-border-color);
+      padding: 1rem;
+      overflow-y: auto;
+    }
+    .sidebar h3 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--pico-muted-color);
+      margin: 1rem 0 0.5rem;
+    }
+    .sidebar ul { list-style: none; padding: 0; margin: 0; }
+    .sidebar li {
+      padding: 0.5rem 0.75rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .sidebar li:hover { background: var(--pico-secondary-background); }
+    .sidebar li.selected {
+      background: var(--pico-primary-background);
+      color: var(--pico-primary-inverse);
+    }
+    .sidebar li small { display: block; color: inherit; opacity: 0.7; font-size: 0.75rem; }
+    main { padding: 1.5rem 2rem; max-width: 1200px; }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .stat-card {
+      background: var(--pico-card-background-color);
+      border: 1px solid var(--pico-muted-border-color);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+    }
+    .stat-card .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--pico-muted-color);
+    }
+    .stat-card .value { font-size: 1.4rem; font-weight: 600; margin-top: 0.25rem; }
+    .stat-card .value.positive { color: #2e7d32; }
+    .stat-card .value.negative { color: #c62828; }
+    .toggle-bar { margin: 1rem 0; }
+    .toggle-bar button {
+      margin-right: 0.5rem;
+      padding: 0.4rem 1rem;
+      font-size: 0.9rem;
+    }
+    .toggle-bar button.active { background: var(--pico-primary); color: var(--pico-primary-inverse); }
+    table { font-size: 0.9rem; }
+    .expanded-row {
+      background: var(--pico-code-background-color);
+      padding: 1rem 1.5rem;
+      font-size: 0.85rem;
+      white-space: pre-wrap;
+    }
+    .row-toggle {
+      cursor: pointer;
+      user-select: none;
+      color: var(--pico-primary);
+    }
+    .empty { color: var(--pico-muted-color); font-style: italic; padding: 2rem; text-align: center; }
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.5rem;
+    }
+    .header-bar small { color: var(--pico-muted-color); font-size: 0.75rem; }
+    .tier-tag {
+      display: inline-block;
+      padding: 0.1rem 0.5rem;
+      font-size: 0.7rem;
+      border-radius: 3px;
+      background: var(--pico-secondary-background);
+      margin-left: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="app" x-data="dashboard()" x-init="load()">
+    <aside class="sidebar">
+      <div class="header-bar">
+        <strong>Strategies</strong>
+      </div>
+      <h3>Active</h3>
+      <ul>
+        <template x-for="s in data.active" :key="s.id">
+          <li
+            :class="{ selected: selected === s.id }"
+            @click="selected = s.id; tab = 'executed'"
+          >
+            <span x-text="s.display_name"></span>
+            <small>
+              <span x-text="s.summary.n_closed"></span> closed ·
+              £<span x-text="s.summary.total_pnl_gbp.toFixed(2)"></span>
+            </small>
+          </li>
+        </template>
+        <template x-if="data.active.length === 0">
+          <li style="cursor: default; color: var(--pico-muted-color); font-style: italic;">
+            None active
+          </li>
+        </template>
+      </ul>
+
+      <h3>Archived</h3>
+      <ul>
+        <template x-for="s in data.archived" :key="s.id">
+          <li
+            :class="{ selected: selected === s.id }"
+            @click="selected = s.id; tab = 'executed'"
+          >
+            <span x-text="s.display_name"></span>
+            <small>
+              <span x-text="s.summary.n_closed"></span> closed ·
+              £<span x-text="s.summary.total_pnl_gbp.toFixed(2)"></span>
+            </small>
+          </li>
+        </template>
+        <template x-if="data.archived.length === 0">
+          <li style="cursor: default; color: var(--pico-muted-color); font-style: italic;">
+            None archived
+          </li>
+        </template>
+      </ul>
+
+      <hr>
+      <small style="color: var(--pico-muted-color); font-size: 0.7rem;">
+        Generated <span x-text="formatTimestamp(data.generated_at)"></span>
+      </small>
+    </aside>
+
+    <main>
+      <template x-if="!current">
+        <div class="empty">Pick a strategy from the sidebar.</div>
+      </template>
+
+      <template x-if="current">
+        <div>
+          <div class="header-bar">
+            <hgroup style="margin-bottom: 0;">
+              <h2 style="margin-bottom: 0.25rem;">
+                <span x-text="current.display_name"></span>
+                <span class="tier-tag" x-text="current.tier"></span>
+                <span class="tier-tag" x-text="current.region"></span>
+              </h2>
+              <p style="margin: 0; color: var(--pico-muted-color); font-size: 0.85rem;"
+                 x-text="current.description"></p>
+            </hgroup>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="label">Total P&L</div>
+              <div
+                class="value"
+                :class="pnlClass(current.summary.total_pnl_gbp)"
+                x-text="'£' + current.summary.total_pnl_gbp.toFixed(2)"
+              ></div>
+            </div>
+            <div class="stat-card">
+              <div class="label">Avg P&L %</div>
+              <div
+                class="value"
+                :class="pnlClass(current.summary.avg_pnl_pct)"
+                x-text="current.summary.avg_pnl_pct.toFixed(2) + '%'"
+              ></div>
+            </div>
+            <div class="stat-card">
+              <div class="label">Hit rate</div>
+              <div class="value" x-text="(current.summary.hit_rate * 100).toFixed(1) + '%'"></div>
+            </div>
+            <div class="stat-card">
+              <div class="label">Closed trades</div>
+              <div class="value" x-text="current.summary.n_closed"></div>
+            </div>
+            <div class="stat-card">
+              <div class="label">Open positions</div>
+              <div class="value" x-text="current.summary.n_open"></div>
+            </div>
+            <div class="stat-card">
+              <div class="label">Predictions logged</div>
+              <div class="value" x-text="current.summary.n_predictions"></div>
+            </div>
+          </div>
+
+          <div class="toggle-bar">
+            <button
+              :class="{ active: tab === 'executed' }"
+              @click="tab = 'executed'; expanded = null"
+            >Executed (<span x-text="current.executed.length"></span>)</button>
+            <button
+              :class="{ active: tab === 'uncommitted' }"
+              @click="tab = 'uncommitted'; expanded = null"
+            >Uncommitted candidates (<span x-text="current.uncommitted.length"></span>)</button>
+          </div>
+
+          <template x-if="tab === 'executed'">
+            <div>
+              <template x-if="current.executed.length === 0">
+                <div class="empty">No trades yet.</div>
+              </template>
+              <template x-if="current.executed.length > 0">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Entry date</th>
+                      <th>Ticker</th>
+                      <th>Entry</th>
+                      <th>Exit date</th>
+                      <th>Exit</th>
+                      <th>P&L £</th>
+                      <th>P&L %</th>
+                      <th>Reason</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <template x-for="(t, i) in current.executed" :key="t.trade_id || i">
+                    <tbody>
+                      <tr>
+                        <td x-text="t.entry_date"></td>
+                        <td x-text="t.ticker"></td>
+                        <td x-text="t.entry_price ? t.entry_price.toFixed(2) : '—'"></td>
+                        <td x-text="t.exit_date || '(open)'"></td>
+                        <td x-text="t.exit_price ? t.exit_price.toFixed(2) : '—'"></td>
+                        <td
+                          :class="t.pnl_gbp != null ? pnlClass(t.pnl_gbp) : ''"
+                          x-text="t.pnl_gbp != null ? t.pnl_gbp.toFixed(2) : '—'"
+                        ></td>
+                        <td
+                          :class="t.pnl_pct != null ? pnlClass(t.pnl_pct) : ''"
+                          x-text="t.pnl_pct != null ? t.pnl_pct.toFixed(2) + '%' : '—'"
+                        ></td>
+                        <td x-text="t.exit_reason || '—'"></td>
+                        <td>
+                          <span
+                            class="row-toggle"
+                            @click="expanded = (expanded === (t.trade_id || i)) ? null : (t.trade_id || i)"
+                            x-text="expanded === (t.trade_id || i) ? 'hide' : 'why?'"
+                          ></span>
+                        </td>
+                      </tr>
+                      <tr x-show="expanded === (t.trade_id || i)">
+                        <td colspan="9" class="expanded-row">
+                          <strong>Entry thesis</strong>
+                          <p x-text="t.thesis || '(no thesis recorded)'"></p>
+                          <template x-if="t.outcome_notes">
+                            <div>
+                              <strong>Outcome notes</strong>
+                              <p x-text="t.outcome_notes"></p>
+                            </div>
+                          </template>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </table>
+              </template>
+            </div>
+          </template>
+
+          <template x-if="tab === 'uncommitted'">
+            <div>
+              <template x-if="current.uncommitted.length === 0">
+                <div class="empty">No uncommitted predictions yet. (Wave 1 doesn't generate them — they arrive when LLM strategies activate in Wave 2+.)</div>
+              </template>
+              <template x-if="current.uncommitted.length > 0">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Ticker</th>
+                      <th>Predicted class</th>
+                      <th>Predicted %</th>
+                      <th>Actual %</th>
+                      <th>Conviction</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <template x-for="(p, i) in current.uncommitted" :key="i + '-pred'">
+                    <tbody>
+                      <tr>
+                        <td x-text="p.prediction_date"></td>
+                        <td x-text="p.ticker"></td>
+                        <td x-text="p.predicted_class"></td>
+                        <td x-text="p.predicted_return_pct != null ? p.predicted_return_pct.toFixed(2) + '%' : '—'"></td>
+                        <td
+                          :class="p.actual_return_pct != null ? pnlClass(p.actual_return_pct) : ''"
+                          x-text="p.actual_return_pct != null ? p.actual_return_pct.toFixed(2) + '%' : '—'"
+                        ></td>
+                        <td x-text="p.conviction != null ? p.conviction.toFixed(2) : '—'"></td>
+                        <td>
+                          <span
+                            class="row-toggle"
+                            @click="expanded = (expanded === ('p' + i)) ? null : ('p' + i)"
+                            x-text="expanded === ('p' + i) ? 'hide' : 'why?'"
+                          ></span>
+                        </td>
+                      </tr>
+                      <tr x-show="expanded === ('p' + i)">
+                        <td colspan="7" class="expanded-row">
+                          <strong>Rationale</strong>
+                          <p x-text="p.rationale || '(no rationale recorded)'"></p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </table>
+              </template>
+            </div>
+          </template>
+        </div>
+      </template>
+    </main>
+  </div>
+
+  <script>
+    function dashboard() {
+      return {
+        data: { active: [], archived: [], generated_at: null },
+        selected: null,
+        tab: 'executed',
+        expanded: null,
+        async load() {
+          try {
+            const response = await fetch('data.json', { cache: 'no-store' });
+            this.data = await response.json();
+            const first = this.data.active[0] || this.data.archived[0];
+            if (first) this.selected = first.id;
+          } catch (e) {
+            console.error('Failed to load data.json', e);
+          }
+        },
+        get current() {
+          const all = [...this.data.active, ...this.data.archived];
+          return all.find(s => s.id === this.selected) || null;
+        },
+        pnlClass(v) {
+          if (v == null) return '';
+          if (v > 0) return 'positive';
+          if (v < 0) return 'negative';
+          return '';
+        },
+        formatTimestamp(ts) {
+          if (!ts) return 'never';
+          try {
+            return new Date(ts).toLocaleString();
+          } catch {
+            return ts;
+          }
+        },
+      };
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+id: news-reactive
+display_name: "News reactive"
+description: |
+  LLM-driven. Weights earnings surprises, M&A, guidance changes, and other catalysts.
+  Trades the reaction to news, not the trend. Activated in Wave 3.
+
+implementation: llm
+
+active: false
+tier: shadow
+region: us
+
+capital_gbp: 10000
+max_positions: 5
+max_position_pct: 30
+min_position_gbp: 50
+
+use_stops: true
+use_take_profits: true
+
+tools:
+  - get_universe
+  - get_history
+  - get_recent_news
+  - get_earnings_info
+  - get_filing_summary
+  - get_insider_trades
+
+model_assignment:
+  wide_scoring: haiku
+  deep_analysis: sonnet
+  final_select: sonnet

@@ -1,0 +1,30 @@
+id: mean-reverter
+display_name: "Mean reverter"
+description: |
+  LLM-driven. Buys oversold bounces. Weights RSI and distance from moving averages.
+  Counter-trend. Activated in Wave 3.
+
+implementation: llm
+
+active: false
+tier: shadow
+region: us
+
+capital_gbp: 10000
+max_positions: 5
+max_position_pct: 30
+min_position_gbp: 50
+
+use_stops: true
+use_take_profits: true
+
+tools:
+  - get_universe
+  - get_history
+  - get_technicals
+  - get_recent_news
+
+model_assignment:
+  wide_scoring: haiku
+  deep_analysis: sonnet
+  final_select: sonnet

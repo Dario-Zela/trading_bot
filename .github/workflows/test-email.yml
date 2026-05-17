@@ -1,0 +1,60 @@
+name: Test email
+
+# One-shot cron + manual trigger. Used to verify the Brevo email path works
+# end-to-end in CI. Delete or disable this workflow after verification.
+
+on:
+  schedule:
+    # Today only — May 17 at 18:28 UTC. Won't fire again for a year (so safe
+    # to leave the file in place if you want to keep the workflow_dispatch button).
+    - cron: '28 18 17 5 *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Send test email
+        env:
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          NOTIFY_EMAIL_TO: ${{ secrets.NOTIFY_EMAIL_TO }}
+          NOTIFY_EMAIL_FROM: ${{ secrets.NOTIFY_EMAIL_FROM }}
+        run: |
+          python -c "
+          from datetime import datetime, timezone
+          from trading_bot.notify import send_summary_email
+
+          now = datetime.now(timezone.utc).isoformat()
+          body = f'''# trading-bot — test email
+
+          This is an automated test from the GitHub Actions \`test-email\` workflow.
+
+          - Fired at: {now}
+          - Trigger: ${{ github.event_name }}
+          - Run URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+          If you got this, the Brevo email path is wired up correctly end-to-end and the
+          daily pipeline will be able to deliver summaries.
+          '''
+          send_summary_email(subject='[trading-bot] test email', body_markdown=body)
+          print('Sent OK')
+          "

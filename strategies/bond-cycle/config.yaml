@@ -1,0 +1,36 @@
+id: bond-cycle
+display_name: "Bond cycle"
+description: |
+  LLM-driven. Trades bond ETFs (TLT, IEF, SHY, HYG, LQD) based on yield-curve
+  shape, central-bank stance, credit spreads, and breakeven inflation. Activated
+  in Wave 4 (depends on weekly macro agent for rate-cycle context).
+
+implementation: llm
+
+active: false
+tier: shadow
+region: us
+
+capital_gbp: 10000
+max_positions: 3            # very concentrated — bond moves are correlated
+max_position_pct: 50
+min_position_gbp: 100
+
+use_stops: true
+use_take_profits: true
+
+universe: us_etfs_bond
+
+tools:
+  - get_universe
+  - get_history
+  - get_yield_curve
+  - get_credit_spreads
+  - get_macro_view
+  - get_technicals
+  - get_recent_news
+
+model_assignment:
+  wide_scoring: haiku
+  deep_analysis: sonnet
+  final_select: sonnet

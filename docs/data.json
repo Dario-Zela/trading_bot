@@ -1,0 +1,31 @@
+{
+  "generated_at": "2026-05-17T17:33:00.078794+00:00",
+  "active": [
+    {
+      "id": "control-rule-based",
+      "display_name": "Control \u2014 rule-based gainers",
+      "description": "Deterministic baseline. Buys top-5 highest previous-day % gainers from the\nS&P 500 universe, equal weight, no stops, no take-profits. No LLM involvement.\nEvery other strategy must beat this to justify its existence.",
+      "tier": "shadow",
+      "region": "us",
+      "universe": "sp500",
+      "capital_gbp": 10000.0,
+      "summary": {
+        "n_closed": 0,
+        "n_open": 0,
+        "total_pnl_gbp": 0.0,
+        "avg_pnl_pct": 0.0,
+        "hit_rate": 0.0,
+        "n_predictions": 0
+      },
+      "equity_curve": [
+        {
+          "date": null,
+          "equity": 10000.0
+        }
+      ],
+      "executed": [],
+      "uncommitted": []
+    }
+  ],
+  "archived": []
+}

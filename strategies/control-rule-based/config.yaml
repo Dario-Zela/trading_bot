@@ -1,0 +1,23 @@
+id: control-rule-based
+display_name: "Control — rule-based gainers"
+description: |
+  Deterministic baseline. Buys top-5 highest previous-day % gainers from the
+  S&P 500 universe, equal weight, no stops, no take-profits. No LLM involvement.
+  Every other strategy must beat this to justify its existence.
+
+implementation: rule_based  # tells the loader to use the bespoke Python class
+
+active: true
+tier: shadow                # shadow / alpaca-paper / t212-live
+region: us                  # us / uk-eu
+
+capital_gbp: 10000          # paper capital allocation
+max_positions: 5
+max_position_pct: 30        # constraint, though control always equal-weights
+min_position_gbp: 50
+
+# Rule-based control does not use stops or take-profits
+use_stops: false
+use_take_profits: false
+
+universe: sp500             # tools.get_universe(universe_id)

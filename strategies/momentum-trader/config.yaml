@@ -1,0 +1,31 @@
+id: momentum-trader
+display_name: "Momentum trader"
+description: |
+  LLM-driven. Buys recent winners. Weights price action and volume. Trend-following.
+  Activated in Wave 2.
+
+implementation: llm
+
+active: false               # activates in Wave 2
+tier: shadow
+region: us
+
+capital_gbp: 10000
+max_positions: 5
+max_position_pct: 30
+min_position_gbp: 50
+
+use_stops: true
+use_take_profits: true
+
+# Tools this strategy is allowed to call (subset of the tool library)
+tools:
+  - get_universe
+  - get_history
+  - get_technicals
+  - get_recent_news
+
+model_assignment:
+  wide_scoring: haiku
+  deep_analysis: sonnet
+  final_select: sonnet
