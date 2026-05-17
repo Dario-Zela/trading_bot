@@ -1,0 +1,70 @@
+name: Weekly macro
+
+# Sunday 17:00 UTC = 18:00 BST / 17:00 GMT. Runs once a week, before Monday's
+# US pipeline cron picks up the freshly-written macro view via get_macro_view().
+
+on:
+  schedule:
+    - cron: '0 17 * * 0'
+  workflow_dispatch:
+
+concurrency:
+  group: weekly-macro
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install Python package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Install Claude Code CLI
+        run: |
+          curl -fsSL https://claude.ai/install.sh | bash
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          claude --version
+
+      - name: Run weekly macro
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          ALPACA_API_KEY__1: ${{ secrets.ALPACA_API_KEY__1 }}
+          ALPACA_API_SECRET__1: ${{ secrets.ALPACA_API_SECRET__1 }}
+        run: python -m trading_bot.pipeline weekly-macro
+
+      - name: Commit macro state back
+        run: |
+          git config user.name "trading-bot[bot]"
+          git config user.email "trading-bot@users.noreply.github.com"
+          git add state/macro || true
+          if git diff --cached --quiet; then
+            echo "No macro state changes to commit"
+            exit 0
+          fi
+          git commit -m "weekly macro — $(date -u +%Y-%m-%dT%H:%MZ)"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin main || git rebase --abort || true
+            if git push; then
+              exit 0
+            fi
+            echo "Push attempt $i failed, retrying..."
+            sleep 2
+          done
+          echo "Could not push macro state after 3 attempts"
+          exit 1
