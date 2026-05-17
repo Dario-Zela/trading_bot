@@ -20,6 +20,7 @@ from pathlib import Path
 
 from trading_bot.executor.base import TradeIntent
 from trading_bot.llm.claude_code import ClaudeCodeError, run_claude_for_json
+from trading_bot.state.predictions import PredictionRecord, append_prediction
 from trading_bot.strategy.base import Strategy
 from trading_bot.tools import (
     get_commodity_prices,
@@ -45,6 +46,21 @@ _PREFILTER_RSI_MIN = 30.0
 _PREFILTER_RSI_MAX = 80.0
 _PREFILTER_MIN_VOL_RATIO = 0.5
 _PREFILTER_TOP_N = 30  # how many candidates to hand to the LLM
+
+
+def _classify(predicted_pct: float, rsi: float | None) -> str:
+    """Bucket a candidate into one of the five directional classes used for
+    prediction grading. Crude version based on the 5d return + RSI; replaced
+    with explicit LLM scoring per candidate in a later refactor."""
+    if predicted_pct >= 8.0 or (rsi is not None and rsi >= 70 and predicted_pct >= 4.0):
+        return "strong_up"
+    if predicted_pct >= 2.0:
+        return "mild_up"
+    if predicted_pct <= -8.0 or (rsi is not None and rsi <= 30 and predicted_pct <= -4.0):
+        return "strong_down"
+    if predicted_pct <= -2.0:
+        return "mild_down"
+    return "flat"
 
 
 class LLMStrategy(Strategy):
@@ -99,9 +115,12 @@ class LLMStrategy(Strategy):
             )
         except ClaudeCodeError as e:
             log.error("%s: LLM call failed: %s", cfg.id, e)
+            self._log_predictions(candidates, picked_intents=[], on_date=on_date)
             return []
 
-        return self._parse_picks(response)
+        intents = self._parse_picks(response)
+        self._log_predictions(candidates, picked_intents=intents, on_date=on_date)
+        return intents
 
     # ---- internals ---------------------------------------------------------
 
@@ -347,6 +366,54 @@ class LLMStrategy(Strategy):
             except Exception as e:
                 log.debug("get_insider_trades(%s) failed: %s", c.ticker, e)
         return out
+
+    def _log_predictions(
+        self,
+        candidates: list,
+        *,
+        picked_intents: list[TradeIntent],
+        on_date: date,
+    ) -> None:
+        """Write a PredictionRecord for every pre-filtered candidate.
+
+        The wider prediction set is what we use for IC / hit-rate / decile-spread
+        analysis (independently of whether a candidate was actually traded).
+        Wave 2b initial implementation: predicted_return_pct uses the 5-day
+        momentum (the technical signal that got it through pre-filter); a future
+        refinement asks Claude to score each candidate explicitly.
+
+        actual_return_pct is filled in by the daily reflection / exit step.
+        """
+        cfg = self.config
+        picked_tickers = {i.ticker for i in picked_intents}
+        picked_theses = {i.ticker: i.thesis for i in picked_intents}
+
+        for c in candidates:
+            predicted_pct = c.return_5d_pct if c.return_5d_pct is not None else 0.0
+            predicted_class = _classify(predicted_pct, c.rsi_14)
+            was_traded = c.ticker in picked_tickers
+            conviction = 0.75 if was_traded else 0.4
+            if was_traded:
+                rationale = picked_theses.get(c.ticker, "Picked by LLM.")
+            else:
+                rationale = (
+                    f"Passed pre-filter (5d {c.return_5d_pct:+.2f}%, RSI {c.rsi_14:.1f}, "
+                    f"above SMA20={c.above_sma_20}) but LLM did not select."
+                )
+
+            append_prediction(
+                PredictionRecord(
+                    strategy_id=cfg.id,
+                    region=cfg.region,
+                    prediction_date=on_date.isoformat(),
+                    ticker=c.ticker,
+                    predicted_class=predicted_class,
+                    predicted_return_pct=round(float(predicted_pct), 2),
+                    conviction=conviction,
+                    rationale=rationale,
+                    was_traded=was_traded,
+                )
+            )
 
     def _parse_picks(self, response) -> list[TradeIntent]:
         cfg = self.config

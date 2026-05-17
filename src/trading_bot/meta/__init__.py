@@ -3,6 +3,6 @@
 Wave 2c: daily reflection (per-trade outcome/risks analysis).
 Wave 6 will add: weekly evolution (strategy promotion/demotion), weekly macro.
 """
-from trading_bot.meta.reflection import reflect_on_day
+from trading_bot.meta.reflection import grade_predictions, reflect_on_day
 
-__all__ = ["reflect_on_day"]
+__all__ = ["reflect_on_day", "grade_predictions"]

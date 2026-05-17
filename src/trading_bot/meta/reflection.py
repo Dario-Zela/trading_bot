@@ -18,10 +18,84 @@ from datetime import date
 
 from trading_bot.llm.claude_code import ClaudeCodeError, run_claude_for_json
 from trading_bot.state.ledger import _iter_records  # noqa: WPS437 — internal but stable
-from trading_bot.state.paths import ledger_path
+from trading_bot.state.paths import ledger_path, predictions_path
+from trading_bot.tools.history import get_history
 
 
 log = logging.getLogger(__name__)
+
+
+def grade_predictions(on_date: date, region: str | None = None) -> int:
+    """Fill in actual_return_pct + actual_class on every prediction recorded
+    today (open→close return). Cheap — one yfinance batch fetch per region.
+
+    Independent of the LLM-based reflect_on_day; runs even when
+    CLAUDE_CODE_OAUTH_TOKEN is missing.
+    """
+    target = on_date.isoformat()
+    path = predictions_path()
+    if not path.exists():
+        return 0
+
+    rows = []
+    tickers_to_fetch: set[str] = set()
+    for line in path.read_text().splitlines():
+        if not line.strip():
+            continue
+        r = json.loads(line)
+        rows.append(r)
+        if r.get("prediction_date") == target and r.get("actual_return_pct") is None:
+            if region is None or r.get("region") == region:
+                tickers_to_fetch.add(r["ticker"])
+
+    if not tickers_to_fetch:
+        return 0
+
+    bars = get_history(list(tickers_to_fetch), lookback_days=1, end_date=on_date)
+    actuals: dict[str, float | None] = {}
+    for ticker, bar_list in bars.items():
+        if not bar_list:
+            continue
+        b = bar_list[-1]
+        if b.open and b.open > 0:
+            actuals[ticker] = (b.close / b.open - 1.0) * 100.0
+
+    updated = 0
+    for r in rows:
+        if r.get("prediction_date") != target:
+            continue
+        if r.get("actual_return_pct") is not None:
+            continue
+        if region is not None and r.get("region") != region:
+            continue
+        actual = actuals.get(r["ticker"])
+        if actual is None:
+            continue
+        r["actual_return_pct"] = round(actual, 2)
+        r["actual_class"] = _classify_outcome(actual)
+        updated += 1
+
+    if updated == 0:
+        return 0
+
+    tmp = path.with_suffix(".jsonl.tmp")
+    with tmp.open("w") as f:
+        for r in rows:
+            f.write(json.dumps(r) + "\n")
+    tmp.replace(path)
+    return updated
+
+
+def _classify_outcome(actual_pct: float) -> str:
+    if actual_pct >= 4.0:
+        return "strong_up"
+    if actual_pct >= 1.0:
+        return "mild_up"
+    if actual_pct <= -4.0:
+        return "strong_down"
+    if actual_pct <= -1.0:
+        return "mild_down"
+    return "flat"
 
 
 def reflect_on_day(on_date: date, region: str | None = None) -> int:

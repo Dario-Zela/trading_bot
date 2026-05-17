@@ -56,30 +56,65 @@ def get_history(
 
 
 def _flatten(df: pd.DataFrame, tickers: list[str], lookback_days: int) -> dict[str, list[Bar]]:
+    """Build {ticker: [Bar]} from yfinance's mixed-shape output.
+
+    yfinance returns different layouts depending on universe / number of
+    tickers / version: single-ticker is flat columns; multi-ticker can be
+    MultiIndex (ticker, price) or (price, ticker). We normalise to flat
+    Open/High/Low/Close/Volume columns before iterating.
+    """
     out: dict[str, list[Bar]] = {}
     is_single = len(tickers) == 1
 
     for ticker in tickers:
-        sub = df if is_single else df.get(ticker)
+        sub = _slice_ticker(df, ticker, is_single)
         if sub is None or sub.empty:
             continue
         sub = sub.dropna().tail(lookback_days)
         bars: list[Bar] = []
-        for ts, row in sub.iterrows():
-            bars.append(
-                Bar(
-                    ticker=ticker,
-                    bar_date=_to_date(ts),
-                    open=float(row["Open"]),
-                    high=float(row["High"]),
-                    low=float(row["Low"]),
-                    close=float(row["Close"]),
-                    volume=int(row["Volume"]),
+        for ts in sub.index:
+            try:
+                bars.append(
+                    Bar(
+                        ticker=ticker,
+                        bar_date=_to_date(ts),
+                        open=float(sub.at[ts, "Open"]),
+                        high=float(sub.at[ts, "High"]),
+                        low=float(sub.at[ts, "Low"]),
+                        close=float(sub.at[ts, "Close"]),
+                        volume=int(sub.at[ts, "Volume"]),
+                    )
                 )
-            )
+            except (KeyError, ValueError, TypeError):
+                # Single missing bar shouldn't kill the whole ticker
+                continue
         if bars:
             out[ticker] = bars
     return out
+
+
+def _slice_ticker(df: pd.DataFrame, ticker: str, is_single: bool) -> pd.DataFrame | None:
+    """Extract one ticker's per-day OHLCV with a flat column index."""
+    if is_single:
+        sub = df
+    elif isinstance(df.columns, pd.MultiIndex):
+        # Try ticker-at-level-0 (the group_by='ticker' layout) first, then
+        # fall back to ticker-at-level-1.
+        level_0 = df.columns.get_level_values(0)
+        level_1 = df.columns.get_level_values(1)
+        if ticker in level_0:
+            sub = df[ticker]
+        elif ticker in level_1:
+            sub = df.xs(ticker, axis=1, level=1)
+        else:
+            return None
+    else:
+        return None
+    if isinstance(sub.columns, pd.MultiIndex):
+        # Flatten — innermost level should be the OHLCV name.
+        sub = sub.copy()
+        sub.columns = [c[-1] if isinstance(c, tuple) else c for c in sub.columns]
+    return sub
 
 
 def _to_date(ts) -> date:

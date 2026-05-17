@@ -94,8 +94,10 @@ def run_clear_slot(slot: int) -> None:
 
 
 def run_reflect(region: str, on_date: date) -> int:
-    from trading_bot.meta.reflection import reflect_on_day
+    from trading_bot.meta.reflection import grade_predictions, reflect_on_day
 
+    n_graded = grade_predictions(on_date, region=region)
+    log.info("Graded %d predictions with actual returns", n_graded)
     return reflect_on_day(on_date, region=region)
 
 
