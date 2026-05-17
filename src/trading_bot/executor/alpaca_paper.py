@@ -181,11 +181,17 @@ class AlpacaPaperExecutor(Executor):
 
     def clear_slot(self) -> None:
         """Wipe the slot in preparation for a new strategy assignment:
-        suspend, cancel all open orders, liquidate all positions."""
+        suspend trading, cancel all open orders, liquidate all positions,
+        then resume. The suspend window guards against a race where new
+        orders land mid-clear; after resume the slot is ready for the next
+        strategy to start trading on the next pipeline run."""
         self.suspend()
-        self._cancel_all_orders()
-        self._close_all_positions()
-        log.info("Slot %d cleared (positions liquidated, orders cancelled)", self.slot)
+        try:
+            self._cancel_all_orders()
+            self._close_all_positions()
+        finally:
+            self.resume()
+        log.info("Slot %d cleared and resumed", self.slot)
 
     # ---- HTTP plumbing -----------------------------------------------------
 
