@@ -93,9 +93,53 @@ def run_clear_slot(slot: int) -> None:
     executor.clear_slot()
 
 
+def run_reflect(region: str, on_date: date) -> int:
+    from trading_bot.meta.reflection import reflect_on_day
+
+    return reflect_on_day(on_date, region=region)
+
+
+def run_summary(region: str, on_date: date) -> None:
+    """Read today's exits from the ledger and send the summary email.
+    Runs after exit + reflect so the email reflects any LLM-updated
+    outcome_notes / risks_observed."""
+    import json
+    from pathlib import Path
+    from collections import defaultdict
+
+    from trading_bot.state.paths import ledger_path
+
+    target = on_date.isoformat()
+    exits: dict[str, list[dict]] = defaultdict(list)
+    path: Path = ledger_path()
+    if path.exists():
+        with path.open() as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                r = json.loads(line)
+                if r.get("exit_date") != target:
+                    continue
+                if region is not None and r.get("region") != region:
+                    continue
+                exits[r["strategy_id"]].append(r)
+
+    subject, body_text, body_html = render_daily_summary(
+        run_date=on_date,
+        region=region,
+        entries={},
+        exits=dict(exits),
+    )
+    try:
+        send_summary_email(subject=subject, body_text=body_text, body_html=body_html)
+    except Exception as e:
+        log.error("Email send failed: %s", e)
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="trading_bot.pipeline")
-    parser.add_argument("mode", choices=["entry", "exit", "clear-slot"])
+    parser.add_argument("mode", choices=["entry", "exit", "clear-slot", "reflect", "summary"])
     parser.add_argument("--region", default="us", choices=["us", "uk-eu"])
     parser.add_argument("--date", help="ISO date (defaults to today)")
     parser.add_argument("--email", action="store_true", help="Send summary email after exit")
@@ -116,6 +160,16 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     on_date = date.fromisoformat(args.date) if args.date else date.today()
+
+    if args.mode == "reflect":
+        n = run_reflect(args.region, on_date)
+        log.info("Reflection complete: %d trades updated", n)
+        return 0
+
+    if args.mode == "summary":
+        run_summary(args.region, on_date)
+        log.info("Summary email dispatched for %s region", args.region)
+        return 0
 
     if args.mode == "entry":
         entries = run_entry(args.region, on_date)

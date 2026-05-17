@@ -67,7 +67,7 @@ jobs:
           pip install -e .
 
       - name: Install Claude Code CLI
-        if: steps.mode.outputs.mode == 'entry'
+        if: steps.mode.outputs.mode == 'entry' || steps.mode.outputs.mode == 'exit'
         run: |
           curl -fsSL https://claude.ai/install.sh | bash
           echo "$HOME/.local/bin" >> $GITHUB_PATH
@@ -88,7 +88,12 @@ jobs:
         run: |
           case "${{ steps.mode.outputs.mode }}" in
             exit)
-              python -m trading_bot.pipeline exit --region us --email
+              # Three-phase exit: close positions, LLM reflection (Wave 2c),
+              # then build dashboard, then email summary.
+              python -m trading_bot.pipeline exit --region us
+              python -m trading_bot.pipeline reflect --region us || echo "Reflection step failed (non-fatal)"
+              python -m trading_bot.dashboard.build
+              python -m trading_bot.pipeline summary --region us
               ;;
             clear-slot)
               python -m trading_bot.pipeline clear-slot --slot "${{ inputs.slot }}"
@@ -97,10 +102,6 @@ jobs:
               python -m trading_bot.pipeline entry --region us
               ;;
           esac
-
-      - name: Rebuild dashboard
-        if: steps.mode.outputs.mode == 'exit'
-        run: python -m trading_bot.dashboard.build
 
       - name: Commit state and dashboard back
         run: |

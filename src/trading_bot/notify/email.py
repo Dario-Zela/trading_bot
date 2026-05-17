@@ -186,13 +186,21 @@ def _render_html_summary(
     </tr>
     """
 
+    all_strategies = sorted(set(entries) | set(exits))
+
+    # TOC nav strip — anchor jumps to each strategy section below.
+    # Real interactive tabs aren't viable in email; anchor links are the
+    # universally-supported equivalent (Gmail, Outlook, Apple Mail all honour them).
+    nav_html = _render_nav_strip(all_strategies, entries=entries, exits=exits) if len(all_strategies) > 1 else ""
+
     strategy_blocks: list[str] = []
-    for strategy_id in sorted(set(entries) | set(exits)):
+    for strategy_id in all_strategies:
         strategy_blocks.append(
             _render_strategy_section(
                 strategy_id=strategy_id,
                 opened=entries.get(strategy_id, []),
                 closed=exits.get(strategy_id, []),
+                show_back_to_top=len(all_strategies) > 1,
             )
         )
 
@@ -219,12 +227,14 @@ def _render_html_summary(
 <html lang="en">
 <head><meta charset="UTF-8"></head>
 <body style="margin:0;padding:0;background:#f3f4f6;">
+<a id="top"></a>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f3f4f6;">
   <tr>
     <td align="center" style="padding:24px 12px;">
       <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:8px;overflow:hidden;border:1px solid #e5e7eb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
         {header_html}
         {headline_html}
+        {nav_html}
         {''.join(strategy_blocks)}
         {footer_html}
       </table>
@@ -235,8 +245,78 @@ def _render_html_summary(
 </html>"""
 
 
+def _render_nav_strip(
+    strategy_ids: list[str],
+    *,
+    entries: dict[str, list[dict]],
+    exits: dict[str, list[dict]],
+) -> str:
+    """Top-of-email nav: one row per strategy with summary stats and an anchor
+    jump. Renders only when there's more than one strategy."""
+    rows: list[str] = []
+    for sid in strategy_ids:
+        strat_exits = exits.get(sid, [])
+        strat_entries = entries.get(sid, [])
+        pnl = sum(float(t.get("pnl_gbp") or 0.0) for t in strat_exits)
+        n_closed = len(strat_exits)
+        n_open = len(strat_entries)
+        pnl_color = "#15803d" if pnl > 0 else ("#b91c1c" if pnl < 0 else "#475569")
+        pnl_sign = "+" if pnl > 0 else ("−" if pnl < 0 else "")
+        # Trade counts: prefer "closed today" but fall back to "open" if no exits yet
+        if n_closed > 0:
+            count_label = f"{n_closed} closed"
+        elif n_open > 0:
+            count_label = f"{n_open} open"
+        else:
+            count_label = "0 trades"
+
+        rows.append(
+            f"""
+            <tr>
+              <td style="padding:10px 12px;border-bottom:1px solid #f3f4f6;">
+                <a href="#strategy-{_anchor(sid)}" style="text-decoration:none;color:inherit;display:block;">
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                      <td style="font-size:13px;font-weight:600;color:#111827;">{_escape(sid)}</td>
+                      <td align="right" style="font-size:13px;color:#6b7280;">
+                        <span style="color:#6b7280;font-size:11px;margin-right:10px;">{count_label}</span>
+                        <span style="font-weight:700;color:{pnl_color};">{pnl_sign}£{abs(pnl):.2f}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </a>
+              </td>
+            </tr>
+            """
+        )
+
+    return f"""
+    <tr>
+      <td style="padding:0 28px 12px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #e5e7eb;border-radius:6px;overflow:hidden;">
+          <tr>
+            <td style="padding:8px 12px;background:#f9fafb;border-bottom:1px solid #e5e7eb;font-size:10px;text-transform:uppercase;letter-spacing:0.05em;color:#6b7280;font-weight:600;">
+              Strategies — tap to jump
+            </td>
+          </tr>
+          {''.join(rows)}
+        </table>
+      </td>
+    </tr>
+    """
+
+
+def _anchor(strategy_id: str) -> str:
+    """Sanitise a strategy id for use as an HTML anchor."""
+    return "".join(c if c.isalnum() else "-" for c in strategy_id).strip("-")
+
+
 def _render_strategy_section(
-    *, strategy_id: str, opened: list[dict], closed: list[dict]
+    *,
+    strategy_id: str,
+    opened: list[dict],
+    closed: list[dict],
+    show_back_to_top: bool = False,
 ) -> str:
     """One per-strategy block within the email body."""
     pnl = sum(float(t.get("pnl_gbp") or 0.0) for t in closed)
@@ -284,9 +364,16 @@ def _render_strategy_section(
         for t in opened:
             opened_html_parts.append(_render_open_card(t))
 
+    back_to_top = (
+        '<div style="text-align:right;margin-top:8px;">'
+        '<a href="#top" style="font-size:11px;color:#6b7280;text-decoration:none;">↑ Top</a>'
+        '</div>'
+    ) if show_back_to_top else ""
+
     return f"""
     <tr>
       <td style="padding:0 28px 12px;">
+        <a id="strategy-{_anchor(strategy_id)}"></a>
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
           <tr>
             <td>
@@ -300,6 +387,7 @@ def _render_strategy_section(
         {stat_row}
         {''.join(closed_html_parts)}
         {''.join(opened_html_parts)}
+        {back_to_top}
       </td>
     </tr>
     """
