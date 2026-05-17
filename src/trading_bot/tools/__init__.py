@@ -16,6 +16,7 @@ from trading_bot.tools.cross_asset import (
 )
 from trading_bot.tools.earnings import EarningsInfo, get_earnings_info
 from trading_bot.tools.insiders import InsiderSummary, get_insider_trades
+from trading_bot.tools.filings import FilingSummary, get_filing_summary
 
 __all__ = [
     "get_universe",
@@ -39,4 +40,6 @@ __all__ = [
     "get_earnings_info",
     "InsiderSummary",
     "get_insider_trades",
+    "FilingSummary",
+    "get_filing_summary",
 ]

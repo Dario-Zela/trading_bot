@@ -27,6 +27,7 @@ from trading_bot.tools import (
     get_credit_spreads,
     get_dollar_index,
     get_earnings_info,
+    get_filing_summary,
     get_insider_trades,
     get_macro_view,
     get_recent_news,
@@ -200,6 +201,7 @@ class LLMStrategy(Strategy):
         # they'd ignore).
         per_candidate_earnings = self._maybe_fetch_earnings(tools_set, candidates)
         per_candidate_insiders = self._maybe_fetch_insiders(tools_set, candidates)
+        per_candidate_filings = self._maybe_fetch_filings(tools_set, candidates)
 
         sections.append("## Candidates (pre-filtered to those in a healthy uptrend)\n")
         for c in candidates:
@@ -231,6 +233,19 @@ class LLMStrategy(Strategy):
                     f"{ins.n_buys} buys / {ins.n_sells} sells — **{ins.net_signal}**"
                 )
 
+            filings_lines = ""
+            filings = per_candidate_filings.get(c.ticker) if per_candidate_filings else None
+            if filings:
+                bullets = []
+                # Cap to 4 most recent so the prompt doesn't blow up
+                for f in filings[:4]:
+                    items = f" — items {', '.join(f.items)}" if f.items else ""
+                    bullets.append(f"  - [{f.filing_date}] {f.form_type}{items}")
+                    if f.excerpt:
+                        # First ~250 chars only — full text is too long
+                        bullets.append(f"    > {f.excerpt[:250]}...")
+                filings_lines = "\n  Recent filings:\n" + "\n".join(bullets)
+
             sections.append(
                 f"### {c.ticker}\n"
                 f"- close: ${c.close:.2f} (as of {c.as_of})\n"
@@ -242,6 +257,7 @@ class LLMStrategy(Strategy):
                 f"- volume ratio (today vs 20-day avg): {c.volume_ratio:.2f}"
                 + earnings_line
                 + insider_line
+                + filings_lines
                 + news_lines
             )
 
@@ -365,6 +381,21 @@ class LLMStrategy(Strategy):
                 out[c.ticker] = get_insider_trades(c.ticker, days=60)
             except Exception as e:
                 log.debug("get_insider_trades(%s) failed: %s", c.ticker, e)
+        return out
+
+    def _maybe_fetch_filings(self, tools: set[str], candidates: list) -> dict:
+        if "get_filing_summary" not in tools:
+            return {}
+        # Only the top-15 candidates get filings — they're the most expensive
+        # tool (one EDGAR call per ticker, plus potentially body fetches for
+        # 8-Ks). Saves ~half the per-run EDGAR traffic.
+        top = candidates[:15]
+        out = {}
+        for c in top:
+            try:
+                out[c.ticker] = get_filing_summary(c.ticker, days=30)
+            except Exception as e:
+                log.debug("get_filing_summary(%s) failed: %s", c.ticker, e)
         return out
 
     def _log_predictions(
