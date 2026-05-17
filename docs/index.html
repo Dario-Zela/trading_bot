@@ -95,6 +95,33 @@
       background: var(--accent);
       color: var(--pico-primary-inverse);
     }
+    .region-toggle {
+      margin-left: auto;
+      display: flex;
+      gap: 0.25rem;
+      align-items: center;
+    }
+    .region-btn {
+      background: none;
+      border: 1px solid var(--pico-muted-border-color);
+      border-radius: 6px;
+      padding: 0.3rem 0.7rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--pico-muted-color);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .region-btn:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .region-btn.active {
+      background: var(--accent);
+      color: var(--pico-primary-inverse);
+      border-color: var(--accent);
+    }
 
     /* Search */
     .search-row {
@@ -359,11 +386,29 @@
 
     <nav class="tabs">
       <button class="tab" :class="{ active: tab === 'active' }" @click="tab = 'active'; selected = null">
-        Active <span class="count" x-text="data.active.length"></span>
+        Active <span class="count" x-text="filterByRegion(data.active).length"></span>
       </button>
       <button class="tab" :class="{ active: tab === 'archived' }" @click="tab = 'archived'; selected = null">
-        Archived <span class="count" x-text="data.archived.length"></span>
+        Archived <span class="count" x-text="filterByRegion(data.archived).length"></span>
       </button>
+
+      <div class="region-toggle">
+        <template x-for="r in regionsAvailable" :key="r">
+          <button
+            class="region-btn"
+            :class="{ active: region === r }"
+            @click="setRegion(r)"
+            x-text="regionLabel(r)"
+          ></button>
+        </template>
+        <template x-if="regionsAvailable.length > 1">
+          <button
+            class="region-btn"
+            :class="{ active: region === 'all' }"
+            @click="setRegion('all')"
+          >All</button>
+        </template>
+      </div>
     </nav>
 
     <div class="search-row">
@@ -371,8 +416,8 @@
     </div>
 
     <div class="grid">
-      <template x-for="s in filteredStrategies" :key="s.id">
-        <div class="card" :class="{ selected: selected === s.id }" @click="selectStrategy(s.id)">
+      <template x-for="s in filteredStrategies" :key="s.key || s.id">
+        <div class="card" :class="{ selected: selected === (s.key || s.id) }" @click="selectStrategy(s.key || s.id)">
           <div class="card-name" x-text="s.display_name"></div>
           <div class="card-badges">
             <span class="badge" :class="'tier-' + s.tier" x-text="s.tier"></span>
@@ -559,8 +604,9 @@
   <script>
     function dashboard() {
       return {
-        data: { active: [], archived: [], generated_at: null },
+        data: { active: [], archived: [], regions: [], generated_at: null },
         tab: 'active',
+        region: localStorage.getItem('region') || 'us',
         search: '',
         selected: null,
         subtab: 'executed',
@@ -578,8 +624,24 @@
           }
         },
 
+        get regionsAvailable() {
+          return (this.data.regions && this.data.regions.length) ? this.data.regions : ['us'];
+        },
+
+        regionLabel(r) {
+          if (r === 'us') return 'US';
+          if (r === 'uk-eu') return 'UK/EU';
+          return r.toUpperCase();
+        },
+
+        filterByRegion(pool) {
+          if (this.region === 'all') return pool;
+          return pool.filter(s => s.region === this.region);
+        },
+
         get filteredStrategies() {
-          const pool = this.tab === 'active' ? this.data.active : this.data.archived;
+          const base = this.tab === 'active' ? this.data.active : this.data.archived;
+          const pool = this.filterByRegion(base);
           const q = this.search.trim().toLowerCase();
           if (!q) return pool;
           return pool.filter(s =>
@@ -591,16 +653,22 @@
 
         get current() {
           const all = [...this.data.active, ...this.data.archived];
-          return all.find(s => s.id === this.selected) || null;
+          return all.find(s => (s.key || s.id) === this.selected) || null;
         },
 
-        selectStrategy(id) {
-          this.selected = this.selected === id ? null : id;
+        selectStrategy(key) {
+          this.selected = this.selected === key ? null : key;
           this.subtab = 'executed';
           this.expanded = null;
           this.$nextTick(() => {
             if (this.current) this.renderChart(this.current);
           });
+        },
+
+        setRegion(r) {
+          this.region = r;
+          localStorage.setItem('region', r);
+          this.selected = null;
         },
 
         toggleTheme() {

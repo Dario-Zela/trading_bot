@@ -1,10 +1,15 @@
 {
-  "generated_at": "2026-05-17T22:47:16.506681+00:00",
+  "generated_at": "2026-05-17T23:43:30.812839+00:00",
+  "regions": [
+    "uk-eu",
+    "us"
+  ],
   "active": [
     {
       "id": "bond-cycle",
+      "key": "bond-cycle@us",
       "display_name": "Bond cycle",
-      "description": "LLM-driven. Trades bond ETFs (TLT, IEF, SHY, HYG, LQD) based on yield-curve\nshape, central-bank stance, credit spreads, and breakeven inflation. Activated\nin Wave 4 (depends on weekly macro agent for rate-cycle context).",
+      "description": "LLM-driven. Trades bond ETFs based on yield-curve shape, central-bank\nstance, and credit spreads. US: TLT/IEF/SHY/HYG/LQD. UK/EU: Gilts +\nBunds + EUR credit ETFs. Same strategy bias, different bond universe\nper region.",
       "tier": "shadow",
       "region": "us",
       "universe": "us_etfs_bond",
@@ -27,9 +32,36 @@
       "uncommitted": []
     },
     {
+      "id": "bond-cycle",
+      "key": "bond-cycle@uk-eu",
+      "display_name": "Bond cycle",
+      "description": "LLM-driven. Trades bond ETFs based on yield-curve shape, central-bank\nstance, and credit spreads. US: TLT/IEF/SHY/HYG/LQD. UK/EU: Gilts +\nBunds + EUR credit ETFs. Same strategy bias, different bond universe\nper region.",
+      "tier": "shadow",
+      "region": "uk-eu",
+      "universe": "eu_etfs_bond",
+      "capital_gbp": 10000.0,
+      "summary": {
+        "n_closed": 0,
+        "n_open": 0,
+        "total_pnl_gbp": 0.0,
+        "avg_pnl_pct": 0.0,
+        "hit_rate": 0.0,
+        "n_predictions": 0
+      },
+      "equity_curve": [
+        {
+          "date": null,
+          "equity": 10000.0
+        }
+      ],
+      "executed": [],
+      "uncommitted": []
+    },
+    {
       "id": "commodity-momentum",
+      "key": "commodity-momentum@us",
       "display_name": "Commodity momentum",
-      "description": "LLM-driven. Trades commodity ETFs (GLD, SLV, USO, DBA, DBB) based on dollar\nindex, real yields, supply/demand themes, and geopolitical drivers. Activated\nin Wave 4 (depends on weekly macro agent).",
+      "description": "LLM-driven. Trades commodity ETFs based on dollar index, real yields,\nsupply/demand themes. Commodities are dollar-denominated globally so the\nsame US-listed ETF universe (GLD, SLV, USO, DBA, DBB) is used in both\nregions \u2014 only the underlying decision logic differs by macro regime.",
       "tier": "shadow",
       "region": "us",
       "universe": "us_etfs_commodity",
@@ -52,9 +84,36 @@
       "uncommitted": []
     },
     {
+      "id": "commodity-momentum",
+      "key": "commodity-momentum@uk-eu",
+      "display_name": "Commodity momentum",
+      "description": "LLM-driven. Trades commodity ETFs based on dollar index, real yields,\nsupply/demand themes. Commodities are dollar-denominated globally so the\nsame US-listed ETF universe (GLD, SLV, USO, DBA, DBB) is used in both\nregions \u2014 only the underlying decision logic differs by macro regime.",
+      "tier": "shadow",
+      "region": "uk-eu",
+      "universe": "us_etfs_commodity",
+      "capital_gbp": 10000.0,
+      "summary": {
+        "n_closed": 0,
+        "n_open": 0,
+        "total_pnl_gbp": 0.0,
+        "avg_pnl_pct": 0.0,
+        "hit_rate": 0.0,
+        "n_predictions": 0
+      },
+      "equity_curve": [
+        {
+          "date": null,
+          "equity": 10000.0
+        }
+      ],
+      "executed": [],
+      "uncommitted": []
+    },
+    {
       "id": "control-rule-based",
+      "key": "control-rule-based@us",
       "display_name": "Control \u2014 rule-based gainers",
-      "description": "Deterministic baseline. Buys top-5 highest previous-day % gainers from the\nS&P 500 universe, equal weight, no stops, no take-profits. No LLM involvement.\nEvery other strategy must beat this to justify its existence.",
+      "description": "Deterministic baseline. Buys top-N highest previous-day % gainers from the\nconfigured universe, equal weight, no stops, no take-profits. No LLM\ninvolvement. Region-agnostic \u2014 runs against S&P 500 in the US pipeline and\nagainst UK + EU blue chips in the UK/EU pipeline. The yardstick every\nother strategy must beat in each region.",
       "tier": "shadow",
       "region": "us",
       "universe": "sp500",
@@ -1338,9 +1397,36 @@
       "uncommitted": []
     },
     {
+      "id": "control-rule-based",
+      "key": "control-rule-based@uk-eu",
+      "display_name": "Control \u2014 rule-based gainers",
+      "description": "Deterministic baseline. Buys top-N highest previous-day % gainers from the\nconfigured universe, equal weight, no stops, no take-profits. No LLM\ninvolvement. Region-agnostic \u2014 runs against S&P 500 in the US pipeline and\nagainst UK + EU blue chips in the UK/EU pipeline. The yardstick every\nother strategy must beat in each region.",
+      "tier": "shadow",
+      "region": "uk-eu",
+      "universe": "uk_eu_blue_chips",
+      "capital_gbp": 10000.0,
+      "summary": {
+        "n_closed": 0,
+        "n_open": 0,
+        "total_pnl_gbp": 0.0,
+        "avg_pnl_pct": 0.0,
+        "hit_rate": 0.0,
+        "n_predictions": 0
+      },
+      "equity_curve": [
+        {
+          "date": null,
+          "equity": 10000.0
+        }
+      ],
+      "executed": [],
+      "uncommitted": []
+    },
+    {
       "id": "macro-aligned",
+      "key": "macro-aligned@us",
       "display_name": "Macro aligned",
-      "description": "LLM-driven. Reads the weekly macro view first; only buys stocks in sectors\nthe macro agent is bullish on; avoids bearish sectors. Regime-aware top-down\nstrategy. Activated in Wave 4 (depends on weekly macro agent existing).",
+      "description": "LLM-driven. Reads the weekly macro view first; only buys stocks in sectors\nthe macro agent is bullish on; avoids bearish sectors. Regime-aware top-down\nstrategy. Region-agnostic \u2014 the macro view is global, just the candidate\nuniverse differs per region.",
       "tier": "shadow",
       "region": "us",
       "universe": "sp500",
@@ -1448,9 +1534,36 @@
       "uncommitted": []
     },
     {
+      "id": "macro-aligned",
+      "key": "macro-aligned@uk-eu",
+      "display_name": "Macro aligned",
+      "description": "LLM-driven. Reads the weekly macro view first; only buys stocks in sectors\nthe macro agent is bullish on; avoids bearish sectors. Regime-aware top-down\nstrategy. Region-agnostic \u2014 the macro view is global, just the candidate\nuniverse differs per region.",
+      "tier": "shadow",
+      "region": "uk-eu",
+      "universe": "uk_eu_blue_chips",
+      "capital_gbp": 10000.0,
+      "summary": {
+        "n_closed": 0,
+        "n_open": 0,
+        "total_pnl_gbp": 0.0,
+        "avg_pnl_pct": 0.0,
+        "hit_rate": 0.0,
+        "n_predictions": 0
+      },
+      "equity_curve": [
+        {
+          "date": null,
+          "equity": 10000.0
+        }
+      ],
+      "executed": [],
+      "uncommitted": []
+    },
+    {
       "id": "mean-reverter",
+      "key": "mean-reverter@us",
       "display_name": "Mean reverter",
-      "description": "LLM-driven. Buys oversold bounces. Weights RSI and distance from moving averages.\nCounter-trend. Activated in Wave 3.",
+      "description": "LLM-driven. Buys oversold bounces. Weights RSI and distance from MA;\ncounter-trend. Region-agnostic \u2014 runs in US and UK/EU pipelines with\ndifferent universes.",
       "tier": "shadow",
       "region": "us",
       "universe": "sp500",
@@ -1473,9 +1586,36 @@
       "uncommitted": []
     },
     {
+      "id": "mean-reverter",
+      "key": "mean-reverter@uk-eu",
+      "display_name": "Mean reverter",
+      "description": "LLM-driven. Buys oversold bounces. Weights RSI and distance from MA;\ncounter-trend. Region-agnostic \u2014 runs in US and UK/EU pipelines with\ndifferent universes.",
+      "tier": "shadow",
+      "region": "uk-eu",
+      "universe": "uk_eu_blue_chips",
+      "capital_gbp": 10000.0,
+      "summary": {
+        "n_closed": 0,
+        "n_open": 0,
+        "total_pnl_gbp": 0.0,
+        "avg_pnl_pct": 0.0,
+        "hit_rate": 0.0,
+        "n_predictions": 0
+      },
+      "equity_curve": [
+        {
+          "date": null,
+          "equity": 10000.0
+        }
+      ],
+      "executed": [],
+      "uncommitted": []
+    },
+    {
       "id": "momentum-trader",
+      "key": "momentum-trader@us",
       "display_name": "Momentum trader",
-      "description": "Buys recent winners that are still trending. Wave 2a uses a rule-based stub\n(top-N by 5-day return with RSI in a \"trending but not exhausted\" band).\nWave 2b replaces the stub with multi-stage LLM analysis using the same tool\nlibrary and config.",
+      "description": "LLM-driven. Buys recent winners that are still trending. Region-agnostic\nbias \u2014 the same prompt runs against S&P 500 in the US pipeline and against\nUK + EU blue chips in the UK/EU pipeline. The LLM is told the universe is\nwhatever's been pre-filtered for it and adapts to the regime.",
       "tier": "alpaca-paper",
       "region": "us",
       "universe": "sp500",
@@ -1947,9 +2087,36 @@
       "uncommitted": []
     },
     {
+      "id": "momentum-trader",
+      "key": "momentum-trader@uk-eu",
+      "display_name": "Momentum trader",
+      "description": "LLM-driven. Buys recent winners that are still trending. Region-agnostic\nbias \u2014 the same prompt runs against S&P 500 in the US pipeline and against\nUK + EU blue chips in the UK/EU pipeline. The LLM is told the universe is\nwhatever's been pre-filtered for it and adapts to the regime.",
+      "tier": "shadow",
+      "region": "uk-eu",
+      "universe": "uk_eu_blue_chips",
+      "capital_gbp": 10000.0,
+      "summary": {
+        "n_closed": 0,
+        "n_open": 0,
+        "total_pnl_gbp": 0.0,
+        "avg_pnl_pct": 0.0,
+        "hit_rate": 0.0,
+        "n_predictions": 0
+      },
+      "equity_curve": [
+        {
+          "date": null,
+          "equity": 10000.0
+        }
+      ],
+      "executed": [],
+      "uncommitted": []
+    },
+    {
       "id": "news-reactive",
+      "key": "news-reactive@us",
       "display_name": "News reactive",
-      "description": "LLM-driven. Weights earnings surprises, M&A, guidance changes, and other catalysts.\nTrades the reaction to news, not the trend. Activated in Wave 3.",
+      "description": "LLM-driven. Weights earnings surprises, M&A, guidance changes, and other\ncatalysts. News routing per ticker: Alpaca News for US-listed names,\nyfinance fallback for UK/EU listings \u2014 coverage is decent everywhere.",
       "tier": "shadow",
       "region": "us",
       "universe": "sp500",
@@ -2113,9 +2280,36 @@
       "uncommitted": []
     },
     {
+      "id": "news-reactive",
+      "key": "news-reactive@uk-eu",
+      "display_name": "News reactive",
+      "description": "LLM-driven. Weights earnings surprises, M&A, guidance changes, and other\ncatalysts. News routing per ticker: Alpaca News for US-listed names,\nyfinance fallback for UK/EU listings \u2014 coverage is decent everywhere.",
+      "tier": "shadow",
+      "region": "uk-eu",
+      "universe": "uk_eu_blue_chips",
+      "capital_gbp": 10000.0,
+      "summary": {
+        "n_closed": 0,
+        "n_open": 0,
+        "total_pnl_gbp": 0.0,
+        "avg_pnl_pct": 0.0,
+        "hit_rate": 0.0,
+        "n_predictions": 0
+      },
+      "equity_curve": [
+        {
+          "date": null,
+          "equity": 10000.0
+        }
+      ],
+      "executed": [],
+      "uncommitted": []
+    },
+    {
       "id": "sector-rotator",
+      "key": "sector-rotator@us",
       "display_name": "Sector rotator",
-      "description": "LLM-driven. Trades the 11 SPDR sector ETFs based on relative momentum, sector\nrotation patterns, and macro alignment. Holds a small number of sector ETFs at a\ntime, rotating as leadership shifts. Activated in Wave 3.",
+      "description": "LLM-driven. Trades sector ETFs based on relative momentum and macro\nalignment. US: SPDR sector ETFs (XLF, XLE, XLK, ...). UK/EU: iShares\nSTOXX Europe 600 sector ETFs (EXH1.DE, EXV3.DE, ...). Same strategy\nbias, different ETF universe per region.",
       "tier": "shadow",
       "region": "us",
       "universe": "us_etfs_sector",
@@ -2192,6 +2386,32 @@
           "updated_at": "2026-05-17T22:43:43.892783+00:00"
         }
       ],
+      "uncommitted": []
+    },
+    {
+      "id": "sector-rotator",
+      "key": "sector-rotator@uk-eu",
+      "display_name": "Sector rotator",
+      "description": "LLM-driven. Trades sector ETFs based on relative momentum and macro\nalignment. US: SPDR sector ETFs (XLF, XLE, XLK, ...). UK/EU: iShares\nSTOXX Europe 600 sector ETFs (EXH1.DE, EXV3.DE, ...). Same strategy\nbias, different ETF universe per region.",
+      "tier": "shadow",
+      "region": "uk-eu",
+      "universe": "eu_etfs_sector",
+      "capital_gbp": 10000.0,
+      "summary": {
+        "n_closed": 0,
+        "n_open": 0,
+        "total_pnl_gbp": 0.0,
+        "avg_pnl_pct": 0.0,
+        "hit_rate": 0.0,
+        "n_predictions": 0
+      },
+      "equity_curve": [
+        {
+          "date": null,
+          "equity": 10000.0
+        }
+      ],
+      "executed": [],
       "uncommitted": []
     }
   ],
