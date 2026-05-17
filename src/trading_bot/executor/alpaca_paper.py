@@ -59,7 +59,7 @@ class AlpacaPaperExecutor(Executor):
             except Exception as e:
                 log.warning("Snapshot fetch failed for %s: %s — skipping", intent.ticker, e)
                 continue
-            entry_estimate = snap.get("ap") or snap.get("c")  # ask price or last close
+            entry_estimate = snap.get("c")
             if not entry_estimate or entry_estimate <= 0:
                 log.warning("No usable entry price for %s — skipping", intent.ticker)
                 continue
@@ -208,8 +208,10 @@ class AlpacaPaperExecutor(Executor):
                 "client_order_id": client_order_id,
             }
         else:
-            stop_price = round(entry_estimate * (1 + stop_loss_pct / 100.0), 2)
-            target_price = round(entry_estimate * (1 + take_profit_pct / 100.0), 2)
+            # 1-cent safety buffer in each direction guards against tiny drift
+            # between our seed price and Alpaca's order-validation base_price.
+            stop_price = round(entry_estimate * (1 + stop_loss_pct / 100.0) - 0.01, 2)
+            target_price = round(entry_estimate * (1 + take_profit_pct / 100.0) + 0.01, 2)
             payload = {
                 "symbol": ticker,
                 "qty": str(qty),
@@ -234,18 +236,43 @@ class AlpacaPaperExecutor(Executor):
         return response.json()
 
     def _get_snapshot(self, ticker: str) -> dict[str, Any]:
-        # Lightweight: use Alpaca's latest-quote endpoint
-        url = f"https://data.alpaca.markets/v2/stocks/{ticker}/quotes/latest"
-        response = requests.get(url, headers=self._headers(), timeout=10)
+        """Best available "current price" for sizing & bracket-price computation.
+
+        Prefers latest_trade.p (most aligned with how Alpaca validates bracket
+        orders), falls back to quote midpoint, then today's daily close. We
+        intentionally avoid the quote ask in isolation because on weekends /
+        after-hours the ask can be wide and well above the regular-hours price
+        Alpaca uses for its `base_price` order-validation reference.
+        """
+        url = f"https://data.alpaca.markets/v2/stocks/{ticker}/snapshots"
+        response = requests.get(
+            url, headers=self._headers(), params={"symbols": ticker}, timeout=10
+        )
         if not response.ok:
-            # Fall back to latest trade
-            url = f"https://data.alpaca.markets/v2/stocks/{ticker}/trades/latest"
-            response = requests.get(url, headers=self._headers(), timeout=10)
-            response.raise_for_status()
-            trade = response.json().get("trade") or {}
-            return {"c": trade.get("p")}
-        quote = response.json().get("quote") or {}
-        return {"ap": quote.get("ap"), "bp": quote.get("bp")}
+            log.warning("Snapshot fetch failed for %s: %s", ticker, response.status_code)
+            return {"c": None}
+        body = response.json().get(ticker) or {}
+
+        # Try latest trade first (most accurate "current price")
+        latest_trade = body.get("latestTrade") or {}
+        trade_price = latest_trade.get("p")
+        if trade_price and trade_price > 0:
+            return {"c": float(trade_price)}
+
+        # Fall back to quote midpoint
+        latest_quote = body.get("latestQuote") or {}
+        bp = latest_quote.get("bp")
+        ap = latest_quote.get("ap")
+        if bp and ap and bp > 0 and ap > 0:
+            return {"c": (float(bp) + float(ap)) / 2.0}
+
+        # Last resort: today's daily bar close
+        daily_bar = body.get("dailyBar") or {}
+        close = daily_bar.get("c")
+        if close and close > 0:
+            return {"c": float(close)}
+
+        return {"c": None}
 
     def _get_position(self, ticker: str) -> dict[str, Any] | None:
         response = requests.get(
