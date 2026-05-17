@@ -97,14 +97,29 @@ jobs:
             echo "No state changes to commit"
             exit 0
           fi
-          git commit -m "pipeline-uk-eu ${{ steps.mode.outputs.mode }} run — $(date -u +%Y-%m-%dT%H:%MZ)"
-          for i in 1 2 3; do
-            git pull --rebase --autostash origin main || git rebase --abort || true
-            if git push; then
+          MSG="pipeline-uk-eu ${{ steps.mode.outputs.mode }} run — $(date -u +%Y-%m-%dT%H:%MZ)"
+          git commit -m "$MSG"
+
+          for i in 1 2; do
+            if git pull --rebase --autostash origin main && git push; then
               exit 0
             fi
-            echo "Push attempt $i failed, retrying..."
+            git rebase --abort 2>/dev/null || true
+            echo "Push attempt $i failed; will retry with smart merge..."
             sleep 2
           done
-          echo "Could not push state after 3 attempts"
-          exit 1
+
+          echo "Falling back to smart-merge strategy..."
+          mkdir -p /tmp/save
+          cp -r state /tmp/save/ 2>/dev/null || true
+          git fetch origin main
+          git reset --hard origin/main
+          python3 .github/scripts/smart_merge_state.py "$PWD" /tmp/save
+          python -m trading_bot.dashboard.build || true
+          git add state docs || true
+          if git diff --cached --quiet; then
+            echo "Smart-merge produced no new changes; remote already has everything"
+            exit 0
+          fi
+          git commit -m "$MSG (smart-merged)"
+          git push
