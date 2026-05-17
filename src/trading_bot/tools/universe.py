@@ -9,16 +9,40 @@ import requests
 _SP500_WIKI_URL = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
 _USER_AGENT = "trading-bot/0.1 (research; +https://github.com/Dario-Zela/trading_bot)"
 
+# Static lists — these change rarely, easier to keep in-tree than fetch.
+# Update if SPDR rebalances sector mappings (very infrequent).
+_US_ETFS_SECTOR = [
+    "XLF",   # Financials
+    "XLE",   # Energy
+    "XLK",   # Technology
+    "XLV",   # Health Care
+    "XLY",   # Consumer Discretionary
+    "XLP",   # Consumer Staples
+    "XLI",   # Industrials
+    "XLU",   # Utilities
+    "XLB",   # Materials
+    "XLRE",  # Real Estate
+    "XLC",   # Communication Services
+]
+
+_US_ETFS_BOND = ["TLT", "IEF", "SHY", "HYG", "LQD"]
+_US_ETFS_COMMODITY = ["GLD", "SLV", "USO", "DBA", "DBB"]
+
 
 def get_universe(universe_id: str) -> list[str]:
     """Return a ticker list for the named universe.
 
-    Wave 1 supports only 'sp500'. Later waves will add ETF universes
-    ('us_etfs_sector', 'us_etfs_bond', 'us_etfs_commodity'), broker-catalog
-    filters, and news-driven dynamic universes.
+    Supported: 'sp500', 'us_etfs_sector', 'us_etfs_bond', 'us_etfs_commodity'.
+    Future waves: broker-catalog filters, news-driven dynamic universes.
     """
     if universe_id == "sp500":
         return _fetch_sp500()
+    if universe_id == "us_etfs_sector":
+        return list(_US_ETFS_SECTOR)
+    if universe_id == "us_etfs_bond":
+        return list(_US_ETFS_BOND)
+    if universe_id == "us_etfs_commodity":
+        return list(_US_ETFS_COMMODITY)
     raise ValueError(f"Unknown universe: {universe_id}")
 
 
