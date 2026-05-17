@@ -110,7 +110,17 @@ jobs:
           git add state docs || true
           if git diff --cached --quiet; then
             echo "No state changes to commit"
-          else
-            git commit -m "pipeline ${{ steps.mode.outputs.mode }} run — $(date -u +%Y-%m-%dT%H:%MZ)"
-            git push
+            exit 0
           fi
+          git commit -m "pipeline ${{ steps.mode.outputs.mode }} run — $(date -u +%Y-%m-%dT%H:%MZ)"
+          # Retry against remote drift (someone pushed during the run)
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin main || git rebase --abort || true
+            if git push; then
+              exit 0
+            fi
+            echo "Push attempt $i failed, retrying after fetch..."
+            sleep 2
+          done
+          echo "Could not push state after 3 attempts"
+          exit 1
