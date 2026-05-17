@@ -128,40 +128,65 @@ class AlpacaPaperExecutor(Executor):
 
         closed: list[dict] = []
         for trade in open_trades:
-            # First, get the current position (it may have already been closed
-            # by a bracket stop or take-profit firing during the day).
-            position = self._get_position(trade["ticker"])
             try:
+                position = self._get_position(trade["ticker"])
+                close_fill_price: float | None = None
+                exit_reason: str
+
                 if position is not None:
-                    # Position still open — close at market
-                    self._close_position(trade["ticker"])
-                # Look up the most recent fill for the close of this position
-                exit_price = self._get_latest_close_price(trade)
-                exit_reason = self._infer_exit_reason(trade, exit_price)
+                    # Position still open at Alpaca — close at market and use
+                    # the resulting fill price (the only honest exit price).
+                    close_order = self._close_position(trade["ticker"])
+                    if close_order is not None:
+                        fap = close_order.get("filled_avg_price")
+                        if fap is not None:
+                            close_fill_price = float(fap)
+                    if close_fill_price is None:
+                        # We closed but couldn't read the fill — fall back to
+                        # the position's avg entry (preserves zero-ish P&L
+                        # instead of inventing a bid-ask-spread "loss").
+                        close_fill_price = float(position.get("avg_entry_price") or trade["entry_price"])
+                    exit_reason = self._infer_exit_reason(trade, close_fill_price)
+                else:
+                    # No position to close. Either a bracket leg already fired
+                    # intraday, or the order never filled (cancelled, rejected,
+                    # weekend-test, etc). Without an actual fill price we
+                    # refuse to invent P&L — mark the trade as cancelled and
+                    # leave pnl null. Wave 2c reflection can interpret this.
+                    close_fill_price = None
+                    exit_reason = "cancelled"
             except Exception as e:
                 log.error("Exit failed for %s: %s", trade["ticker"], e)
                 continue
 
             entry_price = float(trade["entry_price"])
             quantity = float(trade["quantity"])
-            pnl_gbp = (exit_price - entry_price) * quantity
-            pnl_pct = (exit_price / entry_price - 1.0) * 100.0 if entry_price > 0 else 0.0
+            if close_fill_price is None:
+                pnl_gbp: float | None = None
+                pnl_pct: float | None = None
+                exit_price_to_record: float | None = None
+            else:
+                pnl_gbp = (close_fill_price - entry_price) * quantity
+                pnl_pct = (
+                    (close_fill_price / entry_price - 1.0) * 100.0 if entry_price > 0 else 0.0
+                )
+                exit_price_to_record = close_fill_price
 
             mark_trade_exited(
                 trade_id=trade["trade_id"],
                 exit_date=on_date,
-                exit_price=exit_price,
-                pnl_gbp=pnl_gbp,
-                pnl_pct=pnl_pct,
+                exit_price=exit_price_to_record if exit_price_to_record is not None else 0.0,
+                pnl_gbp=pnl_gbp if pnl_gbp is not None else 0.0,
+                pnl_pct=pnl_pct if pnl_pct is not None else 0.0,
                 exit_reason=exit_reason,
             )
             closed.append(
                 {
                     **trade,
                     "exit_date": on_date.isoformat(),
-                    "exit_price": exit_price,
-                    "pnl_gbp": pnl_gbp,
-                    "pnl_pct": pnl_pct,
+                    "exit_price": exit_price_to_record,
+                    "pnl_gbp": pnl_gbp if pnl_gbp is not None else 0.0,
+                    "pnl_pct": pnl_pct if pnl_pct is not None else 0.0,
                     "exit_reason": exit_reason,
                 }
             )
@@ -306,27 +331,25 @@ class AlpacaPaperExecutor(Executor):
             return None
         return response.json()
 
-    def _close_position(self, ticker: str) -> None:
+    def _close_position(self, ticker: str) -> dict[str, Any] | None:
+        """Liquidate the position at market and return the resulting order
+        record (which carries the eventual filled_avg_price once Alpaca fills
+        it). Returns None on error or when there's no position to close."""
         response = requests.delete(
             self._url(f"/v2/positions/{ticker}"), headers=self._headers(), timeout=15
         )
-        if not response.ok and response.status_code not in (404, 422):
-            log.error("Close position failed for %s: %s %s", ticker, response.status_code, response.text[:200])
-
-    def _get_latest_close_price(self, trade: dict) -> float:
-        """Find the close fill price for this trade. Tries position avg price,
-        then latest quote, then entry price as last resort."""
-        url = f"https://data.alpaca.markets/v2/stocks/{trade['ticker']}/quotes/latest"
+        if response.status_code in (404, 422):
+            return None
+        if not response.ok:
+            log.error(
+                "Close position failed for %s: %s %s",
+                ticker, response.status_code, response.text[:200],
+            )
+            return None
         try:
-            response = requests.get(url, headers=self._headers(), timeout=10)
-            if response.ok:
-                quote = response.json().get("quote") or {}
-                bp = quote.get("bp")
-                if bp:
-                    return float(bp)
+            return response.json()
         except Exception:
-            pass
-        return float(trade["entry_price"])
+            return None
 
     def _infer_exit_reason(self, trade: dict, exit_price: float) -> str:
         entry = float(trade["entry_price"])
