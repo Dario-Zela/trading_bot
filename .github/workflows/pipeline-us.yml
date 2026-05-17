@@ -61,10 +61,17 @@ jobs:
           python-version: '3.11'
           cache: pip
 
-      - name: Install
+      - name: Install Python package
         run: |
           python -m pip install --upgrade pip
           pip install -e .
+
+      - name: Install Claude Code CLI
+        if: steps.mode.outputs.mode == 'entry'
+        run: |
+          curl -fsSL https://claude.ai/install.sh | bash
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          claude --version || (echo "claude not on PATH after install"; exit 1)
 
       - name: Run pipeline (${{ steps.mode.outputs.mode }})
         env:
@@ -77,6 +84,7 @@ jobs:
           ALPACA_API_SECRET__2: ${{ secrets.ALPACA_API_SECRET__2 }}
           ALPACA_API_KEY__3: ${{ secrets.ALPACA_API_KEY__3 }}
           ALPACA_API_SECRET__3: ${{ secrets.ALPACA_API_SECRET__3 }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
         run: |
           case "${{ steps.mode.outputs.mode }}" in
             exit)

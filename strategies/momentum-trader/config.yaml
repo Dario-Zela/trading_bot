@@ -6,7 +6,7 @@ description: |
   Wave 2b replaces the stub with multi-stage LLM analysis using the same tool
   library and config.
 
-implementation: momentum_stub  # rule_based / momentum_stub / llm — Wave 2a uses the stub
+implementation: llm  # Wave 2b — LLM-driven via Claude Code CLI
 
 active: true
 tier: alpaca-paper

@@ -50,6 +50,7 @@ def _to_config(raw: dict) -> StrategyConfig:
 def load_active_strategies(region: str | None = None) -> list[Strategy]:
     """Discover and instantiate every active strategy for the given region."""
     from trading_bot.strategy.control_rule_based import ControlRuleBased
+    from trading_bot.strategy.llm_strategy import LLMStrategy
     from trading_bot.strategy.momentum_stub import MomentumTraderStub
 
     out: list[Strategy] = []
@@ -65,8 +66,7 @@ def load_active_strategies(region: str | None = None) -> list[Strategy]:
         elif config.implementation == "momentum_stub":
             out.append(MomentumTraderStub(config))
         elif config.implementation == "llm":
-            # Wave 2b will activate these
-            continue
+            out.append(LLMStrategy(config))
         else:
             raise ValueError(f"Unknown strategy implementation: {config.implementation}")
     return out

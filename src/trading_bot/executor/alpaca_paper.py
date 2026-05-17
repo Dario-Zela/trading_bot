@@ -207,6 +207,7 @@ class AlpacaPaperExecutor(Executor):
     def clear_slot(self) -> None:
         """Wipe the slot in preparation for a new strategy assignment:
         suspend trading, cancel all open orders, liquidate all positions,
+        mark any ledger trades still attached to this slot as cancelled,
         then resume. The suspend window guards against a race where new
         orders land mid-clear; after resume the slot is ready for the next
         strategy to start trading on the next pipeline run."""
@@ -214,9 +215,56 @@ class AlpacaPaperExecutor(Executor):
         try:
             self._cancel_all_orders()
             self._close_all_positions()
+            n_marked = self._mark_ledger_trades_cancelled()
         finally:
             self.resume()
-        log.info("Slot %d cleared and resumed", self.slot)
+        log.info(
+            "Slot %d cleared and resumed (marked %d ledger trade%s cancelled)",
+            self.slot, n_marked, "" if n_marked == 1 else "s",
+        )
+
+    def _mark_ledger_trades_cancelled(self) -> int:
+        """For every strategy bound to this slot, mark its open ledger trades
+        as exited with reason='cleared'. Preserves audit trail while keeping
+        the ledger in sync with Alpaca after a wipe."""
+        from datetime import date as _date
+
+        import yaml
+
+        from trading_bot.strategy.registry import _strategies_dir
+
+        bound_strategies: list[str] = []
+        for path in _strategies_dir().glob("*/config.yaml"):
+            raw = yaml.safe_load(path.read_text())
+            if raw.get("alpaca_slot") == self.slot and raw.get("tier") == "alpaca-paper":
+                bound_strategies.append(raw["id"])
+        if not bound_strategies:
+            return 0
+
+        today = _date.today()
+        n = 0
+        for sid in bound_strategies:
+            for trade in read_open_trades(strategy_id=sid):
+                mark_trade_exited(
+                    trade_id=trade["trade_id"],
+                    exit_date=today,
+                    exit_price=0.0,
+                    pnl_gbp=0.0,
+                    pnl_pct=0.0,
+                    exit_reason="cleared",
+                    outcome_notes=(
+                        "Slot was cleared (clear-slot ran) before this trade reached a "
+                        "natural exit. Either it was cancelled before any fill, or any "
+                        "real position was liquidated by clear-slot."
+                    ),
+                    risks_observed=(
+                        "P&L not recorded because the actual fill/close price wasn't "
+                        "captured cleanly by clear-slot. Wave 2c reflection can flag this "
+                        "as data missing rather than a real outcome."
+                    ),
+                )
+                n += 1
+        return n
 
     # ---- HTTP plumbing -----------------------------------------------------
 
