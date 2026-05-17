@@ -1,0 +1,37 @@
+id: momentum-trader-eu
+display_name: "Momentum trader (EU)"
+description: |
+  EU counterpart of momentum-trader. LLM-driven, eu_blue_chips universe
+  (DAX + CAC + AEX), shadow tier only. Same trend-following bias as the
+  US / UK versions, adapted to the lower-volatility European blue-chip
+  regime.
+
+implementation: llm
+
+active: true
+tier: shadow
+region: uk-eu
+
+capital_gbp: 10000
+max_positions: 4
+max_position_pct: 30
+min_position_gbp: 50
+
+use_stops: true
+use_take_profits: true
+
+stop_loss_pct: -3.0
+take_profit_pct: 5.0
+
+universe: eu_blue_chips
+
+tools:
+  - get_universe
+  - get_history
+  - get_technicals
+  - get_macro_view
+
+model_assignment:
+  wide_scoring: haiku
+  deep_analysis: sonnet
+  final_select: sonnet
