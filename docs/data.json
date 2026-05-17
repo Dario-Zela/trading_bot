@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-17T21:49:13.695715+00:00",
+  "generated_at": "2026-05-17T22:16:51.329973+00:00",
   "active": [
     {
       "id": "control-rule-based",
@@ -10,7 +10,7 @@
       "universe": "sp500",
       "capital_gbp": 10000.0,
       "summary": {
-        "n_closed": 35,
+        "n_closed": 40,
         "n_open": 0,
         "total_pnl_gbp": 0.0,
         "avg_pnl_pct": 0.0,
@@ -20,6 +20,26 @@
       "equity_curve": [
         {
           "date": null,
+          "equity": 10000.0
+        },
+        {
+          "date": "2026-05-17",
+          "equity": 10000.0
+        },
+        {
+          "date": "2026-05-17",
+          "equity": 10000.0
+        },
+        {
+          "date": "2026-05-17",
+          "equity": 10000.0
+        },
+        {
+          "date": "2026-05-17",
+          "equity": 10000.0
+        },
+        {
+          "date": "2026-05-17",
           "equity": 10000.0
         },
         {
@@ -184,7 +204,9 @@
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
           "created_at": "2026-05-17T18:37:35.477984+00:00",
-          "updated_at": "2026-05-17T18:38:46.595405+00:00"
+          "updated_at": "2026-05-17T18:38:46.595405+00:00",
+          "outcome_notes": "Price returned to entry by the scheduled exit, capturing nothing from SNDK's prior-session surge. The momentum that drove the +6.56% open gap did not extend intraday, suggesting the move was already fully priced at open.",
+          "risks_observed": "SNDK appears eight times in today's book with identical fills \u2014 a probable order-deduplication failure that creates unintended 8x concentration in a single name. Scheduled exits with no intraday stop left the position fully exposed to any adverse move during the holding window."
         },
         {
           "trade_id": "0bc31e50-a8db-4d84-90ef-08d951197f9a",
@@ -206,7 +228,9 @@
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
           "created_at": "2026-05-17T18:37:35.478252+00:00",
-          "updated_at": "2026-05-17T18:38:46.595838+00:00"
+          "updated_at": "2026-05-17T18:38:46.595838+00:00",
+          "outcome_notes": "FDS exited flat at the scheduled time, producing no realised edge from the prior-day gap. The +4.51% open gain was not followed through intraday, consistent with mean-reversion pressure on a name without a sustained catalyst.",
+          "risks_observed": "FDS also appears eight times with identical fills, compounding sector exposure in financial-data software. The absence of any profit-target or stop means this position relied entirely on scheduled time to close, with no mechanism to capture or protect against intraday swings."
         },
         {
           "trade_id": "831386e2-df1c-478d-af0a-745a8e962900",
@@ -228,7 +252,9 @@
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
           "created_at": "2026-05-17T18:37:35.478382+00:00",
-          "updated_at": "2026-05-17T18:38:46.596219+00:00"
+          "updated_at": "2026-05-17T18:38:46.596219+00:00",
+          "outcome_notes": "APP held flat through the scheduled exit window; the prior-session gap was not extended and no incremental gain was captured. Given APP's history of sharp intraday reversals post-gap, the lack of a trailing stop left realised P&L entirely dependent on timing luck.",
+          "risks_observed": "Eight identical APP positions at $501.00 signals a deduplication bug inflating nominal exposure significantly. APP and SWKS together tilt the basket heavily toward high-beta tech, meaning a sector rotation or macro shock would have hit multiple names simultaneously."
         },
         {
           "trade_id": "4664a633-2e08-42c0-8bbc-b2181e44945d",
@@ -250,7 +276,9 @@
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
           "created_at": "2026-05-17T18:37:35.478500+00:00",
-          "updated_at": "2026-05-17T18:38:46.596549+00:00"
+          "updated_at": "2026-05-17T18:38:46.596549+00:00",
+          "outcome_notes": "SWKS exited at entry price; the prior-session gap gave back nothing but also offered nothing further. Semiconductor names at this level are sensitive to macro rate moves and supply-chain headlines that can gap-reverse without warning intraday.",
+          "risks_observed": "Eight duplicate SWKS positions amplify single-stock semiconductor risk well beyond intended sizing. The basket on this day held three semiconductor or semiconductor-adjacent names (SNDK, SWKS, APP), creating implicit sector correlation that a single-name momentum filter does not account for."
         },
         {
           "trade_id": "e3e6ece2-0742-43a2-8060-ecf09b32997e",
@@ -272,7 +300,9 @@
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
           "created_at": "2026-05-17T18:37:35.478608+00:00",
-          "updated_at": "2026-05-17T18:38:46.596864+00:00"
+          "updated_at": "2026-05-17T18:38:46.596864+00:00",
+          "outcome_notes": "WDAY returned to entry at the scheduled exit, providing no evidence that the gap thesis had intraday follow-through. Enterprise SaaS names after earnings-adjacent gaps often face immediate selling pressure from holders taking profit at the open.",
+          "risks_observed": "Eight copies of WDAY at $125.01 represent the same deduplication failure seen across the whole basket. Five distinct tickers, each replicated eight times, means the portfolio carried 40 positions but only five independent risk factors \u2014 diversification was entirely illusory."
         },
         {
           "trade_id": "f9420a2e-52b3-46d1-ad37-3429034b52db",
@@ -293,8 +323,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Second SNDK instance, flat exit matching the first. No additional price information is produced by having duplicate positions \u2014 the outcome is mechanically identical to trade fe03ab9f.",
+          "risks_observed": "Presence of a second SNDK position at the same fill confirms the deduplication bug is systematic, not a one-off. Each additional duplicate increases slippage cost and market-impact risk at exit without adding any diversification benefit.",
           "created_at": "2026-05-17T19:19:58.486032+00:00",
           "updated_at": "2026-05-17T19:20:31.353792+00:00"
         },
@@ -317,8 +347,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Second FDS instance, flat exit. Identical to the first FDS trade in every observable dimension; the scheduled exit mechanism does not differentiate between positions.",
+          "risks_observed": "Running eight positions in FDS with no netting logic means any adverse tick is multiplied eightfold. For a lower-liquidity name like FDS, unwinding eight positions at a scheduled time could move the market against itself.",
           "created_at": "2026-05-17T19:19:58.486324+00:00",
           "updated_at": "2026-05-17T19:20:31.354380+00:00"
         },
@@ -365,8 +395,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Second SWKS instance, flat exit. No price action differentiated this position from the first; the outcome is a direct artefact of the duplication bug.",
+          "risks_observed": "Skyworks carries RF chip exposure tied to smartphone cycle news; eight positions with a single intraday catalyst could have produced a loss eight times larger than intended. No stop was in place to contain that scenario.",
           "created_at": "2026-05-17T19:19:58.486538+00:00",
           "updated_at": "2026-05-17T19:20:31.355259+00:00"
         },
@@ -389,8 +419,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Second WDAY instance, flat exit. Enterprise software names often see gap-and-reverse patterns on the open; the flat result is marginally better than a loss but reflects no edge from the holding period.",
+          "risks_observed": "WDAY's sensitivity to interest-rate sentiment (high-duration growth name) adds macro correlation to the basket that is not captured by the momentum filter. Eight-way duplication makes this latent risk disproportionate.",
           "created_at": "2026-05-17T19:19:58.486627+00:00",
           "updated_at": "2026-05-17T19:20:31.355679+00:00"
         },
@@ -413,8 +443,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Third SNDK instance, flat. Three identical SNDK positions already on the book with no independent price signal distinguishing them.",
+          "risks_observed": "By the third duplicate, SNDK alone likely represents an outsized share of total notional. If SNDK had gapped down on any storage-sector headline, the strategy would have absorbed triple the intended loss from a single source.",
           "created_at": "2026-05-17T21:13:16.542592+00:00",
           "updated_at": "2026-05-17T21:28:03.943840+00:00"
         },
@@ -437,8 +467,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Third FDS instance, flat exit. FactSet is a relatively low-volatility name; the flat result is consistent with its typical intraday range but means the prior-day gap was not a tradeable signal for the holding period.",
+          "risks_observed": "Three FDS positions with no netting risk creating false confidence in position count \u2014 the ledger shows 24 positions but the actual risk is concentrated in five names. Reporting tools that sum positions without deduplication will overstate diversification.",
           "created_at": "2026-05-17T21:13:16.542798+00:00",
           "updated_at": "2026-05-17T21:28:03.944738+00:00"
         },
@@ -461,8 +491,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Third APP instance, flat. AppLovin's intraday volatility is high enough that three duplicated positions could easily have produced a meaningful loss; the flat outcome is fortuitous rather than a sign the rule worked.",
+          "risks_observed": "APP, SNDK, and SWKS in triplicate creates concentrated semiconductor/ad-tech exposure; a sector-wide sell-off during the holding window would have been severe. No correlation filter exists in the strategy to prevent this clustering.",
           "created_at": "2026-05-17T21:13:16.542925+00:00",
           "updated_at": "2026-05-17T21:28:03.945489+00:00"
         },
@@ -485,8 +515,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Third SWKS instance, flat exit. The scheduled-exit mechanic ensures all duplicates close at the same time, which could amplify market impact if the position size is large.",
+          "risks_observed": "Three SWKS positions closing simultaneously on a scheduled timer creates a predictable exit pattern that could be front-run if positions are large enough. Staggering exits or using a TWAP would reduce this risk.",
           "created_at": "2026-05-17T21:13:16.543038+00:00",
           "updated_at": "2026-05-17T21:28:03.946265+00:00"
         },
@@ -509,8 +539,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Third WDAY instance, flat exit. The result is mechanically identical to the prior two WDAY trades; no new information is conveyed about the momentum thesis.",
+          "risks_observed": "Three WDAY positions held through the scheduled window with no stop meant full intraday downside exposure was tripled relative to intent. Cloud/SaaS names can move 3\u20135% intraday on macro rate commentary, which was unhedged here.",
           "created_at": "2026-05-17T21:13:16.543149+00:00",
           "updated_at": "2026-05-17T21:28:03.947037+00:00"
         },
@@ -533,8 +563,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Fourth SNDK instance, flat exit. At this point the duplication pattern is clearly systematic; the flat result masks the fact that the strategy is effectively running a concentrated single-name book disguised as a diversified basket.",
+          "risks_observed": "Four SNDK positions represents a structural failure in order management, not just a one-time glitch. Any downstream risk metrics (VaR, position limits) built on position counts rather than notional will be materially understated.",
           "created_at": "2026-05-17T21:18:46.179591+00:00",
           "updated_at": "2026-05-17T21:28:03.947805+00:00"
         },
@@ -557,8 +587,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Fourth FDS instance, flat. FactSet's stability worked in the strategy's favour here \u2014 a more volatile name in fourfold duplication would have produced a meaningful loss.",
+          "risks_observed": "The low-volatility nature of FDS may be masking the severity of the duplication bug. Applying the same broken order logic to a higher-beta name in the screener would be far more damaging.",
           "created_at": "2026-05-17T21:18:46.179853+00:00",
           "updated_at": "2026-05-17T21:28:03.948550+00:00"
         },
@@ -581,8 +611,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Fourth APP instance, flat. Four copies of a high-momentum ad-tech name held without a stop is a significant risk exposure that produced a neutral outcome only by chance.",
+          "risks_observed": "APP's intraday price action can be driven by a single large algo or news item; four simultaneous positions closing at a scheduled time with no flexibility creates both exit-side market-impact and timing risk.",
           "created_at": "2026-05-17T21:18:46.179968+00:00",
           "updated_at": "2026-05-17T21:28:03.949324+00:00"
         },
@@ -605,8 +635,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Fourth SWKS instance, flat exit. Skyworks' RF business is sensitive to Apple supply-chain news; four duplicated positions with a scheduled exit left the strategy fully exposed to that idiosyncratic risk for the entire holding window.",
+          "risks_observed": "The pattern of fourfold duplication across all five tickers at this point in the day suggests the bug fires once per scheduled run interval, producing one extra position per cycle. Identifying and fixing that trigger is urgent before the next session.",
           "created_at": "2026-05-17T21:18:46.180070+00:00",
           "updated_at": "2026-05-17T21:28:03.950101+00:00"
         },
@@ -629,8 +659,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Fourth WDAY instance, flat exit. Workday held its open level through the session, meaning neither buyers nor sellers dominated intraday \u2014 the prior-day gap was not a signal for same-day continuation.",
+          "risks_observed": "Four copies of WDAY, a rate-sensitive SaaS name, sitting unhedged through a full trading session is a material interest-rate duration risk. The strategy has no mechanism to reduce exposure on macro event days.",
           "created_at": "2026-05-17T21:18:46.180159+00:00",
           "updated_at": "2026-05-17T21:28:03.950885+00:00"
         },
@@ -653,8 +683,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Fifth SNDK instance, flat. Five identical fills confirm the duplication is recurring on a fixed cycle; SNDK's price action was flat across the session regardless, so the thesis produced no edge even once.",
+          "risks_observed": "Five SNDK positions is now well beyond any plausible intended sizing. If the bug is tied to a retry loop or cron job, the number of duplicates will grow with session length \u2014 a hard position-count circuit breaker is needed immediately.",
           "created_at": "2026-05-17T21:21:16.633297+00:00",
           "updated_at": "2026-05-17T21:28:03.951638+00:00"
         },
@@ -677,8 +707,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Fifth FDS instance, flat. FactSet's muted intraday move meant the momentum thesis produced no follow-through; the exit was purely time-driven with no price signal.",
+          "risks_observed": "Five FDS duplicates highlight that the deduplication failure is not ticker-specific \u2014 it is systemic to the order-routing layer. All five tickers are affected uniformly, which rules out a per-symbol configuration issue.",
           "created_at": "2026-05-17T21:21:16.633543+00:00",
           "updated_at": "2026-05-17T21:28:03.952412+00:00"
         },
@@ -701,8 +731,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Fifth APP instance, flat exit. AppLovin's intraday flatness after a prior-day gap suggests the initial move was driven by overnight news that did not sustain; the holding period captured nothing.",
+          "risks_observed": "Five APP positions simultaneously exposed to intraday ad-spend or platform regulatory news is a tail-risk scenario with no mitigation in the current rule set. A single adverse headline could have produced a loss five times the intended unit risk.",
           "created_at": "2026-05-17T21:21:16.633668+00:00",
           "updated_at": "2026-05-17T21:28:03.953194+00:00"
         },
@@ -725,8 +755,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Fifth SWKS instance, flat. The semiconductor name held its open price through the session; no intraday catalyst moved it, and the scheduled exit captured nothing from the prior-day momentum.",
+          "risks_observed": "Five SWKS positions alongside five SNDK positions means the strategy carries ten semiconductor-sector exposures on a day where the semiconductor index was the reference risk. A sector event would have been amplified tenfold relative to a single SWKS position.",
           "created_at": "2026-05-17T21:21:16.633783+00:00",
           "updated_at": "2026-05-17T21:28:03.953968+00:00"
         },
@@ -749,8 +779,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Fifth WDAY instance, flat exit. Enterprise SaaS flatness intraday after a gap is a recurring pattern; the scheduled exit mechanic is not designed to capitalise on this, nor to cut losses if it reverses.",
+          "risks_observed": "Five WDAY positions held through the full session with no trailing stop means the maximum loss per unit of intended risk is five times what the position-sizing logic assumed. The strategy's risk model is broken until deduplication is fixed.",
           "created_at": "2026-05-17T21:21:16.633921+00:00",
           "updated_at": "2026-05-17T21:28:03.954752+00:00"
         },
@@ -773,8 +803,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Sixth SNDK instance, flat. At this duplication count, the strategy has ceased to function as a momentum system and is instead running an unintentional concentration test in five names.",
+          "risks_observed": "Six SNDK positions is a hard indicator that no position-limit guard exists in the execution layer. Adding a per-symbol max-open-positions check would have prevented duplicates beyond the first and is the single most important fix for this strategy.",
           "created_at": "2026-05-17T21:24:35.510673+00:00",
           "updated_at": "2026-05-17T21:28:03.955526+00:00"
         },
@@ -797,8 +827,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Sixth FDS instance, flat. The result is identical to the first five; no additional signal or edge was generated by holding six copies of the same position.",
+          "risks_observed": "FDS is a relatively illiquid name compared to the other basket members; six positions closing at the same scheduled time could have created meaningful slippage on the exit side, which would not appear in the P&L here since price happened to be flat.",
           "created_at": "2026-05-17T21:24:35.510923+00:00",
           "updated_at": "2026-05-17T21:28:03.956336+00:00"
         },
@@ -821,8 +851,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Sixth APP instance, flat exit. The position contributed nothing to realised P&L; the flat outcome obscures the fact that the strategy is running six times its intended APP exposure.",
+          "risks_observed": "Six APP positions on a day where the name had already made a large prior-day move means the strategy is chasing an exhausted trend. The combination of momentum-chasing logic and no position cap is the root cause of both the duplication risk and the strategy's inherent mean-reversion exposure.",
           "created_at": "2026-05-17T21:24:35.511034+00:00",
           "updated_at": "2026-05-17T21:28:03.957130+00:00"
         },
@@ -845,8 +875,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Sixth SWKS instance, flat. Skyworks held its open price through the session, confirming no intraday momentum follow-through from the prior-day gap.",
+          "risks_observed": "Six semiconductor positions across SNDK and SWKS (twelve total, six each) means a chip-sector headline during the session would have produced losses at a magnitude the strategy was not designed to absorb. Sector-level concentration limits are absent.",
           "created_at": "2026-05-17T21:24:35.511133+00:00",
           "updated_at": "2026-05-17T21:28:03.957923+00:00"
         },
@@ -869,8 +899,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Sixth WDAY instance, flat exit. The pattern is now fully established: all five tickers exited flat at the scheduled time, with no intraday edge from the momentum signal on this session.",
+          "risks_observed": "Six copies of each of five names \u2014 30 positions with five risk factors \u2014 is the most concentrated the strategy has run. The basket-level risk on this day was effectively a leveraged bet on five tech/growth names with zero diversification, held with no stop.",
           "created_at": "2026-05-17T21:24:35.511240+00:00",
           "updated_at": "2026-05-17T21:28:03.958721+00:00"
         },
@@ -893,8 +923,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Seventh SNDK instance, flat. The duplication count has now reached seven; the order system is generating one new position per cycle with no awareness that identical positions already exist.",
+          "risks_observed": "At seven SNDK positions, the notional exposure in a single name is likely exceeding any reasonable portfolio risk limit. The flat session outcome prevented a visible loss, but the risk was fully present throughout the holding window.",
           "created_at": "2026-05-17T21:46:28.384626+00:00",
           "updated_at": "2026-05-17T21:49:12.570059+00:00"
         },
@@ -917,8 +947,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Seventh FDS instance, flat exit. FactSet's intraday range was narrow enough that duplicated positions produced no harm, but the structural problem is unchanged.",
+          "risks_observed": "Seven FDS positions closing simultaneously at a scheduled time represents a predictable and repeated exit pattern. If the strategy runs identically tomorrow and FDS gaps down, the loss will be seven times the unit risk \u2014 a scenario that must be addressed before the next session.",
           "created_at": "2026-05-17T21:46:28.384856+00:00",
           "updated_at": "2026-05-17T21:49:12.571236+00:00"
         },
@@ -941,8 +971,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Seventh APP instance, flat. Seven copies of a high-beta momentum name held without a stop through a full session is a significant tail-risk event that happened to resolve without loss.",
+          "risks_observed": "APP's correlation to the broader risk-on/risk-off regime means any macro event during the session (Fed commentary, geopolitical news) would have hit all seven positions simultaneously with no hedge in place.",
           "created_at": "2026-05-17T21:46:28.384968+00:00",
           "updated_at": "2026-05-17T21:49:12.572299+00:00"
         },
@@ -965,8 +995,8 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Seventh SWKS instance, flat exit. The semiconductor exposure is now at a level where even a modest chip-sector move would produce a material portfolio impact, not a rounding error.",
+          "risks_observed": "Seven SWKS positions alongside seven SNDK positions means 14 of the 35 positions at this point in the day are semiconductor names. If the SOX index had sold off 2% intraday, the strategy would have absorbed losses roughly equivalent to running a 2x leveraged semiconductor ETF.",
           "created_at": "2026-05-17T21:46:28.385067+00:00",
           "updated_at": "2026-05-17T21:49:12.573353+00:00"
         },
@@ -989,12 +1019,157 @@
           "pnl_gbp": 0.0,
           "pnl_pct": 0.0,
           "exit_reason": "scheduled",
-          "outcome_notes": "Closed near flat at +0.00%. Drifted sideways through the session \u2014 no follow-through but no meaningful reversal either.",
-          "risks_observed": "The rule-based control can't distinguish 'rallying on solid fundamentals' from 'rallying on a squeeze about to unwind.' This loss validates the case for news-aware and mean-reverter strategies that would have filtered it.",
+          "outcome_notes": "Seventh WDAY instance, flat exit. The prior-day momentum signal on WDAY produced no intraday edge; the scheduled exit simply returned the position to cash at no cost.",
+          "risks_observed": "Seven high-duration SaaS positions (WDAY) in a rate-sensitive market environment is an unhedged macro risk. The strategy carries no rate or macro hedge, and the duplication bug has amplified this exposure sevenfold from its intended level.",
           "created_at": "2026-05-17T21:46:28.385161+00:00",
           "updated_at": "2026-05-17T21:49:12.574430+00:00"
+        },
+        {
+          "trade_id": "e25bef37-ce73-486e-888a-1de8282e53d7",
+          "strategy_id": "control-rule-based",
+          "region": "us",
+          "tier": "shadow",
+          "ticker": "SNDK",
+          "side": "long",
+          "entry_date": "2026-05-17",
+          "entry_price": 1407.6099853515625,
+          "quantity": 1.4208481190196183,
+          "allocation_pct": 20.0,
+          "stop_loss_pct": null,
+          "take_profit_pct": null,
+          "thesis": "Top previous-day gainer (+6.56% close-to-open). Rule-based control: buying the prior session's strongest movers with no further filter.",
+          "exit_date": "2026-05-17",
+          "exit_price": 1407.6099853515625,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "scheduled",
+          "outcome_notes": "Eighth and final SNDK instance, flat exit. Over the course of the session the strategy generated eight identical SNDK positions, none of which produced any realised edge. The momentum thesis was not validated on any of the eight entries.",
+          "risks_observed": "Eight SNDK positions at $1407.61 per share represents the highest per-name notional exposure of any ticker in the basket. Fixing the deduplication bug is the single most urgent priority for this strategy before the next session runs.",
+          "created_at": "2026-05-17T22:05:19.451082+00:00",
+          "updated_at": "2026-05-17T22:13:39.672250+00:00"
+        },
+        {
+          "trade_id": "1aa770d4-94d1-40fa-9422-5f7a68abf1ad",
+          "strategy_id": "control-rule-based",
+          "region": "us",
+          "tier": "shadow",
+          "ticker": "FDS",
+          "side": "long",
+          "entry_date": "2026-05-17",
+          "entry_price": 212.5800018310547,
+          "quantity": 9.408222705678002,
+          "allocation_pct": 20.0,
+          "stop_loss_pct": null,
+          "take_profit_pct": null,
+          "thesis": "Top previous-day gainer (+4.51% close-to-open). Rule-based control: buying the prior session's strongest movers with no further filter.",
+          "exit_date": "2026-05-17",
+          "exit_price": 212.5800018310547,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "scheduled",
+          "outcome_notes": "Eighth FDS instance, flat exit. The full-day session produced no evidence of intraday momentum continuation in FactSet; the scheduled exit was the only exit mechanic available and it returned the position flat.",
+          "risks_observed": "Eight FDS positions closing at a scheduled time with no stop is a fully passive exit strategy \u2014 appropriate for a control benchmark, but dangerous if the duplication bug carries into a session where the prior-day gainer reverses sharply intraday.",
+          "created_at": "2026-05-17T22:05:19.451296+00:00",
+          "updated_at": "2026-05-17T22:13:39.673552+00:00"
+        },
+        {
+          "trade_id": "b625fa22-6dae-435d-b6d4-b972b6ad5707",
+          "strategy_id": "control-rule-based",
+          "region": "us",
+          "tier": "shadow",
+          "ticker": "APP",
+          "side": "long",
+          "entry_date": "2026-05-17",
+          "entry_price": 501.0,
+          "quantity": 3.992015968063872,
+          "allocation_pct": 20.0,
+          "stop_loss_pct": null,
+          "take_profit_pct": null,
+          "thesis": "Top previous-day gainer (+4.38% close-to-open). Rule-based control: buying the prior session's strongest movers with no further filter.",
+          "exit_date": "2026-05-17",
+          "exit_price": 501.0,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "scheduled",
+          "outcome_notes": "Eighth APP instance, flat exit. AppLovin held its open price through the session; the prior-day gap gave back nothing but also offered no further upside during the holding window.",
+          "risks_observed": "Eight APP positions is the terminal count for today's duplication cycle. The basket closed the day with 40 nominal positions but only five independent bets \u2014 a deduplication fix must verify not just order IDs but also ticker-level open position counts before submitting new orders.",
+          "created_at": "2026-05-17T22:05:19.451452+00:00",
+          "updated_at": "2026-05-17T22:13:39.674759+00:00"
+        },
+        {
+          "trade_id": "3afa33a5-aafc-4f9f-8044-c2be2c5dc988",
+          "strategy_id": "control-rule-based",
+          "region": "us",
+          "tier": "shadow",
+          "ticker": "SWKS",
+          "side": "long",
+          "entry_date": "2026-05-17",
+          "entry_price": 68.52999877929688,
+          "quantity": 29.184299367070853,
+          "allocation_pct": 20.0,
+          "stop_loss_pct": null,
+          "take_profit_pct": null,
+          "thesis": "Top previous-day gainer (+4.29% close-to-open). Rule-based control: buying the prior session's strongest movers with no further filter.",
+          "exit_date": "2026-05-17",
+          "exit_price": 68.52999877929688,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "scheduled",
+          "outcome_notes": "Eighth SWKS instance, flat exit. Skyworks provided no intraday follow-through to its prior-day gap, consistent with the rest of the basket. The semiconductor name closed the session where it opened.",
+          "risks_observed": "Eight SWKS positions on a day with no intraday move is a best-case outcome for a broken order system. The same bug running on a volatile session day \u2014 an unexpected tariff announcement or earnings preannouncement \u2014 would have produced losses at 8x intended unit size with no stop to contain them.",
+          "created_at": "2026-05-17T22:05:19.451582+00:00",
+          "updated_at": "2026-05-17T22:13:39.675956+00:00"
+        },
+        {
+          "trade_id": "b8c91d28-1e08-45ce-b0b9-5ea70a0da823",
+          "strategy_id": "control-rule-based",
+          "region": "us",
+          "tier": "shadow",
+          "ticker": "WDAY",
+          "side": "long",
+          "entry_date": "2026-05-17",
+          "entry_price": 125.01000213623047,
+          "quantity": 15.998719828998057,
+          "allocation_pct": 20.0,
+          "stop_loss_pct": null,
+          "take_profit_pct": null,
+          "thesis": "Top previous-day gainer (+4.20% close-to-open). Rule-based control: buying the prior session's strongest movers with no further filter.",
+          "exit_date": "2026-05-17",
+          "exit_price": 125.01000213623047,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "scheduled",
+          "outcome_notes": "Eighth and final WDAY instance, flat exit. The entire basket of 40 positions closed at exactly their entry prices; the session produced no realised edge from the prior-day momentum signal across any of the five names.",
+          "risks_observed": "The full-day basket picture: five tickers, each held in eight duplicate positions, all exiting at a scheduled time with no stop and no profit target. The flat outcome is entirely attributable to benign intraday price action, not to strategy design. Until the deduplication bug and the absence of intraday stops are both fixed, this strategy is running far outside its intended risk envelope every session.",
+          "created_at": "2026-05-17T22:05:19.451689+00:00",
+          "updated_at": "2026-05-17T22:13:39.677167+00:00"
         }
       ],
+      "uncommitted": []
+    },
+    {
+      "id": "mean-reverter",
+      "display_name": "Mean reverter",
+      "description": "LLM-driven. Buys oversold bounces. Weights RSI and distance from moving averages.\nCounter-trend. Activated in Wave 3.",
+      "tier": "shadow",
+      "region": "us",
+      "universe": "sp500",
+      "capital_gbp": 10000.0,
+      "summary": {
+        "n_closed": 0,
+        "n_open": 0,
+        "total_pnl_gbp": 0.0,
+        "avg_pnl_pct": 0.0,
+        "hit_rate": 0.0,
+        "n_predictions": 0
+      },
+      "equity_curve": [
+        {
+          "date": null,
+          "equity": 10000.0
+        }
+      ],
+      "executed": [],
       "uncommitted": []
     },
     {
@@ -1006,7 +1181,7 @@
       "universe": "sp500",
       "capital_gbp": 10000.0,
       "summary": {
-        "n_closed": 8,
+        "n_closed": 12,
         "n_open": 0,
         "total_pnl_gbp": 0.0,
         "avg_pnl_pct": 0.0,
@@ -1016,6 +1191,22 @@
       "equity_curve": [
         {
           "date": null,
+          "equity": 10000.0
+        },
+        {
+          "date": "2026-05-17",
+          "equity": 10000.0
+        },
+        {
+          "date": "2026-05-17",
+          "equity": 10000.0
+        },
+        {
+          "date": "2026-05-17",
+          "equity": 10000.0
+        },
+        {
+          "date": "2026-05-17",
           "equity": 10000.0
         },
         {
@@ -1243,8 +1434,211 @@
           "risks_observed": "P&L not recorded because the actual fill/close price wasn't captured cleanly by clear-slot. Wave 2c reflection can flag this as data missing rather than a real outcome.",
           "created_at": "2026-05-17T21:45:34.006809+00:00",
           "updated_at": "2026-05-17T21:48:19.399487+00:00"
+        },
+        {
+          "trade_id": "momentum-trader-9d5161b18a58",
+          "strategy_id": "momentum-trader",
+          "region": "us",
+          "tier": "alpaca-paper",
+          "ticker": "ZBRA",
+          "side": "long",
+          "entry_date": "2026-05-17",
+          "entry_price": 259.53,
+          "quantity": 11.0,
+          "allocation_pct": 30.0,
+          "stop_loss_pct": -5.0,
+          "take_profit_pct": 12.0,
+          "thesis": "Strongest 5-day return in the universe (+14.74%) with MACD histogram at +3.40 confirming accelerating momentum; RSI at 70.7 is elevated but sub-75, volume 1.29x average, and zero negative news \u2014 cleanest setup on the board.",
+          "exit_date": "2026-05-17",
+          "exit_price": 0.0,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "cleared",
+          "outcome_notes": "Slot was cleared (clear-slot ran) before this trade reached a natural exit. Either it was cancelled before any fill, or any real position was liquidated by clear-slot.",
+          "risks_observed": "P&L not recorded because the actual fill/close price wasn't captured cleanly by clear-slot. Wave 2c reflection can flag this as data missing rather than a real outcome.",
+          "created_at": "2026-05-17T22:04:49.736226+00:00",
+          "updated_at": "2026-05-17T22:07:13.919598+00:00"
+        },
+        {
+          "trade_id": "momentum-trader-2d4347a0e657",
+          "strategy_id": "momentum-trader",
+          "region": "us",
+          "tier": "alpaca-paper",
+          "ticker": "TRGP",
+          "side": "long",
+          "entry_date": "2026-05-17",
+          "entry_price": 272.1,
+          "quantity": 9.0,
+          "allocation_pct": 27.0,
+          "stop_loss_pct": -4.0,
+          "take_profit_pct": 10.0,
+          "thesis": "Midstream energy with the highest volume ratio among non-overbought candidates (1.49x); RSI 69.6, MACD positive, +15.49% 20-day return, and commodity supercycle narrative all aligned \u2014 durable trend with room before overbought.",
+          "exit_date": "2026-05-17",
+          "exit_price": 0.0,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "cleared",
+          "outcome_notes": "Slot was cleared (clear-slot ran) before this trade reached a natural exit. Either it was cancelled before any fill, or any real position was liquidated by clear-slot.",
+          "risks_observed": "P&L not recorded because the actual fill/close price wasn't captured cleanly by clear-slot. Wave 2c reflection can flag this as data missing rather than a real outcome.",
+          "created_at": "2026-05-17T22:04:50.146961+00:00",
+          "updated_at": "2026-05-17T22:07:13.920827+00:00"
+        },
+        {
+          "trade_id": "momentum-trader-17902242eccb",
+          "strategy_id": "momentum-trader",
+          "region": "us",
+          "tier": "alpaca-paper",
+          "ticker": "COHR",
+          "side": "long",
+          "entry_date": "2026-05-17",
+          "entry_price": 383.46,
+          "quantity": 6.0,
+          "allocation_pct": 25.0,
+          "stop_loss_pct": -7.0,
+          "take_profit_pct": 15.0,
+          "thesis": "NVIDIA disclosed a fresh 7.79M-share stake providing hard institutional catalyst; RSI 63.3 gives the most room to run of the top performers, and MACD histogram +4.68 shows momentum still building.",
+          "exit_date": "2026-05-17",
+          "exit_price": 0.0,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "cleared",
+          "outcome_notes": "Slot was cleared (clear-slot ran) before this trade reached a natural exit. Either it was cancelled before any fill, or any real position was liquidated by clear-slot.",
+          "risks_observed": "P&L not recorded because the actual fill/close price wasn't captured cleanly by clear-slot. Wave 2c reflection can flag this as data missing rather than a real outcome.",
+          "created_at": "2026-05-17T22:04:50.966328+00:00",
+          "updated_at": "2026-05-17T22:07:13.921975+00:00"
+        },
+        {
+          "trade_id": "momentum-trader-838ff1f3a712",
+          "strategy_id": "momentum-trader",
+          "region": "us",
+          "tier": "alpaca-paper",
+          "ticker": "VRT",
+          "side": "long",
+          "entry_date": "2026-05-17",
+          "entry_price": 370.95,
+          "quantity": 4.0,
+          "allocation_pct": 18.0,
+          "stop_loss_pct": -5.0,
+          "take_profit_pct": 12.0,
+          "thesis": "Three simultaneous analyst upgrades with raised price targets (BofA $440, Barclays $412, RBC $435) against a +20.69% 20-day trend; volume slightly below average is the only blemish, sized smaller accordingly.",
+          "exit_date": "2026-05-17",
+          "exit_price": 0.0,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "cleared",
+          "outcome_notes": "Slot was cleared (clear-slot ran) before this trade reached a natural exit. Either it was cancelled before any fill, or any real position was liquidated by clear-slot.",
+          "risks_observed": "P&L not recorded because the actual fill/close price wasn't captured cleanly by clear-slot. Wave 2c reflection can flag this as data missing rather than a real outcome.",
+          "created_at": "2026-05-17T22:04:51.353967+00:00",
+          "updated_at": "2026-05-17T22:07:13.923117+00:00"
         }
       ],
+      "uncommitted": []
+    },
+    {
+      "id": "news-reactive",
+      "display_name": "News reactive",
+      "description": "LLM-driven. Weights earnings surprises, M&A, guidance changes, and other catalysts.\nTrades the reaction to news, not the trend. Activated in Wave 3.",
+      "tier": "shadow",
+      "region": "us",
+      "universe": "sp500",
+      "capital_gbp": 10000.0,
+      "summary": {
+        "n_closed": 2,
+        "n_open": 0,
+        "total_pnl_gbp": 0.0,
+        "avg_pnl_pct": 0.0,
+        "hit_rate": 0.0,
+        "n_predictions": 0
+      },
+      "equity_curve": [
+        {
+          "date": null,
+          "equity": 10000.0
+        },
+        {
+          "date": "2026-05-17",
+          "equity": 10000.0
+        },
+        {
+          "date": "2026-05-17",
+          "equity": 10000.0
+        }
+      ],
+      "executed": [
+        {
+          "trade_id": "6ad9bcf1-0818-4c4d-b730-9330b7c18b1f",
+          "strategy_id": "news-reactive",
+          "region": "us",
+          "tier": "shadow",
+          "ticker": "COHR",
+          "side": "long",
+          "entry_date": "2026-05-17",
+          "entry_price": 382.45001220703125,
+          "quantity": 6.536801987724027,
+          "allocation_pct": 25.0,
+          "stop_loss_pct": -6.0,
+          "take_profit_pct": 14.0,
+          "thesis": "NVIDIA initiated a 7.79M-share position in Coherent Corp (filed 2026-05-15), a direct institutional endorsement of COHR's role in AI optical networking infrastructure. RSI 63.3 is not overbought, volume is at-average (1.0x) rather than exhausted, suggesting the market is still absorbing the NVIDIA signal rather than having already fully priced it.",
+          "exit_date": "2026-05-17",
+          "exit_price": 382.45001220703125,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "scheduled",
+          "outcome_notes": "Price returned exactly to entry by the scheduled exit, indicating the NVIDIA filing catalyst generated no further follow-through on trade date \u2014 the market had likely absorbed the 13F/Form 4 disclosure over the two days between filing (2026-05-15) and entry (2026-05-17). The scheduled exit enforced a clean close, but the thesis window had already closed before the position was live.",
+          "risks_observed": "Filing-date lag is the primary risk that materialised: institutional-holding disclosures are backward-looking and often already priced in by the time they surface in a news feed, making the entry timing structurally late. No stop was present, so a gap or adverse intraday move would have run uncapped to the scheduled close.",
+          "created_at": "2026-05-17T22:02:09.674105+00:00",
+          "updated_at": "2026-05-17T22:13:39.437465+00:00"
+        },
+        {
+          "trade_id": "09459e9c-409d-4418-8981-d5ef7bbe0a7d",
+          "strategy_id": "news-reactive",
+          "region": "us",
+          "tier": "shadow",
+          "ticker": "VRT",
+          "side": "long",
+          "entry_date": "2026-05-17",
+          "entry_price": 370.94000244140625,
+          "quantity": 5.39170751829582,
+          "allocation_pct": 20.0,
+          "stop_loss_pct": -5.0,
+          "take_profit_pct": 10.0,
+          "thesis": "Three simultaneous analyst upgrades with raised price targets on 2026-05-15 (B of A to $440, Barclays to $412, RBC to $435 vs current $370.94) represent coordinated sell-side conviction in Vertiv's AI data-centre infrastructure story; consensus targets imply 11\u201319% upside from here with RSI 69.3 leaving room before overbought territory.",
+          "exit_date": "2026-05-17",
+          "exit_price": 370.94000244140625,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "scheduled",
+          "outcome_notes": "Same pattern as COHR: price was unchanged at the scheduled exit, with the triple-upgrade momentum from 2026-05-15 having been fully absorbed before 2026-05-17. Coordinated same-day upgrades from three banks typically reflect a shared catalyst (earnings, investor day, sector note) rather than independent incremental conviction, compressing the post-announcement drift window.",
+          "risks_observed": "At the basket level, both positions are correlated AI-infrastructure names entered on two-day-old news \u2014 a sector sentiment reversal on 2026-05-17 would have hit both simultaneously with no hedge or position sizing offset between them. RSI at 69.3 on entry also left limited buffer before overbought conditions, narrowing the asymmetry in favour of the thesis.",
+          "created_at": "2026-05-17T22:02:09.674346+00:00",
+          "updated_at": "2026-05-17T22:13:39.438761+00:00"
+        }
+      ],
+      "uncommitted": []
+    },
+    {
+      "id": "sector-rotator",
+      "display_name": "Sector rotator",
+      "description": "LLM-driven. Trades the 11 SPDR sector ETFs based on relative momentum, sector\nrotation patterns, and macro alignment. Holds a small number of sector ETFs at a\ntime, rotating as leadership shifts. Activated in Wave 3.",
+      "tier": "shadow",
+      "region": "us",
+      "universe": "us_etfs_sector",
+      "capital_gbp": 10000.0,
+      "summary": {
+        "n_closed": 0,
+        "n_open": 0,
+        "total_pnl_gbp": 0.0,
+        "avg_pnl_pct": 0.0,
+        "hit_rate": 0.0,
+        "n_predictions": 0
+      },
+      "equity_curve": [
+        {
+          "date": null,
+          "equity": 10000.0
+        }
+      ],
+      "executed": [],
       "uncommitted": []
     }
   ],
