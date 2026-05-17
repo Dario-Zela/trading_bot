@@ -21,7 +21,19 @@ from pathlib import Path
 from trading_bot.executor.base import TradeIntent
 from trading_bot.llm.claude_code import ClaudeCodeError, run_claude_for_json
 from trading_bot.strategy.base import Strategy
-from trading_bot.tools import get_macro_view, get_recent_news, get_technicals, get_universe
+from trading_bot.tools import (
+    get_commodity_prices,
+    get_credit_spreads,
+    get_dollar_index,
+    get_earnings_info,
+    get_insider_trades,
+    get_macro_view,
+    get_recent_news,
+    get_sector_strength,
+    get_technicals,
+    get_universe,
+    get_yield_curve,
+)
 
 
 log = logging.getLogger(__name__)
@@ -149,13 +161,26 @@ class LLMStrategy(Strategy):
 
         # Optional macro context — only injected when the strategy lists
         # get_macro_view in its tools list.
-        if "get_macro_view" in (cfg.tools or []):
+        tools_set = set(cfg.tools or [])
+        if "get_macro_view" in tools_set:
             view = get_macro_view()
             if view:
                 sections.append("## Current macro view (treat as the regime backdrop)\n" + view)
 
+        # Universe-level / cross-asset snapshots — fetched once and rendered
+        # compactly before the candidates. Each block is opt-in via cfg.tools.
+        cross_asset_block = self._build_cross_asset_block(tools_set)
+        if cross_asset_block:
+            sections.append(cross_asset_block)
+
         sections.append("## Your strategy bias / approach\n" + deep_analysis_prompt.strip())
         sections.append("## Final selection instructions\n" + final_select_prompt.strip())
+
+        # Per-candidate fundamentals data — only fetched if strategy lists them
+        # in tools (so equity-only strategies don't pay the latency for tools
+        # they'd ignore).
+        per_candidate_earnings = self._maybe_fetch_earnings(tools_set, candidates)
+        per_candidate_insiders = self._maybe_fetch_insiders(tools_set, candidates)
 
         sections.append("## Candidates (pre-filtered to those in a healthy uptrend)\n")
         for c in candidates:
@@ -168,6 +193,25 @@ class LLMStrategy(Strategy):
                     for item in ticker_news[:5]
                 )
                 news_lines = f"\n  Recent news:\n{bullets}"
+
+            earnings_line = ""
+            ei = per_candidate_earnings.get(c.ticker) if per_candidate_earnings else None
+            if ei and (ei.next_earnings_date or ei.last_surprise_pct is not None):
+                bits = []
+                if ei.next_earnings_date:
+                    bits.append(f"next earnings: {ei.next_earnings_date}")
+                if ei.last_surprise_pct is not None:
+                    bits.append(f"last surprise: {ei.last_surprise_pct:+.1f}%")
+                earnings_line = f"\n- earnings: {' · '.join(bits)}"
+
+            insider_line = ""
+            ins = per_candidate_insiders.get(c.ticker) if per_candidate_insiders else None
+            if ins and (ins.n_buys + ins.n_sells > 0):
+                insider_line = (
+                    f"\n- insiders ({ins.lookback_days}d): "
+                    f"{ins.n_buys} buys / {ins.n_sells} sells — **{ins.net_signal}**"
+                )
+
             sections.append(
                 f"### {c.ticker}\n"
                 f"- close: ${c.close:.2f} (as of {c.as_of})\n"
@@ -177,6 +221,8 @@ class LLMStrategy(Strategy):
                 f"- SMA20 ${c.sma_20:.2f} (above: {c.above_sma_20}), SMA50 ${c.sma_50:.2f} (above: {c.above_sma_50})\n"
                 f"- 5-day return: {c.return_5d_pct:+.2f}%, 20-day: {c.return_20d_pct:+.2f}%\n"
                 f"- volume ratio (today vs 20-day avg): {c.volume_ratio:.2f}"
+                + earnings_line
+                + insider_line
                 + news_lines
             )
 
@@ -202,6 +248,105 @@ class LLMStrategy(Strategy):
         )
 
         return "\n\n".join(sections)
+
+    def _build_cross_asset_block(self, tools: set[str]) -> str:
+        """Compact universe-level snapshot. Fetched once per pipeline run;
+        each sub-block is opt-in via the strategy's tools list."""
+        parts: list[str] = []
+
+        if "get_yield_curve" in tools:
+            try:
+                yc = get_yield_curve()
+                bits: list[str] = []
+                if yc.y3m is not None: bits.append(f"3M={yc.y3m:.2f}%")
+                if yc.y5y is not None: bits.append(f"5Y={yc.y5y:.2f}%")
+                if yc.y10y is not None: bits.append(f"10Y={yc.y10y:.2f}%")
+                if yc.y30y is not None: bits.append(f"30Y={yc.y30y:.2f}%")
+                if yc.spread_3m10y is not None: bits.append(f"3m10y spread={yc.spread_3m10y:+.2f}bp")
+                if bits:
+                    parts.append(f"**Yield curve** (as of {yc.as_of}): " + " · ".join(bits))
+            except Exception as e:
+                log.warning("get_yield_curve failed: %s", e)
+
+        if "get_credit_spreads" in tools:
+            try:
+                cs = get_credit_spreads()
+                if cs.hyg_5d_return_pct is not None and cs.lqd_5d_return_pct is not None:
+                    parts.append(
+                        f"**Credit (5d)**: HYG {cs.hyg_5d_return_pct:+.2f}% vs LQD "
+                        f"{cs.lqd_5d_return_pct:+.2f}% → HY-IG diff {cs.hy_vs_ig_5d_diff:+.2f}pp "
+                        "(positive = risk-on, spreads tightening)"
+                    )
+            except Exception as e:
+                log.warning("get_credit_spreads failed: %s", e)
+
+        if "get_dollar_index" in tools:
+            try:
+                dxy = get_dollar_index()
+                if dxy.level is not None:
+                    parts.append(
+                        f"**Dollar index** (as of {dxy.as_of}): {dxy.level:.2f} "
+                        f"(5d {dxy.return_5d_pct:+.2f}%, 20d {dxy.return_20d_pct:+.2f}%)"
+                    )
+            except Exception as e:
+                log.warning("get_dollar_index failed: %s", e)
+
+        if "get_commodity_prices" in tools:
+            try:
+                commodities = get_commodity_prices()
+                rows = []
+                for c in commodities:
+                    if c.close is None:
+                        continue
+                    rows.append(
+                        f"  - {c.name} ({c.ticker}): ${c.close:.2f} "
+                        f"(5d {c.return_5d_pct:+.2f}% / 20d {c.return_20d_pct:+.2f}%)"
+                        if c.return_5d_pct is not None and c.return_20d_pct is not None
+                        else f"  - {c.name} ({c.ticker}): ${c.close:.2f}"
+                    )
+                if rows:
+                    parts.append("**Commodity prices**\n" + "\n".join(rows))
+            except Exception as e:
+                log.warning("get_commodity_prices failed: %s", e)
+
+        if "get_sector_strength" in tools:
+            try:
+                sectors = get_sector_strength()
+                if sectors:
+                    rows = []
+                    for i, s in enumerate(sectors, 1):
+                        r5 = f"{s.return_5d_pct:+.2f}%" if s.return_5d_pct is not None else "—"
+                        r20 = f"{s.return_20d_pct:+.2f}%" if s.return_20d_pct is not None else "—"
+                        rows.append(f"  {i:2d}. {s.ticker} {s.label:<24s} 5d {r5}  20d {r20}")
+                    parts.append("**Sector strength ranking** (best → worst by 5d)\n" + "\n".join(rows))
+            except Exception as e:
+                log.warning("get_sector_strength failed: %s", e)
+
+        if not parts:
+            return ""
+        return "## Cross-asset & sector snapshot\n\n" + "\n\n".join(parts)
+
+    def _maybe_fetch_earnings(self, tools: set[str], candidates: list) -> dict:
+        if "get_earnings_info" not in tools:
+            return {}
+        out = {}
+        for c in candidates:
+            try:
+                out[c.ticker] = get_earnings_info(c.ticker)
+            except Exception as e:
+                log.debug("get_earnings_info(%s) failed: %s", c.ticker, e)
+        return out
+
+    def _maybe_fetch_insiders(self, tools: set[str], candidates: list) -> dict:
+        if "get_insider_trades" not in tools:
+            return {}
+        out = {}
+        for c in candidates:
+            try:
+                out[c.ticker] = get_insider_trades(c.ticker, days=60)
+            except Exception as e:
+                log.debug("get_insider_trades(%s) failed: %s", c.ticker, e)
+        return out
 
     def _parse_picks(self, response) -> list[TradeIntent]:
         cfg = self.config
