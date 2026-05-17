@@ -108,6 +108,13 @@ def run_weekly_macro_cmd(on_date: date) -> None:
     log.info("Weekly macro run summary: %s", summary)
 
 
+def run_weekly_evolution_cmd(on_date: date) -> None:
+    from trading_bot.meta.evolution import run_weekly_evolution
+
+    summary = run_weekly_evolution(on_date)
+    log.info("Weekly evolution run summary: %s", summary)
+
+
 def run_summary(region: str, on_date: date) -> None:
     """Read today's exits from the ledger and send the summary email.
     Runs after exit + reflect so the email reflects any LLM-updated
@@ -150,7 +157,10 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="trading_bot.pipeline")
     parser.add_argument(
         "mode",
-        choices=["entry", "exit", "clear-slot", "reflect", "summary", "weekly-macro"],
+        choices=[
+            "entry", "exit", "clear-slot", "reflect", "summary",
+            "weekly-macro", "weekly-evolution",
+        ],
     )
     parser.add_argument("--region", default="us", choices=["us", "uk-eu"])
     parser.add_argument("--date", help="ISO date (defaults to today)")
@@ -175,6 +185,10 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.mode == "weekly-macro":
         run_weekly_macro_cmd(on_date)
+        return 0
+
+    if args.mode == "weekly-evolution":
+        run_weekly_evolution_cmd(on_date)
         return 0
 
     if args.mode == "reflect":

@@ -1,0 +1,81 @@
+name: Weekly evolution
+
+# Saturday 09:00 UTC — runs after the week's trading is complete (US closed
+# Friday) and well before Monday's cron. The agent computes per-strategy
+# metrics over the rolling 14-day window, asks Claude for action
+# recommendations, then auto-executes anything that stays on Tier 0 (shadow)
+# or Tier 1 (alpaca-paper). Tier 2 promotions are surfaced as GitHub Issues
+# for human approval.
+
+on:
+  schedule:
+    - cron: '0 9 * * 6'
+  workflow_dispatch:
+
+concurrency:
+  group: weekly-evolution
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install Python package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Install Claude Code CLI
+        run: |
+          curl -fsSL https://claude.ai/install.sh | bash
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          claude --version
+
+      - name: Run weekly evolution
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          ALPACA_API_KEY__1: ${{ secrets.ALPACA_API_KEY__1 }}
+          ALPACA_API_SECRET__1: ${{ secrets.ALPACA_API_SECRET__1 }}
+          ALPACA_API_KEY__2: ${{ secrets.ALPACA_API_KEY__2 }}
+          ALPACA_API_SECRET__2: ${{ secrets.ALPACA_API_SECRET__2 }}
+          ALPACA_API_KEY__3: ${{ secrets.ALPACA_API_KEY__3 }}
+          ALPACA_API_SECRET__3: ${{ secrets.ALPACA_API_SECRET__3 }}
+          # gh CLI uses GH_TOKEN to authenticate against the GitHub API for issue creation
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python -m trading_bot.pipeline weekly-evolution
+
+      - name: Commit state + config changes back
+        run: |
+          git config user.name "trading-bot[bot]"
+          git config user.email "trading-bot@users.noreply.github.com"
+          git add state strategies || true
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "weekly evolution — $(date -u +%Y-%m-%dT%H:%MZ)"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin main || git rebase --abort || true
+            if git push; then
+              exit 0
+            fi
+            echo "Push attempt $i failed, retrying..."
+            sleep 2
+          done
+          echo "Could not push after 3 attempts"
+          exit 1
