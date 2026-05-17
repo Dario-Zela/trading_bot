@@ -244,14 +244,15 @@ class AlpacaPaperExecutor(Executor):
         after-hours the ask can be wide and well above the regular-hours price
         Alpaca uses for its `base_price` order-validation reference.
         """
-        url = f"https://data.alpaca.markets/v2/stocks/{ticker}/snapshots"
-        response = requests.get(
-            url, headers=self._headers(), params={"symbols": ticker}, timeout=10
-        )
+        url = f"https://data.alpaca.markets/v2/stocks/{ticker}/snapshot"
+        response = requests.get(url, headers=self._headers(), timeout=10)
         if not response.ok:
-            log.warning("Snapshot fetch failed for %s: %s", ticker, response.status_code)
+            log.warning(
+                "Snapshot fetch failed for %s: %s %s",
+                ticker, response.status_code, response.text[:120],
+            )
             return {"c": None}
-        body = response.json().get(ticker) or {}
+        body = response.json() or {}
 
         # Try latest trade first (most accurate "current price")
         latest_trade = body.get("latestTrade") or {}
