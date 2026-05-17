@@ -101,16 +101,14 @@ def main(argv: list[str] | None = None) -> int:
              len(exits), sum(len(v) for v in exits.values()))
 
     if args.email:
-        # Also surface today's entries (still open if exit didn't fire, otherwise included in exits)
-        entries: dict[str, list[dict]] = {}  # noqa: F841 — exit summary shows closed positions
-        subject, body = render_daily_summary(
+        subject, body_text, body_html = render_daily_summary(
             run_date=on_date,
             region=args.region,
-            entries={},
+            entries={},  # exits already include the entry data; no need to double-list
             exits=exits,
         )
         try:
-            send_summary_email(subject=subject, body_markdown=body)
+            send_summary_email(subject=subject, body_text=body_text, body_html=body_html)
         except Exception as e:
             log.error("Email send failed: %s", e)
             # Don't fail the whole run on email failure

@@ -32,6 +32,12 @@ class TradeRecord:
     pnl_pct: float | None = None
     exit_reason: str | None = None  # "scheduled" / "stop" / "take_profit"
 
+    # Wave 1.5 — post-trade analysis. Populated when the trade is marked exited.
+    # Wave 1 uses templated text from the strategy; Wave 6 replaces with LLM
+    # reflection-agent output that's much richer.
+    outcome_notes: str | None = None
+    risks_observed: str | None = None
+
     created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     updated_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
@@ -85,6 +91,8 @@ def mark_trade_exited(
     pnl_gbp: float,
     pnl_pct: float,
     exit_reason: str = "scheduled",
+    outcome_notes: str | None = None,
+    risks_observed: str | None = None,
 ) -> None:
     """Rewrite the ledger in place, setting exit fields on the matching trade.
 
@@ -105,6 +113,10 @@ def mark_trade_exited(
             row["pnl_gbp"] = pnl_gbp
             row["pnl_pct"] = pnl_pct
             row["exit_reason"] = exit_reason
+            if outcome_notes is not None:
+                row["outcome_notes"] = outcome_notes
+            if risks_observed is not None:
+                row["risks_observed"] = risks_observed
             row["updated_at"] = datetime.now(timezone.utc).isoformat()
             found = True
             break

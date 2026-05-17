@@ -103,6 +103,10 @@ class ShadowExecutor(Executor):
             pnl_gbp = (exit_price - entry_price) * quantity
             pnl_pct = (exit_price / entry_price - 1.0) * 100.0 if entry_price > 0 else 0.0
 
+            outcome_notes, risks_observed = _templated_reflection(
+                pnl_pct=pnl_pct, exit_reason=exit_reason, ticker=trade["ticker"]
+            )
+
             mark_trade_exited(
                 trade_id=trade["trade_id"],
                 exit_date=on_date,
@@ -110,6 +114,8 @@ class ShadowExecutor(Executor):
                 pnl_gbp=pnl_gbp,
                 pnl_pct=pnl_pct,
                 exit_reason=exit_reason,
+                outcome_notes=outcome_notes,
+                risks_observed=risks_observed,
             )
 
             closed.append(
@@ -120,9 +126,63 @@ class ShadowExecutor(Executor):
                     "pnl_gbp": pnl_gbp,
                     "pnl_pct": pnl_pct,
                     "exit_reason": exit_reason,
+                    "outcome_notes": outcome_notes,
+                    "risks_observed": risks_observed,
                 }
             )
         return closed
+
+
+def _templated_reflection(
+    *, pnl_pct: float, exit_reason: str, ticker: str
+) -> tuple[str, str]:
+    """Templated outcome + risks text for Wave 1's rule-based control strategy.
+
+    Wave 6's LLM reflection agent replaces this with real per-trade analysis
+    that draws on the strategy's full reasoning chain and the day's market
+    context. Keeping the templated path because it makes Wave 1 emails useful
+    out of the box.
+    """
+    if exit_reason == "take_profit":
+        outcome = (
+            f"Take-profit hit at +{pnl_pct:.2f}%. Momentum thesis held — the prior "
+            f"session's buying pressure carried through and {ticker} reached the target."
+        )
+    elif exit_reason == "stop":
+        outcome = (
+            f"Stopped out at {pnl_pct:+.2f}%. The setup reversed against us early; "
+            f"the bracket stop limited the damage to the configured floor."
+        )
+    elif pnl_pct > 0.5:
+        outcome = (
+            f"Closed at {pnl_pct:+.2f}%. Follow-through on the previous-day strength held "
+            f"into the close — clean momentum continuation."
+        )
+    elif pnl_pct < -0.5:
+        outcome = (
+            f"Closed at {pnl_pct:+.2f}%. Previous-day strength faded — likely profit-taking "
+            f"or rotation out of the name. No catalyst either way; pure technical fade."
+        )
+    else:
+        outcome = (
+            f"Closed near flat at {pnl_pct:+.2f}%. Drifted sideways through the session — "
+            f"no follow-through but no meaningful reversal either."
+        )
+
+    if pnl_pct > 0:
+        risks = (
+            "Rule-based control has no fundamental or news filter. Today's win is "
+            "consistent with the strategy's design; watch concentration and sector "
+            "balance across the basket."
+        )
+    else:
+        risks = (
+            "The rule-based control can't distinguish 'rallying on solid fundamentals' "
+            "from 'rallying on a squeeze about to unwind.' This loss validates the case "
+            "for news-aware and mean-reverter strategies that would have filtered it."
+        )
+
+    return outcome, risks
 
 
 def _resolve_exit(

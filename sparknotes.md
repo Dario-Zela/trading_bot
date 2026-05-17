@@ -316,6 +316,7 @@ All 5 strategies are seeded in the registry from day one (configs + prompts exis
 | Wave | Adds | Risk retired |
 |---|---|---|
 | **1. Skeleton** | `control-rule-based` only. US region only. Shadow tier only. One cron (US daily pipeline). Tools: `get_universe`, `get_history`. Email summary. GH Pages dashboard. | End-to-end loop, cron, file state, executor abstraction, email reporting, prediction grading, dashboard rendering — all proven before spending one LLM token |
+| **1.5. Polish** | Visual upgrade to dashboard + email (Chart.js curves, color-coded P&L, dark mode, inline-CSS email template). | Confidence in what we see day-to-day before LLM data starts arriving |
 | **2. First LLM strategy** | `momentum-trader`. Alpaca paper executor (Tier 1). Bracket orders for stops/take-profits. Tools: `get_technicals`, `get_recent_news`. Daily reflection cron. | LLM pipeline, MCP tool calls, real paper fills |
 | **3. Breadth — equity + first cross-asset** | `mean-reverter`, `news-reactive`, `sector-rotator`. Tools: `get_filing_summary`, `get_earnings_info`, `get_insider_trades`, `get_sector_strength`, `get_etf_relative_strength`, ETF universes (`us_etfs_sector`). | Multiple LLM strategies in parallel; ETF trading; tool library coverage |
 | **4. Macro + cross-asset** | Weekly macro agent. Strategies: `macro-aligned`, `bond-cycle`, `commodity-momentum`. Tools: `get_macro_view`, `get_yield_curve`, `get_credit_spreads`, `get_dollar_index`, `get_commodity_prices`. | Two-time-scale learning loops + cross-asset universe |
@@ -329,6 +330,32 @@ Each wave is shippable on its own. We pause between waves to validate before add
 - **Ticker blacklist** — start empty `[]`; add entries when something specific warrants it
 - **Promotion criteria** — concrete thresholds (IC, hit rate, Sharpe, runway length) for Tier 0 → Tier 1 → Tier 2. Defined in Wave 6 (evolution agent) when we have real data to calibrate against
 - **ISA US-stock eligibility filter list** — only needed when Tier 2 activates (deferred)
+
+## Polish pass — visual improvements (scheduled between waves)
+
+The Wave 1 dashboard and email are functional but visually plain. A focused polish pass to land before things accumulate:
+
+**Dashboard (`docs/index.html`)**
+- Real equity-curve chart (Chart.js or uPlot — small, no build step)
+- Better stat cards with hierarchy (large headline number, smaller label, trend arrow)
+- Color-coded P&L cells (green/red), sortable table columns, filterable date range
+- Dark mode (Pico.css supports `data-theme="dark"` out of the box, just needs a toggle)
+- Responsive mobile layout (current sidebar collapses awkwardly under ~700px)
+- Per-strategy comparison view (small multiples or overlaid equity curves)
+
+**Email summary (`notify/email.py`)**
+- Replace the hand-rolled markdown-to-HTML with a proper inline-CSS HTML template (most email clients strip `<style>` tags — inlined styles are mandatory)
+- Headline numbers in prominent boxes (total P&L, hit rate)
+- Color-coded P&L (green positive / red negative — works in Gmail/Apple Mail; degrades gracefully elsewhere)
+- 600px-wide fixed layout (email standard)
+- Compact mobile rendering
+- **Three labelled sections per trade**: *Why entered* (entry thesis), *What happened* (post-hoc outcome analysis), *⚠ Risks observed* (what risks materialised / what to flag for next session). Visual hierarchy via section-header colour (neutral / sky-blue / amber).
+- Optional: embed a tiny equity-curve image (matplotlib → base64 PNG inline)
+
+**Implied data-model addition** (small, lands with Wave 1.5):
+- New field `risks_observed: str | None` on `TradeRecord` alongside the existing `outcome_notes` (currently planned for Wave 6 reflection). For Wave 1.5 + Wave 1's rule-based control we can populate both with simple templated text; the LLM-driven reflection agent (Wave 6) replaces it with real analysis.
+
+Sized as a single focused wave ("Wave 1.5 — polish") — ~half a day of work. Best scheduled before Wave 2 so we have visibility we can trust during LLM iteration, OR right after Wave 2 once we have real LLM-driven data to display.
 
 ### Deferred until a strategy is chosen for live graduation
 
