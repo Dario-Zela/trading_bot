@@ -1,38 +1,40 @@
 id: sector-rotator
 display_name: "Sector rotator"
 description: |
-  LLM-driven. Trades the 11 SPDR sector ETFs based on relative momentum, sector
-  rotation patterns, and macro alignment. Holds a small number of sector ETFs at a
-  time, rotating as leadership shifts. Activated in Wave 3.
+  LLM-driven. Trades sector ETFs based on relative momentum and macro
+  alignment. US: SPDR sector ETFs (XLF, XLE, XLK, ...). UK/EU: iShares
+  STOXX Europe 600 sector ETFs (EXH1.DE, EXV3.DE, ...). Same strategy
+  bias, different ETF universe per region.
 
 implementation: llm
-
 active: true
-tier: shadow
-region: us
 
 capital_gbp: 10000
-max_positions: 4            # fewer, larger positions — sectors are diversified by construction
+max_positions: 4
 max_position_pct: 40
 min_position_gbp: 100
 
 use_stops: true
 use_take_profits: true
-
-stop_loss_pct: -4.0   # wider than equity strategies — sector ETFs trend slower, need more room
+stop_loss_pct: -4.0
 take_profit_pct: 8.0
-
-universe: us_etfs_sector
 
 tools:
   - get_universe
   - get_history
-  - get_etf_relative_strength
-  - get_sector_strength
   - get_technicals
+  - get_sector_strength
   - get_macro_view
 
 model_assignment:
   wide_scoring: haiku
   deep_analysis: sonnet
   final_select: sonnet
+
+runs_in:
+  - region: us
+    tier: shadow
+    universe: us_etfs_sector
+  - region: uk-eu
+    tier: shadow
+    universe: eu_etfs_sector

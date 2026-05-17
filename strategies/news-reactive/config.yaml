@@ -1,14 +1,12 @@
 id: news-reactive
 display_name: "News reactive"
 description: |
-  LLM-driven. Weights earnings surprises, M&A, guidance changes, and other catalysts.
-  Trades the reaction to news, not the trend. Activated in Wave 3.
+  LLM-driven. Weights earnings surprises, M&A, guidance changes, and other
+  catalysts. News routing per ticker: Alpaca News for US-listed names,
+  yfinance fallback for UK/EU listings — coverage is decent everywhere.
 
 implementation: llm
-
 active: true
-tier: shadow
-region: us
 
 capital_gbp: 10000
 max_positions: 5
@@ -17,11 +15,8 @@ min_position_gbp: 50
 
 use_stops: true
 use_take_profits: true
-
 stop_loss_pct: -3.0
 take_profit_pct: 5.0
-
-universe: sp500
 
 tools:
   - get_universe
@@ -35,3 +30,11 @@ model_assignment:
   wide_scoring: haiku
   deep_analysis: sonnet
   final_select: sonnet
+
+runs_in:
+  - region: us
+    tier: shadow
+    universe: sp500
+  - region: uk-eu
+    tier: shadow
+    universe: uk_eu_blue_chips

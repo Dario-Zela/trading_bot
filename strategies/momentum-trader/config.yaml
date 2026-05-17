@@ -1,40 +1,43 @@
 id: momentum-trader
 display_name: "Momentum trader"
 description: |
-  Buys recent winners that are still trending. Wave 2a uses a rule-based stub
-  (top-N by 5-day return with RSI in a "trending but not exhausted" band).
-  Wave 2b replaces the stub with multi-stage LLM analysis using the same tool
-  library and config.
+  LLM-driven. Buys recent winners that are still trending. Region-agnostic
+  bias — the same prompt runs against S&P 500 in the US pipeline and against
+  UK + EU blue chips in the UK/EU pipeline. The LLM is told the universe is
+  whatever's been pre-filtered for it and adapts to the regime.
 
-implementation: llm  # Wave 2b — LLM-driven via Claude Code CLI
-
+implementation: llm
 active: true
-tier: alpaca-paper
-region: us
-alpaca_slot: 1
 
+# Shared defaults — applied to every region this strategy runs in unless
+# the region-specific entry overrides them.
 capital_gbp: 10000
 max_positions: 4
 max_position_pct: 30
 min_position_gbp: 50
-
 use_stops: true
 use_take_profits: true
-
-stop_loss_pct: -3.0      # stub uses fixed bracket levels; LLM version will set per pick
+stop_loss_pct: -3.0
 take_profit_pct: 5.0
 
-universe: sp500
-
-# Tools the LLM version is allowed to call (subset of the tool library).
-# The stub only uses get_universe + get_technicals.
 tools:
   - get_universe
   - get_history
   - get_technicals
   - get_recent_news
+  - get_macro_view
 
 model_assignment:
   wide_scoring: haiku
   deep_analysis: sonnet
   final_select: sonnet
+
+# Runs in both regions with different universes + tiers
+runs_in:
+  - region: us
+    tier: alpaca-paper
+    alpaca_slot: 1
+    universe: sp500
+  - region: uk-eu
+    tier: shadow
+    universe: uk_eu_blue_chips

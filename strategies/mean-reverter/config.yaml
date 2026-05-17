@@ -1,14 +1,12 @@
 id: mean-reverter
 display_name: "Mean reverter"
 description: |
-  LLM-driven. Buys oversold bounces. Weights RSI and distance from moving averages.
-  Counter-trend. Activated in Wave 3.
+  LLM-driven. Buys oversold bounces. Weights RSI and distance from MA;
+  counter-trend. Region-agnostic — runs in US and UK/EU pipelines with
+  different universes.
 
 implementation: llm
-
 active: true
-tier: shadow
-region: us
 
 capital_gbp: 10000
 max_positions: 5
@@ -17,11 +15,8 @@ min_position_gbp: 50
 
 use_stops: true
 use_take_profits: true
-
 stop_loss_pct: -3.0
 take_profit_pct: 5.0
-
-universe: sp500
 
 tools:
   - get_universe
@@ -33,3 +28,11 @@ model_assignment:
   wide_scoring: haiku
   deep_analysis: sonnet
   final_select: sonnet
+
+runs_in:
+  - region: us
+    tier: shadow
+    universe: sp500
+  - region: uk-eu
+    tier: shadow
+    universe: uk_eu_blue_chips

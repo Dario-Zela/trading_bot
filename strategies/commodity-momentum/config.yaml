@@ -1,15 +1,13 @@
 id: commodity-momentum
 display_name: "Commodity momentum"
 description: |
-  LLM-driven. Trades commodity ETFs (GLD, SLV, USO, DBA, DBB) based on dollar
-  index, real yields, supply/demand themes, and geopolitical drivers. Activated
-  in Wave 4 (depends on weekly macro agent).
+  LLM-driven. Trades commodity ETFs based on dollar index, real yields,
+  supply/demand themes. Commodities are dollar-denominated globally so the
+  same US-listed ETF universe (GLD, SLV, USO, DBA, DBB) is used in both
+  regions — only the underlying decision logic differs by macro regime.
 
 implementation: llm
-
 active: true
-tier: shadow
-region: us
 
 capital_gbp: 10000
 max_positions: 3
@@ -18,11 +16,8 @@ min_position_gbp: 100
 
 use_stops: true
 use_take_profits: true
-
-stop_loss_pct: -4.0     # commodity ETFs are volatile; wider stops
+stop_loss_pct: -4.0
 take_profit_pct: 8.0
-
-universe: us_etfs_commodity
 
 tools:
   - get_universe
@@ -38,3 +33,11 @@ model_assignment:
   wide_scoring: haiku
   deep_analysis: sonnet
   final_select: sonnet
+
+runs_in:
+  - region: us
+    tier: shadow
+    universe: us_etfs_commodity
+  - region: uk-eu
+    tier: shadow
+    universe: us_etfs_commodity

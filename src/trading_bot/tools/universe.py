@@ -31,6 +31,34 @@ _US_ETFS_SECTOR = [
 _US_ETFS_BOND = ["TLT", "IEF", "SHY", "HYG", "LQD"]
 _US_ETFS_COMMODITY = ["GLD", "SLV", "USO", "DBA", "DBB"]
 
+# iShares STOXX Europe 600 sector ETFs. Listed in Frankfurt (.DE) — these
+# are the EU analogues of US SPDR sector ETFs.
+_EU_ETFS_SECTOR = [
+    "EXH1.DE",  # Banks
+    "EXH4.DE",  # Consumer Goods
+    "EXH5.DE",  # Industrial
+    "EXH8.DE",  # Utilities
+    "EXH9.DE",  # Travel & Leisure / Consumer Services
+    "EXSA.DE",  # Basic Resources
+    "EXV1.DE",  # Insurance
+    "EXV3.DE",  # Technology
+    "EXV4.DE",  # Telecom
+    "EXV6.DE",  # Health Care
+    "EXV9.DE",  # Oil & Gas
+]
+
+# European bond ETFs — UK Gilts, Bunds, EUR credit. Sufficient for the
+# bond-cycle strategy's duration + credit decisions in the EU regime.
+_EU_ETFS_BOND = [
+    "IGLT.L",   # UK Gilts (all maturities)
+    "IGLS.L",   # UK Gilts (short)
+    "IGLO.L",   # UK Gilts (long)
+    "EUNH.DE",  # EUR govt 1-3Y
+    "IBGM.L",   # EUR govt 7-10Y
+    "IEAC.L",   # EUR investment-grade corp
+    "IHYG.L",   # EUR high yield
+]
+
 # AEX 25 — hand-curated list of Amsterdam-listed Euronext names. Small and
 # stable (the AEX index has 25 components), so easier to hardcode than scrape.
 _AEX25 = [
@@ -86,12 +114,25 @@ def get_universe(universe_id: str) -> list[str]:
     if universe_id == "eu_blue_chips":
         combined = set(_fetch_dax40()) | set(_fetch_cac40()) | set(_AEX25)
         return sorted(combined)
+    if universe_id == "uk_eu_blue_chips":
+        # FTSE 100 + DAX 40 + CAC 40 + AEX 25 — the full UK + EU pipeline universe
+        combined = (
+            set(_fetch_ftse100())
+            | set(_fetch_dax40())
+            | set(_fetch_cac40())
+            | set(_AEX25)
+        )
+        return sorted(combined)
     if universe_id == "us_etfs_sector":
         return list(_US_ETFS_SECTOR)
     if universe_id == "us_etfs_bond":
         return list(_US_ETFS_BOND)
     if universe_id == "us_etfs_commodity":
         return list(_US_ETFS_COMMODITY)
+    if universe_id == "eu_etfs_sector":
+        return list(_EU_ETFS_SECTOR)
+    if universe_id == "eu_etfs_bond":
+        return list(_EU_ETFS_BOND)
     raise ValueError(f"Unknown universe: {universe_id}")
 
 

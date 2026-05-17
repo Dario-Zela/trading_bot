@@ -48,25 +48,58 @@ def _to_config(raw: dict) -> StrategyConfig:
 
 
 def load_active_strategies(region: str | None = None) -> list[Strategy]:
-    """Discover and instantiate every active strategy for the given region."""
+    """Discover and instantiate every active strategy for the given region.
+
+    Supports two config shapes:
+    - Single-region: `region: us` top-level field.
+    - Multi-region: a `runs_in` list of {region, universe, tier, alpaca_slot}
+      entries. The loader expands one Strategy instance per entry whose
+      region matches the filter.
+    """
     from trading_bot.strategy.control_rule_based import ControlRuleBased
     from trading_bot.strategy.llm_strategy import LLMStrategy
     from trading_bot.strategy.momentum_stub import MomentumTraderStub
 
+    def _instantiate(cfg: StrategyConfig) -> Strategy:
+        if cfg.implementation == "rule_based":
+            return ControlRuleBased(cfg)
+        if cfg.implementation == "momentum_stub":
+            return MomentumTraderStub(cfg)
+        if cfg.implementation == "llm":
+            return LLMStrategy(cfg)
+        raise ValueError(f"Unknown strategy implementation: {cfg.implementation}")
+
     out: list[Strategy] = []
     for config_path in _strategies_dir().glob("*/config.yaml"):
         raw = yaml.safe_load(config_path.read_text())
-        config = _to_config(raw)
-        if not config.active:
+        if not raw.get("active", False):
             continue
-        if region is not None and config.region != region:
+        for derived in _expand_regions(raw):
+            if region is not None and derived.get("region") != region:
+                continue
+            out.append(_instantiate(_to_config(derived)))
+    return out
+
+
+def _expand_regions(raw: dict) -> list[dict]:
+    """Yield one fully-merged config dict per region this strategy runs in.
+
+    Single-region configs (with top-level `region` and no `runs_in`) yield
+    a single entry unchanged. Multi-region configs (with `runs_in: [...]`)
+    yield one merged dict per region entry — top-level fields are the
+    defaults, region entries override.
+    """
+    runs_in = raw.get("runs_in")
+    if not runs_in:
+        return [raw]
+
+    out = []
+    for entry in runs_in:
+        if not isinstance(entry, dict) or not entry.get("region"):
             continue
-        if config.implementation == "rule_based":
-            out.append(ControlRuleBased(config))
-        elif config.implementation == "momentum_stub":
-            out.append(MomentumTraderStub(config))
-        elif config.implementation == "llm":
-            out.append(LLMStrategy(config))
-        else:
-            raise ValueError(f"Unknown strategy implementation: {config.implementation}")
+        merged = {k: v for k, v in raw.items() if k != "runs_in"}
+        merged.update(entry)
+        # If region-specific entry doesn't override tier/universe etc, the
+        # top-level defaults still apply via the merge above.
+        out.append(merged)
     return out
