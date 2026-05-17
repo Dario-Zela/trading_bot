@@ -394,10 +394,16 @@ def _render_strategy_section(
 
 
 def _reason_badge_style(reason: str) -> tuple[str, str]:
+    """(background, text-colour) per exit-reason. Reads consistently in both
+    the dashboard and email."""
     if reason == "take_profit":
         return ("#dcfce7", "#15803d")
     if reason == "stop":
         return ("#fee2e2", "#b91c1c")
+    if reason == "cancelled":
+        return ("#fef3c7", "#b45309")
+    if reason == "cleared":
+        return ("#ede9fe", "#6d28d9")
     return ("#f1f5f9", "#475569")
 
 

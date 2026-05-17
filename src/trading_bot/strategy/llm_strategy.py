@@ -21,7 +21,7 @@ from pathlib import Path
 from trading_bot.executor.base import TradeIntent
 from trading_bot.llm.claude_code import ClaudeCodeError, run_claude_for_json
 from trading_bot.strategy.base import Strategy
-from trading_bot.tools import get_recent_news, get_technicals, get_universe
+from trading_bot.tools import get_macro_view, get_recent_news, get_technicals, get_universe
 
 
 log = logging.getLogger(__name__)
@@ -146,6 +146,13 @@ class LLMStrategy(Strategy):
             f"- use_stops: {cfg.use_stops}\n"
             f"- use_take_profits: {cfg.use_take_profits}\n"
         )
+
+        # Optional macro context — only injected when the strategy lists
+        # get_macro_view in its tools list.
+        if "get_macro_view" in (cfg.tools or []):
+            view = get_macro_view()
+            if view:
+                sections.append("## Current macro view (treat as the regime backdrop)\n" + view)
 
         sections.append("## Your strategy bias / approach\n" + deep_analysis_prompt.strip())
         sections.append("## Final selection instructions\n" + final_select_prompt.strip())

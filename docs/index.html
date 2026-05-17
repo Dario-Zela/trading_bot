@@ -273,14 +273,23 @@
     .reason-badge {
       display: inline-block;
       font-size: 0.7rem;
-      padding: 0.1rem 0.45rem;
+      padding: 0.15rem 0.5rem;
       border-radius: 3px;
-      background: var(--pico-secondary-background);
-      color: var(--pico-muted-color);
+      font-weight: 600;
+      background: rgba(100, 116, 139, 0.16);
+      color: #475569;
     }
-    .reason-badge.stop { background: rgba(220, 38, 38, 0.15); color: var(--negative); }
-    .reason-badge.take_profit { background: rgba(22, 163, 74, 0.15); color: var(--positive); }
-    .reason-badge.scheduled { background: rgba(100, 116, 139, 0.15); color: #64748b; }
+    .reason-badge.stop { background: rgba(220, 38, 38, 0.15); color: #b91c1c; }
+    .reason-badge.take_profit { background: rgba(22, 163, 74, 0.15); color: #15803d; }
+    .reason-badge.scheduled { background: rgba(100, 116, 139, 0.16); color: #475569; }
+    .reason-badge.cancelled { background: rgba(217, 119, 6, 0.16); color: #b45309; }
+    .reason-badge.cleared { background: rgba(124, 58, 237, 0.16); color: #6d28d9; }
+    [data-theme="dark"] .reason-badge { background: rgba(148, 163, 184, 0.2); color: #e2e8f0; }
+    [data-theme="dark"] .reason-badge.stop { color: #fca5a5; }
+    [data-theme="dark"] .reason-badge.take_profit { color: #86efac; }
+    [data-theme="dark"] .reason-badge.scheduled { color: #cbd5e1; }
+    [data-theme="dark"] .reason-badge.cancelled { background: rgba(251, 191, 36, 0.18); color: #fbbf24; }
+    [data-theme="dark"] .reason-badge.cleared { background: rgba(196, 181, 253, 0.18); color: #c4b5fd; }
     .why-toggle {
       color: var(--accent);
       cursor: pointer;

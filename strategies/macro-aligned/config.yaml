@@ -7,7 +7,7 @@ description: |
 
 implementation: llm
 
-active: false
+active: true
 tier: shadow
 region: us
 
@@ -18,6 +18,11 @@ min_position_gbp: 50
 
 use_stops: true
 use_take_profits: true
+
+stop_loss_pct: -3.5
+take_profit_pct: 7.0
+
+universe: sp500
 
 tools:
   - get_universe
