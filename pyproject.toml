@@ -8,9 +8,11 @@ dependencies = [
     "pyyaml>=6.0",
     "yfinance>=0.2.40",
     "pandas>=2.0",
+    "numpy>=1.26",
     "lxml>=5.0",
     "requests>=2.31",
     "python-dotenv>=1.0",
+    "alpaca-py>=0.34",
 ]
 
 [project.optional-dependencies]

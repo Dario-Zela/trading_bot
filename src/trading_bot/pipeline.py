@@ -6,22 +6,29 @@ import sys
 from collections import defaultdict
 from datetime import date
 
-from trading_bot.executor import ShadowExecutor
+from trading_bot.executor import AlpacaPaperExecutor, ShadowExecutor
 from trading_bot.executor.base import Executor
 from trading_bot.notify.email import render_daily_summary, send_summary_email
 from trading_bot.state import read_open_trades
-from trading_bot.strategy.base import Strategy
+from trading_bot.strategy.base import Strategy, StrategyConfig
 from trading_bot.strategy.registry import load_active_strategies
 
 
 log = logging.getLogger(__name__)
 
 
-def _executor_for_tier(tier: str) -> Executor:
-    if tier == "shadow":
+def _executor_for_strategy(config: StrategyConfig) -> Executor:
+    if config.tier == "shadow":
         return ShadowExecutor()
+    if config.tier == "alpaca-paper":
+        if config.alpaca_slot is None:
+            raise ValueError(
+                f"Strategy {config.id}: tier=alpaca-paper requires an alpaca_slot in config"
+            )
+        return AlpacaPaperExecutor(slot=config.alpaca_slot)
     raise NotImplementedError(
-        f"Executor for tier '{tier}' is not implemented in Wave 1 — only 'shadow' is supported"
+        f"Executor for tier '{config.tier}' is not implemented yet — "
+        "valid tiers are 'shadow' and 'alpaca-paper'"
     )
 
 
@@ -33,24 +40,29 @@ def run_entry(region: str, on_date: date) -> dict[str, list[dict]]:
 
     entries: dict[str, list[dict]] = {}
     for strategy in strategies:
-        intents = strategy.select_picks(on_date)
-        log.info("%s: %d picks", strategy.config.id, len(intents))
+        try:
+            intents = strategy.select_picks(on_date)
+            log.info("%s: %d picks", strategy.config.id, len(intents))
 
-        executor = _executor_for_tier(strategy.config.tier)
-        executor.enter(
-            intents,
-            strategy_id=strategy.config.id,
-            region=strategy.config.region,
-            capital_gbp=strategy.config.capital_gbp,
-            on_date=on_date,
-        )
+            executor = _executor_for_strategy(strategy.config)
+            executor.enter(
+                intents,
+                strategy_id=strategy.config.id,
+                region=strategy.config.region,
+                capital_gbp=strategy.config.capital_gbp,
+                on_date=on_date,
+            )
 
-        opened = read_open_trades(
-            strategy_id=strategy.config.id,
-            region=strategy.config.region,
-            on_date=on_date,
-        )
-        entries[strategy.config.id] = opened
+            opened = read_open_trades(
+                strategy_id=strategy.config.id,
+                region=strategy.config.region,
+                on_date=on_date,
+            )
+            entries[strategy.config.id] = opened
+        except Exception as e:
+            log.exception("Strategy %s failed in entry phase: %s", strategy.config.id, e)
+            # Continue with the remaining strategies — one bad strategy shouldn't
+            # poison the whole pipeline run.
     return entries
 
 
@@ -62,23 +74,32 @@ def run_exit(region: str, on_date: date) -> dict[str, list[dict]]:
 
     exits: dict[str, list[dict]] = defaultdict(list)
     for strategy in strategies:
-        executor = _executor_for_tier(strategy.config.tier)
-        closed = executor.exit_scheduled(
-            strategy_id=strategy.config.id,
-            region=strategy.config.region,
-            on_date=on_date,
-        )
-        if closed:
-            exits[strategy.config.id].extend(closed)
+        try:
+            executor = _executor_for_strategy(strategy.config)
+            closed = executor.exit_scheduled(
+                strategy_id=strategy.config.id,
+                region=strategy.config.region,
+                on_date=on_date,
+            )
+            if closed:
+                exits[strategy.config.id].extend(closed)
+        except Exception as e:
+            log.exception("Strategy %s failed in exit phase: %s", strategy.config.id, e)
     return dict(exits)
+
+
+def run_clear_slot(slot: int) -> None:
+    executor = AlpacaPaperExecutor(slot=slot)
+    executor.clear_slot()
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="trading_bot.pipeline")
-    parser.add_argument("mode", choices=["entry", "exit"])
+    parser.add_argument("mode", choices=["entry", "exit", "clear-slot"])
     parser.add_argument("--region", default="us", choices=["us", "uk-eu"])
     parser.add_argument("--date", help="ISO date (defaults to today)")
     parser.add_argument("--email", action="store_true", help="Send summary email after exit")
+    parser.add_argument("--slot", type=int, help="Alpaca slot number (used by clear-slot)")
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args(argv)
 
@@ -86,6 +107,13 @@ def main(argv: list[str] | None = None) -> int:
         level=logging.DEBUG if args.verbose else logging.INFO,
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
     )
+
+    if args.mode == "clear-slot":
+        if args.slot is None:
+            parser.error("clear-slot requires --slot N")
+        run_clear_slot(args.slot)
+        log.info("Slot %d cleared", args.slot)
+        return 0
 
     on_date = date.fromisoformat(args.date) if args.date else date.today()
 

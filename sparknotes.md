@@ -330,6 +330,7 @@ Each wave is shippable on its own. We pause between waves to validate before add
 - **Ticker blacklist** — start empty `[]`; add entries when something specific warrants it
 - **Promotion criteria** — concrete thresholds (IC, hit rate, Sharpe, runway length) for Tier 0 → Tier 1 → Tier 2. Defined in Wave 6 (evolution agent) when we have real data to calibrate against
 - **ISA US-stock eligibility filter list** — only needed when Tier 2 activates (deferred)
+- **Entry idempotency** — running the entry pipeline twice on the same day currently duplicates positions. The cron schedule prevents this in production, but `workflow_dispatch` re-runs or retries-on-failure could trip it. Add a guard ("skip if this strategy already has open positions opened today") in a hardening pass.
 
 ## Polish pass — visual improvements (scheduled between waves)
 

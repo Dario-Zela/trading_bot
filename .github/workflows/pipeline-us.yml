@@ -15,12 +15,18 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: 'entry or exit'
+        description: 'entry / exit / clear-slot'
         required: true
         type: choice
         options:
           - entry
           - exit
+          - clear-slot
+      slot:
+        description: 'Alpaca slot to clear (only for clear-slot mode)'
+        required: false
+        default: '1'
+        type: string
 
 concurrency:
   group: pipeline-us
@@ -65,12 +71,24 @@ jobs:
           BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
           NOTIFY_EMAIL_TO: ${{ secrets.NOTIFY_EMAIL_TO }}
           NOTIFY_EMAIL_FROM: ${{ secrets.NOTIFY_EMAIL_FROM }}
+          ALPACA_API_KEY__1: ${{ secrets.ALPACA_API_KEY__1 }}
+          ALPACA_API_SECRET__1: ${{ secrets.ALPACA_API_SECRET__1 }}
+          ALPACA_API_KEY__2: ${{ secrets.ALPACA_API_KEY__2 }}
+          ALPACA_API_SECRET__2: ${{ secrets.ALPACA_API_SECRET__2 }}
+          ALPACA_API_KEY__3: ${{ secrets.ALPACA_API_KEY__3 }}
+          ALPACA_API_SECRET__3: ${{ secrets.ALPACA_API_SECRET__3 }}
         run: |
-          if [ "${{ steps.mode.outputs.mode }}" = "exit" ]; then
-            python -m trading_bot.pipeline exit --region us --email
-          else
-            python -m trading_bot.pipeline entry --region us
-          fi
+          case "${{ steps.mode.outputs.mode }}" in
+            exit)
+              python -m trading_bot.pipeline exit --region us --email
+              ;;
+            clear-slot)
+              python -m trading_bot.pipeline clear-slot --slot "${{ inputs.slot }}"
+              ;;
+            *)
+              python -m trading_bot.pipeline entry --region us
+              ;;
+          esac
 
       - name: Rebuild dashboard
         if: steps.mode.outputs.mode == 'exit'

@@ -1,24 +1,33 @@
 id: momentum-trader
 display_name: "Momentum trader"
 description: |
-  LLM-driven. Buys recent winners. Weights price action and volume. Trend-following.
-  Activated in Wave 2.
+  Buys recent winners that are still trending. Wave 2a uses a rule-based stub
+  (top-N by 5-day return with RSI in a "trending but not exhausted" band).
+  Wave 2b replaces the stub with multi-stage LLM analysis using the same tool
+  library and config.
 
-implementation: llm
+implementation: momentum_stub  # rule_based / momentum_stub / llm — Wave 2a uses the stub
 
-active: false               # activates in Wave 2
-tier: shadow
+active: true
+tier: alpaca-paper
 region: us
+alpaca_slot: 1
 
 capital_gbp: 10000
-max_positions: 5
+max_positions: 4
 max_position_pct: 30
 min_position_gbp: 50
 
 use_stops: true
 use_take_profits: true
 
-# Tools this strategy is allowed to call (subset of the tool library)
+stop_loss_pct: -3.0      # stub uses fixed bracket levels; LLM version will set per pick
+take_profit_pct: 5.0
+
+universe: sp500
+
+# Tools the LLM version is allowed to call (subset of the tool library).
+# The stub only uses get_universe + get_technicals.
 tools:
   - get_universe
   - get_history

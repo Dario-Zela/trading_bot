@@ -23,6 +23,7 @@ def load_strategy_config(strategy_id: str) -> StrategyConfig:
 
 
 def _to_config(raw: dict) -> StrategyConfig:
+    alpaca_slot = raw.get("alpaca_slot")
     return StrategyConfig(
         id=raw["id"],
         display_name=raw["display_name"],
@@ -38,16 +39,18 @@ def _to_config(raw: dict) -> StrategyConfig:
         use_stops=bool(raw.get("use_stops", False)),
         use_take_profits=bool(raw.get("use_take_profits", False)),
         universe=raw.get("universe", "sp500"),
+        alpaca_slot=int(alpaca_slot) if alpaca_slot is not None else None,
+        stop_loss_pct=float(raw["stop_loss_pct"]) if raw.get("stop_loss_pct") is not None else None,
+        take_profit_pct=float(raw["take_profit_pct"]) if raw.get("take_profit_pct") is not None else None,
         tools=list(raw.get("tools", [])),
         model_assignment=dict(raw.get("model_assignment", {})),
     )
 
 
 def load_active_strategies(region: str | None = None) -> list[Strategy]:
-    """Discover and instantiate every active strategy. Wave 1 only knows how to
-    instantiate rule_based strategies; LLM strategies (implementation='llm') are
-    skipped until Wave 2 wires their pipeline."""
+    """Discover and instantiate every active strategy for the given region."""
     from trading_bot.strategy.control_rule_based import ControlRuleBased
+    from trading_bot.strategy.momentum_stub import MomentumTraderStub
 
     out: list[Strategy] = []
     for config_path in _strategies_dir().glob("*/config.yaml"):
@@ -59,8 +62,10 @@ def load_active_strategies(region: str | None = None) -> list[Strategy]:
             continue
         if config.implementation == "rule_based":
             out.append(ControlRuleBased(config))
+        elif config.implementation == "momentum_stub":
+            out.append(MomentumTraderStub(config))
         elif config.implementation == "llm":
-            # Wave 2+ — skip silently in Wave 1
+            # Wave 2b will activate these
             continue
         else:
             raise ValueError(f"Unknown strategy implementation: {config.implementation}")
