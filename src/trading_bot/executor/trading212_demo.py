@@ -203,6 +203,27 @@ class Trading212DemoExecutor(Executor):
         region: str,
         on_date: date,
     ) -> list[dict]:
+        # First pass: sweep T212 portfolio for orphans (positions with no
+        # matching ledger entry today) and attribute them to this strategy.
+        # The first T212-paper strategy whose exit runs claims all orphans —
+        # subsequent strategies for the same slot won't see them as orphans
+        # because the entries are now in the ledger. Attribution is imperfect
+        # when multiple strategies share a slot, but the alternative is
+        # leaving positions open at T212 indefinitely.
+        try:
+            recovered = self.reconcile_orphans(
+                attribute_to_strategy=strategy_id,
+                region=region,
+                on_date=on_date,
+            )
+            if recovered:
+                log.info(
+                    "Recovered %d orphan T212 position(s) into %s's ledger: %s",
+                    len(recovered), strategy_id, [r["ticker"] for r in recovered],
+                )
+        except Exception as e:
+            log.warning("Orphan reconcile failed for %s (non-fatal): %s", strategy_id, e)
+
         open_trades = read_open_trades(strategy_id=strategy_id, region=region, on_date=on_date)
         if not open_trades:
             return []
