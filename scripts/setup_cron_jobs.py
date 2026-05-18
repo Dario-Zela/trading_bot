@@ -206,9 +206,17 @@ def main() -> int:
     to_delete = [j for j in existing if (j.get("title") or "").startswith(JOB_TITLE_PREFIX)]
     if to_delete:
         print(f"Deleting {len(to_delete)} existing trading_bot job(s):")
-        for j in to_delete:
+        for i, j in enumerate(to_delete):
+            if i > 0:
+                # cron-job.org's free-tier rate limit applies to deletes
+                # too — without this pause, sequential deletes burn the
+                # quota and the first few creates 429 hard.
+                time.sleep(_REQ_PAUSE_S)
             delete_job(cron_key, j["jobId"])
             print(f"  - deleted '{j['title']}' (jobId={j['jobId']})")
+        # Brief grace period after the delete burst before we start
+        # creating — gives the rate-limit window time to refresh.
+        time.sleep(_REQ_PAUSE_S * 2)
     else:
         print("No existing trading_bot jobs to delete.")
 
