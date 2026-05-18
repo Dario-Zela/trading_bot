@@ -121,13 +121,6 @@ def run_weekly_evolution_cmd(on_date: date) -> None:
     log.info("Weekly evolution run summary: %s", summary)
 
 
-def run_dst_sync_cmd() -> None:
-    from trading_bot.meta.dst_sync import sync_dst
-
-    summary = sync_dst()
-    log.info("DST sync summary: %s", summary)
-
-
 def run_summary(region: str, on_date: date) -> None:
     """Read today's exits from the ledger and send the summary email.
     Runs after exit + reflect so the email reflects any LLM-updated
@@ -172,7 +165,7 @@ def main(argv: list[str] | None = None) -> int:
         "mode",
         choices=[
             "entry", "exit", "clear-slot", "reflect", "summary",
-            "weekly-macro", "weekly-evolution", "dst-sync",
+            "weekly-macro", "weekly-evolution",
             "t212-reconcile-orphans",
         ],
     )
@@ -194,10 +187,6 @@ def main(argv: list[str] | None = None) -> int:
             parser.error("clear-slot requires --slot N")
         run_clear_slot(args.slot)
         log.info("Slot %d cleared", args.slot)
-        return 0
-
-    if args.mode == "dst-sync":
-        run_dst_sync_cmd()
         return 0
 
     if args.mode == "t212-reconcile-orphans":

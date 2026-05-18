@@ -1,11 +1,10 @@
 name: Weekly macro
 
-# Sunday 17:00 UTC = 18:00 BST / 17:00 GMT. Runs once a week, before Monday's
-# US pipeline cron picks up the freshly-written macro view via get_macro_view().
+# Triggered every Sunday 17:00 UTC by cron-job.org via workflow_dispatch.
+# Runs once a week, before Monday's US pipeline picks up the freshly-
+# written macro view via get_macro_view().
 
 on:
-  schedule:
-    - cron: '0 17 * * 0'
   workflow_dispatch:
 
 concurrency:

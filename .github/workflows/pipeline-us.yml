@@ -1,17 +1,11 @@
 name: US pipeline
 
-# US market: 14:30–21:00 UK (always — ET is UK-5).
-# Entry 5 min after open. Exit 30 min before close.
-# Wave 1 uses fixed UTC crons aligned to UK summer (BST). In GMT the wall-clock
-# is 1h earlier; for daily-bar strategies the offset doesn't matter. DST-correct
-# scheduling is a Wave 2 follow-up.
+# Triggered Mon–Fri at NYSE-relative times by cron-job.org via
+# workflow_dispatch (entry: 09:35 ET, exit: 15:30 ET — cron-job.org
+# handles DST). No GH Actions schedule here; that scheduler has proven
+# unreliable.
 
 on:
-  schedule:
-    # 13:35 UTC weekdays — entry (14:35 BST / 13:35 GMT)
-    - cron: '35 13 * * 1-5'
-    # 19:30 UTC weekdays — exit (20:30 BST / 19:30 GMT)
-    - cron: '30 19 * * 1-5'
   workflow_dispatch:
     inputs:
       mode:
@@ -46,14 +40,7 @@ jobs:
 
       - name: Decide mode
         id: mode
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "mode=${{ inputs.mode }}" >> $GITHUB_OUTPUT
-          elif [ "${{ github.event.schedule }}" = "35 13 * * 1-5" ]; then
-            echo "mode=entry" >> $GITHUB_OUTPUT
-          else
-            echo "mode=exit" >> $GITHUB_OUTPUT
-          fi
+        run: echo "mode=${{ inputs.mode }}" >> $GITHUB_OUTPUT
 
       - name: Set up Python
         uses: actions/setup-python@v6

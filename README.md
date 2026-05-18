@@ -46,19 +46,18 @@ Each strategy has a `config.yaml` with `runs_in:` per-region entries (region, ti
 
 ## Daily cycle
 
-All cron times are UTC (GitHub Actions doesn't honour timezones). DST drift is corrected weekly by `dst-sync.yml`:
+GitHub Actions' built-in cron is unreliable (we observed silent dropped triggers during high-load windows). Scheduling is handled by **cron-job.org**, an independent service that calls each workflow via GitHub's REST API at the right local time. Each schedule runs in the market's local timezone, so DST is handled automatically.
 
-| Workflow | When (UTC) | Region | Action |
+| Workflow | When (market-local) | Region | Action |
 |---|---|---|---|
-| `pipeline-us.yml` | Mon–Fri 13:35 | US | entry |
-| `pipeline-us.yml` | Mon–Fri 19:30 | US | exit + reflect + dashboard + email |
-| `pipeline-uk-eu.yml` | Mon–Fri 07:35 | UK-EU | entry |
-| `pipeline-uk-eu.yml` | Mon–Fri 15:00 | UK-EU | exit + reflect + dashboard + email |
-| `weekly-macro.yml` | Sun 17:00 | — | macro view refresh |
-| `weekly-evolution.yml` | Sat 09:00 | — | strategy promote / demote / tune / spawn |
-| `dst-sync.yml` | Sun 02:00 | — | re-derive pipeline cron times for current DST |
+| `pipeline-us.yml` | Mon–Fri 09:35 ET | US | entry |
+| `pipeline-us.yml` | Mon–Fri 15:30 ET | US | exit + reflect + dashboard + email |
+| `pipeline-uk-eu.yml` | Mon–Fri 08:35 UK | UK-EU | entry |
+| `pipeline-uk-eu.yml` | Mon–Fri 16:00 UK | UK-EU | exit + reflect + dashboard + email |
+| `weekly-macro.yml` | Sun 17:00 UTC | — | macro view refresh |
+| `weekly-evolution.yml` | Sat 09:00 UTC | — | strategy promote / demote / tune / spawn |
 
-All workflows also have `workflow_dispatch` triggers for manual runs from the Actions tab.
+Provision the cron-job.org schedules from `scripts/setup_cron_jobs.py` (one-shot). All workflows also accept `workflow_dispatch` for manual runs from the Actions tab.
 
 ## Dashboard + email
 

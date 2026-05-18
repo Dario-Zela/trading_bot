@@ -1,15 +1,14 @@
 name: Weekly evolution
 
-# Saturday 09:00 UTC — runs after the week's trading is complete (US closed
-# Friday) and well before Monday's cron. The agent computes per-strategy
-# metrics over the rolling 14-day window, asks Claude for action
-# recommendations, then auto-executes anything that stays on Tier 0 (shadow)
-# or Tier 1 (alpaca-paper). Tier 2 promotions are surfaced as GitHub Issues
-# for human approval.
+# Triggered every Saturday 09:00 UTC by cron-job.org via workflow_dispatch.
+# Runs after the week's trading is complete (US closed Friday) and before
+# Monday's pipelines. The agent computes per-strategy metrics over the
+# rolling 14-day window, asks Claude for action recommendations, then
+# auto-executes anything that stays on Tier 0 (shadow) / Tier 1 (alpaca-
+# paper). Tier 2 promotions are surfaced as GitHub Issues for human
+# approval.
 
 on:
-  schedule:
-    - cron: '0 9 * * 6'
   workflow_dispatch:
 
 concurrency:

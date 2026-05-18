@@ -1,16 +1,11 @@
 name: UK/EU pipeline
 
-# LSE is open 08:00–16:30 UK year-round. Entry 5 min after open, exit 30 min
-# before close. UTC times year-round are picked for BST (UK summer); in GMT
-# the wall-clock runs 1h later — acceptable for daily-bar strategies, same
-# convention as pipeline-us.yml.
+# Triggered Mon–Fri at LSE-relative times by cron-job.org via
+# workflow_dispatch (entry: 08:35 UK, exit: 16:00 UK — cron-job.org
+# handles DST). No GH Actions schedule here; that scheduler has proven
+# unreliable.
 
 on:
-  schedule:
-    # 07:35 UTC weekdays — entry (08:35 BST / 07:35 GMT)
-    - cron: '35 7 * * 1-5'
-    # 15:00 UTC weekdays — exit (16:00 BST / 15:00 GMT)
-    - cron: '0 15 * * 1-5'
   workflow_dispatch:
     inputs:
       mode:
@@ -39,14 +34,7 @@ jobs:
 
       - name: Decide mode
         id: mode
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "mode=${{ inputs.mode }}" >> $GITHUB_OUTPUT
-          elif [ "${{ github.event.schedule }}" = "35 7 * * 1-5" ]; then
-            echo "mode=entry" >> $GITHUB_OUTPUT
-          else
-            echo "mode=exit" >> $GITHUB_OUTPUT
-          fi
+        run: echo "mode=${{ inputs.mode }}" >> $GITHUB_OUTPUT
 
       - name: Set up Python
         uses: actions/setup-python@v6
