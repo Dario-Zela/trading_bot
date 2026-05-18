@@ -39,6 +39,11 @@ def _executor_for_strategy(config: StrategyConfig) -> Executor:
 
 
 def run_entry(region: str, on_date: date) -> dict[str, list[dict]]:
+    from trading_bot.tools.calendar import is_market_open_on
+    if not is_market_open_on(on_date, region):
+        log.info("Market closed in region=%s on %s — skipping entry", region, on_date.isoformat())
+        return {}
+
     strategies = load_active_strategies(region=region)
     if not strategies:
         log.info("No active strategies for region %s", region)
@@ -73,6 +78,14 @@ def run_entry(region: str, on_date: date) -> dict[str, list[dict]]:
 
 
 def run_exit(region: str, on_date: date) -> dict[str, list[dict]]:
+    from trading_bot.tools.calendar import is_market_open_on
+    if not is_market_open_on(on_date, region):
+        log.info(
+            "Market closed in region=%s on %s — skipping exit (any open positions roll over to next session)",
+            region, on_date.isoformat(),
+        )
+        return {}
+
     strategies = load_active_strategies(region=region)
     if not strategies:
         log.info("No active strategies for region %s", region)
