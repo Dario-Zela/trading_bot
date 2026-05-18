@@ -1,0 +1,67 @@
+name: Daily news brief
+
+# Triggered Mon-Fri ~06:30 UTC by cron-job.org via workflow_dispatch.
+# Runs ~1h before UK-EU entry so strategies can read the brief. Light
+# weight — single Haiku call, no per-ticker tools.
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: daily-news-brief
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install Python package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Install Claude Code CLI
+        run: |
+          curl -fsSL https://claude.ai/install.sh | bash
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          claude --version
+
+      - name: Run daily news brief
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          ALPACA_API_KEY__1: ${{ secrets.ALPACA_API_KEY__1 }}
+          ALPACA_API_SECRET__1: ${{ secrets.ALPACA_API_SECRET__1 }}
+        run: python -m trading_bot.pipeline daily-news-brief
+
+      - name: Commit brief back
+        run: |
+          git config user.name "trading-bot[bot]"
+          git config user.email "trading-bot@users.noreply.github.com"
+          git add state/daily_news || true
+          if git diff --cached --quiet; then
+            echo "No brief written; skipping commit"
+            exit 0
+          fi
+          git commit -m "daily news brief — $(date -u +%Y-%m-%d)"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin main || git rebase --abort || true
+            if git push; then exit 0; fi
+            echo "Push attempt $i failed, retrying..."
+            sleep 2
+          done
+          echo "Could not push after 3 attempts"
+          exit 1

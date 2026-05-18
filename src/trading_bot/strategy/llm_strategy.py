@@ -210,6 +210,15 @@ class LLMStrategy(Strategy):
             if view:
                 sections.append("## Current macro view (treat as the regime backdrop)\n" + view)
 
+        # Optional daily news brief — injected when the strategy lists
+        # get_daily_news_brief. Today's market-moving headlines themed
+        # into a short markdown brief by the daily-news-brief agent.
+        if "get_daily_news_brief" in tools_set:
+            from trading_bot.tools.daily_news import get_daily_news_brief
+            brief = get_daily_news_brief(on_date)
+            if brief:
+                sections.append("## Today's market news brief (themes from this morning's headlines)\n" + brief)
+
         # Universe-level / cross-asset snapshots — fetched once and rendered
         # compactly before the candidates. Each block is opt-in via cfg.tools.
         cross_asset_block = self._build_cross_asset_block(tools_set)

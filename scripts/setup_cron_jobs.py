@@ -70,6 +70,15 @@ SCHEDULES: list[dict] = [
         "hour": 16, "minute": 0,
         "wdays": [1, 2, 3, 4, 5],
     },
+    # Daily — runs ~1h before UK-EU entry to give the brief time to land.
+    {
+        "name": "daily-news-brief",
+        "workflow": "daily-news-brief.yml",
+        "inputs": {},
+        "tz": "Europe/London",
+        "hour": 7, "minute": 30,
+        "wdays": [1, 2, 3, 4, 5],  # Mon-Fri
+    },
     # Weekly meta-jobs — pure UTC schedules, no inputs.
     {
         "name": "weekly-evolution",

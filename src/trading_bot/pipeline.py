@@ -156,6 +156,13 @@ def run_weekly_evolution_cmd(on_date: date) -> None:
     log.info("Weekly evolution run summary: %s", summary)
 
 
+def run_daily_news_brief_cmd(on_date: date) -> None:
+    from trading_bot.meta.daily_news import run_daily_news_brief
+
+    summary = run_daily_news_brief(on_date)
+    log.info("Daily news brief summary: %s", summary)
+
+
 def run_summary(region: str, on_date: date) -> None:
     """Read today's exits from the ledger and send the summary email.
     Runs after exit + reflect so the email reflects any LLM-updated
@@ -200,7 +207,7 @@ def main(argv: list[str] | None = None) -> int:
         "mode",
         choices=[
             "entry", "exit", "clear-slot", "reflect", "summary",
-            "weekly-macro", "weekly-evolution",
+            "weekly-macro", "weekly-evolution", "daily-news-brief",
             "t212-reconcile-orphans",
         ],
     )
@@ -247,6 +254,10 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.mode == "weekly-evolution":
         run_weekly_evolution_cmd(on_date)
+        return 0
+
+    if args.mode == "daily-news-brief":
+        run_daily_news_brief_cmd(on_date)
         return 0
 
     if args.mode == "reflect":
