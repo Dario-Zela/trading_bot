@@ -267,7 +267,12 @@ class Trading212DemoExecutor(Executor):
         # close_order_id=None means "no position to close" (use history lookup
         # later) or "close submit failed" (we skip recording).
         submitted: list[tuple[dict, str, str | None, str]] = []
-        for trade, t212_ticker in actionable:
+        for i, (trade, t212_ticker) in enumerate(actionable):
+            if i > 0:
+                # T212 rate-limits /equity/portfolio/{ticker} hard (~1 req/s).
+                # Hammering it with 9 lookups in 3s returns 429s, which look
+                # like "no position" to the rest of the code. Space them out.
+                time.sleep(0.6)
             position = self._get_position(t212_ticker)
             if position is None:
                 # No live position — entry never filled, or close already
@@ -634,11 +639,13 @@ class Trading212DemoExecutor(Executor):
         return raw_price
 
     def _find_recent_sell(self, t212_ticker: str, on_date: date) -> dict[str, Any] | None:
-        """Find the most recent SELL (negative-quantity) order for this
-        ticker that filled today. Used when exit_scheduled sees no live
-        position — the close already happened (externally or in a prior
-        run that lost the response) and we need to recover the fill price
-        from T212's order history."""
+        """Find the most recent SELL order for this ticker that filled
+        today. Used when exit_scheduled sees no live position — the close
+        already happened (externally / in a prior run that lost the
+        response) and we need to recover the fill price from T212's order
+        history. We log the raw shape of the first item we see so the
+        filter can be tightened once T212's exact response format is
+        confirmed."""
         try:
             response = requests.get(
                 self._url("/equity/history/orders"),
@@ -650,33 +657,85 @@ class Trading212DemoExecutor(Executor):
             log.debug("T212 history fetch errored during close recovery: %s", e)
             return None
         if not response.ok:
+            log.warning(
+                "T212 history fetch returned %s for %s during close recovery",
+                response.status_code, t212_ticker,
+            )
             return None
         try:
             body = response.json() or {}
         except json.JSONDecodeError:
             return None
         items = body.get("items") if isinstance(body, dict) else body
-        if not isinstance(items, list):
+        if not isinstance(items, list) or not items:
+            log.info("T212 history for %s: no items returned", t212_ticker)
             return None
+
+        # One-time diagnostic dump so we can see the actual response shape
+        # in the run logs. T212's history doc is sparse; we want to see
+        # field names and value types for status/direction/timestamps.
+        first = items[0]
+        log.info(
+            "T212 history sample for %s (keys=%s): %s",
+            t212_ticker,
+            sorted(first.keys()) if isinstance(first, dict) else "n/a",
+            json.dumps(first)[:500] if isinstance(first, dict) else str(first)[:500],
+        )
+
         target_date = on_date.isoformat()
+        # Pick: any item with a SELL direction (positive or negative qty
+        # depending on convention; SELL action; or anything that has a
+        # fill price and a non-buy filledQuantity). Multiple field-name
+        # heuristics because T212's history schema is undocumented.
+        candidates: list[dict[str, Any]] = []
         for item in items:
             if not isinstance(item, dict):
                 continue
-            qty = item.get("filledQuantity") or item.get("quantity")
-            try:
-                if qty is None or float(qty) >= 0:
-                    continue  # not a sell
-            except (TypeError, ValueError):
-                continue
-            status = (item.get("status") or "").lower()
-            if status not in ("filled", "executed", "completed"):
-                continue
-            # T212 timestamps look like "2026-05-18T15:04:43.000+00:00"
-            ts = (item.get("dateModified") or item.get("dateCreated") or item.get("dateExecuted") or "")
+
+            # Date filter
+            ts = (
+                item.get("dateModified")
+                or item.get("dateCreated")
+                or item.get("dateExecuted")
+                or item.get("dateUpdated")
+                or ""
+            )
             if not ts.startswith(target_date):
                 continue
-            return item
-        return None
+
+            # Direction filter — accept multiple representations
+            direction_signal: str | None = None
+            for k in ("type", "side", "action", "direction"):
+                v = item.get(k)
+                if isinstance(v, str):
+                    direction_signal = v.upper()
+                    break
+            qty = item.get("filledQuantity") or item.get("quantity") or 0
+            try:
+                qty_f = float(qty)
+            except (TypeError, ValueError):
+                qty_f = 0.0
+            is_sell = (
+                (direction_signal in ("SELL", "SHORT", "S"))
+                or (qty_f < 0)
+            )
+            if not is_sell:
+                continue
+
+            # Must have a usable fill price
+            if self._fill_price_of(item) is None:
+                continue
+            candidates.append(item)
+
+        if not candidates:
+            log.info("T212 history for %s: no SELL match on %s", t212_ticker, target_date)
+            return None
+        # Most recent first
+        candidates.sort(
+            key=lambda i: (i.get("dateModified") or i.get("dateExecuted") or i.get("dateCreated") or ""),
+            reverse=True,
+        )
+        return candidates[0]
 
     def _get_order(self, order_id: int | str) -> dict[str, Any] | None:
         """Fetch an order from the active orders endpoint. Returns None if
