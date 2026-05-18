@@ -43,8 +43,10 @@ log = logging.getLogger(__name__)
 
 # Pre-filter parameters — keep a wide directional spread so the LLM scores
 # rising, falling, and flat candidates (not just trend-following winners).
-# We let liquidity be the floor; direction-mixing is up to the LLM.
-_PREFILTER_MIN_VOL_RATIO = 0.4
+# Liquidity comes from the universe (FTSE 350, S&P 1500, etc.); we don't
+# enforce an extra volume floor at filter time because today's intraday
+# bar (which yfinance returns mid-session) reports only partial volume,
+# yielding misleadingly low volume_ratio for morning runs.
 _PREFILTER_TOP_N = 100  # candidates handed to the LLM for multi-class scoring
 
 
@@ -157,18 +159,19 @@ class LLMStrategy(Strategy):
         return out
 
     def _prefilter(self, techs: dict) -> list:
-        """Liquidity-only pre-filter that preserves directional diversity.
+        """Minimal pre-filter that preserves directional diversity.
 
-        Keeps any ticker with usable technicals + reasonable volume. Ranks
-        by ABS(5-day return) so the LLM sees both the biggest movers up
-        AND the biggest movers down — letting it score across rising,
-        falling, and flat regimes rather than only winners.
+        Keeps any ticker with usable technicals (rsi_14 + return_5d_pct
+        both computable). Ranks by ABS(5-day return) so the LLM sees the
+        biggest movers up AND down, letting it score across rising,
+        falling, and flat regimes rather than only winners. Liquidity is
+        enforced via universe selection upstream, not here — a today-vs-
+        avg volume ratio is unreliable mid-session when today's bar only
+        carries partial volume.
         """
         keep = []
         for ticker, t in techs.items():
             if t.rsi_14 is None or t.return_5d_pct is None:
-                continue
-            if t.volume_ratio is not None and t.volume_ratio < _PREFILTER_MIN_VOL_RATIO:
                 continue
             keep.append(t)
         # Sort by absolute magnitude of recent move — picks up both up- and
