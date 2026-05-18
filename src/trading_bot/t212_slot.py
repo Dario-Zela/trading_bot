@@ -27,6 +27,12 @@ from dataclasses import dataclass
 _DEMO_BASE_URL = "https://demo.trading212.com/api/v0"
 _LIVE_BASE_URL = "https://live.trading212.com/api/v0"
 
+# T212 caps the Practice account balance at £50k. Real orders will fail
+# once cumulative open positions push cash + holdings past this limit,
+# so we keep the constant centrally and pre-flight against it from the
+# executor.
+T212_PAPER_BUDGET_GBP = 50_000.0
+
 
 @dataclass(frozen=True)
 class T212Creds:

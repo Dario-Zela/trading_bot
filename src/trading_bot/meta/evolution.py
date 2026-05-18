@@ -40,6 +40,7 @@ from trading_bot.llm.claude_code import ClaudeCodeError, run_claude_for_json
 from trading_bot.meta.metrics import StrategyMetrics, compute_all_metrics
 from trading_bot.state.paths import STATE_ROOT
 from trading_bot.strategy.registry import _strategies_dir  # noqa: WPS437 — internal but stable
+from trading_bot.t212_slot import T212_PAPER_BUDGET_GBP
 
 
 log = logging.getLogger(__name__)
@@ -241,6 +242,10 @@ Other constraints:
 - Promotion requires `meets_promotion_criteria=true` AND a free slot
 - Demotion requires `meets_demotion_criteria=true`
 - Spawned variants start on Tier 0 shadow, must have a different `id`
+- Trading212 demo (Tier 1.5, UK-EU only) caps total account balance at £{int(T212_PAPER_BUDGET_GBP):,}.
+  If tuning capital_gbp for a UK-EU strategy that's already on `trading212-paper`,
+  remember that the sum of capital_gbp across all `trading212-paper` strategies
+  shares that single budget. US strategies on `alpaca-paper` are not affected.
 
 ## Current snapshot
 

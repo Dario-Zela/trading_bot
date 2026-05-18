@@ -19,6 +19,7 @@ instrument list locally.
 """
 from __future__ import annotations
 
+import json
 import logging
 import time
 import uuid
@@ -29,7 +30,7 @@ import requests
 
 from trading_bot.executor.base import Executor, TradeIntent
 from trading_bot.state import TradeRecord, append_trade, mark_trade_exited, read_open_trades
-from trading_bot.t212_slot import T212Creds, load_slot_creds
+from trading_bot.t212_slot import T212_PAPER_BUDGET_GBP, T212Creds, load_slot_creds
 from trading_bot.tools.t212_instruments import Translator, fetch_instruments
 
 
@@ -59,6 +60,16 @@ class Trading212DemoExecutor(Executor):
             return
 
         translator = self._get_translator()
+        free_cash = self._get_free_cash()
+        if free_cash is None:
+            log.warning(
+                "Could not read T212 free cash — proceeding without budget pre-flight"
+            )
+        else:
+            log.info(
+                "T212 slot %d free cash: £%.2f (account cap £%.0f)",
+                self.slot, free_cash, T212_PAPER_BUDGET_GBP,
+            )
 
         for intent in intents:
             t212_ticker = translator.translate(intent.ticker)
@@ -90,6 +101,19 @@ class Trading212DemoExecutor(Executor):
                     quantity, min_qty, intent.ticker,
                 )
                 continue
+
+            # Budget pre-flight: T212 demo accounts cap at £50k. Skip rather
+            # than letting T212 reject downstream — we want clean logs and
+            # a deterministic in-flight state.
+            if free_cash is not None and allocation_gbp > free_cash:
+                log.warning(
+                    "Skipping %s: would allocate £%.2f but T212 slot %d only has £%.2f free "
+                    "(account cap £%.0f). Lower capital_gbp or rotate slots.",
+                    intent.ticker, allocation_gbp, self.slot, free_cash, T212_PAPER_BUDGET_GBP,
+                )
+                continue
+            if free_cash is not None:
+                free_cash -= allocation_gbp  # local decrement so subsequent intents see updated budget
 
             client_order_id = f"{strategy_id}-{uuid.uuid4().hex[:12]}"
             order = self._submit_market_order(
@@ -368,6 +392,35 @@ class Trading212DemoExecutor(Executor):
                 continue
             self._submit_market_order(t212_ticker=t212_ticker, quantity=-float(qty))
             time.sleep(0.1)
+
+    def _get_free_cash(self) -> float | None:
+        """Read account `free` cash from T212. Returns None on error so the
+        caller can decide whether to proceed (vs blocking on a transient
+        connectivity glitch)."""
+        try:
+            response = requests.get(
+                self._url("/equity/account/cash"),
+                headers=self._headers(),
+                timeout=10,
+            )
+        except requests.RequestException as e:
+            log.warning("T212 cash fetch errored: %s", e)
+            return None
+        if not response.ok:
+            log.warning("T212 cash fetch returned %s: %s", response.status_code, response.text[:200])
+            return None
+        try:
+            body = response.json() or {}
+        except json.JSONDecodeError:
+            return None
+        # T212 returns {"free": ..., "total": ..., "invested": ..., "ppl": ..., ...}
+        free = body.get("free")
+        if free is None:
+            return None
+        try:
+            return float(free)
+        except (TypeError, ValueError):
+            return None
 
     def _estimate_price(self, yf_ticker: str) -> float | None:
         """Use yfinance's recent close as the sizing seed. T212 doesn't expose
