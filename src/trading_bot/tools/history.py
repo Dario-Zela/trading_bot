@@ -75,9 +75,7 @@ def _flatten(df: pd.DataFrame, tickers: list[str], lookback_days: int) -> dict[s
         if sub is None or sub.empty:
             continue
         sub = sub.dropna().tail(lookback_days)
-        # LSE quotes in pence, divide by 100 to get £. Tokyo (.T) and Hong
-        # Kong (.HK) quote in JPY and HKD respectively, both already in their
-        # main currency unit so no scaling needed.
+        # LSE quotes in pence, divide by 100 to get £.
         price_scale = 0.01 if ticker.endswith(".L") else 1.0
         bars: list[Bar] = []
         for ts in sub.index:

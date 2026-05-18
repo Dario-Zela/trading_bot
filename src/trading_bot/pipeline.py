@@ -169,7 +169,7 @@ def main(argv: list[str] | None = None) -> int:
             "weekly-macro", "weekly-evolution", "dst-sync",
         ],
     )
-    parser.add_argument("--region", default="us", choices=["us", "uk-eu", "asia"])
+    parser.add_argument("--region", default="us", choices=["us", "uk-eu"])
     parser.add_argument("--date", help="ISO date (defaults to today)")
     parser.add_argument("--email", action="store_true", help="Send summary email after exit")
     parser.add_argument("--slot", type=int, help="Alpaca slot number (used by clear-slot)")

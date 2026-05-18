@@ -64,11 +64,6 @@ def workflow_specs() -> list[WorkflowDstSpec]:
           exit 15:30 (30min before close).
     LSE / Euronext / Xetra: 08:00–16:30 Europe/London. Entry 8:35,
           exit 16:00.
-    HKEX / TSE: HKEX 09:30–16:00 Asia/Hong_Kong, TSE 09:00–15:00 Asia/Tokyo.
-          Anchor entry to HKEX open + 5min (last open of the day across
-          our Asian markets) and exit to TSE close - 30min (first close
-          of the day). HKEX and TSE don't observe DST so the UTC offset
-          is fixed year-round — we re-derive anyway for safety.
     """
     root = _workflows_root()
     return [
@@ -84,13 +79,6 @@ def workflow_specs() -> list[WorkflowDstSpec]:
             targets=[
                 CronTarget("entry", "Europe/London", 8, 35),
                 CronTarget("exit",  "Europe/London", 16, 0),
-            ],
-        ),
-        WorkflowDstSpec(
-            path=root / "pipeline-asia.yml",
-            targets=[
-                CronTarget("entry", "Asia/Hong_Kong", 9, 35),
-                CronTarget("exit",  "Asia/Tokyo", 14, 30),
             ],
         ),
     ]
