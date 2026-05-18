@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-18T15:37:07.637975+00:00",
+  "generated_at": "2026-05-18T17:37:40.991080+00:00",
   "regions": [
     "uk-eu",
     "us"
@@ -9084,8 +9084,8 @@
       "universe": "uk_eu_extended",
       "capital_gbp": 10000.0,
       "summary": {
-        "n_closed": 0,
-        "n_open": 9,
+        "n_closed": 9,
+        "n_open": 0,
         "total_pnl_gbp": 0.0,
         "avg_pnl_pct": 0.0,
         "hit_rate": 0.0,
@@ -9094,6 +9094,42 @@
       "equity_curve": [
         {
           "date": null,
+          "equity": 10000.0
+        },
+        {
+          "date": "2026-05-18",
+          "equity": 10000.0
+        },
+        {
+          "date": "2026-05-18",
+          "equity": 10000.0
+        },
+        {
+          "date": "2026-05-18",
+          "equity": 10000.0
+        },
+        {
+          "date": "2026-05-18",
+          "equity": 10000.0
+        },
+        {
+          "date": "2026-05-18",
+          "equity": 10000.0
+        },
+        {
+          "date": "2026-05-18",
+          "equity": 10000.0
+        },
+        {
+          "date": "2026-05-18",
+          "equity": 10000.0
+        },
+        {
+          "date": "2026-05-18",
+          "equity": 10000.0
+        },
+        {
+          "date": "2026-05-18",
           "equity": 10000.0
         }
       ],
@@ -9106,22 +9142,22 @@
           "ticker": "GAMA.L",
           "side": "long",
           "entry_date": "2026-05-18",
-          "entry_price": 990.5,
+          "entry_price": 9.905,
           "quantity": 282.0,
           "allocation_pct": 0.0,
           "stop_loss_pct": null,
           "take_profit_pct": null,
           "thesis": "Reconciled from T212 portfolio (GAMAl_EQ) \u2014 original ledger entry missing",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
+          "exit_date": "2026-05-18",
+          "exit_price": 0.0,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "cancelled",
           "outcome_notes": null,
           "risks_observed": null,
           "broker_order_id": null,
           "created_at": "2026-05-18T15:03:42.769784+00:00",
-          "updated_at": "2026-05-18T15:03:42.769796+00:00"
+          "updated_at": "2026-05-18T17:37:36.640307+00:00"
         },
         {
           "trade_id": "mean-reverter-reconciled-17b59da8",
@@ -9131,22 +9167,22 @@
           "ticker": "AEP.L",
           "side": "long",
           "entry_date": "2026-05-18",
-          "entry_price": 2235.0,
+          "entry_price": 22.35,
           "quantity": 112.0,
           "allocation_pct": 0.0,
           "stop_loss_pct": null,
           "take_profit_pct": null,
           "thesis": "Reconciled from T212 portfolio (AEPl_EQ) \u2014 original ledger entry missing",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
+          "exit_date": "2026-05-18",
+          "exit_price": 0.0,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "cancelled",
           "outcome_notes": null,
           "risks_observed": null,
           "broker_order_id": null,
           "created_at": "2026-05-18T15:03:42.770579+00:00",
-          "updated_at": "2026-05-18T15:03:42.770587+00:00"
+          "updated_at": "2026-05-18T17:37:36.956406+00:00"
         },
         {
           "trade_id": "mean-reverter-reconciled-571d44bf",
@@ -9156,22 +9192,22 @@
           "ticker": "WIX.L",
           "side": "long",
           "entry_date": "2026-05-18",
-          "entry_price": 173.0,
+          "entry_price": 1.73,
           "quantity": 1158.0,
           "allocation_pct": 0.0,
           "stop_loss_pct": null,
           "take_profit_pct": null,
           "thesis": "Reconciled from T212 portfolio (WIXl_EQ) \u2014 original ledger entry missing",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
+          "exit_date": "2026-05-18",
+          "exit_price": 0.0,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "cancelled",
           "outcome_notes": null,
           "risks_observed": null,
           "broker_order_id": null,
           "created_at": "2026-05-18T15:03:42.771052+00:00",
-          "updated_at": "2026-05-18T15:03:42.771059+00:00"
+          "updated_at": "2026-05-18T17:37:37.253272+00:00"
         },
         {
           "trade_id": "mean-reverter-reconciled-b14d9928",
@@ -9187,16 +9223,16 @@
           "stop_loss_pct": null,
           "take_profit_pct": null,
           "thesis": "Reconciled from T212 portfolio (IFXd_EQ) \u2014 original ledger entry missing",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
+          "exit_date": "2026-05-18",
+          "exit_price": 0.0,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "cancelled",
           "outcome_notes": null,
           "risks_observed": null,
           "broker_order_id": null,
           "created_at": "2026-05-18T15:03:42.771649+00:00",
-          "updated_at": "2026-05-18T15:03:42.771655+00:00"
+          "updated_at": "2026-05-18T17:37:37.560872+00:00"
         },
         {
           "trade_id": "mean-reverter-reconciled-0a5a220c",
@@ -9206,22 +9242,22 @@
           "ticker": "SSPG.L",
           "side": "long",
           "entry_date": "2026-05-18",
-          "entry_price": 155.3,
+          "entry_price": 1.5530000000000002,
           "quantity": 1163.0,
           "allocation_pct": 0.0,
           "stop_loss_pct": null,
           "take_profit_pct": null,
           "thesis": "Reconciled from T212 portfolio (SSPGl_EQ) \u2014 original ledger entry missing",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
+          "exit_date": "2026-05-18",
+          "exit_price": 0.0,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "cancelled",
           "outcome_notes": null,
           "risks_observed": null,
           "broker_order_id": null,
           "created_at": "2026-05-18T15:03:42.773360+00:00",
-          "updated_at": "2026-05-18T15:03:42.773366+00:00"
+          "updated_at": "2026-05-18T17:37:37.876777+00:00"
         },
         {
           "trade_id": "mean-reverter-reconciled-17c352b0",
@@ -9231,22 +9267,22 @@
           "ticker": "PAGE.L",
           "side": "long",
           "entry_date": "2026-05-18",
-          "entry_price": 114.7,
+          "entry_price": 1.147,
           "quantity": 1746.0,
           "allocation_pct": 0.0,
           "stop_loss_pct": null,
           "take_profit_pct": null,
           "thesis": "Reconciled from T212 portfolio (PAGEl_EQ) \u2014 original ledger entry missing",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
+          "exit_date": "2026-05-18",
+          "exit_price": 0.0,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "cancelled",
           "outcome_notes": null,
           "risks_observed": null,
           "broker_order_id": null,
           "created_at": "2026-05-18T15:03:42.773690+00:00",
-          "updated_at": "2026-05-18T15:03:42.773698+00:00"
+          "updated_at": "2026-05-18T17:37:38.163010+00:00"
         },
         {
           "trade_id": "mean-reverter-reconciled-97213f69",
@@ -9262,16 +9298,16 @@
           "stop_loss_pct": null,
           "take_profit_pct": null,
           "thesis": "Reconciled from T212 portfolio (ABNa_EQ) \u2014 original ledger entry missing",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
+          "exit_date": "2026-05-18",
+          "exit_price": 0.0,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "cancelled",
           "outcome_notes": null,
           "risks_observed": null,
           "broker_order_id": null,
           "created_at": "2026-05-18T15:03:42.774217+00:00",
-          "updated_at": "2026-05-18T15:03:42.774224+00:00"
+          "updated_at": "2026-05-18T17:37:38.818802+00:00"
         },
         {
           "trade_id": "mean-reverter-reconciled-d6786c6b",
@@ -9281,22 +9317,22 @@
           "ticker": "SSE.L",
           "side": "long",
           "entry_date": "2026-05-18",
-          "entry_price": 2306.0,
+          "entry_price": 23.06,
           "quantity": 65.0,
           "allocation_pct": 0.0,
           "stop_loss_pct": null,
           "take_profit_pct": null,
           "thesis": "Reconciled from T212 portfolio (SSEl_EQ) \u2014 original ledger entry missing",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
+          "exit_date": "2026-05-18",
+          "exit_price": 0.0,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "cancelled",
           "outcome_notes": null,
           "risks_observed": null,
           "broker_order_id": null,
           "created_at": "2026-05-18T15:03:42.774509+00:00",
-          "updated_at": "2026-05-18T15:03:42.774516+00:00"
+          "updated_at": "2026-05-18T17:37:39.102313+00:00"
         },
         {
           "trade_id": "mean-reverter-reconciled-262ad940",
@@ -9306,22 +9342,22 @@
           "ticker": "BAB.L",
           "side": "long",
           "entry_date": "2026-05-18",
-          "entry_price": 967.4,
+          "entry_price": 9.674,
           "quantity": 230.0,
           "allocation_pct": 0.0,
           "stop_loss_pct": null,
           "take_profit_pct": null,
           "thesis": "Reconciled from T212 portfolio (BABl_EQ) \u2014 original ledger entry missing",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
+          "exit_date": "2026-05-18",
+          "exit_price": 0.0,
+          "pnl_gbp": 0.0,
+          "pnl_pct": 0.0,
+          "exit_reason": "cancelled",
           "outcome_notes": null,
           "risks_observed": null,
           "broker_order_id": null,
           "created_at": "2026-05-18T15:03:42.775764+00:00",
-          "updated_at": "2026-05-18T15:03:42.775770+00:00"
+          "updated_at": "2026-05-18T17:37:39.369525+00:00"
         }
       ],
       "uncommitted": [
