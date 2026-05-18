@@ -24,6 +24,7 @@ def load_strategy_config(strategy_id: str) -> StrategyConfig:
 
 def _to_config(raw: dict) -> StrategyConfig:
     alpaca_slot = raw.get("alpaca_slot")
+    t212_slot = raw.get("t212_slot")
     return StrategyConfig(
         id=raw["id"],
         display_name=raw["display_name"],
@@ -40,6 +41,7 @@ def _to_config(raw: dict) -> StrategyConfig:
         use_take_profits=bool(raw.get("use_take_profits", False)),
         universe=raw.get("universe", "sp500"),
         alpaca_slot=int(alpaca_slot) if alpaca_slot is not None else None,
+        t212_slot=int(t212_slot) if t212_slot is not None else None,
         stop_loss_pct=float(raw["stop_loss_pct"]) if raw.get("stop_loss_pct") is not None else None,
         take_profit_pct=float(raw["take_profit_pct"]) if raw.get("take_profit_pct") is not None else None,
         tools=list(raw.get("tools", [])),

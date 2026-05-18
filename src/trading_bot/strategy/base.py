@@ -14,7 +14,7 @@ class StrategyConfig:
     description: str
     implementation: str  # "rule_based" | "momentum_stub" | "llm"
     active: bool
-    tier: str  # "shadow" | "alpaca-paper" | "t212-live"
+    tier: str  # "shadow" | "alpaca-paper" | "trading212-paper" | "t212-live"
     region: str
     capital_gbp: float
     max_positions: int
@@ -24,6 +24,7 @@ class StrategyConfig:
     use_take_profits: bool
     universe: str = "sp500"
     alpaca_slot: int | None = None      # required for tier=alpaca-paper
+    t212_slot: int | None = None        # required for tier=trading212-paper
     stop_loss_pct: float | None = None  # used by stub implementations; LLM picks per-trade
     take_profit_pct: float | None = None
     tools: list[str] = field(default_factory=list)

@@ -71,9 +71,13 @@ jobs:
           BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
           NOTIFY_EMAIL_TO: ${{ secrets.NOTIFY_EMAIL_TO }}
           NOTIFY_EMAIL_FROM: ${{ secrets.NOTIFY_EMAIL_FROM }}
-          # UK strategies don't use Alpaca but the data tools may (news API)
+          # UK strategies don't use Alpaca for execution but the data tools may (news API)
           ALPACA_API_KEY__1: ${{ secrets.ALPACA_API_KEY__1 }}
           ALPACA_API_SECRET__1: ${{ secrets.ALPACA_API_SECRET__1 }}
+          # Trading212 demo (Practice mode) — slot 1 covers UK-EU strategies
+          # that have been promoted to tier=trading212-paper. Safe to leave
+          # unset; only required if any UK-EU strategy is on that tier.
+          T212_API_KEY__1: ${{ secrets.T212_API_KEY__1 }}
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
         run: |
           case "${{ steps.mode.outputs.mode }}" in

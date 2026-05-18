@@ -6,7 +6,7 @@ import sys
 from collections import defaultdict
 from datetime import date
 
-from trading_bot.executor import AlpacaPaperExecutor, ShadowExecutor
+from trading_bot.executor import AlpacaPaperExecutor, ShadowExecutor, Trading212DemoExecutor
 from trading_bot.executor.base import Executor
 from trading_bot.notify.email import render_daily_summary, send_summary_email
 from trading_bot.state import read_open_trades
@@ -26,9 +26,15 @@ def _executor_for_strategy(config: StrategyConfig) -> Executor:
                 f"Strategy {config.id}: tier=alpaca-paper requires an alpaca_slot in config"
             )
         return AlpacaPaperExecutor(slot=config.alpaca_slot)
+    if config.tier == "trading212-paper":
+        if config.t212_slot is None:
+            raise ValueError(
+                f"Strategy {config.id}: tier=trading212-paper requires a t212_slot in config"
+            )
+        return Trading212DemoExecutor(slot=config.t212_slot)
     raise NotImplementedError(
         f"Executor for tier '{config.tier}' is not implemented yet — "
-        "valid tiers are 'shadow' and 'alpaca-paper'"
+        "valid tiers are 'shadow', 'alpaca-paper', 'trading212-paper'"
     )
 
 
