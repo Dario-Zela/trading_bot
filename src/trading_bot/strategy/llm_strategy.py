@@ -78,6 +78,11 @@ def _classify(predicted_pct: float, rsi: float | None) -> str:
 class LLMStrategy(Strategy):
     """Strategy backed by Claude Code in single-call mode."""
 
+    # Top-N from Stage 1 to hand to Stage 2's deep-analysis call.
+    # 20 gives the Sonnet stage plenty of optionality while keeping
+    # per-candidate tool fetches (filings / earnings / insider) cheap.
+    _STAGE2_TOP_N = 20
+
     def select_picks(self, on_date: date) -> list[TradeIntent]:
         cfg = self.config
 
@@ -112,9 +117,23 @@ class LLMStrategy(Strategy):
             log.warning("News fetch failed (continuing without news): %s", e)
             news = {ticker: [] for ticker in candidate_tickers}
 
+        # Stage 1 — Haiku wide-scoring on every candidate. Cheap broad
+        # 5-class prediction pass; the goal is to surface the most
+        # informative top-N for the expensive Stage 2 call.
+        stage1_predictions = self._stage1_wide_score(cfg, on_date, candidates, news, prompts)
+
+        # Narrow to top-N for Stage 2. Falls back to ALL candidates if
+        # Stage 1 returned nothing (e.g., Haiku call failed) so the
+        # pipeline degrades gracefully instead of going dark.
+        stage2_candidates = self._select_stage2_candidates(candidates, stage1_predictions)
+        log.info(
+            "%s: stage 1 scored %d, handing %d to stage 2 deep analysis",
+            cfg.id, len(stage1_predictions) or len(candidates), len(stage2_candidates),
+        )
+
         prompt = self._build_prompt(
             on_date=on_date,
-            candidates=candidates,
+            candidates=stage2_candidates,
             news=news,
             deep_analysis_prompt=prompts["deep_analysis"],
             final_select_prompt=prompts["final_select"],
@@ -126,19 +145,122 @@ class LLMStrategy(Strategy):
                 model=cfg.model_assignment.get("final_select", "sonnet"),
             )
         except ClaudeCodeError as e:
-            log.error("%s: LLM call failed: %s", cfg.id, e)
-            self._log_predictions(candidates, llm_predictions={}, picked_intents=[], on_date=on_date)
+            log.error("%s: stage-2 LLM call failed: %s", cfg.id, e)
+            self._log_predictions(candidates, llm_predictions=stage1_predictions, picked_intents=[], on_date=on_date)
             return []
 
-        llm_predictions, picks_raw = self._extract_predictions_and_picks(response)
+        stage2_predictions, picks_raw = self._extract_predictions_and_picks(response)
         intents = self._parse_picks(picks_raw)
+        # Stage 2 predictions (richer reasoning) override Stage 1 for the
+        # top-N; Stage 1 fills the rest of the universe for IC computation.
+        merged_predictions = {**stage1_predictions, **stage2_predictions}
         self._log_predictions(
             candidates,
-            llm_predictions=llm_predictions,
+            llm_predictions=merged_predictions,
             picked_intents=intents,
             on_date=on_date,
         )
         return intents
+
+    def _stage1_wide_score(
+        self,
+        cfg,
+        on_date: date,
+        candidates: list,
+        news: dict,
+        prompts: dict[str, str],
+    ) -> dict[str, dict]:
+        """Cheap Haiku call: predict 5-class direction for every candidate
+        with minimal context (technicals + 1 headline per ticker). Returns
+        {ticker: prediction_dict}. Empty on failure — caller falls back
+        to using all candidates for Stage 2."""
+        prompt = self._build_stage1_prompt(cfg, on_date, candidates, news, prompts)
+        model = cfg.model_assignment.get("wide_scoring", "haiku")
+        try:
+            response = run_claude_for_json(prompt, model=model)
+        except ClaudeCodeError as e:
+            log.warning("%s: stage-1 (wide scoring) failed: %s — degrading to single-stage", cfg.id, e)
+            return {}
+        preds, _ = self._extract_predictions_and_picks(response)
+        return preds
+
+    def _build_stage1_prompt(
+        self,
+        cfg,
+        on_date: date,
+        candidates: list,
+        news: dict,
+        prompts: dict[str, str],
+    ) -> str:
+        """Compact Stage-1 prompt: one row per candidate (ticker, technicals
+        snapshot, top headline), strategy bias section, ask for 5-class
+        predictions on EVERY candidate in JSON."""
+        bias = (prompts.get("deep_analysis") or "").strip()
+        # Crude tail-trim — Stage 1 just needs the strategy bias, not the
+        # full deep_analysis. Keep first 1500 chars.
+        if len(bias) > 1500:
+            bias = bias[:1500] + "\n\n[bias truncated for stage 1]"
+
+        rows: list[str] = []
+        for c in candidates:
+            top_headline = ""
+            ticker_news = news.get(c.ticker) or []
+            if ticker_news:
+                top_headline = f" · news: {ticker_news[0].headline[:120]}"
+            rsi = f"{c.rsi_14:.0f}" if c.rsi_14 is not None else "—"
+            ret5 = f"{c.return_5d_pct:+.2f}%" if c.return_5d_pct is not None else "—"
+            ret20 = f"{c.return_20d_pct:+.2f}%" if c.return_20d_pct is not None else "—"
+            rows.append(f"- {c.ticker}: close={c.close:.2f} 5d={ret5} 20d={ret20} RSI={rsi}{top_headline}")
+
+        return (
+            f"You are running stage 1 (wide scoring) for trading strategy `{cfg.id}` on "
+            f"{on_date.isoformat()}. Region: {cfg.region}. This is a CHEAP broad pass — "
+            f"score every candidate, no picks yet, no allocations.\n\n"
+            f"## Strategy bias / approach (your edge)\n\n{bias or '(no bias prompt — score by technicals)'}\n\n"
+            f"## Candidates ({len(candidates)})\n\n" + "\n".join(rows) + "\n\n"
+            "## Required output\n\n"
+            "Score every candidate above with a 5-class prediction. Return JSON only:\n\n"
+            "```json\n"
+            "{\n"
+            "  \"predictions\": [\n"
+            "    {\n"
+            "      \"ticker\": \"...\",\n"
+            "      \"predicted_class\": \"strong_up\" | \"mild_up\" | \"flat\" | \"mild_down\" | \"strong_down\",\n"
+            "      \"predicted_return_pct\": <float estimate of today's intraday return>,\n"
+            "      \"conviction\": <0.0-1.0>,\n"
+            "      \"rationale\": \"<1 short sentence>\"\n"
+            "    }\n"
+            "  ]\n"
+            "}\n"
+            "```\n\n"
+            "Be honest about flat and falling names — those scores feed prediction-grading "
+            "metrics and matter as much as the up calls. Do not include `picks` in this response."
+        )
+
+    def _select_stage2_candidates(
+        self, candidates: list, stage1_predictions: dict[str, dict]
+    ) -> list:
+        """Rank by Stage 1's conviction × expected magnitude, keep top N.
+        Falls back to original candidates list if Stage 1 produced nothing."""
+        if not stage1_predictions:
+            return candidates
+
+        def score(c) -> float:
+            p = stage1_predictions.get(c.ticker)
+            if not p:
+                return 0.0
+            try:
+                conv = float(p.get("conviction") or 0)
+            except (TypeError, ValueError):
+                conv = 0.0
+            try:
+                mag = abs(float(p.get("predicted_return_pct") or 0))
+            except (TypeError, ValueError):
+                mag = 0.0
+            return conv * mag
+
+        ranked = sorted(candidates, key=score, reverse=True)
+        return ranked[: self._STAGE2_TOP_N]
 
     # ---- internals ---------------------------------------------------------
 
