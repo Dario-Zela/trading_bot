@@ -1,38 +1,31 @@
 id: mean-reverter
-display_name: "Mean reverter"
-description: |
-  LLM-driven. Buys oversold bounces. Weights RSI and distance from MA;
-  counter-trend. Region-agnostic — runs in US and UK/EU pipelines with
-  different universes.
-
+display_name: Mean reverter
+description: "LLM-driven. Buys oversold bounces. Weights RSI and distance from MA;\n\
+  counter-trend. Region-agnostic \u2014 runs in US and UK/EU pipelines with\ndifferent\
+  \ universes.\n"
 implementation: llm
 active: true
-
 capital_gbp: 10000
 max_positions: 5
 max_position_pct: 30
 min_position_gbp: 50
-
 use_stops: true
 use_take_profits: true
 stop_loss_pct: -3.0
 take_profit_pct: 5.0
-
 tools:
-  - get_universe
-  - get_history
-  - get_technicals
-  - get_recent_news
-
+- get_universe
+- get_history
+- get_technicals
+- get_recent_news
 model_assignment:
   wide_scoring: haiku
   deep_analysis: sonnet
   final_select: sonnet
-
 runs_in:
-  - region: us
-    tier: shadow
-    universe: sp500
-  - region: uk-eu
-    tier: shadow
-    universe: uk_eu_blue_chips
+- region: us
+  tier: shadow
+  universe: sp1500
+- region: uk-eu
+  tier: shadow
+  universe: uk_eu_extended

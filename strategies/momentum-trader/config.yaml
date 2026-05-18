@@ -1,16 +1,11 @@
 id: momentum-trader
-display_name: "Momentum trader"
-description: |
-  LLM-driven. Buys recent winners that are still trending. Region-agnostic
-  bias — the same prompt runs against S&P 500 in the US pipeline and against
-  UK + EU blue chips in the UK/EU pipeline. The LLM is told the universe is
-  whatever's been pre-filtered for it and adapts to the regime.
-
+display_name: Momentum trader
+description: "LLM-driven. Buys recent winners that are still trending. Region-agnostic\n\
+  bias \u2014 the same prompt runs against S&P 500 in the US pipeline and against\n\
+  UK + EU blue chips in the UK/EU pipeline. The LLM is told the universe is\nwhatever's\
+  \ been pre-filtered for it and adapts to the regime.\n"
 implementation: llm
 active: true
-
-# Shared defaults — applied to every region this strategy runs in unless
-# the region-specific entry overrides them.
 capital_gbp: 10000
 max_positions: 4
 max_position_pct: 30
@@ -19,25 +14,21 @@ use_stops: true
 use_take_profits: true
 stop_loss_pct: -3.0
 take_profit_pct: 5.0
-
 tools:
-  - get_universe
-  - get_history
-  - get_technicals
-  - get_recent_news
-  - get_macro_view
-
+- get_universe
+- get_history
+- get_technicals
+- get_recent_news
+- get_macro_view
 model_assignment:
   wide_scoring: haiku
   deep_analysis: sonnet
   final_select: sonnet
-
-# Runs in both regions with different universes + tiers
 runs_in:
-  - region: us
-    tier: alpaca-paper
-    alpaca_slot: 1
-    universe: sp500
-  - region: uk-eu
-    tier: shadow
-    universe: uk_eu_blue_chips
+- region: us
+  tier: alpaca-paper
+  alpaca_slot: 1
+  universe: sp1500
+- region: uk-eu
+  tier: shadow
+  universe: uk_eu_extended

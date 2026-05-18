@@ -7,7 +7,10 @@ import requests
 
 
 _SP500_WIKI_URL = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
+_SP400_WIKI_URL = "https://en.wikipedia.org/wiki/List_of_S%26P_400_companies"
+_SP600_WIKI_URL = "https://en.wikipedia.org/wiki/List_of_S%26P_600_companies"
 _FTSE100_WIKI_URL = "https://en.wikipedia.org/wiki/FTSE_100_Index"
+_FTSE250_WIKI_URL = "https://en.wikipedia.org/wiki/FTSE_250_Index"
 _DAX40_WIKI_URL = "https://en.wikipedia.org/wiki/DAX"
 _CAC40_WIKI_URL = "https://en.wikipedia.org/wiki/CAC_40"
 _USER_AGENT = "trading-bot/0.1 (research; +https://github.com/Dario-Zela/trading_bot)"
@@ -95,16 +98,29 @@ def get_universe(universe_id: str) -> list[str]:
     """Return a ticker list for the named universe.
 
     Supported:
-    - US equities: 'sp500'
+    - US equities: 'sp500', 'sp400', 'sp600', 'sp1500' (500+400+600 combined)
     - US ETFs: 'us_etfs_sector', 'us_etfs_bond', 'us_etfs_commodity'
-    - UK equities: 'ftse100'
-    - EU equities: 'dax40' (Frankfurt), 'cac40' (Paris), 'aex25' (Amsterdam),
-                   'eu_blue_chips' (union of the three)
+    - UK equities: 'ftse100', 'ftse250', 'ftse350' (100+250 combined)
+    - EU equities: 'dax40', 'cac40', 'aex25', 'eu_blue_chips' (DAX+CAC+AEX)
+    - UK+EU combined: 'uk_eu_blue_chips' (FTSE100+DAX+CAC+AEX),
+                       'uk_eu_extended' (FTSE350+DAX+CAC+AEX, ~450 names)
     """
     if universe_id == "sp500":
         return _fetch_sp500()
+    if universe_id == "sp400":
+        return _fetch_sp400()
+    if universe_id == "sp600":
+        return _fetch_sp600()
+    if universe_id == "sp1500":
+        combined = set(_fetch_sp500()) | set(_fetch_sp400()) | set(_fetch_sp600())
+        return sorted(combined)
     if universe_id == "ftse100":
         return _fetch_ftse100()
+    if universe_id == "ftse250":
+        return _fetch_ftse250()
+    if universe_id == "ftse350":
+        combined = set(_fetch_ftse100()) | set(_fetch_ftse250())
+        return sorted(combined)
     if universe_id == "dax40":
         return _fetch_dax40()
     if universe_id == "cac40":
@@ -115,9 +131,17 @@ def get_universe(universe_id: str) -> list[str]:
         combined = set(_fetch_dax40()) | set(_fetch_cac40()) | set(_AEX25)
         return sorted(combined)
     if universe_id == "uk_eu_blue_chips":
-        # FTSE 100 + DAX 40 + CAC 40 + AEX 25 — the full UK + EU pipeline universe
         combined = (
             set(_fetch_ftse100())
+            | set(_fetch_dax40())
+            | set(_fetch_cac40())
+            | set(_AEX25)
+        )
+        return sorted(combined)
+    if universe_id == "uk_eu_extended":
+        combined = (
+            set(_fetch_ftse100())
+            | set(_fetch_ftse250())
             | set(_fetch_dax40())
             | set(_fetch_cac40())
             | set(_AEX25)
@@ -145,6 +169,51 @@ def _fetch_sp500() -> list[str]:
     df = tables[0]
     # Wikipedia uses dot-format (BRK.B); yfinance wants dash-format (BRK-B)
     return sorted(df["Symbol"].str.replace(".", "-", regex=False).tolist())
+
+
+def _fetch_sp400() -> list[str]:
+    response = requests.get(_SP400_WIKI_URL, headers={"User-Agent": _USER_AGENT}, timeout=15)
+    response.raise_for_status()
+    tables = pd.read_html(StringIO(response.text))
+    df = tables[0]
+    return sorted(df["Symbol"].astype(str).str.replace(".", "-", regex=False).tolist())
+
+
+def _fetch_sp600() -> list[str]:
+    response = requests.get(_SP600_WIKI_URL, headers={"User-Agent": _USER_AGENT}, timeout=15)
+    response.raise_for_status()
+    tables = pd.read_html(StringIO(response.text))
+    df = tables[0]
+    return sorted(df["Symbol"].astype(str).str.replace(".", "-", regex=False).tolist())
+
+
+def _fetch_ftse250() -> list[str]:
+    """FTSE 250 (UK mid-cap, ~250 LSE names). Same pattern as FTSE 100."""
+    response = requests.get(_FTSE250_WIKI_URL, headers={"User-Agent": _USER_AGENT}, timeout=15)
+    response.raise_for_status()
+    tables = pd.read_html(StringIO(response.text))
+    for df in tables:
+        cols_lower = {str(c).lower().strip(): c for c in df.columns}
+        ticker_col = (
+            cols_lower.get("epic")
+            or cols_lower.get("ticker")
+            or cols_lower.get("symbol")
+            or cols_lower.get("code")
+        )
+        if ticker_col is None:
+            continue
+        tickers = df[ticker_col].astype(str).str.strip().str.upper()
+        tickers = [t if t.endswith(".L") else f"{t}.L" for t in tickers if t and t.lower() != "nan"]
+        seen = set()
+        out = []
+        for t in tickers:
+            if t in seen or " " in t or len(t) > 8:
+                continue
+            seen.add(t)
+            out.append(t)
+        if len(out) >= 100:  # FTSE 250 sanity floor
+            return sorted(out)
+    raise RuntimeError("Could not find an FTSE 250 ticker column in any Wikipedia table")
 
 
 def _fetch_ftse100() -> list[str]:

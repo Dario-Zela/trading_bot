@@ -1,27 +1,22 @@
 id: control-rule-based
-display_name: "Control — rule-based gainers"
-description: |
-  Deterministic baseline. Buys top-N highest previous-day % gainers from the
-  configured universe, equal weight, no stops, no take-profits. No LLM
-  involvement. Region-agnostic — runs against S&P 500 in the US pipeline and
-  against UK + EU blue chips in the UK/EU pipeline. The yardstick every
-  other strategy must beat in each region.
-
+display_name: "Control \u2014 rule-based gainers"
+description: "Deterministic baseline. Buys top-N highest previous-day % gainers from\
+  \ the\nconfigured universe, equal weight, no stops, no take-profits. No LLM\ninvolvement.\
+  \ Region-agnostic \u2014 runs against S&P 500 in the US pipeline and\nagainst UK\
+  \ + EU blue chips in the UK/EU pipeline. The yardstick every\nother strategy must\
+  \ beat in each region.\n"
 implementation: rule_based
 active: true
-
 capital_gbp: 10000
 max_positions: 5
 max_position_pct: 30
 min_position_gbp: 50
-
 use_stops: false
 use_take_profits: false
-
 runs_in:
-  - region: us
-    tier: shadow
-    universe: sp500
-  - region: uk-eu
-    tier: shadow
-    universe: uk_eu_blue_chips
+- region: us
+  tier: shadow
+  universe: sp1500
+- region: uk-eu
+  tier: shadow
+  universe: uk_eu_extended

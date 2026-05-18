@@ -41,12 +41,21 @@ from trading_bot.tools import (
 log = logging.getLogger(__name__)
 
 
-# Pre-filter parameters — chosen to give Claude a meaningful but bounded
-# universe to reason over. Adjustable per-strategy in a later refactor.
-_PREFILTER_RSI_MIN = 30.0
-_PREFILTER_RSI_MAX = 80.0
-_PREFILTER_MIN_VOL_RATIO = 0.5
-_PREFILTER_TOP_N = 30  # how many candidates to hand to the LLM
+# Pre-filter parameters — keep a wide directional spread so the LLM scores
+# rising, falling, and flat candidates (not just trend-following winners).
+# We let liquidity be the floor; direction-mixing is up to the LLM.
+_PREFILTER_MIN_VOL_RATIO = 0.4
+_PREFILTER_TOP_N = 100  # candidates handed to the LLM for multi-class scoring
+
+
+def _safe_float(val, *, default: float) -> float:
+    try:
+        f = float(val)
+        if f != f:  # NaN
+            return default
+        return f
+    except (TypeError, ValueError):
+        return default
 
 
 def _classify(predicted_pct: float, rsi: float | None) -> str:
@@ -116,11 +125,17 @@ class LLMStrategy(Strategy):
             )
         except ClaudeCodeError as e:
             log.error("%s: LLM call failed: %s", cfg.id, e)
-            self._log_predictions(candidates, picked_intents=[], on_date=on_date)
+            self._log_predictions(candidates, llm_predictions={}, picked_intents=[], on_date=on_date)
             return []
 
-        intents = self._parse_picks(response)
-        self._log_predictions(candidates, picked_intents=intents, on_date=on_date)
+        llm_predictions, picks_raw = self._extract_predictions_and_picks(response)
+        intents = self._parse_picks(picks_raw)
+        self._log_predictions(
+            candidates,
+            llm_predictions=llm_predictions,
+            picked_intents=intents,
+            on_date=on_date,
+        )
         return intents
 
     # ---- internals ---------------------------------------------------------
@@ -142,18 +157,23 @@ class LLMStrategy(Strategy):
         return out
 
     def _prefilter(self, techs: dict) -> list:
+        """Liquidity-only pre-filter that preserves directional diversity.
+
+        Keeps any ticker with usable technicals + reasonable volume. Ranks
+        by ABS(5-day return) so the LLM sees both the biggest movers up
+        AND the biggest movers down — letting it score across rising,
+        falling, and flat regimes rather than only winners.
+        """
         keep = []
         for ticker, t in techs.items():
-            if t.rsi_14 is None or t.return_5d_pct is None or t.above_sma_20 is None:
-                continue
-            if not t.above_sma_20:
-                continue
-            if not (_PREFILTER_RSI_MIN <= t.rsi_14 <= _PREFILTER_RSI_MAX):
+            if t.rsi_14 is None or t.return_5d_pct is None:
                 continue
             if t.volume_ratio is not None and t.volume_ratio < _PREFILTER_MIN_VOL_RATIO:
                 continue
             keep.append(t)
-        keep.sort(key=lambda x: x.return_5d_pct, reverse=True)
+        # Sort by absolute magnitude of recent move — picks up both up- and
+        # down-movers symmetrically.
+        keep.sort(key=lambda x: abs(x.return_5d_pct), reverse=True)
         return keep[:_PREFILTER_TOP_N]
 
     def _build_prompt(
@@ -262,24 +282,44 @@ class LLMStrategy(Strategy):
             )
 
         sections.append(
-            "## Required output format\n\n"
-            "Return a JSON array — one object per pick. If nothing is compelling today, "
-            "return an empty array `[]`. **Do not** include explanations outside the JSON.\n\n"
+            "## Required output\n\n"
+            "Return a **JSON object with two keys**: `predictions` (one entry per "
+            "candidate above) and `picks` (the subset you want to trade today).\n\n"
+            "### `predictions` — score EVERY candidate\n\n"
+            "One object per ticker in the candidates section above. The point of "
+            "this list is statistical model validation: we measure how well your "
+            "ranking predicts realised returns end-of-day. **Score the full set** "
+            "including names you're confident will fall or do nothing — getting "
+            "those right is just as valuable as getting the rising ones right.\n\n"
             "```json\n"
-            "[\n"
-            "  {\n"
-            "    \"ticker\": \"AAPL\",\n"
-            "    \"allocation_pct\": 25.0,\n"
-            "    \"stop_loss_pct\": -3.0,\n"
-            "    \"take_profit_pct\": 5.0,\n"
-            "    \"thesis\": \"1-2 sentence rationale citing the specific technicals or news that justified this pick.\"\n"
-            "  }\n"
-            "]\n"
+            "{\n"
+            "  \"ticker\": \"...\",\n"
+            "  \"predicted_class\": \"strong_up\" | \"mild_up\" | \"flat\" | \"mild_down\" | \"strong_down\",\n"
+            "  \"predicted_return_pct\": <float, your point estimate for today's intraday return>,\n"
+            "  \"conviction\": <0.0-1.0>,\n"
+            "  \"rationale\": \"<1 short sentence — the dominant signal driving the call>\"\n"
+            "}\n"
             "```\n\n"
-            f"Allocations must sum to ≤ 100. Up to {cfg.max_positions} picks. "
-            f"Each `allocation_pct` between (min_position_gbp/capital × 100) and {cfg.max_position_pct}. "
-            "Bracket-order constraint: `stop_loss_pct` < 0 and `take_profit_pct` > 0 if set, "
-            "or both null for a plain market order without protection."
+            "### `picks` — top names you want long today (subset of predictions)\n\n"
+            "```json\n"
+            "{\n"
+            "  \"ticker\": \"...\",\n"
+            "  \"allocation_pct\": <float>,\n"
+            "  \"stop_loss_pct\": <float or null>,\n"
+            "  \"take_profit_pct\": <float or null>,\n"
+            "  \"thesis\": \"<1-2 sentence rationale>\"\n"
+            "}\n"
+            "```\n\n"
+            f"Hard rules for picks: up to {cfg.max_positions} entries, allocations "
+            f"sum to ≤ 100, each between (min_position_gbp/capital × 100) and "
+            f"{cfg.max_position_pct}. Bracket-order constraint: `stop_loss_pct` < 0 "
+            "and `take_profit_pct` > 0 if set, or both null. Cash is a valid position — "
+            "return `picks: []` if nothing is compelling, but still score every "
+            "candidate in `predictions`.\n\n"
+            "Full required shape:\n\n"
+            "```json\n"
+            "{ \"predictions\": [...], \"picks\": [...] }\n"
+            "```"
         )
 
         return "\n\n".join(sections)
@@ -402,49 +442,79 @@ class LLMStrategy(Strategy):
         self,
         candidates: list,
         *,
+        llm_predictions: dict[str, dict],
         picked_intents: list[TradeIntent],
         on_date: date,
     ) -> None:
         """Write a PredictionRecord for every pre-filtered candidate.
 
-        The wider prediction set is what we use for IC / hit-rate / decile-spread
-        analysis (independently of whether a candidate was actually traded).
-        Wave 2b initial implementation: predicted_return_pct uses the 5-day
-        momentum (the technical signal that got it through pre-filter); a future
-        refinement asks Claude to score each candidate explicitly.
+        Class / predicted_return_pct / conviction / rationale come from the
+        LLM's `predictions` block. If a candidate is missing from the LLM
+        response (parse failure, truncated output), we fall back to a
+        technical-heuristic classification so the row still gets logged.
 
-        actual_return_pct is filled in by the daily reflection / exit step.
+        actual_return_pct is filled by meta.reflection.grade_predictions at
+        the exit step.
         """
         cfg = self.config
         picked_tickers = {i.ticker for i in picked_intents}
-        picked_theses = {i.ticker: i.thesis for i in picked_intents}
 
         for c in candidates:
-            predicted_pct = c.return_5d_pct if c.return_5d_pct is not None else 0.0
-            predicted_class = _classify(predicted_pct, c.rsi_14)
-            was_traded = c.ticker in picked_tickers
-            conviction = 0.75 if was_traded else 0.4
-            if was_traded:
-                rationale = picked_theses.get(c.ticker, "Picked by LLM.")
+            ticker = c.ticker
+            llm_pred = llm_predictions.get(ticker)
+            if llm_pred is not None:
+                predicted_class = str(llm_pred.get("predicted_class", "flat"))
+                predicted_pct = _safe_float(llm_pred.get("predicted_return_pct"), default=0.0)
+                conviction = _safe_float(llm_pred.get("conviction"), default=0.5)
+                rationale = str(llm_pred.get("rationale", "")).strip() or "(no rationale)"
             else:
-                rationale = (
-                    f"Passed pre-filter (5d {c.return_5d_pct:+.2f}%, RSI {c.rsi_14:.1f}, "
-                    f"above SMA20={c.above_sma_20}) but LLM did not select."
-                )
+                # Fallback: candidate not scored by LLM (truncated response etc.)
+                predicted_pct = c.return_5d_pct if c.return_5d_pct is not None else 0.0
+                predicted_class = _classify(predicted_pct, c.rsi_14)
+                conviction = 0.3  # low — LLM didn't engage with this name
+                rationale = "Not scored by LLM; fallback technical heuristic."
 
+            was_traded = ticker in picked_tickers
             append_prediction(
                 PredictionRecord(
                     strategy_id=cfg.id,
                     region=cfg.region,
                     prediction_date=on_date.isoformat(),
-                    ticker=c.ticker,
+                    ticker=ticker,
                     predicted_class=predicted_class,
                     predicted_return_pct=round(float(predicted_pct), 2),
-                    conviction=conviction,
+                    conviction=round(float(conviction), 2),
                     rationale=rationale,
                     was_traded=was_traded,
                 )
             )
+
+    def _extract_predictions_and_picks(self, response) -> tuple[dict[str, dict], list]:
+        """Pull `predictions` (keyed by ticker) + `picks` (list) out of the LLM
+        response. Tolerates the legacy shape (response = a bare list of picks)
+        as a fallback so old strategy outputs don't break."""
+        if isinstance(response, dict):
+            preds_raw = response.get("predictions") or []
+            picks_raw = response.get("picks") or []
+        elif isinstance(response, list):
+            preds_raw = []
+            picks_raw = response
+        else:
+            return {}, []
+
+        predictions: dict[str, dict] = {}
+        if isinstance(preds_raw, list):
+            for entry in preds_raw:
+                if not isinstance(entry, dict):
+                    continue
+                ticker = entry.get("ticker")
+                if not ticker:
+                    continue
+                predictions[str(ticker).upper()] = entry
+
+        if not isinstance(picks_raw, list):
+            picks_raw = []
+        return predictions, picks_raw
 
     def _parse_picks(self, response) -> list[TradeIntent]:
         cfg = self.config

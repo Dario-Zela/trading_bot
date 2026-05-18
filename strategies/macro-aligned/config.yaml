@@ -1,41 +1,34 @@
 id: macro-aligned
-display_name: "Macro aligned"
-description: |
-  LLM-driven. Reads the weekly macro view first; only buys stocks in sectors
-  the macro agent is bullish on; avoids bearish sectors. Regime-aware top-down
-  strategy. Region-agnostic — the macro view is global, just the candidate
-  universe differs per region.
-
+display_name: Macro aligned
+description: "LLM-driven. Reads the weekly macro view first; only buys stocks in sectors\n\
+  the macro agent is bullish on; avoids bearish sectors. Regime-aware top-down\nstrategy.\
+  \ Region-agnostic \u2014 the macro view is global, just the candidate\nuniverse\
+  \ differs per region.\n"
 implementation: llm
 active: true
-
 capital_gbp: 10000
 max_positions: 5
 max_position_pct: 30
 min_position_gbp: 50
-
 use_stops: true
 use_take_profits: true
 stop_loss_pct: -3.5
 take_profit_pct: 7.0
-
 tools:
-  - get_universe
-  - get_history
-  - get_technicals
-  - get_recent_news
-  - get_sector_strength
-  - get_macro_view
-
+- get_universe
+- get_history
+- get_technicals
+- get_recent_news
+- get_sector_strength
+- get_macro_view
 model_assignment:
   wide_scoring: haiku
   deep_analysis: sonnet
   final_select: sonnet
-
 runs_in:
-  - region: us
-    tier: shadow
-    universe: sp500
-  - region: uk-eu
-    tier: shadow
-    universe: uk_eu_blue_chips
+- region: us
+  tier: shadow
+  universe: sp1500
+- region: uk-eu
+  tier: shadow
+  universe: uk_eu_extended

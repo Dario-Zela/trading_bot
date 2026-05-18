@@ -1,40 +1,33 @@
 id: news-reactive
-display_name: "News reactive"
-description: |
-  LLM-driven. Weights earnings surprises, M&A, guidance changes, and other
-  catalysts. News routing per ticker: Alpaca News for US-listed names,
-  yfinance fallback for UK/EU listings — coverage is decent everywhere.
-
+display_name: News reactive
+description: "LLM-driven. Weights earnings surprises, M&A, guidance changes, and other\n\
+  catalysts. News routing per ticker: Alpaca News for US-listed names,\nyfinance fallback\
+  \ for UK/EU listings \u2014 coverage is decent everywhere.\n"
 implementation: llm
 active: true
-
 capital_gbp: 10000
 max_positions: 5
 max_position_pct: 30
 min_position_gbp: 50
-
 use_stops: true
 use_take_profits: true
 stop_loss_pct: -3.0
 take_profit_pct: 5.0
-
 tools:
-  - get_universe
-  - get_history
-  - get_recent_news
-  - get_earnings_info
-  - get_filing_summary
-  - get_insider_trades
-
+- get_universe
+- get_history
+- get_recent_news
+- get_earnings_info
+- get_filing_summary
+- get_insider_trades
 model_assignment:
   wide_scoring: haiku
   deep_analysis: sonnet
   final_select: sonnet
-
 runs_in:
-  - region: us
-    tier: shadow
-    universe: sp500
-  - region: uk-eu
-    tier: shadow
-    universe: uk_eu_blue_chips
+- region: us
+  tier: shadow
+  universe: sp1500
+- region: uk-eu
+  tier: shadow
+  universe: uk_eu_extended
