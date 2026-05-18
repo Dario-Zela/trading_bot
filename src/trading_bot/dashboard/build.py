@@ -274,6 +274,16 @@ def main(argv: list[str] | None = None) -> int:
     data = build_dashboard_data()
     out_path.write_text(json.dumps(data, indent=2))
     log.info("Wrote %s (%d active, %d archived)", out_path, len(data["active"]), len(data["archived"]))
+
+    # Render the static markdown-driven pages alongside the dashboard JSON.
+    # Idempotent: re-renders every existing brief / macro view / evolution
+    # log so the site stays consistent after any single workflow runs.
+    try:
+        from trading_bot.dashboard.pages import rebuild_all_pages
+        summary = rebuild_all_pages()
+        log.info("Rebuilt static pages: %s", summary)
+    except Exception as e:
+        log.warning("Static page rebuild failed (non-fatal): %s", e)
     return 0
 
 

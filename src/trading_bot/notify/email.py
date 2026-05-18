@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 import os
+import re
 from datetime import date
 
 import requests
@@ -62,6 +63,65 @@ def send_summary_email(
 
 _DASHBOARD_URL = "https://dario-zela.github.io/trading_bot/"
 _REPO_URL = "https://github.com/Dario-Zela/trading_bot"
+
+
+def render_news_brief_email(
+    *,
+    run_date: date,
+    bot_summary_md: str,
+    full_brief_url: str,
+) -> tuple[str, str, str]:
+    """Compose the standalone morning-news email (separate from the
+    end-of-day trading summary). Returns (subject, text_body, html_body).
+    Body is short: a 'jump to full read' button at the top, then the
+    inline bot-summary block so the email is useful on its own."""
+    subject = f"[trading-bot] Morning brief — {run_date.isoformat()}"
+
+    text_lines = [
+        f"Morning markets brief — {run_date.isoformat()}",
+        "",
+        f"Read the full newspaper-style brief: {full_brief_url}",
+        "",
+        "Bot summary:",
+        bot_summary_md.strip() or "(no summary)",
+    ]
+    text_body = "\n".join(text_lines)
+
+    summary_html = bot_summary_md.strip()
+    # Light markdown → HTML conversion for the inline summary section.
+    # The bot summary is mostly bold labels + bullets; we render those
+    # without pulling in the markdown library for one snippet.
+    summary_html = _escape(summary_html)
+    summary_html = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", summary_html)
+    summary_html = re.sub(r"^\s*-\s+(.*)", r"&bull; \1", summary_html, flags=re.MULTILINE)
+    summary_html = summary_html.replace("\n", "<br />")
+
+    weekday_name = run_date.strftime("%a %d %b %Y")
+    html_body = f"""<!DOCTYPE html>
+<html lang="en">
+<body style="margin:0;padding:0;background:#f3f4f6;font-family:-apple-system,Segoe UI,Roboto,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f3f4f6;padding:20px 0;">
+    <tr><td align="center">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+        <tr><td style="padding:24px 28px 8px;border-bottom:1px solid #e5e7eb;">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:#6b7280;font-weight:600;">Morning brief · {_escape(weekday_name)}</div>
+          <div style="font-size:20px;font-weight:700;color:#111827;letter-spacing:-0.01em;margin-top:4px;">Today&apos;s market read</div>
+        </td></tr>
+        <tr><td style="padding:18px 28px 6px;">
+          <a href="{_escape(full_brief_url)}" style="display:inline-block;padding:11px 18px;background:#2563eb;color:#ffffff;text-decoration:none;border-radius:6px;font-size:13px;font-weight:600;">Read the full newspaper brief →</a>
+        </td></tr>
+        <tr><td style="padding:18px 28px 24px;font-size:13.5px;line-height:1.6;color:#374151;">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:#9ca3af;font-weight:600;margin-bottom:8px;">Bot summary (compressed)</div>
+          <div>{summary_html or '(no summary)'}</div>
+        </td></tr>
+        <tr><td style="padding:18px 28px 22px;border-top:1px solid #e5e7eb;background:#fafafa;font-size:11px;color:#9ca3af;">
+          Auto-generated daily before market open · <a href="{_REPO_URL}" style="color:#6b7280;text-decoration:none;">github.com/Dario-Zela/trading_bot</a>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body></html>"""
+    return subject, text_body, html_body
 
 
 def _escape(s: str) -> str:

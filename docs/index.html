@@ -431,6 +431,24 @@
     [data-theme="dark"] .pred-class-badge.mild_down { color: #fca5a5; }
     [data-theme="dark"] .pred-class-badge.strong_down { color: #fca5a5; }
 
+    /* Page-level nav (matches static pages built by dashboard/pages.py) */
+    .nav-tabs {
+      display: flex;
+      gap: 0;
+      margin-right: 0.5rem;
+    }
+    .nav-tab {
+      padding: 0.4rem 0.9rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--pico-muted-color);
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+    .nav-tab:hover { color: var(--accent); }
+    .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
     @media (max-width: 700px) {
       .app { padding: 1rem; }
       .grid { grid-template-columns: 1fr; }
@@ -441,6 +459,12 @@
   <div class="app" x-data="dashboard()" x-init="load()">
     <header class="topbar">
       <h1>⚡ Trading Bot</h1>
+      <nav class="nav-tabs">
+        <a class="nav-tab active" href="index.html">Dashboard</a>
+        <a class="nav-tab" href="news/index.html">News</a>
+        <a class="nav-tab" href="macro/index.html">Macro</a>
+        <a class="nav-tab" href="evolution.html">Evolution</a>
+      </nav>
       <div class="spacer"></div>
       <span class="meta">
         Last updated <span x-text="formatTimestamp(data.generated_at)"></span>
