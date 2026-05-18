@@ -20,7 +20,7 @@ Tracking the work to ship the multi-stage newspaper pipeline. Check items off as
 - [x] `src/trading_bot/meta/grade_predictions.py` — daily grader: walks open predictions whose target_date has passed, scores each via Haiku in parallel using a cross-asset snapshot, mutates status to proven / partial / falsified / still-open
 - [x] `pipeline.py` mode `grade-predictions` wired
 - [x] `.github/workflows/grade-predictions.yml` — cron-job.org-triggered workflow that runs `pipeline grade-predictions` daily
-- [x] Add `grade-predictions` to `scripts/setup_cron_jobs.py` SCHEDULES (23:30 UTC, every day)
+- [x] Add `grade-predictions` to `scripts/setup_cron_jobs.py` SCHEDULES (05:00 UTC, every day — just before the morning brief)
 - [x] Commit + push the Phase 1 work
 
 ---

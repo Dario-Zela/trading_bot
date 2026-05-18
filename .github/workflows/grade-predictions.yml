@@ -1,7 +1,10 @@
 name: Grade predictions
 
-# Triggered nightly (23:30 UTC) by cron-job.org via workflow_dispatch.
-# Walks every open prediction whose target_date has passed, scores it
+# Triggered every morning (05:00 UTC) by cron-job.org via workflow_dispatch.
+# Sits between yesterday's market close and the morning news brief at
+# 07:30 BST — Asia has just finished trading, US closed ~8 hours ago,
+# nothing happens between 05:00 and the brief except this. The grader
+# walks every open prediction whose target_date has passed, scores it
 # against its falsification criterion using current market data, and
 # mutates its row to proven / partial / falsified / still-open. Feeds the
 # "marking the homework" section across News, Macro, and Evolution.
