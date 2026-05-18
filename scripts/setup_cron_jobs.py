@@ -79,6 +79,16 @@ SCHEDULES: list[dict] = [
         "hour": 7, "minute": 30,
         "wdays": [1, 2, 3, 4, 5],  # Mon-Fri
     },
+    # Nightly grader — scores any open prediction whose target_date has
+    # passed. Runs at 23:30 UTC so verdicts are fresh for the morning brief.
+    {
+        "name": "grade-predictions",
+        "workflow": "grade-predictions.yml",
+        "inputs": {},
+        "tz": "UTC",
+        "hour": 23, "minute": 30,
+        "wdays": [1, 2, 3, 4, 5, 6, 0],  # every day
+    },
     # Weekly meta-jobs — pure UTC schedules, no inputs.
     {
         "name": "weekly-evolution",

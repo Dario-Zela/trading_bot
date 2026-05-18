@@ -1,18 +1,32 @@
-"""Static HTML page rendering for content stored as markdown in state/.
+"""Static HTML page rendering for the trading-bot site.
 
-Three artifacts get web pages on GitHub Pages:
-- Daily news briefs (state/daily_news/*.md → docs/news/*.html)
-- Weekly macro views (state/macro/views/*.md → docs/macro/*.html)
-- Evolution log (state/evolution.md → docs/evolution.html)
+Renders four kinds of page from structured data produced upstream:
 
-Each page shares a small HTML shell with nav tabs that match the main
-dashboard's header so the four views feel like one site. Markdown is
-rendered server-side (Python `markdown` lib) into HTML so the pages
-work without JavaScript.
+- News editions (multi-stage agent output) → `docs/news/YYYY-MM-DD/index.html`
+  plus per-article subpages at `docs/news/YYYY-MM-DD/{slug}.html`.
+- Macro views (weekly multi-desk output) → `docs/macro/YYYY-W##/index.html`
+  plus per-piece subpages at `docs/macro/YYYY-W##/{slug}.html`.
+- Evolution log (weekly per-strategy reports) → `docs/evolution.html`.
+- Archive indices listing all editions / views.
+
+The render layer is HTML-template based: agents produce structured JSON
+(headlines, markdown bodies, sections, predictions). This module turns
+that into HTML. The LLM never emits final HTML — too risky for layout
+stability.
+
+Shared shell (masthead-strip, app nav, font picker, colophon) is provided
+by `_shell()`. Pages link to `docs/assets/style.css` for everything else.
+
+For backwards compatibility this module still exposes `render_news_pages`,
+`render_macro_pages`, `render_evolution_page`, and `rebuild_all_pages` —
+they now drive the new shell + structure but operate on the existing
+markdown files in `state/`. Once Phase 2/3 land, the multi-stage agents
+will write structured JSON and these legacy entry points will pivot.
 """
 from __future__ import annotations
 
 import html
+import json
 import logging
 import re
 from datetime import date, datetime, timezone
@@ -26,138 +40,147 @@ from trading_bot.state.paths import STATE_ROOT
 log = logging.getLogger(__name__)
 
 
+# ---------------------------------------------------------------------------
+# Shell
+# ---------------------------------------------------------------------------
+
 _NAV_ITEMS = (
-    ("dashboard", "Dashboard"),
-    ("news", "News"),
-    ("macro", "Macro"),
-    ("evolution", "Evolution"),
+    ("dashboard", "Dashboard", "index.html"),
+    ("news",      "News",      "news/index.html"),
+    ("macro",     "Macro",     "macro/index.html"),
+    ("evolution", "Evolution", "evolution.html"),
 )
+
+_FONTS_LINK = (
+    '<link rel="preconnect" href="https://fonts.googleapis.com">'
+    '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
+    '<link href="https://fonts.googleapis.com/css2?'
+    'family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400'
+    '&family=Source+Serif+4:ital,wght@0,400;0,600;1,400'
+    '&family=Source+Sans+3:wght@400;500;600;700'
+    '&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400'
+    '&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400'
+    '&family=Lora:ital,wght@0,400;0,600;0,700;1,400'
+    '&family=Inter:wght@400;500;600;700'
+    '&family=IBM+Plex+Sans:wght@400;500;600;700'
+    '&family=Lato:wght@400;700'
+    '&display=swap" rel="stylesheet">'
+)
+
+_FONT_PICKER_SCRIPT = """
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+"""
 
 
 def docs_root() -> Path:
-    # src/trading_bot/dashboard/pages.py → repo root is 4 parents up
     return Path(__file__).resolve().parents[3] / "docs"
 
 
+def _up_to_root(depth: int) -> str:
+    return "../" * depth if depth > 0 else "./"
+
+
 def _nav_html(current: str, depth: int) -> str:
-    """Build the nav-tabs HTML for a given section + nesting depth.
-    `depth` is how many `../` to prepend (0 = file is in docs/, 1 = in
-    docs/news/, etc.)."""
-    up = "../" * depth
-    hrefs = {
-        "dashboard": f"{up}index.html",
-        "news":      f"{up}news/index.html",
-        "macro":     f"{up}macro/index.html",
-        "evolution": f"{up}evolution.html",
-    }
-    out = []
-    for ident, label in _NAV_ITEMS:
+    up = _up_to_root(depth)
+    items = []
+    for ident, label, path in _NAV_ITEMS:
         cls = "nav-tab active" if ident == current else "nav-tab"
-        out.append(f'<a class="{cls}" href="{hrefs[ident]}">{label}</a>')
-    return '<nav class="nav-tabs">\n' + "\n".join(out) + "\n</nav>"
+        items.append(f'<a class="{cls}" href="{up}{path}">{label}</a>')
+    return "\n".join(items)
 
 
-def _shell(*, title: str, body_html: str, current: str, depth: int, subtitle: str = "") -> str:
-    """Wrap rendered markdown in the standard page shell."""
-    sub = f'<div class="page-subtitle">{html.escape(subtitle)}</div>' if subtitle else ""
-    nav = _nav_html(current, depth)
+def _font_picker_html() -> str:
+    return (
+        '<div class="font-picker">'
+        '<span class="label">Font</span>'
+        '<button data-font="classic">Classic</button>'
+        '<button data-font="newsreader">Newsreader</button>'
+        '<button data-font="crimson">Crimson</button>'
+        '<button data-font="lora">Lora</button>'
+        "</div>"
+    )
+
+
+def _shell(
+    *,
+    title: str,
+    body_html: str,
+    current: str,
+    depth: int,
+    page_class: str = "",
+    extra_nav: str = "",
+) -> str:
+    """Wrap a page body in the shared shell — head, nav, font picker,
+    Google Fonts, stylesheet link, colophon. `depth` controls how many
+    `../` we prepend to relative paths (0 = file is in docs/, 1 = in
+    docs/news/, 2 = in docs/news/2026-05-18/)."""
+    up = _up_to_root(depth)
+    body_class = f"page-{page_class}" if page_class else ""
     return f"""<!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{html.escape(title)} — Trading Bot</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-  <style>
-    :root {{
-      --positive: #16a34a;
-      --negative: #dc2626;
-      --accent: var(--pico-primary);
-    }}
-    body {{ margin: 0; }}
-    .app {{ max-width: 880px; margin: 0 auto; padding: 1.5rem 2rem 4rem; }}
-    .topbar {{
-      display: flex; align-items: center; gap: 1rem;
-      padding-bottom: 1rem; border-bottom: 1px solid var(--pico-muted-border-color);
-      margin-bottom: 0.5rem;
-    }}
-    .topbar h1 {{ margin: 0; font-size: 1.3rem; letter-spacing: -0.01em; }}
-    .topbar .spacer {{ flex: 1; }}
-    .nav-tabs {{ display: flex; gap: 0; }}
-    .nav-tab {{
-      padding: 0.4rem 0.9rem;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--pico-muted-color);
-      text-decoration: none;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-    }}
-    .nav-tab:hover {{ color: var(--accent); }}
-    .nav-tab.active {{ color: var(--accent); border-bottom-color: var(--accent); }}
-    .page-subtitle {{
-      color: var(--pico-muted-color);
-      font-size: 0.85rem;
-      margin: 0.5rem 0 1.5rem;
-    }}
-    .page-content {{ font-size: 1rem; line-height: 1.65; }}
-    .page-content h1 {{ font-size: 1.8rem; letter-spacing: -0.01em; margin-top: 2rem; }}
-    .page-content h2 {{ font-size: 1.35rem; margin-top: 2rem; }}
-    .page-content h3 {{ font-size: 1.1rem; margin-top: 1.5rem; }}
-    .page-content h4 {{
-      font-size: 1rem; margin-top: 1.25rem;
-      color: var(--pico-h3-color);
-    }}
-    .page-content table {{ font-size: 0.9rem; margin: 1rem 0; }}
-    .page-content table th {{ background: var(--pico-muted-border-color); }}
-    .page-content blockquote {{
-      border-left: 3px solid var(--accent);
-      margin-left: 0; padding-left: 1rem;
-      color: var(--pico-muted-color);
-    }}
-    .page-content code {{ font-size: 0.85em; }}
-    .page-content hr {{ border-top: 1px solid var(--pico-muted-border-color); margin: 2rem 0; }}
-    .index-list {{ list-style: none; padding: 0; }}
-    .index-list li {{
-      padding: 0.65rem 0;
-      border-bottom: 1px solid var(--pico-muted-border-color);
-    }}
-    .index-list li a {{ font-weight: 600; text-decoration: none; }}
-    .index-list .muted {{ color: var(--pico-muted-color); font-size: 0.85rem; margin-left: 0.4rem; }}
-  </style>
+  {_FONTS_LINK}
+  <link rel="stylesheet" href="{up}assets/style.css">
 </head>
-<body>
-  <div class="app">
-    <header class="topbar">
-      <h1>Trading Bot</h1>
-      <div class="spacer"></div>
-      {nav}
-    </header>
-    <h2 style="margin: 1.5rem 0 0;">{html.escape(title)}</h2>
-    {sub}
-    <main class="page-content">
-      {body_html}
-    </main>
-  </div>
+<body class="{body_class}">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    {_nav_html(current, depth)}
+    <span class="spacer"></span>
+    {extra_nav}
+    {_font_picker_html()}
+  </nav>
+  {body_html}
+  {_FONT_PICKER_SCRIPT}
 </body>
 </html>
 """
-
-
-def _md_to_html(md_text: str) -> str:
-    """Render markdown with tables, fenced code, smart links."""
-    return md_lib.markdown(
-        md_text,
-        extensions=["tables", "fenced_code", "sane_lists", "nl2br"],
-    )
 
 
 def _generated_at() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
 
+def _md_to_html(md_text: str) -> str:
+    return md_lib.markdown(
+        md_text,
+        extensions=["tables", "fenced_code", "sane_lists", "nl2br"],
+    )
+
+
 # ---------------------------------------------------------------------------
-# Daily news pages
+# Daily news pages — Phase 1 backwards-compat path
+# Reads existing state/daily_news/*.md and renders them with the new shell.
+# Phase 2 replaces this with structured-JSON-driven rendering.
 # ---------------------------------------------------------------------------
 
 def _news_md_dir() -> Path:
@@ -171,37 +194,60 @@ def _news_out_dir() -> Path:
 
 
 def render_news_pages() -> int:
-    """Render every daily-news markdown file into docs/news/*.html plus an
-    index. Returns the number of brief pages written (not counting index)."""
+    """Render every daily-news markdown file. Returns the number of brief
+    pages written (not counting the archive index)."""
     src_dir = _news_md_dir()
-    if not src_dir.exists():
-        log.info("No daily_news markdown directory — skipping news pages")
-        _write_empty_news_index()
-        return 0
+    out_dir = _news_out_dir()
 
     entries: list[tuple[str, Path]] = []
-    for src in sorted(src_dir.glob("*.md")):
-        date_str = src.stem
-        out_path = _news_out_dir() / f"{date_str}.html"
-        body_html = _md_to_html(src.read_text())
-        page = _shell(
-            title=f"Daily news brief — {date_str}",
-            body_html=body_html,
-            current="news",
-            depth=1,
-            subtitle=f"Generated by the daily-news-brief agent · rendered {_generated_at()}",
-        )
-        out_path.write_text(page)
-        entries.append((date_str, out_path))
-
+    if src_dir.exists():
+        for src in sorted(src_dir.glob("*.md")):
+            if src.stem.endswith(".bot"):
+                continue  # skip bot-summary companions
+            date_str = src.stem
+            out_path = out_dir / f"{date_str}.html"
+            body = _md_to_html(src.read_text())
+            paper = (
+                f'<main class="paper">'
+                f'<header class="masthead">'
+                f'  <h1>The Bot Tribune<span class="sub">— Daily, {date_str}</span></h1>'
+                f'</header>'
+                f'<div class="masthead-strip">'
+                f'  <span><strong>News</strong></span>'
+                f'  <span>{html.escape(date_str)}</span>'
+                f'  <span>Rendered {html.escape(_generated_at())}</span>'
+                f'</div>'
+                f'<article>{body}</article>'
+                f'<footer class="colophon">Auto-generated by the trading-bot daily news pipeline.</footer>'
+                f'</main>'
+            )
+            page = _shell(
+                title=f"News — {date_str}",
+                body_html=paper,
+                current="news",
+                depth=1,
+                page_class="news",
+            )
+            out_path.write_text(page)
+            entries.append((date_str, out_path))
     _write_news_index(entries)
-    log.info("Rendered %d daily news pages → %s", len(entries), _news_out_dir())
+    log.info("Rendered %d daily news pages → %s", len(entries), out_dir)
     return len(entries)
 
 
 def _write_news_index(entries: list[tuple[str, Path]]) -> None:
+    out_dir = _news_out_dir()
     if not entries:
-        _write_empty_news_index()
+        body = (
+            '<main class="paper">'
+            '<header class="masthead"><h1>The Bot Tribune<span class="sub">— News archive</span></h1></header>'
+            '<p style="text-align:center;font-style:italic;color:var(--ink-muted);margin-top:2rem;">'
+            'No daily news briefs yet. The agent runs each weekday morning.</p>'
+            '</main>'
+        )
+        (out_dir / "index.html").write_text(
+            _shell(title="News archive", body_html=body, current="news", depth=1, page_class="news")
+        )
         return
     entries_desc = sorted(entries, key=lambda e: e[0], reverse=True)
     items = "\n".join(
@@ -209,25 +255,27 @@ def _write_news_index(entries: list[tuple[str, Path]]) -> None:
         f'<span class="muted">daily news brief</span></li>'
         for d, p in entries_desc
     )
-    body = f'<ul class="index-list">\n{items}\n</ul>'
-    page = _shell(
-        title="Daily news briefs",
-        body_html=body,
-        current="news",
-        depth=1,
-        subtitle=f"{len(entries)} brief{'s' if len(entries) != 1 else ''} archived",
+    body = (
+        '<main class="paper">'
+        '<header class="masthead">'
+        '  <h1>The Bot Tribune<span class="sub">— News archive</span></h1>'
+        f'  <div class="subtitle">{len(entries)} brief{"s" if len(entries) != 1 else ""} on file. Most recent first.</div>'
+        '</header>'
+        '<div class="masthead-strip">'
+        '  <span><strong>News archive</strong></span>'
+        f'  <span>{html.escape(_generated_at())}</span>'
+        '  <span></span>'
+        '</div>'
+        f'<ul class="index-list">{items}</ul>'
+        '</main>'
     )
-    (_news_out_dir() / "index.html").write_text(page)
-
-
-def _write_empty_news_index() -> None:
-    body = '<p class="page-content">No daily news briefs yet. The agent runs each weekday morning.</p>'
-    page = _shell(title="Daily news briefs", body_html=body, current="news", depth=1)
-    (_news_out_dir() / "index.html").write_text(page)
+    (out_dir / "index.html").write_text(
+        _shell(title="News archive", body_html=body, current="news", depth=1, page_class="news")
+    )
 
 
 # ---------------------------------------------------------------------------
-# Weekly macro pages
+# Weekly macro pages — same backwards-compat shape
 # ---------------------------------------------------------------------------
 
 def _macro_md_dir() -> Path:
@@ -242,34 +290,55 @@ def _macro_out_dir() -> Path:
 
 def render_macro_pages() -> int:
     src_dir = _macro_md_dir()
-    if not src_dir.exists():
-        log.info("No macro views directory — skipping macro pages")
-        _write_empty_macro_index()
-        return 0
+    out_dir = _macro_out_dir()
 
     entries: list[tuple[str, Path]] = []
-    for src in sorted(src_dir.glob("*.md")):
-        week_id = src.stem
-        out_path = _macro_out_dir() / f"{week_id}.html"
-        body_html = _md_to_html(src.read_text())
-        page = _shell(
-            title=f"Weekly macro view — {week_id}",
-            body_html=body_html,
-            current="macro",
-            depth=1,
-            subtitle=f"Generated by the weekly-macro agent · rendered {_generated_at()}",
-        )
-        out_path.write_text(page)
-        entries.append((week_id, out_path))
-
+    if src_dir.exists():
+        for src in sorted(src_dir.glob("*.md")):
+            week_id = src.stem
+            out_path = out_dir / f"{week_id}.html"
+            body = _md_to_html(src.read_text())
+            paper = (
+                '<main class="paper">'
+                '<header class="masthead">'
+                f'  <h1>The Bot Tribune<span class="sub">— Macro, {html.escape(week_id)}</span></h1>'
+                '</header>'
+                '<div class="masthead-strip">'
+                '  <span><strong>Macro</strong></span>'
+                f'  <span>{html.escape(week_id)}</span>'
+                f'  <span>Rendered {html.escape(_generated_at())}</span>'
+                '</div>'
+                f'<article>{body}</article>'
+                '<footer class="colophon">Auto-generated by the weekly-macro agent.</footer>'
+                '</main>'
+            )
+            page = _shell(
+                title=f"Macro — {week_id}",
+                body_html=paper,
+                current="macro",
+                depth=1,
+                page_class="macro",
+            )
+            out_path.write_text(page)
+            entries.append((week_id, out_path))
     _write_macro_index(entries)
-    log.info("Rendered %d macro view pages → %s", len(entries), _macro_out_dir())
+    log.info("Rendered %d macro view pages → %s", len(entries), out_dir)
     return len(entries)
 
 
 def _write_macro_index(entries: list[tuple[str, Path]]) -> None:
+    out_dir = _macro_out_dir()
     if not entries:
-        _write_empty_macro_index()
+        body = (
+            '<main class="paper">'
+            '<header class="masthead"><h1>The Bot Tribune<span class="sub">— Macro archive</span></h1></header>'
+            '<p style="text-align:center;font-style:italic;color:var(--ink-muted);margin-top:2rem;">'
+            'No macro views yet. The agent runs every Sunday evening.</p>'
+            '</main>'
+        )
+        (out_dir / "index.html").write_text(
+            _shell(title="Macro archive", body_html=body, current="macro", depth=1, page_class="macro")
+        )
         return
     entries_desc = sorted(entries, key=lambda e: e[0], reverse=True)
     items = "\n".join(
@@ -277,25 +346,27 @@ def _write_macro_index(entries: list[tuple[str, Path]]) -> None:
         f'<span class="muted">macro view</span></li>'
         for d, p in entries_desc
     )
-    body = f'<ul class="index-list">\n{items}\n</ul>'
-    page = _shell(
-        title="Weekly macro views",
-        body_html=body,
-        current="macro",
-        depth=1,
-        subtitle=f"{len(entries)} view{'s' if len(entries) != 1 else ''} archived",
+    body = (
+        '<main class="paper">'
+        '<header class="masthead">'
+        '  <h1>The Bot Tribune<span class="sub">— Macro archive</span></h1>'
+        f'  <div class="subtitle">{len(entries)} view{"s" if len(entries) != 1 else ""} on file. Most recent first.</div>'
+        '</header>'
+        '<div class="masthead-strip">'
+        '  <span><strong>Macro archive</strong></span>'
+        f'  <span>{html.escape(_generated_at())}</span>'
+        '  <span></span>'
+        '</div>'
+        f'<ul class="index-list">{items}</ul>'
+        '</main>'
     )
-    (_macro_out_dir() / "index.html").write_text(page)
-
-
-def _write_empty_macro_index() -> None:
-    body = '<p class="page-content">No macro views yet. The agent runs every Sunday evening.</p>'
-    page = _shell(title="Weekly macro views", body_html=body, current="macro", depth=1)
-    (_macro_out_dir() / "index.html").write_text(page)
+    (out_dir / "index.html").write_text(
+        _shell(title="Macro archive", body_html=body, current="macro", depth=1, page_class="macro")
+    )
 
 
 # ---------------------------------------------------------------------------
-# Evolution log page
+# Evolution log
 # ---------------------------------------------------------------------------
 
 def _evolution_md_path() -> Path:
@@ -303,40 +374,52 @@ def _evolution_md_path() -> Path:
 
 
 def render_evolution_page() -> bool:
-    """Render state/evolution.md to docs/evolution.html. Returns True if
-    rendered, False if the source file doesn't exist."""
     src = _evolution_md_path()
     out = docs_root() / "evolution.html"
     if not src.exists():
-        page = _shell(
-            title="Strategy evolution log",
-            body_html='<p class="page-content">No evolution log yet. The agent runs every Saturday morning.</p>',
-            current="evolution",
-            depth=0,
+        body = (
+            '<main class="paper">'
+            '<header class="masthead"><h1>The Bot Tribune<span class="sub">— Evolution log</span></h1></header>'
+            '<p style="text-align:center;font-style:italic;color:var(--ink-muted);margin-top:2rem;">'
+            'No evolution entries yet. The agent runs every Saturday morning.</p>'
+            '</main>'
         )
-        out.write_text(page)
-        log.info("Wrote empty evolution.html")
+        out.write_text(_shell(
+            title="Evolution log", body_html=body, current="evolution",
+            depth=0, page_class="evolution",
+        ))
         return False
-    body_html = _md_to_html(src.read_text())
-    page = _shell(
-        title="Strategy evolution log",
-        body_html=body_html,
-        current="evolution",
-        depth=0,
-        subtitle=f"Generated by the weekly-evolution agent · rendered {_generated_at()}",
+    body = _md_to_html(src.read_text())
+    paper = (
+        '<main class="paper">'
+        '<header class="masthead">'
+        '  <h1>The Bot Tribune<span class="sub">— Evolution log</span></h1>'
+        '</header>'
+        '<div class="masthead-strip">'
+        '  <span><strong>Evolution</strong></span>'
+        f'  <span>Rendered {html.escape(_generated_at())}</span>'
+        '  <span></span>'
+        '</div>'
+        f'<article>{body}</article>'
+        '<footer class="colophon">Auto-generated by the weekly-evolution agent.</footer>'
+        '</main>'
     )
-    out.write_text(page)
-    log.info("Rendered evolution.html (%d chars)", len(body_html))
+    out.write_text(_shell(
+        title="Evolution log", body_html=paper, current="evolution",
+        depth=0, page_class="evolution",
+    ))
+    log.info("Rendered evolution.html")
     return True
 
 
 # ---------------------------------------------------------------------------
-# Composite + public URL helper
+# Public composite
 # ---------------------------------------------------------------------------
 
 def rebuild_all_pages() -> dict:
-    """Render every static page. Called from dashboard.build at the end of
-    every pipeline so news/macro/evolution stay fresh alongside data.json."""
+    """Re-render every static page in one call. Called from dashboard.build
+    after every pipeline run so news/macro/evolution stay synchronised with
+    the latest state."""
     n_news = render_news_pages()
     n_macro = render_macro_pages()
     have_evolution = render_evolution_page()
@@ -344,11 +427,6 @@ def rebuild_all_pages() -> dict:
 
 
 def pages_url(path: str) -> str:
-    """Best-effort public URL for a relative-to-docs path. Uses the
-    repo's GitHub Pages convention. Returns '' if we can't construct one."""
-    # GitHub Pages from main branch /docs serves at
-    # https://<user>.github.io/<repo>/. Repo name is hard-coded since it's
-    # in the cron-job.org schedule too — single source of truth.
     base = "https://dario-zela.github.io/trading_bot"
     return f"{base}/{path.lstrip('/')}"
 

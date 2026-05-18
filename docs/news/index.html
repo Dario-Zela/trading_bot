@@ -3,86 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Daily news briefs — Trading Bot</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-  <style>
-    :root {
-      --positive: #16a34a;
-      --negative: #dc2626;
-      --accent: var(--pico-primary);
-    }
-    body { margin: 0; }
-    .app { max-width: 880px; margin: 0 auto; padding: 1.5rem 2rem 4rem; }
-    .topbar {
-      display: flex; align-items: center; gap: 1rem;
-      padding-bottom: 1rem; border-bottom: 1px solid var(--pico-muted-border-color);
-      margin-bottom: 0.5rem;
-    }
-    .topbar h1 { margin: 0; font-size: 1.3rem; letter-spacing: -0.01em; }
-    .topbar .spacer { flex: 1; }
-    .nav-tabs { display: flex; gap: 0; }
-    .nav-tab {
-      padding: 0.4rem 0.9rem;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--pico-muted-color);
-      text-decoration: none;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-    }
-    .nav-tab:hover { color: var(--accent); }
-    .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-    .page-subtitle {
-      color: var(--pico-muted-color);
-      font-size: 0.85rem;
-      margin: 0.5rem 0 1.5rem;
-    }
-    .page-content { font-size: 1rem; line-height: 1.65; }
-    .page-content h1 { font-size: 1.8rem; letter-spacing: -0.01em; margin-top: 2rem; }
-    .page-content h2 { font-size: 1.35rem; margin-top: 2rem; }
-    .page-content h3 { font-size: 1.1rem; margin-top: 1.5rem; }
-    .page-content h4 {
-      font-size: 1rem; margin-top: 1.25rem;
-      color: var(--pico-h3-color);
-    }
-    .page-content table { font-size: 0.9rem; margin: 1rem 0; }
-    .page-content table th { background: var(--pico-muted-border-color); }
-    .page-content blockquote {
-      border-left: 3px solid var(--accent);
-      margin-left: 0; padding-left: 1rem;
-      color: var(--pico-muted-color);
-    }
-    .page-content code { font-size: 0.85em; }
-    .page-content hr { border-top: 1px solid var(--pico-muted-border-color); margin: 2rem 0; }
-    .index-list { list-style: none; padding: 0; }
-    .index-list li {
-      padding: 0.65rem 0;
-      border-bottom: 1px solid var(--pico-muted-border-color);
-    }
-    .index-list li a { font-weight: 600; text-decoration: none; }
-    .index-list .muted { color: var(--pico-muted-color); font-size: 0.85rem; margin-left: 0.4rem; }
-  </style>
+  <title>News archive — Trading Bot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
 </head>
-<body>
-  <div class="app">
-    <header class="topbar">
-      <h1>Trading Bot</h1>
-      <div class="spacer"></div>
-      <nav class="nav-tabs">
-<a class="nav-tab" href="../index.html">Dashboard</a>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../index.html">Dashboard</a>
 <a class="nav-tab active" href="../news/index.html">News</a>
 <a class="nav-tab" href="../macro/index.html">Macro</a>
 <a class="nav-tab" href="../evolution.html">Evolution</a>
-</nav>
-    </header>
-    <h2 style="margin: 1.5rem 0 0;">Daily news briefs</h2>
-    <div class="page-subtitle">2 briefs archived</div>
-    <main class="page-content">
-      <ul class="index-list">
-<li><a href="2026-05-18.bot.html">2026-05-18.bot</a><span class="muted">daily news brief</span></li>
-<li><a href="2026-05-18.html">2026-05-18</a><span class="muted">daily news brief</span></li>
-</ul>
-    </main>
-  </div>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper"><header class="masthead">  <h1>The Bot Tribune<span class="sub">— News archive</span></h1>  <div class="subtitle">1 brief on file. Most recent first.</div></header><div class="masthead-strip">  <span><strong>News archive</strong></span>  <span>2026-05-18 20:59 UTC</span>  <span></span></div><ul class="index-list"><li><a href="2026-05-18.html">2026-05-18</a><span class="muted">daily news brief</span></li></ul></main>
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
 </body>
 </html>

@@ -1,0 +1,68 @@
+name: Grade predictions
+
+# Triggered nightly (23:30 UTC) by cron-job.org via workflow_dispatch.
+# Walks every open prediction whose target_date has passed, scores it
+# against its falsification criterion using current market data, and
+# mutates its row to proven / partial / falsified / still-open. Feeds the
+# "marking the homework" section across News, Macro, and Evolution.
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: grade-predictions
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install Python package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Install Claude Code CLI
+        run: |
+          curl -fsSL https://claude.ai/install.sh | bash
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          claude --version
+
+      - name: Grade predictions
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          ALPACA_API_KEY__1: ${{ secrets.ALPACA_API_KEY__1 }}
+          ALPACA_API_SECRET__1: ${{ secrets.ALPACA_API_SECRET__1 }}
+        run: python -m trading_bot.pipeline grade-predictions
+
+      - name: Commit graded predictions
+        run: |
+          git config user.name "trading-bot[bot]"
+          git config user.email "trading-bot@users.noreply.github.com"
+          git add state/predictions || true
+          if git diff --cached --quiet; then
+            echo "No grading changes to commit"
+            exit 0
+          fi
+          git commit -m "predictions graded — $(date -u +%Y-%m-%d)"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin main || git rebase --abort || true
+            if git push; then exit 0; fi
+            sleep 2
+          done
+          echo "Could not push after 3 attempts"
+          exit 1
