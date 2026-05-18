@@ -85,10 +85,56 @@ def render_daily_summary(
     entries: {strategy_id: [trade records that were opened today]}
     exits:   {strategy_id: [trade records that were closed today]}
     """
-    subject = f"[trading-bot] {region.upper()} daily summary — {run_date.isoformat()}"
+    subject = _build_subject(run_date, region, exits)
     text_body = _render_text_summary(run_date, region, entries, exits)
     html_body = _render_html_summary(run_date, region, entries, exits)
     return subject, text_body, html_body
+
+
+_REAL_BROKER_TIERS = {"alpaca-paper", "trading212-paper", "t212-live"}
+
+
+def _build_subject(run_date: date, region: str, exits: dict[str, list[dict]]) -> str:
+    """Compose the daily-summary subject line with headline P&L split by
+    real-broker vs shadow. Examples:
+      [trading-bot] UK-EU 2026-05-18 — broker +£16.28 (9) · shadow +£104.31 (9)
+      [trading-bot] US 2026-05-18 — no closes
+    Keeps the date + region prefix at the front so inbox scanning still
+    works; the P&L tail makes 'did today win or lose?' a one-glance read.
+    """
+    broker_pnl = broker_n = 0.0, 0
+    shadow_pnl = shadow_n = 0.0, 0
+    broker_total = 0.0
+    broker_count = 0
+    shadow_total = 0.0
+    shadow_count = 0
+    for trades in exits.values():
+        for t in trades:
+            pnl = t.get("pnl_gbp")
+            if pnl is None or t.get("exit_date") is None:
+                continue
+            tier = (t.get("tier") or "").lower()
+            if tier in _REAL_BROKER_TIERS:
+                broker_total += float(pnl)
+                broker_count += 1
+            else:
+                shadow_total += float(pnl)
+                shadow_count += 1
+
+    head = f"[trading-bot] {region.upper()} {run_date.isoformat()}"
+    if broker_count == 0 and shadow_count == 0:
+        return head + " — no closes"
+    parts: list[str] = []
+    if broker_count:
+        parts.append(f"broker {_fmt_signed(broker_total)} ({broker_count})")
+    if shadow_count:
+        parts.append(f"shadow {_fmt_signed(shadow_total)} ({shadow_count})")
+    return f"{head} — " + " · ".join(parts)
+
+
+def _fmt_signed(v: float) -> str:
+    sign = "+" if v >= 0 else "−"  # unicode minus for cleaner glyph
+    return f"{sign}£{abs(v):.2f}"
 
 
 def _render_text_summary(
