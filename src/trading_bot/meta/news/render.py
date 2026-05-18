@@ -274,11 +274,11 @@ def _masthead_html(plan: NewsPlan, today: date, edition_dir: Path) -> str:
     question = html.escape(plan.todays_question or "")
     question_html = ""
     if question:
+        # Class only — margin/typography lives in style.css so the
+        # subtitle adjacent-sibling rule can space it properly.
         question_html = (
-            '  <div class="subtitle" style="margin-top:0.4rem;font-style:normal;'
-            'font-family:var(--sans);font-size:0.86rem;letter-spacing:0.06em;'
-            'text-transform:uppercase;color:var(--ink-soft);">'
-            f'<span style="color:var(--c-front);font-weight:700;">Today\'s question · </span>{question}'
+            '  <div class="subtitle todays-question">'
+            f'<span class="label">Today\'s question · </span>{question}'
             '</div>'
         )
 
@@ -294,9 +294,9 @@ def _masthead_html(plan: NewsPlan, today: date, edition_dir: Path) -> str:
 
     return (
         '<header class="masthead">'
-        + nav_html
-        + f'  <h1><a href="../latest.html" class="masthead-link">The Bot Tribune</a>'
+        f'  <h1><a href="../latest.html" class="masthead-link">The Bot Tribune</a>'
         f'<span class="sub">— Daily, {html.escape(formatted)}</span></h1>'
+        + nav_html
         + (f'  <div class="subtitle">{subtitle}</div>' if subtitle else '')
         + question_html
         + '</header>'
@@ -331,9 +331,10 @@ def _neighbouring_news_dates(today: date, news_dir: Path) -> tuple[str | None, s
 
 
 def _edition_nav_html(*, prev_url: str, next_url: str, latest_url: str,
-                      prev_label: str, next_label: str) -> str:
-    """A small arrow strip above the masthead H1. Prev/next inert when
-    no neighbour exists; latest always present."""
+                      prev_label: str, next_label: str,
+                      archive_url: str = "../index.html") -> str:
+    """A small arrow strip under the masthead H1. Prev/next inert when
+    no neighbour exists; latest + all-editions links always present."""
     def _arrow(direction: str, url: str, label: str) -> str:
         if not url:
             return f'<span class="edition-nav-link disabled">{direction}</span>'
@@ -346,6 +347,7 @@ def _edition_nav_html(*, prev_url: str, next_url: str, latest_url: str,
         + _arrow("← prev", prev_url, prev_label)
         + f'<a class="edition-nav-link latest" href="{html.escape(latest_url)}">latest ↑</a>'
         + _arrow("next →", next_url, next_label)
+        + f'<a class="edition-nav-link all" href="{html.escape(archive_url)}">all</a>'
         + '</div>'
     )
 

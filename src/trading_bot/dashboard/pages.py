@@ -46,8 +46,12 @@ log = logging.getLogger(__name__)
 
 _NAV_ITEMS = (
     ("dashboard", "Dashboard", "index.html"),
-    ("news",      "News",      "news/index.html"),
-    ("macro",     "Macro",     "macro/index.html"),
+    # News + Macro point at the latest-edition redirect so clicking the
+    # ribbon tab opens today's edition directly. The full archive lives
+    # at news/index.html / macro/index.html and is reachable from the
+    # "all" link in each edition's nav strip.
+    ("news",      "News",      "news/latest.html"),
+    ("macro",     "Macro",     "macro/latest.html"),
     ("evolution", "Evolution", "evolution.html"),
 )
 
@@ -284,6 +288,7 @@ def render_news_pages() -> int:
             dir_entries.append((child.name, idx))
 
     _write_news_index(legacy_entries, dir_entries)
+    _ensure_latest_redirect(out_dir, dir_entries, legacy_entries, "news")
     total = len(legacy_entries) + len(dir_entries)
     log.info("Rendered %d daily news pages → %s (%d legacy, %d structured)",
              total, out_dir, len(legacy_entries), len(dir_entries))
@@ -392,6 +397,61 @@ def _macro_out_dir() -> Path:
     return p
 
 
+def _ensure_latest_redirect(
+    out_dir: Path,
+    dir_entries: list[tuple[str, Path]],
+    legacy_entries: list[tuple[str, Path]],
+    kind: str,
+) -> None:
+    """Make sure `out_dir/latest.html` exists. Phase 2/3 editions write
+    it on each render, but the ribbon tab points there unconditionally —
+    so we bootstrap on archive rebuild too. Falls back to the legacy
+    flat-file when no directory edition exists yet, and only writes a
+    placeholder if neither form is present."""
+    latest_path = out_dir / "latest.html"
+    target: str = ""
+    if dir_entries:
+        newest = sorted(dir_entries, key=lambda e: e[0], reverse=True)[0][0]
+        target = f"{newest}/"
+    elif legacy_entries:
+        newest = sorted(legacy_entries, key=lambda e: e[0], reverse=True)[0]
+        target = newest[1].name
+    if not target:
+        # No editions at all — write a friendly placeholder so the
+        # ribbon tab never 404s.
+        latest_path.write_text(
+            '<!DOCTYPE html><html><head><meta charset="UTF-8">'
+            f'<title>{kind.capitalize()} — no editions yet</title>'
+            '<link rel="stylesheet" href="../assets/style.css"></head>'
+            f'<body class="page-{kind}"><main class="paper">'
+            '<header class="masthead">'
+            f'<h1>The Bot Tribune<span class="sub">— {kind.capitalize()}</span></h1>'
+            '<div class="subtitle">No editions yet.</div></header>'
+            f'<p style="text-align:center;font-style:italic;color:var(--ink-muted);margin-top:2rem;">'
+            f'The {kind} agent runs on its schedule; the first edition will appear here.</p>'
+            '</main></body></html>'
+        )
+        return
+    # Don't downgrade an existing latest.html to point to an older edition
+    if latest_path.exists():
+        try:
+            existing = latest_path.read_text()
+            m = re.search(r'url=([^/"\']+)/?', existing)
+            if m and m.group(1) >= target.rstrip("/"):
+                return
+        except OSError:
+            pass
+    latest_path.write_text(
+        '<!DOCTYPE html><html><head>'
+        f'<meta http-equiv="refresh" content="0; url={html.escape(target)}">'
+        f'<link rel="canonical" href="{html.escape(target)}">'
+        f'<title>Redirecting to latest {kind} edition…</title>'
+        '</head><body>'
+        f'<p>Redirecting to <a href="{html.escape(target)}">{html.escape(target)}</a>…</p>'
+        '</body></html>'
+    )
+
+
 def render_macro_pages() -> int:
     src_dir = _macro_md_dir()
     out_dir = _macro_out_dir()
@@ -425,9 +485,23 @@ def render_macro_pages() -> int:
             )
             out_path.write_text(page)
             entries.append((week_id, out_path))
+    # Discover directory-form macro editions (Phase 3 output)
+    dir_entries: list[tuple[str, Path]] = []
+    for child in sorted(out_dir.glob("*")):
+        if not child.is_dir():
+            continue
+        if not re.match(r"^\d{4}-W\d{2}$", child.name):
+            continue
+        idx = child / "index.html"
+        if idx.exists():
+            dir_entries.append((child.name, idx))
+
     _write_macro_index(entries)
-    log.info("Rendered %d macro view pages → %s", len(entries), out_dir)
-    return len(entries)
+    _ensure_latest_redirect(out_dir, dir_entries, entries, "macro")
+    total = len(entries) + len(dir_entries)
+    log.info("Rendered %d macro pages → %s (%d legacy, %d structured)",
+             total, out_dir, len(entries), len(dir_entries))
+    return total
 
 
 def _write_macro_index(entries: list[tuple[str, Path]]) -> None:

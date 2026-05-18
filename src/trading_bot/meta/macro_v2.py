@@ -759,9 +759,9 @@ def _render_macro_front(edition: MacroEdition, edition_dir: Path) -> str:
     # Masthead
     parts.append(
         '<header class="masthead">'
-        + nav_html
-        + '  <h1><a href="../latest.html" class="masthead-link">The Bot Tribune</a>'
+        '  <h1><a href="../latest.html" class="masthead-link">The Bot Tribune</a>'
         f'<span class="sub">— Macro, {html.escape(edition.week_id)}</span></h1>'
+        + nav_html
         + (f'  <div class="subtitle">{html.escape(edition.plan.masthead_subtitle)}</div>' if edition.plan.masthead_subtitle else '')
         + '</header>'
     )

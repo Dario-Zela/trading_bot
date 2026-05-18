@@ -166,31 +166,28 @@ body.page-dashboard .font-picker button.active{ background: var(--c-pos);    bor
   border-bottom: none;
 }
 
-/* Edition nav strip (prev / latest / next) above the masthead H1 */
+/* Edition nav strip (prev / latest / next) sits just under the
+   masthead H1+date — small, unobtrusive, centred. */
 .edition-nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  gap: 0.8rem;
   font-family: var(--sans);
-  font-size: 0.74rem;
-  letter-spacing: 0.16em;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--ink-soft);
-  padding-bottom: 0.6rem;
-  margin-bottom: 0.6rem;
-  border-bottom: 1px solid var(--hairline);
+  color: var(--ink-muted);
+  margin-top: 0.4rem;
 }
 .edition-nav-link {
-  color: var(--ink-soft);
+  color: var(--ink-muted);
   text-decoration: none;
-  padding: 0.2rem 0.5rem;
+  padding: 0.1rem 0.35rem;
 }
 .edition-nav-link:hover { color: var(--ink); }
-.edition-nav-link.disabled { color: var(--hairline); cursor: default; }
-.edition-nav-link.latest {
-  font-weight: 700;
-  color: var(--ink);
-}
+.edition-nav-link.disabled { color: var(--hairline); cursor: default; pointer-events: none; }
+.edition-nav-link.latest { font-weight: 700; color: var(--ink-soft); }
 body.page-news .edition-nav-link.latest { color: var(--c-front); }
 body.page-macro .edition-nav-link.latest { color: var(--c-primary); }
 body.page-news .masthead h1 .sub      { color: var(--c-front);  }
@@ -201,9 +198,24 @@ body.page-evolution .masthead h1 .sub { color: var(--c-evo);    }
   font-style: italic;
   font-size: 1.15rem;
   color: var(--ink-soft);
-  margin: 0.55rem auto 0;
+  margin: 1.6rem auto 1.2rem;
   line-height: 1.45;
 }
+.masthead .subtitle.todays-question {
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 0.86rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
+}
+.masthead .subtitle.todays-question .label {
+  color: var(--c-front);
+  font-weight: 700;
+}
+body.page-macro .masthead .subtitle.todays-question .label { color: var(--c-primary); }
 body.page-news .masthead .subtitle { color: var(--c-front); }
 
 .masthead-strip {
@@ -458,6 +470,10 @@ body.page-evolution .editorial-body p:first-of-type::first-letter {
   align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
+  /* Push the footer below any floated drop cap from the body p above —
+     short briefs would otherwise let the drop cap protrude into the
+     read-more / sources row. */
+  clear: both;
 }
 .brief-footer .sources {
   font-family: var(--sans);
