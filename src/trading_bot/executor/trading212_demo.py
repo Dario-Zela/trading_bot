@@ -145,7 +145,8 @@ class Trading212DemoExecutor(Executor):
             filled = self._wait_for_fill(order_id=broker_order_id, t212_ticker=t212_ticker)
 
             if filled is not None:
-                fill_price = self._fill_price_of(filled)
+                raw_fill = self._fill_price_of(filled)
+                fill_price = self._to_gbp(t212_ticker, raw_fill) if raw_fill is not None else None
             else:
                 fill_price = None
 
@@ -231,26 +232,24 @@ class Trading212DemoExecutor(Executor):
         translator = self._get_translator()
         closed: list[dict] = []
 
+        # Phase 0 — resolve each trade's T212 ticker and reconcile any
+        # pending-entry entry_price (sentinel 0 from a timed-out enter).
+        actionable: list[tuple[dict, str]] = []
         for trade in open_trades:
             t212_ticker = translator.translate(trade["ticker"])
             if t212_ticker is None:
                 log.warning("Cannot resolve T212 ticker for exit on %s — leaving open", trade["ticker"])
                 continue
 
-            # Pending reconciliation: if the trade was recorded with a sentinel
-            # entry_price (the fill poll timed out during enter()), look up
-            # the actual fill from T212 order history now. This is the on-exit
-            # half of the orphan-recovery contract — entry side records the
-            # broker_order_id; exit side reads it back to recover the price.
             if (not trade.get("entry_price") or float(trade.get("entry_price") or 0) == 0.0) and trade.get("broker_order_id"):
                 reconciled = self._get_order_from_history(t212_ticker, trade["broker_order_id"])
                 if reconciled is not None:
                     recovered = self._fill_price_of(reconciled)
                     if recovered is not None and recovered > 0:
-                        trade["entry_price"] = recovered
+                        trade["entry_price"] = self._to_gbp(t212_ticker, recovered)
                         log.info(
                             "Reconciled pending entry for %s (order %s): entry_price=%.4f from T212 history",
-                            trade["ticker"], trade["broker_order_id"], recovered,
+                            trade["ticker"], trade["broker_order_id"], trade["entry_price"],
                         )
                 if not trade.get("entry_price") or float(trade["entry_price"]) == 0.0:
                     log.warning(
@@ -259,44 +258,88 @@ class Trading212DemoExecutor(Executor):
                         trade.get("broker_order_id"), trade["ticker"],
                     )
 
+            actionable.append((trade, t212_ticker))
+
+        # Phase 1 — fire-and-forget: submit every close order without
+        # waiting for any to fill. Every order goes into T212's queue
+        # immediately; we collect fills in phase 2 after they've all had
+        # a head start. Per-trade entry: (trade, t212_ticker, close_order_id).
+        # close_order_id=None means "no position to close" (use history lookup
+        # later) or "close submit failed" (we skip recording).
+        submitted: list[tuple[dict, str, str | None, str]] = []
+        for trade, t212_ticker in actionable:
             position = self._get_position(t212_ticker)
+            if position is None:
+                # No live position — entry never filled, or close already
+                # happened externally / in a prior run. Phase 2 will look
+                # in history for a matching sell on this date.
+                submitted.append((trade, t212_ticker, None, "no_position"))
+                continue
+            qty = -float(position.get("quantity") or trade["quantity"])
+            close_order = self._submit_market_order(t212_ticker=t212_ticker, quantity=qty)
+            if close_order is None:
+                log.warning("T212 close-order submit failed for %s — leaving open", trade["ticker"])
+                # Don't record at all; trade stays open in the ledger for retry.
+                continue
+            submitted.append((
+                trade,
+                t212_ticker,
+                str(close_order.get("id")) if close_order.get("id") is not None else None,
+                "submitted",
+            ))
+
+        n_live_submits = sum(1 for _, _, oid, status in submitted if status == "submitted" and oid is not None)
+        if n_live_submits:
+            log.info(
+                "T212: submitted %d close order(s) for %s, polling for fills",
+                n_live_submits, strategy_id,
+            )
+
+        # Phase 2 — poll each submitted close. By the time we start, every
+        # order has been in T212's queue for at least N submit-latencies.
+        closed: list[dict] = []
+        for trade, t212_ticker, close_order_id, status in submitted:
             close_fill_price: float | None = None
             exit_reason: str
 
-            if position is not None:
-                # Sell the entire position at market, then poll for the
-                # definitive fill price from T212's order endpoints.
-                close_order = self._submit_market_order(
-                    t212_ticker=t212_ticker,
-                    quantity=-float(position.get("quantity") or trade["quantity"]),
-                )
-                if close_order is None:
-                    log.warning("T212 close-order submit failed for %s — leaving open", trade["ticker"])
-                    continue
-                filled = self._wait_for_fill(
-                    order_id=close_order.get("id"), t212_ticker=t212_ticker
-                )
+            if status == "no_position":
+                # Try to recover the close from T212 order history (a sell
+                # that fired today). If found → record P&L; else → cancelled.
+                hist = self._find_recent_sell(t212_ticker, on_date)
+                if hist is not None:
+                    raw = self._fill_price_of(hist)
+                    if raw is not None and raw > 0:
+                        close_fill_price = self._to_gbp(t212_ticker, raw)
+                        exit_reason = "scheduled"
+                        log.info(
+                            "Recovered close for %s from T212 history: exit_price=%.4f",
+                            trade["ticker"], close_fill_price,
+                        )
+                    else:
+                        exit_reason = "cancelled"
+                else:
+                    exit_reason = "cancelled"
+            elif close_order_id is None:
+                # Submitted but no order id came back — odd; mark cancelled.
+                exit_reason = "cancelled"
+            else:
+                filled = self._wait_for_fill(order_id=close_order_id, t212_ticker=t212_ticker)
                 if filled is None:
                     log.warning(
                         "T212 close order %s for %s didn't fill in time — leaving open",
-                        close_order.get("id"), trade["ticker"],
+                        close_order_id, trade["ticker"],
                     )
-                    continue
-                close_fill_price = self._fill_price_of(filled)
-                if close_fill_price is None:
+                    continue  # leave open in ledger; next exit run will retry
+                raw_fill = self._fill_price_of(filled)
+                if raw_fill is None:
                     log.warning(
-                        "T212 reported FILLED for close of %s but no fill price — recording cancelled",
+                        "T212 close FILLED for %s but no price — recording cancelled",
                         trade["ticker"],
                     )
                     exit_reason = "cancelled"
                 else:
+                    close_fill_price = self._to_gbp(t212_ticker, raw_fill)
                     exit_reason = "scheduled"
-            else:
-                # No position at T212 — entry order never filled or was
-                # liquidated externally. Mark cancelled with null P&L
-                # (honesty rule: never invent fills).
-                close_fill_price = None
-                exit_reason = "cancelled"
 
             entry_price = float(trade["entry_price"])
             quantity = float(trade["quantity"])
@@ -394,6 +437,7 @@ class Trading212DemoExecutor(Executor):
                 entry_price = float(avg_price)
             except (TypeError, ValueError):
                 continue
+            entry_price = self._to_gbp(t212_ticker, entry_price)
 
             client_order_id = f"{attribute_to_strategy}-reconciled-{uuid.uuid4().hex[:8]}"
             record = TradeRecord(
@@ -571,6 +615,67 @@ class Trading212DemoExecutor(Executor):
                 return float(v)
             except (TypeError, ValueError):
                 continue
+        return None
+
+    def _to_gbp(self, t212_ticker: str, raw_price: float) -> float:
+        """Normalize a T212-reported price to the ledger's base unit (£).
+
+        T212 quotes LSE in GBX (pence) — every recorded price must be
+        divided by 100 or our P&L is 100× too large. Other currencies
+        (EUR/USD on cross-listings) are returned as-is for now; FX
+        conversion is Task #50.
+        """
+        inst = self._get_translator().get_instrument(t212_ticker)
+        if inst is None:
+            return raw_price
+        ccy = (inst.get("currencyCode") or "").upper()
+        if ccy == "GBX":
+            return raw_price / 100.0
+        return raw_price
+
+    def _find_recent_sell(self, t212_ticker: str, on_date: date) -> dict[str, Any] | None:
+        """Find the most recent SELL (negative-quantity) order for this
+        ticker that filled today. Used when exit_scheduled sees no live
+        position — the close already happened (externally or in a prior
+        run that lost the response) and we need to recover the fill price
+        from T212's order history."""
+        try:
+            response = requests.get(
+                self._url("/equity/history/orders"),
+                headers=self._headers(),
+                params={"ticker": t212_ticker, "limit": 50},
+                timeout=15,
+            )
+        except requests.RequestException as e:
+            log.debug("T212 history fetch errored during close recovery: %s", e)
+            return None
+        if not response.ok:
+            return None
+        try:
+            body = response.json() or {}
+        except json.JSONDecodeError:
+            return None
+        items = body.get("items") if isinstance(body, dict) else body
+        if not isinstance(items, list):
+            return None
+        target_date = on_date.isoformat()
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+            qty = item.get("filledQuantity") or item.get("quantity")
+            try:
+                if qty is None or float(qty) >= 0:
+                    continue  # not a sell
+            except (TypeError, ValueError):
+                continue
+            status = (item.get("status") or "").lower()
+            if status not in ("filled", "executed", "completed"):
+                continue
+            # T212 timestamps look like "2026-05-18T15:04:43.000+00:00"
+            ts = (item.get("dateModified") or item.get("dateCreated") or item.get("dateExecuted") or "")
+            if not ts.startswith(target_date):
+                continue
+            return item
         return None
 
     def _get_order(self, order_id: int | str) -> dict[str, Any] | None:
