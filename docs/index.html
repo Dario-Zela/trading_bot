@@ -123,10 +123,10 @@
       border-color: var(--accent);
     }
 
-    /* Global overview cards */
+    /* Global overview cards — mirror .card visuals from the strategy grid */
     .overview-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1rem;
       margin-bottom: 1.5rem;
     }
@@ -135,34 +135,59 @@
       border: 1px solid var(--pico-muted-border-color);
       border-radius: 8px;
       padding: 1rem 1.25rem;
-      margin: 0;
       box-shadow: var(--card-shadow);
     }
-    .overview-card header {
+    .overview-head {
       display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
-      margin-bottom: 0.85rem;
-      padding: 0;
-      border: none;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.9rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--pico-muted-border-color);
     }
-    .overview-card header strong {
+    .overview-title {
       font-size: 0.95rem;
+      font-weight: 600;
       letter-spacing: -0.01em;
     }
-    .overview-grid {
+    .overview-tiers {
+      font-size: 0.65rem;
+      color: var(--pico-muted-color);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+    .overview-stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+      gap: 0;
     }
-    .overview-card .big {
+    .overview-stat { padding: 0 0.5rem; }
+    .overview-stat:first-child { padding-left: 0; }
+    .overview-stat:last-child {
+      padding-right: 0;
+      padding-left: 1rem;
+      border-left: 1px solid var(--pico-muted-border-color);
+    }
+    .overview-stat-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--pico-muted-color);
+      margin-bottom: 0.25rem;
+    }
+    .overview-stat-pnl {
       font-size: 1.5rem;
       font-weight: 700;
       letter-spacing: -0.02em;
       line-height: 1.1;
+      margin-bottom: 0.2rem;
     }
-    .overview-card .small { font-size: 0.7rem; }
-    .overview-card .muted { color: var(--pico-muted-color); font-size: 0.78rem; }
+    .overview-stat-meta {
+      font-size: 0.72rem;
+      color: var(--pico-muted-color);
+    }
 
     /* Search */
     .search-row {
@@ -457,27 +482,27 @@
     </div>
 
     <!-- Global overview: separates real broker fills from shadow simulation.
-         Computed live from the currently-visible strategies so it tracks
-         the active region + tab + search filters. -->
+         Computed live from filteredStrategies so it tracks the active
+         region + tab + search filters. -->
     <template x-if="data">
       <section class="overview-row">
-        <article class="overview-card">
-          <header>
-            <strong>Real broker (paper)</strong>
-            <span class="muted" x-text="overview.real.tiers.join(' + ') || '—'"></span>
-          </header>
-          <div class="overview-grid">
-            <div>
-              <div class="muted small">Today</div>
-              <div class="big" :class="pnlClass(overview.real.todayPnl)"
+        <div class="overview-card">
+          <div class="overview-head">
+            <span class="overview-title">Real broker (paper)</span>
+            <span class="overview-tiers" x-text="overview.real.tiers.join(' + ') || 'no real-broker strategies'"></span>
+          </div>
+          <div class="overview-stats">
+            <div class="overview-stat">
+              <div class="overview-stat-label">Today</div>
+              <div class="overview-stat-pnl" :class="pnlClass(overview.real.todayPnl)"
                    x-text="formatGbp(overview.real.todayPnl)"></div>
-              <div class="muted small" x-text="overview.real.todayN + ' trades'"></div>
+              <div class="overview-stat-meta" x-text="overview.real.todayN + ' trades'"></div>
             </div>
-            <div>
-              <div class="muted small">All-time</div>
-              <div class="big" :class="pnlClass(overview.real.alltimePnl)"
+            <div class="overview-stat">
+              <div class="overview-stat-label">All-time</div>
+              <div class="overview-stat-pnl" :class="pnlClass(overview.real.alltimePnl)"
                    x-text="formatGbp(overview.real.alltimePnl)"></div>
-              <div class="muted small">
+              <div class="overview-stat-meta">
                 <span x-text="overview.real.alltimeN + ' trades'"></span>
                 <template x-if="overview.real.hitRate !== null">
                   <span> · <span x-text="(overview.real.hitRate * 100).toFixed(1) + '% hit'"></span></span>
@@ -485,24 +510,24 @@
               </div>
             </div>
           </div>
-        </article>
-        <article class="overview-card">
-          <header>
-            <strong>Shadow (simulation)</strong>
-            <span class="muted">yfinance close-price simulation, no orders placed</span>
-          </header>
-          <div class="overview-grid">
-            <div>
-              <div class="muted small">Today</div>
-              <div class="big" :class="pnlClass(overview.shadow.todayPnl)"
+        </div>
+        <div class="overview-card">
+          <div class="overview-head">
+            <span class="overview-title">Shadow (simulation)</span>
+            <span class="overview-tiers">yfinance · no orders placed</span>
+          </div>
+          <div class="overview-stats">
+            <div class="overview-stat">
+              <div class="overview-stat-label">Today</div>
+              <div class="overview-stat-pnl" :class="pnlClass(overview.shadow.todayPnl)"
                    x-text="formatGbp(overview.shadow.todayPnl)"></div>
-              <div class="muted small" x-text="overview.shadow.todayN + ' trades'"></div>
+              <div class="overview-stat-meta" x-text="overview.shadow.todayN + ' trades'"></div>
             </div>
-            <div>
-              <div class="muted small">All-time</div>
-              <div class="big" :class="pnlClass(overview.shadow.alltimePnl)"
+            <div class="overview-stat">
+              <div class="overview-stat-label">All-time</div>
+              <div class="overview-stat-pnl" :class="pnlClass(overview.shadow.alltimePnl)"
                    x-text="formatGbp(overview.shadow.alltimePnl)"></div>
-              <div class="muted small">
+              <div class="overview-stat-meta">
                 <span x-text="overview.shadow.alltimeN + ' trades'"></span>
                 <template x-if="overview.shadow.hitRate !== null">
                   <span> · <span x-text="(overview.shadow.hitRate * 100).toFixed(1) + '% hit'"></span></span>
@@ -510,7 +535,7 @@
               </div>
             </div>
           </div>
-        </article>
+        </div>
       </section>
     </template>
 
