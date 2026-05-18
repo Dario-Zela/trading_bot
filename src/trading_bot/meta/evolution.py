@@ -419,6 +419,20 @@ def _do_demote(
     return ActionLog(sid, region, "demote", True, reason, {"slot_cleared": cleared, "previous_slot": slot})
 
 
+_SAFE_VARIANT_ID_RE = re.compile(r"^[a-z0-9][a-z0-9_-]{1,40}$")
+
+
+def _has_t212_live(cfg: dict) -> bool:
+    """True if any runs_in entry (or the top-level tier) is t212-live.
+    Used to refuse spawn-variant from live-tier strategies."""
+    if (cfg.get("tier") or "").lower() == "t212-live":
+        return True
+    for entry in (cfg.get("runs_in") or []):
+        if isinstance(entry, dict) and (entry.get("tier") or "").lower() == "t212-live":
+            return True
+    return False
+
+
 def _do_spawn(raw: dict, configs: dict[str, dict]) -> ActionLog:
     parent_id = raw.get("strategy_id")
     variant_id = raw.get("variant_id") or f"{parent_id}-v2"
@@ -429,6 +443,16 @@ def _do_spawn(raw: dict, configs: dict[str, dict]) -> ActionLog:
     if variant_id in configs:
         return ActionLog(parent_id, None, "spawn-variant", False, f"Variant id {variant_id} already exists", {})
 
+    # Validate variant_id is filesystem-safe. The LLM occasionally
+    # suggests names with spaces, slashes, or capitals — those would
+    # create awkward strategy directories or shell-quoting bugs.
+    if not _SAFE_VARIANT_ID_RE.match(variant_id):
+        return ActionLog(
+            parent_id, None, "spawn-variant", False,
+            f"variant_id '{variant_id}' is invalid — must match {_SAFE_VARIANT_ID_RE.pattern}",
+            {},
+        )
+
     n_active = sum(1 for c in configs.values() if c.get("active"))
     if n_active >= MAX_TOTAL_STRATEGIES:
         return ActionLog(parent_id, None, "spawn-variant", False, f"Active strategy cap reached ({MAX_TOTAL_STRATEGIES})", {})
@@ -437,6 +461,18 @@ def _do_spawn(raw: dict, configs: dict[str, dict]) -> ActionLog:
     variant_dir = _strategies_dir() / variant_id
     if not parent_dir.exists():
         return ActionLog(parent_id, None, "spawn-variant", False, f"Parent dir missing: {parent_dir}", {})
+
+    # If the parent has any t212-live (Tier 2) configuration, refuse to
+    # spawn — variants must start on shadow but we shouldn't be
+    # propagating live-tier state through the spawn machinery at all
+    # (defense against a bug that lets it slip through).
+    parent_cfg_snapshot = configs[parent_id]
+    if _has_t212_live(parent_cfg_snapshot):
+        return ActionLog(
+            parent_id, None, "spawn-variant", False,
+            "Parent has tier=t212-live in runs_in — refusing to spawn variants from live strategies",
+            {},
+        )
 
     shutil.copytree(parent_dir, variant_dir)
 
@@ -475,6 +511,22 @@ def _do_spawn(raw: dict, configs: dict[str, dict]) -> ActionLog:
         f"weekly evolution agent. Reason: {reason}"
     )
     _write_config(variant_id, variant_cfg)
+
+    # Verify the new variant loads cleanly via the registry before we
+    # declare success. Catches malformed configs (missing required
+    # fields, broken yaml) before the next pipeline run tries to use
+    # the variant and fails opaquely.
+    try:
+        from trading_bot.strategy.registry import load_strategy_config
+        load_strategy_config(variant_id)
+    except Exception as e:
+        # Roll back — delete the dir + reject the spawn so weekly runs
+        # don't accumulate broken variants over time.
+        shutil.rmtree(variant_dir, ignore_errors=True)
+        return ActionLog(
+            parent_id, None, "spawn-variant", False,
+            f"Variant {variant_id} failed post-spawn registry load: {e}", {},
+        )
 
     # Append the addendum to the variant's deep_analysis.md (parent stays untouched)
     addendum = raw.get("deep_analysis_addendum")
