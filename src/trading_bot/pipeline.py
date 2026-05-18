@@ -173,9 +173,11 @@ def main(argv: list[str] | None = None) -> int:
         choices=[
             "entry", "exit", "clear-slot", "reflect", "summary",
             "weekly-macro", "weekly-evolution", "dst-sync",
+            "t212-reconcile-orphans",
         ],
     )
     parser.add_argument("--region", default="us", choices=["us", "uk-eu"])
+    parser.add_argument("--strategy", help="strategy_id to attribute reconciled orphans to")
     parser.add_argument("--date", help="ISO date (defaults to today)")
     parser.add_argument("--email", action="store_true", help="Send summary email after exit")
     parser.add_argument("--slot", type=int, help="Alpaca slot number (used by clear-slot)")
@@ -196,6 +198,21 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.mode == "dst-sync":
         run_dst_sync_cmd()
+        return 0
+
+    if args.mode == "t212-reconcile-orphans":
+        if not args.strategy:
+            parser.error("t212-reconcile-orphans requires --strategy <id>")
+        from datetime import date as _date
+        target_date = _date.fromisoformat(args.date) if args.date else _date.today()
+        executor = Trading212DemoExecutor(slot=1)
+        recovered = executor.reconcile_orphans(
+            attribute_to_strategy=args.strategy,
+            region=args.region,
+            on_date=target_date,
+        )
+        log.info("T212 reconcile: recovered %d orphan position(s): %s",
+                 len(recovered), [r["ticker"] for r in recovered])
         return 0
 
     on_date = date.fromisoformat(args.date) if args.date else date.today()

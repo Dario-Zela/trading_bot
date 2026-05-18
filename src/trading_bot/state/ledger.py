@@ -38,6 +38,11 @@ class TradeRecord:
     outcome_notes: str | None = None
     risks_observed: str | None = None
 
+    # Broker-side reference. For T212 this is the order id returned by the
+    # market-order endpoint. Set when entry is recorded as "pending" because
+    # the fill-poll timed out — exit then reconciles via T212 order history.
+    broker_order_id: str | None = None
+
     created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     updated_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 

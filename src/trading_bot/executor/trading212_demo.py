@@ -136,24 +136,46 @@ class Trading212DemoExecutor(Executor):
             if order is None:
                 continue
 
+            broker_order_id = str(order.get("id")) if order.get("id") is not None else None
+
             # Poll for the definitive fill. T212's POST response is usually
             # an acknowledgment; the real fill price arrives once the order
             # transitions to FILLED, which we read from the active-order
             # endpoint and then from history if it's already moved.
-            filled = self._wait_for_fill(order_id=order.get("id"), t212_ticker=t212_ticker)
-            if filled is None:
-                log.warning(
-                    "T212 order %s for %s didn't fill within timeout — not recording. "
-                    "If T212 fills it later, the position will be reconciled on exit.",
-                    order.get("id"), intent.ticker,
-                )
-                continue
-            fill_price = self._fill_price_of(filled)
+            filled = self._wait_for_fill(order_id=broker_order_id, t212_ticker=t212_ticker)
+
+            if filled is not None:
+                fill_price = self._fill_price_of(filled)
+            else:
+                fill_price = None
+
             if fill_price is None:
+                # Order was submitted (we have the broker_order_id) but the
+                # fill didn't surface within timeout. Record as PENDING so
+                # exit_scheduled can reconcile via T212 order history later
+                # — better than orphaning the position at T212.
                 log.warning(
-                    "T212 reported FILLED for %s but no fill price in the order record — skipping",
-                    intent.ticker,
+                    "T212 order %s for %s didn't fill within poll timeout — recording as pending. "
+                    "Exit will reconcile entry_price from T212 order history.",
+                    broker_order_id, intent.ticker,
                 )
+                record = TradeRecord(
+                    trade_id=client_order_id,
+                    strategy_id=strategy_id,
+                    region=region,
+                    tier=_TIER,
+                    ticker=intent.ticker,
+                    side="long",
+                    entry_date=on_date.isoformat(),
+                    entry_price=0.0,  # sentinel — reconciled at exit
+                    quantity=quantity,
+                    allocation_pct=intent.allocation_pct,
+                    stop_loss_pct=intent.stop_loss_pct,
+                    take_profit_pct=intent.take_profit_pct,
+                    thesis=intent.thesis,
+                    broker_order_id=broker_order_id,
+                )
+                append_trade(record)
                 continue
 
             record = TradeRecord(
@@ -170,6 +192,7 @@ class Trading212DemoExecutor(Executor):
                 stop_loss_pct=intent.stop_loss_pct,
                 take_profit_pct=intent.take_profit_pct,
                 thesis=intent.thesis,
+                broker_order_id=broker_order_id,
             )
             append_trade(record)
 
@@ -192,6 +215,28 @@ class Trading212DemoExecutor(Executor):
             if t212_ticker is None:
                 log.warning("Cannot resolve T212 ticker for exit on %s — leaving open", trade["ticker"])
                 continue
+
+            # Pending reconciliation: if the trade was recorded with a sentinel
+            # entry_price (the fill poll timed out during enter()), look up
+            # the actual fill from T212 order history now. This is the on-exit
+            # half of the orphan-recovery contract — entry side records the
+            # broker_order_id; exit side reads it back to recover the price.
+            if (not trade.get("entry_price") or float(trade.get("entry_price") or 0) == 0.0) and trade.get("broker_order_id"):
+                reconciled = self._get_order_from_history(t212_ticker, trade["broker_order_id"])
+                if reconciled is not None:
+                    recovered = self._fill_price_of(reconciled)
+                    if recovered is not None and recovered > 0:
+                        trade["entry_price"] = recovered
+                        log.info(
+                            "Reconciled pending entry for %s (order %s): entry_price=%.4f from T212 history",
+                            trade["ticker"], trade["broker_order_id"], recovered,
+                        )
+                if not trade.get("entry_price") or float(trade["entry_price"]) == 0.0:
+                    log.warning(
+                        "Could not reconcile entry price for pending order %s on %s — "
+                        "closing position but P&L will be unrecoverable",
+                        trade.get("broker_order_id"), trade["ticker"],
+                    )
 
             position = self._get_position(t212_ticker)
             close_fill_price: float | None = None
@@ -260,6 +305,129 @@ class Trading212DemoExecutor(Executor):
                 "exit_reason": exit_reason,
             })
         return closed
+
+    def reconcile_orphans(
+        self,
+        *,
+        attribute_to_strategy: str,
+        region: str,
+        on_date: date,
+    ) -> list[dict]:
+        """Find T212 positions that have no matching open ledger trade for
+        today and write entries for them, so the daily exit can close them
+        normally. Used when a prior entry run dropped the ledger write
+        (fill-poll timeout before the pending-record fix). Returns the
+        list of recovered trades."""
+        try:
+            response = requests.get(
+                self._url("/equity/portfolio"),
+                headers=self._headers(),
+                timeout=15,
+            )
+        except requests.RequestException as e:
+            log.error("T212 portfolio fetch errored during reconcile: %s", e)
+            return []
+        if not response.ok:
+            log.error(
+                "T212 portfolio fetch returned %s during reconcile: %s",
+                response.status_code, response.text[:200],
+            )
+            return []
+        try:
+            positions = response.json() or []
+        except json.JSONDecodeError:
+            log.error("T212 portfolio response wasn't JSON")
+            return []
+
+        translator = self._get_translator()
+        # Build a reverse map: T212 ticker -> yfinance ticker for any
+        # ledger entries we already have today
+        existing_today = read_open_trades(region=region, on_date=on_date)
+        existing_yf_tickers = {t["ticker"] for t in existing_today}
+
+        recovered: list[dict] = []
+        for pos in positions:
+            t212_ticker = pos.get("ticker")
+            if not t212_ticker:
+                continue
+
+            # Reverse-translate T212 → yfinance via the instrument metadata.
+            # The instrument record carries the ISIN/shortName we need to
+            # reconstruct what our universes call this ticker.
+            yf_ticker = self._t212_to_yfinance(t212_ticker, translator)
+            if yf_ticker is None:
+                log.warning(
+                    "Can't reverse-translate %s to yfinance ticker — skipping reconcile",
+                    t212_ticker,
+                )
+                continue
+
+            if yf_ticker in existing_yf_tickers:
+                continue  # Already in ledger — nothing to reconcile
+
+            quantity = float(pos.get("quantity") or 0)
+            avg_price = pos.get("averagePrice")
+            if quantity <= 0 or avg_price is None:
+                continue
+            try:
+                entry_price = float(avg_price)
+            except (TypeError, ValueError):
+                continue
+
+            client_order_id = f"{attribute_to_strategy}-reconciled-{uuid.uuid4().hex[:8]}"
+            record = TradeRecord(
+                trade_id=client_order_id,
+                strategy_id=attribute_to_strategy,
+                region=region,
+                tier=_TIER,
+                ticker=yf_ticker,
+                side="long",
+                entry_date=on_date.isoformat(),
+                entry_price=entry_price,
+                quantity=quantity,
+                allocation_pct=0.0,
+                thesis=f"Reconciled from T212 portfolio ({t212_ticker}) — original ledger entry missing",
+            )
+            append_trade(record)
+            log.info(
+                "Reconciled orphan: %s qty=%.0f @ %.4f → attributed to %s",
+                yf_ticker, quantity, entry_price, attribute_to_strategy,
+            )
+            recovered.append({"ticker": yf_ticker, "quantity": quantity, "entry_price": entry_price})
+        return recovered
+
+    def _t212_to_yfinance(self, t212_ticker: str, translator: Translator) -> str | None:
+        """Best-effort reverse translation. We use the instrument's shortName
+        and embedded exchange letter / country code to reconstruct the
+        yfinance ticker (the format our ledger uses)."""
+        inst = translator.get_instrument(t212_ticker)
+        if inst is None:
+            return None
+        short = (inst.get("shortName") or "").upper()
+        if not short:
+            return None
+        stem = t212_ticker[:-3] if t212_ticker.endswith("_EQ") else t212_ticker
+        # Single-letter form: VODl, ASMLa, SAPd → last lowercase char identifies exchange
+        if stem and stem[-1].islower():
+            letter = stem[-1]
+            for yf_suffix, t212_letter in {
+                ".L": "l", ".DE": "d", ".PA": "p", ".AS": "a",
+                ".MC": "e", ".MI": "m", ".ST": "s", ".HE": "h", ".CO": "c",
+            }.items():
+                if letter == t212_letter:
+                    return f"{short}{yf_suffix}"
+        # Country-code form: VOD_US, UCB_BE
+        if "_" in stem:
+            parts = stem.split("_")
+            country = parts[-1]
+            for yf_suffix, t212_country in {
+                ".BR": "BE", ".LS": "PT", ".VI": "AT", ".TO": "CA",
+            }.items():
+                if country == t212_country:
+                    return f"{short}{yf_suffix}"
+            if country == "US":
+                return short  # No suffix for US
+        return None
 
     # ---- safety controls ---------------------------------------------------
 
@@ -449,7 +617,7 @@ class Trading212DemoExecutor(Executor):
         *,
         order_id: int | str | None,
         t212_ticker: str,
-        timeout_s: float = 10.0,
+        timeout_s: float = 60.0,
     ) -> dict[str, Any] | None:
         """Poll until the order reaches a terminal state. Returns the order
         record if it FILLED, None if it was cancelled / rejected / didn't
