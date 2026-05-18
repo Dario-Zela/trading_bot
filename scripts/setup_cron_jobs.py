@@ -197,39 +197,120 @@ def create_job(api_key: str, gh_pat: str, spec: dict) -> int:
     return r.json().get("jobId")
 
 
+def _spec_fingerprint(spec: dict) -> tuple:
+    """A normalized fingerprint we can compare against existing-job fields
+    from cron-job.org's list response. Captures everything the user might
+    plausibly change: workflow file, schedule time, timezone, wdays."""
+    return (
+        spec["workflow"],
+        spec.get("tz", ""),
+        int(spec.get("hour", 0)),
+        int(spec.get("minute", 0)),
+        tuple(sorted(spec.get("wdays", []))),
+    )
+
+
+def _existing_fingerprint(job: dict) -> tuple | None:
+    """Extract the same fingerprint from an existing cron-job.org job
+    record. Returns None if the job isn't shaped like one we'd manage
+    (e.g., missing fields after a manual edit)."""
+    url = job.get("url") or ""
+    # url is like https://api.github.com/repos/X/Y/actions/workflows/{wf}/dispatches
+    workflow = ""
+    if "/actions/workflows/" in url:
+        try:
+            workflow = url.split("/actions/workflows/")[1].split("/")[0]
+        except IndexError:
+            pass
+    sch = job.get("schedule") or {}
+    hours = sch.get("hours") or []
+    minutes = sch.get("minutes") or []
+    wdays = sch.get("wdays") or []
+    if not workflow or not hours or not minutes:
+        return None
+    return (
+        workflow,
+        sch.get("timezone") or "",
+        int(hours[0]),
+        int(minutes[0]),
+        tuple(sorted(wdays)),
+    )
+
+
 def main() -> int:
     gh_pat = _env_or_die("GH_PAT")
     cron_key = _env_or_die("CRON_API_KEY")
 
     print("Listing existing cron-job.org jobs...")
     existing = list_jobs(cron_key)
-    to_delete = [j for j in existing if (j.get("title") or "").startswith(JOB_TITLE_PREFIX)]
-    if to_delete:
-        print(f"Deleting {len(to_delete)} existing trading_bot job(s):")
-        for i, j in enumerate(to_delete):
-            if i > 0:
-                # cron-job.org's free-tier rate limit applies to deletes
-                # too — without this pause, sequential deletes burn the
-                # quota and the first few creates 429 hard.
-                time.sleep(_REQ_PAUSE_S)
-            delete_job(cron_key, j["jobId"])
-            print(f"  - deleted '{j['title']}' (jobId={j['jobId']})")
-        # Brief grace period after the delete burst before we start
-        # creating — gives the rate-limit window time to refresh.
-        time.sleep(_REQ_PAUSE_S * 2)
-    else:
-        print("No existing trading_bot jobs to delete.")
+    existing_by_title = {
+        (j.get("title") or ""): j
+        for j in existing
+        if (j.get("title") or "").startswith(JOB_TITLE_PREFIX)
+    }
+    desired_titles = {JOB_TITLE_PREFIX + s["name"] for s in SCHEDULES}
 
-    print(f"\nCreating {len(SCHEDULES)} fresh schedule(s):")
-    for i, spec in enumerate(SCHEDULES):
-        if i > 0:
-            time.sleep(_REQ_PAUSE_S)  # cron-job.org free-tier pace
-        wdays_human = ",".join(("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")[d] for d in spec["wdays"])
-        jid = create_job(cron_key, gh_pat, spec)
-        print(
-            f"  + {spec['name']:<25}  {wdays_human:<19} {spec['hour']:02d}:{spec['minute']:02d} "
-            f"{spec['tz']:<20}  jobId={jid}"
-        )
+    # Three-way diff: keep / update / create / delete.
+    to_skip: list[tuple[str, int]] = []     # (name, existing_jobId)
+    to_update: list[tuple[dict, int]] = []  # (spec, existing_jobId_to_delete_first)
+    to_create: list[dict] = []
+    to_delete_orphan: list[dict] = [        # ours-but-no-longer-in-SCHEDULES
+        j for title, j in existing_by_title.items() if title not in desired_titles
+    ]
+
+    for spec in SCHEDULES:
+        title = JOB_TITLE_PREFIX + spec["name"]
+        existing_job = existing_by_title.get(title)
+        if existing_job is None:
+            to_create.append(spec)
+            continue
+        ex_fp = _existing_fingerprint(existing_job)
+        if ex_fp is not None and ex_fp == _spec_fingerprint(spec):
+            to_skip.append((spec["name"], existing_job["jobId"]))
+        else:
+            to_update.append((spec, existing_job["jobId"]))
+
+    n_actions = len(to_update) + len(to_create) + len(to_delete_orphan)
+
+    print(
+        f"\nDiff: {len(to_skip)} unchanged · {len(to_create)} to create · "
+        f"{len(to_update)} to update · {len(to_delete_orphan)} orphan(s) to remove"
+    )
+    if to_skip:
+        for name, jid in to_skip:
+            print(f"  = {name:<25} jobId={jid} (unchanged)")
+
+    if n_actions == 0:
+        print("\nNothing to do. Re-run is a no-op.")
+        return 0
+
+    def _paced(idx: int) -> None:
+        if idx > 0:
+            time.sleep(_REQ_PAUSE_S)
+
+    # Deletes first: orphans, then the to-update old versions.
+    delete_ops = [(j["title"], j["jobId"]) for j in to_delete_orphan] + [
+        (JOB_TITLE_PREFIX + spec["name"], jid) for spec, jid in to_update
+    ]
+    if delete_ops:
+        print(f"\nDeleting {len(delete_ops)} job(s):")
+        for i, (title, jid) in enumerate(delete_ops):
+            _paced(i)
+            delete_job(cron_key, jid)
+            print(f"  - {title} (jobId={jid})")
+        time.sleep(_REQ_PAUSE_S * 2)  # grace period before create burst
+
+    create_ops = [spec for spec, _jid in to_update] + to_create
+    if create_ops:
+        print(f"\nCreating {len(create_ops)} job(s):")
+        for i, spec in enumerate(create_ops):
+            _paced(i)
+            wdays_human = ",".join(("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")[d] for d in spec["wdays"])
+            jid = create_job(cron_key, gh_pat, spec)
+            print(
+                f"  + {spec['name']:<25}  {wdays_human:<19} {spec['hour']:02d}:{spec['minute']:02d} "
+                f"{spec['tz']:<20}  jobId={jid}"
+            )
 
     print(
         "\nDone. Verify at https://console.cron-job.org/jobs — each row shows its "
