@@ -90,6 +90,13 @@ def _build_prompt(
         ]
         calls_block = "\n## Today's predictions\n\n" + "\n".join(calls_lines)
 
+    question_line = (
+        f"\n## Today's question (the publisher's framing — keep it in mind when "
+        f"choosing your Risk tone wording; do NOT add a new section for it)\n\n"
+        f"> {plan.todays_question}\n"
+        if plan.todays_question else ""
+    )
+
     return f"""You are compressing today's edition of The Bot Tribune
 into a 150-word strategy brief. {today.isoformat()}.
 
@@ -97,6 +104,7 @@ The strategies that read this need: macro risk tone, the day's
 themes, sector lean, a watchlist of tickers, and any data/events
 worth flagging. They DO NOT need the news as news — they need it
 as signal.
+{question_line}
 
 ## The edition
 

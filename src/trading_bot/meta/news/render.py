@@ -198,10 +198,21 @@ def _render_front_page(
 def _masthead_html(plan: NewsPlan, today: date) -> str:
     formatted = today.strftime("%A, %d %B %Y")
     subtitle = html.escape(plan.masthead_subtitle or "")
+    question = html.escape(plan.todays_question or "")
+    question_html = ""
+    if question:
+        question_html = (
+            '  <div class="subtitle" style="margin-top:0.4rem;font-style:normal;'
+            'font-family:var(--sans);font-size:0.86rem;letter-spacing:0.06em;'
+            'text-transform:uppercase;color:var(--ink-soft);">'
+            f'<span style="color:var(--c-front);font-weight:700;">Today\'s question · </span>{question}'
+            '</div>'
+        )
     return (
         '<header class="masthead">'
         f'  <h1>The Bot Tribune<span class="sub">— Daily, {html.escape(formatted)}</span></h1>'
         + (f'  <div class="subtitle">{subtitle}</div>' if subtitle else '')
+        + question_html
         + '</header>'
     )
 

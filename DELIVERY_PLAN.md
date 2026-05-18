@@ -147,14 +147,14 @@ CSS + small HTML edits to the existing Alpine app. No new agents, no new state.
 
 ---
 
-## Phase 6 — Polish
+## Phase 6 — Polish ✅
 
 - [x] Macro and Evolution emails — `render_macro_email()` + `render_evolution_email()` in `notify/email.py`, wired into `meta/macro_v2.py` and `meta/evolution.py`
 - [x] Yesterday's predictions auto-grading already runs at 05:00 UTC (changed from 23:30 in Phase 1)
-- [ ] Dashboard "global overview" tile — already done, verify it survives the restyle
-- [ ] Strategy reading-times-it badges on the news front page (nice-to-have, not blocking)
-- [ ] "Today's question" subtitle on the news lead (publisher can be prompted to generate it — extension of the masthead_subtitle field)
-- [ ] Smoke-test the full stack: trigger daily news manually, verify HTML lands on Pages, email arrives, predictions persisted, grader resolves the previous day's calls (deferred — needs live workflow run)
+- [x] Dashboard "global overview" tile — verified surviving the restyle (broker + shadow overview-card pair in docs/index.html, scoped CSS in style.css)
+- [x] "Today's question" — added to `NewsPlan` as a structured field, publisher prompted to generate it, rendered as a small-caps line below the masthead subtitle, passed to the bot-summary compressor as framing context
+- [ ] Strategy reading-times-it badges on the news front page (nice-to-have, not blocking — skipped intentionally)
+- [ ] Smoke-test the full stack: trigger daily news manually, verify HTML lands on Pages, email arrives, predictions persisted, grader resolves the previous day's calls (deferred — needs live `workflow_dispatch` run)
 
 ---
 

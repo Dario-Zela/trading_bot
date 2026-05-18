@@ -95,6 +95,7 @@ class NewsPlan:
     front_lead_slug: str                # slug of the front lead piece
     pieces: list[PlannedPiece]          # in render order
     notes: str = ""                     # publisher's internal notes (debug-only)
+    todays_question: str = ""           # the framing question the strategies should keep in mind
 
 
 def plan_edition(
@@ -202,6 +203,18 @@ framing. Examples of the right register:
 - "Israeli cabinet stalls on hostage vote; tech earnings split the tape."
 - "Quiet day on the wires, with a chunky biotech deal as the exception."
 
+## Today's question
+
+One question (≤120 chars) the trading strategies should keep in mind
+as they read the brief. The question should be falsifiable in
+principle and rooted in today's lead. Examples:
+
+- "Does Fed credibility survive a print this hot without a verbal shock?"
+- "Is the Gaza ceasefire window real enough for energy to fade today?"
+- "Will the chip-sector pullback hold below the 50-day, or bounce on AMD?"
+
+Dry. No "we wonder" / "could it be that..." padding.
+
 ## Required output
 
 Return JSON only:
@@ -209,6 +222,7 @@ Return JSON only:
 ```json
 {{
   "masthead_subtitle": "<one-sentence subtitle>",
+  "todays_question": "<one falsifiable question ≤120 chars>",
   "pieces": [
     {{
       "triage_index": <int — index into the roster above>,
@@ -309,6 +323,7 @@ def _parse_plan(response: dict | list, triaged: list[TriagedCandidate], today: d
         front_lead_slug=lead_slug,
         pieces=pieces,
         notes=str(response.get("notes") or "")[:280],
+        todays_question=str(response.get("todays_question") or "").strip()[:200],
     )
 
 
@@ -375,6 +390,7 @@ def _heuristic_plan(triaged: list[TriagedCandidate], today: date) -> NewsPlan:
         front_lead_slug=lead_slug,
         pieces=pieces,
         notes="heuristic plan (LLM unavailable)",
+        todays_question="",
     )
 
 
@@ -406,6 +422,7 @@ def plan_to_json(plan: NewsPlan) -> dict:
     return {
         "edition_date": plan.edition_date,
         "masthead_subtitle": plan.masthead_subtitle,
+        "todays_question": plan.todays_question,
         "front_lead_slug": plan.front_lead_slug,
         "notes": plan.notes,
         "pieces": [asdict(p) for p in plan.pieces],
@@ -434,4 +451,5 @@ def plan_from_json(data: dict) -> NewsPlan:
         front_lead_slug=str(data.get("front_lead_slug", "")),
         pieces=pieces,
         notes=str(data.get("notes", "")),
+        todays_question=str(data.get("todays_question", "")),
     )
