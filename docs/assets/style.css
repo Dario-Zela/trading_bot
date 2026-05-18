@@ -264,7 +264,7 @@ body.page-dashboard .masthead h1 .sub {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   padding-top: 0.6rem;
-  margin: 3rem 0 1.4rem;
+  margin: 4.5rem 0 1.4rem;
   border-top: 2px solid;
   display: flex;
   justify-content: space-between;
@@ -327,9 +327,10 @@ body.page-dashboard .masthead h1 .sub {
  * Lead article (front-page hero on news, editorial on macro/evolution)
  * ============================================================================ */
 .lead, .editorial {
-  padding-bottom: 2.4rem;
+  padding-bottom: 3.2rem;
   border-bottom: 1px solid var(--hairline);
 }
+.lead .read-more, .editorial .read-more { margin-top: 1.8rem; }
 .lead h2, .editorial h2 {
   font-family: var(--serif-head);
   font-weight: 900;
@@ -377,15 +378,9 @@ body.page-evolution .editorial-body p:first-of-type::first-letter {
   line-height: 1.65;
   margin: 0 0 0.95rem;
 }
-.editorial > p:first-of-type::first-letter {
-  font-family: var(--serif-head);
-  font-weight: 900;
-  font-size: 4rem;
-  line-height: 0.85;
-  float: left;
-  margin: 0.3rem 0.5rem -0.2rem 0;
-  color: var(--c-evo);
-}
+/* Drop cap intentionally lives on .editorial-body p (not .editorial > p)
+   — putting it on direct children targeted the .meta / .dek lines instead
+   of the body. Evolution + macro both wrap their body in .editorial-body. */
 
 @media (max-width: 900px) {
   .lead-body, .editorial-body { column-count: 1; }
@@ -464,7 +459,8 @@ body.page-evolution .editorial-body p:first-of-type::first-letter {
 .brief.risk    h3 + p::first-letter { color: var(--c-risk); }
 
 .brief-footer {
-  margin-top: 0.9rem;
+  margin-top: 1.1rem;
+  padding-bottom: 0.3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -475,6 +471,12 @@ body.page-evolution .editorial-body p:first-of-type::first-letter {
      read-more / sources row. */
   clear: both;
 }
+
+/* Briefs in grids get bottom padding so the read-more button can't
+   crowd the next section's heading. The 4.5rem margin on
+   .section-label combined with this padding gives genuine breathing
+   room between sections. */
+.brief { padding-bottom: 1rem; }
 .brief-footer .sources {
   font-family: var(--sans);
   font-size: 0.74rem;

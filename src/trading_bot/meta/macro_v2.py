@@ -711,11 +711,22 @@ def _render_macro_edition(edition: MacroEdition, docs_root: Path, shell_fn) -> P
     # Per-piece subpages (reuse the news article renderer)
     from trading_bot.meta.news.render import _render_article_subpage
     pieces_by_slug = {p.slug: p for p in edition.plan.pieces}
+
+    # Compute prev/next once so every subpage shares the same nav arrows
+    prev_id, next_id = _neighbouring_weeks(edition.week_id, edition_dir.parent)
+    prev_url = f"../{prev_id}/" if prev_id else ""
+    next_url = f"../{next_id}/" if next_id else ""
+
     for piece in edition.plan.pieces:
         art = edition.articles.get(piece.slug)
         if not art:
             continue
-        subpage_body = _render_article_subpage(piece, art, edition.plan, pieces_by_slug, datetime.fromisoformat(edition.today + "T00:00:00").date())
+        subpage_body = _render_article_subpage(
+            piece, art, edition.plan, pieces_by_slug,
+            datetime.fromisoformat(edition.today + "T00:00:00").date(),
+            prev_url=prev_url, next_url=next_url,
+            prev_label=prev_id or "", next_label=next_id or "",
+        )
         page = shell_fn(
             title=f"{piece.headline} — Macro {edition.week_id}",
             body_html=subpage_body,

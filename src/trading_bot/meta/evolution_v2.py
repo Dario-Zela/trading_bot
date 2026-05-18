@@ -449,9 +449,12 @@ def _render_body(edition: EvolutionEdition) -> str:
         '</div>'
     )
 
-    # Editorial intro
+    # Editorial intro — body wrapped in .editorial-body so the drop-cap
+    # CSS rule targets the body paragraph (not a meta/dek line).
     parts.append('<article class="editorial">')
+    parts.append('<div class="editorial-body">')
     parts.append(_md_to_html(edition.editorial_md))
+    parts.append('</div>')
     parts.append('</article>')
 
     # Slate table — one row per (strategy, region) with metrics

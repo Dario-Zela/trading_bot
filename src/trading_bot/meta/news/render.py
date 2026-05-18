@@ -88,12 +88,21 @@ def render_news_edition(
     # Build a lookup: slug -> piece (used everywhere)
     pieces_by_slug = {p.slug: p for p in plan.pieces}
 
+    # Compute prev/next once so every subpage carries the same nav
+    prev_iso, next_iso = _neighbouring_news_dates(today, edition_dir.parent)
+    prev_url = f"../{prev_iso}/" if prev_iso else ""
+    next_url = f"../{next_iso}/" if next_iso else ""
+
     # 1. Per-article subpages
     for piece in plan.pieces:
         art = articles.get(piece.slug)
         if not art:
             continue
-        subpage_html = _render_article_subpage(piece, art, plan, pieces_by_slug, today)
+        subpage_html = _render_article_subpage(
+            piece, art, plan, pieces_by_slug, today,
+            prev_url=prev_url, next_url=next_url,
+            prev_label=prev_iso or "", next_label=next_iso or "",
+        )
         page = shell_fn(
             title=f"{piece.headline} — {today.isoformat()}",
             body_html=subpage_html,
@@ -591,6 +600,11 @@ def _render_article_subpage(
     plan: NewsPlan,
     pieces_by_slug: dict[str, PlannedPiece],
     today: date,
+    *,
+    prev_url: str = "",
+    next_url: str = "",
+    prev_label: str = "",
+    next_label: str = "",
 ) -> str:
     kicker = html.escape(piece.kicker or piece.section.upper())
     body_html = _md_to_html(article.body_md)
@@ -665,9 +679,20 @@ def _render_article_subpage(
 
     minutes = _estimate_read_minutes(article.body_md)
     read_time = f" · {minutes} min read" if minutes > 0 else ""
+    # Edition-nav strip — same arrows the front page has, so the user
+    # can move between editions without backing out.
+    subpage_nav = _edition_nav_html(
+        prev_url=prev_url,
+        next_url=next_url,
+        latest_url="../latest.html",
+        prev_label=prev_label,
+        next_label=next_label,
+        archive_url="../index.html",
+    )
     return (
         '<main class="paper article-page">'
-        '<a class="back-link" href="index.html">← Back to the front page</a>'
+        + subpage_nav
+        + '<a class="back-link" href="index.html">← Back to the front page</a>'
         f'<div class="article-meta">{kicker} · By {html.escape(piece.byline)} · {html.escape(today.isoformat())}{html.escape(read_time)}</div>'
         f'<h1>{html.escape(piece.headline)}</h1>'
         f'{hero_html}'
