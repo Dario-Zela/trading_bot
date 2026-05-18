@@ -17,7 +17,7 @@ from dataclasses import dataclass
 
 log = logging.getLogger(__name__)
 
-_DEFAULT_TIMEOUT = 600  # 10 min — generous to allow heavy reasoning
+_DEFAULT_TIMEOUT = 1200  # 20 min — tool-heavy strategies (macro-aligned, news-reactive) blew through 600s on the UK-EU run
 
 
 class ClaudeCodeError(RuntimeError):

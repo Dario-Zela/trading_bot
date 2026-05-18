@@ -100,11 +100,19 @@ class Trading212DemoExecutor(Executor):
             allocation_gbp = capital_gbp * (intent.allocation_pct / 100.0)
             # T212 GBP accounts settle UK trades natively; for EU stocks it
             # auto-converts. We size in GBP across the board.
-            quantity = round(allocation_gbp / entry_estimate, 4)
-            if quantity < min_qty:
+            #
+            # T212 rejects fractional quantities for most non-US instruments
+            # with `quantity-precision-mismatch` (only some allow fractional,
+            # and the instrument metadata endpoint doesn't expose the per-
+            # ticker precision). Whole shares are universally accepted, so
+            # we floor to int across the board. Small allocations on
+            # expensive stocks may round to zero — caught by the min_qty
+            # check below.
+            quantity = float(int(allocation_gbp / entry_estimate))
+            if quantity < max(min_qty, 1.0):
                 log.warning(
-                    "Computed qty %.4f below T212 minimum %.4f for %s — skipping",
-                    quantity, min_qty, intent.ticker,
+                    "Computed qty %.0f below T212 minimum (%.2f shares ~£%.2f) for %s — skipping",
+                    quantity, min_qty, allocation_gbp, intent.ticker,
                 )
                 continue
 
