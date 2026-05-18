@@ -244,7 +244,13 @@ class Trading212DemoExecutor(Executor):
         except Exception as e:
             log.warning("Orphan reconcile failed for %s (non-fatal): %s", strategy_id, e)
 
-        open_trades = read_open_trades(strategy_id=strategy_id, region=region, on_date=on_date)
+        # Sweep ALL open trades for this strategy+region. Same rationale
+        # as the other executors: prior-session strands (holiday, workflow
+        # failure, T212 outage) get picked up here. _find_recent_sell looks
+        # at today's history when there's no live position; for true
+        # multi-day strands the position will simply be re-closed-or-marked
+        # cancelled rather than silently lingering forever.
+        open_trades = read_open_trades(strategy_id=strategy_id, region=region)
         if not open_trades:
             return []
 
@@ -696,12 +702,15 @@ class Trading212DemoExecutor(Executor):
             return raw_price
         return raw_price * mult
 
+    _STALE_LOOKBACK_DAYS = 7
+
     def _find_recent_sell(self, t212_ticker: str, on_date: date) -> dict[str, Any] | None:
         """Find the most recent SELL order for this ticker that filled
-        today. Used when exit_scheduled sees no live position — the close
-        already happened (externally / in a prior run that lost the
-        response) and we need to recover the fill price from T212's order
-        history.
+        within the last week. Used when exit_scheduled sees no live
+        position — the close already happened (externally / in a prior
+        run that lost the response / a session strand from a prior day)
+        and we need to recover the fill price from T212's order history.
+        7-day window covers weekend gaps and most workflow strands.
 
         T212's history items are shaped `{order: {...}, fill: {...}}`.
         The order metadata (side, ticker, status, timestamp) lives under
@@ -732,7 +741,8 @@ class Trading212DemoExecutor(Executor):
             log.info("T212 history for %s: no items returned", t212_ticker)
             return None
 
-        target_date = on_date.isoformat()
+        from datetime import timedelta as _td
+        oldest_acceptable = (on_date - _td(days=self._STALE_LOOKBACK_DAYS)).isoformat()
         candidates: list[dict[str, Any]] = []
         for item in items:
             if not isinstance(item, dict):
@@ -744,8 +754,12 @@ class Trading212DemoExecutor(Executor):
 
             # Date filter — use order.createdAt (T212 returns ISO 8601 like
             # "2026-05-18T15:03:43.000Z"). Fall back to fill.filledAt.
+            # Accept anything from the last STALE_LOOKBACK_DAYS so stale
+            # strands from prior sessions can be reconciled.
             ts = order.get("createdAt") or fill.get("filledAt") or ""
-            if not ts.startswith(target_date):
+            if not ts or ts[:10] < oldest_acceptable:
+                continue
+            if ts[:10] > on_date.isoformat():
                 continue
 
             # Direction filter — order.side is the authoritative field

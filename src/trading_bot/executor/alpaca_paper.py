@@ -151,7 +151,13 @@ class AlpacaPaperExecutor(Executor):
         region: str,
         on_date: date,
     ) -> list[dict]:
-        open_trades = read_open_trades(strategy_id=strategy_id, region=region, on_date=on_date)
+        # Sweep ALL open trades for this strategy+region. If a prior
+        # session missed its exit (holiday, workflow failure, broker
+        # outage) those trades sit stranded with exit_date=None. The
+        # close-by-current-position logic below handles them — Alpaca
+        # returns the live position if still open, the bracket-leg-fill
+        # path handles closes that fired intraday.
+        open_trades = read_open_trades(strategy_id=strategy_id, region=region)
         if not open_trades:
             return []
 

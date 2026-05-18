@@ -75,7 +75,12 @@ class ShadowExecutor(Executor):
         region: str,
         on_date: date,
     ) -> list[dict]:
-        open_trades = read_open_trades(strategy_id=strategy_id, region=region, on_date=on_date)
+        # Sweep ALL open trades for this strategy+region, not just today's.
+        # If a prior session missed its exit (holiday, workflow failure, etc),
+        # those trades sit stranded with exit_date=None. We close them here
+        # at today's yfinance close — small mark-to-market drift but no
+        # silent strand.
+        open_trades = read_open_trades(strategy_id=strategy_id, region=region)
         if not open_trades:
             return []
 
