@@ -456,29 +456,31 @@
       <input type="search" placeholder="Search strategies by name or description…" x-model="search" />
     </div>
 
-    <!-- Global overview: separates real broker fills from shadow simulation -->
-    <template x-if="data && data.global_overview">
+    <!-- Global overview: separates real broker fills from shadow simulation.
+         Computed live from the currently-visible strategies so it tracks
+         the active region + tab + search filters. -->
+    <template x-if="data">
       <section class="overview-row">
         <article class="overview-card">
           <header>
             <strong>Real broker (paper)</strong>
-            <span class="muted" x-text="(data.global_overview.real_broker.tiers || []).join(' + ') || '—'"></span>
+            <span class="muted" x-text="overview.real.tiers.join(' + ') || '—'"></span>
           </header>
           <div class="overview-grid">
             <div>
               <div class="muted small">Today</div>
-              <div class="big" :class="pnlClass(data.global_overview.real_broker.today_pnl_gbp)"
-                   x-text="formatGbp(data.global_overview.real_broker.today_pnl_gbp)"></div>
-              <div class="muted small" x-text="data.global_overview.real_broker.today_n_trades + ' trades'"></div>
+              <div class="big" :class="pnlClass(overview.real.todayPnl)"
+                   x-text="formatGbp(overview.real.todayPnl)"></div>
+              <div class="muted small" x-text="overview.real.todayN + ' trades'"></div>
             </div>
             <div>
               <div class="muted small">All-time</div>
-              <div class="big" :class="pnlClass(data.global_overview.real_broker.alltime_pnl_gbp)"
-                   x-text="formatGbp(data.global_overview.real_broker.alltime_pnl_gbp)"></div>
+              <div class="big" :class="pnlClass(overview.real.alltimePnl)"
+                   x-text="formatGbp(overview.real.alltimePnl)"></div>
               <div class="muted small">
-                <span x-text="data.global_overview.real_broker.alltime_n_trades + ' trades'"></span>
-                <template x-if="data.global_overview.real_broker.alltime_hit_rate !== null">
-                  <span> · <span x-text="(data.global_overview.real_broker.alltime_hit_rate * 100).toFixed(1) + '% hit'"></span></span>
+                <span x-text="overview.real.alltimeN + ' trades'"></span>
+                <template x-if="overview.real.hitRate !== null">
+                  <span> · <span x-text="(overview.real.hitRate * 100).toFixed(1) + '% hit'"></span></span>
                 </template>
               </div>
             </div>
@@ -492,18 +494,18 @@
           <div class="overview-grid">
             <div>
               <div class="muted small">Today</div>
-              <div class="big" :class="pnlClass(data.global_overview.shadow_simulation.today_pnl_gbp)"
-                   x-text="formatGbp(data.global_overview.shadow_simulation.today_pnl_gbp)"></div>
-              <div class="muted small" x-text="data.global_overview.shadow_simulation.today_n_trades + ' trades'"></div>
+              <div class="big" :class="pnlClass(overview.shadow.todayPnl)"
+                   x-text="formatGbp(overview.shadow.todayPnl)"></div>
+              <div class="muted small" x-text="overview.shadow.todayN + ' trades'"></div>
             </div>
             <div>
               <div class="muted small">All-time</div>
-              <div class="big" :class="pnlClass(data.global_overview.shadow_simulation.alltime_pnl_gbp)"
-                   x-text="formatGbp(data.global_overview.shadow_simulation.alltime_pnl_gbp)"></div>
+              <div class="big" :class="pnlClass(overview.shadow.alltimePnl)"
+                   x-text="formatGbp(overview.shadow.alltimePnl)"></div>
               <div class="muted small">
-                <span x-text="data.global_overview.shadow_simulation.alltime_n_trades + ' trades'"></span>
-                <template x-if="data.global_overview.shadow_simulation.alltime_hit_rate !== null">
-                  <span> · <span x-text="(data.global_overview.shadow_simulation.alltime_hit_rate * 100).toFixed(1) + '% hit'"></span></span>
+                <span x-text="overview.shadow.alltimeN + ' trades'"></span>
+                <template x-if="overview.shadow.hitRate !== null">
+                  <span> · <span x-text="(overview.shadow.hitRate * 100).toFixed(1) + '% hit'"></span></span>
                 </template>
               </div>
             </div>
@@ -746,6 +748,41 @@
             s.id.toLowerCase().includes(q) ||
             (s.description || '').toLowerCase().includes(q)
           );
+        },
+
+        // Aggregate P&L over whatever strategies are currently visible.
+        // Updates reactively when tab / region / search change so the
+        // overview always reflects what the user is actually looking at.
+        get overview() {
+          const REAL_TIERS = new Set(['alpaca-paper', 'trading212-paper', 't212-live']);
+          const today = new Date().toISOString().slice(0, 10);
+          const real = { tiers: new Set(), todayPnl: 0, todayN: 0, alltimePnl: 0, alltimeN: 0, alltimeWins: 0 };
+          const shadow = { tiers: new Set(['shadow']), todayPnl: 0, todayN: 0, alltimePnl: 0, alltimeN: 0, alltimeWins: 0 };
+          for (const s of this.filteredStrategies) {
+            const tier = (s.tier || '').toLowerCase();
+            const target = REAL_TIERS.has(tier) ? real : shadow;
+            if (REAL_TIERS.has(tier)) target.tiers.add(tier);
+            for (const t of (s.executed || [])) {
+              if (t.pnl_gbp == null || t.exit_date == null) continue;
+              const p = Number(t.pnl_gbp);
+              target.alltimePnl += p;
+              target.alltimeN += 1;
+              if (p > 0) target.alltimeWins += 1;
+              if (t.exit_date === today) {
+                target.todayPnl += p;
+                target.todayN += 1;
+              }
+            }
+          }
+          const finalize = (b) => ({
+            tiers: Array.from(b.tiers).sort(),
+            todayPnl: +b.todayPnl.toFixed(2),
+            todayN: b.todayN,
+            alltimePnl: +b.alltimePnl.toFixed(2),
+            alltimeN: b.alltimeN,
+            hitRate: b.alltimeN > 0 ? b.alltimeWins / b.alltimeN : null,
+          });
+          return { real: finalize(real), shadow: finalize(shadow) };
         },
 
         get current() {
