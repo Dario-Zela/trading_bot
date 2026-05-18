@@ -28,21 +28,31 @@ log = logging.getLogger(__name__)
 
 _CACHE_TTL_S = 7 * 24 * 3600  # 7 days
 
-# Map yfinance ticker suffix → T212 exchange substring in the instrument
-# ticker. T212 embeds the exchange in the middle of its ticker string,
-# e.g. VOD_LON_EQ. The substring is what we match against.
-_SUFFIX_TO_T212_EXCHANGE = {
-    ".L": "LON",   # London Stock Exchange
-    ".DE": "FRA",  # Xetra / Frankfurt (T212 uses lowercase d sometimes; FRA is the more reliable match)
-    ".PA": "PAR",  # Euronext Paris
-    ".AS": "AMS",  # Euronext Amsterdam
-    ".BR": "BRU",  # Euronext Brussels
-    ".LS": "LIS",  # Euronext Lisbon
-    ".MI": "MIL",  # Borsa Italiana
-    ".MC": "MAD",  # BME Madrid
-    ".ST": "STO",  # Nasdaq Stockholm
-    ".HE": "HEL",  # Nasdaq Helsinki
-    ".CO": "CPH",  # Nasdaq Copenhagen
+# T212 uses two parallel ticker conventions:
+#   1. Single-letter suffix appended to the shortName: `VODl_EQ` (LSE),
+#      `ASMLa_EQ` (Amsterdam), `SAPd_EQ` (Xetra), `MCp_EQ` (Paris). This
+#      covers the bulk of European exchanges.
+#   2. Country code in the middle: `UCB_BE_EQ` (Brussels), `STN_US_EQ`
+#      (NYSE). Used for Belgium, Portugal, Austria, Canada, US.
+#
+# Mapping derived empirically from a full T212 instrument dump (~17k rows).
+_SUFFIX_TO_T212_LETTER = {
+    ".L":  "l",   # London (LSE) — 4293 tickers
+    ".DE": "d",   # Deutsche Börse / Xetra — 3259
+    ".PA": "p",   # Euronext Paris — 493
+    ".AS": "a",   # Euronext Amsterdam — 273
+    ".MC": "e",   # BME Madrid (España) — 158
+    ".MI": "m",   # Borsa Italiana (Milan) — 319
+    ".ST": "s",   # Nasdaq Stockholm — 467
+    ".HE": "h",   # Nasdaq Helsinki (unverified count)
+    ".CO": "c",   # Nasdaq Copenhagen (unverified count)
+}
+
+_SUFFIX_TO_T212_COUNTRY = {
+    ".BR": "BE",  # Euronext Brussels — 102
+    ".LS": "PT",  # Euronext Lisbon — 28
+    ".VI": "AT",  # Wiener Börse Vienna — 67
+    ".TO": "CA",  # Toronto — 537
 }
 
 
@@ -80,38 +90,61 @@ def yfinance_to_t212(
 ) -> str | None:
     """Translate one yfinance ticker to its T212 instrument ticker.
 
-    Matches by `shortName` (the human-readable ticker T212 uses internally)
-    combined with an exchange substring derived from the yfinance suffix.
+    Matching strategy:
+    1. Find every T212 instrument whose `shortName` matches the yfinance
+       stem (case-insensitive, with hyphen/dot share-class rewrites).
+    2. Among those, pick the one whose ticker matches the exchange
+       convention implied by the yfinance suffix:
+       - `XYZl_EQ` for `.L`, `XYZd_EQ` for `.DE`, etc. (single-letter form)
+       - `XYZ_BE_EQ` for `.BR`, `XYZ_US_EQ` for no suffix (country form)
     Returns None if no match — caller should skip the trade and log.
     """
     if not yf_ticker:
         return None
 
-    # Split into stem + exchange suffix
+    # Determine the expected T212 ticker pattern from the yfinance suffix.
+    t212_letter: str | None = None
+    t212_country: str | None = None
     if "." in yf_ticker:
         stem, _, suffix = yf_ticker.rpartition(".")
         suffix = "." + suffix
-        exch_substr = _SUFFIX_TO_T212_EXCHANGE.get(suffix)
-        if exch_substr is None:
+        t212_letter = _SUFFIX_TO_T212_LETTER.get(suffix)
+        t212_country = _SUFFIX_TO_T212_COUNTRY.get(suffix)
+        if t212_letter is None and t212_country is None:
             log.debug("No T212 exchange mapping for suffix %s", suffix)
             return None
     else:
-        # No suffix → US listing
         stem = yf_ticker
-        exch_substr = "US"
+        t212_country = "US"
 
-    # yfinance uses '-' for share classes (BRK-B), T212 uses dot or letter suffixes.
-    # Try the literal first, then a few common rewrites.
+    # yfinance uses '-' for US share classes (BRK-B); T212 sometimes uses
+    # '.' or no separator. Try a few common rewrites of the stem.
     candidates_stem = [stem, stem.replace("-", "."), stem.replace("-", "")]
+    candidates_stem_upper = [c.upper() for c in candidates_stem]
 
-    for cand in candidates_stem:
-        for inst in instruments:
-            short = (inst.get("shortName") or "").upper()
-            ticker = (inst.get("ticker") or "").upper()
-            if short != cand.upper():
-                continue
-            if exch_substr in ticker:
-                return inst["ticker"]
+    for inst in instruments:
+        short = (inst.get("shortName") or "").upper()
+        if short not in candidates_stem_upper:
+            continue
+        ticker = inst.get("ticker") or ""
+        if not ticker.endswith("_EQ"):
+            continue
+        stem_in_ticker = ticker[:-3]  # strip "_EQ"
+
+        if t212_letter is not None:
+            # Single-letter convention: VODl, ASMLa, SAPd, etc. We can't
+            # require stem == f"{short}{letter}" because T212 keeps legacy
+            # ticker codes after company renames (e.g., shortName=HBR but
+            # ticker stays PMOl_EQ from Premier Oil). The exchange letter
+            # is lowercase in T212's convention, and shortNames are all
+            # uppercase, so a case-sensitive endswith disambiguates safely:
+            # `AMSEL` (hypothetical ticker) ends with "L" not "l".
+            if stem_in_ticker.endswith(t212_letter):
+                return ticker
+        if t212_country is not None:
+            # Country-code convention: VOD_US, UCB_BE.
+            if stem_in_ticker.endswith(f"_{t212_country}"):
+                return ticker
     return None
 
 
