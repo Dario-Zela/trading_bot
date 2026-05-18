@@ -161,6 +161,17 @@ class AlpacaPaperExecutor(Executor):
         if not open_trades:
             return []
 
+        # Cancel ALL open orders for this Alpaca slot before attempting
+        # market closes. Bracket entries leave stop + take-profit child
+        # orders open until one fires; those children "hold" the shares
+        # (held_for_orders == position qty), so a fresh market-sell
+        # returns 403 "insufficient qty available". Cancelling them
+        # first frees the shares for the close. Already-filled orders
+        # are no-ops in DELETE /v2/orders, so this is safe for trades
+        # where a leg DID fire intraday — those positions will read as
+        # None below and recover the exit via the parent's filled-leg.
+        self._cancel_all_orders()
+
         closed: list[dict] = []
         for trade in open_trades:
             try:
