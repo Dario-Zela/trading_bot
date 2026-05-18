@@ -60,9 +60,9 @@ from trading_bot.state.predictions_log import (
 
 log = logging.getLogger(__name__)
 
-_PUBLISH_TIMEOUT = 240
-_PRED_TIMEOUT = 240
-_STRATEGY_TIMEOUT = 180
+_PUBLISH_TIMEOUT = 600    # macro snapshot prompt is heavy; 240s was tight in 2026-W21
+_PRED_TIMEOUT = 600       # same — multi-horizon macro reasoning needs the headroom
+_STRATEGY_TIMEOUT = 240
 
 
 # Macro byline roster. Different beats from the news desks.
