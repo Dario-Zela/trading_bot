@@ -126,6 +126,31 @@ def _md_to_html(md_text: str) -> str:
     )
 
 
+_MARKDOWN_NOISE_RE = re.compile(r"[#`*_>\[\]()!\-]+")
+_WORDS_PER_MINUTE = 225
+
+
+def _estimate_read_minutes(md_text: str) -> int:
+    """Estimate minutes-to-read from a markdown body. Strips markdown
+    syntax noise, counts whitespace-separated tokens, divides by 225
+    words/min, rounds up to the nearest minute (minimum 1)."""
+    if not md_text:
+        return 0
+    cleaned = _MARKDOWN_NOISE_RE.sub(" ", md_text)
+    n_words = len(cleaned.split())
+    if n_words <= 0:
+        return 0
+    # Round up so a 230-word piece reads "2 min" not "1 min"
+    return max(1, (n_words + _WORDS_PER_MINUTE - 1) // _WORDS_PER_MINUTE)
+
+
+def _read_badge(minutes: int) -> str:
+    """Small inline badge — '· 4 min'. Empty string for 0 minutes."""
+    if minutes <= 0:
+        return ""
+    return f' <span style="opacity:0.7;font-weight:400;">· {minutes} min</span>'
+
+
 def _section_class(section: str) -> str:
     return _SECTION_CLASS.get(section, "beyond")
 
@@ -246,10 +271,13 @@ def _render_lead(piece: PlannedPiece, brief: Brief | None, article: FullArticle 
     elif piece.one_line:
         dek = f'<p class="dek">{html.escape(piece.one_line)}</p>'
 
-    read_more = (
-        f'<a class="read-more lead" href="{html.escape(piece.slug)}.html">Read the full article →</a>'
-        if article else ""
-    )
+    read_more = ""
+    if article:
+        minutes = _estimate_read_minutes(article.body_md)
+        read_more = (
+            f'<a class="read-more lead" href="{html.escape(piece.slug)}.html">'
+            f'Read the full article →{_read_badge(minutes)}</a>'
+        )
     out.append(
         '<article class="lead">'
         f'  <p class="meta lead"><span class="accent">{kicker}</span>'
@@ -319,9 +347,10 @@ def _render_brief_card(
     body_html = _md_to_html(body_md)
     read_more = ""
     if article:
+        minutes = _estimate_read_minutes(article.body_md)
         read_more = (
             f'<a class="read-more small {section_cls}" href="{html.escape(piece.slug)}.html">'
-            f'Read on →</a>'
+            f'Read on →{_read_badge(minutes)}</a>'
         )
     sources = ""
     if brief and brief.sources_used:
@@ -512,10 +541,12 @@ def _render_article_subpage(
             '</section>'
         )
 
+    minutes = _estimate_read_minutes(article.body_md)
+    read_time = f" · {minutes} min read" if minutes > 0 else ""
     return (
         '<main class="paper article-page">'
         '<a class="back-link" href="index.html">← Back to the front page</a>'
-        f'<div class="article-meta">{kicker} · By {html.escape(piece.byline)} · {html.escape(today.isoformat())}</div>'
+        f'<div class="article-meta">{kicker} · By {html.escape(piece.byline)} · {html.escape(today.isoformat())}{html.escape(read_time)}</div>'
         f'<h1>{html.escape(piece.headline)}</h1>'
         f'{hero_html}'
         f'{callout_html}'

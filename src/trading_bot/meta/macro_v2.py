@@ -851,7 +851,12 @@ def _render_macro_editorial(piece: PlannedPiece, brief: Brief | None, article: F
         dek = f'<p class="dek">{html.escape(piece.one_line)}</p>'
     read_more = ""
     if article:
-        read_more = f'<a class="read-more lead" href="{html.escape(piece.slug)}.html">Read the full thesis →</a>'
+        from trading_bot.meta.news.render import _estimate_read_minutes, _read_badge
+        minutes = _estimate_read_minutes(article.body_md)
+        read_more = (
+            f'<a class="read-more lead" href="{html.escape(piece.slug)}.html">'
+            f'Read the full thesis →{_read_badge(minutes)}</a>'
+        )
     return (
         '<div class="section-label rates">'
         '  <span>The week\'s thesis</span>'
@@ -906,8 +911,11 @@ def _render_macro_brief(piece: PlannedPiece, brief: Brief | None, article: FullA
     body_html = _md_to_html(body_md)
     read_more = ""
     if article:
+        from trading_bot.meta.news.render import _estimate_read_minutes, _read_badge
+        minutes = _estimate_read_minutes(article.body_md)
         read_more = (
-            f'<a class="read-more small {cls}" href="{html.escape(piece.slug)}.html">Read on →</a>'
+            f'<a class="read-more small {cls}" href="{html.escape(piece.slug)}.html">'
+            f'Read on →{_read_badge(minutes)}</a>'
         )
     return (
         f'<article class="brief {cls}">'
