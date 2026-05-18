@@ -585,6 +585,24 @@ class Trading212DemoExecutor(Executor):
     def _url(self, path: str) -> str:
         return f"{self.creds.base_url}{path}"
 
+    def _request_with_retry(self, method: str, url: str, **kw) -> requests.Response | None:
+        """Wrap a T212 HTTP call with 429-aware retry. T212's free-tier
+        rate-limit is tight (~1 req/s per endpoint pool) and the per-loop
+        sleep we already do can still get caught when phases overlap.
+        Up to 3 retries with linear backoff."""
+        for attempt in range(4):
+            try:
+                r = requests.request(method, url, timeout=15, **kw)
+            except requests.RequestException as e:
+                log.debug("T212 %s %s errored: %s", method, url, e)
+                return None
+            if r.status_code != 429:
+                return r
+            wait = 0.8 * (attempt + 1)
+            log.debug("T212 429 on %s (attempt %d) — sleeping %.1fs", url, attempt + 1, wait)
+            time.sleep(wait)
+        return r  # last response, still 429
+
     def _submit_market_order(
         self,
         *,
@@ -665,15 +683,13 @@ class Trading212DemoExecutor(Executor):
         history item; the caller pulls the price via `_fill_price_of`
         which knows about the same nesting.
         """
-        try:
-            response = requests.get(
-                self._url("/equity/history/orders"),
-                headers=self._headers(),
-                params={"ticker": t212_ticker, "limit": 50},
-                timeout=15,
-            )
-        except requests.RequestException as e:
-            log.debug("T212 history fetch errored during close recovery: %s", e)
+        response = self._request_with_retry(
+            "GET",
+            self._url("/equity/history/orders"),
+            headers=self._headers(),
+            params={"ticker": t212_ticker, "limit": 50},
+        )
+        if response is None:
             return None
         if not response.ok:
             log.warning(
@@ -841,14 +857,12 @@ class Trading212DemoExecutor(Executor):
         return None
 
     def _get_position(self, t212_ticker: str) -> dict[str, Any] | None:
-        try:
-            response = requests.get(
-                self._url(f"/equity/portfolio/{t212_ticker}"),
-                headers=self._headers(),
-                timeout=10,
-            )
-        except requests.RequestException as e:
-            log.warning("Position fetch errored for %s: %s", t212_ticker, e)
+        response = self._request_with_retry(
+            "GET",
+            self._url(f"/equity/portfolio/{t212_ticker}"),
+            headers=self._headers(),
+        )
+        if response is None:
             return None
         if response.status_code == 404:
             return None
