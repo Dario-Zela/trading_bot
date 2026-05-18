@@ -154,7 +154,9 @@ CSS + small HTML edits to the existing Alpine app. No new agents, no new state.
 - [x] Dashboard "global overview" tile — verified surviving the restyle (broker + shadow overview-card pair in docs/index.html, scoped CSS in style.css)
 - [x] "Today's question" — added to `NewsPlan` as a structured field, publisher prompted to generate it, rendered as a small-caps line below the masthead subtitle, passed to the bot-summary compressor as framing context
 - [x] Strategy reading-time badges — `_estimate_read_minutes()` (225 wpm, markdown-noise-stripped); shown on every Read-on / Read-the-full-article link (lead + briefs) and in the article subpage meta line. Applied to both news and macro pipelines.
-- [ ] Smoke-test the full stack: trigger daily news manually, verify HTML lands on Pages, email arrives, predictions persisted, grader resolves the previous day's calls (deferred — needs live `workflow_dispatch` run)
+- [x] Smoke-test the full stack — ran both `daily-news-brief` and `weekly-macro` via `workflow_dispatch` on 2026-05-18:
+  - **Daily-news:** clean. 19 pieces published across Front / Markets / World / Health, 18 articles with hero images, 3 trading-floor prose pieces, 6 predictions persisted, today's question rendered, email sent.
+  - **Weekly-macro:** partial. v1 markdown landed cleanly; v2 publisher + predictions Sonnet calls timed out at 240s → bumped to 600s in `meta/macro_v2.py`, and added `docs/macro` to the workflow's `git add` (was missing). Fix in commit `9997609`. Re-run to verify.
 
 ---
 
