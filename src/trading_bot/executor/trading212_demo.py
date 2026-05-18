@@ -303,7 +303,11 @@ class Trading212DemoExecutor(Executor):
         # Phase 2 — poll each submitted close. By the time we start, every
         # order has been in T212's queue for at least N submit-latencies.
         closed: list[dict] = []
-        for trade, t212_ticker, close_order_id, status in submitted:
+        for i, (trade, t212_ticker, close_order_id, status) in enumerate(submitted):
+            if i > 0 and status == "no_position":
+                # T212 history endpoint shares the same rate-limit pool as
+                # portfolio fetches; space the calls out.
+                time.sleep(0.6)
             close_fill_price: float | None = None
             exit_reason: str
 
@@ -609,9 +613,19 @@ class Trading212DemoExecutor(Executor):
 
     def _fill_price_of(self, order: dict[str, Any]) -> float | None:
         """Pull the fill price from an order record. T212 uses different
-        field names depending on whether the record came from the active
-        orders endpoint, the history endpoint, or the submit response.
+        field names + nesting depending on which endpoint returned it:
+        - submit-response / active-order: flat dict with fillPrice / etc.
+        - history: nested `{order: {...}, fill: {price: ...}}`
         Returns None if no fill price is present."""
+        if not isinstance(order, dict):
+            return None
+        # Nested history shape first
+        fill = order.get("fill")
+        if isinstance(fill, dict) and fill.get("price") is not None:
+            try:
+                return float(fill["price"])
+            except (TypeError, ValueError):
+                pass
         for key in ("fillPrice", "filledPrice", "averagePrice", "averageFillPrice", "price"):
             v = order.get(key)
             if v is None:
@@ -643,9 +657,14 @@ class Trading212DemoExecutor(Executor):
         today. Used when exit_scheduled sees no live position — the close
         already happened (externally / in a prior run that lost the
         response) and we need to recover the fill price from T212's order
-        history. We log the raw shape of the first item we see so the
-        filter can be tightened once T212's exact response format is
-        confirmed."""
+        history.
+
+        T212's history items are shaped `{order: {...}, fill: {...}}`.
+        The order metadata (side, ticker, status, timestamp) lives under
+        `order`; the executed price under `fill.price`. Returns the
+        history item; the caller pulls the price via `_fill_price_of`
+        which knows about the same nesting.
+        """
         try:
             response = requests.get(
                 self._url("/equity/history/orders"),
@@ -671,68 +690,48 @@ class Trading212DemoExecutor(Executor):
             log.info("T212 history for %s: no items returned", t212_ticker)
             return None
 
-        # One-time diagnostic dump so we can see the actual response shape
-        # in the run logs. T212's history doc is sparse; we want to see
-        # field names and value types for status/direction/timestamps.
-        first = items[0]
-        log.info(
-            "T212 history sample for %s (keys=%s): %s",
-            t212_ticker,
-            sorted(first.keys()) if isinstance(first, dict) else "n/a",
-            json.dumps(first)[:500] if isinstance(first, dict) else str(first)[:500],
-        )
-
         target_date = on_date.isoformat()
-        # Pick: any item with a SELL direction (positive or negative qty
-        # depending on convention; SELL action; or anything that has a
-        # fill price and a non-buy filledQuantity). Multiple field-name
-        # heuristics because T212's history schema is undocumented.
         candidates: list[dict[str, Any]] = []
         for item in items:
             if not isinstance(item, dict):
                 continue
+            order = item.get("order") or {}
+            fill = item.get("fill") or {}
+            if not isinstance(order, dict) or not isinstance(fill, dict):
+                continue
 
-            # Date filter
-            ts = (
-                item.get("dateModified")
-                or item.get("dateCreated")
-                or item.get("dateExecuted")
-                or item.get("dateUpdated")
-                or ""
-            )
+            # Date filter — use order.createdAt (T212 returns ISO 8601 like
+            # "2026-05-18T15:03:43.000Z"). Fall back to fill.filledAt.
+            ts = order.get("createdAt") or fill.get("filledAt") or ""
             if not ts.startswith(target_date):
                 continue
 
-            # Direction filter — accept multiple representations
-            direction_signal: str | None = None
-            for k in ("type", "side", "action", "direction"):
-                v = item.get(k)
-                if isinstance(v, str):
-                    direction_signal = v.upper()
-                    break
-            qty = item.get("filledQuantity") or item.get("quantity") or 0
-            try:
-                qty_f = float(qty)
-            except (TypeError, ValueError):
-                qty_f = 0.0
-            is_sell = (
-                (direction_signal in ("SELL", "SHORT", "S"))
-                or (qty_f < 0)
-            )
-            if not is_sell:
+            # Direction filter — order.side is the authoritative field
+            side = (order.get("side") or "").upper()
+            if side != "SELL":
+                # Also accept by sign of filledQuantity as a fallback
+                fq = order.get("filledQuantity") or order.get("quantity") or 0
+                try:
+                    if float(fq) >= 0:
+                        continue
+                except (TypeError, ValueError):
+                    continue
+
+            # Must be filled
+            status = (order.get("status") or "").upper()
+            if status not in ("FILLED", "EXECUTED", "COMPLETED"):
                 continue
 
-            # Must have a usable fill price
-            if self._fill_price_of(item) is None:
+            # Must have a fill price
+            if fill.get("price") is None:
                 continue
             candidates.append(item)
 
         if not candidates:
             log.info("T212 history for %s: no SELL match on %s", t212_ticker, target_date)
             return None
-        # Most recent first
         candidates.sort(
-            key=lambda i: (i.get("dateModified") or i.get("dateExecuted") or i.get("dateCreated") or ""),
+            key=lambda i: (i.get("order") or {}).get("createdAt") or "",
             reverse=True,
         )
         return candidates[0]
