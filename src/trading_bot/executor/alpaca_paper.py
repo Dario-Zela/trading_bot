@@ -8,6 +8,14 @@ Bracket orders are Alpaca's native primitive for entry + stop + take-profit
 in a single submission. The broker enforces the stop/target server-side so we
 don't need a mid-day cron to watch positions.
 
+Fill prices come exclusively from Alpaca's order endpoints. After submitting
+an order we poll `GET /v2/orders/{id}` until it reaches a terminal state
+(filled / canceled / rejected) and read `filled_avg_price` from the terminal
+record. On exit, if the position is already gone (a bracket child fired
+intraday), we re-fetch the entry parent order with `nested=true` and read
+the filled leg's price. Snapshot prices from the market data API are only
+used as bracket-pricing seeds — never recorded as fills.
+
 Wave 2a scope:
 - enter(): place bracket orders for each TradeIntent
 - exit_scheduled(): close any remaining positions opened today (market sell)
@@ -18,6 +26,7 @@ Wave 2a scope:
 from __future__ import annotations
 
 import logging
+import time
 import uuid
 from datetime import date
 from typing import Any
@@ -98,6 +107,26 @@ class AlpacaPaperExecutor(Executor):
             if order is None:
                 continue
 
+            # Poll until the parent order reaches a terminal state. The
+            # submit response is an acknowledgment; the definitive fill
+            # price only appears once Alpaca marks the order filled.
+            filled = self._wait_for_fill(order.get("id"))
+            if filled is None or (filled.get("status") or "").lower() != "filled":
+                log.warning(
+                    "Alpaca order %s for %s didn't fill within timeout (status=%s) — not recording ledger",
+                    order.get("id"), intent.ticker,
+                    filled.get("status") if filled else "unknown",
+                )
+                continue
+            fill_price_raw = filled.get("filled_avg_price")
+            if fill_price_raw is None:
+                log.warning(
+                    "Alpaca reported FILLED for %s but filled_avg_price is missing — skipping",
+                    intent.ticker,
+                )
+                continue
+            entry_price = float(fill_price_raw)
+
             record = TradeRecord(
                 trade_id=client_order_id,
                 strategy_id=strategy_id,
@@ -106,7 +135,7 @@ class AlpacaPaperExecutor(Executor):
                 ticker=intent.ticker,
                 side="long",
                 entry_date=on_date.isoformat(),
-                entry_price=float(order.get("filled_avg_price") or entry_estimate),
+                entry_price=entry_price,
                 quantity=quantity,
                 allocation_pct=intent.allocation_pct,
                 stop_loss_pct=intent.stop_loss_pct,
@@ -134,27 +163,44 @@ class AlpacaPaperExecutor(Executor):
                 exit_reason: str
 
                 if position is not None:
-                    # Position still open at Alpaca — close at market and use
-                    # the resulting fill price (the only honest exit price).
+                    # Position still open at Alpaca — close at market, then
+                    # poll the resulting order until filled.
                     close_order = self._close_position(trade["ticker"])
-                    if close_order is not None:
-                        fap = close_order.get("filled_avg_price")
+                    if close_order is None:
+                        log.warning("Close-order submit failed for %s — leaving open", trade["ticker"])
+                        continue
+                    filled = self._wait_for_fill(close_order.get("id"))
+                    if filled is not None and (filled.get("status") or "").lower() == "filled":
+                        fap = filled.get("filled_avg_price")
                         if fap is not None:
                             close_fill_price = float(fap)
                     if close_fill_price is None:
-                        # We closed but couldn't read the fill — fall back to
-                        # the position's avg entry (preserves zero-ish P&L
-                        # instead of inventing a bid-ask-spread "loss").
-                        close_fill_price = float(position.get("avg_entry_price") or trade["entry_price"])
-                    exit_reason = self._infer_exit_reason(trade, close_fill_price)
+                        log.warning(
+                            "Close order %s for %s didn't yield a fill price — recording cancelled",
+                            close_order.get("id"), trade["ticker"],
+                        )
+                        exit_reason = "cancelled"
+                    else:
+                        exit_reason = self._infer_exit_reason(trade, close_fill_price)
                 else:
-                    # No position to close. Either a bracket leg already fired
-                    # intraday, or the order never filled (cancelled, rejected,
-                    # weekend-test, etc). Without an actual fill price we
-                    # refuse to invent P&L — mark the trade as cancelled and
-                    # leave pnl null. Wave 2c reflection can interpret this.
-                    close_fill_price = None
-                    exit_reason = "cancelled"
+                    # No position. Either a bracket leg fired intraday or
+                    # the entry never filled. Re-fetch the entry order with
+                    # nested=true to see if a child (stop / take-profit)
+                    # filled and at what price. If so, that IS the exit fill.
+                    parent = self._get_order_by_client_id(trade["trade_id"])
+                    leg_fill = self._extract_filled_leg(parent) if parent else None
+                    if leg_fill is None:
+                        close_fill_price = None
+                        exit_reason = "cancelled"
+                    else:
+                        close_fill_price = float(leg_fill["filled_avg_price"])
+                        leg_type = (leg_fill.get("order_type") or "").lower()
+                        if "stop" in leg_type:
+                            exit_reason = "stop"
+                        elif "limit" in leg_type:
+                            exit_reason = "take_profit"
+                        else:
+                            exit_reason = "scheduled"
             except Exception as e:
                 log.error("Exit failed for %s: %s", trade["ticker"], e)
                 continue
@@ -378,6 +424,81 @@ class AlpacaPaperExecutor(Executor):
             log.warning("Position fetch failed for %s: %s", ticker, response.status_code)
             return None
         return response.json()
+
+    def _get_order_by_id(self, order_id: str | None) -> dict[str, Any] | None:
+        """Fetch one order by its Alpaca-assigned id with nested legs."""
+        if not order_id:
+            return None
+        try:
+            response = requests.get(
+                self._url(f"/v2/orders/{order_id}"),
+                headers=self._headers(),
+                params={"nested": "true"},
+                timeout=10,
+            )
+        except requests.RequestException as e:
+            log.debug("Order fetch errored for %s: %s", order_id, e)
+            return None
+        if response.status_code == 404:
+            return None
+        if not response.ok:
+            return None
+        try:
+            return response.json()
+        except Exception:
+            return None
+
+    def _get_order_by_client_id(self, client_order_id: str) -> dict[str, Any] | None:
+        """Look up an order by our client-assigned id (we use this to find
+        the original entry parent at exit time so we can read filled legs)."""
+        try:
+            response = requests.get(
+                self._url("/v2/orders:by_client_order_id"),
+                headers=self._headers(),
+                params={"client_order_id": client_order_id, "nested": "true"},
+                timeout=10,
+            )
+        except requests.RequestException as e:
+            log.debug("by-client-id fetch errored for %s: %s", client_order_id, e)
+            return None
+        if response.status_code == 404:
+            return None
+        if not response.ok:
+            return None
+        try:
+            return response.json()
+        except Exception:
+            return None
+
+    def _wait_for_fill(self, order_id: str | None, *, timeout_s: float = 10.0) -> dict[str, Any] | None:
+        """Poll the order endpoint until the order reaches a terminal
+        state. Returns the terminal order record (filled or not) so the
+        caller can read `status` and `filled_avg_price`. Returns None only
+        if we can't reach the order at all."""
+        if not order_id:
+            return None
+        deadline = time.time() + timeout_s
+        order: dict[str, Any] | None = None
+        while time.time() < deadline:
+            order = self._get_order_by_id(order_id)
+            if order is not None:
+                status = (order.get("status") or "").lower()
+                # Alpaca terminal statuses
+                if status in ("filled", "canceled", "rejected", "expired", "done_for_day"):
+                    return order
+            time.sleep(0.5)
+        return order  # last seen; may still be pending
+
+    def _extract_filled_leg(self, parent: dict[str, Any]) -> dict[str, Any] | None:
+        """Given a bracket parent order, find the leg (stop or take-profit)
+        that filled. Returns the leg dict or None if neither leg filled."""
+        legs = parent.get("legs") or []
+        for leg in legs:
+            if not isinstance(leg, dict):
+                continue
+            if (leg.get("status") or "").lower() == "filled" and leg.get("filled_avg_price") is not None:
+                return leg
+        return None
 
     def _close_position(self, ticker: str) -> dict[str, Any] | None:
         """Liquidate the position at market and return the resulting order

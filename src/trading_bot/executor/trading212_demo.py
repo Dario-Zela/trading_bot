@@ -7,6 +7,12 @@ same-day round-trips anyway, so this executor simply:
 - exit_scheduled(): market SELL every position opened today by this strategy
 - clear_slot(): cancel all pending orders + sell all positions
 
+Fill prices come exclusively from T212. After submitting an order we poll
+`GET /equity/orders/{id}` until the order leaves the active list, then
+fall through to `GET /equity/history/orders` for the definitive fill.
+yfinance is only ever a sizing seed (qty = allocation / yfinance_close);
+recorded entry/exit prices and P&L come from the broker.
+
 Intraday stop / take-profit are not enforced here — the daily exit cron
 handles closure. If a stop/take-profit is configured on the strategy, it
 acts only as a sizing hint and is logged in the ledger; the actual fill is
@@ -122,7 +128,25 @@ class Trading212DemoExecutor(Executor):
             if order is None:
                 continue
 
-            fill_price = self._extract_fill_price(order, fallback=entry_estimate)
+            # Poll for the definitive fill. T212's POST response is usually
+            # an acknowledgment; the real fill price arrives once the order
+            # transitions to FILLED, which we read from the active-order
+            # endpoint and then from history if it's already moved.
+            filled = self._wait_for_fill(order_id=order.get("id"), t212_ticker=t212_ticker)
+            if filled is None:
+                log.warning(
+                    "T212 order %s for %s didn't fill within timeout — not recording. "
+                    "If T212 fills it later, the position will be reconciled on exit.",
+                    order.get("id"), intent.ticker,
+                )
+                continue
+            fill_price = self._fill_price_of(filled)
+            if fill_price is None:
+                log.warning(
+                    "T212 reported FILLED for %s but no fill price in the order record — skipping",
+                    intent.ticker,
+                )
+                continue
 
             record = TradeRecord(
                 trade_id=client_order_id,
@@ -166,22 +190,37 @@ class Trading212DemoExecutor(Executor):
             exit_reason: str
 
             if position is not None:
-                # Sell the entire position at market.
+                # Sell the entire position at market, then poll for the
+                # definitive fill price from T212's order endpoints.
                 close_order = self._submit_market_order(
                     t212_ticker=t212_ticker,
                     quantity=-float(position.get("quantity") or trade["quantity"]),
                 )
-                if close_order is not None:
-                    close_fill_price = self._extract_fill_price(close_order, fallback=None)
+                if close_order is None:
+                    log.warning("T212 close-order submit failed for %s — leaving open", trade["ticker"])
+                    continue
+                filled = self._wait_for_fill(
+                    order_id=close_order.get("id"), t212_ticker=t212_ticker
+                )
+                if filled is None:
+                    log.warning(
+                        "T212 close order %s for %s didn't fill in time — leaving open",
+                        close_order.get("id"), trade["ticker"],
+                    )
+                    continue
+                close_fill_price = self._fill_price_of(filled)
                 if close_fill_price is None:
-                    # Fall back to T212's reported average entry — preserves
-                    # near-zero P&L rather than inventing bid-ask noise.
-                    close_fill_price = float(position.get("averagePrice") or trade["entry_price"])
-                exit_reason = "scheduled"
+                    log.warning(
+                        "T212 reported FILLED for close of %s but no fill price — recording cancelled",
+                        trade["ticker"],
+                    )
+                    exit_reason = "cancelled"
+                else:
+                    exit_reason = "scheduled"
             else:
-                # No position at T212 — order never filled or was already
-                # liquidated. Mark cancelled with null P&L per the executor
-                # honesty rule (don't invent fills).
+                # No position at T212 — entry order never filled or was
+                # liquidated externally. Mark cancelled with null P&L
+                # (honesty rule: never invent fills).
                 close_fill_price = None
                 exit_reason = "cancelled"
 
@@ -322,18 +361,124 @@ class Trading212DemoExecutor(Executor):
             return None
         return response.json()
 
-    def _extract_fill_price(self, order: dict[str, Any], fallback: float | None) -> float | None:
-        """T212 returns the order shape but the fill price field name varies
-        between sync and async fills. Try a few common keys; fall back to
-        whatever the caller provided as a seed estimate."""
-        for key in ("fillPrice", "averagePrice", "filledPrice", "price"):
+    def _fill_price_of(self, order: dict[str, Any]) -> float | None:
+        """Pull the fill price from an order record. T212 uses different
+        field names depending on whether the record came from the active
+        orders endpoint, the history endpoint, or the submit response.
+        Returns None if no fill price is present."""
+        for key in ("fillPrice", "filledPrice", "averagePrice", "averageFillPrice", "price"):
             v = order.get(key)
-            if v is not None:
-                try:
-                    return float(v)
-                except (TypeError, ValueError):
-                    continue
-        return fallback
+            if v is None:
+                continue
+            try:
+                return float(v)
+            except (TypeError, ValueError):
+                continue
+        return None
+
+    def _get_order(self, order_id: int | str) -> dict[str, Any] | None:
+        """Fetch an order from the active orders endpoint. Returns None if
+        the order is no longer active (most likely because it has filled
+        or been cancelled and moved to history)."""
+        if order_id is None:
+            return None
+        try:
+            response = requests.get(
+                self._url(f"/equity/orders/{order_id}"),
+                headers=self._headers(),
+                timeout=10,
+            )
+        except requests.RequestException as e:
+            log.debug("T212 active-order fetch errored for %s: %s", order_id, e)
+            return None
+        if response.status_code == 404:
+            return None
+        if not response.ok:
+            return None
+        try:
+            return response.json()
+        except json.JSONDecodeError:
+            return None
+
+    def _get_order_from_history(
+        self, t212_ticker: str, order_id: int | str
+    ) -> dict[str, Any] | None:
+        """Look up a single order in T212's history endpoint. The endpoint
+        is paginated and filterable by ticker, so we pull the most recent
+        page for this ticker and scan for our id. Recent fills are at the
+        top so this is cheap in practice."""
+        if order_id is None:
+            return None
+        try:
+            response = requests.get(
+                self._url("/equity/history/orders"),
+                headers=self._headers(),
+                params={"ticker": t212_ticker, "limit": 50},
+                timeout=15,
+            )
+        except requests.RequestException as e:
+            log.debug("T212 history fetch errored: %s", e)
+            return None
+        if not response.ok:
+            return None
+        try:
+            body = response.json() or {}
+        except json.JSONDecodeError:
+            return None
+        items = body.get("items") if isinstance(body, dict) else body
+        if not isinstance(items, list):
+            return None
+        oid_str = str(order_id)
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+            if str(item.get("id")) == oid_str:
+                return item
+        return None
+
+    def _wait_for_fill(
+        self,
+        *,
+        order_id: int | str | None,
+        t212_ticker: str,
+        timeout_s: float = 10.0,
+    ) -> dict[str, Any] | None:
+        """Poll until the order reaches a terminal state. Returns the order
+        record if it FILLED, None if it was cancelled / rejected / didn't
+        resolve within `timeout_s`.
+
+        The poll alternates between the active-orders endpoint (where the
+        order lives while pending) and the history endpoint (where it
+        lands after fill). On paper accounts market orders resolve almost
+        instantly, so the loop typically runs once."""
+        if order_id is None:
+            return None
+        deadline = time.time() + timeout_s
+        while time.time() < deadline:
+            active = self._get_order(order_id)
+            if active is not None:
+                status = (active.get("status") or "").lower()
+                if status in ("filled", "executed", "completed"):
+                    return active
+                if status in ("cancelled", "canceled", "rejected", "expired"):
+                    return None
+                # Still pending — wait and retry
+            else:
+                # Not in active list → check history
+                historical = self._get_order_from_history(t212_ticker, order_id)
+                if historical is not None:
+                    status = (historical.get("status") or "").lower()
+                    if status in ("filled", "executed", "completed"):
+                        return historical
+                    return None
+            time.sleep(0.5)
+        # Final check after timeout
+        historical = self._get_order_from_history(t212_ticker, order_id)
+        if historical is not None:
+            status = (historical.get("status") or "").lower()
+            if status in ("filled", "executed", "completed"):
+                return historical
+        return None
 
     def _get_position(self, t212_ticker: str) -> dict[str, Any] | None:
         try:
