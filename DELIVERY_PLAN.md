@@ -29,12 +29,13 @@ Tracking the work to ship the multi-stage newspaper pipeline. Check items off as
 
 The six-stage architecture. Each agent emits JSON; Python composes the HTML.
 
-### 2A — Stage 1: Discovery agent
+### 2A — Stage 1: Discovery agent ✅
 
-- [ ] `src/trading_bot/meta/news/discovery.py`
-- [ ] Sonnet + WebSearch tool — searches across *every* topic class (markets, world, tech, science, politics, culture, sport, climate, health), not just markets
-- [ ] Returns ~30-50 candidates: `{title, one_line, suggested_section, importance_hint, source_hints[]}`
-- [ ] Prompt template `strategies/news/prompts/discovery.md`
+- [x] `src/trading_bot/meta/news/discovery.py`
+- [x] Sonnet + WebSearch — searches across every topic class (markets, world, tech & science, climate, health, sport, culture, beyond the tape), not just markets
+- [x] Returns ~30-50 `Candidate` records: `{title, one_line, suggested_section, importance_hint, source_hints[]}`
+- [x] Seeded with Alpaca News + yfinance broad-market headlines so the markets baseline is guaranteed even if WebSearch underperforms
+- [x] Graceful fallback to seed-only on LLM failure
 
 ### 2B — Stage 2: Triage agent
 
