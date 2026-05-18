@@ -1,9 +1,62 @@
 {
-  "generated_at": "2026-05-18T18:10:55.850081+00:00",
+  "generated_at": "2026-05-18T18:21:07.470125+00:00",
   "regions": [
     "uk-eu",
     "us"
   ],
+  "global_overview": {
+    "real_broker": {
+      "tiers": [
+        "alpaca-paper",
+        "trading212-paper"
+      ],
+      "today_pnl_gbp": 16.28,
+      "today_n_trades": 9,
+      "alltime_pnl_gbp": 16.28,
+      "alltime_n_trades": 34,
+      "alltime_n_wins": 6,
+      "alltime_hit_rate": 0.176,
+      "regions": {
+        "us": {
+          "today_pnl_gbp": 0.0,
+          "today_n_trades": 0,
+          "alltime_pnl_gbp": 0.0,
+          "alltime_n_trades": 21
+        },
+        "uk-eu": {
+          "today_pnl_gbp": 16.28,
+          "today_n_trades": 9,
+          "alltime_pnl_gbp": 16.28,
+          "alltime_n_trades": 13
+        }
+      }
+    },
+    "shadow_simulation": {
+      "tiers": [
+        "shadow"
+      ],
+      "today_pnl_gbp": 104.31,
+      "today_n_trades": 9,
+      "alltime_pnl_gbp": 104.31,
+      "alltime_n_trades": 73,
+      "alltime_n_wins": 4,
+      "alltime_hit_rate": 0.055,
+      "regions": {
+        "us": {
+          "today_pnl_gbp": 0.0,
+          "today_n_trades": 0,
+          "alltime_pnl_gbp": 0.0,
+          "alltime_n_trades": 50
+        },
+        "uk-eu": {
+          "today_pnl_gbp": 104.31,
+          "today_n_trades": 9,
+          "alltime_pnl_gbp": 104.31,
+          "alltime_n_trades": 23
+        }
+      }
+    }
+  },
   "active": [
     {
       "id": "bond-cycle",
@@ -9086,7 +9139,7 @@
       "summary": {
         "n_closed": 9,
         "n_open": 0,
-        "total_pnl_gbp": 3.51,
+        "total_pnl_gbp": 16.28,
         "avg_pnl_pct": 0.11,
         "hit_rate": 0.667,
         "n_predictions": 250
@@ -9110,27 +9163,27 @@
         },
         {
           "date": "2026-05-18",
-          "equity": 9960.22
+          "equity": 9968.89
         },
         {
           "date": "2026-05-18",
-          "equity": 9969.53
+          "equity": 9978.19
         },
         {
           "date": "2026-05-18",
-          "equity": 9999.21
+          "equity": 10007.87
         },
         {
           "date": "2026-05-18",
-          "equity": 9968.1
+          "equity": 9980.87
         },
         {
           "date": "2026-05-18",
-          "equity": 9986.95
+          "equity": 9999.72
         },
         {
           "date": "2026-05-18",
-          "equity": 10003.51
+          "equity": 10016.28
         }
       ],
       "executed": [
@@ -9217,15 +9270,15 @@
           "ticker": "IFX.DE",
           "side": "long",
           "entry_date": "2026-05-18",
-          "entry_price": 67.76,
+          "entry_price": 58.810257945060734,
           "quantity": 40.0,
           "allocation_pct": 0.0,
           "stop_loss_pct": null,
           "take_profit_pct": null,
           "thesis": "Reconciled from T212 portfolio (IFXd_EQ) \u2014 original ledger entry missing",
           "exit_date": "2026-05-18",
-          "exit_price": 66.12,
-          "pnl_gbp": -65.60000000000002,
+          "exit_price": 57.386869175434114,
+          "pnl_gbp": -56.93555078506478,
           "pnl_pct": -2.4203069657615095,
           "exit_reason": "scheduled",
           "outcome_notes": "IFX.DE fell over 2.4% from entry to the scheduled exit with no recovery \u2014 the position moved against the thesis throughout the hold and the scheduled exit crystallised the full drawdown without any mean-reversion occurring. Given Infineon's sensitivity to semiconductor cycle sentiment, a sector-level sell-off or macro negative likely drove the sustained directional move rather than idiosyncratic noise.",
@@ -9292,16 +9345,16 @@
           "ticker": "ABN.AS",
           "side": "long",
           "entry_date": "2026-05-18",
-          "entry_price": 32.73,
+          "entry_price": 28.40702099382877,
           "quantity": 61.0,
           "allocation_pct": 0.0,
           "stop_loss_pct": null,
           "take_profit_pct": null,
           "thesis": "Reconciled from T212 portfolio (ABNa_EQ) \u2014 original ledger entry missing",
           "exit_date": "2026-05-18",
-          "exit_price": 32.22,
-          "pnl_gbp": -31.10999999999988,
-          "pnl_pct": -1.5582034830430747,
+          "exit_price": 27.964381803274154,
+          "pnl_gbp": -27.00099062383154,
+          "pnl_pct": -1.5582034830430636,
           "exit_reason": "scheduled",
           "outcome_notes": "ABN AMRO dropped ~1.6% from entry to the scheduled exit with no recovery; European bank names are sensitive to rate expectations and credit spreads, and a sustained directional decline of this magnitude suggests a macro or sector headwind rather than the temporary dislocation mean-reversion targets.",
           "risks_observed": "ABN.AS and IFX.DE both lost meaningfully on the same day, indicating correlated continental European exposure that amplified the basket's downside \u2014 two of the three losers are non-UK names, which is a concentration risk if the strategy is not explicitly sizing for cross-border correlation. No stop on either position compounded the effect.",

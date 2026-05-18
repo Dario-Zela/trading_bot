@@ -123,6 +123,47 @@
       border-color: var(--accent);
     }
 
+    /* Global overview cards */
+    .overview-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .overview-card {
+      background: var(--pico-card-background-color);
+      border: 1px solid var(--pico-muted-border-color);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin: 0;
+      box-shadow: var(--card-shadow);
+    }
+    .overview-card header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      margin-bottom: 0.85rem;
+      padding: 0;
+      border: none;
+    }
+    .overview-card header strong {
+      font-size: 0.95rem;
+      letter-spacing: -0.01em;
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .overview-card .big {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .overview-card .small { font-size: 0.7rem; }
+    .overview-card .muted { color: var(--pico-muted-color); font-size: 0.78rem; }
+
     /* Search */
     .search-row {
       margin-bottom: 1.5rem;
@@ -414,6 +455,62 @@
     <div class="search-row">
       <input type="search" placeholder="Search strategies by name or description…" x-model="search" />
     </div>
+
+    <!-- Global overview: separates real broker fills from shadow simulation -->
+    <template x-if="data && data.global_overview">
+      <section class="overview-row">
+        <article class="overview-card">
+          <header>
+            <strong>Real broker (paper)</strong>
+            <span class="muted" x-text="(data.global_overview.real_broker.tiers || []).join(' + ') || '—'"></span>
+          </header>
+          <div class="overview-grid">
+            <div>
+              <div class="muted small">Today</div>
+              <div class="big" :class="pnlClass(data.global_overview.real_broker.today_pnl_gbp)"
+                   x-text="formatGbp(data.global_overview.real_broker.today_pnl_gbp)"></div>
+              <div class="muted small" x-text="data.global_overview.real_broker.today_n_trades + ' trades'"></div>
+            </div>
+            <div>
+              <div class="muted small">All-time</div>
+              <div class="big" :class="pnlClass(data.global_overview.real_broker.alltime_pnl_gbp)"
+                   x-text="formatGbp(data.global_overview.real_broker.alltime_pnl_gbp)"></div>
+              <div class="muted small">
+                <span x-text="data.global_overview.real_broker.alltime_n_trades + ' trades'"></span>
+                <template x-if="data.global_overview.real_broker.alltime_hit_rate !== null">
+                  <span> · <span x-text="(data.global_overview.real_broker.alltime_hit_rate * 100).toFixed(1) + '% hit'"></span></span>
+                </template>
+              </div>
+            </div>
+          </div>
+        </article>
+        <article class="overview-card">
+          <header>
+            <strong>Shadow (simulation)</strong>
+            <span class="muted">yfinance close-price simulation, no orders placed</span>
+          </header>
+          <div class="overview-grid">
+            <div>
+              <div class="muted small">Today</div>
+              <div class="big" :class="pnlClass(data.global_overview.shadow_simulation.today_pnl_gbp)"
+                   x-text="formatGbp(data.global_overview.shadow_simulation.today_pnl_gbp)"></div>
+              <div class="muted small" x-text="data.global_overview.shadow_simulation.today_n_trades + ' trades'"></div>
+            </div>
+            <div>
+              <div class="muted small">All-time</div>
+              <div class="big" :class="pnlClass(data.global_overview.shadow_simulation.alltime_pnl_gbp)"
+                   x-text="formatGbp(data.global_overview.shadow_simulation.alltime_pnl_gbp)"></div>
+              <div class="muted small">
+                <span x-text="data.global_overview.shadow_simulation.alltime_n_trades + ' trades'"></span>
+                <template x-if="data.global_overview.shadow_simulation.alltime_hit_rate !== null">
+                  <span> · <span x-text="(data.global_overview.shadow_simulation.alltime_hit_rate * 100).toFixed(1) + '% hit'"></span></span>
+                </template>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+    </template>
 
     <div class="grid">
       <template x-for="s in filteredStrategies" :key="s.key || s.id">

@@ -176,12 +176,89 @@ def build_dashboard_data() -> dict:
             "uncommitted": sorted(preds, key=lambda p: p.get("prediction_date", ""), reverse=True),
         })
 
+    # Global overview: roll up real-broker P&L (alpaca-paper, trading212-paper)
+    # separately from shadow simulation so the user can tell at a glance how
+    # much of any headline number reflects actual paper-traded fills vs
+    # yfinance-simulated exposure that was never placed at a broker.
+    global_overview = _build_global_overview(active + archived)
+
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "regions": sorted(regions_seen) if regions_seen else ["us"],
+        "global_overview": global_overview,
         "active": active,
         "archived": archived,
     }
+
+
+_REAL_BROKER_TIERS = {"alpaca-paper", "trading212-paper", "t212-live"}
+
+
+def _build_global_overview(entries: list[dict]) -> dict:
+    """Aggregate trades across every strategy + region into two buckets:
+    real-broker fills (Alpaca / T212) and shadow simulation. Each bucket
+    reports today's P&L, all-time P&L, hit rate, and number of trades."""
+    today = datetime.now(timezone.utc).date().isoformat()
+
+    def _bucket() -> dict:
+        return {
+            "tiers": [],
+            "today_pnl_gbp": 0.0,
+            "today_n_trades": 0,
+            "alltime_pnl_gbp": 0.0,
+            "alltime_n_trades": 0,
+            "alltime_n_wins": 0,
+            "alltime_hit_rate": None,
+            "regions": {},
+        }
+
+    real = _bucket()
+    shadow = _bucket()
+    seen_real_tiers: set[str] = set()
+
+    for e in entries:
+        tier = (e.get("tier") or "").lower()
+        target = real if tier in _REAL_BROKER_TIERS else shadow
+        if tier in _REAL_BROKER_TIERS:
+            seen_real_tiers.add(tier)
+        region = e.get("region") or "us"
+        region_row = target["regions"].setdefault(region, {
+            "today_pnl_gbp": 0.0,
+            "today_n_trades": 0,
+            "alltime_pnl_gbp": 0.0,
+            "alltime_n_trades": 0,
+        })
+        for trade in e.get("executed", []):
+            pnl = trade.get("pnl_gbp")
+            if pnl is None or trade.get("exit_date") is None:
+                continue  # still open or pnl unrecorded
+            pnl_f = float(pnl)
+            target["alltime_pnl_gbp"] += pnl_f
+            target["alltime_n_trades"] += 1
+            region_row["alltime_pnl_gbp"] += pnl_f
+            region_row["alltime_n_trades"] += 1
+            if pnl_f > 0:
+                target["alltime_n_wins"] += 1
+            if trade.get("exit_date") == today:
+                target["today_pnl_gbp"] += pnl_f
+                target["today_n_trades"] += 1
+                region_row["today_pnl_gbp"] += pnl_f
+                region_row["today_n_trades"] += 1
+
+    for bucket in (real, shadow):
+        if bucket["alltime_n_trades"]:
+            bucket["alltime_hit_rate"] = round(
+                bucket["alltime_n_wins"] / bucket["alltime_n_trades"], 3
+            )
+        bucket["today_pnl_gbp"] = round(bucket["today_pnl_gbp"], 2)
+        bucket["alltime_pnl_gbp"] = round(bucket["alltime_pnl_gbp"], 2)
+        for region_row in bucket["regions"].values():
+            region_row["today_pnl_gbp"] = round(region_row["today_pnl_gbp"], 2)
+            region_row["alltime_pnl_gbp"] = round(region_row["alltime_pnl_gbp"], 2)
+
+    real["tiers"] = sorted(seen_real_tiers)
+    shadow["tiers"] = ["shadow"]
+    return {"real_broker": real, "shadow_simulation": shadow}
 
 
 def main(argv: list[str] | None = None) -> int:
