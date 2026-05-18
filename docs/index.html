@@ -3,514 +3,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trading Bot Dashboard</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <title>Dashboard — The Bot Tribune</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-  <style>
-    :root {
-      --positive: #16a34a;
-      --negative: #dc2626;
-      --neutral: var(--pico-muted-color);
-      --accent: var(--pico-primary);
-      --card-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.04);
-      --card-shadow-hover: 0 4px 8px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.06);
-    }
-    [data-theme="dark"] {
-      --positive: #22c55e;
-      --negative: #f87171;
-      --card-shadow: 0 1px 3px rgba(0,0,0,0.4);
-      --card-shadow-hover: 0 4px 8px rgba(0,0,0,0.5);
-    }
-    body { margin: 0; }
-    .app { max-width: 1280px; margin: 0 auto; padding: 1.5rem 2rem; }
-
-    /* Header */
-    .topbar {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid var(--pico-muted-border-color);
-      margin-bottom: 1.5rem;
-    }
-    .topbar h1 {
-      margin: 0;
-      font-size: 1.3rem;
-      letter-spacing: -0.01em;
-    }
-    .topbar .spacer { flex: 1; }
-    .topbar .meta {
-      font-size: 0.8rem;
-      color: var(--pico-muted-color);
-    }
-    .theme-toggle {
-      background: none;
-      border: 1px solid var(--pico-muted-border-color);
-      border-radius: 6px;
-      width: 36px;
-      height: 36px;
-      padding: 0;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    /* Tabs */
-    .tabs {
-      display: flex;
-      gap: 0;
-      border-bottom: 1px solid var(--pico-muted-border-color);
-      margin-bottom: 1rem;
-    }
-    .tab {
-      background: none;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: var(--pico-muted-color);
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-    }
-    .tab.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
-    .tab .count {
-      display: inline-block;
-      background: rgba(100, 116, 139, 0.16);
-      color: #475569;
-      border-radius: 10px;
-      padding: 0.05rem 0.5rem;
-      font-size: 0.75rem;
-      margin-left: 0.4rem;
-      font-weight: 600;
-    }
-    [data-theme="dark"] .tab .count {
-      background: rgba(148, 163, 184, 0.22);
-      color: #e2e8f0;
-    }
-    .tab.active .count {
-      background: var(--accent);
-      color: var(--pico-primary-inverse);
-    }
-    .region-toggle {
-      margin-left: auto;
-      display: flex;
-      gap: 0.25rem;
-      align-items: center;
-    }
-    .region-btn {
-      background: none;
-      border: 1px solid var(--pico-muted-border-color);
-      border-radius: 6px;
-      padding: 0.3rem 0.7rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--pico-muted-color);
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-    .region-btn:hover {
-      color: var(--accent);
-      border-color: var(--accent);
-    }
-    .region-btn.active {
-      background: var(--accent);
-      color: var(--pico-primary-inverse);
-      border-color: var(--accent);
-    }
-
-    /* Global overview cards — mirror .card visuals from the strategy grid */
-    .overview-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .overview-card {
-      background: var(--pico-card-background-color);
-      border: 1px solid var(--pico-muted-border-color);
-      border-radius: 8px;
-      padding: 1rem 1.25rem;
-      box-shadow: var(--card-shadow);
-    }
-    .overview-head {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 0.75rem;
-      margin-bottom: 0.9rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid var(--pico-muted-border-color);
-    }
-    .overview-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-    }
-    .overview-tiers {
-      font-size: 0.65rem;
-      color: var(--pico-muted-color);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      white-space: nowrap;
-    }
-    .overview-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-    }
-    .overview-stat { padding: 0 0.5rem; }
-    .overview-stat:first-child { padding-left: 0; }
-    .overview-stat:last-child {
-      padding-right: 0;
-      padding-left: 1rem;
-      border-left: 1px solid var(--pico-muted-border-color);
-    }
-    .overview-stat-label {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--pico-muted-color);
-      margin-bottom: 0.25rem;
-    }
-    .overview-stat-pnl {
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      margin-bottom: 0.2rem;
-    }
-    .overview-stat-meta {
-      font-size: 0.72rem;
-      color: var(--pico-muted-color);
-    }
-
-    /* Search */
-    .search-row {
-      margin-bottom: 1.5rem;
-    }
-    .search-row input {
-      max-width: 360px;
-      font-size: 0.9rem;
-      margin: 0;
-    }
-
-    /* Strategy grid */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    .card {
-      background: var(--pico-card-background-color);
-      border: 1px solid var(--pico-muted-border-color);
-      border-radius: 8px;
-      padding: 1rem;
-      cursor: pointer;
-      transition: all 0.15s;
-      box-shadow: var(--card-shadow);
-    }
-    .card:hover {
-      transform: translateY(-1px);
-      box-shadow: var(--card-shadow-hover);
-      border-color: var(--accent);
-    }
-    .card.selected {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 2px var(--accent);
-    }
-    .card-name {
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 0.2rem;
-    }
-    .card-badges {
-      display: flex;
-      gap: 0.3rem;
-      margin-bottom: 1rem;
-    }
-    .badge {
-      font-size: 0.65rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      padding: 0.15rem 0.55rem;
-      border-radius: 3px;
-      background: rgba(100, 116, 139, 0.14);
-      color: #475569;
-      font-weight: 600;
-    }
-    [data-theme="dark"] .badge {
-      background: rgba(148, 163, 184, 0.2);
-      color: #e2e8f0;
-    }
-    .badge.tier-shadow { background: rgba(100, 116, 139, 0.18); color: #475569; }
-    .badge.tier-alpaca-paper { background: rgba(59, 130, 246, 0.18); color: #1d4ed8; }
-    .badge.tier-t212-live { background: rgba(168, 85, 247, 0.18); color: #7e22ce; }
-    .badge.region-us { background: rgba(220, 38, 38, 0.14); color: #b91c1c; }
-    .badge.region-uk-eu { background: rgba(37, 99, 235, 0.16); color: #1d4ed8; }
-    [data-theme="dark"] .badge.tier-shadow { color: #cbd5e1; }
-    [data-theme="dark"] .badge.tier-alpaca-paper { color: #93c5fd; }
-    [data-theme="dark"] .badge.tier-t212-live { color: #d8b4fe; }
-    [data-theme="dark"] .badge.region-us { color: #fca5a5; }
-    [data-theme="dark"] .badge.region-uk-eu { color: #93c5fd; }
-    .card-pnl {
-      font-size: 1.6rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1;
-      margin-bottom: 0.1rem;
-    }
-    .card-pnl-pct {
-      font-size: 0.85rem;
-      color: var(--pico-muted-color);
-      margin-bottom: 0.9rem;
-    }
-    .card-meta {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.75rem;
-      color: var(--pico-muted-color);
-      padding-top: 0.75rem;
-      border-top: 1px solid var(--pico-muted-border-color);
-    }
-    .positive { color: var(--positive); }
-    .negative { color: var(--negative); }
-
-    /* Detail panel */
-    .detail {
-      background: var(--pico-card-background-color);
-      border: 1px solid var(--pico-muted-border-color);
-      border-radius: 8px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-    }
-    .detail-header h2 {
-      margin: 0 0 0.25rem;
-      font-size: 1.25rem;
-      letter-spacing: -0.01em;
-    }
-    .detail-header .desc {
-      color: var(--pico-muted-color);
-      font-size: 0.85rem;
-      margin: 0 0 1.25rem;
-      line-height: 1.5;
-    }
-
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 0.75rem;
-      margin-bottom: 1.5rem;
-    }
-    .stat {
-      padding: 0.75rem 1rem;
-      border-radius: 6px;
-      background: var(--pico-background-color);
-      border: 1px solid var(--pico-muted-border-color);
-    }
-    .stat-label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--pico-muted-color);
-      margin-bottom: 0.25rem;
-    }
-    .stat-value {
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-    }
-
-    /* Chart */
-    .chart-box {
-      position: relative;
-      height: 240px;
-      margin-bottom: 1.5rem;
-      background: var(--pico-background-color);
-      border: 1px solid var(--pico-muted-border-color);
-      border-radius: 6px;
-      padding: 1rem;
-    }
-
-    /* Sub-tabs (Executed / Uncommitted) */
-    .subtabs {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-    .subtab {
-      background: none;
-      border: 1px solid var(--pico-muted-border-color);
-      border-radius: 6px;
-      padding: 0.4rem 0.9rem;
-      font-size: 0.85rem;
-      color: var(--pico-muted-color);
-      cursor: pointer;
-    }
-    .subtab.active {
-      background: var(--accent);
-      color: var(--pico-primary-inverse);
-      border-color: var(--accent);
-    }
-
-    /* Tables */
-    table { font-size: 0.85rem; margin-bottom: 0; }
-    th { font-weight: 600; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--pico-muted-color); }
-    td { padding: 0.5rem 0.6rem; }
-    .reason-badge {
-      display: inline-block;
-      font-size: 0.7rem;
-      padding: 0.15rem 0.5rem;
-      border-radius: 3px;
-      font-weight: 600;
-      background: rgba(100, 116, 139, 0.16);
-      color: #475569;
-    }
-    .reason-badge.stop { background: rgba(220, 38, 38, 0.15); color: #b91c1c; }
-    .reason-badge.take_profit { background: rgba(22, 163, 74, 0.15); color: #15803d; }
-    .reason-badge.scheduled { background: rgba(100, 116, 139, 0.16); color: #475569; }
-    .reason-badge.cancelled { background: rgba(217, 119, 6, 0.16); color: #b45309; }
-    .reason-badge.cleared { background: rgba(124, 58, 237, 0.16); color: #6d28d9; }
-    [data-theme="dark"] .reason-badge { background: rgba(148, 163, 184, 0.2); color: #e2e8f0; }
-    [data-theme="dark"] .reason-badge.stop { color: #fca5a5; }
-    [data-theme="dark"] .reason-badge.take_profit { color: #86efac; }
-    [data-theme="dark"] .reason-badge.scheduled { color: #cbd5e1; }
-    [data-theme="dark"] .reason-badge.cancelled { background: rgba(251, 191, 36, 0.18); color: #fbbf24; }
-    [data-theme="dark"] .reason-badge.cleared { background: rgba(196, 181, 253, 0.18); color: #c4b5fd; }
-    .why-toggle {
-      color: var(--accent);
-      cursor: pointer;
-      font-size: 0.8rem;
-      user-select: none;
-    }
-    .expanded {
-      background: var(--pico-code-background-color);
-      padding: 1rem 1.2rem;
-      font-size: 0.85rem;
-      border-left: 3px solid var(--accent);
-    }
-    .expanded strong {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--pico-muted-color);
-      display: block;
-      margin-bottom: 0.25rem;
-    }
-    .expanded p { margin: 0 0 0.75rem; line-height: 1.5; }
-    .expanded p:last-child { margin-bottom: 0; }
-
-    .empty {
-      color: var(--pico-muted-color);
-      font-style: italic;
-      text-align: center;
-      padding: 3rem 1rem;
-    }
-
-    .pred-class-badge {
-      display: inline-block;
-      font-size: 0.7rem;
-      padding: 0.15rem 0.5rem;
-      border-radius: 3px;
-      font-weight: 600;
-    }
-    .pred-class-badge.strong_up { background: rgba(22, 163, 74, 0.25); color: #15803d; }
-    .pred-class-badge.mild_up { background: rgba(22, 163, 74, 0.14); color: #15803d; }
-    .pred-class-badge.flat { background: rgba(100, 116, 139, 0.16); color: #475569; }
-    .pred-class-badge.mild_down { background: rgba(220, 38, 38, 0.14); color: #b91c1c; }
-    .pred-class-badge.strong_down { background: rgba(220, 38, 38, 0.25); color: #b91c1c; }
-    [data-theme="dark"] .pred-class-badge.strong_up { color: #86efac; }
-    [data-theme="dark"] .pred-class-badge.mild_up { color: #86efac; }
-    [data-theme="dark"] .pred-class-badge.flat { background: rgba(148, 163, 184, 0.2); color: #cbd5e1; }
-    [data-theme="dark"] .pred-class-badge.mild_down { color: #fca5a5; }
-    [data-theme="dark"] .pred-class-badge.strong_down { color: #fca5a5; }
-
-    /* Page-level nav (matches static pages built by dashboard/pages.py) */
-    .nav-tabs {
-      display: flex;
-      gap: 0;
-      margin-right: 0.5rem;
-    }
-    .nav-tab {
-      padding: 0.4rem 0.9rem;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--pico-muted-color);
-      text-decoration: none;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-    }
-    .nav-tab:hover { color: var(--accent); }
-    .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-
-    @media (max-width: 700px) {
-      .app { padding: 1rem; }
-      .grid { grid-template-columns: 1fr; }
-    }
-  </style>
 </head>
-<body>
-  <div class="app" x-data="dashboard()" x-init="load()">
-    <header class="topbar">
-      <h1>⚡ Trading Bot</h1>
-      <nav class="nav-tabs">
-        <a class="nav-tab active" href="index.html">Dashboard</a>
-        <a class="nav-tab" href="news/index.html">News</a>
-        <a class="nav-tab" href="macro/index.html">Macro</a>
-        <a class="nav-tab" href="evolution.html">Evolution</a>
-      </nav>
-      <div class="spacer"></div>
-      <span class="meta">
-        Last updated <span x-text="formatTimestamp(data.generated_at)"></span>
-      </span>
-      <button class="theme-toggle" @click="toggleTheme()" :title="theme === 'light' ? 'Switch to dark' : 'Switch to light'">
-        <span x-text="theme === 'light' ? '🌙' : '☀️'"></span>
-      </button>
+<body class="page-dashboard" x-data="dashboard()" x-init="load()">
+
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab active" href="index.html">Dashboard</a>
+    <a class="nav-tab" href="news/index.html">News</a>
+    <a class="nav-tab" href="macro/index.html">Macro</a>
+    <a class="nav-tab" href="evolution.html">Evolution</a>
+    <span class="spacer"></span>
+    <div class="font-picker">
+      <span class="label">Font</span>
+      <button data-font="classic">Classic</button>
+      <button data-font="newsreader">Newsreader</button>
+      <button data-font="crimson">Crimson</button>
+      <button data-font="lora">Lora</button>
+    </div>
+  </nav>
+
+  <main class="paper">
+
+    <header class="masthead">
+      <h1>The Bot Tribune<span class="sub">— Live performance</span></h1>
+      <div style="font-family: var(--sans); font-size: 0.78rem; color: var(--ink-muted); letter-spacing: 0.05em;">
+        Last updated <strong x-text="formatTimestamp(data.generated_at)" style="color: var(--ink);"></strong>
+        ·
+        <span x-text="data.active && data.active.length"></span> active strategies
+        ·
+        <span x-text="regionsAvailable.length"></span> regions
+      </div>
     </header>
 
-    <nav class="tabs">
-      <button class="tab" :class="{ active: tab === 'active' }" @click="tab = 'active'; selected = null">
-        Active <span class="count" x-text="filterByRegion(data.active).length"></span>
-      </button>
-      <button class="tab" :class="{ active: tab === 'archived' }" @click="tab = 'archived'; selected = null">
-        Archived <span class="count" x-text="filterByRegion(data.archived).length"></span>
-      </button>
+    <!-- Filter strip: tabs (active/archived) + region toggle + search -->
+    <div class="filters" style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; padding: 0.75rem 0 1.5rem; border-bottom: 1px solid var(--hairline); margin-bottom: 1.5rem;">
+      <div class="filter-group">
+        <button class="filter-btn" :class="{ active: tab === 'active' }"
+                @click="tab = 'active'; selected = null">
+          Active <span style="opacity:.6">(<span x-text="filterByRegion(data.active || []).length"></span>)</span>
+        </button>
+        <button class="filter-btn" :class="{ active: tab === 'archived' }"
+                @click="tab = 'archived'; selected = null">
+          Archived <span style="opacity:.6">(<span x-text="filterByRegion(data.archived || []).length"></span>)</span>
+        </button>
+      </div>
 
-      <div class="region-toggle">
+      <div class="filter-group">
         <template x-for="r in regionsAvailable" :key="r">
-          <button
-            class="region-btn"
-            :class="{ active: region === r }"
-            @click="setRegion(r)"
-            x-text="regionLabel(r)"
-          ></button>
+          <button class="filter-btn" :class="{ active: region === r }"
+                  @click="setRegion(r)" x-text="regionLabel(r)"></button>
         </template>
         <template x-if="regionsAvailable.length > 1">
-          <button
-            class="region-btn"
-            :class="{ active: region === 'all' }"
-            @click="setRegion('all')"
-          >All</button>
+          <button class="filter-btn" :class="{ active: region === 'all' }"
+                  @click="setRegion('all')">All</button>
         </template>
       </div>
-    </nav>
 
-    <div class="search-row">
-      <input type="search" placeholder="Search strategies by name or description…" x-model="search" />
+      <input type="search" class="search" placeholder="Search strategies…" x-model="search">
     </div>
 
-    <!-- Global overview: separates real broker fills from shadow simulation.
-         Computed live from filteredStrategies so it tracks the active
-         region + tab + search filters. -->
+    <!-- Overview cards: broker vs shadow, reactive to filters -->
     <template x-if="data">
       <section class="overview-row">
-        <div class="overview-card">
+        <div class="overview-card broker">
           <div class="overview-head">
             <span class="overview-title">Real broker (paper)</span>
             <span class="overview-tiers" x-text="overview.real.tiers.join(' + ') || 'no real-broker strategies'"></span>
@@ -535,7 +97,7 @@
             </div>
           </div>
         </div>
-        <div class="overview-card">
+        <div class="overview-card shadow">
           <div class="overview-head">
             <span class="overview-title">Shadow (simulation)</span>
             <span class="overview-tiers">yfinance · no orders placed</span>
@@ -563,75 +125,93 @@
       </section>
     </template>
 
-    <div class="grid">
+    <!-- The slate: strategy cards -->
+    <div class="section-label plain">
+      <span>The slate</span>
+      <span class="ord">click a card to expand · <span x-text="filteredStrategies.length"></span> in view</span>
+    </div>
+
+    <div class="strategy-grid">
       <template x-for="s in filteredStrategies" :key="s.key || s.id">
-        <div class="card" :class="{ selected: selected === (s.key || s.id) }" @click="selectStrategy(s.key || s.id)">
+        <div class="strategy-card-tile" :class="{ selected: selected === (s.key || s.id) }"
+             @click="selectStrategy(s.key || s.id)">
           <div class="card-name" x-text="s.display_name"></div>
           <div class="card-badges">
             <span class="badge" :class="'tier-' + s.tier" x-text="s.tier"></span>
             <span class="badge" :class="'region-' + s.region" x-text="s.region"></span>
           </div>
-          <div class="card-pnl" :class="pnlClass(s.summary.total_pnl_gbp)" x-text="formatGbp(s.summary.total_pnl_gbp)"></div>
-          <div class="card-pnl-pct" :class="pnlClass(s.summary.avg_pnl_pct)">
+          <div class="card-pnl" :class="pnlClass(s.summary.total_pnl_gbp)"
+               x-text="formatGbp(s.summary.total_pnl_gbp)"></div>
+          <div class="card-pnl-pct">
             <span x-text="formatPct(s.summary.avg_pnl_pct)"></span> avg / trade
           </div>
           <div class="card-meta">
             <span><span x-text="s.summary.n_closed"></span> closed</span>
-            <span><span x-text="(s.summary.hit_rate * 100).toFixed(0)"></span>% hit rate</span>
+            <span><span x-text="(s.summary.hit_rate * 100).toFixed(0)"></span>% hit</span>
           </div>
         </div>
       </template>
       <template x-if="filteredStrategies.length === 0">
-        <div class="empty" style="grid-column: 1 / -1;">
+        <div style="grid-column: 1 / -1; padding: 2rem; text-align: center; font-family: var(--serif-body); font-style: italic; color: var(--ink-muted);">
           <template x-if="search">No strategies match &quot;<span x-text="search"></span>&quot;.</template>
           <template x-if="!search">No <span x-text="tab"></span> strategies.</template>
         </div>
       </template>
     </div>
 
+    <!-- Detail panel -->
     <template x-if="current">
       <section class="detail">
         <div class="detail-header">
-          <h2 x-text="current.display_name"></h2>
-          <p class="desc" x-text="current.description"></p>
+          <div>
+            <h2 x-text="current.display_name"></h2>
+            <p class="desc" x-text="current.description"></p>
+          </div>
+          <div class="right">
+            <div class="pnl" :class="pnlClass(current.summary.total_pnl_gbp)"
+                 x-text="formatGbp(current.summary.total_pnl_gbp)"></div>
+            <div class="pnl-meta">
+              All-time · <span x-text="current.tier"></span> · slot
+              <span x-text="current.alpaca_slot || current.t212_slot || '—'"></span>
+            </div>
+          </div>
         </div>
 
         <div class="stat-grid">
           <div class="stat">
-            <div class="stat-label">Total P&L</div>
-            <div class="stat-value" :class="pnlClass(current.summary.total_pnl_gbp)" x-text="formatGbp(current.summary.total_pnl_gbp)"></div>
-          </div>
-          <div class="stat">
-            <div class="stat-label">Avg P&L %</div>
-            <div class="stat-value" :class="pnlClass(current.summary.avg_pnl_pct)" x-text="formatPct(current.summary.avg_pnl_pct)"></div>
+            <div class="stat-label">Trades</div>
+            <div class="stat-value" x-text="current.summary.n_closed"></div>
           </div>
           <div class="stat">
             <div class="stat-label">Hit rate</div>
             <div class="stat-value" x-text="(current.summary.hit_rate * 100).toFixed(1) + '%'"></div>
           </div>
           <div class="stat">
-            <div class="stat-label">Closed trades</div>
-            <div class="stat-value" x-text="current.summary.n_closed"></div>
+            <div class="stat-label">Avg P&amp;L %</div>
+            <div class="stat-value" :class="pnlClass(current.summary.avg_pnl_pct)"
+                 x-text="formatPct(current.summary.avg_pnl_pct)"></div>
           </div>
           <div class="stat">
-            <div class="stat-label">Open positions</div>
+            <div class="stat-label">Open</div>
             <div class="stat-value" x-text="current.summary.n_open"></div>
           </div>
           <div class="stat">
-            <div class="stat-label">Predictions logged</div>
+            <div class="stat-label">Predictions</div>
             <div class="stat-value" x-text="current.summary.n_predictions"></div>
           </div>
         </div>
 
-        <div class="chart-box">
+        <div class="chart-wrap">
           <canvas id="equity-chart"></canvas>
         </div>
 
-        <div class="subtabs">
-          <button class="subtab" :class="{ active: subtab === 'executed' }" @click="subtab = 'executed'; expanded = null">
+        <div class="sub-tabs">
+          <button class="sub-tab" :class="{ active: subtab === 'executed' }"
+                  @click="subtab = 'executed'; expanded = null">
             Executed (<span x-text="current.executed.length"></span>)
           </button>
-          <button class="subtab" :class="{ active: subtab === 'uncommitted' }" @click="subtab = 'uncommitted'; expanded = null">
+          <button class="sub-tab" :class="{ active: subtab === 'uncommitted' }"
+                  @click="subtab = 'uncommitted'; expanded = null">
             Uncommitted candidates (<span x-text="current.uncommitted.length"></span>)
           </button>
         </div>
@@ -639,51 +219,48 @@
         <template x-if="subtab === 'executed'">
           <div>
             <template x-if="current.executed.length === 0">
-              <div class="empty">No trades yet.</div>
+              <div style="padding: 1.5rem; text-align: center; font-style: italic; color: var(--ink-muted);">No trades yet.</div>
             </template>
             <template x-if="current.executed.length > 0">
-              <table>
+              <table class="trades-table">
                 <thead>
                   <tr>
-                    <th>Date</th>
-                    <th>Ticker</th>
-                    <th>Entry</th>
-                    <th>Exit</th>
-                    <th>P&L £</th>
-                    <th>P&L %</th>
-                    <th>Reason</th>
-                    <th></th>
+                    <th>Date</th><th>Ticker</th><th>Entry</th><th>Exit</th>
+                    <th>P&amp;L £</th><th>P&amp;L %</th><th>Reason</th><th></th>
                   </tr>
                 </thead>
-                <template x-for="(t, i) in current.executed" :key="t.trade_id">
+                <template x-for="t in current.executed" :key="t.trade_id">
                   <tbody>
                     <tr>
                       <td x-text="t.entry_date"></td>
-                      <td><strong x-text="t.ticker"></strong></td>
+                      <td class="ticker" x-text="t.ticker"></td>
                       <td x-text="'$' + t.entry_price.toFixed(2)"></td>
                       <td x-text="t.exit_price ? '$' + t.exit_price.toFixed(2) : '—'"></td>
                       <td :class="pnlClass(t.pnl_gbp)" x-text="formatGbp(t.pnl_gbp)"></td>
                       <td :class="pnlClass(t.pnl_pct)" x-text="formatPct(t.pnl_pct)"></td>
-                      <td><span class="reason-badge" :class="t.exit_reason" x-text="t.exit_reason"></span></td>
+                      <td x-text="t.exit_reason"></td>
                       <td>
-                        <span class="why-toggle" @click="expanded = (expanded === t.trade_id) ? null : t.trade_id"
-                              x-text="expanded === t.trade_id ? 'hide' : 'why?'"></span>
+                        <a href="#" @click.prevent="expanded = (expanded === t.trade_id) ? null : t.trade_id"
+                           style="font-family: var(--sans); font-size: 0.78rem; color: var(--ink-muted); text-decoration: underline;"
+                           x-text="expanded === t.trade_id ? 'hide' : 'why?'"></a>
                       </td>
                     </tr>
                     <tr x-show="expanded === t.trade_id">
-                      <td colspan="8" class="expanded">
-                        <strong>Why entered</strong>
-                        <p x-text="t.thesis || '(no thesis recorded)'"></p>
+                      <td colspan="8" style="background: var(--paper-dark); padding: 1rem 1.2rem; font-family: var(--serif-body);">
+                        <div style="margin-bottom: 0.6rem;">
+                          <div style="font-family: var(--sans); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.2rem;">Why entered</div>
+                          <div x-text="t.thesis || '(no thesis recorded)'"></div>
+                        </div>
                         <template x-if="t.outcome_notes">
-                          <div>
-                            <strong style="color:#0369a1;">What happened</strong>
-                            <p x-text="t.outcome_notes"></p>
+                          <div style="margin-bottom: 0.6rem;">
+                            <div style="font-family: var(--sans); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-pos); margin-bottom: 0.2rem;">What happened</div>
+                            <div x-text="t.outcome_notes"></div>
                           </div>
                         </template>
                         <template x-if="t.risks_observed">
                           <div>
-                            <strong style="color:#b45309;">⚠ Risks observed</strong>
-                            <p x-text="t.risks_observed"></p>
+                            <div style="font-family: var(--sans); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-amber); margin-bottom: 0.2rem;">⚠ Risks observed</div>
+                            <div x-text="t.risks_observed"></div>
                           </div>
                         </template>
                       </td>
@@ -698,39 +275,39 @@
         <template x-if="subtab === 'uncommitted'">
           <div>
             <template x-if="current.uncommitted.length === 0">
-              <div class="empty">No uncommitted predictions yet (Wave 1 strategies don't generate them — they arrive with LLM strategies).</div>
+              <div style="padding: 1.5rem; text-align: center; font-style: italic; color: var(--ink-muted);">
+                No uncommitted predictions yet.
+              </div>
             </template>
             <template x-if="current.uncommitted.length > 0">
-              <table>
+              <table class="trades-table">
                 <thead>
                   <tr>
-                    <th>Date</th>
-                    <th>Ticker</th>
-                    <th>Class</th>
-                    <th>Predicted %</th>
-                    <th>Actual %</th>
-                    <th>Conviction</th>
-                    <th></th>
+                    <th>Date</th><th>Ticker</th><th>Class</th>
+                    <th>Predicted %</th><th>Actual %</th><th>Conviction</th><th></th>
                   </tr>
                 </thead>
                 <template x-for="(p, i) in current.uncommitted.slice(0, 30)" :key="i">
                   <tbody>
                     <tr>
                       <td x-text="p.prediction_date"></td>
-                      <td><strong x-text="p.ticker"></strong></td>
-                      <td><span class="pred-class-badge" :class="p.predicted_class" x-text="p.predicted_class.replace('_', ' ')"></span></td>
+                      <td class="ticker" x-text="p.ticker"></td>
+                      <td><span class="pred-class-badge" :class="p.predicted_class"
+                                x-text="p.predicted_class.replace('_', ' ')"></span></td>
                       <td :class="pnlClass(p.predicted_return_pct)" x-text="formatPct(p.predicted_return_pct)"></td>
-                      <td :class="pnlClass(p.actual_return_pct)" x-text="p.actual_return_pct != null ? formatPct(p.actual_return_pct) : '—'"></td>
+                      <td :class="pnlClass(p.actual_return_pct)"
+                          x-text="p.actual_return_pct != null ? formatPct(p.actual_return_pct) : '—'"></td>
                       <td x-text="p.conviction.toFixed(2)"></td>
                       <td>
-                        <span class="why-toggle" @click="expanded = (expanded === 'p' + i) ? null : 'p' + i"
-                              x-text="expanded === 'p' + i ? 'hide' : 'why?'"></span>
+                        <a href="#" @click.prevent="expanded = (expanded === 'p' + i) ? null : 'p' + i"
+                           style="font-family: var(--sans); font-size: 0.78rem; color: var(--ink-muted); text-decoration: underline;"
+                           x-text="expanded === 'p' + i ? 'hide' : 'why?'"></a>
                       </td>
                     </tr>
                     <tr x-show="expanded === 'p' + i">
-                      <td colspan="7" class="expanded">
-                        <strong>Rationale</strong>
-                        <p x-text="p.rationale"></p>
+                      <td colspan="7" style="background: var(--paper-dark); padding: 1rem 1.2rem; font-family: var(--serif-body);">
+                        <div style="font-family: var(--sans); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.2rem;">Rationale</div>
+                        <div x-text="p.rationale"></div>
                       </td>
                     </tr>
                   </tbody>
@@ -743,13 +320,45 @@
     </template>
 
     <template x-if="!current && filteredStrategies.length > 0">
-      <div class="empty" style="margin-top: 2rem;">
+      <div style="margin-top: 1.5rem; padding: 1.5rem; text-align: center; font-family: var(--serif-body); font-style: italic; color: var(--ink-muted);">
         Click a strategy above to see details.
       </div>
     </template>
-  </div>
+
+    <footer class="colophon">
+      Real-time view. Every other page on this site is derived from what you see here.
+    </footer>
+
+  </main>
 
   <script>
+    // Font picker — same as the static pages
+    const BOT_FONTS = {
+      classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+      newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+      crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+      lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+    };
+    function applyBotFont(name) {
+      const f = BOT_FONTS[name] || BOT_FONTS.classic;
+      const r = document.documentElement.style;
+      r.setProperty('--serif-head', f.head);
+      r.setProperty('--serif-body', f.body);
+      r.setProperty('--sans', f.sans);
+      try { localStorage.setItem('botFont', name); } catch(e) {}
+      document.querySelectorAll('.font-picker button').forEach(b => {
+        b.classList.toggle('active', b.dataset.font === name);
+      });
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.font-picker button').forEach(b => {
+        b.addEventListener('click', () => applyBotFont(b.dataset.font));
+      });
+      let saved = 'classic';
+      try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+      applyBotFont(saved);
+    });
+
     function dashboard() {
       return {
         data: { active: [], archived: [], regions: [], generated_at: null },
@@ -759,11 +368,9 @@
         selected: null,
         subtab: 'executed',
         expanded: null,
-        theme: localStorage.getItem('theme') || 'light',
         chartInstance: null,
 
         async load() {
-          document.documentElement.setAttribute('data-theme', this.theme);
           try {
             const response = await fetch('data.json', { cache: 'no-store' });
             this.data = await response.json();
@@ -788,7 +395,7 @@
         },
 
         get filteredStrategies() {
-          const base = this.tab === 'active' ? this.data.active : this.data.archived;
+          const base = this.tab === 'active' ? (this.data.active || []) : (this.data.archived || []);
           const pool = this.filterByRegion(base);
           const q = this.search.trim().toLowerCase();
           if (!q) return pool;
@@ -799,9 +406,6 @@
           );
         },
 
-        // Aggregate P&L over whatever strategies are currently visible.
-        // Updates reactively when tab / region / search change so the
-        // overview always reflects what the user is actually looking at.
         get overview() {
           const REAL_TIERS = new Set(['alpaca-paper', 'trading212-paper', 't212-live']);
           const today = new Date().toISOString().slice(0, 10);
@@ -835,7 +439,7 @@
         },
 
         get current() {
-          const all = [...this.data.active, ...this.data.archived];
+          const all = [...(this.data.active || []), ...(this.data.archived || [])];
           return all.find(s => (s.key || s.id) === this.selected) || null;
         },
 
@@ -854,26 +458,17 @@
           this.selected = null;
         },
 
-        toggleTheme() {
-          this.theme = this.theme === 'light' ? 'dark' : 'light';
-          document.documentElement.setAttribute('data-theme', this.theme);
-          localStorage.setItem('theme', this.theme);
-          if (this.current) this.$nextTick(() => this.renderChart(this.current));
-        },
-
         renderChart(strategy) {
           const canvas = document.getElementById('equity-chart');
           if (!canvas) return;
           if (this.chartInstance) this.chartInstance.destroy();
-
           const points = strategy.equity_curve || [];
           const labels = points.map(p => p.date || 'start');
           const values = points.map(p => p.equity);
-          const isDark = this.theme === 'dark';
-          const gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
-          const tickColor = isDark ? '#94a3b8' : '#64748b';
-          const lineColor = (values[values.length - 1] >= values[0]) ? '#16a34a' : '#dc2626';
-
+          const gridColor = 'rgba(0,0,0,0.06)';
+          const tickColor = '#757373';
+          const positive = values[values.length - 1] >= values[0];
+          const lineColor = positive ? '#166534' : '#8b1e1e';
           this.chartInstance = new Chart(canvas, {
             type: 'line',
             data: {
@@ -924,9 +519,8 @@
 
         formatTimestamp(ts) {
           if (!ts) return 'never';
-          try {
-            return new Date(ts).toLocaleString();
-          } catch { return ts; }
+          try { return new Date(ts).toLocaleString(); }
+          catch { return ts; }
         },
       };
     }
