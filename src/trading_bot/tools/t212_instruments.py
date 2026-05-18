@@ -63,7 +63,7 @@ def fetch_instruments(creds: T212Creds, *, force_refresh: bool = False) -> list[
 
     response = requests.get(
         f"{creds.base_url}/equity/metadata/instruments",
-        headers={"Authorization": creds.api_key},
+        headers={"Authorization": creds.auth_header()},
         timeout=30,
     )
     response.raise_for_status()

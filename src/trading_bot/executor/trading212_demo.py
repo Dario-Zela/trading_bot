@@ -265,7 +265,7 @@ class Trading212DemoExecutor(Executor):
 
     def _headers(self) -> dict[str, str]:
         return {
-            "Authorization": self.creds.api_key,
+            "Authorization": self.creds.auth_header(),
             "Content-Type": "application/json",
         }
 
