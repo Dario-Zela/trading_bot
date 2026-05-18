@@ -38,7 +38,11 @@ def _executor_for_strategy(config: StrategyConfig) -> Executor:
     )
 
 
+_MAX_PARALLEL_STRATEGIES = 4
+
+
 def run_entry(region: str, on_date: date) -> dict[str, list[dict]]:
+    from concurrent.futures import ThreadPoolExecutor, as_completed
     from trading_bot.tools.calendar import is_market_open_on
     if not is_market_open_on(on_date, region):
         log.info("Market closed in region=%s on %s — skipping entry", region, on_date.isoformat())
@@ -49,31 +53,49 @@ def run_entry(region: str, on_date: date) -> dict[str, list[dict]]:
         log.info("No active strategies for region %s", region)
         return {}
 
-    entries: dict[str, list[dict]] = {}
-    for strategy in strategies:
-        try:
-            intents = strategy.select_picks(on_date)
-            log.info("%s: %d picks", strategy.config.id, len(intents))
+    # Phase 1: select_picks() in parallel. Each strategy makes its own
+    # Claude Code subprocess call; we let up to N run concurrently.
+    # yfinance history is process-cached so the first finisher pays the
+    # full ~60s universe fetch and the rest hit the warm cache.
+    intents_by_id: dict[str, tuple] = {}  # sid -> (strategy, intents)
+    log.info(
+        "Entry phase: fanning out %d strategies (max %d concurrent)",
+        len(strategies), _MAX_PARALLEL_STRATEGIES,
+    )
+    with ThreadPoolExecutor(max_workers=_MAX_PARALLEL_STRATEGIES) as pool:
+        futures = {pool.submit(strategy.select_picks, on_date): strategy for strategy in strategies}
+        for fut in as_completed(futures):
+            strategy = futures[fut]
+            try:
+                intents = fut.result()
+                log.info("%s: %d picks", strategy.config.id, len(intents))
+                intents_by_id[strategy.config.id] = (strategy, intents)
+            except Exception as e:
+                log.exception("Strategy %s failed in select_picks: %s", strategy.config.id, e)
+                intents_by_id[strategy.config.id] = (strategy, [])
 
+    # Phase 2: enter() sequentially. Broker API calls — we want
+    # deterministic rate against Alpaca / T212 (already throttled per
+    # request). Sequential here keeps the order in logs stable too.
+    entries: dict[str, list[dict]] = {}
+    for sid, (strategy, intents) in intents_by_id.items():
+        try:
             executor = _executor_for_strategy(strategy.config)
             executor.enter(
                 intents,
-                strategy_id=strategy.config.id,
+                strategy_id=sid,
                 region=strategy.config.region,
                 capital_gbp=strategy.config.capital_gbp,
                 on_date=on_date,
             )
-
             opened = read_open_trades(
-                strategy_id=strategy.config.id,
+                strategy_id=sid,
                 region=strategy.config.region,
                 on_date=on_date,
             )
-            entries[strategy.config.id] = opened
+            entries[sid] = opened
         except Exception as e:
-            log.exception("Strategy %s failed in entry phase: %s", strategy.config.id, e)
-            # Continue with the remaining strategies — one bad strategy shouldn't
-            # poison the whole pipeline run.
+            log.exception("Strategy %s failed in enter phase: %s", sid, e)
     return entries
 
 

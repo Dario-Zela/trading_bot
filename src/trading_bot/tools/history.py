@@ -19,6 +19,13 @@ log = logging.getLogger(__name__)
 _BATCH_SIZE = 40
 _BATCH_SLEEP_S = 1.5
 
+# Process-lifetime cache for get_history. With per-strategy LLM calls
+# fanned out in parallel (run_entry), every strategy in a region tends
+# to request the same universe at the same end_date. The chunked
+# yfinance download takes ~60s; caching means only the first caller
+# pays it. Key: (sorted-tickers-tuple, lookback_days, end_date.iso).
+_HISTORY_CACHE: dict = {}
+
 
 @dataclass(frozen=True)
 class Bar:
@@ -51,6 +58,13 @@ def get_history(
         return {}
 
     end = end_date or date.today()
+    cache_key = (tuple(sorted(tickers)), lookback_days, end.isoformat())
+    cached = _HISTORY_CACHE.get(cache_key)
+    if cached is not None:
+        # Return a shallow copy so a caller mutating one ticker's bar list
+        # doesn't corrupt the cache. Bar objects themselves are frozen.
+        return {k: list(v) for k, v in cached.items()}
+
     # Pad the lookback so we always cover requested trading days even across weekends/holidays
     period = max(lookback_days * 2 + 5, 10)
     end_ts = pd.Timestamp(end) + pd.Timedelta(days=1)
@@ -79,7 +93,8 @@ def get_history(
         "yfinance history: %d/%d tickers returned bars (lookback=%dd)",
         len(out), len(tickers), lookback_days,
     )
-    return out
+    _HISTORY_CACHE[cache_key] = out
+    return {k: list(v) for k, v in out.items()}
 
 
 def _flatten(df: pd.DataFrame, tickers: list[str], lookback_days: int) -> dict[str, list[Bar]]:
