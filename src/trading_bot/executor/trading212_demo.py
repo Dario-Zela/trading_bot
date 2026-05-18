@@ -37,6 +37,7 @@ import requests
 from trading_bot.executor.base import Executor, TradeIntent
 from trading_bot.state import TradeRecord, append_trade, mark_trade_exited, read_open_trades
 from trading_bot.t212_slot import T212_PAPER_BUDGET_GBP, T212Creds, load_slot_creds
+from trading_bot.tools.fx import convert_from_gbp, to_gbp_multiplier
 from trading_bot.tools.t212_instruments import Translator, fetch_instruments
 
 
@@ -98,9 +99,27 @@ class Trading212DemoExecutor(Executor):
                 continue
 
             allocation_gbp = capital_gbp * (intent.allocation_pct / 100.0)
-            # T212 GBP accounts settle UK trades natively; for EU stocks it
-            # auto-converts. We size in GBP across the board.
-            #
+            # T212 quotes each instrument in its listing currency. yfinance
+            # returns LSE bars pence-corrected to £ (history.py) but EUR/USD
+            # bars unchanged. To size correctly across currencies we convert
+            # the £ allocation into the instrument's native unit before
+            # dividing — otherwise we under-allocate on EUR stocks by the
+            # FX rate (~15% on EURGBP) and bizarre on USD.
+            ccy = (inst.get("currencyCode") or "GBP").upper()
+            if ccy == "GBX":
+                # yfinance entry_estimate is already in £ but T212 wants the
+                # quantity, which is just shares; £ / £-per-share works.
+                allocation_native = allocation_gbp
+            elif ccy == "GBP":
+                allocation_native = allocation_gbp
+            else:
+                allocation_native = convert_from_gbp(allocation_gbp, ccy)
+                if allocation_native is None:
+                    log.warning(
+                        "Skipping %s: FX rate unavailable for %s — can't size %s position safely",
+                        intent.ticker, ccy, ccy,
+                    )
+                    continue
             # T212 rejects fractional quantities for most non-US instruments
             # with `quantity-precision-mismatch` (only some allow fractional,
             # and the instrument metadata endpoint doesn't expose the per-
@@ -108,7 +127,7 @@ class Trading212DemoExecutor(Executor):
             # we floor to int across the board. Small allocations on
             # expensive stocks may round to zero — caught by the min_qty
             # check below.
-            quantity = float(int(allocation_gbp / entry_estimate))
+            quantity = float(int(allocation_native / entry_estimate))
             if quantity < max(min_qty, 1.0):
                 log.warning(
                     "Computed qty %.0f below T212 minimum (%.2f shares ~£%.2f) for %s — skipping",
@@ -657,18 +676,25 @@ class Trading212DemoExecutor(Executor):
     def _to_gbp(self, t212_ticker: str, raw_price: float) -> float:
         """Normalize a T212-reported price to the ledger's base unit (£).
 
-        T212 quotes LSE in GBX (pence) — every recorded price must be
-        divided by 100 or our P&L is 100× too large. Other currencies
-        (EUR/USD on cross-listings) are returned as-is for now; FX
-        conversion is Task #50.
+        T212 quotes LSE in GBX (pence — divide by 100), EUR/USD/etc. in
+        their native currency (multiply by spot FX rate). FX rates come
+        from yfinance via the fx module and are cached per process.
+        Falls back to raw_price (unchanged) only if both the instrument
+        record and FX lookup are unavailable — caller decides whether
+        the resulting figure is trustworthy.
         """
         inst = self._get_translator().get_instrument(t212_ticker)
         if inst is None:
             return raw_price
         ccy = (inst.get("currencyCode") or "").upper()
-        if ccy == "GBX":
-            return raw_price / 100.0
-        return raw_price
+        mult = to_gbp_multiplier(ccy)
+        if mult is None:
+            log.warning(
+                "FX rate unavailable for %s (currency=%s) — leaving %s price as-is in native units",
+                t212_ticker, ccy, t212_ticker,
+            )
+            return raw_price
+        return raw_price * mult
 
     def _find_recent_sell(self, t212_ticker: str, on_date: date) -> dict[str, Any] | None:
         """Find the most recent SELL order for this ticker that filled
