@@ -2,6 +2,11 @@
 
 Reads ledger.jsonl + predictions.jsonl and computes the numbers that drive
 promote/demote/tune decisions in trading_bot.meta.evolution.
+
+Metrics are keyed by (strategy_id, region) because each strategy can run
+independently across regions (us / uk-eu / asia) with its own tier and
+performance profile. The evolution agent then makes per-(sid, region)
+promote/demote calls.
 """
 from __future__ import annotations
 
@@ -20,6 +25,7 @@ log = logging.getLogger(__name__)
 @dataclass
 class StrategyMetrics:
     strategy_id: str
+    region: str
     window_days: int
     window_start: str
     window_end: str
@@ -47,25 +53,27 @@ class StrategyMetrics:
 
 def compute_metrics(
     strategy_id: str,
+    region: str,
     *,
     window_days: int = 14,
     end_date: date | None = None,
 ) -> StrategyMetrics:
-    """Compute metrics for a single strategy over the rolling window."""
+    """Compute metrics for a single (strategy, region) pair over the window."""
     end = end_date or date.today()
     start = end - timedelta(days=window_days)
 
     m = StrategyMetrics(
         strategy_id=strategy_id,
+        region=region,
         window_days=window_days,
         window_start=start.isoformat(),
         window_end=end.isoformat(),
     )
 
-    trades_window = _read_trades(strategy_id, start, end)
+    trades_window = _read_trades(strategy_id, region, start, end)
     _fill_trade_metrics(m, trades_window)
 
-    preds_window = _read_predictions(strategy_id, start, end)
+    preds_window = _read_predictions(strategy_id, region, start, end)
     _fill_prediction_metrics(m, preds_window)
 
     return m
@@ -75,24 +83,29 @@ def compute_all_metrics(
     *,
     window_days: int = 14,
     end_date: date | None = None,
-) -> dict[str, StrategyMetrics]:
-    """Compute metrics for every strategy that has trades or predictions in
-    the window. Returns {strategy_id: StrategyMetrics}."""
+) -> dict[tuple[str, str], StrategyMetrics]:
+    """Compute metrics for every (strategy_id, region) pair seen in the window.
+
+    Returns {(strategy_id, region): StrategyMetrics}. The evolution agent
+    iterates over this so it can make region-specific promote/demote calls.
+    """
     end = end_date or date.today()
     start = end - timedelta(days=window_days)
-    strategy_ids: set[str] = set()
+    keys: set[tuple[str, str]] = set()
     for rec in _iter_lines(ledger_path()):
         sid = rec.get("strategy_id")
+        region = rec.get("region") or "us"
         if sid and _in_window(rec.get("entry_date"), start, end):
-            strategy_ids.add(sid)
+            keys.add((sid, region))
     for rec in _iter_lines(predictions_path()):
         sid = rec.get("strategy_id")
+        region = rec.get("region") or "us"
         if sid and _in_window(rec.get("prediction_date"), start, end):
-            strategy_ids.add(sid)
+            keys.add((sid, region))
 
     return {
-        sid: compute_metrics(sid, window_days=window_days, end_date=end)
-        for sid in sorted(strategy_ids)
+        (sid, region): compute_metrics(sid, region, window_days=window_days, end_date=end)
+        for (sid, region) in sorted(keys)
     }
 
 
@@ -124,10 +137,12 @@ def _in_window(date_str: str | None, start: date, end: date) -> bool:
     return start <= d <= end
 
 
-def _read_trades(strategy_id: str, start: date, end: date) -> list[dict]:
+def _read_trades(strategy_id: str, region: str, start: date, end: date) -> list[dict]:
     out = []
     for rec in _iter_lines(ledger_path()):
         if rec.get("strategy_id") != strategy_id:
+            continue
+        if (rec.get("region") or "us") != region:
             continue
         if not rec.get("exit_date"):
             continue
@@ -140,10 +155,12 @@ def _read_trades(strategy_id: str, start: date, end: date) -> list[dict]:
     return out
 
 
-def _read_predictions(strategy_id: str, start: date, end: date) -> list[dict]:
+def _read_predictions(strategy_id: str, region: str, start: date, end: date) -> list[dict]:
     out = []
     for rec in _iter_lines(predictions_path()):
         if rec.get("strategy_id") != strategy_id:
+            continue
+        if (rec.get("region") or "us") != region:
             continue
         if not _in_window(rec.get("prediction_date"), start, end):
             continue

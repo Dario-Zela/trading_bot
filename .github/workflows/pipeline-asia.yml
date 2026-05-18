@@ -1,0 +1,129 @@
+name: Asia pipeline
+
+# Asian markets — TSE (Tokyo, opens 09:00 JST = 00:00 UTC), HKEX (Hong Kong,
+# opens 09:30 HKT = 01:30 UTC), SSE (Shanghai, 09:30 CST = 01:30 UTC). All
+# three are simultaneously open in the 01:30–06:00 UTC window. We anchor
+# entry to HKEX open (last to open) and exit to TSE close (first to close)
+# so all positions enter/exit while at least the dominant market is live.
+#
+# None of these three exchanges observe DST so the UTC times are stable
+# year-round — dst-sync still re-derives them for safety.
+
+on:
+  schedule:
+    # 01:35 UTC weekdays — entry (HKEX open + 5 min)
+    - cron: '35 1 * * 1-5'
+    # 05:30 UTC weekdays — exit (TSE close - 30 min)
+    - cron: '30 5 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'entry / exit'
+        required: true
+        type: choice
+        options:
+          - entry
+          - exit
+
+concurrency:
+  group: pipeline-asia
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Decide mode
+        id: mode
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "mode=${{ inputs.mode }}" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.schedule }}" = "35 1 * * 1-5" ]; then
+            echo "mode=entry" >> $GITHUB_OUTPUT
+          else
+            echo "mode=exit" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install Python package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Install Claude Code CLI
+        if: steps.mode.outputs.mode == 'entry' || steps.mode.outputs.mode == 'exit'
+        run: |
+          curl -fsSL https://claude.ai/install.sh | bash
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          claude --version
+
+      - name: Run pipeline (${{ steps.mode.outputs.mode }})
+        env:
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          NOTIFY_EMAIL_TO: ${{ secrets.NOTIFY_EMAIL_TO }}
+          NOTIFY_EMAIL_FROM: ${{ secrets.NOTIFY_EMAIL_FROM }}
+          # Asia strategies don't use Alpaca but data tools still want the key
+          ALPACA_API_KEY__1: ${{ secrets.ALPACA_API_KEY__1 }}
+          ALPACA_API_SECRET__1: ${{ secrets.ALPACA_API_SECRET__1 }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: |
+          case "${{ steps.mode.outputs.mode }}" in
+            exit)
+              python -m trading_bot.pipeline exit --region asia
+              python -m trading_bot.pipeline reflect --region asia || echo "Reflection step failed (non-fatal)"
+              python -m trading_bot.dashboard.build
+              python -m trading_bot.pipeline summary --region asia
+              ;;
+            *)
+              python -m trading_bot.pipeline entry --region asia
+              ;;
+          esac
+
+      - name: Commit state and dashboard back
+        run: |
+          git config user.name "trading-bot[bot]"
+          git config user.email "trading-bot@users.noreply.github.com"
+          git add state docs || true
+          if git diff --cached --quiet; then
+            echo "No state changes to commit"
+            exit 0
+          fi
+          MSG="pipeline-asia ${{ steps.mode.outputs.mode }} run — $(date -u +%Y-%m-%dT%H:%MZ)"
+          git commit -m "$MSG"
+
+          for i in 1 2; do
+            if git pull --rebase --autostash origin main && git push; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            echo "Push attempt $i failed; will retry with smart merge..."
+            sleep 2
+          done
+
+          echo "Falling back to smart-merge strategy..."
+          mkdir -p /tmp/save
+          cp -r state /tmp/save/ 2>/dev/null || true
+          git fetch origin main
+          git reset --hard origin/main
+          python3 .github/scripts/smart_merge_state.py "$PWD" /tmp/save
+          python -m trading_bot.dashboard.build || true
+          git add state docs || true
+          if git diff --cached --quiet; then
+            echo "Smart-merge produced no new changes"
+            exit 0
+          fi
+          git commit -m "$MSG (smart-merged)"
+          git push

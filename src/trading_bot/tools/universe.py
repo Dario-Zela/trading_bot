@@ -13,6 +13,93 @@ _FTSE100_WIKI_URL = "https://en.wikipedia.org/wiki/FTSE_100_Index"
 _FTSE250_WIKI_URL = "https://en.wikipedia.org/wiki/FTSE_250_Index"
 _DAX40_WIKI_URL = "https://en.wikipedia.org/wiki/DAX"
 _CAC40_WIKI_URL = "https://en.wikipedia.org/wiki/CAC_40"
+_HANGSENG_WIKI_URL = "https://en.wikipedia.org/wiki/Hang_Seng_Index"
+
+# Curated Japanese large-caps. The English Wikipedia Nikkei 225 page lacks a
+# constituents table (the JP Wikipedia has one but parsing it cleanly with
+# pandas.read_html is brittle), and the index changes only ~2-3 names/year,
+# so a pinned list is the right trade-off for shadow trading. Mostly
+# Nikkei 225 + TOPIX-100 overlap names with good ADR liquidity. Refresh
+# this list once a year or when membership changes are flagged in lessons.
+_JP_LARGE_CAPS = [
+    "1605.T",   # INPEX
+    "1925.T",   # Daiwa House
+    "2502.T",   # Asahi Group
+    "2503.T",   # Kirin
+    "2802.T",   # Ajinomoto
+    "2914.T",   # Japan Tobacco
+    "3382.T",   # Seven & i
+    "3402.T",   # Toray Industries
+    "3407.T",   # Asahi Kasei
+    "4063.T",   # Shin-Etsu Chemical
+    "4452.T",   # Kao
+    "4502.T",   # Takeda Pharmaceutical
+    "4503.T",   # Astellas Pharma
+    "4519.T",   # Chugai Pharma
+    "4523.T",   # Eisai
+    "4543.T",   # Terumo
+    "4568.T",   # Daiichi Sankyo
+    "4661.T",   # Oriental Land
+    "4901.T",   # Fujifilm
+    "5108.T",   # Bridgestone
+    "5401.T",   # Nippon Steel
+    "5713.T",   # Sumitomo Metal Mining
+    "6098.T",   # Recruit Holdings
+    "6273.T",   # SMC Corp
+    "6301.T",   # Komatsu
+    "6326.T",   # Kubota
+    "6367.T",   # Daikin Industries
+    "6501.T",   # Hitachi
+    "6502.T",   # Toshiba
+    "6503.T",   # Mitsubishi Electric
+    "6594.T",   # Nidec
+    "6701.T",   # NEC
+    "6702.T",   # Fujitsu
+    "6752.T",   # Panasonic
+    "6758.T",   # Sony Group
+    "6857.T",   # Advantest
+    "6861.T",   # Keyence
+    "6902.T",   # Denso
+    "6920.T",   # Lasertec
+    "6954.T",   # Fanuc
+    "6981.T",   # Murata Manufacturing
+    "7011.T",   # Mitsubishi Heavy Industries
+    "7201.T",   # Nissan Motor
+    "7203.T",   # Toyota Motor
+    "7267.T",   # Honda Motor
+    "7269.T",   # Suzuki Motor
+    "7270.T",   # Subaru
+    "7733.T",   # Olympus
+    "7741.T",   # HOYA
+    "7751.T",   # Canon
+    "7832.T",   # Bandai Namco
+    "7974.T",   # Nintendo
+    "8001.T",   # Itochu
+    "8002.T",   # Marubeni
+    "8031.T",   # Mitsui & Co
+    "8035.T",   # Tokyo Electron
+    "8053.T",   # Sumitomo Corp
+    "8058.T",   # Mitsubishi Corp
+    "8267.T",   # Aeon
+    "8306.T",   # Mitsubishi UFJ Financial
+    "8316.T",   # Sumitomo Mitsui Financial
+    "8411.T",   # Mizuho Financial
+    "8591.T",   # Orix
+    "8604.T",   # Nomura Holdings
+    "8725.T",   # MS&AD Insurance
+    "8766.T",   # Tokio Marine
+    "8801.T",   # Mitsui Fudosan
+    "8802.T",   # Mitsubishi Estate
+    "9020.T",   # JR East
+    "9022.T",   # JR Central
+    "9432.T",   # NTT
+    "9433.T",   # KDDI
+    "9434.T",   # SoftBank Corp
+    "9501.T",   # TEPCO
+    "9613.T",   # NTT Data
+    "9983.T",   # Fast Retailing (Uniqlo)
+    "9984.T",   # SoftBank Group
+]
 _USER_AGENT = "trading-bot/0.1 (research; +https://github.com/Dario-Zela/trading_bot)"
 
 # Static lists — these change rarely, easier to keep in-tree than fetch.
@@ -104,6 +191,8 @@ def get_universe(universe_id: str) -> list[str]:
     - EU equities: 'dax40', 'cac40', 'aex25', 'eu_blue_chips' (DAX+CAC+AEX)
     - UK+EU combined: 'uk_eu_blue_chips' (FTSE100+DAX+CAC+AEX),
                        'uk_eu_extended' (FTSE350+DAX+CAC+AEX, ~450 names)
+    - Asia equities: 'jp_large_caps' (curated TSE), 'hangseng' (HKEX),
+                     'asia_blue_chips' (jp_large_caps + hangseng, ~150 names)
     """
     if universe_id == "sp500":
         return _fetch_sp500()
@@ -146,6 +235,13 @@ def get_universe(universe_id: str) -> list[str]:
             | set(_fetch_cac40())
             | set(_AEX25)
         )
+        return sorted(combined)
+    if universe_id == "jp_large_caps":
+        return list(_JP_LARGE_CAPS)
+    if universe_id == "hangseng":
+        return _fetch_hangseng()
+    if universe_id == "asia_blue_chips":
+        combined = set(_JP_LARGE_CAPS) | set(_fetch_hangseng())
         return sorted(combined)
     if universe_id == "us_etfs_sector":
         return list(_US_ETFS_SECTOR)
@@ -250,6 +346,43 @@ def _fetch_ftse100() -> list[str]:
         if out:
             return sorted(out)
     raise RuntimeError("Could not find an FTSE 100 ticker column in any Wikipedia table")
+
+
+def _fetch_hangseng() -> list[str]:
+    """Hang Seng Index — Hong Kong large-caps. Tickers like 0700.HK
+    (Tencent). HKEX uses 4-digit zero-padded codes. Wikipedia renders the
+    ticker column as "SEHK: 700" so we strip the prefix before padding."""
+    response = requests.get(_HANGSENG_WIKI_URL, headers={"User-Agent": _USER_AGENT}, timeout=15)
+    response.raise_for_status()
+    tables = pd.read_html(StringIO(response.text))
+    for df in tables:
+        cols_lower = {str(c).lower().strip(): c for c in df.columns}
+        ticker_col = (
+            cols_lower.get("stock code")
+            or cols_lower.get("ticker")
+            or cols_lower.get("ticker symbol")
+            or cols_lower.get("symbol")
+            or cols_lower.get("code")
+        )
+        if ticker_col is None:
+            continue
+        seen: set[str] = set()
+        out: list[str] = []
+        for raw in df[ticker_col].astype(str):
+            if not raw or raw.lower() == "nan":
+                continue
+            # Strip exchange prefix like "SEHK: 700" → "700", and any .HK suffix
+            cleaned = raw.split(":")[-1].strip().replace(".HK", "").strip()
+            if not cleaned.isdigit():
+                continue
+            padded = f"{int(cleaned):04d}.HK"
+            if padded in seen:
+                continue
+            seen.add(padded)
+            out.append(padded)
+        if len(out) >= 30:  # Hang Seng has ~80 components
+            return sorted(out)
+    raise RuntimeError("Could not find a Hang Seng ticker column in any Wikipedia table")
 
 
 def _fetch_dax40() -> list[str]:

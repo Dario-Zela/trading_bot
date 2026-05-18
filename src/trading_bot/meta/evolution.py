@@ -5,14 +5,21 @@ prompts + configs + recent lessons, asks Claude for action recommendations,
 then auto-executes anything that stays on Tier 0 / Tier 1:
 
   - keep             — no change
-  - tune             — edit config fields within safety bounds
-  - promote          — Tier 0 (shadow) → Tier 1 (alpaca-paper) + slot assign
-  - demote           — Tier 1 (alpaca-paper) → Tier 0 (shadow) + clear_slot
+  - tune             — edit config fields within safety bounds (strategy-wide,
+                       all regions share these)
+  - promote          — Tier 0 (shadow) → Tier 1 (alpaca-paper) + slot assign,
+                       region-specific
+  - demote           — Tier 1 (alpaca-paper) → Tier 0 (shadow) + clear_slot,
+                       region-specific
   - spawn-variant    — clone an existing strategy with config + prompt diffs
   - request-tier-2   — file GitHub Issue for human approval (never auto)
 
 Tier 2 (live) is fully off-limits to this agent. Anything involving real
 money requires explicit human approval per sparknotes design.
+
+Promote/demote are **per-region**: a strategy can be on alpaca-paper in
+`us` while still on shadow in `uk-eu`, etc. Tune is strategy-wide because
+the bounds (capital, position sizing, stops) are shared across regions.
 """
 from __future__ import annotations
 
@@ -51,7 +58,9 @@ PROMOTION_MIN_IC = 0.05
 DEMOTION_MAX_DRAWDOWN_PCT = -10.0
 DEMOTION_MIN_HIT_RATE = 0.40
 
-# Fields the agent is allowed to tune on Tier 0/1 strategies
+# Fields the agent is allowed to tune on Tier 0/1 strategies (strategy-wide,
+# applied at the top level — all regions inherit). Region-specific entries
+# in runs_in can override these, but the agent doesn't touch overrides.
 TUNABLE_FIELDS = {
     "max_positions": (1, 10),
     "max_position_pct": (5.0, 60.0),
@@ -65,6 +74,7 @@ TUNABLE_FIELDS = {
 @dataclass
 class ActionLog:
     strategy_id: str
+    region: str | None  # None for strategy-wide actions like tune / spawn
     action: str
     applied: bool
     reason: str
@@ -118,7 +128,7 @@ def run_weekly_evolution(today: date) -> dict:
 
     summary = {
         "week_end": today.isoformat(),
-        "n_strategies": len(metrics),
+        "n_snapshot_rows": len(snapshot),
         "n_actions_applied": sum(1 for a in applied if a.applied),
         "n_actions_skipped": sum(1 for a in applied if not a.applied),
         "n_tier_2_requests": len(pending_tier_2),
@@ -134,26 +144,51 @@ def run_weekly_evolution(today: date) -> dict:
 
 def _build_snapshot(
     configs: dict[str, dict],
-    metrics: dict[str, StrategyMetrics],
+    metrics: dict[tuple[str, str], StrategyMetrics],
 ) -> list[dict]:
+    """One row per (strategy_id, region) pair that's actually configured to
+    run somewhere. Region-specific tier/slot come from the runs_in entry."""
     rows = []
     for sid, cfg in configs.items():
-        m = metrics.get(sid)
-        rows.append({
-            "id": sid,
-            "tier": cfg.get("tier"),
-            "alpaca_slot": cfg.get("alpaca_slot"),
-            "active": cfg.get("active"),
-            "max_positions": cfg.get("max_positions"),
-            "max_position_pct": cfg.get("max_position_pct"),
-            "stop_loss_pct": cfg.get("stop_loss_pct"),
-            "take_profit_pct": cfg.get("take_profit_pct"),
-            "capital_gbp": cfg.get("capital_gbp"),
-            "metrics": _metrics_to_dict(m) if m else None,
-            "meets_promotion_criteria": _meets_promotion(m, cfg) if m else False,
-            "meets_demotion_criteria": _meets_demotion(m, cfg) if m else False,
-        })
+        for entry in _regions_for_config(cfg):
+            region = entry["region"]
+            m = metrics.get((sid, region))
+            rows.append({
+                "id": sid,
+                "region": region,
+                "tier": entry.get("tier", cfg.get("tier", "shadow")),
+                "alpaca_slot": entry.get("alpaca_slot", cfg.get("alpaca_slot")),
+                "universe": entry.get("universe", cfg.get("universe")),
+                "active": cfg.get("active"),
+                # Strategy-wide config fields (shared across regions)
+                "max_positions": cfg.get("max_positions"),
+                "max_position_pct": cfg.get("max_position_pct"),
+                "stop_loss_pct": cfg.get("stop_loss_pct"),
+                "take_profit_pct": cfg.get("take_profit_pct"),
+                "capital_gbp": cfg.get("capital_gbp"),
+                "metrics": _metrics_to_dict(m) if m else None,
+                "meets_promotion_criteria": _meets_promotion(m, entry) if m else False,
+                "meets_demotion_criteria": _meets_demotion(m, entry) if m else False,
+            })
     return rows
+
+
+def _regions_for_config(cfg: dict) -> list[dict]:
+    """Yield each region descriptor for this strategy.
+
+    Multi-region (`runs_in`) configs: yield each entry as-is.
+    Single-region configs: yield one synthetic entry combining the
+    top-level region / tier / alpaca_slot / universe fields.
+    """
+    runs_in = cfg.get("runs_in")
+    if isinstance(runs_in, list) and runs_in:
+        return [dict(e) for e in runs_in if isinstance(e, dict) and e.get("region")]
+    return [{
+        "region": cfg.get("region", "us"),
+        "tier": cfg.get("tier", "shadow"),
+        "alpaca_slot": cfg.get("alpaca_slot"),
+        "universe": cfg.get("universe"),
+    }]
 
 
 def _metrics_to_dict(m: StrategyMetrics) -> dict:
@@ -175,18 +210,18 @@ def _build_prompt(today: date, snapshot: list[dict], lessons: str) -> str:
 
     snapshot_json = json.dumps(snapshot, indent=2)
     return f"""You are the weekly evolution agent for the trading bot. Today is
-{today.isoformat()}. Below is a 14-day rolling snapshot of every strategy:
-their config, metrics, and whether they currently meet promotion / demotion
-criteria.
+{today.isoformat()}. Each strategy can run independently across regions
+(`us`, `uk-eu`, `asia`), with its own tier and slot per region. Below is a
+14-day rolling snapshot of every (strategy, region) pair.
 
 ## Your authority
 
 You can auto-execute these actions on **Tier 0 (shadow)** and **Tier 1
 (alpaca-paper)** strategies:
 - `keep` — no change
-- `tune` — edit specific fields within bounds
-- `promote` — Tier 0 → Tier 1 (we'll assign a free Alpaca slot)
-- `demote` — Tier 1 → Tier 0 (we'll clear the slot)
+- `tune` — edit specific fields (strategy-wide, no region — affects every region the strategy runs in)
+- `promote` — Tier 0 → Tier 1 for **one region** (we'll assign a free Alpaca slot)
+- `demote` — Tier 1 → Tier 0 for **one region** (we'll clear the slot)
 - `spawn-variant` — clone an existing strategy with prompt + config diffs
 
 For **Tier 2 (live)** strategies you can ONLY recommend with `request-tier-2`
@@ -194,13 +229,15 @@ For **Tier 2 (live)** strategies you can ONLY recommend with `request-tier-2`
 
 ## Safety bounds
 
-Tunable fields (clipped to these ranges if you exceed them):
+Tunable fields (clipped to these ranges if you exceed them; tune is
+strategy-wide, applied at the top of config.yaml):
 {json.dumps({k: list(v) for k, v in TUNABLE_FIELDS.items()}, indent=2)}
 
 Other constraints:
 - Free Alpaca slots available: {free_slots}
 - Currently active strategies: {n_active} of max {MAX_TOTAL_STRATEGIES}
 - Don't spawn a variant if it'd push active total over the cap
+- Promote / demote actions require a `region` field naming which region to act on
 - Promotion requires `meets_promotion_criteria=true` AND a free slot
 - Demotion requires `meets_demotion_criteria=true`
 - Spawned variants start on Tier 0 shadow, must have a different `id`
@@ -217,31 +254,34 @@ Other constraints:
 
 ## Required output
 
-A JSON object with one key `actions`, a list of action objects:
+A JSON object with one key `actions`, a list of action objects. Promote /
+demote MUST include `region`; tune / spawn-variant do not:
 
 ```json
 {{
   "actions": [
-    {{ "strategy_id": "<id>", "action": "keep", "reason": "1 sentence" }},
+    {{ "strategy_id": "<id>", "region": "<region>", "action": "keep", "reason": "1 sentence" }},
     {{ "strategy_id": "<id>", "action": "tune",
        "changes": {{ "max_positions": 4, "stop_loss_pct": -2.5 }},
        "reason": "1-2 sentences citing the metric you're responding to" }},
-    {{ "strategy_id": "<id>", "action": "promote", "reason": "..." }},
-    {{ "strategy_id": "<id>", "action": "demote", "reason": "..." }},
+    {{ "strategy_id": "<id>", "region": "us", "action": "promote", "reason": "..." }},
+    {{ "strategy_id": "<id>", "region": "uk-eu", "action": "demote", "reason": "..." }},
     {{ "strategy_id": "<parent_id>", "action": "spawn-variant",
        "variant_id": "<parent_id>-v2-or-some-meaningful-suffix",
        "config_overrides": {{ "max_positions": 3, ... }},
        "deep_analysis_addendum": "Markdown text appended to the parent's deep_analysis.md to express the variant's bias",
        "reason": "1-2 sentences — why this variant has a meaningfully different edge from the parent" }},
-    {{ "strategy_id": "<id>", "action": "request-tier-2", "reason": "Detailed case for live promotion" }}
+    {{ "strategy_id": "<id>", "region": "<region>", "action": "request-tier-2", "reason": "Detailed case for live promotion" }}
   ]
 }}
 ```
 
-Be conservative. Most strategies should be `keep` most weeks. Promote only
-when the data clearly supports it; demote only when the trend is unmistakable.
-Spawning variants should be rare — only when you see a genuinely different
-edge that the parent's prompt isn't capturing.
+Be conservative. Most rows should be `keep` most weeks. Promote only when
+the data clearly supports it; demote only when the trend is unmistakable.
+A strategy performing well in one region but poorly in another is normal —
+treat those decisions independently. Spawning variants should be rare —
+only when you see a genuinely different edge that the parent's prompt
+isn't capturing.
 """
 
 
@@ -252,11 +292,12 @@ edge that the parent's prompt isn't capturing.
 def _apply_action(
     raw: dict,
     *,
-    metrics: dict[str, StrategyMetrics],
+    metrics: dict[tuple[str, str], StrategyMetrics],
     configs: dict[str, dict],
 ) -> ActionLog | None:
     sid = raw.get("strategy_id")
     action = (raw.get("action") or "").strip().lower()
+    region = raw.get("region")
     reason = str(raw.get("reason", "")).strip()
     if not sid or not action:
         return None
@@ -265,36 +306,45 @@ def _apply_action(
         return _do_spawn(raw, configs)
 
     if sid not in configs:
-        return ActionLog(sid, action, False, f"Unknown strategy_id; ignored. ({reason})", {})
+        return ActionLog(sid, region, action, False, f"Unknown strategy_id; ignored. ({reason})", {})
 
     cfg = configs[sid]
 
-    if cfg.get("tier") == "t212-live":
-        return ActionLog(sid, action, False, "Tier 2 strategy — agent has no authority", {})
-
-    if action == "keep":
-        return ActionLog(sid, action, True, reason, {})
-
+    # Tune is strategy-wide
     if action == "tune":
         return _do_tune(sid, raw, cfg, reason)
 
+    # All other actions need a region
+    if not region:
+        return ActionLog(sid, None, action, False, f"Action '{action}' requires a region", {})
+
+    entry = _find_region_entry(cfg, region)
+    if entry is None:
+        return ActionLog(sid, region, action, False, f"Strategy {sid} does not run in region {region}", {})
+
+    if entry.get("tier") == "t212-live":
+        return ActionLog(sid, region, action, False, "Tier 2 strategy — agent has no authority", {})
+
+    if action == "keep":
+        return ActionLog(sid, region, action, True, reason, {})
+
     if action == "promote":
-        return _do_promote(sid, cfg, metrics.get(sid), configs, reason)
+        return _do_promote(sid, region, cfg, entry, metrics.get((sid, region)), configs, reason)
 
     if action == "demote":
-        return _do_demote(sid, cfg, metrics.get(sid), reason)
+        return _do_demote(sid, region, cfg, entry, metrics.get((sid, region)), reason)
 
     if action == "request-tier-2":
         # Recorded only; the issue creator picks these up
-        return ActionLog(sid, action, False, reason, {"requires_human_approval": True})
+        return ActionLog(sid, region, action, False, reason, {"requires_human_approval": True})
 
-    return ActionLog(sid, action, False, f"Unknown action; ignored. ({reason})", {})
+    return ActionLog(sid, region, action, False, f"Unknown action; ignored. ({reason})", {})
 
 
 def _do_tune(sid: str, raw: dict, cfg: dict, reason: str) -> ActionLog:
     changes_raw = raw.get("changes")
     if not isinstance(changes_raw, dict) or not changes_raw:
-        return ActionLog(sid, "tune", False, "No changes specified", {})
+        return ActionLog(sid, None, "tune", False, "No changes specified", {})
 
     clamped: dict = {}
     rejected: dict = {}
@@ -311,48 +361,57 @@ def _do_tune(sid: str, raw: dict, cfg: dict, reason: str) -> ActionLog:
         clamped[field_name] = max(lo, min(hi, val))
 
     if not clamped:
-        return ActionLog(sid, "tune", False, f"No applicable changes. Rejected: {rejected}", {})
+        return ActionLog(sid, None, "tune", False, f"No applicable changes. Rejected: {rejected}", {})
 
     cfg.update(clamped)
     _write_config(sid, cfg)
-    return ActionLog(sid, "tune", True, reason, {"applied": clamped, "rejected": rejected})
+    return ActionLog(sid, None, "tune", True, reason, {"applied": clamped, "rejected": rejected})
 
 
 def _do_promote(
     sid: str,
+    region: str,
     cfg: dict,
+    entry: dict,
     m: StrategyMetrics | None,
     configs: dict[str, dict],
     reason: str,
 ) -> ActionLog:
-    if cfg.get("tier") != "shadow":
-        return ActionLog(sid, "promote", False, "Not on shadow tier — nothing to promote from", {})
-    if not m or not _meets_promotion(m, cfg):
-        return ActionLog(sid, "promote", False, "Does not meet promotion criteria", {"metrics": _metrics_to_dict(m) if m else None})
+    if entry.get("tier") != "shadow":
+        return ActionLog(sid, region, "promote", False, f"Not on shadow tier in {region} — nothing to promote from", {})
+    if not m or not _meets_promotion(m, entry):
+        return ActionLog(sid, region, "promote", False, "Does not meet promotion criteria", {"metrics": _metrics_to_dict(m) if m else None})
 
     free_slot = _next_free_slot(configs)
     if free_slot is None:
-        return ActionLog(sid, "promote", False, f"No free Alpaca slot (max={MAX_ALPACA_SLOTS})", {})
+        return ActionLog(sid, region, "promote", False, f"No free Alpaca slot (max={MAX_ALPACA_SLOTS})", {})
 
-    cfg["tier"] = "alpaca-paper"
-    cfg["alpaca_slot"] = free_slot
+    entry["tier"] = "alpaca-paper"
+    entry["alpaca_slot"] = free_slot
     _write_config(sid, cfg)
-    return ActionLog(sid, "promote", True, reason, {"slot": free_slot})
+    return ActionLog(sid, region, "promote", True, reason, {"slot": free_slot})
 
 
-def _do_demote(sid: str, cfg: dict, m: StrategyMetrics | None, reason: str) -> ActionLog:
-    if cfg.get("tier") != "alpaca-paper":
-        return ActionLog(sid, "demote", False, "Not on alpaca-paper tier — nothing to demote from", {})
-    if not m or not _meets_demotion(m, cfg):
-        return ActionLog(sid, "demote", False, "Does not meet demotion criteria", {"metrics": _metrics_to_dict(m) if m else None})
+def _do_demote(
+    sid: str,
+    region: str,
+    cfg: dict,
+    entry: dict,
+    m: StrategyMetrics | None,
+    reason: str,
+) -> ActionLog:
+    if entry.get("tier") != "alpaca-paper":
+        return ActionLog(sid, region, "demote", False, f"Not on alpaca-paper tier in {region} — nothing to demote from", {})
+    if not m or not _meets_demotion(m, entry):
+        return ActionLog(sid, region, "demote", False, "Does not meet demotion criteria", {"metrics": _metrics_to_dict(m) if m else None})
 
-    slot = cfg.get("alpaca_slot")
+    slot = entry.get("alpaca_slot")
     cleared = _try_clear_slot(slot) if slot else False
 
-    cfg["tier"] = "shadow"
-    cfg["alpaca_slot"] = None
+    entry["tier"] = "shadow"
+    entry["alpaca_slot"] = None
     _write_config(sid, cfg)
-    return ActionLog(sid, "demote", True, reason, {"slot_cleared": cleared, "previous_slot": slot})
+    return ActionLog(sid, region, "demote", True, reason, {"slot_cleared": cleared, "previous_slot": slot})
 
 
 def _do_spawn(raw: dict, configs: dict[str, dict]) -> ActionLog:
@@ -361,22 +420,22 @@ def _do_spawn(raw: dict, configs: dict[str, dict]) -> ActionLog:
     reason = str(raw.get("reason", "")).strip()
 
     if parent_id not in configs:
-        return ActionLog(parent_id or "?", "spawn-variant", False, "Unknown parent strategy", {})
+        return ActionLog(parent_id or "?", None, "spawn-variant", False, "Unknown parent strategy", {})
     if variant_id in configs:
-        return ActionLog(parent_id, "spawn-variant", False, f"Variant id {variant_id} already exists", {})
+        return ActionLog(parent_id, None, "spawn-variant", False, f"Variant id {variant_id} already exists", {})
 
     n_active = sum(1 for c in configs.values() if c.get("active"))
     if n_active >= MAX_TOTAL_STRATEGIES:
-        return ActionLog(parent_id, "spawn-variant", False, f"Active strategy cap reached ({MAX_TOTAL_STRATEGIES})", {})
+        return ActionLog(parent_id, None, "spawn-variant", False, f"Active strategy cap reached ({MAX_TOTAL_STRATEGIES})", {})
 
     parent_dir = _strategies_dir() / parent_id
     variant_dir = _strategies_dir() / variant_id
     if not parent_dir.exists():
-        return ActionLog(parent_id, "spawn-variant", False, f"Parent dir missing: {parent_dir}", {})
+        return ActionLog(parent_id, None, "spawn-variant", False, f"Parent dir missing: {parent_dir}", {})
 
     shutil.copytree(parent_dir, variant_dir)
 
-    # Variant config: load parent's, override, force shadow tier
+    # Variant config: load parent's, override, force shadow tier across all regions
     variant_cfg = dict(configs[parent_id])
     overrides = raw.get("config_overrides")
     if isinstance(overrides, dict):
@@ -391,17 +450,28 @@ def _do_spawn(raw: dict, configs: dict[str, dict]) -> ActionLog:
                 variant_cfg[k] = v
     variant_cfg["id"] = variant_id
     variant_cfg["display_name"] = f"{variant_cfg.get('display_name', parent_id)} (variant)"
-    variant_cfg["tier"] = "shadow"
-    variant_cfg["alpaca_slot"] = None
     variant_cfg["active"] = True
+    # Force every region this variant inherits to shadow tier
+    if isinstance(variant_cfg.get("runs_in"), list):
+        new_runs = []
+        for entry in variant_cfg["runs_in"]:
+            if not isinstance(entry, dict):
+                continue
+            ne = dict(entry)
+            ne["tier"] = "shadow"
+            ne["alpaca_slot"] = None
+            new_runs.append(ne)
+        variant_cfg["runs_in"] = new_runs
+    else:
+        variant_cfg["tier"] = "shadow"
+        variant_cfg["alpaca_slot"] = None
     variant_cfg["description"] = (
         f"Auto-spawned variant of {parent_id} on {date.today().isoformat()} by the "
         f"weekly evolution agent. Reason: {reason}"
     )
     _write_config(variant_id, variant_cfg)
 
-    # Append the addendum to the parent's deep_analysis.md (variant inherits parent's prompt
-    # but we want the addendum reflected in the variant's copy specifically)
+    # Append the addendum to the variant's deep_analysis.md (parent stays untouched)
     addendum = raw.get("deep_analysis_addendum")
     if isinstance(addendum, str) and addendum.strip():
         prompts_dir = variant_dir / "prompts"
@@ -416,7 +486,7 @@ def _do_spawn(raw: dict, configs: dict[str, dict]) -> ActionLog:
             )
             deep_path.write_text(new_text)
 
-    return ActionLog(parent_id, "spawn-variant", True, reason, {
+    return ActionLog(parent_id, None, "spawn-variant", True, reason, {
         "variant_id": variant_id,
         "addendum_applied": bool(addendum),
     })
@@ -426,8 +496,8 @@ def _do_spawn(raw: dict, configs: dict[str, dict]) -> ActionLog:
 # Criteria
 # ---------------------------------------------------------------------------
 
-def _meets_promotion(m: StrategyMetrics | None, cfg: dict) -> bool:
-    if not m or cfg.get("tier") != "shadow":
+def _meets_promotion(m: StrategyMetrics | None, entry: dict) -> bool:
+    if not m or entry.get("tier") != "shadow":
         return False
     if m.n_trades < PROMOTION_MIN_TRADES:
         return False
@@ -440,8 +510,8 @@ def _meets_promotion(m: StrategyMetrics | None, cfg: dict) -> bool:
     return True
 
 
-def _meets_demotion(m: StrategyMetrics | None, cfg: dict) -> bool:
-    if not m or cfg.get("tier") != "alpaca-paper":
+def _meets_demotion(m: StrategyMetrics | None, entry: dict) -> bool:
+    if not m or entry.get("tier") != "alpaca-paper":
         return False
     if m.max_drawdown_pct <= DEMOTION_MAX_DRAWDOWN_PCT:
         return True
@@ -454,12 +524,32 @@ def _meets_demotion(m: StrategyMetrics | None, cfg: dict) -> bool:
 # Slot management + config I/O
 # ---------------------------------------------------------------------------
 
+def _find_region_entry(cfg: dict, region: str) -> dict | None:
+    """Return a *reference* to the runs_in entry for `region`, or build a
+    synthetic top-level wrapper for single-region configs. Mutations to the
+    returned dict propagate back into cfg (the caller then writes cfg back
+    to disk). For single-region configs we mutate cfg directly, so we wrap
+    cfg itself in a thin view to keep the call-site symmetric."""
+    runs_in = cfg.get("runs_in")
+    if isinstance(runs_in, list):
+        for entry in runs_in:
+            if isinstance(entry, dict) and entry.get("region") == region:
+                return entry
+        return None
+    # Single-region path — cfg's top-level region must match
+    if cfg.get("region", "us") != region:
+        return None
+    return cfg  # mutating cfg directly is the right thing
+
+
 def _next_free_slot(configs: dict[str, dict]) -> int | None:
-    used = {
-        c.get("alpaca_slot")
-        for c in configs.values()
-        if c.get("tier") == "alpaca-paper" and c.get("alpaca_slot") is not None
-    }
+    """Scan every runs_in entry and every top-level config for used slots."""
+    used: set[int] = set()
+    for cfg in configs.values():
+        for entry in _regions_for_config(cfg):
+            slot = entry.get("alpaca_slot")
+            if slot is not None and entry.get("tier") == "alpaca-paper":
+                used.add(int(slot))
     for slot in range(1, MAX_ALPACA_SLOTS + 1):
         if slot not in used:
             return slot
@@ -468,7 +558,7 @@ def _next_free_slot(configs: dict[str, dict]) -> int | None:
 
 def _free_alpaca_slots(snapshot: list[dict]) -> list[int]:
     used = {
-        s.get("alpaca_slot")
+        int(s["alpaca_slot"])
         for s in snapshot
         if s.get("tier") == "alpaca-paper" and s.get("alpaca_slot") is not None
     }
@@ -539,8 +629,9 @@ def _append_evolution_log(today: date, actions: list[ActionLog]) -> None:
         lines.append("_No actions._\n")
     for a in actions:
         status = "✅ applied" if a.applied else "⏭️ skipped"
+        scope = f"{a.strategy_id}@{a.region}" if a.region else a.strategy_id
         lines.append(
-            f"- **{a.strategy_id}** · `{a.action}` · {status} — {a.reason}"
+            f"- **{scope}** · `{a.action}` · {status} — {a.reason}"
         )
         if a.details:
             lines.append(f"  - details: `{json.dumps(a.details)}`")
@@ -560,25 +651,28 @@ def _maybe_file_issue(
     """Open one GitHub Issue per weekly run summarising what happened and
     flagging Tier 2 requests. Uses the `gh` CLI which is pre-installed on
     GH Actions runners (no-op if `gh` isn't available locally)."""
+    def _scope(a: ActionLog) -> str:
+        return f"{a.strategy_id}@{a.region}" if a.region else a.strategy_id
+
     body_parts = [f"## Weekly evolution — {today.isoformat()}\n"]
     if tier_2_requests:
         body_parts.append("### Tier 2 promotion requests (your approval needed)\n")
         for a in tier_2_requests:
-            body_parts.append(f"- **{a.strategy_id}** — {a.reason}")
+            body_parts.append(f"- **{_scope(a)}** — {a.reason}")
         body_parts.append("")
 
     auto_applied = [a for a in applied if a.applied and a.action != "request-tier-2"]
     if auto_applied:
         body_parts.append("### Auto-applied (FYI)\n")
         for a in auto_applied:
-            body_parts.append(f"- **{a.strategy_id}** · `{a.action}` — {a.reason}")
+            body_parts.append(f"- **{_scope(a)}** · `{a.action}` — {a.reason}")
         body_parts.append("")
 
     skipped = [a for a in applied if not a.applied and a.action != "request-tier-2"]
     if skipped:
         body_parts.append("### Skipped\n")
         for a in skipped:
-            body_parts.append(f"- **{a.strategy_id}** · `{a.action}` — {a.reason}")
+            body_parts.append(f"- **{_scope(a)}** · `{a.action}` — {a.reason}")
 
     body = "\n".join(body_parts).strip() or "_No activity._"
     title = f"Evolution {today.isoformat()} — {len(tier_2_requests)} tier-2 request(s), {len(auto_applied)} auto-applied"
