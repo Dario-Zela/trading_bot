@@ -1,0 +1,5 @@
+# Phase 7 — archive tarballs are binary blobs of cold-storage HTML.
+# Mark them as such so GitHub doesn't try to render diffs or count
+# them toward language statistics.
+state/archive/*.tar.gz binary linguist-generated=true
+state/archive/*.tar.gz -diff

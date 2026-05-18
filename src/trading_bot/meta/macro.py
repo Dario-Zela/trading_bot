@@ -98,6 +98,16 @@ def run_weekly_macro(today: date) -> dict:
         "macro: wrote %s, %d new predictions, %d graded (%d falsified)",
         view_path.name, n_new, n_graded, n_falsified,
     )
+
+    # Phase 3 — also run the v2 multi-desk pipeline. Purely additive;
+    # failure here doesn't affect the existing markdown view.
+    v2_summary: dict | None = None
+    try:
+        from trading_bot.meta.macro_v2 import run_macro_v2
+        v2_summary = run_macro_v2(today)
+    except Exception as e:
+        log.warning("Macro v2 render failed (non-fatal): %s", e)
+
     return {
         "week": week_id,
         "view_path": str(view_path),
@@ -105,6 +115,7 @@ def run_weekly_macro(today: date) -> dict:
         "graded": n_graded,
         "falsified": n_falsified,
         "total_cost_usd": result.total_cost_usd,
+        "v2": v2_summary,
     }
 
 

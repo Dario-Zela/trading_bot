@@ -37,95 +37,100 @@ The six-stage architecture. Each agent emits JSON; Python composes the HTML.
 - [x] Seeded with Alpaca News + yfinance broad-market headlines so the markets baseline is guaranteed even if WebSearch underperforms
 - [x] Graceful fallback to seed-only on LLM failure
 
-### 2B — Stage 2: Triage agent
+### 2B — Stage 2: Triage agent ✅
 
-- [ ] `src/trading_bot/meta/news/triage.py`
-- [ ] Haiku × 6 parallel — one call per candidate
-- [ ] Each scores 1-10 + writes a one-line angle + key facts
-- [ ] Filters survivors to top-N by score (no fixed cap; whatever the publisher needs)
+- [x] `src/trading_bot/meta/news/triage.py`
+- [x] Haiku × 6 parallel — one call per candidate
+- [x] Each scores 1-10 + writes a one-line angle + key facts
+- [x] Filters survivors to top-N by score (no fixed cap; whatever the publisher needs)
 
-### 2C — Stage 3: Publisher agent
+### 2C — Stage 3: Publisher agent ✅
 
-- [ ] `src/trading_bot/meta/news/publisher.py`
-- [ ] Sonnet — organises survivors into sections (Front, Markets, World, Tech, Beyond, plus variable sections like Sport/Climate/Health when warranted)
-- [ ] Assigns bylines (persona-based), picks the lead story, sets the AI-generated humorous masthead subtitle
-- [ ] Emits the newspaper-plan JSON: section list, lead slug, masthead lines
+- [x] `src/trading_bot/meta/news/publisher.py`
+- [x] Sonnet — organises survivors into sections (Front, Markets, World, Tech, Beyond, plus variable sections like Sport/Climate/Health when warranted)
+- [x] Assigns bylines (persona-based), picks the lead story, sets the AI-generated humorous masthead subtitle
+- [x] Emits the newspaper-plan JSON: section list, lead slug, masthead lines
 
-### 2D — Stage 4: Brief writers (parallel)
+### 2D — Stage 4: Brief writers (parallel) ✅
 
-- [ ] `src/trading_bot/meta/news/brief_writer.py`
-- [ ] Haiku × 6 parallel — one brief per story (~80-100 words, conversational, no jargon)
-- [ ] Includes byline, headline, body markdown, sources
+- [x] `src/trading_bot/meta/news/brief_writer.py`
+- [x] Haiku × 6 parallel — one brief per story (~80-100 words, conversational, no jargon)
+- [x] Includes byline, headline, body markdown, sources
 
-### 2E — Stage 5: Full-article writers (parallel)
+### 2E — Stage 5: Full-article writers (parallel) ✅
 
-- [ ] `src/trading_bot/meta/news/article_writer.py`
-- [ ] Sonnet × 6 parallel — full article, **no word cap**, written to the topic
-- [ ] Each writer also runs an image search (Claude WebFetch against Google Images / Bing image results) for the most fitting hero image — returns image_url + caption
-- [ ] Includes inline callouts, sources block, related-articles slugs
+- [x] `src/trading_bot/meta/news/article_writer.py`
+- [x] Sonnet × 6 parallel — full article, **no word cap**, written to the topic
+- [x] Each writer also runs an image search (Claude WebFetch / WebSearch) for the most fitting hero image — returns image_url + caption + credit
+- [x] Includes inline callouts, sources block, related-articles slugs
 
-### 2F — Stage 6: Bot-summary compressor
+### 2F — Stage 6: Bot-summary compressor ✅
 
-- [ ] `src/trading_bot/meta/news/bot_summary.py`
-- [ ] Haiku — takes the full assembled edition, produces a tight ~150-word `state/daily_news/YYYY-MM-DD.bot.md` for strategy prompts
-- [ ] Preserves Risk tone / Themes / Sector lean / Watchlist / Key data structure
+- [x] `src/trading_bot/meta/news/bot_summary.py`
+- [x] Haiku — takes the full assembled edition, produces a tight ~150-word `state/daily_news/YYYY-MM-DD.bot.md` for strategy prompts
+- [x] Preserves Risk tone / Themes / Sector lean / Watchlist / Key data structure
 
-### 2G — Trading floor section
+### 2G — Trading floor section ✅
 
-- [ ] `src/trading_bot/meta/news/trading_floor.py`
-- [ ] Reads `state/ledger.jsonl` for yesterday's strategy P&L
-- [ ] Haiku × 3 parallel — writes prose pieces (winner, loser, "quieter movers") — news-style, not numbers-style
-- [ ] Pulled into the publisher's plan automatically
+- [x] `src/trading_bot/meta/news/trading_floor.py`
+- [x] Reads `state/ledger.jsonl` for yesterday's strategy P&L
+- [x] Haiku × 3 parallel — writes prose pieces (winner, loser, "quieter movers") — news-style, not numbers-style
+- [x] Appended into the rendered edition by the assembler (publisher must NOT include it)
 
-### 2H — Desk's calls section
+### 2H — Desk's calls section ✅
 
-- [ ] Reads `state/predictions/news.jsonl` for open predictions + recent verdicts
-- [ ] Generates fresh predictions (Sonnet) per horizon (tomorrow / week / month) — claim + falsification_criteria + conviction
-- [ ] Persists each via `append_prediction()` so the grader can score them later
-- [ ] Renders "Marking the homework" sub-section from the most recently graded predictions
+- [x] `src/trading_bot/meta/news/desks_calls.py` — reads `state/predictions/news.jsonl` for graded verdicts
+- [x] Generates fresh predictions (Sonnet) per horizon (tomorrow / week / month) — claim + falsification_criteria + conviction
+- [x] Persists each via `append_prediction()` so the grader can score them later
+- [x] Renders "Marking the homework" sub-section from the most recently graded predictions
 
-### 2I — Assembly + sub-page generation
+### 2I — Assembly + sub-page generation ✅
 
-- [ ] `pages.py` — `render_news_edition(date, structured_data)` writes `docs/news/YYYY-MM-DD/index.html` + `docs/news/YYYY-MM-DD/{slug}.html`
-- [ ] `render_news_archive_index()` — listing of all editions
-- [ ] Wires images, callouts, "related in this edition" cross-links
-- [ ] Daily news email links to the front-page URL
+- [x] `meta/news/render.py` — `render_news_edition()` writes `docs/news/YYYY-MM-DD/index.html` + `docs/news/YYYY-MM-DD/{slug}.html`
+- [x] `pages.render_news_edition()` — thin wrapper that injects the shared shell
+- [x] News archive index updated to include both legacy flat-file and structured directory editions
+- [x] Wires images, "In one sentence" callouts, sources block, "related in this edition" cross-links
+- [x] `news_url_for()` prefers the directory URL when the structured edition exists
 
-### 2J — Orchestration
+### 2J — Orchestration ✅
 
-- [ ] Rewrite `src/trading_bot/meta/daily_news.py` to call the six stages in order
-- [ ] Update `.github/workflows/daily-news-brief.yml` — bump timeout, expose secrets
-- [ ] Smoke-test end-to-end on a single edition
-
----
-
-## Phase 3 — Macro pipeline (same architecture, weekly cadence)
-
-Reuses the multi-stage scaffolding from Phase 2, with desk-based structure rather than news-section-based.
-
-- [ ] `src/trading_bot/meta/macro_v2/discovery.py` — data-driven: cross-asset snapshot + yield curve + sector strength + commodity prices + credit spreads
-- [ ] `src/trading_bot/meta/macro_v2/publisher.py` — organises into desks (rates / FX / credit / sectors / regions), assigns desk-specific bylines
-- [ ] `src/trading_bot/meta/macro_v2/brief_writer.py` — one brief per desk piece
-- [ ] `src/trading_bot/meta/macro_v2/article_writer.py` — full pieces, no word cap, image search per piece
-- [ ] `src/trading_bot/meta/macro_v2/sector_spotlight.py` — Sonnet × 2-3 for spotlight long-form pieces on the most actionable sectors
-- [ ] `src/trading_bot/meta/macro_v2/predictions.py` — generates predictions per horizon (month / quarter / 6mo / 2027 / multi-year), persists via `append_prediction()`
-- [ ] `src/trading_bot/meta/macro_v2/for_strategies.py` — Haiku-compressed "For the strategies" callout (bullet list of bias signals)
-- [ ] `pages.py` — `render_macro_edition(week_id, structured_data)` writes `docs/macro/YYYY-W##/index.html` + per-piece subpages
-- [ ] Update `.github/workflows/weekly-macro.yml` — bump timeout, plumb full pipeline
-- [ ] Macro weekly email with link to the front-page URL
+- [x] Rewrote `src/trading_bot/meta/daily_news.py` — six stages in order, with stages 4 running its four parallel sub-stages via an outer ThreadPoolExecutor
+- [x] `.github/workflows/daily-news-brief.yml` — bumped to 30-min job timeout
+- [x] Pipeline state dumped to `state/daily_news/{date}.pipeline.json` for debugging / re-render
+- [x] Headlines markdown still written to `state/daily_news/{date}.md` for archive compat
+- [ ] Smoke-test on a single live edition (deferred — needs OAUTH token + WebSearch budget; will run via `workflow_dispatch` manually)
 
 ---
 
-## Phase 4 — Evolution restyle (editorial format)
+## Phase 3 — Macro pipeline ✅
 
-The agent already exists; this reshapes its output into the per-strategy report card format.
+Reuses the Phase 2 scaffolding (Brief, FullArticle, news article-writer) with desk-based structure rather than news-section-based.
 
-- [ ] `src/trading_bot/meta/evolution_v2/editorial.py` — Sonnet writes the "this week's read" intro from metrics + decisions
-- [ ] `src/trading_bot/meta/evolution_v2/strategy_report.py` — Haiku × N parallel — for each strategy, write `{what_worked, what_didnt, lessons, going_forward, config_changes}` JSON
-- [ ] `src/trading_bot/meta/evolution_v2/format_decisions.py` — the existing promote/demote/tune/spawn actions become the visual chips
-- [ ] `pages.py` — `render_evolution(week_id, structured_data)` writes the page with the slate table + per-strategy cards + decisions row
-- [ ] Update `weekly-evolution.yml` — plumb the new output structure
-- [ ] Evolution weekly email with link
+- [x] `src/trading_bot/meta/macro_v2.py` (single module, mirrors `evolution_v2.py` shape)
+  - [x] Snapshot — reuses `meta.macro._gather_snapshot()` for yield curve / credit / DXY / sectors / commodities
+  - [x] Publisher (Sonnet) — desks: Editorial / Rates / FX / Credit / Sectors / Regions / Risk; desk-specific bylines
+  - [x] Brief writers + Article writers — reuses the news pipeline modules (`Brief`, `FullArticle` are shape-compatible)
+  - [x] Predictions (Sonnet) — horizons: month / quarter / 6mo / year / multi-year; persisted via unified `predictions_log` (source="macro")
+  - [x] "For the strategies" callout (Haiku) — dark-callout bias signals + watchlist
+  - [x] Renderer — writes `docs/macro/YYYY-W##/index.html` + per-piece subpages (reuses news article subpage renderer)
+- [x] `meta/macro.py` now calls `run_macro_v2()` after the existing markdown view is produced (non-fatal on failure)
+- [x] `weekly-macro.yml` — bumped to 40-min job timeout
+- [ ] Macro weekly email with link to the front-page URL (deferred to Phase 6)
+- [ ] Sector spotlight long-form pieces (deferred — publisher already allows Sectors desk features; dedicated spotlight is overkill for now)
+
+---
+
+## Phase 4 — Evolution restyle (editorial format) ✅
+
+The action engine in `meta/evolution.py` already exists; this added the editorial layer.
+
+- [x] `src/trading_bot/meta/evolution_v2.py` (single module rather than a package — small enough)
+  - [x] Editorial intro (Sonnet) — "this week's read" from snapshot + applied actions
+  - [x] Per-strategy report cards (Haiku × N parallel) — `{headline, what_worked, what_didnt, lessons, going_forward, config_changes}`
+  - [x] Render layer — slate table + per-strategy cards + decisions chips row
+- [x] `meta/evolution.py` calls `build_and_render_evolution()` after the action engine runs (non-fatal on failure)
+- [x] `weekly-evolution.yml` no changes needed (existing workflow already calls run_weekly_evolution)
+- [ ] Evolution weekly email with link (deferred to Phase 6 polish)
 
 ---
 
@@ -144,12 +149,30 @@ CSS + small HTML edits to the existing Alpine app. No new agents, no new state.
 
 ## Phase 6 — Polish
 
-- [ ] Macro and Evolution emails (currently only News has one)
-- [ ] Dashboard "global overview" tile (already done, just verify it survives the restyle)
-- [ ] Strategy reading-times-it badges or progress indicators on the news front page
-- [ ] "Today's question" subtitle on the news lead (the publisher generates it)
-- [ ] Yesterday's predictions auto-grading runs at 23:30 UTC so verdicts are fresh for the morning brief
-- [ ] Smoke-test the full stack: trigger daily news manually, verify HTML lands on Pages, email arrives, predictions persisted, grader resolves the previous day's calls
+- [x] Macro and Evolution emails — `render_macro_email()` + `render_evolution_email()` in `notify/email.py`, wired into `meta/macro_v2.py` and `meta/evolution.py`
+- [x] Yesterday's predictions auto-grading already runs at 05:00 UTC (changed from 23:30 in Phase 1)
+- [ ] Dashboard "global overview" tile — already done, verify it survives the restyle
+- [ ] Strategy reading-times-it badges on the news front page (nice-to-have, not blocking)
+- [ ] "Today's question" subtitle on the news lead (publisher can be prompted to generate it — extension of the masthead_subtitle field)
+- [ ] Smoke-test the full stack: trigger daily news manually, verify HTML lands on Pages, email arrives, predictions persisted, grader resolves the previous day's calls (deferred — needs live workflow run)
+
+---
+
+## Phase 7 — Archive trimming (storage hygiene) ✅
+
+The repo is the source of truth and is cloned by every GH Actions run. Daily news editions could each be ~250 KB of HTML (front page + ~20 sub-articles + images metadata); 1000 days × 250 KB ≈ 250 MB just for news. We trim older editions into compressed tarballs so the working tree stays slim.
+
+- [x] `scripts/archive_old_editions.py` — walks `docs/news/YYYY-MM-DD/` and `docs/macro/YYYY-W##/`, anything older than **90 days** gets bundled into `state/archive/news-YYYY-MM.tar.gz` / `state/archive/macro-YYYY.tar.gz`, originals removed from `docs/`. Handles both directory-form (Phase 2/3) and legacy flat-file editions. Idempotent — merges into an existing tarball if you re-run on the same month.
+- [x] Tar files store each edition as its top-level entry (file or dir) so a single restore command rehydrates a month if needed
+- [x] `docs/news/index.html` + `docs/macro/index.html` archive lists read from `state/archive/manifest.json` so trimmed editions still appear as "archived (compressed)" links pointing at the raw GitHub blob URL of the tarball
+- [x] `.github/workflows/archive-trim.yml` — weekly cron (Sunday 04:00 UTC, before grade-predictions/news brief), commits the bundled tarballs + removed-files diff. Supports `dry_run=true` input for safe preview.
+- [x] `.gitattributes` — marks `state/archive/*.tar.gz` as `binary linguist-generated=true -diff` so they don't bloat GitHub's diff renders or language stats
+- [x] `setup_cron_jobs.py` SCHEDULES — added `archive-trim` (Sunday 04:00 UTC)
+- [x] One-time backfill skipped initially (nothing's older than 90 days yet); revisit if Pages storage approaches the 1 GB soft limit
+
+### Future option (only if 90-day live window itself grows too large)
+
+- [ ] Move tarballs out of git entirely — push to Cloudflare R2 (~free for personal scale), keep only the manifest in repo. Defer until tarballs sum to >500 MB.
 
 ---
 
@@ -202,5 +225,11 @@ state/
     news.jsonl
     macro.jsonl
     evolution.jsonl
+  archive/                 ← Phase 7
+    news-YYYY-MM.tar.gz
+    macro-YYYY.tar.gz
+    manifest.json
+scripts/
+  archive_old_editions.py  ← Phase 7
 DELIVERY_PLAN.md           ← this file
 ```

@@ -124,6 +124,99 @@ def render_news_brief_email(
     return subject, text_body, html_body
 
 
+def render_macro_email(
+    *,
+    week_id: str,
+    headline: str,
+    for_strategies_md: str,
+    full_brief_url: str,
+) -> tuple[str, str, str]:
+    """Compose the weekly macro email. Returns (subject, text, html)."""
+    subject = f"[trading-bot] Weekly macro — {week_id}"
+    text_body = "\n".join([
+        f"Weekly macro view — {week_id}",
+        f"Headline: {headline}",
+        "",
+        f"Read the full edition: {full_brief_url}",
+        "",
+        "For the strategies:",
+        for_strategies_md.strip() or "(no bias signals)",
+    ])
+
+    signals_html = _escape(for_strategies_md.strip())
+    signals_html = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", signals_html)
+    signals_html = re.sub(r"_(.+?)_", r"<em>\1</em>", signals_html)
+    signals_html = re.sub(r"^\s*-\s+(.*)", r"&bull; \1", signals_html, flags=re.MULTILINE)
+    signals_html = signals_html.replace("\n", "<br />")
+
+    html_body = f"""<!DOCTYPE html>
+<html lang="en">
+<body style="margin:0;padding:0;background:#f3f4f6;font-family:-apple-system,Segoe UI,Roboto,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f3f4f6;padding:20px 0;">
+    <tr><td align="center">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+        <tr><td style="padding:24px 28px 8px;border-bottom:1px solid #e5e7eb;">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:#6b7280;font-weight:600;">Weekly macro · {_escape(week_id)}</div>
+          <div style="font-size:20px;font-weight:700;color:#111827;letter-spacing:-0.01em;margin-top:4px;">{_escape(headline) or "Macro view"}</div>
+        </td></tr>
+        <tr><td style="padding:18px 28px 6px;">
+          <a href="{_escape(full_brief_url)}" style="display:inline-block;padding:11px 18px;background:#1e3a8a;color:#ffffff;text-decoration:none;border-radius:6px;font-size:13px;font-weight:600;">Read the full edition →</a>
+        </td></tr>
+        <tr><td style="padding:18px 28px 24px;font-size:13.5px;line-height:1.6;color:#374151;">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:#9ca3af;font-weight:600;margin-bottom:8px;">For the strategies (bias signals)</div>
+          <div>{signals_html or '(no signals)'}</div>
+        </td></tr>
+        <tr><td style="padding:18px 28px 22px;border-top:1px solid #e5e7eb;background:#fafafa;font-size:11px;color:#9ca3af;">
+          Auto-generated weekly · <a href="{_REPO_URL}" style="color:#6b7280;text-decoration:none;">github.com/Dario-Zela/trading_bot</a>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body></html>"""
+    return subject, text_body, html_body
+
+
+def render_evolution_email(
+    *,
+    week_end: str,
+    n_strategies: int,
+    n_actions_applied: int,
+    full_brief_url: str,
+) -> tuple[str, str, str]:
+    """Compose the weekly evolution email. Returns (subject, text, html)."""
+    subject = f"[trading-bot] Weekly evolution — {week_end}"
+    text_body = "\n".join([
+        f"Weekly evolution — week ending {week_end}",
+        f"{n_strategies} strategies reviewed; {n_actions_applied} actions applied.",
+        "",
+        f"Read the full edition: {full_brief_url}",
+    ])
+    html_body = f"""<!DOCTYPE html>
+<html lang="en">
+<body style="margin:0;padding:0;background:#f3f4f6;font-family:-apple-system,Segoe UI,Roboto,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f3f4f6;padding:20px 0;">
+    <tr><td align="center">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+        <tr><td style="padding:24px 28px 8px;border-bottom:1px solid #e5e7eb;">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:#6b7280;font-weight:600;">Weekly evolution · {_escape(week_end)}</div>
+          <div style="font-size:20px;font-weight:700;color:#111827;letter-spacing:-0.01em;margin-top:4px;">The cards</div>
+        </td></tr>
+        <tr><td style="padding:18px 28px 8px;font-size:14px;color:#374151;">
+          {n_strategies} {'strategy' if n_strategies == 1 else 'strategies'} reviewed · {n_actions_applied} {'action' if n_actions_applied == 1 else 'actions'} applied.
+        </td></tr>
+        <tr><td style="padding:14px 28px 24px;">
+          <a href="{_escape(full_brief_url)}" style="display:inline-block;padding:11px 18px;background:#374151;color:#ffffff;text-decoration:none;border-radius:6px;font-size:13px;font-weight:600;">Read the full report →</a>
+        </td></tr>
+        <tr><td style="padding:18px 28px 22px;border-top:1px solid #e5e7eb;background:#fafafa;font-size:11px;color:#9ca3af;">
+          Auto-generated by the weekly-evolution agent · <a href="{_REPO_URL}" style="color:#6b7280;text-decoration:none;">github.com/Dario-Zela/trading_bot</a>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body></html>"""
+    return subject, text_body, html_body
+
+
 def _escape(s: str) -> str:
     return (
         s.replace("&", "&amp;")

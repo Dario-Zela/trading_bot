@@ -102,6 +102,40 @@ def docs_root() -> Path:
     return Path(__file__).resolve().parents[3] / "docs"
 
 
+def _archive_manifest_path() -> Path:
+    return Path(__file__).resolve().parents[3] / "state" / "archive" / "manifest.json"
+
+
+def _read_archived_news_dates() -> list[dict]:
+    """Read the Phase 7 archive manifest, return per-edition records
+    suitable for inclusion in the news archive index. Each record is
+    `{date, url}` where url points at the tarball blob (the user
+    downloads to inspect)."""
+    return _read_archived_records(kind="news")
+
+
+def _read_archived_macro_weeks() -> list[dict]:
+    return _read_archived_records(kind="macro")
+
+
+def _read_archived_records(*, kind: str) -> list[dict]:
+    manifest_path = _archive_manifest_path()
+    if not manifest_path.exists():
+        return []
+    try:
+        manifest = json.loads(manifest_path.read_text())
+    except json.JSONDecodeError:
+        return []
+    out: list[dict] = []
+    for bundle in manifest.get(kind, []) or []:
+        if not isinstance(bundle, dict):
+            continue
+        url = bundle.get("url", "")
+        for entry in (bundle.get("entries") or []):
+            out.append({"date": entry, "url": url})
+    return out
+
+
 def _up_to_root(depth: int) -> str:
     return "../" * depth if depth > 0 else "./"
 
@@ -195,16 +229,23 @@ def _news_out_dir() -> Path:
 
 def render_news_pages() -> int:
     """Render every daily-news markdown file. Returns the number of brief
-    pages written (not counting the archive index)."""
+    pages written (not counting the archive index).
+
+    This is the legacy flat-file path. The new structured pipeline
+    (Phase 2) calls `render_news_edition()` which writes a directory
+    per edition; both forms appear in the archive index."""
     src_dir = _news_md_dir()
     out_dir = _news_out_dir()
 
-    entries: list[tuple[str, Path]] = []
+    legacy_entries: list[tuple[str, Path]] = []
     if src_dir.exists():
         for src in sorted(src_dir.glob("*.md")):
             if src.stem.endswith(".bot"):
                 continue  # skip bot-summary companions
             date_str = src.stem
+            # Skip the legacy render if a dir-based edition exists for the same date
+            if (out_dir / date_str / "index.html").exists():
+                continue
             out_path = out_dir / f"{date_str}.html"
             body = _md_to_html(src.read_text())
             paper = (
@@ -229,15 +270,71 @@ def render_news_pages() -> int:
                 page_class="news",
             )
             out_path.write_text(page)
-            entries.append((date_str, out_path))
-    _write_news_index(entries)
-    log.info("Rendered %d daily news pages → %s", len(entries), out_dir)
-    return len(entries)
+            legacy_entries.append((date_str, out_path))
+
+    # Discover dir-based editions too (Phase 2 output)
+    dir_entries: list[tuple[str, Path]] = []
+    for child in sorted(out_dir.glob("*")):
+        if not child.is_dir():
+            continue
+        if not _ISO_DATE_RE.match(child.name):
+            continue
+        idx = child / "index.html"
+        if idx.exists():
+            dir_entries.append((child.name, idx))
+
+    _write_news_index(legacy_entries, dir_entries)
+    total = len(legacy_entries) + len(dir_entries)
+    log.info("Rendered %d daily news pages → %s (%d legacy, %d structured)",
+             total, out_dir, len(legacy_entries), len(dir_entries))
+    return total
 
 
-def _write_news_index(entries: list[tuple[str, Path]]) -> None:
+_ISO_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def render_news_edition(today: date, **kwargs) -> Path:
+    """Render the structured Phase 2 newspaper edition for `today`.
+
+    Thin wrapper around `meta.news.render.render_news_edition`. Kept on
+    `pages.py` so that callers can use a single rendering entry point.
+
+    Accepts keyword args: plan, briefs, articles, triaged, floor, desks.
+    See `meta.news.render.render_news_edition` for the full signature."""
+    from trading_bot.meta.news.render import render_news_edition as _render
+    return _render(
+        today,
+        docs_root=docs_root(),
+        shell_fn=_shell,
+        **kwargs,
+    )
+
+
+def _write_news_index(
+    legacy_entries: list[tuple[str, Path]],
+    dir_entries: list[tuple[str, Path]] | None = None,
+) -> None:
+    """Render the News archive index. Both flat (legacy) and directory
+    (Phase 2) editions are listed; when both forms exist for a date the
+    directory form wins (and the legacy is suppressed at render time).
+    Phase 7 — also lists trimmed editions from state/archive/manifest.json
+    as compressed-archive links."""
+    dir_entries = dir_entries or []
     out_dir = _news_out_dir()
-    if not entries:
+
+    # Combine, deduplicating by date — directory wins, archive fills gaps
+    combined: dict[str, tuple[str, str, str]] = {}  # date -> (href, label, kind)
+    for d, p in legacy_entries:
+        combined[d] = (p.name, d, "legacy")
+    for d, p in dir_entries:
+        combined[d] = (f"{d}/", d, "structured")
+
+    # Phase 7: pull trimmed editions from the archive manifest
+    for arch in _read_archived_news_dates():
+        if arch["date"] not in combined:
+            combined[arch["date"]] = (arch["url"], arch["date"], "archived")
+
+    if not combined:
         body = (
             '<main class="paper">'
             '<header class="masthead"><h1>The Bot Tribune<span class="sub">— News archive</span></h1></header>'
@@ -249,17 +346,24 @@ def _write_news_index(entries: list[tuple[str, Path]]) -> None:
             _shell(title="News archive", body_html=body, current="news", depth=1, page_class="news")
         )
         return
-    entries_desc = sorted(entries, key=lambda e: e[0], reverse=True)
+
+    entries_desc = sorted(combined.items(), key=lambda kv: kv[0], reverse=True)
+    kind_label = {
+        "structured": "newspaper edition",
+        "legacy":     "daily brief",
+        "archived":   "archived (compressed)",
+    }
     items = "\n".join(
-        f'<li><a href="{html.escape(p.name)}">{html.escape(d)}</a>'
-        f'<span class="muted">daily news brief</span></li>'
-        for d, p in entries_desc
+        f'<li><a href="{html.escape(href)}">{html.escape(label)}</a>'
+        f'<span class="muted">{kind_label.get(kind, "daily brief")}</span></li>'
+        for _, (href, label, kind) in entries_desc
     )
+    n = len(combined)
     body = (
         '<main class="paper">'
         '<header class="masthead">'
         '  <h1>The Bot Tribune<span class="sub">— News archive</span></h1>'
-        f'  <div class="subtitle">{len(entries)} brief{"s" if len(entries) != 1 else ""} on file. Most recent first.</div>'
+        f'  <div class="subtitle">{n} edition{"s" if n != 1 else ""} on file. Most recent first.</div>'
         '</header>'
         '<div class="masthead-strip">'
         '  <span><strong>News archive</strong></span>'
@@ -328,7 +432,21 @@ def render_macro_pages() -> int:
 
 def _write_macro_index(entries: list[tuple[str, Path]]) -> None:
     out_dir = _macro_out_dir()
-    if not entries:
+    # Combine live + archived. Live entries store (week, Path) where Path
+    # is the on-disk file (we use p.name). Archived store the absolute URL.
+    live_weeks = {d for d, _ in entries}
+    combined: list[tuple[str, str, str]] = []   # (week, href, kind)
+    for d, p in entries:
+        # If p is a directory we prefer the directory URL; otherwise it's
+        # the legacy flat-file rendered to docs/macro/<week>.html.
+        href = f"{d}/" if (out_dir / d / "index.html").exists() else p.name
+        combined.append((d, href, "view"))
+    for arch in _read_archived_macro_weeks():
+        if arch["date"] in live_weeks:
+            continue
+        combined.append((arch["date"], arch["url"], "archived"))
+
+    if not combined:
         body = (
             '<main class="paper">'
             '<header class="masthead"><h1>The Bot Tribune<span class="sub">— Macro archive</span></h1></header>'
@@ -340,17 +458,18 @@ def _write_macro_index(entries: list[tuple[str, Path]]) -> None:
             _shell(title="Macro archive", body_html=body, current="macro", depth=1, page_class="macro")
         )
         return
-    entries_desc = sorted(entries, key=lambda e: e[0], reverse=True)
+    entries_desc = sorted(combined, key=lambda e: e[0], reverse=True)
+    kind_label = {"view": "macro view", "archived": "archived (compressed)"}
     items = "\n".join(
-        f'<li><a href="{html.escape(p.name)}">{html.escape(d)}</a>'
-        f'<span class="muted">macro view</span></li>'
-        for d, p in entries_desc
+        f'<li><a href="{html.escape(href)}">{html.escape(d)}</a>'
+        f'<span class="muted">{kind_label.get(kind, "macro view")}</span></li>'
+        for d, href, kind in entries_desc
     )
     body = (
         '<main class="paper">'
         '<header class="masthead">'
         '  <h1>The Bot Tribune<span class="sub">— Macro archive</span></h1>'
-        f'  <div class="subtitle">{len(entries)} view{"s" if len(entries) != 1 else ""} on file. Most recent first.</div>'
+        f'  <div class="subtitle">{len(combined)} view{"s" if len(combined) != 1 else ""} on file. Most recent first.</div>'
         '</header>'
         '<div class="masthead-strip">'
         '  <span><strong>Macro archive</strong></span>'
@@ -432,4 +551,9 @@ def pages_url(path: str) -> str:
 
 
 def news_url_for(d: date) -> str:
-    return pages_url(f"news/{d.isoformat()}.html")
+    """Canonical URL for the edition on date `d`. Prefers the
+    directory form (Phase 2 structured edition) when both exist."""
+    iso = d.isoformat()
+    if (_news_out_dir() / iso / "index.html").exists():
+        return pages_url(f"news/{iso}/")
+    return pages_url(f"news/{iso}.html")

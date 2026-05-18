@@ -117,13 +117,14 @@ def run_claude_for_json(
     *,
     model: str = "sonnet",
     timeout_seconds: int = _DEFAULT_TIMEOUT,
+    extra_args: list[str] | None = None,
 ) -> dict | list:
     """Convenience: invoke Claude and extract a JSON block from the response.
 
     Looks for a JSON code fence first (```json ... ```), falls back to the
     first {...} or [...] in the text. Raises ClaudeCodeError if none is found.
     """
-    result = run_claude(prompt, model=model, timeout_seconds=timeout_seconds)
+    result = run_claude(prompt, model=model, timeout_seconds=timeout_seconds, extra_args=extra_args)
     return _extract_json(result.text)
 
 

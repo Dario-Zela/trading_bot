@@ -127,6 +127,36 @@ def run_weekly_evolution(today: date) -> dict:
     _append_evolution_log(today, applied)
     issue_url = _maybe_file_issue(today, applied, pending_tier_2)
 
+    # Phase 4 — render the editorial evolution page (per-strategy report cards).
+    # This is purely additive: failure here doesn't affect the action engine.
+    try:
+        from trading_bot.dashboard.pages import _shell, docs_root, pages_url
+        from trading_bot.meta.evolution_v2 import build_and_render_evolution
+        build_and_render_evolution(
+            today=today,
+            snapshot=snapshot,
+            applied_actions=[asdict_actionlog(a) for a in applied],
+            docs_root=docs_root(),
+            shell_fn=_shell,
+        )
+        # Send the weekly evolution email
+        try:
+            from trading_bot.notify.email import render_evolution_email, send_summary_email
+            n_actions_applied_count = sum(1 for a in applied if a.applied)
+            n_strategies = len({(a.strategy_id) for a in applied}) or len({s.get("id") for s in snapshot})
+            subject, text_body, html_body = render_evolution_email(
+                week_end=today.isoformat(),
+                n_strategies=n_strategies,
+                n_actions_applied=n_actions_applied_count,
+                full_brief_url=pages_url("evolution.html"),
+            )
+            send_summary_email(subject=subject, body_text=text_body, body_html=html_body)
+            log.info("Evolution: sent weekly email")
+        except Exception as e:
+            log.warning("Couldn't send evolution email (non-fatal): %s", e)
+    except Exception as e:
+        log.warning("Evolution editorial render failed (non-fatal): %s", e)
+
     summary = {
         "week_end": today.isoformat(),
         "n_snapshot_rows": len(snapshot),
@@ -137,6 +167,18 @@ def run_weekly_evolution(today: date) -> dict:
     }
     log.info("evolution: %s", summary)
     return summary
+
+
+def asdict_actionlog(a: ActionLog) -> dict:
+    """ActionLog → dict (for handing to the v2 renderer)."""
+    return {
+        "strategy_id": a.strategy_id,
+        "region": a.region,
+        "action": a.action,
+        "applied": a.applied,
+        "reason": a.reason,
+        "details": a.details,
+    }
 
 
 # ---------------------------------------------------------------------------

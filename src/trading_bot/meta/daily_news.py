@@ -1,114 +1,148 @@
-"""Daily market news brief — runs each morning before the entry pipelines.
+"""Daily market news brief — the multi-stage newspaper pipeline.
 
-Fetches recent headlines for broad-market ETFs (SPY, QQQ, IWM, DIA) via
-Alpaca News + a couple of UK proxies via yfinance, then asks Claude to
-distill them into 3-5 themes that summarize the day's market context.
-Output goes to state/daily_news/YYYY-MM-DD.md and is read by LLM
-strategies that opt into the `get_daily_news_brief` tool.
+Orchestration:
 
-Cheap to run (single Haiku call, no per-ticker tools), so we trigger it
-~30 min before UK-EU entry to give the file plenty of time to land.
+1. **Discovery** (Sonnet + WebSearch) — surface ~30-50 candidates.
+2. **Triage** (Haiku × 6 parallel) — score, sharpen angle, pull facts.
+3. **Publisher** (Sonnet) — lead, sections, bylines, masthead subtitle.
+4. *Parallel block:*
+   - **Brief writers** (Haiku × 6 parallel) — the front-page bodies.
+   - **Article writers** (Sonnet × 6 parallel) — full articles + images.
+   - **Trading floor** (Haiku × 3 parallel) — yesterday's P&L in prose.
+   - **Desk's calls** (Sonnet) — fresh predictions + Marking the homework.
+5. **Bot summary** (Haiku) — ~150-word strategy briefing.
+6. **Render** — assembly to `docs/news/YYYY-MM-DD/index.html`
+   + per-article subpages, plus the index update.
+7. **Email** — morning brief with a link to the front page.
+
+The pipeline preserves the existing contract with downstream strategies:
+the bot summary still lands at `state/daily_news/{date}.bot.md` in the
+familiar Risk tone / Themes / Sector lean / Watchlist / Key data shape.
 """
 from __future__ import annotations
 
+import json
 import logging
 import os
-import re
+from concurrent.futures import ThreadPoolExecutor
+from dataclasses import asdict
 from datetime import date, datetime, timezone
 from pathlib import Path
 
-from trading_bot.llm.claude_code import ClaudeCodeError, run_claude
+from trading_bot.meta.news.article_writer import articles_to_json, write_articles
+from trading_bot.meta.news.bot_summary import compress_bot_summary
+from trading_bot.meta.news.brief_writer import briefs_to_json, write_briefs
+from trading_bot.meta.news.desks_calls import build_desks_calls
+from trading_bot.meta.news.discovery import candidates_to_json, discover_stories
+from trading_bot.meta.news.publisher import plan_edition, plan_to_json
+from trading_bot.meta.news.trading_floor import write_floor_briefs
+from trading_bot.meta.news.triage import triage_candidates, triaged_to_json
 from trading_bot.state.paths import STATE_ROOT
-from trading_bot.tools.news import get_recent_news
-
-
-_BOT_SUMMARY_RE = re.compile(r"```bot-summary\s*\n(.*?)\n```", re.DOTALL | re.IGNORECASE)
 
 
 log = logging.getLogger(__name__)
 
 
-_BROAD_TICKERS = ["SPY", "QQQ", "IWM", "DIA"]  # US broad market
-_UK_PROXIES = ["VOD.L", "BP.L", "HSBA.L"]      # high-volume UK names for yfinance fallback
-
-
 def run_daily_news_brief(today: date) -> dict:
-    """Fetch headlines, ask Claude for a themed brief, write to state/."""
+    """Run the full multi-stage newspaper pipeline for `today`.
+
+    Returns a summary dict with stage counts + the public URL.
+    """
     if not os.environ.get("CLAUDE_CODE_OAUTH_TOKEN"):
         log.error("CLAUDE_CODE_OAUTH_TOKEN not set — skipping daily news brief")
         return {"skipped": True, "reason": "no oauth token"}
 
-    headlines = _gather_headlines()
-    if not headlines:
-        log.warning("No headlines fetched for %s; skipping brief", today.isoformat())
-        return {"skipped": True, "reason": "no headlines"}
+    pipeline_state: dict = {"date": today.isoformat(), "stages": {}}
 
-    log.info("daily-news-brief: %d headlines gathered for %s", len(headlines), today.isoformat())
-    prompt = _build_prompt(today, headlines)
-    try:
-        # Sonnet for the heavier newspaper-style prompt — Haiku was fine for
-        # the original five-bullet version but the longer output benefits
-        # from Sonnet's better prose. One call per day, ~$0.05 cost delta.
-        result = run_claude(prompt, model="sonnet")
-    except ClaudeCodeError as e:
-        log.error("daily-news-brief: Claude call failed: %s", e)
-        return {"error": str(e)}
+    # Stage 1 — Discovery
+    log.info("=== Stage 1 / 6 — Discovery ===")
+    candidates = discover_stories(today)
+    pipeline_state["stages"]["discovery"] = {
+        "count": len(candidates),
+        "candidates": candidates_to_json(candidates),
+    }
+    if not candidates:
+        log.warning("Discovery returned no candidates — aborting brief for %s", today.isoformat())
+        return {"skipped": True, "reason": "no candidates"}
 
-    raw_md = result.text.strip()
-    if not raw_md:
-        return {"error": "empty response"}
+    # Stage 2 — Triage
+    log.info("=== Stage 2 / 6 — Triage (×%d) ===", len(candidates))
+    triaged = triage_candidates(candidates, today)
+    pipeline_state["stages"]["triage"] = {
+        "count": len(triaged),
+        "triaged": triaged_to_json(triaged),
+    }
 
-    # Split: the response contains a long newspaper brief and a fenced
-    # ```bot-summary block. The newspaper goes to the human-facing
-    # markdown file; the compressed bot summary lives in a *.bot.md
-    # sibling and is what get_daily_news_brief() returns to strategies
-    # (keeps per-strategy prompt cost low).
-    bot_summary = ""
-    newspaper_md = raw_md
-    m = _BOT_SUMMARY_RE.search(raw_md)
-    if m:
-        bot_summary = m.group(1).strip()
-        newspaper_md = (raw_md[: m.start()] + raw_md[m.end():]).rstrip()
+    # Stage 3 — Publisher
+    log.info("=== Stage 3 / 6 — Publisher ===")
+    plan = plan_edition(triaged, today)
+    pipeline_state["stages"]["publisher"] = plan_to_json(plan)
+    if not plan.pieces:
+        log.warning("Publisher returned empty plan — aborting brief for %s", today.isoformat())
+        return {"skipped": True, "reason": "empty plan"}
 
-    path = _brief_path(today)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    header = (
-        f"# Daily market news brief — {today.isoformat()}\n\n"
-        f"*Auto-generated by the daily-news-brief agent on "
-        f"{datetime.now(timezone.utc).isoformat()}. Companion bot-summary "
-        f"saved alongside for strategy prompts.*\n\n---\n\n"
-    )
-    path.write_text(header + newspaper_md + "\n")
-    log.info("daily-news-brief: wrote %s (%d chars newspaper)", path, len(newspaper_md))
+    # Stage 4 — Briefs + Articles + Floor + Desks (in parallel)
+    log.info("=== Stage 4 / 6 — Briefs + Articles + Floor + Desks (parallel) ===")
+    with ThreadPoolExecutor(max_workers=4) as outer:
+        f_briefs = outer.submit(write_briefs, plan, triaged, today)
+        f_articles = outer.submit(write_articles, plan, triaged, today)
+        f_floor = outer.submit(write_floor_briefs, today)
+        f_desks = outer.submit(build_desks_calls, plan, triaged, today)
+        briefs = f_briefs.result()
+        articles = f_articles.result()
+        floor = f_floor.result()
+        desks = f_desks.result()
 
-    if bot_summary:
-        bot_path = _bot_brief_path(today)
-        bot_path.write_text(bot_summary + "\n")
-        log.info("daily-news-brief: wrote %s (%d chars bot summary)", bot_path, len(bot_summary))
-    else:
-        log.warning(
-            "daily-news-brief: no bot-summary fenced block in response — strategies will fall back to the full newspaper text"
-        )
+    pipeline_state["stages"]["briefs"] = briefs_to_json(briefs)
+    pipeline_state["stages"]["articles"] = articles_to_json(articles)
+    pipeline_state["stages"]["floor"] = [asdict(f) for f in floor]
+    pipeline_state["stages"]["desks"] = {
+        "fresh_predictions": [asdict(p) for p in desks.fresh_predictions],
+        "homework_items": [asdict(p) for p in desks.homework_items],
+    }
 
-    # Render the static HTML page now so the email link works the moment
-    # the email is sent. dashboard/build also re-renders later but we
-    # don't want to wait for that.
+    # Stage 5 — Bot summary
+    log.info("=== Stage 5 / 6 — Bot summary compression ===")
+    bot_summary = compress_bot_summary(plan, briefs, floor, desks, today)
+    pipeline_state["stages"]["bot_summary"] = bot_summary
+
+    # Persist the pipeline state for debugging / archive
+    _write_pipeline_state(today, pipeline_state)
+
+    # Persist the bot summary (strategy prompts read this)
+    bot_path = _bot_brief_path(today)
+    bot_path.parent.mkdir(parents=True, exist_ok=True)
+    bot_path.write_text(bot_summary + "\n")
+    log.info("Wrote bot summary → %s (%d chars)", bot_path, len(bot_summary))
+
+    # Persist a human-readable headlines markdown for archive compat
+    _write_headlines_markdown(today, plan, briefs)
+
+    # Stage 6 — Render + page URL + email
+    log.info("=== Stage 6 / 6 — Render edition + send email ===")
     page_url: str | None = None
     try:
-        from trading_bot.dashboard.pages import render_news_pages, news_url_for
-        render_news_pages()
+        from trading_bot.dashboard.pages import (
+            news_url_for, render_news_edition, render_news_pages,
+        )
+        render_news_edition(
+            today,
+            plan=plan, briefs=briefs, articles=articles,
+            triaged=triaged, floor=floor, desks=desks,
+        )
+        render_news_pages()  # refresh archive index to include the new edition
         page_url = news_url_for(today)
     except Exception as e:
-        log.warning("Couldn't render news HTML page (non-fatal): %s", e)
+        log.warning("Render failed (non-fatal): %s", e)
 
-    # Send the dedicated morning-brief email — separate from the daily
-    # trading summary that goes out after exit.
     if page_url:
         try:
-            from trading_bot.notify.email import render_news_brief_email, send_summary_email
+            from trading_bot.notify.email import (
+                render_news_brief_email, send_summary_email,
+            )
             subject, text_body, html_body = render_news_brief_email(
                 run_date=today,
-                bot_summary_md=bot_summary or newspaper_md[:1200],
+                bot_summary_md=bot_summary,
                 full_brief_url=page_url,
             )
             send_summary_email(subject=subject, body_text=text_body, body_html=html_body)
@@ -118,139 +152,51 @@ def run_daily_news_brief(today: date) -> dict:
 
     return {
         "date": today.isoformat(),
-        "headlines_in": len(headlines),
-        "path": str(path),
+        "discovery_count": len(candidates),
+        "triaged_count": len(triaged),
+        "pieces": len(plan.pieces),
+        "articles": len(articles),
+        "floor_pieces": len(floor),
+        "fresh_predictions": len(desks.fresh_predictions),
+        "homework_items": len(desks.homework_items),
         "bot_summary_chars": len(bot_summary),
         "page_url": page_url,
-        "cost_usd": result.total_cost_usd,
     }
 
 
-def _gather_headlines() -> list[dict]:
-    """Pull broad-market headlines from Alpaca News + UK proxies. Returns
-    a flat list of {timestamp, headline, summary, tickers} dicts."""
-    seen_urls: set[str] = set()
-    out: list[dict] = []
-    try:
-        by_ticker = get_recent_news(_BROAD_TICKERS + _UK_PROXIES, days=1, limit=30)
-    except Exception as e:
-        log.warning("News fetch failed during brief: %s", e)
-        return out
-    for items in by_ticker.values():
-        for item in items:
-            if item.url and item.url in seen_urls:
-                continue
-            if item.url:
-                seen_urls.add(item.url)
-            out.append({
-                "timestamp": item.timestamp,
-                "headline": item.headline,
-                "summary": (item.summary or "")[:240],
-                "tickers": list(item.tickers),
-            })
-    # Most recent first
-    out.sort(key=lambda x: x.get("timestamp", ""), reverse=True)
-    return out[:40]
+def _write_pipeline_state(today: date, state: dict) -> None:
+    """Dump the full multi-stage state for inspection / re-render."""
+    path = STATE_ROOT / "daily_news" / f"{today.isoformat()}.pipeline.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    state["generated_at"] = datetime.now(timezone.utc).isoformat()
+    path.write_text(json.dumps(state, indent=2, default=str))
+    log.info("Wrote pipeline state → %s", path)
 
 
-def _build_prompt(today: date, headlines: list[dict]) -> str:
-    bullets = "\n".join(
-        f"- [{h.get('timestamp', '')[:10]}] {h.get('headline', '')}"
-        + (f" — {h['summary']}" if h.get('summary') else "")
-        for h in headlines
-    )
-    return f"""You are the morning markets editor for an algorithmic trading bot.
-Today is {today.isoformat()}. Below are ~{len(headlines)} headlines from the
-last 24 hours covering US and UK market context.
-
-Your job has two parts:
-1. A comprehensive newspaper-style brief in markdown that a human reader
-   can enjoy as a proper morning read. Aim for 800-1500 words.
-2. A separate compressed bot summary — terse bullets that downstream LLM
-   strategies will inject into their prompts. Aim for ~150 words. Token
-   budget matters here: 8 strategies × 2 regions × this summary per call.
-
-## Headlines (raw input)
-
-{bullets}
-
-## Output structure
-
-Produce BOTH parts in this exact order.
-
-### Part 1 — Newspaper brief (humans)
-
-Write extensive markdown using **all** of these sub-sections, in order. No
-preamble. Headings, bold, tables where appropriate.
-
-#### Front page
-
-A 2-3 paragraph editorial opener that sets the day's mood. Lead with the
-single most important story. Reference 2-4 specific headlines. End with a
-one-sentence "today's question" — the framing the strategies should keep
-in mind.
-
-#### Today's themes
-
-3-6 themes, each its own H4 sub-heading (`#### Theme name`). For each:
-- 2-3 sentences on what's actually happening and why it matters
-- Bold "**Sectors:**" line listing affected sectors with a directional lean
-- Bold "**Watchlist:**" line with 3-6 tickers (mix of US and UK if relevant)
-  that this theme touches directly
-
-#### Sector pulse
-
-A markdown table with columns: Sector | Lean | One-line driver | Today's
-watch tickers. Cover the major sectors that have news today (skip ones
-that don't). Lean is one of: Bullish · Mildly bullish · Neutral · Mildly
-bearish · Bearish.
-
-#### Risk tone
-
-One paragraph. State whether markets are risk-on / risk-off / mixed, then
-cite the strongest 1-2 headlines driving that read. Note any tail risk
-that could flip the tone (Fed speak, earnings, geopolitics, data release).
-
-#### Yesterday's followups (if anything)
-
-If today's headlines update on a story that was material yesterday, note
-the resolution in 1-2 short paragraphs. Otherwise, omit this section
-entirely. Don't manufacture continuity.
-
-### Part 2 — Bot summary (algos)
-
-After the newspaper brief is complete, output a single fenced code block
-tagged `bot-summary` containing a terse bullet-list summary. This is
-exactly what the LLM strategies see when they ask for the news brief —
-keep it tight. Format:
-
-```bot-summary
-**Risk tone:** risk-on / risk-off / mixed — one short reason.
-
-**Themes (3-5):**
-- _theme name_ — one sentence on what's moving + which sectors it touches.
-- _theme name_ — ...
-
-**Sector lean:**
-- Bullish: <sectors>
-- Mildly bullish: <sectors>
-- Neutral: <sectors>
-- Mildly bearish: <sectors>
-- Bearish: <sectors>
-
-**Watchlist (top tickers across regions):** TICK1, TICK2, TICK3, …
-
-**Key data / events to watch today:** one short line, or "(none flagged)".
-```
-
-## Style notes
-
-- Honest and a touch dry; markets reporting, not hype.
-- Specific numbers when present; don't fabricate.
-- UK and US both matter — the bot trades both regions. Don't be US-only.
-- If a section has nothing to say, write one honest line instead of padding.
-- The bot-summary block is what strategies actually read — keep it ≤150 words.
-"""
+def _write_headlines_markdown(today: date, plan, briefs) -> None:
+    """Save a human-readable headlines list to state/daily_news/{date}.md.
+    The legacy renderer + archive tooling expect this file to exist."""
+    path = _brief_path(today)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    lines = [
+        f"# The Bot Tribune — {today.isoformat()}",
+        "",
+        f"*{plan.masthead_subtitle}*" if plan.masthead_subtitle else "",
+        "",
+        "## Today's pieces",
+        "",
+    ]
+    by_section: dict[str, list] = {}
+    for p in plan.pieces:
+        by_section.setdefault(p.section, []).append(p)
+    for section, pieces in by_section.items():
+        lines.append(f"### {section}")
+        lines.append("")
+        for p in pieces:
+            lines.append(f"- **{p.headline}** — {p.one_line}  ")
+            lines.append(f"  *By {p.byline} · {p.kicker}*")
+        lines.append("")
+    path.write_text("\n".join(lines))
 
 
 def _brief_path(d: date) -> Path:

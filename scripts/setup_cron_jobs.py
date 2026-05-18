@@ -108,6 +108,17 @@ SCHEDULES: list[dict] = [
         "hour": 17, "minute": 0,
         "wdays": [0],  # Sunday
     },
+    # Phase 7 — Archive trim. Runs Sunday 04:00 UTC, before grade-predictions
+    # (05:00) and the daily-news-brief (06:30 UK = 06:30 UTC in winter).
+    # Compresses news/macro editions older than 90 days into state/archive/*.tar.gz.
+    {
+        "name": "archive-trim",
+        "workflow": "archive-trim.yml",
+        "inputs": {},
+        "tz": "UTC",
+        "hour": 4, "minute": 0,
+        "wdays": [0],  # Sunday
+    },
 ]
 
 JOB_TITLE_PREFIX = "trading_bot — "
