@@ -397,29 +397,32 @@ def _heuristic_macro_plan(today: date, week_id: str, snapshot: dict) -> NewsPlan
 
     yc = snapshot.get("yield_curve") or {}
     if yc:
+        y10 = _fmt_num(yc.get("10Y"), digits=2, suffix="%")
+        spread = _fmt_num(yc.get("spread_3m10y"), digits=2, suffix="%")
         pieces.append(PlannedPiece(
             slug="rates-curve", section="Rates",
-            headline=f"The curve at {yc.get('10Y', 'n/a')} for the 10y",
+            headline=f"The curve at {y10} for the 10y",
             kicker="RATES · CURVE", byline="G. Mehlman",
-            one_line=f"3m10y spread at {yc.get('spread_3m10y', 'n/a')}.",
+            one_line=f"3m10y spread at {spread}.",
             tier="feature", triage_index=1,
         ))
         pieces[-1].__dict__["_macro_angle"] = "The shape of the curve this week."
-        pieces[-1].__dict__["_macro_key_facts"] = [f"10Y at {yc.get('10Y', 'n/a')}"]
+        pieces[-1].__dict__["_macro_key_facts"] = [f"10Y at {y10}"]
         pieces[-1].__dict__["_macro_why"] = ""
 
     sectors = snapshot.get("sector_strength") or []
     if sectors:
         top = sectors[0]
+        r5 = _fmt_num(top.get("5d"), digits=2, suffix="%")
         pieces.append(PlannedPiece(
             slug="sectors-leader", section="Sectors",
             headline=f"{top.get('label', 'top sector')} leads the week",
             kicker="SECTORS · LEAD", byline="I. Aresti",
-            one_line=f"{top.get('label', '')} 5d return {top.get('5d', 0)}%.",
+            one_line=f"{top.get('label', '')} 5d return {r5}.",
             tier="feature", triage_index=2,
         ))
         pieces[-1].__dict__["_macro_angle"] = "Sector leadership this week."
-        pieces[-1].__dict__["_macro_key_facts"] = [f"{top.get('label', '')}: 5d {top.get('5d', 0)}%"]
+        pieces[-1].__dict__["_macro_key_facts"] = [f"{top.get('label', '')}: 5d {r5}"]
         pieces[-1].__dict__["_macro_why"] = ""
 
     return NewsPlan(
@@ -723,7 +726,7 @@ def _render_macro_edition(edition: MacroEdition, docs_root: Path, shell_fn) -> P
         (edition_dir / f"{piece.slug}.html").write_text(page)
 
     # Front page
-    front_body = _render_macro_front(edition)
+    front_body = _render_macro_front(edition, edition_dir)
     front_page = shell_fn(
         title=f"Macro — {edition.week_id}",
         body_html=front_body,
@@ -733,16 +736,32 @@ def _render_macro_edition(edition: MacroEdition, docs_root: Path, shell_fn) -> P
     )
     front_path = edition_dir / "index.html"
     front_path.write_text(front_page)
+    # Update docs/macro/latest.html → newest edition
+    from trading_bot.meta.news.render import _write_latest_redirect
+    _write_latest_redirect(edition_dir.parent, edition_dir.name)
     return front_path
 
 
-def _render_macro_front(edition: MacroEdition) -> str:
+def _render_macro_front(edition: MacroEdition, edition_dir: Path) -> str:
     parts: list[str] = ['<main class="paper">']
+
+    # Prev / next from the on-disk sibling weeks
+    prev_id, next_id = _neighbouring_weeks(edition.week_id, edition_dir.parent)
+    from trading_bot.meta.news.render import _edition_nav_html
+    nav_html = _edition_nav_html(
+        prev_url=f"../{prev_id}/" if prev_id else "",
+        next_url=f"../{next_id}/" if next_id else "",
+        latest_url="../latest.html",
+        prev_label=prev_id or "",
+        next_label=next_id or "",
+    )
 
     # Masthead
     parts.append(
         '<header class="masthead">'
-        f'  <h1>The Bot Tribune<span class="sub">— Macro, {html.escape(edition.week_id)}</span></h1>'
+        + nav_html
+        + '  <h1><a href="../latest.html" class="masthead-link">The Bot Tribune</a>'
+        f'<span class="sub">— Macro, {html.escape(edition.week_id)}</span></h1>'
         + (f'  <div class="subtitle">{html.escape(edition.plan.masthead_subtitle)}</div>' if edition.plan.masthead_subtitle else '')
         + '</header>'
     )
@@ -793,6 +812,14 @@ def _render_macro_front(edition: MacroEdition) -> str:
     return "\n".join(parts)
 
 
+def _fmt_num(v, *, digits: int = 2, suffix: str = "") -> str:
+    """Format a snapshot number to a fixed number of decimal places.
+    Falls back to em-dash if the value isn't numeric."""
+    if isinstance(v, (int, float)):
+        return f"{v:.{digits}f}{suffix}"
+    return "—"
+
+
 def _render_snapshot_grid(snapshot: dict) -> str:
     """Cross-asset snap cards — yield, credit, DXY, top sector."""
     if not snapshot:
@@ -801,7 +828,12 @@ def _render_snapshot_grid(snapshot: dict) -> str:
 
     yc = snapshot.get("yield_curve") or {}
     if yc:
-        cards.append(_snap_card("10y yield", f"{yc.get('10Y', '—')}%", f"3m10y {yc.get('spread_3m10y', '—')}", "rates"))
+        cards.append(_snap_card(
+            "10y yield",
+            _fmt_num(yc.get("10Y"), digits=2, suffix="%"),
+            f"3m10y {_fmt_num(yc.get('spread_3m10y'), digits=2, suffix='%')}",
+            "rates",
+        ))
     cs = snapshot.get("credit_spreads") or {}
     if cs:
         diff = cs.get("hy_vs_ig_5d_diff")
@@ -811,7 +843,12 @@ def _render_snapshot_grid(snapshot: dict) -> str:
     if dxy:
         r5 = dxy.get("return_5d_pct")
         delta = f"{r5:+.2f}%" if isinstance(r5, (int, float)) else "—"
-        cards.append(_snap_card("DXY 5d", delta, f"level {dxy.get('level', '—')}", "fx"))
+        cards.append(_snap_card(
+            "DXY 5d",
+            delta,
+            f"level {_fmt_num(dxy.get('level'), digits=2)}",
+            "fx",
+        ))
     sectors = snapshot.get("sector_strength") or []
     if sectors:
         top = sectors[0]
@@ -1049,6 +1086,31 @@ def _unique_slug(base: str, used: set[str]) -> str:
 def _iso_week(d: date) -> str:
     year, week, _ = d.isocalendar()
     return f"{year}-W{week:02d}"
+
+
+_WEEK_RE = re.compile(r"^\d{4}-W\d{2}$")
+
+
+def _neighbouring_weeks(week_id: str, macro_dir: Path) -> tuple[str | None, str | None]:
+    """Return (previous_week, next_week) IDs for navigation, based on
+    the on-disk YYYY-W## sibling dirs."""
+    if not macro_dir.exists():
+        return None, None
+    weeks: list[str] = []
+    for child in macro_dir.iterdir():
+        if not child.is_dir():
+            continue
+        if not _WEEK_RE.match(child.name):
+            continue
+        if (child / "index.html").exists() or child.name == week_id:
+            weeks.append(child.name)
+    if week_id not in weeks:
+        weeks.append(week_id)
+    weeks.sort()
+    i = weeks.index(week_id)
+    prev_id = weeks[i - 1] if i > 0 else None
+    next_id = weeks[i + 1] if i < len(weeks) - 1 else None
+    return prev_id, next_id
 
 
 def _md_to_html(md_text: str) -> str:

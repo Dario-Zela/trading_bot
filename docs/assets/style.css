@@ -158,6 +158,41 @@ body.page-dashboard .font-picker button.active{ background: var(--c-pos);    bor
   margin-top: 0.4rem;
   letter-spacing: 0;
 }
+
+.masthead h1 a.masthead-link,
+.masthead h1 a.masthead-link:hover {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: none;
+}
+
+/* Edition nav strip (prev / latest / next) above the masthead H1 */
+.edition-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.6rem;
+  border-bottom: 1px solid var(--hairline);
+}
+.edition-nav-link {
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding: 0.2rem 0.5rem;
+}
+.edition-nav-link:hover { color: var(--ink); }
+.edition-nav-link.disabled { color: var(--hairline); cursor: default; }
+.edition-nav-link.latest {
+  font-weight: 700;
+  color: var(--ink);
+}
+body.page-news .edition-nav-link.latest { color: var(--c-front); }
+body.page-macro .edition-nav-link.latest { color: var(--c-primary); }
 body.page-news .masthead h1 .sub      { color: var(--c-front);  }
 body.page-evolution .masthead h1 .sub { color: var(--c-evo);    }
 
@@ -167,7 +202,6 @@ body.page-evolution .masthead h1 .sub { color: var(--c-evo);    }
   font-size: 1.15rem;
   color: var(--ink-soft);
   margin: 0.55rem auto 0;
-  max-width: 60ch;
   line-height: 1.45;
 }
 body.page-news .masthead .subtitle { color: var(--c-front); }
@@ -395,7 +429,7 @@ body.page-evolution .editorial-body p:first-of-type::first-letter {
 .grid-3 .brief h3 { font-size: 1.32rem; }
 .brief p { margin: 0 0 0.8rem; font-size: 1.02rem; line-height: 1.62; }
 .grid-3 .brief p { font-size: 1rem; }
-.brief p:first-of-type::first-letter {
+.brief h3 + p::first-letter {
   font-family: var(--serif-head);
   font-weight: 900;
   font-size: 2.8rem;
@@ -403,19 +437,19 @@ body.page-evolution .editorial-body p:first-of-type::first-letter {
   float: left;
   margin: 0.22rem 0.42rem -0.1rem 0;
 }
-.brief.front   p:first-of-type::first-letter { color: var(--c-front); }
-.brief.markets p:first-of-type::first-letter { color: var(--c-markets); }
-.brief.world   p:first-of-type::first-letter { color: var(--c-world); }
-.brief.tech    p:first-of-type::first-letter { color: var(--c-tech); }
-.brief.beyond  p:first-of-type::first-letter { color: var(--c-beyond); }
-.brief.desk    p:first-of-type::first-letter { color: var(--c-desk); }
-.brief.calls   p:first-of-type::first-letter { color: var(--c-calls); }
-.brief.rates   p:first-of-type::first-letter { color: var(--c-rates); }
-.brief.fx      p:first-of-type::first-letter { color: var(--c-fx); }
-.brief.credit  p:first-of-type::first-letter { color: var(--c-credit); }
-.brief.sectors p:first-of-type::first-letter { color: var(--c-sectors); }
-.brief.regions p:first-of-type::first-letter { color: var(--c-regions); }
-.brief.risk    p:first-of-type::first-letter { color: var(--c-risk); }
+.brief.front   h3 + p::first-letter { color: var(--c-front); }
+.brief.markets h3 + p::first-letter { color: var(--c-markets); }
+.brief.world   h3 + p::first-letter { color: var(--c-world); }
+.brief.tech    h3 + p::first-letter { color: var(--c-tech); }
+.brief.beyond  h3 + p::first-letter { color: var(--c-beyond); }
+.brief.desk    h3 + p::first-letter { color: var(--c-desk); }
+.brief.calls   h3 + p::first-letter { color: var(--c-calls); }
+.brief.rates   h3 + p::first-letter { color: var(--c-rates); }
+.brief.fx      h3 + p::first-letter { color: var(--c-fx); }
+.brief.credit  h3 + p::first-letter { color: var(--c-credit); }
+.brief.sectors h3 + p::first-letter { color: var(--c-sectors); }
+.brief.regions h3 + p::first-letter { color: var(--c-regions); }
+.brief.risk    h3 + p::first-letter { color: var(--c-risk); }
 
 .brief-footer {
   margin-top: 0.9rem;
@@ -430,6 +464,11 @@ body.page-evolution .editorial-body p:first-of-type::first-letter {
   font-size: 0.74rem;
   letter-spacing: 0.04em;
   color: var(--ink-muted);
+  min-width: 0;
+  flex: 1 1 auto;
+  text-align: right;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 /* ============================================================================

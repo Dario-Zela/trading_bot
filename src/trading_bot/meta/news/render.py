@@ -104,7 +104,11 @@ def render_news_edition(
         (edition_dir / f"{piece.slug}.html").write_text(page)
 
     # 2. Front page
-    front_html = _render_front_page(plan, briefs, articles, floor, desks, today)
+    front_html = _render_front_page(plan, briefs, articles, floor, desks, today, edition_dir)
+
+    # 3. Update `docs/news/latest.html` so the masthead always links to the
+    # newest edition (one-click "latest" from any page in the publication).
+    _write_latest_redirect(edition_dir.parent, edition_dir.name)
     front_page = shell_fn(
         title=f"News — {today.isoformat()}",
         body_html=front_html,
@@ -128,6 +132,19 @@ def _md_to_html(md_text: str) -> str:
 
 _MARKDOWN_NOISE_RE = re.compile(r"[#`*_>\[\]()!\-]+")
 _WORDS_PER_MINUTE = 225
+_URL_RE = re.compile(r"https?://([^/\s]+)(?:/.*)?", re.IGNORECASE)
+
+
+def _shorten_source(s: str) -> str:
+    """Collapse 'https://www.foo.com/some/long/path...' → 'foo.com'.
+    Leave non-URL source names alone (they're already short)."""
+    m = _URL_RE.fullmatch(s.strip())
+    if not m:
+        return s.strip()
+    host = m.group(1).lower()
+    if host.startswith("www."):
+        host = host[4:]
+    return host
 
 
 def _estimate_read_minutes(md_text: str) -> int:
@@ -159,6 +176,36 @@ def _generated_at() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
 
+def _write_latest_redirect(parent_dir: Path, target_name: str) -> None:
+    """Write parent_dir/latest.html as a meta-refresh redirect to
+    target_name/. Idempotent — re-running for the same date is a no-op,
+    re-running for a newer date overwrites with the newer target."""
+    latest_path = parent_dir / "latest.html"
+    # Only overwrite if the new target is lexically newer than the
+    # existing one (so re-rendering an OLD edition doesn't repoint
+    # latest backward).
+    if latest_path.exists():
+        try:
+            existing = latest_path.read_text()
+            # Pull the existing target out of the meta refresh
+            existing_m = re.search(r'url=([^/"\']+)/?', existing)
+            if existing_m and existing_m.group(1) > target_name:
+                return
+        except OSError:
+            pass
+    redirect_html = (
+        '<!DOCTYPE html>\n'
+        '<html><head>\n'
+        f'<meta http-equiv="refresh" content="0; url={html.escape(target_name)}/">\n'
+        f'<link rel="canonical" href="{html.escape(target_name)}/">\n'
+        f'<title>Redirecting to latest edition…</title>\n'
+        '</head><body>\n'
+        f'<p>Redirecting to <a href="{html.escape(target_name)}/">{html.escape(target_name)}</a>…</p>\n'
+        '</body></html>\n'
+    )
+    latest_path.write_text(redirect_html)
+
+
 # ---------------------------------------------------------------------------
 # Front page
 # ---------------------------------------------------------------------------
@@ -170,6 +217,7 @@ def _render_front_page(
     floor: list[FloorBrief],
     desks: DesksCalls,
     today: date,
+    edition_dir: Path,
 ) -> str:
     # Group pieces by section, in plan order
     sections: dict[str, list[PlannedPiece]] = {}
@@ -180,7 +228,7 @@ def _render_front_page(
     parts.append('<main class="paper">')
 
     # Masthead
-    parts.append(_masthead_html(plan, today))
+    parts.append(_masthead_html(plan, today, edition_dir))
 
     # Masthead strip (the meta bar under the masthead)
     parts.append(_masthead_strip_html(today, plan))
@@ -220,7 +268,7 @@ def _render_front_page(
     return "\n".join(parts)
 
 
-def _masthead_html(plan: NewsPlan, today: date) -> str:
+def _masthead_html(plan: NewsPlan, today: date, edition_dir: Path) -> str:
     formatted = today.strftime("%A, %d %B %Y")
     subtitle = html.escape(plan.masthead_subtitle or "")
     question = html.escape(plan.todays_question or "")
@@ -233,12 +281,72 @@ def _masthead_html(plan: NewsPlan, today: date) -> str:
             f'<span style="color:var(--c-front);font-weight:700;">Today\'s question · </span>{question}'
             '</div>'
         )
+
+    # Prev / next arrows from the on-disk listing of edition dirs.
+    prev_iso, next_iso = _neighbouring_news_dates(today, edition_dir.parent)
+    nav_html = _edition_nav_html(
+        prev_url=f"../{prev_iso}/" if prev_iso else "",
+        next_url=f"../{next_iso}/" if next_iso else "",
+        latest_url="../latest.html",
+        prev_label=prev_iso or "",
+        next_label=next_iso or "",
+    )
+
     return (
         '<header class="masthead">'
-        f'  <h1>The Bot Tribune<span class="sub">— Daily, {html.escape(formatted)}</span></h1>'
+        + nav_html
+        + f'  <h1><a href="../latest.html" class="masthead-link">The Bot Tribune</a>'
+        f'<span class="sub">— Daily, {html.escape(formatted)}</span></h1>'
         + (f'  <div class="subtitle">{subtitle}</div>' if subtitle else '')
         + question_html
         + '</header>'
+    )
+
+
+def _neighbouring_news_dates(today: date, news_dir: Path) -> tuple[str | None, str | None]:
+    """Return (previous_iso, next_iso) for navigation from `today`,
+    based on the on-disk YYYY-MM-DD directories in `news_dir`. Returns
+    (None, None) if `news_dir` doesn't exist yet."""
+    if not news_dir.exists():
+        return None, None
+    dates = []
+    for child in news_dir.iterdir():
+        if not child.is_dir():
+            continue
+        try:
+            datetime.strptime(child.name, "%Y-%m-%d")
+        except ValueError:
+            continue
+        if (child / "index.html").exists() or child.name == today.isoformat():
+            dates.append(child.name)
+    dates.sort()
+    iso = today.isoformat()
+    if iso not in dates:
+        dates.append(iso)
+        dates.sort()
+    i = dates.index(iso)
+    prev_iso = dates[i - 1] if i > 0 else None
+    next_iso = dates[i + 1] if i < len(dates) - 1 else None
+    return prev_iso, next_iso
+
+
+def _edition_nav_html(*, prev_url: str, next_url: str, latest_url: str,
+                      prev_label: str, next_label: str) -> str:
+    """A small arrow strip above the masthead H1. Prev/next inert when
+    no neighbour exists; latest always present."""
+    def _arrow(direction: str, url: str, label: str) -> str:
+        if not url:
+            return f'<span class="edition-nav-link disabled">{direction}</span>'
+        return (
+            f'<a class="edition-nav-link" href="{html.escape(url)}" '
+            f'title="{html.escape(label)}">{direction}</a>'
+        )
+    return (
+        '<div class="edition-nav">'
+        + _arrow("← prev", prev_url, prev_label)
+        + f'<a class="edition-nav-link latest" href="{html.escape(latest_url)}">latest ↑</a>'
+        + _arrow("next →", next_url, next_label)
+        + '</div>'
     )
 
 
@@ -354,7 +462,19 @@ def _render_brief_card(
         )
     sources = ""
     if brief and brief.sources_used:
-        sources = '<span class="sources">' + html.escape("Sources: " + ", ".join(brief.sources_used[:3])) + '</span>'
+        # Dedupe + shorten URL-shaped sources to their hostname so long URLs
+        # don't clip into neighbouring text.
+        shortened: list[str] = []
+        seen: set[str] = set()
+        for s in brief.sources_used[:6]:
+            short = _shorten_source(s)
+            if short and short.lower() not in seen:
+                seen.add(short.lower())
+                shortened.append(short)
+            if len(shortened) >= 3:
+                break
+        if shortened:
+            sources = '<span class="sources">' + html.escape("Sources: " + ", ".join(shortened)) + '</span>'
 
     return (
         f'<article class="brief {section_cls}">'

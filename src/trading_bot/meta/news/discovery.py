@@ -35,9 +35,22 @@ log = logging.getLogger(__name__)
 
 # Broad-market tickers we use to seed Alpaca News with a guaranteed
 # markets-side starting set. Discovery is asked to extend beyond these
-# via web search.
-_BROAD_TICKERS = ("SPY", "QQQ", "IWM", "DIA")
-_UK_PROXIES   = ("VOD.L", "BP.L", "HSBA.L")
+# via web search. The user is UK-based, so the UK/Europe seed is the
+# fuller list and the US seed is the smaller (US news is easy to find
+# via web search; UK/Europe news is what discovery tends to miss).
+_BROAD_TICKERS = ("SPY", "QQQ", "IWM")  # SPY+QQQ+IWM cover broad US; DIA dropped
+_UK_PROXIES = (
+    # FTSE 100 majors across sectors
+    "BP.L", "SHEL.L", "HSBA.L", "BARC.L", "LLOY.L", "NWG.L",
+    "AZN.L", "GSK.L", "ULVR.L", "VOD.L", "BT-A.L", "RIO.L",
+    "GLEN.L", "AAL.L", "TSCO.L", "SBRY.L", "NG.L", "RR.L",
+    # FTSE 250 / wider UK proxies
+    "BABA.L", "MNG.L", "AVV.L", "EZJ.L",
+)
+_EU_PROXIES = (
+    # Major European names (cross-listed or pan-EU exposure)
+    "SAP", "ASML", "MC.PA", "OR.PA", "AIR.PA", "SIE.DE", "NESN.SW",
+)
 
 # Target count for the discovery output. The agent is told to aim for
 # this; triage handles whatever it gets.
@@ -95,7 +108,11 @@ def _gather_seed_headlines() -> list[dict]:
     seen_urls: set[str] = set()
     out: list[dict] = []
     try:
-        by_ticker = get_recent_news(list(_BROAD_TICKERS) + list(_UK_PROXIES), days=1, limit=30)
+        # UK first in the list — when limit caps the count, UK news survives.
+        by_ticker = get_recent_news(
+            list(_UK_PROXIES) + list(_EU_PROXIES) + list(_BROAD_TICKERS),
+            days=1, limit=40,
+        )
     except Exception as e:
         log.warning("Seed news fetch failed: %s", e)
         return out
@@ -129,42 +146,66 @@ def _build_prompt(today: date, seed: list[dict]) -> str:
             f"and you must extend well beyond these)\n\n{bullets}\n"
         )
 
-    return f"""You are the discovery editor for The Bot Tribune, an algorithmic
-trading bot's daily newspaper. Today is {today.isoformat()}.
+    return f"""You are the discovery editor for The Bot Tribune, a
+UK-based algorithmic trading bot's daily newspaper. Today is
+{today.isoformat()}. The publication's primary reader is in the UK
+and trades both UK/EU and US sessions, so coverage should reflect a
+UK perspective on the global day.
 
 Your job: produce a candidate list of ~{_TARGET_CANDIDATES} newsworthy
 stories from the past 24 hours, across every topic the Tribune covers.
 The next stage of the pipeline (triage) will score each candidate;
 your job is breadth and quality of capture, not curation.
 
+## Geographic balance (important)
+
+This is a UK-centred publication. Aim for roughly:
+
+- **40-50% UK / Europe** — Westminster, Threadneedle Street, BoE,
+  Brussels, ECB, FTSE 100/250, major continental names, EU
+  regulation, UK / European politics and policy
+- **30-40% US** — Fed, US macro, S&P/Nasdaq, major US corporates,
+  Washington politics — but only the genuinely consequential
+  stories. Not every Trump truth-social post.
+- **10-20% rest-of-world** — China, Japan, EM, geopolitics where it
+  affects markets
+
+Within UK coverage, *prefer* UK-domestic stories that a US-only
+discovery would miss: BoE speakers, gilt auctions, FTSE earnings,
+UK retail data, NHS / planning / energy policy, City regulatory
+news, Scottish politics where consequential.
+
 ## Coverage scope
 
-The Tribune covers all of the following. Aim for breadth and a mix of
-importance levels — not everything is a 10/10.
+Aim for breadth and a mix of importance levels — not everything is a 10/10.
 
-- **Markets / Finance / Business** — central banks, macro data, M&A,
-  earnings, regulatory, major deals
-- **World affairs / Politics / Geopolitics** — elections, diplomacy,
-  conflicts, major government decisions
+- **Markets / Finance / Business** — central banks (BoE, ECB, Fed),
+  macro data, M&A, earnings, regulatory, major deals
+- **World affairs / Politics / Geopolitics** — UK and European politics
+  first, then US, then global; elections, diplomacy, conflicts
 - **Tech & science** — AI, biotech, frontier research, major product
-  launches, regulatory developments
+  launches, regulatory developments (UK/EU AI rules included)
 - **Climate / Environment** — significant climate events, policy
   decisions, important scientific findings
 - **Health / Medicine** — major studies, public health, drug approvals
 - **Culture** — arts, music, books, film, design — but only when
-  substantive (book launches, major exhibits, criticism that lands)
-- **Sport** — major events, governance shifts, large deals
+  substantive
+- **Sport** — major events, governance shifts, large deals (Premier
+  League / rugby / cricket count more than NFL for this reader)
 - **Beyond the tape** — interesting long-tail oddments worth knowing
 
 ## How to discover
 
 Use web search aggressively. Search for:
-- "top news today" / "{today.isoformat()} news"
-- Specific publications: Reuters, Bloomberg, FT, BBC, NYT, AP, Politico,
-  The Information, Nature News, MIT Tech Review, The Guardian, Le Monde,
-  Spiegel, Nikkei, SCMP
-- Topic-specific queries to fill obvious gaps (e.g., "AI news today",
-  "climate policy this week", "Premier League results")
+- "top UK news today" / "{today.isoformat()} UK news" first
+- Then "top US news today" / "Europe news {today.isoformat()}"
+- UK / European publications: BBC, FT, Guardian, Times, Telegraph,
+  Reuters UK, Le Monde, Spiegel, Handelsblatt, El País, Politico EU
+- US publications: WSJ, NYT, Bloomberg, Reuters, AP, Politico
+- Asia: Nikkei, SCMP, Bloomberg Asia (for the cross-asset stories
+  that affect UK/US markets)
+- Topic-specific queries to fill obvious gaps (e.g., "BoE rate
+  decision", "Premier League results", "EU AI Act")
 - Independent verification of any single-source claim where reasonable
 {seed_block}
 
