@@ -285,6 +285,94 @@ def regime_subtitles(*, days: int = 7) -> list[dict]:
     return out
 
 
+def ic_noise_floor(sid: str, *, n_iter: int = 500, quantile: float = 0.95) -> dict:
+    """Phase 11D + 12 — Monte Carlo noise floor for a strategy's IC.
+
+    Reads (predicted_pct, actual_pct) pairs from state/predictions.jsonl
+    for `sid`, computes real IC, then shuffles `actual_pct` N times and
+    computes the IC distribution under the null hypothesis. Returns
+    `{n, real_ic, noise_floor, verdict}` where verdict is one of
+    'above_noise' / 'marginal' / 'noise' / 'too_few'.
+
+    Used by both the standalone diagnostic (`scripts/ic_noise_floor.py`)
+    and the per-strategy evolution prompt — so the agent sees the
+    sample-size-adjusted picture, not just the raw point estimate."""
+    import random as _random
+    p = STATE_ROOT / "predictions.jsonl"
+    if not p.exists():
+        return {"n": 0, "verdict": "too_few"}
+    preds: list[float] = []
+    actuals: list[float] = []
+    try:
+        with p.open() as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    rec = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if rec.get("strategy_id") != sid:
+                    continue
+                pr = rec.get("predicted_return_pct")
+                ac = rec.get("actual_return_pct")
+                if pr is None or ac is None:
+                    continue
+                try:
+                    preds.append(float(pr))
+                    actuals.append(float(ac))
+                except (TypeError, ValueError):
+                    continue
+    except OSError:
+        return {"n": 0, "verdict": "too_few"}
+    n = len(preds)
+    if n < 5:
+        return {"n": n, "verdict": "too_few"}
+
+    def _pearson(xs: list[float], ys: list[float]) -> float | None:
+        n_ = len(xs)
+        if n_ < 2:
+            return None
+        mx = sum(xs) / n_
+        my = sum(ys) / n_
+        num = sum((x - mx) * (y - my) for x, y in zip(xs, ys))
+        dx = (sum((x - mx) ** 2 for x in xs)) ** 0.5
+        dy = (sum((y - my) ** 2 for y in ys)) ** 0.5
+        if dx == 0 or dy == 0:
+            return None
+        return num / (dx * dy)
+
+    real_ic = _pearson(preds, actuals)
+    if real_ic is None:
+        return {"n": n, "verdict": "too_few"}
+
+    rng = _random.Random(42)
+    shuffled = list(actuals)
+    null_ics: list[float] = []
+    for _ in range(n_iter):
+        rng.shuffle(shuffled)
+        ic = _pearson(preds, shuffled)
+        if ic is not None:
+            null_ics.append(ic)
+    if not null_ics:
+        return {"n": n, "real_ic": round(real_ic, 3), "verdict": "too_few"}
+    null_ics.sort()
+    idx = max(0, min(len(null_ics) - 1, int(quantile * len(null_ics))))
+    noise = null_ics[idx]
+
+    if real_ic >= noise + 0.02:
+        verdict = "above_noise"
+    elif real_ic >= noise:
+        verdict = "marginal"
+    else:
+        verdict = "noise"
+    return {
+        "n": n, "real_ic": round(real_ic, 3),
+        "noise_floor": round(noise, 3), "verdict": verdict,
+    }
+
+
 def parent_deep_analysis(sid: str, *, max_chars: int = 2000) -> str:
     """Read the strategy's deep_analysis.md prompt so the agent can
     reason about spawn-variant proposals against the actual bias.

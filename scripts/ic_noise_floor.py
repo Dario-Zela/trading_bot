@@ -14,6 +14,9 @@ Method:
 4. Print a per-strategy report + write `state/diagnostics/ic_noise_floor.md`.
 
 Run: `python scripts/ic_noise_floor.py [--n 1000] [--strategy id]`
+
+The actual MC math lives in `meta.evolution_inputs.ic_noise_floor()`
+so the evolution agent reads the same numbers this script reports.
 """
 from __future__ import annotations
 

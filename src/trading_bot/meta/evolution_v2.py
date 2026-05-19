@@ -360,6 +360,7 @@ def _build_strategy_report_prompt(sid: str, rows: list[dict], actions: list[dict
     from trading_bot.meta.evolution_inputs import (
         fees_pct_of_gross, cost_gate_drop_rate, earnings_gate_hit_rate,
         sector_concentration, trail_activation_rate, parent_deep_analysis,
+        ic_noise_floor,
     )
     fee_pct = fees_pct_of_gross(sid)
     cost_drop = cost_gate_drop_rate(sid)
@@ -367,6 +368,10 @@ def _build_strategy_report_prompt(sid: str, rows: list[dict], actions: list[dict
     sectors = sector_concentration(sid)
     trail_rate = trail_activation_rate(sid)
     deep_md = parent_deep_analysis(sid)
+    # Phase 11D / 12 — Monte Carlo noise floor for the strategy's IC.
+    # Tells the agent whether the headline IC is "above noise" given
+    # sample size, vs an artifact of small-N.
+    noise = ic_noise_floor(sid)
 
     signals_lines = [
         f"- **Fees as share of gross P&L** (last 14d): "
@@ -392,6 +397,13 @@ def _build_strategy_report_prompt(sid: str, rows: list[dict], actions: list[dict
     if sectors:
         sector_str = ", ".join(f"{s['sector']} {s['pct']:.0f}%" for s in sectors[:4])
         signals_lines.append(f"- **Sector concentration** (by traded notional): {sector_str}")
+    if noise.get("verdict") not in (None, "too_few"):
+        signals_lines.append(
+            f"- **IC noise-floor MC**: real IC {noise.get('real_ic', 0):+.3f} vs "
+            f"q95 noise {noise.get('noise_floor', 0):+.3f} (n={noise.get('n', 0)}) "
+            f"→ **{noise.get('verdict')}**. "
+            f"'noise' means the IC could be lucky shuffles, not signal — be sceptical."
+        )
     signals_block = "\n".join(signals_lines)
 
     deep_block = ""
