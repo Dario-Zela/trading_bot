@@ -119,6 +119,38 @@ SCHEDULES: list[dict] = [
         "hour": 4, "minute": 0,
         "wdays": [0],  # Sunday
     },
+    # Phase 8D — midday trailing-stop pass. Split by region because the
+    # mid-sessions are hours apart. UK-EU mid-LSE-session is around
+    # 12:00 UK; US mid-NYSE-session is around 12:30 ET. Each workflow
+    # talks to only its own broker.
+    {
+        "name": "midday-trail-uk-eu",
+        "workflow": "midday-trail-uk-eu.yml",
+        "inputs": {},
+        "tz": "Europe/London",
+        "hour": 12, "minute": 0,
+        "wdays": [1, 2, 3, 4, 5],
+    },
+    {
+        "name": "midday-trail-us",
+        "workflow": "midday-trail-us.yml",
+        "inputs": {},
+        "tz": "America/New_York",
+        "hour": 12, "minute": 30,
+        "wdays": [1, 2, 3, 4, 5],
+    },
+    # Phase 9F — nightly bot-health check. 22:00 UTC sits after the day's
+    # last live workflow (US exit at 15:30 ET = 19:30/20:30 UTC) but
+    # before tomorrow's grade-predictions at 05:00, so the email lands
+    # while we're awake.
+    {
+        "name": "health-check",
+        "workflow": "health-check.yml",
+        "inputs": {},
+        "tz": "UTC",
+        "hour": 22, "minute": 0,
+        "wdays": [1, 2, 3, 4, 5, 6, 0],   # every day
+    },
 ]
 
 JOB_TITLE_PREFIX = "trading_bot — "

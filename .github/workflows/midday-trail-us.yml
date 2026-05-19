@@ -1,0 +1,50 @@
+name: Midday trail (US)
+
+# Phase 8D — Alpaca side of the trailing-stop pass. Scheduled by
+# cron-job.org at ~12:30 ET (mid-US-session) Mon-Fri so we catch the
+# "ran in the morning, gave it back at the close" pattern. PATCHes
+# bracket-stop children upward on positions in profit.
+#
+# T212 trail is handled by midday-trail-uk-eu.yml on a different
+# schedule (LSE midday is ~12:00 UK, before US even opens).
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: midday-trail-us
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  trail:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Trail Alpaca stops
+        env:
+          ALPACA_API_KEY__1: ${{ secrets.ALPACA_API_KEY__1 }}
+          ALPACA_API_SECRET__1: ${{ secrets.ALPACA_API_SECRET__1 }}
+          ALPACA_API_KEY__2: ${{ secrets.ALPACA_API_KEY__2 }}
+          ALPACA_API_SECRET__2: ${{ secrets.ALPACA_API_SECRET__2 }}
+          ALPACA_API_KEY__3: ${{ secrets.ALPACA_API_KEY__3 }}
+          ALPACA_API_SECRET__3: ${{ secrets.ALPACA_API_SECRET__3 }}
+        run: python scripts/midday_trail.py --brokers alpaca

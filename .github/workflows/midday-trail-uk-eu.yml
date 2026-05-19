@@ -1,0 +1,50 @@
+name: Midday trail (UK/EU)
+
+# Phase 8D — T212 side of the trailing-stop pass. Scheduled by
+# cron-job.org at ~12:00 UK (mid-LSE-session) Mon-Fri. T212's
+# Invest API doesn't expose PATCH on stops; we cancel-and-replace
+# any existing stop with a higher one when the position's in profit.
+#
+# Alpaca trail is handled by midday-trail-us.yml on a later schedule
+# (mid-US-session is hours later).
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: midday-trail-uk-eu
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  trail:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Trail T212 stops
+        env:
+          T212_API_KEY__1: ${{ secrets.T212_API_KEY__1 }}
+          T212_API_SECRET__1: ${{ secrets.T212_API_SECRET__1 }}
+          T212_API_KEY__2: ${{ secrets.T212_API_KEY__2 }}
+          T212_API_SECRET__2: ${{ secrets.T212_API_SECRET__2 }}
+          T212_API_KEY__3: ${{ secrets.T212_API_KEY__3 }}
+          T212_API_SECRET__3: ${{ secrets.T212_API_SECRET__3 }}
+        run: python scripts/midday_trail.py --brokers t212
