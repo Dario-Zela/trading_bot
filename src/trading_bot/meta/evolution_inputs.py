@@ -178,7 +178,9 @@ def cost_gate_drop_rate(sid: str, *, days: int = _LOOKBACK_DAYS) -> dict:
 
 
 def earnings_gate_hit_rate(sid: str, *, days: int = _LOOKBACK_DAYS) -> dict:
-    """Per-strategy earnings-gate aggregate."""
+    """Per-strategy earnings-gate aggregate. Files are named
+    `<date>.<sid>.<region>.json` since f88ac31 added the region
+    suffix, so the glob is `<date>.<sid>.*.json`."""
     d = STATE_ROOT / "earnings_gate"
     if not d.exists():
         return {"n_runs": 0, "candidates_total": 0, "candidates_dropped": 0, "drop_rate_pct": 0.0}
@@ -186,7 +188,9 @@ def earnings_gate_hit_rate(sid: str, *, days: int = _LOOKBACK_DAYS) -> dict:
     n_runs = 0
     total = 0
     dropped = 0
-    for p in d.glob(f"*.{sid}.json"):
+    # `*.{sid}.*.json` matches the new region-suffixed format; the
+    # double-`*` also tolerates the old (pre-f88ac31) shape `<date>.<sid>.json`.
+    for p in list(d.glob(f"*.{sid}.*.json")) + list(d.glob(f"*.{sid}.json")):
         date_part = p.stem.split(".", 1)[0]
         if date_part < cutoff:
             continue
@@ -225,10 +229,11 @@ def verdict_rates_by_source(*, days: int = _VERDICT_LOOKBACK_DAYS) -> dict[str, 
                     except json.JSONDecodeError:
                         continue
                     # Filter by made_at (when the prediction entered the
-                    # log). Counting old open predictions inflates `total`
-                    # and distorts the headline.
+                    # log). Drop rows with no made_at — they pre-date the
+                    # field and aren't safely datable. Also drop anything
+                    # older than the window.
                     made_at = (rec.get("made_at") or "")[:10]
-                    if made_at and made_at < cutoff:
+                    if not made_at or made_at < cutoff:
                         continue
                     counts["total"] += 1
                     status = rec.get("status") or "open"

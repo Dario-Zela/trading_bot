@@ -448,11 +448,14 @@ class LLMStrategy(Strategy):
             sections.append(
                 "## Recently trailed out (re-entries pay full fees again)\n\n"
                 + "\n".join(trail_lines)
-                + "\n\nThe post-processor doubles the cost-gate threshold "
-                  "for these tickers automatically. Only re-pick one if your "
-                  "predicted return clears the doubled threshold AND you have "
-                  "a fresh thesis — yesterday's setup losing money via stop "
-                  "today is usually a reason to step away for a few sessions."
+                + "\n\nThe post-processor adds ONE extra round-trip cost on "
+                  "top of the normal cost-gate threshold for these tickers "
+                  "automatically (i.e. predicted return must beat "
+                  "`cost_gate_multiplier × cost + cost`, not just "
+                  "`cost_gate_multiplier × cost`). Only re-pick one if your "
+                  "predicted return clears that bar AND you have a fresh "
+                  "thesis — yesterday's setup losing money via stop today is "
+                  "usually a reason to step away for a few sessions."
             )
 
         sections.append("## Candidates (pre-filtered to those in a healthy uptrend)\n")

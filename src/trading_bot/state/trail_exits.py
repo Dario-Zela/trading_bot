@@ -8,8 +8,10 @@ pay the entry tax *again* — which the LLM's cost gate doesn't see.
 This module persists every stop-driven exit and exposes:
 - `append_trail_exit()` — called from each executor's exit path
 - `load_recent_trail_exits(days)` — used by `sizing.adjust_picks()` to
-  multiply the cost estimate for any pick whose ticker was trailed
-  out recently, AND by the strategy LLM prompt to warn explicitly.
+  ADD an extra round-trip cost to the gate threshold for any pick
+  whose ticker was trailed out recently (additive, not multiplicative
+  — see `sizing.py` for the math). The strategy LLM prompt also
+  warns about these tickers explicitly.
 
 The persistence is a single JSONL at `state/trail_exits.jsonl`; one
 line per close. Old entries are tolerated forever — the lookback

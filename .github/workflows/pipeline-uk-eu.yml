@@ -1,9 +1,10 @@
 name: UK/EU pipeline
 
 # Triggered Mon–Fri at LSE-relative times by cron-job.org via
-# workflow_dispatch (entry: 08:35 UK, exit: 16:00 UK — cron-job.org
-# handles DST). No GH Actions schedule here; that scheduler has proven
-# unreliable.
+# workflow_dispatch (entry: 08:05 UK, exit: 15:30 UK — cron-job.org
+# handles DST). The cron fires 30 min early so the multi-stage
+# pipeline finishes by the actual market window. No GH Actions
+# schedule here; that scheduler has proven unreliable.
 
 on:
   workflow_dispatch:

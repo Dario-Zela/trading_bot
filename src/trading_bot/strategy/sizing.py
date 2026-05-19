@@ -59,7 +59,9 @@ def adjust_picks(
 
     # Phase 10A — load recently trailed-out tickers. Re-picking these
     # within the window pays a fresh round-trip (esp. stamp duty), so
-    # we double the cost estimate for them before the gate.
+    # we ADD one extra round-trip cost to the gate threshold for
+    # them. (Not a multiplier on cost_pct — that would compound with
+    # cost_gate_multiplier and over-penalise.)
     try:
         from trading_bot.state.trail_exits import load_recent_trail_exits
         trailed_recently = load_recent_trail_exits(days=3)
@@ -136,12 +138,18 @@ def adjust_picks(
                 threshold += cost_pct
             if pred_return_f < threshold:
                 adj.dropped = True
-                trail_note = " [+1× re-entry surcharge]" if trail_record else ""
-                adj.drop_reason = (
-                    f"predicted {pred_return_f:+.2f}% < {cfg.cost_gate_multiplier:.1f}× "
-                    f"round-trip cost {cost_pct:.2f}% (= {threshold:.2f}% threshold)"
-                    + trail_note
-                )
+                base_threshold = cfg.cost_gate_multiplier * cost_pct
+                if trail_record:
+                    adj.drop_reason = (
+                        f"predicted {pred_return_f:+.2f}% < base {base_threshold:.2f}% "
+                        f"+ re-entry surcharge {cost_pct:.2f}% = {threshold:.2f}% threshold"
+                    )
+                else:
+                    adj.drop_reason = (
+                        f"predicted {pred_return_f:+.2f}% < "
+                        f"{cfg.cost_gate_multiplier:.1f}× round-trip cost "
+                        f"{cost_pct:.2f}% (= {threshold:.2f}% threshold)"
+                    )
                 adjustments.append(adj)
                 continue
         else:
