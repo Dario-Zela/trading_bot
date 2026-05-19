@@ -148,16 +148,16 @@
           What we missed today
         </div>
         <template x-for="[region, rep] in Object.entries(data.missed_movers)" :key="region">
-          <article :style="'margin-bottom: 1.25rem; padding: 0.85rem 1rem 0.95rem 1.1rem; background: var(--paper); border-left: 4px solid ' + missedAccent(region) + '; border-radius: 0 4px 4px 0;'">
-            <header style="display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; margin-bottom: 0.55rem;">
-              <span :style="'font-family: var(--sans); font-size: 0.95rem; font-weight: 700; letter-spacing: 0.06em; color: ' + missedAccent(region) + ';'"
-                    x-text="region.toUpperCase()"></span>
-              <span style="font-family: var(--sans); font-size: 0.78rem; color: var(--ink-muted);"
+          <article style="margin-bottom: 1.5rem; padding-top: 0.2rem;">
+            <header style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.85rem;">
+              <span :style="'display: inline-block; padding: 0.18rem 0.65rem; border-radius: 3px; background: ' + missedAccent(region) + '; color: white; font-family: var(--sans); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;'"
+                    x-text="regionLabel(region)"></span>
+              <span style="font-family: var(--sans); font-size: 0.78rem; color: var(--ink-muted); letter-spacing: 0.04em;"
                     x-text="rep.date + ' · ' + (rep.top_movers ? rep.top_movers.length : 0) + ' notable moves'"></span>
             </header>
-            <p style="font-family: var(--serif-body); font-size: 1.02rem; color: var(--ink); margin: 0 0 1rem; line-height: 1.55;"
+            <p style="font-family: var(--sans); font-size: 0.95rem; color: var(--ink); margin: 0 0 1.1rem; line-height: 1.7; max-width: 62rem;"
                x-text="rep.summary"></p>
-            <table style="width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: 0.82rem; background: var(--card); border-radius: 4px; overflow: hidden;">
+            <table style="width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: 0.82rem;">
               <thead>
                 <tr style="text-align: left; color: var(--ink-muted); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;">
                   <th style="padding: 0.3rem 0.4rem 0.3rem 0;">Ticker</th>
