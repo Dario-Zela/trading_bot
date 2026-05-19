@@ -178,6 +178,157 @@ The repo is the source of truth and is cloned by every GH Actions run. Daily new
 
 ---
 
+## Phase 8 — Trading-quality improvements
+
+The framework is solid; what's under-developed is the bit between
+"find a candidate" and "place an order", and the post-trade learning
+loop. These changes target risk-adjusted P&L, not infrastructure.
+
+### 8A — Volatility-aware position sizing
+
+- [ ] Add `target_daily_risk_pct` config field (default 1.0% of capital)
+- [ ] Post-process LLM picks: `position_£ = target_risk_£ / (ATR_pct)`,
+      then clamp to `max_position_pct` so a low-vol name doesn't blow
+      past the cap
+- [ ] Tell the LLM in the prompt that we vol-adjust afterwards, so the
+      model focuses on direction/conviction rather than gaming `allocation_pct`
+
+### 8B — Pre-trade FX cost gate (hard rule)
+
+- [ ] Backstop the LLM's per-candidate cost line: after picks are
+      parsed, look up `predicted_return_pct` for each pick and drop
+      any where `|predicted| < 2 × round_trip_cost_pct`
+- [ ] Log dropped picks with reason so the evolution agent can see
+      whether the LLM repeatedly tries trades the gate would reject
+
+### 8C — Earnings-calendar gating
+
+- [ ] Add `get_earnings_calendar(tickers)` to `tools/` returning next
+      earnings date per ticker (yfinance `Ticker(t).calendar`)
+- [ ] Pre-fetch when assembling candidates; surface "earnings in 24h"
+      as a per-candidate flag in the LLM prompt
+- [ ] Strategy LLMs can avoid or size down; rule-based strategy gets
+      a hard filter (`skip_if_earnings_in_days <= 1`)
+
+### 8D — Trailing stops on winners (Alpaca first)
+
+- [ ] New midday-check workflow: ~12:00 UK + ~17:30 UK
+- [ ] Scan open Alpaca positions; if in profit ≥ trail_activation_pct,
+      modify the bracket stop to `high_water - trail_pct`
+- [ ] T212 demo: defer (no bracket support); revisit when we have a
+      midday price-poll path
+
+### 8E — Real per-trade LLM reflection
+
+- [ ] Replace templated `outcome_notes` / `risks_observed` text with a
+      Haiku call per closed trade
+- [ ] Inputs: pre-trade thesis (already stored), day's high/low/close,
+      day's ticker news, the day's P&L, exit reason
+- [ ] Fires from each executor's exit path; non-fatal on failure
+      (templated text stays as the fallback)
+
+### 8F — Daily portfolio-loss kill switch
+
+- [ ] `state/halt.json` file with `{halted: bool, reason: str, set_at: iso}`
+- [ ] Entry pass checks at start: if yesterday's live-tier P&L
+      < -3% of total live capital, write halt.json and skip all
+      live-tier entries today
+- [ ] Manual unhalt by deleting / editing the file (committed via PR)
+- [ ] Halt status surfaced on the dashboard + in the daily email
+
+### 8G — Strategy-similarity detection (evolution agent add-on)
+
+- [ ] In `evolution_v2._build_strategy_report_prompt`, compute pairwise
+      Pearson correlation of daily P&L across active strategies over
+      the trailing 14 days
+- [ ] If any pair > 0.85, surface in the agent's editorial intro and
+      in each affected strategy's report card
+- [ ] LLM hypothesises *why* (overlapping universes? Same technical
+      signal? Same news source?) and may suggest a `tune`/`spawn-variant`
+      to differentiate
+
+---
+
+## Phase 9 — Polish + observability (lower priority, queued for later)
+
+Nice-to-haves and rough edges. Won't move the P&L needle as much as
+Phase 8 but are worth doing once Phase 8 is bedded in.
+
+### 9A — A/B test framework with confidence intervals
+
+- [ ] When the evolution agent fires a `promote` action, compute a
+      proper confidence interval on the IC delta (Welch's t-test on
+      the strategy's per-prediction return vs control's). Promote
+      only when the lower CI bound clears the promotion threshold.
+- [ ] Prevents promoting on 14 noisy trades where the IC delta is
+      driven by 2-3 lucky picks.
+
+### 9B — Image-relevance check on article hero pick
+
+- [ ] After the article writer returns an image_url, do a second
+      Haiku pass: "given this article headline + first paragraph,
+      does the image at this URL look on-topic?" Returns yes/no/borderline.
+- [ ] Drop hero on borderline/no; current writer occasionally picks
+      something off-topic (e.g. a generic stock photo for a specific
+      M&A story).
+
+### 9C — De-duplicate stories across editions
+
+- [ ] Discovery / publisher track the trailing 5 days of `front_lead_slug`
+      and front-page headlines. If today's lead is the 4th day in a
+      row of "Iran talks stalled", the publisher must pick something
+      else for the front (relegate to a brief).
+- [ ] Driven by a `recently_led` block in the publisher prompt — model
+      sees what it's already led with and gets to decide if the story
+      genuinely deserves another front.
+
+### 9D — Sector + factor exposure analytics on the dashboard
+
+- [ ] Compute per-day sector exposure across live tiers (using sector
+      from yfinance per ticker) and surface as a stacked area on the
+      dashboard overview.
+- [ ] Same for factors: long-momentum, long-quality, long-value, etc.,
+      via a simple rule mapping per ticker.
+
+### 9E — Mobile-responsive dashboard
+
+- [ ] Current dashboard is desktop-optimised. The newspaper pages
+      already wrap well on mobile; the dashboard's strategy grid +
+      detail panel don't (`grid-template-columns: repeat(auto-fill, ...)`
+      collapses but the detail panel side-by-side stats overflow).
+- [ ] Targeted CSS media-query work, no JS changes needed.
+
+### 9F — Bot-health alerts
+
+- [ ] A nightly check workflow that flags: workflow failures in last
+      24h, ledger staleness, predictions log corruption, broker
+      connectivity errors. Sends a single summary email if anything
+      is amiss.
+- [ ] Easier signal than scrolling GH Actions runs manually.
+
+### 9G — Tax / ISA tracking (live-tier only)
+
+- [ ] When we go live: track CGT base cost per trade for taxable
+      accounts; track ISA contribution / withdrawal events; emit an
+      annual statement that maps to HMRC's CG30 form layout.
+- [ ] Not relevant until live; queued for whenever that lands.
+
+### 9H — Push notifications on trade events
+
+- [ ] Optional Telegram / iOS-Shortcut bridge that pings on entry
+      placed, exit fired, kill switch tripped, halt issued. Already
+      planned for the Phase 2 "approve" UX of going live.
+
+### 9I — Searchable historical predictions
+
+- [ ] The "Marking the homework" section shows the last 8 graded
+      predictions. Add a `/predictions/` archive page with full
+      history, filter by source/horizon/status, and a verdict-rate
+      breakdown per conviction level (so we can see if 'high
+      conviction' actually means something).
+
+---
+
 ## Known unknowns / risks
 
 - **Claude Code WebSearch availability** — discovery + image search both need it. If restricted, fall back to seeded RSS feeds (Reuters / Bloomberg / FT) for news discovery and use the existing yfinance news + Alpaca News + curated UK proxies (already wired) as the discovery substrate.
