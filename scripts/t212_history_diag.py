@@ -12,6 +12,7 @@ from __future__ import annotations
 import json
 import logging
 import sys
+import time
 from datetime import datetime
 
 import requests
@@ -56,7 +57,12 @@ def main() -> int:
 
     print(f"\n=== T212 history diagnostic for {len(strands)} stranded trades ===\n")
 
-    for trade in strands:
+    for i, trade in enumerate(strands):
+        # T212 rate-limits /equity/history/orders aggressively; pace
+        # ourselves to stay under their per-second budget. Two-second
+        # spacing matched the empirical limit on slot 1.
+        if i > 0:
+            time.sleep(2.0)
         yf = trade.get("ticker")
         sid = trade.get("strategy_id")
         entry_oid = trade.get("broker_order_id")
@@ -65,15 +71,24 @@ def main() -> int:
             print(f"--- {yf} ({sid}): cannot resolve T212 ticker ---")
             continue
 
-        try:
-            r = requests.get(
-                f"{creds.base_url}/equity/history/orders",
-                headers={"Authorization": creds.auth_header(), "Accept": "application/json"},
-                params={"ticker": t212_ticker, "limit": 50},
-                timeout=15,
-            )
-        except requests.RequestException as e:
-            print(f"--- {yf}: history fetch errored: {e} ---")
+        # Up to 3 retries with linear backoff on 429
+        r = None
+        for attempt in range(4):
+            try:
+                r = requests.get(
+                    f"{creds.base_url}/equity/history/orders",
+                    headers={"Authorization": creds.auth_header(), "Accept": "application/json"},
+                    params={"ticker": t212_ticker, "limit": 50},
+                    timeout=15,
+                )
+            except requests.RequestException as e:
+                print(f"--- {yf}: history fetch errored: {e} ---")
+                r = None
+                break
+            if r.status_code != 429:
+                break
+            time.sleep(1.0 * (attempt + 1))
+        if r is None:
             continue
         if not r.ok:
             print(f"--- {yf}: history returned {r.status_code}: {r.text[:160]} ---")

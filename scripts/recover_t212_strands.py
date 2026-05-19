@@ -25,6 +25,7 @@ from __future__ import annotations
 import json
 import logging
 import sys
+import time
 from collections import defaultdict
 from datetime import date, datetime, timedelta, timezone
 
@@ -65,19 +66,27 @@ def _to_gbp(translator: Translator, t212_ticker: str, raw_price: float) -> float
 
 
 def _history_for_ticker(creds, t212_ticker: str) -> list[dict]:
-    """Fetch the most recent 50 history items for a single ticker."""
-    try:
-        r = requests.get(
-            f"{creds.base_url}/equity/history/orders",
-            headers={"Authorization": creds.auth_header(), "Accept": "application/json"},
-            params={"ticker": t212_ticker, "limit": 50},
-            timeout=15,
-        )
-    except requests.RequestException as e:
-        log.warning("T212 history fetch failed for %s: %s", t212_ticker, e)
-        return []
-    if not r.ok:
-        log.warning("T212 history returned %d for %s", r.status_code, t212_ticker)
+    """Fetch the most recent 50 history items for a single ticker.
+    Retries on 429 with linear backoff; T212's /equity/history/orders
+    rate-limit is tight enough that two-back-to-back calls can trip it."""
+    r = None
+    for attempt in range(4):
+        try:
+            r = requests.get(
+                f"{creds.base_url}/equity/history/orders",
+                headers={"Authorization": creds.auth_header(), "Accept": "application/json"},
+                params={"ticker": t212_ticker, "limit": 50},
+                timeout=15,
+            )
+        except requests.RequestException as e:
+            log.warning("T212 history fetch failed for %s: %s", t212_ticker, e)
+            return []
+        if r.status_code != 429:
+            break
+        time.sleep(1.0 * (attempt + 1))
+    if r is None or not r.ok:
+        log.warning("T212 history returned %s for %s",
+                    r.status_code if r is not None else "(no response)", t212_ticker)
         return []
     try:
         body = r.json() or {}
@@ -210,7 +219,10 @@ def main() -> int:
             log.error("Slot %d: failed to load instruments (%s) — bailing", slot, e)
             continue
 
-        for trade in trades:
+        for i, trade in enumerate(trades):
+            # Space history queries to stay under T212's per-second cap
+            if i > 0:
+                time.sleep(2.0)
             yf = trade.get("ticker")
             t212_ticker = translator.translate(yf) if yf else None
             if not t212_ticker:
@@ -232,7 +244,7 @@ def main() -> int:
 
             # BUY: search by broker_order_id first, fall back to most recent
             # BUY on entry_date.
-            buy_price_native, _ = _find_fill(
+            buy_price_native, buy_fill_iso, buy_submit_iso, _ = _find_fill(
                 items, side="BUY",
                 on_or_after=entry_date_d,
                 on_or_before=today,
@@ -241,12 +253,23 @@ def main() -> int:
             # SELL: most recent SELL on entry_date or later (the close
             # order ids weren't persisted, so date-window match is what
             # we've got).
-            sell_price_native, sell_ts = _find_fill(
+            sell_price_native, sell_fill_iso, sell_submit_iso, _ = _find_fill(
                 items, side="SELL",
                 on_or_after=entry_date_d,
                 on_or_before=today,
                 target_order_id=None,
             )
+            sell_ts = sell_fill_iso
+
+            sell_lat = _latency_seconds(sell_submit_iso, sell_fill_iso)
+            buy_lat = _latency_seconds(buy_submit_iso, buy_fill_iso)
+            if sell_lat is not None or buy_lat is not None:
+                log.info(
+                    "%s/%s: T212 fill latency — BUY %s, SELL %s",
+                    trade.get("strategy_id"), yf,
+                    f"{buy_lat:.0f}s" if buy_lat is not None else "?",
+                    f"{sell_lat:.0f}s" if sell_lat is not None else "?",
+                )
 
             if buy_price_native is None or sell_price_native is None:
                 log.warning(
