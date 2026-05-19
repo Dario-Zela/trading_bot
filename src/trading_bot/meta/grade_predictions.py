@@ -2,10 +2,13 @@
 target_date has passed.
 
 For each due prediction, we:
-1. Gather light cross-asset context (yfinance prices for major indices,
-   FX, commodities, sectors) so the LLM has something to score against.
-2. Ask Claude (Haiku, parallel) for a verdict: proven / partial /
-   falsified / still-open + a one-sentence note explaining the call.
+1. Hand the grader WebSearch + WebFetch so it can look up the specific
+   data point the claim hinges on — a Treasury yield close, a CPI
+   print, an FX cross, an earnings number, whatever. The ETF snapshot
+   is still passed as quick context, but for sharply-thresholded
+   claims the grader is told to verify with a web search.
+2. Ask Claude (Haiku × N parallel) for a verdict: proven / partial /
+   falsified / still-open + a one-sentence note citing the source.
 3. Mutate the prediction's row with the new status + graded_at + note.
 
 The grader is conservative on "proven": it requires the falsifier to be
@@ -53,6 +56,8 @@ _CONTEXT_TICKERS = (
 )
 
 _MAX_PARALLEL = 6
+_GRADE_TIMEOUT = 360                                  # web research takes time
+_GRADER_TOOLS = ["--allowedTools", "WebSearch,WebFetch"]
 
 
 def run_daily_grading(today: date) -> dict:
@@ -126,9 +131,16 @@ def _build_context_snapshot(today: date) -> dict:
 
 
 def _grade_one(p: Prediction, snapshot: dict, today: date) -> tuple[str, str]:
-    """Ask Claude to score one prediction. Returns (status, note)."""
+    """Ask Claude to score one prediction. Returns (status, note).
+    The grader runs with WebSearch + WebFetch enabled so it can verify
+    sharply-thresholded claims (yields, FX rates, CPI prints, etc.)."""
     prompt = _build_grading_prompt(p, snapshot, today)
-    response = run_claude_for_json(prompt, model="haiku")
+    response = run_claude_for_json(
+        prompt,
+        model="haiku",
+        timeout_seconds=_GRADE_TIMEOUT,
+        extra_args=_GRADER_TOOLS,
+    )
     if not isinstance(response, dict):
         return "still-open", "Grader response was not a JSON object"
     raw_status = (response.get("status") or "").strip().lower()
@@ -154,32 +166,68 @@ that was made earlier and whose target date has now passed.
 - **Conviction at the time**: {p.conviction}
 - **Source**: {p.source} · section: {p.source_section or '—'}
 
-## Current market context
-
-Recent prices and percent changes for a baseline cross-asset set:
+## ETF snapshot (use as quick proxy only)
 
 ```json
 {snapshot_json}
 ```
 
+The ETF snapshot is a baseline — useful when the claim is about an
+equity index, sector, or commodity ETF that's in the list. For
+*anything else* (Treasury yields, FX crosses, specific stocks not in
+the snapshot, economic data prints, individual earnings, regulatory
+events) you must look up the real number yourself.
+
+## You have these tools — use them
+
+- **WebSearch** — find the specific data point the falsification
+  criteria hinges on. Examples:
+  - "10 year Treasury yield close {p.target_date}"
+  - "WTI crude close {p.target_date}"
+  - "GBP/USD close {p.target_date}"
+  - "Nvidia earnings Q1 2026 revenue"
+  - "BoE decision {p.target_date}"
+- **WebFetch** — pull a specific URL when the search points at the
+  right source (FRED, CNBC, Reuters, FT, Yahoo Finance, etc.) and you
+  need the precise close / print.
+
+You SHOULD use WebSearch first for any claim with a sharp numeric
+threshold. Don't guess from a related ETF; find the actual number.
+
 ## Your task
 
-Score the prediction against the falsification criteria using the
-context above. Be strict and honest.
+Score the prediction against the falsification criteria using both
+the ETF snapshot and (where needed) what you find on the web.
 
 - **proven** — the claim is clearly correct AND the falsifier is clearly NOT met.
 - **falsified** — the falsifier is clearly met (the claim is wrong).
 - **partial** — the direction was right but the magnitude or timing was off, OR the
   claim was right on one dimension but not another.
-- **still-open** — you cannot resolve from the data above (e.g., a specific data
-  release that hasn't been published, a date that hasn't quite passed yet).
+- **still-open** — the data genuinely cannot be resolved yet (e.g., a
+  print that hasn't been published, settlement that hasn't happened).
+  This is for genuine unavailability — NOT for "I didn't look hard
+  enough". If you can find the number with a web search, find it.
 
-Output JSON only:
+## Note formatting
+
+Your note MUST cite the specific number(s) you used and the source.
+Examples of the right register:
+
+- "10y yield closed at 4.62% on May 19 per CNBC; threshold 4.55% was
+  cleared — proven."
+- "WTI settled $98.45 on May 23 per Reuters; falsifier requires
+  ≥$103 — falsified."
+- "Nvidia Q1 revenue $44.06B per company release; threshold $43B
+  cleared; stock closed +6.2% — proven."
+
+A note without a specific cited number is incomplete.
+
+## Required output
 
 ```json
 {{
   "status": "proven" | "partial" | "falsified" | "still-open",
-  "note": "<one sentence — what specifically you used to score it>"
+  "note": "<one sentence — cite the specific number(s) and source>"
 }}
 ```
 

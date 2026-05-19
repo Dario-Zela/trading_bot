@@ -22,6 +22,10 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
+    # Web research per prediction can take ~3-6 minutes; with 6 in
+    # parallel and ~10-20 due predictions on a busy day, this needs
+    # generous headroom.
+    timeout-minutes: 45
     steps:
       - name: Check out repo
         uses: actions/checkout@v5

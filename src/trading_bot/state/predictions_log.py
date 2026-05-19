@@ -173,8 +173,18 @@ def mark_prediction_graded(
 
 
 def open_predictions_due_by(d: date, source: str | None = None) -> list[Prediction]:
-    """Open predictions whose target_date is on-or-before `d`. The grader
-    uses this to know what's ready to be checked."""
-    all_open = read_predictions(source=source, status="open")
+    """Predictions whose target_date is on-or-before `d` AND whose
+    status invites another look. The grader uses this to know what's
+    ready to be checked.
+
+    Includes both `open` predictions and `still-open` ones — the latter
+    means the grader previously couldn't resolve the claim (data not
+    yet published, etc.) and should re-check on the next run.
+    """
     iso = d.isoformat()
-    return [p for p in all_open if p.target_date and p.target_date <= iso]
+    out: list[Prediction] = []
+    for status in ("open", "still-open"):
+        for p in read_predictions(source=source, status=status):
+            if p.target_date and p.target_date <= iso:
+                out.append(p)
+    return out
