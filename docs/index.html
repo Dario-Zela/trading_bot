@@ -227,26 +227,40 @@
       </section>
     </template>
 
-    <!-- Sector exposure on currently-open positions (live-tier only) -->
-    <template x-if="data && data.sector_exposure && data.sector_exposure.by_sector && data.sector_exposure.by_sector.length">
-      <section style="margin: 1.5rem 0 2rem; padding: 1rem 1.4rem; background: var(--card); border: 1px solid var(--hairline); border-radius: 6px;">
-        <div style="font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.6rem;">
-          Sector exposure · <span x-text="data.sector_exposure.n_positions"></span> open position(s)
+    <!-- Sector exposure — per-sector mini column chart (1w / 1d /
+         today at increasing opacity). Filters by region selector;
+         counts both open and closed trades to read as a footprint
+         rather than a snapshot. -->
+    <template x-if="currentSectorExposure() && currentSectorExposure().by_sector.length">
+      <section style="margin: 1.5rem 0 2rem; padding: 1rem 1.4rem 1.2rem; background: var(--card); border: 1px solid var(--hairline); border-radius: 6px;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.8rem;">
+          <div style="font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted);">
+            Sector exposure
+          </div>
+          <div style="font-family: var(--sans); font-size: 0.74rem; color: var(--ink-muted);">
+            <span x-text="currentSectorExposure().n_trades"></span> trades
+            (<span x-text="currentSectorExposure().n_open"></span> open ·
+            <span x-text="currentSectorExposure().n_closed"></span> closed)
+          </div>
         </div>
-        <div style="display: flex; gap: 0.4rem; height: 28px; border-radius: 2px; overflow: hidden;">
-          <template x-for="row in data.sector_exposure.by_sector" :key="row.sector">
-            <div :style="'flex-basis: ' + row.pct + '%; background: ' + sectorColor(row.sector) + '; color: white; font-family: var(--sans); font-size: 0.7rem; line-height: 28px; text-align: center; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 0.4rem;'"
-                 :title="row.sector + ': ' + row.pct + '%'"
-                 x-text="row.pct >= 8 ? (row.sector + ' ' + row.pct + '%') : ''"></div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 0.5rem;">
+          <template x-for="row in currentSectorExposure().by_sector.slice(0, 10)" :key="row.sector">
+            <div style="display: flex; flex-direction: column; align-items: stretch; gap: 0.25rem;">
+              <div style="display: flex; align-items: flex-end; gap: 3px; height: 70px;">
+                <div :style="'flex: 1; border-radius: 2px 2px 0 0; opacity: 0.35; height: ' + sectorBarHeight(row.pct_1w, currentSectorExposure().by_sector) + '%; background: ' + sectorColor(row.sector) + ';'"></div>
+                <div :style="'flex: 1; border-radius: 2px 2px 0 0; opacity: 0.65; height: ' + sectorBarHeight(row.pct_1d, currentSectorExposure().by_sector) + '%; background: ' + sectorColor(row.sector) + ';'"></div>
+                <div :style="'flex: 1; border-radius: 2px 2px 0 0; opacity: 1.00; height: ' + sectorBarHeight(row.pct,    currentSectorExposure().by_sector) + '%; background: ' + sectorColor(row.sector) + ';'"></div>
+              </div>
+              <div style="font-family: var(--sans); font-size: 0.72rem; text-align: center; color: var(--ink-soft); font-weight: 600;" x-text="row.sector"></div>
+              <div style="font-family: var(--sans); font-size: 0.74rem; text-align: center; font-variant-numeric: tabular-nums; color: var(--ink);" x-text="row.pct.toFixed(0) + '%'"></div>
+              <div style="font-family: var(--sans); font-size: 0.68rem; text-align: center;"
+                   :class="row.delta_1w_pct > 0 ? 'up' : (row.delta_1w_pct < 0 ? 'down' : '')"
+                   x-text="row.delta_1w_pct === 0 ? '— flat/wk' : ((row.delta_1w_pct > 0 ? '▲ +' : '▼ ') + Math.abs(row.delta_1w_pct).toFixed(0) + '/wk')"></div>
+            </div>
           </template>
         </div>
-        <div style="margin-top: 0.6rem; font-family: var(--sans); font-size: 0.72rem; color: var(--ink-muted);">
-          <template x-for="row in data.sector_exposure.by_sector" :key="row.sector">
-            <span style="margin-right: 1.2rem;">
-              <span :style="'display:inline-block; width:8px; height:8px; border-radius:2px; background:' + sectorColor(row.sector) + '; margin-right:4px;'"></span>
-              <span x-text="row.sector + ' ' + row.pct + '%'"></span>
-            </span>
-          </template>
+        <div style="margin-top: 0.5rem; font-family: var(--sans); font-size: 0.7rem; color: var(--ink-muted); text-align: right;">
+          Each column: 1 week ago · 1 day ago · today (left → right). Includes both open and closed trades.
         </div>
       </section>
     </template>
@@ -552,6 +566,34 @@
           if (r === 'us') return 'var(--c-world)';      // navy
           if (r === 'uk-eu') return 'var(--c-tech)';    // forest green
           return 'var(--ink-muted)';
+        },
+
+        currentSectorExposure() {
+          // The build emits sector_exposure as { region: { ... } }.
+          // Pick the entry matching the active region selector; fall
+          // back to 'all' when the user is in 'all' mode or the
+          // region-specific entry is missing.
+          const se = this.data && this.data.sector_exposure;
+          if (!se) return null;
+          const key = (this.region === 'all') ? 'all' : this.region;
+          return se[key] || se['all'] || null;
+        },
+
+        sectorBarHeight(pct, allRows) {
+          // Normalise each bar against the largest per-sector reading
+          // across all three time slices so cross-sector comparisons
+          // are preserved (a sector at 5% always looks small).
+          if (!pct) return 0;
+          let max = 0;
+          for (const r of allRows) {
+            if (r.pct      > max) max = r.pct;
+            if (r.pct_1d   > max) max = r.pct_1d;
+            if (r.pct_1w   > max) max = r.pct_1w;
+          }
+          if (max <= 0) return 0;
+          // Keep the smallest bars visible — clamp the minimum height
+          // so sectors that exist but are tiny still register.
+          return Math.max(8, (pct / max) * 100);
         },
 
         visibleMissedRegions() {

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-19T18:41:50.809014+00:00",
+  "generated_at": "2026-05-19T19:22:53.856854+00:00",
   "as_of_iso": "2026-05-19",
   "regions": [
     "uk-eu",
@@ -59,30 +59,255 @@
     }
   },
   "sector_exposure": {
-    "by_sector": [
-      {
-        "sector": "Technology",
-        "gbp": 7884.43,
-        "pct": 37.5
-      },
-      {
-        "sector": "Healthcare",
-        "gbp": 5819.83,
-        "pct": 27.7
-      },
-      {
-        "sector": "Industrials",
-        "gbp": 4629.03,
-        "pct": 22.0
-      },
-      {
-        "sector": "Utilities",
-        "gbp": 2695.22,
-        "pct": 12.8
-      }
-    ],
-    "total_gbp": 21028.51,
-    "n_positions": 8
+    "us": {
+      "by_sector": [
+        {
+          "sector": "Technology",
+          "gbp": 32653.41,
+          "pct": 42.9,
+          "pct_1d": 50.1,
+          "pct_1w": 0.0,
+          "delta_1d_pct": -7.2,
+          "delta_1w_pct": 42.9
+        },
+        {
+          "sector": "Industrials",
+          "gbp": 12564.13,
+          "pct": 16.5,
+          "pct_1d": 16.0,
+          "pct_1w": 0.0,
+          "delta_1d_pct": 0.5,
+          "delta_1w_pct": 16.5
+        },
+        {
+          "sector": "Energy",
+          "gbp": 10063.22,
+          "pct": 13.2,
+          "pct_1d": 27.2,
+          "pct_1w": 0.0,
+          "delta_1d_pct": -14.0,
+          "delta_1w_pct": 13.2
+        },
+        {
+          "sector": "Healthcare",
+          "gbp": 8294.83,
+          "pct": 10.9,
+          "pct_1d": 0.0,
+          "pct_1w": 0.0,
+          "delta_1d_pct": 10.9,
+          "delta_1w_pct": 10.9
+        },
+        {
+          "sector": "Consumer Defensive",
+          "gbp": 4361.07,
+          "pct": 5.7,
+          "pct_1d": 6.7,
+          "pct_1w": 0.0,
+          "delta_1d_pct": -1.0,
+          "delta_1w_pct": 5.7
+        },
+        {
+          "sector": "Consumer Cyclical",
+          "gbp": 3780.31,
+          "pct": 5.0,
+          "pct_1d": 0.0,
+          "pct_1w": 0.0,
+          "delta_1d_pct": 5.0,
+          "delta_1w_pct": 5.0
+        },
+        {
+          "sector": "Utilities",
+          "gbp": 2695.22,
+          "pct": 3.5,
+          "pct_1d": 0.0,
+          "pct_1w": 0.0,
+          "delta_1d_pct": 3.5,
+          "delta_1w_pct": 3.5
+        },
+        {
+          "sector": "Real Estate",
+          "gbp": 1765.44,
+          "pct": 2.3,
+          "pct_1d": 0.0,
+          "pct_1w": 0.0,
+          "delta_1d_pct": 2.3,
+          "delta_1w_pct": 2.3
+        }
+      ],
+      "total_gbp": 76177.63,
+      "n_trades": 33,
+      "n_open": 8,
+      "n_closed": 25
+    },
+    "uk-eu": {
+      "by_sector": [
+        {
+          "sector": "Industrials",
+          "gbp": 4227.68,
+          "pct": 22.3,
+          "pct_1d": 0.0,
+          "pct_1w": 0.0,
+          "delta_1d_pct": 22.3,
+          "delta_1w_pct": 22.3
+        },
+        {
+          "sector": "Consumer Cyclical",
+          "gbp": 3809.48,
+          "pct": 20.1,
+          "pct_1d": 0.0,
+          "pct_1w": 0.0,
+          "delta_1d_pct": 20.1,
+          "delta_1w_pct": 20.1
+        },
+        {
+          "sector": "Communication Services",
+          "gbp": 2793.21,
+          "pct": 14.8,
+          "pct_1d": 0.0,
+          "pct_1w": 0.0,
+          "delta_1d_pct": 14.8,
+          "delta_1w_pct": 14.8
+        },
+        {
+          "sector": "Consumer Defensive",
+          "gbp": 2503.2,
+          "pct": 13.2,
+          "pct_1d": 0.0,
+          "pct_1w": 0.0,
+          "delta_1d_pct": 13.2,
+          "delta_1w_pct": 13.2
+        },
+        {
+          "sector": "Technology",
+          "gbp": 2352.41,
+          "pct": 12.4,
+          "pct_1d": 0.0,
+          "pct_1w": 0.0,
+          "delta_1d_pct": 12.4,
+          "delta_1w_pct": 12.4
+        },
+        {
+          "sector": "Financial Services",
+          "gbp": 1732.83,
+          "pct": 9.2,
+          "pct_1d": 0.0,
+          "pct_1w": 0.0,
+          "delta_1d_pct": 9.2,
+          "delta_1w_pct": 9.2
+        },
+        {
+          "sector": "Utilities",
+          "gbp": 1498.9,
+          "pct": 7.9,
+          "pct_1d": 0.0,
+          "pct_1w": 0.0,
+          "delta_1d_pct": 7.9,
+          "delta_1w_pct": 7.9
+        }
+      ],
+      "total_gbp": 18917.71,
+      "n_trades": 9,
+      "n_open": 0,
+      "n_closed": 9
+    },
+    "all": {
+      "by_sector": [
+        {
+          "sector": "Technology",
+          "gbp": 35005.82,
+          "pct": 36.8,
+          "pct_1d": 50.1,
+          "pct_1w": 0.0,
+          "delta_1d_pct": -13.3,
+          "delta_1w_pct": 36.8
+        },
+        {
+          "sector": "Industrials",
+          "gbp": 16791.81,
+          "pct": 17.7,
+          "pct_1d": 16.0,
+          "pct_1w": 0.0,
+          "delta_1d_pct": 1.7,
+          "delta_1w_pct": 17.7
+        },
+        {
+          "sector": "Energy",
+          "gbp": 10063.22,
+          "pct": 10.6,
+          "pct_1d": 27.2,
+          "pct_1w": 0.0,
+          "delta_1d_pct": -16.6,
+          "delta_1w_pct": 10.6
+        },
+        {
+          "sector": "Healthcare",
+          "gbp": 8294.83,
+          "pct": 8.7,
+          "pct_1d": 0.0,
+          "pct_1w": 0.0,
+          "delta_1d_pct": 8.7,
+          "delta_1w_pct": 8.7
+        },
+        {
+          "sector": "Consumer Cyclical",
+          "gbp": 7589.79,
+          "pct": 8.0,
+          "pct_1d": 0.0,
+          "pct_1w": 0.0,
+          "delta_1d_pct": 8.0,
+          "delta_1w_pct": 8.0
+        },
+        {
+          "sector": "Consumer Defensive",
+          "gbp": 6864.27,
+          "pct": 7.2,
+          "pct_1d": 6.7,
+          "pct_1w": 0.0,
+          "delta_1d_pct": 0.5,
+          "delta_1w_pct": 7.2
+        },
+        {
+          "sector": "Utilities",
+          "gbp": 4194.12,
+          "pct": 4.4,
+          "pct_1d": 0.0,
+          "pct_1w": 0.0,
+          "delta_1d_pct": 4.4,
+          "delta_1w_pct": 4.4
+        },
+        {
+          "sector": "Communication Services",
+          "gbp": 2793.21,
+          "pct": 2.9,
+          "pct_1d": 0.0,
+          "pct_1w": 0.0,
+          "delta_1d_pct": 2.9,
+          "delta_1w_pct": 2.9
+        },
+        {
+          "sector": "Real Estate",
+          "gbp": 1765.44,
+          "pct": 1.9,
+          "pct_1d": 0.0,
+          "pct_1w": 0.0,
+          "delta_1d_pct": 1.9,
+          "delta_1w_pct": 1.9
+        },
+        {
+          "sector": "Financial Services",
+          "gbp": 1732.83,
+          "pct": 1.8,
+          "pct_1d": 0.0,
+          "pct_1w": 0.0,
+          "delta_1d_pct": 1.8,
+          "delta_1w_pct": 1.8
+        }
+      ],
+      "total_gbp": 95095.34,
+      "n_trades": 42,
+      "n_open": 8,
+      "n_closed": 34
+    }
   },
   "halt": {
     "halted": false

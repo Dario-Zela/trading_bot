@@ -202,8 +202,15 @@ def build_dashboard_data() -> dict:
     as_of_iso = _latest_exit_iso(active + archived) or datetime.now(timezone.utc).date().isoformat()
     global_overview = _build_global_overview(active + archived, as_of_iso=as_of_iso)
 
-    # Phase 9D — sector exposure on currently-open positions (live-tier only).
-    sector_exposure = _build_sector_exposure(active + archived)
+    # Phase 9D — sector exposure across every real-broker trade (open +
+    # closed) so the panel reads as a trading footprint, not a snapshot
+    # of currently-held positions. Computed per region — selecting US
+    # or UK/EU at the top of the dashboard scopes the panel — plus an
+    # `all` bucket for the combined view.
+    sector_exposure = {
+        region: _build_sector_exposure(active + archived, region=region)
+        for region in (list(regions_seen) + ["all"])
+    }
 
     # Phase 8F — surface kill-switch state to the dashboard
     halt_info = _build_halt_info()
@@ -276,31 +283,69 @@ def _build_halt_info() -> dict:
     }
 
 
-def _build_sector_exposure(entries: list[dict]) -> dict:
-    """Phase 9D — what sectors are we long in today, by notional GBP?
-    Returns {by_sector: [...], total_gbp: ...}. Uses cached sectors;
-    cold-cache adds ~50ms per ticker so the first dashboard build per
-    new ticker is slow but subsequent runs are instant."""
+def _build_sector_exposure(entries: list[dict], region: str | None = None) -> dict:
+    """Sector-exposure footprint across every real-broker trade
+    (open + closed), scoped by region. Returns three time slices —
+    today, 1 day ago, 1 week ago — so the dashboard can render a
+    per-sector mini-chart showing the trajectory.
+
+    `region` filters the source entries: pass 'us' / 'uk-eu' to scope,
+    or 'all' / None for the combined view.
+
+    Returns:
+        {
+          "by_sector": [
+            {"sector": "Tech", "gbp": 4200.0, "pct": 32.0,
+             "pct_1d": 30.0, "pct_1w": 28.0,
+             "delta_1d_pct": 2.0, "delta_1w_pct": 4.0},
+            ...
+          ],
+          "total_gbp":  12450.0,
+          "n_trades":   23,
+          "n_open":     5,
+          "n_closed":   18,
+        }
+    """
     from collections import defaultdict
+    from datetime import date, datetime, timedelta, timezone
+
     from trading_bot.tools.sectors import bulk_lookup
 
-    open_positions: list[dict] = []
+    today = datetime.now(timezone.utc).date()
+    cutoff_1d = (today - timedelta(days=1)).isoformat()
+    cutoff_1w = (today - timedelta(days=7)).isoformat()
+
+    # 1) Collect every real-broker trade in scope.
+    trades: list[dict] = []
     for entry in entries:
+        if region and region != "all" and entry.get("region") != region:
+            continue
         for t in entry.get("executed", []):
-            if t.get("exit_date"):
-                continue
             if t.get("tier") not in _REAL_BROKER_TIERS:
                 continue
-            open_positions.append(t)
-    if not open_positions:
-        return {"by_sector": [], "total_gbp": 0.0, "n_positions": 0}
+            trades.append(t)
+    if not trades:
+        return {
+            "by_sector": [], "total_gbp": 0.0,
+            "n_trades": 0, "n_open": 0, "n_closed": 0,
+        }
 
-    tickers = sorted({t.get("ticker") for t in open_positions if t.get("ticker")})
+    tickers = sorted({t.get("ticker") for t in trades if t.get("ticker")})
     sector_map = bulk_lookup(tickers)
 
-    by_sector: dict[str, float] = defaultdict(float)
-    total = 0.0
-    for t in open_positions:
+    # 2) Build three sector→notional buckets corresponding to which
+    # trades had been *executed* (entry_date is in the past) at each
+    # cutoff. A trade entered yesterday counts in today's bucket and
+    # in yesterday's, but not in last-week's. The "exposure footprint"
+    # interpretation: each trade's entry notional is added once and
+    # never removed — closed trades still count toward where the bot
+    # has been deploying capital recently.
+    now: dict[str, float] = defaultdict(float)
+    d1:  dict[str, float] = defaultdict(float)
+    d7:  dict[str, float] = defaultdict(float)
+    n_open = 0
+    n_closed = 0
+    for t in trades:
         sector = sector_map.get(t.get("ticker")) or "Unknown"
         try:
             entry_price = float(t.get("entry_price") or 0)
@@ -308,20 +353,50 @@ def _build_sector_exposure(entries: list[dict]) -> dict:
             notional = abs(entry_price * qty)
         except (TypeError, ValueError):
             continue
-        # Alpaca rows store USD-priced entries; the dashboard's overview
-        # already labels those as USD-mislabelled-GBP. Treat the
-        # notional as-is for relative breakdown; the % comparison is
-        # the metric, not the absolute £.
-        by_sector[sector] += notional
-        total += notional
-    if total <= 0:
-        return {"by_sector": [], "total_gbp": 0.0, "n_positions": len(open_positions)}
-    rows = sorted(
-        [{"sector": s, "gbp": round(v, 2), "pct": round(v / total * 100, 1)}
-         for s, v in by_sector.items()],
-        key=lambda r: r["gbp"], reverse=True,
-    )
-    return {"by_sector": rows, "total_gbp": round(total, 2), "n_positions": len(open_positions)}
+        if notional <= 0:
+            continue
+        entry_date = t.get("entry_date") or ""
+        now[sector] += notional
+        if entry_date and entry_date < cutoff_1d:
+            d1[sector] += notional
+        if entry_date and entry_date < cutoff_1w:
+            d7[sector] += notional
+        if t.get("exit_date"):
+            n_closed += 1
+        else:
+            n_open += 1
+
+    total_now = sum(now.values())
+    total_d1  = sum(d1.values())
+    total_d7  = sum(d7.values())
+
+    def _pct(buckets: dict, total: float, sector: str) -> float:
+        if total <= 0:
+            return 0.0
+        return round(buckets.get(sector, 0.0) / total * 100, 1)
+
+    rows = []
+    for sector, gbp in sorted(now.items(), key=lambda kv: kv[1], reverse=True):
+        pct      = _pct(now, total_now, sector)
+        pct_1d   = _pct(d1,  total_d1,  sector)
+        pct_1w   = _pct(d7,  total_d7,  sector)
+        rows.append({
+            "sector": sector,
+            "gbp":    round(gbp, 2),
+            "pct":    pct,
+            "pct_1d": pct_1d,
+            "pct_1w": pct_1w,
+            "delta_1d_pct": round(pct - pct_1d, 1),
+            "delta_1w_pct": round(pct - pct_1w, 1),
+        })
+
+    return {
+        "by_sector": rows,
+        "total_gbp": round(total_now, 2),
+        "n_trades":  n_open + n_closed,
+        "n_open":    n_open,
+        "n_closed":  n_closed,
+    }
 
 
 _REAL_BROKER_TIERS = {"alpaca-paper", "trading212-paper", "t212-live"}
