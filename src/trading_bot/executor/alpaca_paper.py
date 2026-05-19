@@ -76,9 +76,17 @@ class AlpacaPaperExecutor(Executor):
                 continue
 
             allocation_gbp = capital_gbp * (intent.allocation_pct / 100.0)
-            # Alpaca paper trades in USD. We approximate 1:1 GBP→USD for sizing
-            # (Wave 2 simplification; Wave 3 will introduce real FX conversion).
-            allocation_usd = allocation_gbp
+            # Alpaca paper trades in USD. Convert allocation properly so the
+            # USD notional we send is the true GBP-equivalent. Previously
+            # 1:1 GBP→USD under-sized by ~21% (USDGBP ≈ 0.79). On FX-fetch
+            # failure we fall back to the old 1:1 to keep the pipeline
+            # alive — better an under-sized position than no fill.
+            usd_per_gbp = (1.0 / to_gbp_multiplier("USD")) if to_gbp_multiplier("USD") else None
+            if usd_per_gbp is None or not (1.0 < usd_per_gbp < 1.8):  # sanity band
+                log.warning("Alpaca sizing: USDGBP fetch failed or out of band (%s) — using 1:1 fallback", usd_per_gbp)
+                allocation_usd = allocation_gbp
+            else:
+                allocation_usd = allocation_gbp * usd_per_gbp
             # Bracket orders require whole shares on Alpaca — fractional orders
             # are restricted to "simple" (non-bracketed) orders. Round down so
             # we never over-allocate; if the result rounds to zero the position

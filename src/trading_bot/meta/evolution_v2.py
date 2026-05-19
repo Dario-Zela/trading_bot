@@ -180,7 +180,7 @@ def _build_editorial_prompt(today: date, snapshot: list[dict], applied_actions: 
         snapshot_lines.append(
             f"- {r.get('id')}@{r.get('region')} [{r.get('tier')}]: "
             f"n={m.get('n_trades', 0)}, hit={(m.get('hit_rate') or 0)*100:.0f}%, "
-            f"P&L £{(m.get('total_pnl_gbp') or 0):+,.2f}, IC={m.get('ic'):+.2f}"
+            f"P&L £{(m.get('total_pnl_gbp') or 0):+,.2f}, IC={(m.get('ic') or 0):+.2f}"
             if m else f"- {r.get('id')}@{r.get('region')} [{r.get('tier')}]: (no trades this window)"
         )
     snapshot_block = "\n".join(snapshot_lines) or "(empty)"
@@ -274,7 +274,7 @@ def _build_strategy_report_prompt(sid: str, rows: list[dict], actions: list[dict
                 f"P&L £{(m.get('total_pnl_gbp') or 0):+,.2f}, "
                 f"avg_pct={(m.get('avg_pnl_pct') or 0)*100:+.2f}%, "
                 f"max_dd={(m.get('max_drawdown_pct') or 0):+.1f}%, "
-                f"IC={m.get('ic', 0):+.2f}"
+                f"IC={(m.get('ic') or 0):+.2f}"
             )
         else:
             region_lines.append(f"- **{r.get('region')}** [{r.get('tier')}]: (no trades this window)")
@@ -291,6 +291,11 @@ def _build_strategy_report_prompt(sid: str, rows: list[dict], actions: list[dict
     # reports — concrete tickers + catalysts + reason hypotheses that
     # the Lessons quadrant can cite directly.
     missed_block = _strategy_missed_lines(sid)
+
+    # Phase 8E now writes real per-trade outcome_notes + risks_observed
+    # via Haiku — these are concrete failure / success modes the agent
+    # should cite, not just aggregated metrics.
+    notable_trades_block = _notable_trades_lines(sid)
 
     sim_lines = []
     for other, corr in similar_pairs:
@@ -321,6 +326,10 @@ for the strategy below.
 ### Missed opportunities this week (from daily missed-movers analysis)
 
 {missed_block}
+
+### Notable per-trade reflections (LLM-written outcome + risk notes)
+
+{notable_trades_block}
 {similar_block}
 
 ## What we need
@@ -456,6 +465,64 @@ def _similar_pairs_for_strategy(sid: str, pairs: list[tuple[str, str, float]]) -
         elif b == sid:
             out.append((a, corr))
     return out
+
+
+def _notable_trades_lines(sid: str, *, lookback_days: int = 14, max_trades: int = 8) -> str:
+    """Pull this strategy's trades over the last `lookback_days`, sort by
+    |pnl_pct| descending, and format the top N with their LLM-written
+    outcome_notes + risks_observed. These are concrete failure / success
+    modes that the per-strategy report's Lessons + Going Forward
+    quadrants can cite directly."""
+    import json as _json
+    from datetime import timedelta
+    from trading_bot.state.paths import ledger_path
+    p = ledger_path()
+    if not p.exists():
+        return "_(ledger not found)_"
+    cutoff = (date.today() - timedelta(days=lookback_days)).isoformat()
+
+    rows: list[dict] = []
+    try:
+        with p.open() as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    rec = _json.loads(line)
+                except _json.JSONDecodeError:
+                    continue
+                if rec.get("strategy_id") != sid:
+                    continue
+                ed = rec.get("exit_date")
+                if not ed or ed < cutoff:
+                    continue
+                if rec.get("exit_reason") in ("cancelled", "cleared"):
+                    continue
+                if not (rec.get("outcome_notes") or rec.get("risks_observed")):
+                    continue
+                rows.append(rec)
+    except OSError:
+        return "_(could not read ledger)_"
+    if not rows:
+        return "_(no reflected trades in window)_"
+
+    # Most-extreme P&L first — winners and losers both
+    rows.sort(key=lambda r: abs(float(r.get("pnl_pct") or 0)), reverse=True)
+    out = []
+    for r in rows[:max_trades]:
+        pct = float(r.get("pnl_pct") or 0)
+        # Clip to sane bounds (long-only can't lose more than 100%)
+        pct = max(-100.0, min(500.0, pct))
+        outcome = (r.get("outcome_notes") or "").strip()
+        risks = (r.get("risks_observed") or "").strip()
+        out.append(
+            f"- **{r.get('ticker', '?')} {pct:+.2f}%** "
+            f"({r.get('exit_date')}, {r.get('exit_reason', '?')})\n"
+            f"  - Outcome: {outcome[:280]}\n"
+            + (f"  - Risks:   {risks[:280]}" if risks and risks != "(reflection agent did not run on this trade)" else "")
+        )
+    return "\n".join(out)
 
 
 def _strategy_missed_lines(sid: str) -> str:

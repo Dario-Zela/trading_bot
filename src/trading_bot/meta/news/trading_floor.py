@@ -238,10 +238,16 @@ def _aggregate_recent_closes(today: date) -> tuple[str | None, dict[str, _Strate
 
 
 def _compact_trade(t: dict) -> dict:
+    # Long-only P&L can't exceed -100%; ledger sometimes has bad rows
+    # (cancelled trades with non-zero recorded numbers, data glitches).
+    # Clip to [-100, +500]% so the LLM doesn't get nonsensical inputs
+    # that read as confident facts.
+    raw_pct = float(t.get("pnl_pct") or 0.0)
+    clipped_pct = max(-100.0, min(500.0, raw_pct))
     return {
         "ticker": t.get("ticker", ""),
         "pnl_gbp": float(t.get("pnl_gbp") or 0.0),
-        "pnl_pct": float(t.get("pnl_pct") or 0.0),
+        "pnl_pct": clipped_pct,
         "exit_reason": t.get("exit_reason", ""),
         "outcome_notes": (t.get("outcome_notes") or "")[:300],
     }

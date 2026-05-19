@@ -823,7 +823,7 @@ class Trading212DemoExecutor(Executor):
             candidates.append(item)
 
         if not candidates:
-            log.info("T212 history for %s: no SELL match on %s", t212_ticker, target_date)
+            log.info("T212 history for %s: no SELL match on or before %s", t212_ticker, on_date.isoformat())
             return None
         candidates.sort(
             key=lambda i: (i.get("order") or {}).get("createdAt") or "",

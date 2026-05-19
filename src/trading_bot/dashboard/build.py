@@ -185,13 +185,37 @@ def build_dashboard_data() -> dict:
     # Phase 9D — sector exposure on currently-open positions (live-tier only).
     sector_exposure = _build_sector_exposure(active + archived)
 
+    # Phase 8F — surface kill-switch state to the dashboard
+    halt_info = _build_halt_info()
+
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "regions": sorted(regions_seen) if regions_seen else ["us"],
         "global_overview": global_overview,
         "sector_exposure": sector_exposure,
+        "halt": halt_info,
         "active": active,
         "archived": archived,
+    }
+
+
+def _build_halt_info() -> dict:
+    """Read state/halt.json. Returns a dict surfaced to the dashboard."""
+    try:
+        from trading_bot.state.halt import is_halted
+        halted, rec = is_halted()
+    except Exception:
+        return {"halted": False}
+    if not halted:
+        return {"halted": False}
+    if rec is None:
+        return {"halted": True, "reason": "(no record on disk)"}
+    return {
+        "halted": True,
+        "reason": rec.reason,
+        "yesterday_pnl_gbp": rec.yesterday_pnl_gbp,
+        "yesterday_pnl_pct": rec.yesterday_pnl_pct,
+        "set_at": rec.set_at,
     }
 
 
@@ -233,6 +257,8 @@ def _build_sector_exposure(entries: list[dict]) -> dict:
         # the metric, not the absolute £.
         by_sector[sector] += notional
         total += notional
+    if total <= 0:
+        return {"by_sector": [], "total_gbp": 0.0, "n_positions": len(open_positions)}
     rows = sorted(
         [{"sector": s, "gbp": round(v, 2), "pct": round(v / total * 100, 1)}
          for s, v in by_sector.items()],

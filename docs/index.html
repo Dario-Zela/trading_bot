@@ -31,6 +31,19 @@
 
   <main class="paper">
 
+    <!-- Phase 8F — kill switch banner. Loud red strip when halt.json is set. -->
+    <template x-if="data && data.halt && data.halt.halted">
+      <div style="margin: -1px -1px 1.5rem -1px; padding: 1rem 1.4rem; background: rgba(139,30,30,0.08); border: 2px solid var(--c-neg); border-radius: 4px; font-family: var(--sans);">
+        <div style="font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-neg); font-weight: 700; margin-bottom: 0.4rem;">
+          ⛔ Kill switch engaged · live-tier entries paused
+        </div>
+        <div style="color: var(--ink); font-size: 0.95rem; line-height: 1.55;" x-text="data.halt.reason"></div>
+        <div style="margin-top: 0.5rem; font-size: 0.78rem; color: var(--ink-muted);">
+          To clear: delete <code>state/halt.json</code> and push.
+        </div>
+      </div>
+    </template>
+
     <header class="masthead">
       <h1>The Bot Tribune<span class="sub">— Live performance</span></h1>
       <div style="font-family: var(--sans); font-size: 0.78rem; color: var(--ink-muted); letter-spacing: 0.05em;">
@@ -258,8 +271,8 @@
                     <tr>
                       <td x-text="t.entry_date"></td>
                       <td class="ticker" x-text="t.ticker"></td>
-                      <td x-text="'$' + t.entry_price.toFixed(2)"></td>
-                      <td x-text="t.exit_price ? '$' + t.exit_price.toFixed(2) : '—'"></td>
+                      <td x-text="currencySymbol(t.currency) + t.entry_price.toFixed(2)"></td>
+                      <td x-text="t.exit_price ? currencySymbol(t.currency) + t.exit_price.toFixed(2) : '—'"></td>
                       <td :class="pnlClass(t.pnl_gbp)" x-text="formatGbp(t.pnl_gbp)"></td>
                       <td style="color: var(--ink-muted); font-size: 0.85em;"
                           x-text="t.fees_gbp ? '-' + formatGbp(Math.abs(t.fees_gbp)) : '—'"></td>
@@ -336,7 +349,7 @@
                       <td :class="pnlClass(p.predicted_return_pct)" x-text="formatPct(p.predicted_return_pct)"></td>
                       <td :class="pnlClass(p.actual_return_pct)"
                           x-text="p.actual_return_pct != null ? formatPct(p.actual_return_pct) : '—'"></td>
-                      <td x-text="p.conviction.toFixed(2)"></td>
+                      <td x-text="formatConviction(p.conviction)"></td>
                       <td>
                         <a href="#" @click.prevent="expanded = (expanded === 'p' + i) ? null : 'p' + i"
                            style="font-family: var(--sans); font-size: 0.78rem; color: var(--ink-muted); text-decoration: underline;"
@@ -554,6 +567,25 @@
           if (v == null) return '—';
           const sign = v > 0 ? '+' : v < 0 ? '−' : '';
           return sign + Math.abs(v).toFixed(2) + '%';
+        },
+
+        formatConviction(c) {
+          // Per-trade predictions stored conviction as float (0.0-1.0);
+          // newer falsifiable predictions store strings ('high'/'medium'/'low').
+          if (c == null) return '—';
+          if (typeof c === 'number') return c.toFixed(2);
+          return String(c);
+        },
+
+        currencySymbol(ccy) {
+          const c = (ccy || '').toUpperCase();
+          if (c === 'GBP') return '£';
+          if (c === 'USD') return '$';
+          if (c === 'EUR') return '€';
+          if (c === 'CHF') return 'CHF ';
+          if (c === 'JPY') return '¥';
+          // Default to $ for legacy rows that pre-date the currency field
+          return '$';
         },
 
         sectorColor(sector) {

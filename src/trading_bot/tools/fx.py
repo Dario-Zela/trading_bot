@@ -17,17 +17,35 @@ from __future__ import annotations
 
 import logging
 from datetime import date
-from functools import lru_cache
-
 import yfinance as yf
 
 
 log = logging.getLogger(__name__)
 
 
-@lru_cache(maxsize=32)
+_RATE_CACHE: dict[str, tuple[float, float]] = {}    # pair → (rate, fetched_unix)
+_RATE_TTL_SECONDS = 3600                            # refresh hourly
+
+
 def _fetch_rate(pair: str) -> float | None:
-    """Fetch the latest close for a yfinance FX pair like EURGBP=X."""
+    """Fetch the latest close for a yfinance FX pair like EURGBP=X.
+
+    Cached per-pair with a 1-hour TTL so long-running pipelines don't
+    reuse the morning's rate at evening exit. Previously @lru_cache had
+    no TTL → stale rates leaked between phases of one workflow run.
+    """
+    import time as _time
+    now = _time.time()
+    cached = _RATE_CACHE.get(pair)
+    if cached is not None and (now - cached[1]) < _RATE_TTL_SECONDS:
+        return cached[0]
+    rate = _fetch_rate_uncached(pair)
+    if rate is not None and rate > 0:
+        _RATE_CACHE[pair] = (rate, now)
+    return rate
+
+
+def _fetch_rate_uncached(pair: str) -> float | None:
     try:
         df = yf.download(
             pair, period="5d", progress=False, threads=False, auto_adjust=False

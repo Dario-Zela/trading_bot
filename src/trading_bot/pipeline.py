@@ -56,10 +56,16 @@ def run_entry(region: str, on_date: date) -> dict[str, list[dict]]:
     # Phase 8F — kill switch. Check yesterday's live-tier P&L; halt
     # new entries on live tiers if it breached the threshold. Shadow
     # strategies still run (no real money at risk; we want the data).
+    #
+    # `_yesterday_live_pnl` sums across regions, so the denominator
+    # MUST also span every active live-tier strategy — not just this
+    # region's. Otherwise a region with small live capital divided by
+    # the cross-region loss spuriously trips the halt.
     from trading_bot.state.halt import (
         LIVE_TIERS, evaluate_and_set_halt, is_halted,
     )
-    live_capital = sum(s.config.capital_gbp for s in strategies if s.config.tier in LIVE_TIERS)
+    all_active = load_active_strategies(region=None)
+    live_capital = sum(s.config.capital_gbp for s in all_active if s.config.tier in LIVE_TIERS)
     if live_capital > 0:
         evaluate_and_set_halt(on_date, total_live_capital_gbp=live_capital)
     halted, halt_rec = is_halted()

@@ -564,6 +564,7 @@ body.page-evolution .editorial-body p:first-of-type::first-letter {
 .verdict.partial   { background: rgba(146,64,14,0.15);  color: #92400e; }
 .verdict.falsified { background: rgba(139,30,30,0.15);  color: var(--c-neg); }
 .verdict.open      { background: rgba(75,85,99,0.15);   color: #4b5563; }
+.verdict.still-open{ background: rgba(15,118,110,0.15); color: #0f766e; }
 
 /* ============================================================================
  * Macro-specific: cross-asset snapshot + sector ratings + risk cards

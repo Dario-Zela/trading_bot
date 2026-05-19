@@ -89,8 +89,11 @@ def reflect_batch(
         }
         for fut in as_completed(futures):
             t = futures[fut]
+            tid = t.get("trade_id")
+            if not tid:
+                continue        # nothing to key under
             try:
-                out[t.get("trade_id")] = fut.result()
+                out[tid] = fut.result()
             except Exception as e:
                 log.warning("Reflection failed for %s: %s", t.get("ticker"), e)
     return out

@@ -152,9 +152,11 @@ def analyze_missed_movers(today: date, region: str) -> MissedMoversReport:
                                   n_tickers_checked=len(all_tickers))
 
     moves.sort(key=lambda x: x[1])
-    top_losers = moves[:_TOP_N_LOSERS]
-    top_gainers = moves[-_TOP_N_GAINERS:][::-1]
-    candidates = list(top_gainers) + list(top_losers)
+    # Filter so "losers" are actually negative and "gainers" actually positive.
+    # On strong-up days we'd otherwise call the smallest gainers "losers".
+    actual_losers = [m for m in moves if m[1] < 0][:_TOP_N_LOSERS]
+    actual_gainers = [m for m in reversed(moves) if m[1] > 0][:_TOP_N_GAINERS]
+    candidates = list(actual_gainers) + list(actual_losers)
     log.info("missed-movers: top %d gainers + %d losers selected",
              len(top_gainers), len(top_losers))
 
@@ -405,20 +407,20 @@ def load_report(today: date, region: str) -> dict | None:
 def load_recent_reports(days: int = 7) -> list[dict]:
     """Load every missed-movers report from the last `days` days, both
     regions. Used by the weekly evolution agent."""
+    from datetime import timedelta
     out: list[dict] = []
     d = _missed_movers_dir()
     if not d.exists():
         return out
+    cutoff_iso = (date.today() - timedelta(days=days)).isoformat()
     for p in sorted(d.glob("*.json")):
         try:
             payload = json.loads(p.read_text())
         except json.JSONDecodeError:
             continue
+        if (payload.get("date") or "") < cutoff_iso:
+            continue
         out.append(payload)
-    # Keep last `days` worth, prefer newest first
+    # Newest-first
     out.sort(key=lambda r: r.get("date", ""), reverse=True)
-    # Filter by date string lex order (works for ISO dates)
-    iso_today = date.today().isoformat()
-    cutoff = (date.today().replace(day=1) if days > 28 else date.today()).isoformat()
-    # Simple cutoff: keep first N*2 entries (two regions × days)
-    return out[: days * 2]
+    return out
