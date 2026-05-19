@@ -37,6 +37,12 @@ import requests
 from trading_bot.executor.base import Executor, TradeIntent
 from trading_bot.state import TradeRecord, append_trade, mark_trade_exited, read_open_trades
 from trading_bot.t212_slot import T212_PAPER_BUDGET_GBP, T212Creds, load_slot_creds
+from trading_bot.tools.fees import (
+    TradeContext,
+    compute_fees,
+    t212_exchange_from_ticker,
+    t212_instrument_type,
+)
 from trading_bot.tools.fx import convert_from_gbp, to_gbp_multiplier
 from trading_bot.tools.t212_instruments import Translator, fetch_instruments
 
@@ -194,6 +200,9 @@ class Trading212DemoExecutor(Executor):
                     take_profit_pct=intent.take_profit_pct,
                     thesis=intent.thesis,
                     broker_order_id=broker_order_id,
+                    currency=ccy,
+                    exchange=t212_exchange_from_ticker(t212_ticker),
+                    instrument_type=t212_instrument_type(inst.get("type", "")),
                 )
                 append_trade(record)
                 continue
@@ -213,6 +222,9 @@ class Trading212DemoExecutor(Executor):
                 take_profit_pct=intent.take_profit_pct,
                 thesis=intent.thesis,
                 broker_order_id=broker_order_id,
+                currency=ccy,
+                exchange=t212_exchange_from_ticker(t212_ticker),
+                instrument_type=t212_instrument_type(inst.get("type", "")),
             )
             append_trade(record)
 
@@ -377,12 +389,37 @@ class Trading212DemoExecutor(Executor):
 
             entry_price = float(trade["entry_price"])
             quantity = float(trade["quantity"])
+            fees_gbp = 0.0
+            fees_breakdown: dict = {}
             if close_fill_price is None:
                 pnl_gbp: float | None = None
                 pnl_pct: float | None = None
                 exit_price_to_record: float | None = None
             else:
-                pnl_gbp = (close_fill_price - entry_price) * quantity
+                gross_pnl_gbp = (close_fill_price - entry_price) * quantity
+                # T212 stores fill prices in GBP via _to_gbp(), so entry +
+                # exit are already GBP. compute_fees() treats them as GBP
+                # natively when currency=GBP, and converts via FX when not.
+                # For T212-paper-recorded prices the currency is always
+                # effectively GBP (already converted at fill time), but the
+                # FX/stamp-duty rules attach to the underlying instrument's
+                # actual currency + exchange — which we stored on the entry
+                # record. So we pass that metadata through.
+                native_ccy = (trade.get("currency") or "GBP").upper()
+                exch = trade.get("exchange") or t212_exchange_from_ticker(t212_ticker)
+                inst_type = trade.get("instrument_type") or "share"
+                fees = compute_fees(TradeContext(
+                    tier=_TIER, currency=native_ccy, exchange=exch,
+                    instrument_type=inst_type,
+                    # T212 fill prices are already GBP (via _to_gbp at entry
+                    # and exit), so notionals are GBP without further work.
+                    entry_notional_gbp=abs(entry_price * quantity),
+                    exit_notional_gbp=abs(close_fill_price * quantity),
+                    quantity=abs(quantity),
+                ))
+                fees_gbp = fees.total_gbp
+                fees_breakdown = fees.as_dict()
+                pnl_gbp = gross_pnl_gbp - fees_gbp
                 pnl_pct = (close_fill_price / entry_price - 1.0) * 100.0 if entry_price > 0 else 0.0
                 exit_price_to_record = close_fill_price
 
@@ -393,6 +430,8 @@ class Trading212DemoExecutor(Executor):
                 pnl_gbp=pnl_gbp if pnl_gbp is not None else 0.0,
                 pnl_pct=pnl_pct if pnl_pct is not None else 0.0,
                 exit_reason=exit_reason,
+                fees_gbp=fees_gbp,
+                fees_breakdown=fees_breakdown,
             )
             closed.append({
                 **trade,

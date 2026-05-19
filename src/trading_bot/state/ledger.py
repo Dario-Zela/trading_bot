@@ -43,6 +43,19 @@ class TradeRecord:
     # the fill-poll timed out — exit then reconciles via T212 order history.
     broker_order_id: str | None = None
 
+    # Wave 7 — fee accounting. `currency` is the instrument's native currency
+    # ("USD" for Alpaca, T212 reports varies); `exchange` is the MIC / common
+    # exchange code (LSE / NYSE / NASDAQ / XPAR / ...); `instrument_type` is
+    # 'share' / 'etf' / 'aim' / 'bond' / 'gilt' — drives stamp-duty exemption.
+    # `fees_gbp` is the aggregate deducted from gross to reach `pnl_gbp` (i.e.
+    # pnl_gbp is NET going forward). `fees_breakdown` carries the line items
+    # for dashboard transparency. Defaults keep old rows backwards-compatible.
+    currency: str = "GBP"
+    exchange: str = ""
+    instrument_type: str = "share"
+    fees_gbp: float = 0.0
+    fees_breakdown: dict = field(default_factory=dict)
+
     created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     updated_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
@@ -98,8 +111,14 @@ def mark_trade_exited(
     exit_reason: str = "scheduled",
     outcome_notes: str | None = None,
     risks_observed: str | None = None,
+    fees_gbp: float = 0.0,
+    fees_breakdown: dict | None = None,
 ) -> None:
     """Rewrite the ledger in place, setting exit fields on the matching trade.
+
+    `pnl_gbp` should be NET of `fees_gbp` so downstream aggregations (dashboard
+    summaries, evolution metrics) sum to the user's true bottom line without
+    needing to subtract fees separately. `fees_breakdown` is for display.
 
     JSONL append-only files don't support in-place edits cleanly. For Wave 1 the
     ledger is small enough that a rewrite is fine. If this becomes a bottleneck
@@ -118,6 +137,9 @@ def mark_trade_exited(
             row["pnl_gbp"] = pnl_gbp
             row["pnl_pct"] = pnl_pct
             row["exit_reason"] = exit_reason
+            row["fees_gbp"] = fees_gbp
+            if fees_breakdown is not None:
+                row["fees_breakdown"] = fees_breakdown
             if outcome_notes is not None:
                 row["outcome_notes"] = outcome_notes
             if risks_observed is not None:

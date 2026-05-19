@@ -36,6 +36,8 @@ import requests
 from trading_bot.alpaca_slot import AlpacaCreds, load_slot_creds
 from trading_bot.executor.base import Executor, TradeIntent
 from trading_bot.state import TradeRecord, append_trade, mark_trade_exited, read_open_trades
+from trading_bot.tools.fees import TradeContext, compute_fees
+from trading_bot.tools.fx import to_gbp_multiplier
 
 
 _TIER = "alpaca-paper"
@@ -141,6 +143,13 @@ class AlpacaPaperExecutor(Executor):
                 stop_loss_pct=intent.stop_loss_pct,
                 take_profit_pct=intent.take_profit_pct,
                 thesis=intent.thesis,
+                # Alpaca is US-only; we tag NYSE generically (NASDAQ trades
+                # share the same fee model). The shadow-T212 cost path keys
+                # off `currency` for FX fees and `exchange` only for the
+                # negligible SEC/FINRA pieces.
+                currency="USD",
+                exchange="NYSE",
+                instrument_type="share",
             )
             append_trade(record)
 
@@ -224,12 +233,35 @@ class AlpacaPaperExecutor(Executor):
 
             entry_price = float(trade["entry_price"])
             quantity = float(trade["quantity"])
+            fees_gbp = 0.0
+            fees_breakdown: dict = {}
             if close_fill_price is None:
                 pnl_gbp: float | None = None
                 pnl_pct: float | None = None
                 exit_price_to_record: float | None = None
             else:
-                pnl_gbp = (close_fill_price - entry_price) * quantity
+                # Alpaca prices + qty are USD/shares. Convert P&L to GBP at
+                # the day's USDGBP spot, then shadow the T212 cost model
+                # so the bot's tracked P&L reflects what live-on-T212 would
+                # actually pay. Alpaca paper itself charges nothing; this
+                # divergence is intentional.
+                pnl_usd = (close_fill_price - entry_price) * quantity
+                usd_to_gbp = to_gbp_multiplier("USD") or 0.79
+                gross_pnl_gbp = pnl_usd * usd_to_gbp
+                entry_notional_gbp = abs(entry_price * quantity * usd_to_gbp)
+                exit_notional_gbp = abs(close_fill_price * quantity * usd_to_gbp)
+                fees = compute_fees(TradeContext(
+                    tier=_TIER,
+                    currency=(trade.get("currency") or "USD").upper(),
+                    exchange=trade.get("exchange") or "NYSE",
+                    instrument_type=trade.get("instrument_type") or "share",
+                    entry_notional_gbp=entry_notional_gbp,
+                    exit_notional_gbp=exit_notional_gbp,
+                    quantity=abs(quantity),
+                ))
+                fees_gbp = fees.total_gbp
+                fees_breakdown = fees.as_dict()
+                pnl_gbp = gross_pnl_gbp - fees_gbp
                 pnl_pct = (
                     (close_fill_price / entry_price - 1.0) * 100.0 if entry_price > 0 else 0.0
                 )
@@ -242,6 +274,8 @@ class AlpacaPaperExecutor(Executor):
                 pnl_gbp=pnl_gbp if pnl_gbp is not None else 0.0,
                 pnl_pct=pnl_pct if pnl_pct is not None else 0.0,
                 exit_reason=exit_reason,
+                fees_gbp=fees_gbp,
+                fees_breakdown=fees_breakdown,
             )
             closed.append(
                 {
@@ -251,6 +285,8 @@ class AlpacaPaperExecutor(Executor):
                     "pnl_gbp": pnl_gbp if pnl_gbp is not None else 0.0,
                     "pnl_pct": pnl_pct if pnl_pct is not None else 0.0,
                     "exit_reason": exit_reason,
+                    "fees_gbp": fees_gbp,
+                    "fees_breakdown": fees_breakdown,
                 }
             )
         return closed

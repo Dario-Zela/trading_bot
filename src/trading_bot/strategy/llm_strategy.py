@@ -324,6 +324,13 @@ class LLMStrategy(Strategy):
             f"- use_take_profits: {cfg.use_take_profits}\n"
         )
 
+        # Trading-cost awareness — strategies are routed through
+        # Trading 212 (live) or shadowed against the same fee schedule
+        # (paper). Costs are non-trivial for short-horizon trades and
+        # should be subtracted from expected return when scoring picks.
+        from trading_bot.tools.fees import FEE_SCHEDULE_BRIEF
+        sections.append("## Trading costs (subtract from expected return)\n" + FEE_SCHEDULE_BRIEF)
+
         # Optional macro context — only injected when the strategy lists
         # get_macro_view in its tools list.
         tools_set = set(cfg.tools or [])
@@ -356,6 +363,14 @@ class LLMStrategy(Strategy):
         per_candidate_earnings = self._maybe_fetch_earnings(tools_set, candidates)
         per_candidate_insiders = self._maybe_fetch_insiders(tools_set, candidates)
         per_candidate_filings = self._maybe_fetch_filings(tools_set, candidates)
+
+        # Compute the typical position size once so the per-candidate cost
+        # estimate is realistic for THIS strategy's sizing — not a generic
+        # number the model has to convert from %.
+        from trading_bot.tools.fees import (
+            estimate_round_trip_cost_pct, yf_ticker_classify,
+        )
+        typical_position_gbp = cfg.capital_gbp * (cfg.max_position_pct / 100.0)
 
         sections.append("## Candidates (pre-filtered to those in a healthy uptrend)\n")
         for c in candidates:
@@ -400,6 +415,15 @@ class LLMStrategy(Strategy):
                         bullets.append(f"    > {f.excerpt[:250]}...")
                 filings_lines = "\n  Recent filings:\n" + "\n".join(bullets)
 
+            exch, ccy = yf_ticker_classify(c.ticker)
+            cost = estimate_round_trip_cost_pct(
+                tier="trading212-paper", currency=ccy, exchange=exch,
+                instrument_type="share",
+                notional_gbp=typical_position_gbp,
+                quantity=typical_position_gbp / max(c.close, 1.0),
+            )
+            cost_line = f"\n- round-trip cost: {cost['note']}"
+
             sections.append(
                 f"### {c.ticker}\n"
                 f"- close: ${c.close:.2f} (as of {c.as_of})\n"
@@ -409,6 +433,7 @@ class LLMStrategy(Strategy):
                 f"- SMA20 ${c.sma_20:.2f} (above: {c.above_sma_20}), SMA50 ${c.sma_50:.2f} (above: {c.above_sma_50})\n"
                 f"- 5-day return: {c.return_5d_pct:+.2f}%, 20-day: {c.return_20d_pct:+.2f}%\n"
                 f"- volume ratio (today vs 20-day avg): {c.volume_ratio:.2f}"
+                + cost_line
                 + earnings_line
                 + insider_line
                 + filings_lines

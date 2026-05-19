@@ -226,7 +226,7 @@
                 <thead>
                   <tr>
                     <th>Date</th><th>Ticker</th><th>Entry</th><th>Exit</th>
-                    <th>P&amp;L £</th><th>P&amp;L %</th><th>Reason</th><th></th>
+                    <th>P&amp;L £</th><th>Fees</th><th>P&amp;L %</th><th>Reason</th><th></th>
                   </tr>
                 </thead>
                 <template x-for="t in current.executed" :key="t.trade_id">
@@ -237,6 +237,8 @@
                       <td x-text="'$' + t.entry_price.toFixed(2)"></td>
                       <td x-text="t.exit_price ? '$' + t.exit_price.toFixed(2) : '—'"></td>
                       <td :class="pnlClass(t.pnl_gbp)" x-text="formatGbp(t.pnl_gbp)"></td>
+                      <td style="color: var(--ink-muted); font-size: 0.85em;"
+                          x-text="t.fees_gbp ? '-' + formatGbp(Math.abs(t.fees_gbp)) : '—'"></td>
                       <td :class="pnlClass(t.pnl_pct)" x-text="formatPct(t.pnl_pct)"></td>
                       <td x-text="t.exit_reason"></td>
                       <td>
@@ -246,11 +248,24 @@
                       </td>
                     </tr>
                     <tr x-show="expanded === t.trade_id">
-                      <td colspan="8" style="background: var(--paper-dark); padding: 1rem 1.2rem; font-family: var(--serif-body);">
+                      <td colspan="9" style="background: var(--paper-dark); padding: 1rem 1.2rem; font-family: var(--serif-body);">
                         <div style="margin-bottom: 0.6rem;">
                           <div style="font-family: var(--sans); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.2rem;">Why entered</div>
                           <div x-text="t.thesis || '(no thesis recorded)'"></div>
                         </div>
+                        <template x-if="t.fees_breakdown && Object.keys(t.fees_breakdown).length">
+                          <div style="margin-bottom: 0.6rem;">
+                            <div style="font-family: var(--sans); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-amber); margin-bottom: 0.2rem;">Fees breakdown</div>
+                            <div style="font-family: var(--sans); font-size: 0.85rem;">
+                              <template x-for="[k, v] in Object.entries(t.fees_breakdown)" :key="k">
+                                <span style="margin-right: 1rem;">
+                                  <span x-text="k.replace(/_gbp$/, '').replace(/_/g, ' ')"></span>
+                                  <strong x-text="'£' + Number(v).toFixed(2)"></strong>
+                                </span>
+                              </template>
+                            </div>
+                          </div>
+                        </template>
                         <template x-if="t.outcome_notes">
                           <div style="margin-bottom: 0.6rem;">
                             <div style="font-family: var(--sans); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-pos); margin-bottom: 0.2rem;">What happened</div>

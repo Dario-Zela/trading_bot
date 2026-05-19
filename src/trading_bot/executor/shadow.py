@@ -11,6 +11,8 @@ from trading_bot.state import (
     read_open_trades,
 )
 from trading_bot.tools import get_history
+from trading_bot.tools.fees import TradeContext, compute_fees, yf_ticker_classify
+from trading_bot.tools.fx import to_gbp_multiplier
 
 
 _TIER = "shadow"
@@ -51,6 +53,7 @@ class ShadowExecutor(Executor):
             allocation_gbp = capital_gbp * (intent.allocation_pct / 100.0)
             quantity = allocation_gbp / entry_price if entry_price > 0 else 0.0
 
+            exch, ccy = yf_ticker_classify(intent.ticker)
             record = TradeRecord(
                 trade_id=str(uuid.uuid4()),
                 strategy_id=strategy_id,
@@ -65,6 +68,9 @@ class ShadowExecutor(Executor):
                 stop_loss_pct=intent.stop_loss_pct,
                 take_profit_pct=intent.take_profit_pct,
                 thesis=intent.thesis,
+                currency=ccy,
+                exchange=exch,
+                instrument_type="share",
             )
             append_trade(record)
 
@@ -105,7 +111,34 @@ class ShadowExecutor(Executor):
                 take_profit_pct=trade.get("take_profit_pct"),
             )
 
-            pnl_gbp = (exit_price - entry_price) * quantity
+            # Shadow mirrors whichever live broker we'd use for this
+            # region. yfinance prices are in the instrument's native
+            # currency — except for LSE listings where yfinance returns
+            # pence-corrected pounds (so .L tickers are GBP-priced by the
+            # time we see them, no conversion needed). Convert to GBP at
+            # spot for everything else.
+            native_ccy = (trade.get("currency") or "USD").upper()
+            exch = trade.get("exchange") or yf_ticker_classify(trade["ticker"])[0]
+            if native_ccy == "GBP":
+                native_to_gbp = 1.0
+            else:
+                native_to_gbp = to_gbp_multiplier(native_ccy) or 1.0
+            gross_pnl_gbp = (exit_price - entry_price) * quantity * native_to_gbp
+            entry_notional_gbp = abs(entry_price * quantity * native_to_gbp)
+            exit_notional_gbp = abs(exit_price * quantity * native_to_gbp)
+            fees = compute_fees(TradeContext(
+                tier=_TIER, currency=native_ccy, exchange=exch,
+                instrument_type=trade.get("instrument_type") or "share",
+                entry_notional_gbp=entry_notional_gbp,
+                exit_notional_gbp=exit_notional_gbp,
+                quantity=abs(quantity),
+            ))
+            fees_gbp = fees.total_gbp
+            fees_breakdown = fees.as_dict()
+            pnl_gbp = gross_pnl_gbp - fees_gbp
+            # pnl_pct is the raw price-side return; fees do not factor in
+            # here because the dashboard already shows fees as a separate
+            # line and we want the % to mean "the price moved by this".
             pnl_pct = (exit_price / entry_price - 1.0) * 100.0 if entry_price > 0 else 0.0
 
             outcome_notes, risks_observed = _templated_reflection(
@@ -121,6 +154,8 @@ class ShadowExecutor(Executor):
                 exit_reason=exit_reason,
                 outcome_notes=outcome_notes,
                 risks_observed=risks_observed,
+                fees_gbp=fees_gbp,
+                fees_breakdown=fees_breakdown,
             )
 
             closed.append(
@@ -133,6 +168,8 @@ class ShadowExecutor(Executor):
                     "exit_reason": exit_reason,
                     "outcome_notes": outcome_notes,
                     "risks_observed": risks_observed,
+                    "fees_gbp": fees_gbp,
+                    "fees_breakdown": fees_breakdown,
                 }
             )
         return closed
