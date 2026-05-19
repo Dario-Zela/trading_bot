@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import sys
 from collections import defaultdict
 from datetime import date
@@ -28,6 +29,13 @@ from trading_bot.meta.reflection import (
     reflect_predictions_on_day,
 )
 from trading_bot.state.paths import ledger_path, predictions_path
+
+
+# Cap how many (date, region) pairs we'll process in one run. The
+# Sonnet calls take ~1-3 minutes per strategy-chunk so a single
+# workflow run can't realistically cover unbounded history. Today's
+# uk-eu + us is the default; bump via the env var to back-fill more.
+_DAYS_LIMIT = int(os.environ.get("REFLECT_DAYS_LIMIT", "2") or "2")
 
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
@@ -124,12 +132,24 @@ def main() -> int:
         log.info("Prediction reflection — no eligible days/regions to catch up")
         return 0
 
+    # Most recent first so today's gets processed before any older backfill.
+    pairs = sorted(days_regions, reverse=True)
+    processed = pairs[:_DAYS_LIMIT]
+    deferred = pairs[_DAYS_LIMIT:]
     log.info(
-        "Prediction reflection — catching up %d (date, region) pair(s)",
-        len(days_regions),
+        "Prediction reflection — %d (date, region) pair(s) eligible; "
+        "processing newest %d this run (limit REFLECT_DAYS_LIMIT=%d)",
+        len(pairs), len(processed), _DAYS_LIMIT,
     )
+    if deferred:
+        log.info(
+            "Deferred for a future run: %s",
+            ", ".join(f"{d}/{r}" for d, r in deferred[:8])
+            + (" …" if len(deferred) > 8 else ""),
+        )
+
     total_preds = 0
-    for d_iso, region in sorted(days_regions):
+    for d_iso, region in processed:
         try:
             d = date.fromisoformat(d_iso)
         except ValueError:

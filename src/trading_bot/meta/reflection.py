@@ -86,6 +86,12 @@ def grade_predictions(on_date: date, region: str | None = None) -> int:
     return updated
 
 
+def _chunked(items: list, size: int):
+    """Yield successive `size`-sized chunks from `items`."""
+    for i in range(0, len(items), size):
+        yield items[i:i + size]
+
+
 def _classify_outcome(actual_pct: float) -> str:
     if actual_pct >= 4.0:
         return "strong_up"
@@ -248,11 +254,17 @@ def reflect_predictions_on_day(on_date: date, region: str | None = None) -> int:
 
     notes_by_strategy: dict[str, dict[str, str]] = {}
     for sid, preds in by_strategy.items():
-        try:
-            notes_by_strategy[sid] = _reflect_predictions_strategy(sid, preds, on_date)
-        except ClaudeCodeError as e:
-            log.error("Prediction reflection failed for %s: %s", sid, e)
-            continue
+        # Chunk per strategy — single Sonnet calls with 200+ prediction
+        # cards balloon to 75k-char prompts and take 3+ minutes apiece.
+        # A 30-row chunk keeps each call under ~25 sec and ~10k chars.
+        merged: dict[str, str] = {}
+        for chunk in _chunked(preds, 30):
+            try:
+                merged.update(_reflect_predictions_strategy(sid, chunk, on_date))
+            except ClaudeCodeError as e:
+                log.error("Prediction reflection failed for %s chunk: %s", sid, e)
+                continue
+        notes_by_strategy[sid] = merged
 
     if not notes_by_strategy:
         return 0
