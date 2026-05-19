@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Predictions archive — Trading Bot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../index.html">Dashboard</a>
+<a class="nav-tab active" href="../news/latest.html">News</a>
+<a class="nav-tab" href="../macro/latest.html">Macro</a>
+<a class="nav-tab" href="../evolution.html">Evolution</a>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper"><header class="masthead"><h1>The Bot Tribune<span class="sub">— Predictions archive</span></h1><div class="subtitle">20 predictions on file · 1 graded · Proven 100% · Partial 0% · Falsified 0%</div></header><div class="masthead-strip"><span><strong>All calls</strong></span><span>Rendered 2026-05-19 15:14 UTC</span><span></span></div><div class="sectors-table"><h3>Verdict rate by conviction</h3><table><tbody><tr><td class="sector"><strong>MEDIUM</strong></td><td class="lean">1 graded / 14 total</td><td class="driver"><span class="up">Proven 100%</span> · Partial 0% · <span class="down">Falsified 0%</span></td></tr></tbody></table></div>
+<div style="margin: 1.5rem 0; padding: 1rem; background: var(--paper-dark); border-radius: 4px; display: flex; gap: 1rem; flex-wrap: wrap; font-family: var(--sans); font-size: 0.85rem;">
+  <label>Source
+    <select id="filter-source" style="margin-left: 0.4rem; padding: 0.2rem 0.5rem;">
+      <option value="">all</option>
+      <option value="news">news</option>
+      <option value="macro">macro</option>
+      <option value="evolution">evolution</option>
+    </select>
+  </label>
+  <label>Horizon
+    <select id="filter-horizon" style="margin-left: 0.4rem; padding: 0.2rem 0.5rem;">
+      <option value="">all</option>
+      <option value="tomorrow">tomorrow</option>
+      <option value="this-week">this-week</option>
+      <option value="this-month">this-month</option>
+      <option value="this-quarter">this-quarter</option>
+      <option value="this-half">this-half</option>
+      <option value="this-year">this-year</option>
+      <option value="multi-year">multi-year</option>
+    </select>
+  </label>
+  <label>Status
+    <select id="filter-status" style="margin-left: 0.4rem; padding: 0.2rem 0.5rem;">
+      <option value="">all</option>
+      <option value="proven">proven</option>
+      <option value="partial">partial</option>
+      <option value="falsified">falsified</option>
+      <option value="still-open">still-open</option>
+      <option value="open">open</option>
+    </select>
+  </label>
+  <label>Conviction
+    <select id="filter-conviction" style="margin-left: 0.4rem; padding: 0.2rem 0.5rem;">
+      <option value="">all</option>
+      <option value="high">high</option>
+      <option value="medium">medium</option>
+      <option value="low">low</option>
+    </select>
+  </label>
+  <span id="filter-count" style="margin-left: auto; color: var(--ink-muted); align-self: center;"></span>
+</div>
+<script>
+(function() {
+  const filters = ['source', 'horizon', 'status', 'conviction'];
+  function applyFilters() {
+    const vals = {};
+    filters.forEach(f => vals[f] = document.getElementById('filter-' + f).value);
+    let shown = 0, total = 0;
+    document.querySelectorAll('article.pred').forEach(el => {
+      total++;
+      const match = filters.every(f => {
+        const want = vals[f];
+        const got = el.dataset[f] || '';
+        return !want || got === want;
+      });
+      el.style.display = match ? '' : 'none';
+      if (match) shown++;
+    });
+    document.getElementById('filter-count').textContent = `${shown} / ${total}`;
+  }
+  filters.forEach(f => document.getElementById('filter-' + f).addEventListener('change', applyFilters));
+  applyFilters();
+})();
+</script>
+<div class="section-label calls"><span>Every call on file</span><span class="ord">newest first</span></div><article class="pred" data-source="news" data-horizon="tomorrow" data-status="open" data-conviction="high" style="margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--hairline);"><p><span class="verdict open">OPEN</span><span style="font-family:var(--sans);font-size:0.74rem;color:var(--ink-muted);"> [news · tomorrow · high conviction] · made 2026-05-19 · target 2026-05-20</span></p><h3 style="font-size: 1.15rem; margin: 0.3rem 0;">WTI crude closes above $104 on 2026-05-20 as Iran talks remain unresolved and US military standby posture holds.</h3><div class="falsif" style="margin: 0.4rem 0;"><strong>Falsified if:</strong> WTI front-month settles at or below $104.00 on May 20.</div><p style="font-family:var(--serif-body); color: var(--ink-soft); margin: 0.3rem 0;">Oil topped $106 today with no resolution in sight; the US denial of a sanctions deal and Iran&#x27;s defiant posture remove the near-term catalyst for a meaningful pullback. Military standby keeps the risk premium sticky.</p></article>
+<article class="pred" data-source="news" data-horizon="tomorrow" data-status="open" data-conviction="medium" style="margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--hairline);"><p><span class="verdict open">OPEN</span><span style="font-family:var(--sans);font-size:0.74rem;color:var(--ink-muted);"> [news · tomorrow · medium conviction] · made 2026-05-19 · target 2026-05-20</span></p><h3 style="font-size: 1.15rem; margin: 0.3rem 0;">Nasdaq closes down again on 2026-05-20, extending the losing streak to two sessions, with semiconductor names leading the decline.</h3><div class="falsif" style="margin: 0.4rem 0;"><strong>Falsified if:</strong> Nasdaq closes flat or positive on May 20.</div><p style="font-family:var(--serif-body); color: var(--ink-soft); margin: 0.3rem 0;">Third Point&#x27;s Q1 rotation out of Nvidia and Microsoft signals institutional doubt on AI-capex sustainability; AMAT and MU are already under pressure. A second down day in semis is the path of least resistance without a diplomatic breakthrough.</p></article>
+<article class="pred" data-source="news" data-horizon="this-week" data-status="open" data-conviction="high" style="margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--hairline);"><p><span class="verdict open">OPEN</span><span style="font-family:var(--sans);font-size:0.74rem;color:var(--ink-muted);"> [news · this-week · high conviction] · made 2026-05-19 · target 2026-05-23</span></p><h3 style="font-size: 1.15rem; margin: 0.3rem 0;">The 10-year Treasury yield closes at or above 4.55% at least three sessions this week (May 20–23).</h3><div class="falsif" style="margin: 0.4rem 0;"><strong>Falsified if:</strong> The 10-year yield closes below 4.55% in two or more sessions between May 20 and May 23 inclusive.</div><p style="font-family:var(--serif-body); color: var(--ink-soft); margin: 0.3rem 0;">Zandi and Yardeni&#x27;s July-hike warnings, sticky oil above $106, and a geopolitical risk premium all argue against a bond rally. The 4.6% level cited today is the floor, not the ceiling.</p></article>
+<article class="pred" data-source="news" data-horizon="this-week" data-status="open" data-conviction="medium" style="margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--hairline);"><p><span class="verdict open">OPEN</span><span style="font-family:var(--sans);font-size:0.74rem;color:var(--ink-muted);"> [news · this-week · medium conviction] · made 2026-05-19 · target 2026-05-26</span></p><h3 style="font-size: 1.15rem; margin: 0.3rem 0;">GE Aerospace shares outperform the S&amp;P 500 by at least 2 percentage points on a cumulative basis between May 20–26.</h3><div class="falsif" style="margin: 0.4rem 0;"><strong>Falsified if:</strong> GE Aerospace&#x27;s cumulative return May 20–26 trails the S&amp;P 500 total return over the same period by any margin.</div><p style="font-family:var(--serif-body); color: var(--ink-soft); margin: 0.3rem 0;">The China aircraft deal locks GE into contractual engine revenue regardless of Boeing execution risk or political reversal — a durable earnings floor the market has not fully priced relative to peers facing capex uncertainty.</p></article>
+<article class="pred" data-source="news" data-horizon="this-month" data-status="open" data-conviction="medium" style="margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--hairline);"><p><span class="verdict open">OPEN</span><span style="font-family:var(--sans);font-size:0.74rem;color:var(--ink-muted);"> [news · this-month · medium conviction] · made 2026-05-19 · target 2026-06-18</span></p><h3 style="font-size: 1.15rem; margin: 0.3rem 0;">Silver spot price falls below $31.50 at least once before June 18 as HSBC&#x27;s own warning that upside is spent triggers profit-taking.</h3><div class="falsif" style="margin: 0.4rem 0;"><strong>Falsified if:</strong> Silver spot price does not trade below $31.50 at any point between May 20 and June 18.</div><p style="font-family:var(--serif-body); color: var(--ink-soft); margin: 0.3rem 0;">HSBC raising targets while simultaneously flagging exhausted upside is a textbook sell-the-news setup. Thin positioning in small-caps suggests capital rotation away from commodities into equities is the incremental flow.</p></article>
+<article class="pred" data-source="news" data-horizon="this-month" data-status="open" data-conviction="low" style="margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--hairline);"><p><span class="verdict open">OPEN</span><span style="font-family:var(--sans);font-size:0.74rem;color:var(--ink-muted);"> [news · this-month · low conviction] · made 2026-05-19 · target 2026-06-18</span></p><h3 style="font-size: 1.15rem; margin: 0.3rem 0;">Citigroup receives final CSRC approval for its wholly-owned China securities unit before June 18.</h3><div class="falsif" style="margin: 0.4rem 0;"><strong>Falsified if:</strong> No official CSRC approval announcement for Citigroup&#x27;s China securities unit is issued by market close on June 18.</div><p style="font-family:var(--serif-body); color: var(--ink-soft); margin: 0.3rem 0;">The CSRC removing the application from the pending list is the last public checkpoint before a decision; that step is already done. Regulatory calendars slip, but the pipeline is clear and the Trump-China goodwill from the aircraft deal creates a permissive backdrop.</p></article>
+<article class="pred" data-source="macro" data-horizon="this-month" data-status="open" data-conviction="medium" style="margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--hairline);"><p><span class="verdict open">OPEN</span><span style="font-family:var(--sans);font-size:0.74rem;color:var(--ink-muted);"> [macro · this-month · medium conviction] · made 2026-05-18 · target 2026-06-17</span></p><h3 style="font-size: 1.15rem; margin: 0.3rem 0;">30Y Treasury yield closes at or above 5.25% at least once before June 17, 2026.</h3><div class="falsif" style="margin: 0.4rem 0;"><strong>Falsified if:</strong> The 30Y yield closes below 5.25% on every trading session through June 17.</div><p style="font-family:var(--serif-body); color: var(--ink-soft); margin: 0.3rem 0;">Fiscal premium re-pricing has momentum and no visible catalyst to arrest it; 10bps of additional upside from 5.147% is a conservative extrapolation of a move already in progress. The market has not priced a credible US fiscal consolidation, so the path of least resistance for the long end remains hi</p></article>
+<article class="pred" data-source="macro" data-horizon="this-month" data-status="open" data-conviction="medium" style="margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--hairline);"><p><span class="verdict open">OPEN</span><span style="font-family:var(--sans);font-size:0.74rem;color:var(--ink-muted);"> [macro · this-month · medium conviction] · made 2026-05-18 · target 2026-06-15</span></p><h3 style="font-size: 1.15rem; margin: 0.3rem 0;">SLV&#x27;s total return from May 18 outperforms GLD&#x27;s by at least 5 percentage points by June 15, 2026.</h3><div class="falsif" style="margin: 0.4rem 0;"><strong>Falsified if:</strong> SLV&#x27;s return from May 18 minus GLD&#x27;s return from May 18 is below +5pp on June 15.</div><p style="font-family:var(--serif-body); color: var(--ink-soft); margin: 0.3rem 0;">Silver&#x27;s -10.3% weekly collapse is a velocity outlier driven by the dollar surge; the implied gold/silver ratio is at a historically stretched level that has consistently mean-reverted within weeks once dollar momentum plateaus. Industrial demand underpinning silver is intact and not the source of t</p></article>
+<article class="pred" data-source="macro" data-horizon="this-quarter" data-status="open" data-conviction="medium" style="margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--hairline);"><p><span class="verdict open">OPEN</span><span style="font-family:var(--sans);font-size:0.74rem;color:var(--ink-muted);"> [macro · this-quarter · medium conviction] · made 2026-05-18 · target 2026-08-16</span></p><h3 style="font-size: 1.15rem; margin: 0.3rem 0;">XLK beats XLE on total return (both from May 18) by at least 2pp by August 16, 2026.</h3><div class="falsif" style="margin: 0.4rem 0;"><strong>Falsified if:</strong> XLE&#x27;s total return from May 18 meets or exceeds XLK&#x27;s total return minus 2pp on August 16.</div><p style="font-family:var(--serif-body); color: var(--ink-soft); margin: 0.3rem 0;">Energy&#x27;s +23% 20-day supply-shock surge has already priced a significant disruption premium; absent oil continuing to rise from here, XLE faces mean-reversion headwinds. The AI capex cycle underpinning tech is structural, and quarterly pullbacks after large runs have consistently been absorbed withi</p></article>
+<article class="pred" data-source="macro" data-horizon="this-quarter" data-status="open" data-conviction="medium" style="margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--hairline);"><p><span class="verdict open">OPEN</span><span style="font-family:var(--sans);font-size:0.74rem;color:var(--ink-muted);"> [macro · this-quarter · medium conviction] · made 2026-05-18 · target 2026-08-16</span></p><h3 style="font-size: 1.15rem; margin: 0.3rem 0;">The 3M-10Y Treasury spread (now +105bps) widens to at least 135bps by August 16, 2026.</h3><div class="falsif" style="margin: 0.4rem 0;"><strong>Falsified if:</strong> The 3M-10Y spread fails to close at or above 135bps on any single day through August 16.</div><p style="font-family:var(--serif-body); color: var(--ink-soft); margin: 0.3rem 0;">Fiscal premium continues lifting the 10Y while the 3M is anchored by a Fed on hold; 30bps of additional steepening is a conservative ask given the structural drivers of the current re-steepening are unchanged. The market is not pricing a credible mechanism to halt the long-end drift.</p></article>
+<article class="pred" data-source="macro" data-horizon="this-quarter" data-status="open" data-conviction="medium" style="margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--hairline);"><p><span class="verdict open">OPEN</span><span style="font-family:var(--sans);font-size:0.74rem;color:var(--ink-muted);"> [macro · this-quarter · medium conviction] · made 2026-05-18 · target 2026-08-16</span></p><h3 style="font-size: 1.15rem; margin: 0.3rem 0;">EEM underperforms SPY by at least 5 percentage points on total return (both from May 18) by August 16, 2026.</h3><div class="falsif" style="margin: 0.4rem 0;"><strong>Falsified if:</strong> EEM&#x27;s total return from May 18 is within 5pp of SPY&#x27;s total return on August 16.</div><p style="font-family:var(--serif-body); color: var(--ink-soft); margin: 0.3rem 0;">Oil-importing EM economies face a twin squeeze: DXY near 99 tightens external financing conditions while oil +23% in 20 days expands import bills simultaneously. Historical analogs of this combination — dollar surge plus energy supply shock — have reliably produced EM equity underperformance within </p></article>
+<article class="pred" data-source="macro" data-horizon="this-half" data-status="open" data-conviction="medium" style="margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--hairline);"><p><span class="verdict open">OPEN</span><span style="font-family:var(--sans);font-size:0.74rem;color:var(--ink-muted);"> [macro · this-half · medium conviction] · made 2026-05-18 · target 2026-11-14</span></p><h3 style="font-size: 1.15rem; margin: 0.3rem 0;">The Fed implements no rate cut through its November 2026 FOMC meeting, leaving the target range unchanged from May 2026.</h3><div class="falsif" style="margin: 0.4rem 0;"><strong>Falsified if:</strong> The Fed announces a cut of at least 25bps at any FOMC meeting on or before November 2026.</div><p style="font-family:var(--serif-body); color: var(--ink-soft); margin: 0.3rem 0;">The oil shock keeps near-term inflation risk alive precisely when the curve has normalized, removing the inversion-as-recession-signal urgency for emergency action; the 30Y at 5.15% signals fiscal concern that a dovish pivot would only worsen. Consensus is pricing easing probability that current dat</p></article>
+<article class="pred" data-source="macro" data-horizon="this-year" data-status="open" data-conviction="low" style="margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--hairline);"><p><span class="verdict open">OPEN</span><span style="font-family:var(--sans);font-size:0.74rem;color:var(--ink-muted);"> [macro · this-year · low conviction] · made 2026-05-18 · target 2027-05-18</span></p><h3 style="font-size: 1.15rem; margin: 0.3rem 0;">DXY closes below 95.00 at least once before May 18, 2027.</h3><div class="falsif" style="margin: 0.4rem 0;"><strong>Falsified if:</strong> DXY closes at or above 95.00 on every trading day through May 18, 2027.</div><p style="font-family:var(--serif-body); color: var(--ink-soft); margin: 0.3rem 0;">The week&#x27;s DXY rally to 99 is a tactical bounce, not a structural reversal; US twin deficits, fiscal premium concerns that crowd out foreign capital, and eventual Fed easing create medium-term dollar headwinds that should reassert within twelve months. A 4% decline from current levels is a modest as</p></article>
+<article class="pred" data-source="macro" data-horizon="multi-year" data-status="open" data-conviction="medium" style="margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--hairline);"><p><span class="verdict open">OPEN</span><span style="font-family:var(--sans);font-size:0.74rem;color:var(--ink-muted);"> [macro · multi-year · medium conviction] · made 2026-05-18 · target 2027-12-31</span></p><h3 style="font-size: 1.15rem; margin: 0.3rem 0;">The 30Y Treasury yield&#x27;s calendar-year 2027 daily-close average exceeds 5.00%.</h3><div class="falsif" style="margin: 0.4rem 0;"><strong>Falsified if:</strong> The arithmetic mean of all 30Y Treasury daily closes during calendar year 2027 is 5.00% or below.</div><p style="font-family:var(--serif-body); color: var(--ink-soft); margin: 0.3rem 0;">US deficit trajectory near 6-7% of GDP and a rising debt/GDP path have structurally re-established term premium in a way that requires either credible fiscal consolidation — politically improbable — or a recession severe enough to force emergency easing to reverse. Starting at 5.147% today, the 30Y </p></article>
+<article class="pred" data-source="news" data-horizon="this-week" data-status="open" data-conviction="high" style="margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--hairline);"><p><span class="verdict open">OPEN</span><span style="font-family:var(--sans);font-size:0.74rem;color:var(--ink-muted);"> [news · this-week · high conviction] · made 2026-05-18 · target 2026-05-21</span></p><h3 style="font-size: 1.15rem; margin: 0.3rem 0;">Nvidia reports Q1 revenue above $43B and shares close up ≥3% on earnings day.</h3><div class="falsif" style="margin: 0.4rem 0;"><strong>Falsified if:</strong> Disproved if Nvidia revenue comes in below $43B or shares close flat or down on the day of the earnings release.</div><p style="font-family:var(--serif-body); color: var(--ink-soft); margin: 0.3rem 0;">Aggressive semiconductor options positioning heading into the print signals the street is leaning long; hyperscaler capex commentary has been robust enough to sustain beat-and-raise cadence. The capex-fear selloff in Nasdaq names creates a low bar that Nvidia&#x27;s data-center numbers routinely clear.</p></article>
+<article class="pred" data-source="news" data-horizon="this-week" data-status="open" data-conviction="medium" style="margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--hairline);"><p><span class="verdict open">OPEN</span><span style="font-family:var(--sans);font-size:0.74rem;color:var(--ink-muted);"> [news · this-week · medium conviction] · made 2026-05-18 · target 2026-05-23</span></p><h3 style="font-size: 1.15rem; margin: 0.3rem 0;">WTI crude closes below $103 by end of week as Iran deal optimism offsets supply risk.</h3><div class="falsif" style="margin: 0.4rem 0;"><strong>Falsified if:</strong> Disproved if WTI settlement price on May 23 is at or above $103.00.</div><p style="font-family:var(--serif-body); color: var(--ink-soft); margin: 0.3rem 0;">Trump&#x27;s delay of military action at Gulf allies&#x27; request materially reduced the immediate strike premium. With negotiations live and the US denying sanctions relief, the market will partially unwind the geopolitical bid even if the underlying risk remains elevated.</p></article>
+<article class="pred" data-source="news" data-horizon="this-week" data-status="open" data-conviction="medium" style="margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--hairline);"><p><span class="verdict open">OPEN</span><span style="font-family:var(--sans);font-size:0.74rem;color:var(--ink-muted);"> [news · this-week · medium conviction] · made 2026-05-18 · target 2026-05-25</span></p><h3 style="font-size: 1.15rem; margin: 0.3rem 0;">IWM (Russell 2000 ETF) outperforms QQQ by ≥1.5 percentage points over the next five sessions.</h3><div class="falsif" style="margin: 0.4rem 0;"><strong>Falsified if:</strong> Disproved if IWM&#x27;s cumulative return from May 19 close through May 25 close does not exceed QQQ&#x27;s cumulative return by at least 1.5 percentage points.</div><p style="font-family:var(--serif-body); color: var(--ink-soft); margin: 0.3rem 0;">Small-caps are posting gains on thin inflows while mega-cap AI names face twin headwinds of capex doubt and elevated yields. A rotation catalyst — even a modest one — tilts the next week&#x27;s relative performance toward small-caps that are technically less crowded.</p></article>
+<article class="pred" data-source="news" data-horizon="tomorrow" data-status="proven" data-conviction="medium" style="margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--hairline);"><p><span class="verdict proven">PROVEN</span><span style="font-family:var(--sans);font-size:0.74rem;color:var(--ink-muted);"> [news · tomorrow · medium conviction] · made 2026-05-18 · target 2026-05-19</span></p><h3 style="font-size: 1.15rem; margin: 0.3rem 0;">The 10-year Treasury yield closes above 4.55% on May 19 as bond markets discount Fed rate cuts further.</h3><div class="falsif" style="margin: 0.4rem 0;"><strong>Falsified if:</strong> Disproved if the 10-year yield settles at or below 4.55% on May 19.</div><p style="font-family:var(--serif-body); color: var(--ink-soft); margin: 0.3rem 0;">10-year Treasury yield closed at 4.608% on May 19, 2026 per Investing.com; threshold of 4.55% was exceeded — proven.</p></article>
+<article class="pred" data-source="news" data-horizon="this-month" data-status="open" data-conviction="low" style="margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--hairline);"><p><span class="verdict open">OPEN</span><span style="font-family:var(--sans);font-size:0.74rem;color:var(--ink-muted);"> [news · this-month · low conviction] · made 2026-05-18 · target 2026-06-17</span></p><h3 style="font-size: 1.15rem; margin: 0.3rem 0;">Citi&#x27;s China securities arm receives final CSRC approval and is announced publicly before June 17.</h3><div class="falsif" style="margin: 0.4rem 0;"><strong>Falsified if:</strong> Disproved if no official CSRC approval announcement for a Citi wholly-owned China securities subsidiary appears before June 17.</div><p style="font-family:var(--serif-body); color: var(--ink-soft); margin: 0.3rem 0;">Regulatory approvals in China are routinely delayed for political leverage, and bilateral tensions over Taiwan, tariffs, and tech export controls give Beijing reason to slow-roll the sign-off. &#x27;Close to approval&#x27; has been the status for months on comparable applications.</p></article>
+<article class="pred" data-source="news" data-horizon="this-month" data-status="open" data-conviction="medium" style="margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--hairline);"><p><span class="verdict open">OPEN</span><span style="font-family:var(--sans);font-size:0.74rem;color:var(--ink-muted);"> [news · this-month · medium conviction] · made 2026-05-18 · target 2026-06-01</span></p><h3 style="font-size: 1.15rem; margin: 0.3rem 0;">Silver spot price pulls back to below $31.50 within two weeks as HSBC&#x27;s capped-upside warning crystallizes.</h3><div class="falsif" style="margin: 0.4rem 0;"><strong>Falsified if:</strong> Disproved if silver spot does not close below $31.50 on any session between May 19 and June 1.</div><p style="font-family:var(--serif-body); color: var(--ink-soft); margin: 0.3rem 0;">HSBC raising targets while simultaneously flagging that the ceiling is near is a classic sell-the-revision signal. Industrial demand softness tied to slowing global manufacturing and a partial oil-risk unwind would pressure silver&#x27;s dual-use bid.</p></article><footer class="colophon">Auto-generated by the predictions archive renderer.</footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
+</body>
+</html>
