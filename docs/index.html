@@ -143,18 +143,21 @@
     <!-- Phase 10D — missed-movers panel. Shows the most recent
          missed-movers report per region (also feeds news + evolution). -->
     <template x-if="data && data.missed_movers && Object.keys(data.missed_movers).length">
-      <section style="margin: 1.5rem 0; padding: 1.1rem 1.4rem 1.2rem; background: var(--card); border: 1px solid var(--hairline); border-radius: 6px;">
-        <div style="font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.6rem;">
+      <section style="margin: 1.5rem 0; padding: 1.1rem 1.4rem 0.4rem; background: var(--card); border: 1px solid var(--hairline); border-radius: 6px;">
+        <div style="font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.9rem;">
           What we missed today
         </div>
         <template x-for="[region, rep] in Object.entries(data.missed_movers)" :key="region">
-          <div style="margin-bottom: 1.1rem;">
-            <div style="font-family: var(--sans); font-size: 0.78rem; font-weight: 700; color: var(--ink); margin-bottom: 0.35rem;">
-              <span x-text="region.toUpperCase()"></span>
-              <span style="font-weight: 400; color: var(--ink-muted);" x-text="'— ' + rep.date + ' · ' + (rep.top_movers ? rep.top_movers.length : 0) + ' notable moves'"></span>
-            </div>
-            <p style="font-family: var(--serif-body); font-size: 0.92rem; color: var(--ink-soft); margin: 0 0 0.75rem; line-height: 1.5;" x-text="rep.summary"></p>
-            <table style="width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: 0.82rem;">
+          <article :style="'margin-bottom: 1.25rem; padding: 0.85rem 1rem 0.95rem 1.1rem; background: var(--paper); border-left: 4px solid ' + missedAccent(region) + '; border-radius: 0 4px 4px 0;'">
+            <header style="display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; margin-bottom: 0.55rem;">
+              <span :style="'font-family: var(--sans); font-size: 0.95rem; font-weight: 700; letter-spacing: 0.06em; color: ' + missedAccent(region) + ';'"
+                    x-text="region.toUpperCase()"></span>
+              <span style="font-family: var(--sans); font-size: 0.78rem; color: var(--ink-muted);"
+                    x-text="rep.date + ' · ' + (rep.top_movers ? rep.top_movers.length : 0) + ' notable moves'"></span>
+            </header>
+            <p style="font-family: var(--serif-body); font-size: 1.02rem; color: var(--ink); margin: 0 0 1rem; line-height: 1.55;"
+               x-text="rep.summary"></p>
+            <table style="width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: 0.82rem; background: var(--card); border-radius: 4px; overflow: hidden;">
               <thead>
                 <tr style="text-align: left; color: var(--ink-muted); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;">
                   <th style="padding: 0.3rem 0.4rem 0.3rem 0;">Ticker</th>
@@ -219,7 +222,7 @@
                 </tbody>
               </template>
             </table>
-          </div>
+          </article>
         </template>
       </section>
     </template>
@@ -540,6 +543,15 @@
           if (r === 'us') return 'US';
           if (r === 'uk-eu') return 'UK/EU';
           return r.toUpperCase();
+        },
+
+        missedAccent(r) {
+          // Region accent colour for the missed-movers panel — picks
+          // distinct hues from the existing palette so US and UK/EU
+          // read as separate sub-sections without needing legends.
+          if (r === 'us') return 'var(--c-world)';      // navy
+          if (r === 'uk-eu') return 'var(--c-tech)';    // forest green
+          return 'var(--ink-muted)';
         },
 
         filterByRegion(pool) {
