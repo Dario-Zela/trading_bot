@@ -8,7 +8,7 @@
     "us_etfs_commodity"
   ],
   "n_tickers_checked": 476,
-  "summary": "Of the 10 biggest movers in the uk-eu universe today, the bot held 0 and missed 10 \u2014 10 were in a strategy's universe but filtered out, 0 were outside coverage entirely. The biggest miss was CURY.L (+15.27%).",
+  "summary": "Of the 10 biggest movers in the uk-eu universe today, the bot held 0 and missed 10. Five upside misses were earnings/results-day catalysts (CURY +15%, IGG +11%, CCR +5%, III +6%, SAP +6% AI launch) where the strategies' earnings gates filtered the names out pre-event and they never re-entered intraday. AAF +7% was a parent-company M&A move that the morning news brief didn't flag as a UK-listed catalyst. The four downside misses (PRN, CWR, RPI, HOC) are unreachable by the long-only basket \u2014 no mechanism to express a short. CWR is the most instructive: a +929% YoY momentum darling finally rolling over after a Weichai-fuelled parabolic week, the exact kind of profit-taking signal a future short-side or paired-trade strategy could harvest.",
   "top_movers": [
     {
       "ticker": "CURY.L",
@@ -22,8 +22,8 @@
         "news-reactive"
       ],
       "was_traded_by": [],
-      "catalyst": "",
-      "miss_reason": "",
+      "catalyst": "FY results: H1 sales growth accelerating, dividend resumed after being passed last year; net cash above \u00a3100m target.",
+      "miss_reason": "Results day catalyst not flagged in pre-market news brief; mean-reverter excluded (stock not at oversold extreme), momentum picks chose names with stronger trailing 20d.",
       "failed": false
     },
     {
@@ -38,8 +38,8 @@
         "news-reactive"
       ],
       "was_traded_by": [],
-      "catalyst": "",
-      "miss_reason": "",
+      "catalyst": "AGM + Q1 revenue +19% to \u00a3331m, AUM >\u00a320bn, monthly active customers +119% trade growth, forward guidance raised.",
+      "miss_reason": "Stock was at all-time high pre-news (set 2026-05-07); mean-reverter excluded for high RSI, momentum-trader didn't flag because the 5d trailing return was modest going in.",
       "failed": false
     },
     {
@@ -54,8 +54,8 @@
         "news-reactive"
       ],
       "was_traded_by": [],
-      "catalyst": "",
-      "miss_reason": "",
+      "catalyst": "Bharti Airtel parent raising stake to ~79% via $2.9bn share swap (cleared 2026-05-13); FY revenue $6.4bn (+30% YoY).",
+      "miss_reason": "EM telecom is a category-edge UK-listed name; news-reactive's morning brief didn't pick up the parent-company M&A as a London-listed catalyst.",
       "failed": false
     },
     {
@@ -70,8 +70,8 @@
         "news-reactive"
       ],
       "was_traded_by": [],
-      "catalyst": "",
-      "miss_reason": "",
+      "catalyst": "Sapphire 2026 conference: 'Autonomous Enterprise' AI strategy + multi-vendor partnerships (Microsoft, Anthropic, AWS, NVIDIA, Palantir); Deutsche Bank reiterated Buy at \u20ac200.",
+      "miss_reason": "Mega-cap AI continuation; strategies were rotating into mid-cap names today, and macro-aligned's regime signals didn't carry an explicit AI-theme tilt.",
       "failed": false
     },
     {
@@ -86,8 +86,8 @@
         "news-reactive"
       ],
       "was_traded_by": [],
-      "catalyst": "",
-      "miss_reason": "",
+      "catalyst": "FY26 results: total return on funds 22%, NAV/share +22% to 3,030p, \u00a3750m buyback, dividend raised. Buy-the-news bounce after pre-results selloff on Action LFL concerns.",
+      "miss_reason": "Falls between strategy windows: mean-reverter saw a rebound already in motion (not a clean oversold setup), momentum-trader saw it still mid-pullback going in. Earnings filter excluded it as a pre-event candidate.",
       "failed": false
     },
     {
@@ -102,8 +102,8 @@
         "news-reactive"
       ],
       "was_traded_by": [],
-      "catalyst": "",
-      "miss_reason": "",
+      "catalyst": "FY26 earnings day: branded drinks +4% rev / \u20ac51m OP (Tennent's, Bulmers) overshadowed weaker MCB distribution; division restructuring announced.",
+      "miss_reason": "Earnings-day pick; bot's earnings gate filters pre-results candidates, and post-catalyst entry has no setup signal once the move is already in the price.",
       "failed": false
     },
     {
@@ -118,8 +118,8 @@
         "news-reactive"
       ],
       "was_traded_by": [],
-      "catalyst": "",
-      "miss_reason": "",
+      "catalyst": "(no clear LSE-listed PRN catalyst surfaced in web search; obscure small-cap, possibly delisted or thinly covered)",
+      "miss_reason": "Long-only basket \u2014 no short capability. Universe contains the ticker but strategies have no mechanism to express a bearish view.",
       "failed": false
     },
     {
@@ -134,8 +134,8 @@
         "news-reactive"
       ],
       "was_traded_by": [],
-      "catalyst": "",
-      "miss_reason": "",
+      "catalyst": "Profit-taking after a hyper-extended run: +929% YoY / +32% past week on the Weichai licensing deal + Rothschild target hike (\u00a34.60 from \u00a32.05) on solid-oxide-fuel-cell AI-DC theme.",
+      "miss_reason": "Long-only \u2014 strategies can't short. Mean-reverter would have excluded it for being far above SMA20; momentum-trader wouldn't enter a name showing its first major down day after a parabolic run.",
       "failed": false
     },
     {
@@ -150,8 +150,8 @@
         "news-reactive"
       ],
       "was_traded_by": [],
-      "catalyst": "",
-      "miss_reason": "",
+      "catalyst": "Lowest share price since IPO; continuation of H1 revenue -6% disappointment and recent CFO departure announcement context.",
+      "miss_reason": "Long-only \u2014 no short capability. Mean-reverter screens for a setup not a falling knife; news-reactive saw negative drift without a positive contra-signal.",
       "failed": false
     },
     {
@@ -166,8 +166,8 @@
         "news-reactive"
       ],
       "was_traded_by": [],
-      "catalyst": "",
-      "miss_reason": "",
+      "catalyst": "Precious-metals miner pullback after a strong Q1 production beat run (gold realised price $4,471/oz drove balance sheet swing to ~$95m net cash); commodity profit-taking.",
+      "miss_reason": "Long-only \u2014 no short capability. Commodity-momentum's tilt is oil/USO not precious-metals miners; other strategies don't separately model miner sub-sector pullbacks.",
       "failed": false
     }
   ],
