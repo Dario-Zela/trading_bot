@@ -158,7 +158,7 @@ def analyze_missed_movers(today: date, region: str) -> MissedMoversReport:
     actual_gainers = [m for m in reversed(moves) if m[1] > 0][:_TOP_N_GAINERS]
     candidates = list(actual_gainers) + list(actual_losers)
     log.info("missed-movers: top %d gainers + %d losers selected",
-             len(top_gainers), len(top_losers))
+             len(actual_gainers), len(actual_losers))
 
     # 4) Look up what the bot actually traded today
     traded_by = _traded_today(today, region)
