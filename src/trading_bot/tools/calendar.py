@@ -39,6 +39,35 @@ def _calendar(exchange: str):
     return mcal.get_calendar(exchange)
 
 
+def add_trading_days(d: date, n: int, region: str) -> date:
+    """Phase 12A — add N trading days to `d`, skipping weekends + the
+    region's market holidays. Used to compute `target_exit_date` from
+    `entry_date + hold_days`. Safe for n=0 (returns d itself if d is a
+    trading day, otherwise the next one).
+
+    Falls back to calendar-day arithmetic on errors so a transient
+    calendar fetch doesn't strand entries with no exit date.
+    """
+    if n < 0:
+        n = 0
+    from datetime import timedelta as _td
+    out = d
+    while n > 0:
+        out = out + _td(days=1)
+        try:
+            if is_market_open_on(out, region):
+                n -= 1
+        except Exception:
+            # Fall back to weekday-only check
+            if out.weekday() < 5:
+                n -= 1
+        # Safety: cap at 30 calendar days to avoid runaway on a broken cal
+        if (out - d).days > 30:
+            log.warning("add_trading_days hit 30-day cap for d=%s n=%d region=%s", d, n, region)
+            break
+    return out
+
+
 def is_market_open_on(d: date, region: str) -> bool:
     """True if the region's primary exchange has a trading session on `d`.
     Unknown regions default to True (don't block unexpected pipelines).

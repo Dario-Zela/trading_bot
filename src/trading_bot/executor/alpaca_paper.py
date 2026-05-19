@@ -36,6 +36,7 @@ import requests
 from trading_bot.alpaca_slot import AlpacaCreds, load_slot_creds
 from trading_bot.executor.base import Executor, TradeIntent
 from trading_bot.state import TradeRecord, append_trade, mark_trade_exited, read_open_trades
+from trading_bot.state.ledger import filter_due_for_exit
 from trading_bot.tools.fees import TradeContext, compute_fees
 from trading_bot.tools.fx import to_gbp_multiplier
 
@@ -137,6 +138,10 @@ class AlpacaPaperExecutor(Executor):
                 continue
             entry_price = float(fill_price_raw)
 
+            # Phase 12A — multi-day positioning support
+            from trading_bot.tools.calendar import add_trading_days
+            hold_days = max(1, int(intent.hold_days))
+            target_exit = add_trading_days(on_date, hold_days, region)
             record = TradeRecord(
                 trade_id=client_order_id,
                 strategy_id=strategy_id,
@@ -158,6 +163,8 @@ class AlpacaPaperExecutor(Executor):
                 currency="USD",
                 exchange="NYSE",
                 instrument_type="share",
+                hold_days=hold_days,
+                target_exit_date=target_exit.isoformat(),
             )
             append_trade(record)
 
@@ -177,6 +184,21 @@ class AlpacaPaperExecutor(Executor):
         open_trades = read_open_trades(strategy_id=strategy_id, region=region)
         if not open_trades:
             return []
+
+        # Phase 12A — only close trades that have reached their
+        # target_exit_date. Multi-day positions stay open across
+        # sessions; their broker brackets persist (Alpaca-side stops
+        # are GTC by default).
+        due_trades = filter_due_for_exit(open_trades, on_date)
+        held = len(open_trades) - len(due_trades)
+        if held:
+            log.info(
+                "%s/%s: %d position(s) still within hold window — leaving open",
+                strategy_id, region, held,
+            )
+        if not due_trades:
+            return []
+        open_trades = due_trades
 
         # Cancel ALL open orders for this Alpaca slot before attempting
         # market closes. Bracket entries leave stop + take-profit child

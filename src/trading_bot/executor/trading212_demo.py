@@ -36,6 +36,7 @@ import requests
 
 from trading_bot.executor.base import Executor, TradeIntent
 from trading_bot.state import TradeRecord, append_trade, mark_trade_exited, read_open_trades
+from trading_bot.state.ledger import filter_due_for_exit
 from trading_bot.t212_slot import T212_PAPER_BUDGET_GBP, T212Creds, load_slot_creds
 from trading_bot.tools.fees import (
     TradeContext,
@@ -154,6 +155,11 @@ class Trading212DemoExecutor(Executor):
             if free_cash is not None:
                 free_cash -= allocation_gbp  # local decrement so subsequent intents see updated budget
 
+            # Phase 12A — multi-day positioning
+            from trading_bot.tools.calendar import add_trading_days
+            hold_days = max(1, int(intent.hold_days))
+            target_exit = add_trading_days(on_date, hold_days, region)
+
             client_order_id = f"{strategy_id}-{uuid.uuid4().hex[:12]}"
             order = self._submit_market_order(
                 t212_ticker=t212_ticker, quantity=quantity
@@ -203,6 +209,8 @@ class Trading212DemoExecutor(Executor):
                     currency=ccy,
                     exchange=t212_exchange_from_ticker(t212_ticker),
                     instrument_type=t212_instrument_type(inst.get("type", "")),
+                    hold_days=hold_days,
+                    target_exit_date=target_exit.isoformat(),
                 )
                 append_trade(record)
                 continue
@@ -225,6 +233,8 @@ class Trading212DemoExecutor(Executor):
                 currency=ccy,
                 exchange=t212_exchange_from_ticker(t212_ticker),
                 instrument_type=t212_instrument_type(inst.get("type", "")),
+                hold_days=hold_days,
+                target_exit_date=target_exit.isoformat(),
             )
             append_trade(record)
 
@@ -265,6 +275,21 @@ class Trading212DemoExecutor(Executor):
         open_trades = read_open_trades(strategy_id=strategy_id, region=region)
         if not open_trades:
             return []
+
+        # Phase 12A — only close trades whose target_exit_date is
+        # on-or-before today. Multi-day positions stay open across
+        # sessions. Legacy rows with no target_exit_date are treated
+        # as same-day round-trips so Wave 1 behaviour is preserved.
+        due_trades = filter_due_for_exit(open_trades, on_date)
+        held_over = len(open_trades) - len(due_trades)
+        if held_over:
+            log.info(
+                "%s/%s: %d T212 position(s) still within hold window — leaving open",
+                strategy_id, region, held_over,
+            )
+        if not due_trades:
+            return []
+        open_trades = due_trades
 
         translator = self._get_translator()
         closed: list[dict] = []

@@ -56,6 +56,14 @@ class TradeRecord:
     fees_gbp: float = 0.0
     fees_breakdown: dict = field(default_factory=dict)
 
+    # Phase 12A — multi-day positioning. `target_exit_date` is set at
+    # entry from `entry_date + hold_days`, skipping weekends. Exit
+    # machinery only closes when `today >= target_exit_date`. Legacy
+    # rows with no target_exit_date are treated as "exit today" so
+    # nothing strands in the ledger after the migration.
+    target_exit_date: str | None = None
+    hold_days: int = 1
+
     created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     updated_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
@@ -99,6 +107,21 @@ def read_open_trades(
         if on_date is not None and rec.get("entry_date") != on_date.isoformat():
             continue
         out.append(rec)
+    return out
+
+
+def filter_due_for_exit(open_trades: list[dict], today: date) -> list[dict]:
+    """Phase 12A — split open trades into 'due to exit today' vs
+    'still held'. A trade is due if its target_exit_date is on-or-
+    before today. Legacy rows with no target_exit_date are treated
+    as same-day round-trips and exit today — preserves Wave 1
+    behaviour for everything written before Phase 12 landed."""
+    iso = today.isoformat()
+    out: list[dict] = []
+    for t in open_trades:
+        target = t.get("target_exit_date")
+        if not target or target <= iso:
+            out.append(t)
     return out
 
 

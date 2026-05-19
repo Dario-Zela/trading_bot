@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import logging
 import uuid
 from datetime import date
+
+log = logging.getLogger(__name__)
 
 from trading_bot.executor.base import Executor, TradeIntent
 from trading_bot.state import (
@@ -10,6 +13,7 @@ from trading_bot.state import (
     mark_trade_exited,
     read_open_trades,
 )
+from trading_bot.state.ledger import filter_due_for_exit
 from trading_bot.tools import get_history
 from trading_bot.tools.fees import TradeContext, compute_fees, yf_ticker_classify
 from trading_bot.tools.fx import to_gbp_multiplier
@@ -71,6 +75,10 @@ class ShadowExecutor(Executor):
             quantity = allocation_gbp / entry_price if entry_price > 0 else 0.0
 
             exch, ccy = yf_ticker_classify(intent.ticker)
+            # Phase 12A — compute target_exit_date from hold_days.
+            from trading_bot.tools.calendar import add_trading_days
+            hold_days = max(1, int(intent.hold_days))
+            target_exit = add_trading_days(on_date, hold_days, region)
             record = TradeRecord(
                 trade_id=str(uuid.uuid4()),
                 strategy_id=strategy_id,
@@ -88,6 +96,8 @@ class ShadowExecutor(Executor):
                 currency=ccy,
                 exchange=exch,
                 instrument_type="share",
+                hold_days=hold_days,
+                target_exit_date=target_exit.isoformat(),
             )
             append_trade(record)
 
@@ -106,6 +116,20 @@ class ShadowExecutor(Executor):
         open_trades = read_open_trades(strategy_id=strategy_id, region=region)
         if not open_trades:
             return []
+
+        # Phase 12A — only close trades whose target_exit_date is
+        # on-or-before today. Legacy rows with no target exit today
+        # (matches Wave 1 same-day round-trip behaviour).
+        due_trades = filter_due_for_exit(open_trades, on_date)
+        held_over = len(open_trades) - len(due_trades)
+        if held_over:
+            log.info(
+                "%s/%s: %d positions still within hold window — leaving open",
+                strategy_id, region, held_over,
+            )
+        if not due_trades:
+            return []
+        open_trades = due_trades
 
         tickers = list({t["ticker"] for t in open_trades})
         history = get_history(tickers, lookback_days=1, end_date=on_date)

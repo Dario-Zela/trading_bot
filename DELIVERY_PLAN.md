@@ -257,6 +257,80 @@ loop. These changes target risk-adjusted P&L, not infrastructure.
 
 ---
 
+## Phase 12 — Multi-day positioning
+
+The biggest deferred item from the audit. Half the strategies are
+inherently multi-day (mean-reverter, macro-aligned, sector-rotator),
+forced onto a same-day round-trip by the original Wave 1 design.
+Phased rollout so existing same-day behaviour stays intact while
+multi-day capability is added incrementally.
+
+### 12A — Foundation: schema + intent + exit logic ✅ (in progress)
+
+- [ ] `TradeIntent.hold_days: int = 1` — strategy declares how many
+      trading days to hold (default 1 = current same-day behaviour).
+- [ ] `TradeRecord.target_exit_date` — computed at entry from
+      `entry_date + hold_days` (calendar-aware so weekends skip).
+- [ ] Each executor's `exit_scheduled()` only closes positions whose
+      `target_exit_date` is on-or-before today. Held positions stay
+      open across sessions.
+- [ ] Backwards-compat: legacy rows with no `target_exit_date` get
+      treated as "exit today" (same as before).
+
+### 12B — Strategy LLM picks horizon
+
+- [ ] LLM strategy prompt explains `hold_days` ∈ {1, 2, 3, 5} with
+      guidance on when each fits (event-driven → 1, momentum → 2-3,
+      mean-reversion → 3-5, macro → 5+).
+- [ ] LLM picks return `hold_days` per ticker; rule-based / momentum-
+      stub default to 1.
+- [ ] `_parse_picks` validates against {1, 2, 3, 5, 10} whitelist.
+
+### 12C — Cost gate scales with horizon
+
+- [ ] Multi-day trades shouldn't pass the cost gate with the same
+      threshold as same-day — they carry more market exposure. The
+      predicted return threshold grows linearly with `hold_days` to
+      reflect "extra beta exposure deserves extra alpha".
+
+### 12D — T212 stops upgrade DAY → GTC
+
+- [ ] When `hold_days > 1`, the trail script uses `timeValidity: "GTC"`
+      instead of `DAY` so stops survive overnight.
+- [ ] Alpaca brackets already persist; no change.
+
+### 12E — Per-trade reflection waits for actual close
+
+- [ ] `outcome_notes` / `risks_observed` only get written when the
+      position actually exits (not at the entry-day close for
+      multi-day trades).
+
+### 12F — Dashboard + news brief show open positions
+
+- [ ] Dashboard's strategy detail panel: separate "open positions"
+      table from "executed". Already partially there; verify it
+      handles multi-day holds correctly.
+- [ ] News trading-floor section: include unrealised P&L of
+      currently-held multi-day positions alongside yesterday's exits.
+
+### 12G — Risk: concurrent open-position cap
+
+- [ ] Per-strategy cap on simultaneously-open positions across days
+      so a multi-day strategy doesn't pile up 30 positions.
+- [ ] Already loosely enforced by `max_positions` at entry-time,
+      but with same-day trades that re-zeroed daily; with multi-day,
+      the cap needs to look at currently-open count not just today's
+      new picks.
+
+### Out of scope for this phase
+
+- FX revaluation across sessions — small for paper trading.
+- Capital cap interaction (T212's £50k limit chokes turnover when
+  positions are held) — observable enough that we can tune
+  `target_daily_risk_pct` down to compensate.
+
+---
+
 ## Phase 11 — Signal quality + sizing realism
 
 Triggered by a self-audit of high-level mistakes. 8 items kept after

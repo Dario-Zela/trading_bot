@@ -14,6 +14,12 @@ class TradeIntent:
     stop_loss_pct: float | None = None
     take_profit_pct: float | None = None
     thesis: str = ""
+    # Phase 12A — multi-day positioning. Defaults to 1 (same-day round-
+    # trip — current Wave 1 behaviour). LLM strategies can return
+    # `hold_days ∈ {1, 2, 3, 5, 10}` per pick; rule-based strategies
+    # default to 1. Exit machinery checks today >= target_exit_date
+    # before closing a position.
+    hold_days: int = 1
 
 
 class Executor(ABC):
