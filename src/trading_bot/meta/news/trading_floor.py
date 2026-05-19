@@ -92,6 +92,13 @@ def write_floor_briefs(today: date) -> list[FloorBrief]:
     if quieter_pool:
         pieces_spec.append(("quieter", "QUIETER MOVERS", quieter_pool))
 
+    # Missed-movers piece — sits alongside winner/loser/quieter. Reads
+    # state/missed_movers/{date}.{region}.json which the exit pipeline
+    # writes after every region's exit pass.
+    missed_payload = _gather_missed_movers(today)
+    if missed_payload:
+        pieces_spec.append(("missed", "WHAT WE MISSED", missed_payload))
+
     if not pieces_spec:
         return []
 
@@ -113,10 +120,39 @@ def write_floor_briefs(today: date) -> list[FloorBrief]:
                 log.warning("Trading floor %s piece failed: %s — using fallback", kind, e)
                 briefs.append(_fallback_floor_brief(kind, kicker_tag, data, day_to_use))
 
-    # Stable ordering: winner, loser, quieter
-    order = {"winner": 0, "loser": 1, "quieter": 2}
+    # Stable ordering: winner, loser, quieter, missed
+    order = {"winner": 0, "loser": 1, "quieter": 2, "missed": 3}
     briefs.sort(key=lambda b: order.get(b.slug.split("-")[-1], 99))
     return briefs
+
+
+def _gather_missed_movers(today: date) -> dict | None:
+    """Read state/missed_movers/{today}.{region}.json for every region
+    and assemble a payload for the missed-movers piece. Walks back up
+    to 7 days so weekend / market-closed days still surface the most
+    recent analysis."""
+    from trading_bot.meta.missed_movers import load_report
+    from datetime import timedelta
+
+    aggregated: dict[str, dict] = {}
+    use_date = today
+    for offset in range(0, 7):
+        d = today - timedelta(days=offset)
+        for region in ("us", "uk-eu"):
+            rep = load_report(d, region)
+            if not rep or region in aggregated:
+                continue
+            aggregated[region] = rep
+        if aggregated:
+            use_date = d
+            break
+
+    if not aggregated:
+        return None
+    return {
+        "as_of": use_date.isoformat(),
+        "by_region": aggregated,
+    }
 
 
 def _aggregate_recent_closes(today: date) -> tuple[str | None, dict[str, _StrategyDay]]:
@@ -246,7 +282,9 @@ def _write_floor_piece(
     )
 
 
-def _build_prompt(kind: str, data: _StrategyDay | list[_StrategyDay], day_iso: str) -> str:
+def _build_prompt(kind: str, data, day_iso: str) -> str:
+    if kind == "missed":
+        return _prompt_missed(data, day_iso)
     if kind == "winner":
         d = data  # type: ignore[assignment]
         return _prompt_single(kind, d, day_iso, role="the trading day's best performer")
@@ -370,24 +408,103 @@ worth a line each.
 """
 
 
-def _default_headline(kind: str, data: _StrategyDay | list[_StrategyDay]) -> str:
+def _prompt_missed(payload: dict, day_iso: str) -> str:
+    """Build the 'what we missed' prompt from a missed-movers payload —
+    the per-region top-mover lists with catalyst + miss-reason."""
+    by_region = payload.get("by_region", {})
+    as_of = payload.get("as_of", day_iso)
+
+    blocks = []
+    for region, rep in by_region.items():
+        movers = rep.get("top_movers", []) or []
+        if not movers:
+            continue
+        lines = [f"### {region.upper()} — {len(movers)} biggest movers"]
+        for m in movers[:8]:
+            traded = ", ".join(m.get("was_traded_by") or []) or "no strategy"
+            in_uni = ", ".join(m.get("in_universe_of") or []) or "outside any universe"
+            catalyst = m.get("catalyst") or "(no catalyst found)"
+            miss = m.get("miss_reason") or "(no reason hypothesis)"
+            lines.append(
+                f"- **{m['ticker']} {m['move_pct']:+.2f}%** — "
+                f"traded by: {traded}; universes: {in_uni}. "
+                f"Catalyst: {catalyst}. Why missed: {miss}"
+            )
+        blocks.append("\n".join(lines))
+    body = "\n\n".join(blocks) if blocks else "(no movers data this run)"
+
+    return f"""You are the trading floor reporter for The Bot Tribune.
+Today is {day_iso}. You're writing the "what we missed" piece for
+the trading floor section — the biggest movers in the bot's tradable
+universes that we did NOT take a position in today (as of {as_of}).
+
+The point of this piece is honest self-criticism: surface the tickers
+that ran without us, identify whether they were in our coverage at
+all, and call out the filter that excluded them. This piece feeds
+straight into the weekly evolution agent's Lessons section.
+
+## Today's biggest movers we missed (or held)
+
+{body}
+
+## Writing rules
+
+- One paragraph, 110-150 words.
+- Lead with the punchiest miss — biggest absolute move, named upfront.
+- Name 3-5 tickers with their moves and the catalysts you have data
+  for. If the catalyst is "no obvious news", say so — don't fabricate.
+- Distinguish "filtered out" from "outside our universe" — these are
+  different problems that need different fixes.
+- If we actually held a top mover, mention it briefly — credit where due.
+- No clichés, no "could've", no hand-wringing. Dry, factual.
+- Byline is "Bot" — third-person about the strategies.
+
+## Required output
+
+```json
+{{
+  "headline": "<short headline, ≤80 chars — e.g., 'NVDA ran 6% on Q1 beat; control held back by RSI filter'>",
+  "body_md": "<one paragraph>"
+}}
+```
+"""
+
+
+def _default_headline(kind: str, data: _StrategyDay | list[_StrategyDay] | dict) -> str:
     if isinstance(data, _StrategyDay):
         if kind == "winner":
             return f"{data.strategy_id} carries the day"
         if kind == "loser":
             return f"{data.strategy_id} stumbles"
+    if kind == "missed":
+        return "What the filters let pass"
     return "Quieter movers across the floor"
 
 
 def _fallback_floor_brief(
     kind: str,
     kicker_tag: str,
-    data: _StrategyDay | list[_StrategyDay] | None,
+    data,
     day_iso: str | None,
 ) -> FloorBrief:
     """Minimal prose if Haiku is unavailable. Surfaces the headline
     facts without trying to be writerly."""
-    if isinstance(data, _StrategyDay):
+    if kind == "missed" and isinstance(data, dict):
+        # Walk the per-region payload, surface the top mover from each
+        pieces = []
+        for region, rep in (data.get("by_region") or {}).items():
+            movers = rep.get("top_movers") or []
+            if not movers:
+                continue
+            biggest = max(movers, key=lambda m: abs(m.get("move_pct", 0)))
+            traded = ", ".join(biggest.get("was_traded_by") or []) or "no strategy"
+            pieces.append(
+                f"{region.upper()}: {biggest['ticker']} {biggest['move_pct']:+.2f}% "
+                f"(traded by {traded})"
+            )
+        body = "Biggest movers we missed today — " + "; ".join(pieces) + "." if pieces else "No movers analysed."
+        head = _default_headline(kind, data)
+    elif isinstance(data, _StrategyDay):
         body = (
             f"{data.strategy_id} closed {data.n_closed} trades for a total "
             f"P&L of £{data.pnl_gbp_total:+,.2f}, averaging "

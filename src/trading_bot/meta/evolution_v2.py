@@ -259,6 +259,11 @@ def _build_strategy_report_prompt(sid: str, rows: list[dict], actions: list[dict
         action_lines.append(f"- `{a.get('action')}`{scope} · {status} — {a.get('reason', '')[:200]}")
     actions_block = "\n".join(action_lines) or "- _no actions applied this week_"
 
+    # Pull this strategy's misses from the trailing-week missed-movers
+    # reports — concrete tickers + catalysts + reason hypotheses that
+    # the Lessons quadrant can cite directly.
+    missed_block = _strategy_missed_lines(sid)
+
     return f"""You are the desk reporter for The Bot Tribune's weekly
 Evolution page. Week ending {today.isoformat()}. Write the report card
 for the strategy below.
@@ -272,6 +277,10 @@ for the strategy below.
 ### Actions taken by the evolution agent this week
 
 {actions_block}
+
+### Missed opportunities this week (from daily missed-movers analysis)
+
+{missed_block}
 
 ## What we need
 
@@ -313,6 +322,37 @@ Return JSON only:
 }}
 ```
 """
+
+
+def _strategy_missed_lines(sid: str) -> str:
+    """Walk the last 7 missed-movers reports and pull the misses where
+    this strategy's universe contained the ticker but the strategy
+    didn't trade it. Formatted as bullets for the prompt."""
+    from trading_bot.meta.missed_movers import load_recent_reports
+    reports = load_recent_reports(days=7)
+    lines: list[str] = []
+    for rep in reports:
+        date_str = rep.get("date", "")
+        region = rep.get("region", "")
+        for m in rep.get("top_movers", []) or []:
+            in_universe = sid in (m.get("in_universe_of") or [])
+            was_traded = sid in (m.get("was_traded_by") or [])
+            if not in_universe or was_traded:
+                continue
+            ticker = m.get("ticker", "")
+            move = m.get("move_pct", 0)
+            catalyst = (m.get("catalyst") or "").strip()
+            reason = (m.get("miss_reason") or "").strip()
+            lines.append(
+                f"- [{date_str} {region}] **{ticker} {move:+.2f}%** — "
+                f"{catalyst}{' · why missed: ' + reason if reason else ''}"
+            )
+    if not lines:
+        return "_(no missed-movers data — analyser may not have run yet, or this strategy had no misses)_"
+    # Cap at 12 to keep the prompt bounded
+    if len(lines) > 12:
+        lines = lines[:12] + [f"_(... {len(lines) - 12} more)_"]
+    return "\n".join(lines)
 
 
 def _parse_strategy_report(sid: str, response: dict | list) -> StrategyReport:

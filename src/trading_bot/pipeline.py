@@ -126,6 +126,21 @@ def run_exit(region: str, on_date: date) -> dict[str, list[dict]]:
                 exits[strategy.config.id].extend(closed)
         except Exception as e:
             log.exception("Strategy %s failed in exit phase: %s", strategy.config.id, e)
+
+    # Post-exit: scan the day's biggest movers across the union of
+    # strategy universes and identify which we missed + why. Non-fatal —
+    # the analysis writes its own state file and is consumed by the
+    # daily news brief + weekly evolution agent.
+    try:
+        from trading_bot.meta.missed_movers import analyze_missed_movers
+        report = analyze_missed_movers(on_date, region)
+        log.info(
+            "missed-movers: %d movers analysed for %s (summary: %s)",
+            len(report.top_movers), region, report.summary[:160],
+        )
+    except Exception as e:
+        log.warning("missed-movers analysis failed (non-fatal): %s", e)
+
     return dict(exits)
 
 
