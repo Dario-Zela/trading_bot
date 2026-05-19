@@ -71,6 +71,52 @@ _FONTS_LINK = (
     '&display=swap" rel="stylesheet">'
 )
 
+_EDITION_NAV_SCRIPT = """
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+"""
+
 _FONT_PICKER_SCRIPT = """
 <script>
 const BOT_FONTS = {
@@ -198,6 +244,7 @@ def _shell(
     {_font_picker_html()}
   </nav>
   {body_html}
+  {_EDITION_NAV_SCRIPT}
   {_FONT_PICKER_SCRIPT}
 </body>
 </html>
@@ -289,6 +336,8 @@ def render_news_pages() -> int:
 
     _write_news_index(legacy_entries, dir_entries)
     _ensure_latest_redirect(out_dir, dir_entries, legacy_entries, "news")
+    from trading_bot.meta.news.render import _write_editions_index
+    _write_editions_index(out_dir, kind="news")
     total = len(legacy_entries) + len(dir_entries)
     log.info("Rendered %d daily news pages → %s (%d legacy, %d structured)",
              total, out_dir, len(legacy_entries), len(dir_entries))
@@ -498,6 +547,8 @@ def render_macro_pages() -> int:
 
     _write_macro_index(entries)
     _ensure_latest_redirect(out_dir, dir_entries, entries, "macro")
+    from trading_bot.meta.news.render import _write_editions_index
+    _write_editions_index(out_dir, kind="macro")
     total = len(entries) + len(dir_entries)
     log.info("Rendered %d macro pages → %s (%d legacy, %d structured)",
              total, out_dir, len(entries), len(dir_entries))

@@ -118,6 +118,10 @@ def render_news_edition(
     # 3. Update `docs/news/latest.html` so the masthead always links to the
     # newest edition (one-click "latest" from any page in the publication).
     _write_latest_redirect(edition_dir.parent, edition_dir.name)
+
+    # 4. Refresh the sidecar editions.json that the JS upgrade reads on
+    # every page load to keep prev/next current.
+    _write_editions_index(edition_dir.parent, kind="news")
     front_page = shell_fn(
         title=f"News — {today.isoformat()}",
         body_html=front_html,
@@ -183,6 +187,35 @@ def _section_class(section: str) -> str:
 
 def _generated_at() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+
+
+def _write_editions_index(parent_dir: Path, *, kind: str) -> None:
+    """List sibling edition directories newest-first to a JSON file that
+    the in-page nav JS fetches to keep prev/next current.
+
+    News editions are dated YYYY-MM-DD; macro editions are ISO weeks
+    YYYY-W##. We sort lexicographically, which works for both."""
+    if kind == "news":
+        pattern = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+    elif kind == "macro":
+        pattern = re.compile(r"^\d{4}-W\d{2}$")
+    else:
+        return
+
+    editions: list[dict[str, str]] = []
+    if parent_dir.exists():
+        for child in sorted(parent_dir.iterdir(), reverse=True):
+            if not child.is_dir():
+                continue
+            if not pattern.match(child.name):
+                continue
+            if not (child / "index.html").exists():
+                continue
+            editions.append({"id": child.name, "url": f"../{child.name}/"})
+
+    out_path = parent_dir / "editions.json"
+    import json as _json
+    out_path.write_text(_json.dumps(editions, separators=(",", ":")))
 
 
 def _write_latest_redirect(parent_dir: Path, target_name: str) -> None:
@@ -299,6 +332,8 @@ def _masthead_html(plan: NewsPlan, today: date, edition_dir: Path) -> str:
         latest_url="../latest.html",
         prev_label=prev_iso or "",
         next_label=next_iso or "",
+        edition_id=today.isoformat(),
+        kind="news",
     )
 
     return (
@@ -341,21 +376,30 @@ def _neighbouring_news_dates(today: date, news_dir: Path) -> tuple[str | None, s
 
 def _edition_nav_html(*, prev_url: str, next_url: str, latest_url: str,
                       prev_label: str, next_label: str,
-                      archive_url: str = "../index.html") -> str:
-    """A small arrow strip under the masthead H1. Prev/next inert when
-    no neighbour exists; latest + all-editions links always present."""
-    def _arrow(direction: str, url: str, label: str) -> str:
+                      archive_url: str = "../index.html",
+                      edition_id: str = "",
+                      kind: str = "news") -> str:
+    """A small arrow strip under the masthead H1. Prev/next are seeded
+    from the on-disk state at render time, BUT each anchor carries a
+    data-role attribute so a tiny JS snippet can upgrade them on page
+    load by fetching `../editions.json`. That way an old edition's
+    'next →' picks up newer editions published after it without
+    having to re-render the old HTML."""
+    def _arrow(role: str, direction: str, url: str, label: str) -> str:
         if not url:
-            return f'<span class="edition-nav-link disabled">{direction}</span>'
+            return (
+                f'<a class="edition-nav-link disabled" data-role="{role}" '
+                f'href="#" aria-disabled="true">{direction}</a>'
+            )
         return (
-            f'<a class="edition-nav-link" href="{html.escape(url)}" '
-            f'title="{html.escape(label)}">{direction}</a>'
+            f'<a class="edition-nav-link" data-role="{role}" '
+            f'href="{html.escape(url)}" title="{html.escape(label)}">{direction}</a>'
         )
     return (
-        '<div class="edition-nav">'
-        + _arrow("← prev", prev_url, prev_label)
+        f'<div class="edition-nav" data-edition="{html.escape(edition_id)}" data-kind="{html.escape(kind)}">'
+        + _arrow("prev", "← prev", prev_url, prev_label)
         + f'<a class="edition-nav-link latest" href="{html.escape(latest_url)}">latest ↑</a>'
-        + _arrow("next →", next_url, next_label)
+        + _arrow("next", "next →", next_url, next_label)
         + f'<a class="edition-nav-link all" href="{html.escape(archive_url)}">all</a>'
         + '</div>'
     )
@@ -605,6 +649,8 @@ def _render_article_subpage(
     next_url: str = "",
     prev_label: str = "",
     next_label: str = "",
+    edition_id: str = "",
+    kind: str = "news",
 ) -> str:
     kicker = html.escape(piece.kicker or piece.section.upper())
     body_html = _md_to_html(article.body_md)
@@ -680,7 +726,9 @@ def _render_article_subpage(
     minutes = _estimate_read_minutes(article.body_md)
     read_time = f" · {minutes} min read" if minutes > 0 else ""
     # Edition-nav strip — same arrows the front page has, so the user
-    # can move between editions without backing out.
+    # can move between editions without backing out. The data-edition
+    # attribute lets the upgrade JS keep prev/next current as new
+    # editions land.
     subpage_nav = _edition_nav_html(
         prev_url=prev_url,
         next_url=next_url,
@@ -688,6 +736,8 @@ def _render_article_subpage(
         prev_label=prev_label,
         next_label=next_label,
         archive_url="../index.html",
+        edition_id=edition_id or today.isoformat(),
+        kind=kind,
     )
     return (
         '<main class="paper article-page">'

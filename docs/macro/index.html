@@ -18,8 +18,53 @@
     
     <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
   </nav>
-  <main class="paper"><header class="masthead">  <h1>The Bot Tribune<span class="sub">— Macro archive</span></h1>  <div class="subtitle">2 views on file. Most recent first.</div></header><div class="masthead-strip">  <span><strong>Macro archive</strong></span>  <span>2026-05-18 23:14 UTC</span>  <span></span></div><ul class="index-list"><li><a href="2026-W21/">2026-W21</a><span class="muted">macro view</span></li>
+  <main class="paper"><header class="masthead">  <h1>The Bot Tribune<span class="sub">— Macro archive</span></h1>  <div class="subtitle">2 views on file. Most recent first.</div></header><div class="masthead-strip">  <span><strong>Macro archive</strong></span>  <span>2026-05-19 07:43 UTC</span>  <span></span></div><ul class="index-list"><li><a href="2026-W21/">2026-W21</a><span class="muted">macro view</span></li>
 <li><a href="2026-W20.html">2026-W20</a><span class="muted">macro view</span></li></ul></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
   
 <script>
 const BOT_FONTS = {

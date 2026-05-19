@@ -726,6 +726,7 @@ def _render_macro_edition(edition: MacroEdition, docs_root: Path, shell_fn) -> P
             datetime.fromisoformat(edition.today + "T00:00:00").date(),
             prev_url=prev_url, next_url=next_url,
             prev_label=prev_id or "", next_label=next_id or "",
+            edition_id=edition.week_id, kind="macro",
         )
         page = shell_fn(
             title=f"{piece.headline} — Macro {edition.week_id}",
@@ -747,9 +748,13 @@ def _render_macro_edition(edition: MacroEdition, docs_root: Path, shell_fn) -> P
     )
     front_path = edition_dir / "index.html"
     front_path.write_text(front_page)
-    # Update docs/macro/latest.html → newest edition
-    from trading_bot.meta.news.render import _write_latest_redirect
+    # Update docs/macro/latest.html → newest edition + the editions.json
+    # sidecar that the in-page nav JS fetches to keep prev/next current.
+    from trading_bot.meta.news.render import (
+        _write_latest_redirect, _write_editions_index,
+    )
     _write_latest_redirect(edition_dir.parent, edition_dir.name)
+    _write_editions_index(edition_dir.parent, kind="macro")
     return front_path
 
 
@@ -765,6 +770,8 @@ def _render_macro_front(edition: MacroEdition, edition_dir: Path) -> str:
         latest_url="../latest.html",
         prev_label=prev_id or "",
         next_label=next_id or "",
+        edition_id=edition.week_id,
+        kind="macro",
     )
 
     # Masthead

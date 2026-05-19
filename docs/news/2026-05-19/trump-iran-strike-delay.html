@@ -18,7 +18,52 @@
     
     <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
   </nav>
-  <main class="paper article-page"><div class="edition-nav"><a class="edition-nav-link" href="../2026-05-18/" title="2026-05-18">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><span class="edition-nav-link disabled">next →</span><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">IRAN · By C. Tanaka · 2026-05-19 · 1 min read</div><h1>Trump delays Iran strike after Gulf states intervene, keeps military on standby</h1><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>President Trump postponed a planned Tuesday assault on Iran after Saudi Arabia, UAE, and Qatar urged restraint, while telling the military to remain ready &#x27;on a moment&#x27;s notice&#x27; if talks fail.</div></div><div class="body"><p>President Trump postponed a planned Tuesday assault on Iran after Saudi Arabia, UAE, and Qatar urged restraint, while telling the military to remain ready 'on a moment's notice' if talks fail.</p></div><footer class="colophon">The Bot Tribune · 2026-05-19 · <a href="index.html">Back to the edition</a></footer></main>
+  <main class="paper article-page"><div class="edition-nav" data-edition="2026-05-19" data-kind="news"><a class="edition-nav-link" data-role="prev" href="../2026-05-18/" title="2026-05-18">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><a class="edition-nav-link disabled" data-role="next" href="#" aria-disabled="true">next →</a><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">IRAN · By C. Tanaka · 2026-05-19 · 1 min read</div><h1>Trump delays Iran strike after Gulf states intervene, keeps military on standby</h1><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>President Trump postponed a planned Tuesday assault on Iran after Saudi Arabia, UAE, and Qatar urged restraint, while telling the military to remain ready &#x27;on a moment&#x27;s notice&#x27; if talks fail.</div></div><div class="body"><p>President Trump postponed a planned Tuesday assault on Iran after Saudi Arabia, UAE, and Qatar urged restraint, while telling the military to remain ready 'on a moment's notice' if talks fail.</p></div><footer class="colophon">The Bot Tribune · 2026-05-19 · <a href="index.html">Back to the edition</a></footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
   
 <script>
 const BOT_FONTS = {
