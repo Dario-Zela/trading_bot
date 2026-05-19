@@ -41,6 +41,55 @@ def _executor_for_strategy(config: StrategyConfig) -> Executor:
 _MAX_PARALLEL_STRATEGIES = 4
 
 
+# Phase 10E — target market-local times the actual orders should hit.
+# The cron fires 30 min earlier (setup_cron_jobs.py) so the multi-stage
+# pipeline finishes near these targets. If we finish faster than that,
+# `_sleep_until_target` holds the orders until the right moment.
+_MARKET_TARGETS: dict[tuple[str, str], tuple[str, int, int]] = {
+    ("us", "entry"):    ("America/New_York",  9, 35),
+    ("us", "exit"):     ("America/New_York", 15, 30),
+    ("uk-eu", "entry"): ("Europe/London",     8, 35),
+    ("uk-eu", "exit"):  ("Europe/London",    16,  0),
+}
+_MAX_SLEEP_SECONDS = 60 * 60   # 1h hard cap — if cron is mis-set, fail loud rather than block all day
+
+
+def _sleep_until_target(region: str, mode: str) -> None:
+    """If the analysis phase finished before the target market-local
+    time, sleep until then so orders fire on schedule even on a fast
+    pipeline run. No-op if we're already past target or if no target
+    is configured for the (region, mode) pair."""
+    spec = _MARKET_TARGETS.get((region, mode))
+    if not spec:
+        return
+    tz_name, hh, mm = spec
+    try:
+        from zoneinfo import ZoneInfo
+    except ImportError:
+        log.warning("zoneinfo unavailable — skipping sleep guard")
+        return
+    import time as _time
+    from datetime import datetime as _dt, time as _t
+    tz = ZoneInfo(tz_name)
+    now = _dt.now(tz)
+    target = _dt.combine(now.date(), _t(hh, mm), tzinfo=tz)
+    if now >= target:
+        return
+    sleep_s = (target - now).total_seconds()
+    if sleep_s > _MAX_SLEEP_SECONDS:
+        log.warning(
+            "Pipeline %s/%s finished %.0fs before target %s — exceeds %ds cap, "
+            "running NOW (cron likely mis-set)",
+            region, mode, sleep_s, target.strftime("%H:%M %Z"), _MAX_SLEEP_SECONDS,
+        )
+        return
+    log.info(
+        "Pipeline %s/%s finished early; sleeping %.0fs until %s target",
+        region, mode, sleep_s, target.strftime("%H:%M %Z"),
+    )
+    _time.sleep(sleep_s)
+
+
 def run_entry(region: str, on_date: date) -> dict[str, list[dict]]:
     from concurrent.futures import ThreadPoolExecutor, as_completed
     from trading_bot.tools.calendar import is_market_open_on
@@ -97,6 +146,10 @@ def run_entry(region: str, on_date: date) -> dict[str, list[dict]]:
                 log.exception("Strategy %s failed in select_picks: %s", strategy.config.id, e)
                 intents_by_id[strategy.config.id] = (strategy, [])
 
+    # Phase 10E — hold orders until the actual market-target time if
+    # the LLM analysis phase finished early. Caps the wait at 1h.
+    _sleep_until_target(region, "entry")
+
     # Phase 2: enter() sequentially. Broker API calls — we want
     # deterministic rate against Alpaca / T212 (already throttled per
     # request). Sequential here keeps the order in logs stable too.
@@ -135,6 +188,12 @@ def run_exit(region: str, on_date: date) -> dict[str, list[dict]]:
     if not strategies:
         log.info("No active strategies for region %s", region)
         return {}
+
+    # Phase 10E — exits have no LLM analysis phase, so sleep upfront.
+    # The exit pipeline runs broker-API calls top-to-bottom; we want
+    # those to land at 30 min before close, not whenever the runner
+    # spins up.
+    _sleep_until_target(region, "exit")
 
     exits: dict[str, list[dict]] = defaultdict(list)
     for strategy in strategies:
