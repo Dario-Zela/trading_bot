@@ -356,6 +356,13 @@ def _build_strategy_report_prompt(sid: str, rows: list[dict], actions: list[dict
     # should cite, not just aggregated metrics.
     notable_trades_block = _notable_trades_lines(sid)
 
+    # Pre-baked reflections on the untraded predictions — the daily
+    # reflect cron writes one sentence per prediction connecting the
+    # rationale to the realised class. Surfacing the biggest gaps
+    # here saves the evolution agent from re-deriving the same
+    # rationalisation across 100s of rows.
+    prediction_reflections_block = _strategy_prediction_reflections_lines(sid)
+
     # Phase 10B — derived signals
     from trading_bot.meta.evolution_inputs import (
         fees_pct_of_gross, cost_gate_drop_rate, earnings_gate_hit_rate,
@@ -450,6 +457,10 @@ for the strategy below.
 ### Notable per-trade reflections (LLM-written outcome + risk notes)
 
 {notable_trades_block}
+
+### Untraded-prediction reflections (one-line analysis per miss)
+
+{prediction_reflections_block}
 {similar_block}
 {deep_block}
 
@@ -642,6 +653,79 @@ def _notable_trades_lines(sid: str, *, lookback_days: int = 14, max_trades: int 
             f"({r.get('exit_date')}, {r.get('exit_reason', '?')})\n"
             f"  - Outcome: {outcome[:280]}\n"
             + (f"  - Risks:   {risks[:280]}" if risks and risks != "(reflection agent did not run on this trade)" else "")
+        )
+    return "\n".join(out)
+
+
+def _strategy_prediction_reflections_lines(
+    sid: str, *, lookback_days: int = 14, max_rows: int = 10,
+) -> str:
+    """Surface the most instructive **untraded** prediction reflections
+    from the trailing window. These are one-liners pre-computed by
+    `reflect_predictions_on_day` — they explain why a given pick's
+    rationale agreed or diverged from the realised outcome, without
+    the evolution agent having to re-derive that for every miss.
+
+    Picks the rows where the gap between predicted and actual return
+    magnitudes is largest (the biggest learn-from cases), capped at
+    `max_rows`. Returns "_(no reflected predictions in window)_" when
+    the window is empty so the prompt section is clearly empty rather
+    than missing."""
+    import json as _json
+    from datetime import date, timedelta
+
+    from trading_bot.state.paths import predictions_path
+
+    p = predictions_path()
+    if not p.exists():
+        return "_(no predictions file)_"
+    cutoff = (date.today() - timedelta(days=lookback_days)).isoformat()
+
+    rows: list[dict] = []
+    try:
+        with p.open() as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    rec = _json.loads(line)
+                except _json.JSONDecodeError:
+                    continue
+                if rec.get("strategy_id") != sid:
+                    continue
+                pd_ = rec.get("prediction_date") or ""
+                if not pd_ or pd_ < cutoff:
+                    continue
+                if not (rec.get("reflection") or "").strip():
+                    continue
+                rows.append(rec)
+    except OSError:
+        return "_(could not read predictions)_"
+
+    if not rows:
+        return "_(no reflected predictions in window)_"
+
+    def _gap(rec: dict) -> float:
+        pr = rec.get("predicted_return_pct")
+        ac = rec.get("actual_return_pct")
+        try:
+            return abs(float(pr or 0) - float(ac or 0))
+        except (TypeError, ValueError):
+            return 0.0
+
+    rows.sort(key=_gap, reverse=True)
+    out: list[str] = []
+    for r in rows[:max_rows]:
+        pr = r.get("predicted_return_pct")
+        ac = r.get("actual_return_pct")
+        pr_s = f"{pr:+.2f}%" if isinstance(pr, (int, float)) else "?"
+        ac_s = f"{ac:+.2f}%" if isinstance(ac, (int, float)) else "?"
+        out.append(
+            f"- **{r.get('ticker', '?')}** ({r.get('prediction_date')}, "
+            f"{r.get('predicted_class', '?')} pred {pr_s} vs "
+            f"{r.get('actual_class', '?')} actual {ac_s}) — "
+            f"{(r.get('reflection') or '').strip()[:280]}"
         )
     return "\n".join(out)
 

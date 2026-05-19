@@ -201,6 +201,157 @@ def _reflect_strategy(strategy_id: str, trades: list[dict], on_date: date) -> di
     return response
 
 
+def reflect_predictions_on_day(on_date: date, region: str | None = None) -> int:
+    """Add a one-sentence `reflection` to each *untraded* prediction made
+    on `on_date`, explaining why the predicted vs actual class diverged
+    (or agreed). Pre-computing this saves the weekly evolution agent
+    from re-deriving the same analysis across hundreds of rows.
+
+    Only operates on rows that already have `actual_class` set (i.e.
+    grade_predictions has run for the day). Traded predictions get
+    their reflection from the corresponding trade's `outcome_notes`
+    in the ledger and are intentionally skipped here.
+
+    Returns the number of prediction rows updated.
+    """
+    if not os.environ.get("CLAUDE_CODE_OAUTH_TOKEN"):
+        log.warning("Prediction reflection skipped: CLAUDE_CODE_OAUTH_TOKEN not set")
+        return 0
+
+    target = on_date.isoformat()
+    path = predictions_path()
+    if not path.exists():
+        return 0
+
+    rows: list[dict] = []
+    by_strategy: dict[str, list[dict]] = {}
+    for line in path.read_text().splitlines():
+        if not line.strip():
+            continue
+        r = json.loads(line)
+        rows.append(r)
+        if r.get("prediction_date") != target:
+            continue
+        if region is not None and r.get("region") != region:
+            continue
+        if r.get("was_traded"):
+            continue                         # ledger reflection covers it
+        if r.get("actual_class") is None:
+            continue                         # not graded yet
+        if (r.get("reflection") or "").strip():
+            continue                         # already reflected
+        by_strategy.setdefault(r["strategy_id"], []).append(r)
+
+    if not by_strategy:
+        log.info("Prediction reflection: no eligible rows on %s", target)
+        return 0
+
+    notes_by_strategy: dict[str, dict[str, str]] = {}
+    for sid, preds in by_strategy.items():
+        try:
+            notes_by_strategy[sid] = _reflect_predictions_strategy(sid, preds, on_date)
+        except ClaudeCodeError as e:
+            log.error("Prediction reflection failed for %s: %s", sid, e)
+            continue
+
+    if not notes_by_strategy:
+        return 0
+
+    # Apply: rows keyed by (strategy_id, ticker) — predictions don't
+    # carry a stable trade_id so we match on (sid, ticker) within the
+    # day, which is unique by construction.
+    apply_index: dict[tuple[str, str], str] = {}
+    for sid, by_ticker in notes_by_strategy.items():
+        for ticker, refl in by_ticker.items():
+            if refl:
+                apply_index[(sid, str(ticker).upper())] = refl
+
+    updated = 0
+    for r in rows:
+        if r.get("prediction_date") != target:
+            continue
+        key = (r.get("strategy_id"), str(r.get("ticker") or "").upper())
+        if key not in apply_index:
+            continue
+        r["reflection"] = apply_index[key].strip()
+        updated += 1
+
+    if updated == 0:
+        return 0
+
+    tmp = path.with_suffix(".jsonl.tmp")
+    with tmp.open("w") as f:
+        for r in rows:
+            f.write(json.dumps(r) + "\n")
+    tmp.replace(path)
+    return updated
+
+
+def _reflect_predictions_strategy(
+    strategy_id: str, predictions: list[dict], on_date: date,
+) -> dict[str, str]:
+    """One Sonnet call per strategy. Returns {ticker_upper: reflection}.
+    The reflection is one short sentence pointing at why the predicted
+    class hit or missed — the kind of line the evolution agent would
+    otherwise have to derive from raw numbers."""
+    cards = []
+    for p in predictions:
+        pred_class = p.get("predicted_class") or "?"
+        actual_class = p.get("actual_class") or "?"
+        pred_pct = p.get("predicted_return_pct")
+        actual_pct = p.get("actual_return_pct")
+        conviction = p.get("conviction")
+        rationale = (p.get("rationale") or "").strip()
+        pred_s = f"{pred_pct:+.2f}%" if isinstance(pred_pct, (int, float)) else "?"
+        actual_s = f"{actual_pct:+.2f}%" if isinstance(actual_pct, (int, float)) else "?"
+        conv_s = f"{conviction:.2f}" if isinstance(conviction, (int, float)) else "?"
+        cards.append(
+            f"### {p.get('ticker')}\n"
+            f"- predicted: {pred_class} ({pred_s}), conviction {conv_s}\n"
+            f"- actual:    {actual_class} ({actual_s})\n"
+            f"- rationale: {rationale or '(none)'}"
+        )
+
+    prompt = (
+        f"You're annotating the `{strategy_id}` strategy's untraded "
+        f"predictions for {on_date.isoformat()}. The strategy scored "
+        f"every candidate but only traded the high-conviction subset. "
+        f"For each prediction below, write ONE short sentence (≤140 "
+        f"chars) connecting the rationale to the realised outcome. "
+        f"This pre-computes the analysis the weekly evolution agent "
+        f"would otherwise have to derive from scratch — be terse and "
+        f"specific, not narrative.\n\n"
+        f"Guidance for the sentence:\n"
+        f"- If the predicted class matched the actual class: name the "
+        f"  signal that worked (e.g. 'RSI 28 mean-reversion played out').\n"
+        f"- If they diverged: name what the rationale assumed vs what "
+        f"  happened (e.g. 'expected continuation; flatlined on low vol').\n"
+        f"- Avoid restating the numbers — they're already shown.\n\n"
+        f"## Predictions\n\n" + "\n\n".join(cards) + "\n\n"
+        f"## Required output\n\n"
+        f"JSON object keyed by ticker symbol (uppercase):\n\n"
+        f"```json\n"
+        f"{{\n"
+        f"  \"TICKER\": \"one-sentence reflection\"\n"
+        f"}}\n"
+        f"```\n\n"
+        f"Use the exact ticker strings from the cards above."
+    )
+
+    response = run_claude_for_json(prompt, model="sonnet")
+    if not isinstance(response, dict):
+        raise ClaudeCodeError(
+            f"Prediction reflection response was not a JSON object — "
+            f"got {type(response).__name__}"
+        )
+    # Normalise keys to upper-case + strip non-string values
+    out: dict[str, str] = {}
+    for k, v in response.items():
+        if isinstance(v, str) and v.strip():
+            out[str(k).upper()] = v.strip()
+    return out
+
+
 def _apply_reflections(trades: list[dict], notes: dict[str, dict]) -> int:
     """Rewrite the ledger to overlay LLM-generated outcome_notes/risks_observed
     on the matching trade rows. Returns number of rows updated."""

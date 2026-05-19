@@ -334,11 +334,25 @@ def run_clear_slot(slot: int) -> None:
 
 
 def run_reflect(region: str, on_date: date) -> int:
-    from trading_bot.meta.reflection import grade_predictions, reflect_on_day
+    from trading_bot.meta.reflection import (
+        grade_predictions,
+        reflect_on_day,
+        reflect_predictions_on_day,
+    )
 
     n_graded = grade_predictions(on_date, region=region)
     log.info("Graded %d predictions with actual returns", n_graded)
-    return reflect_on_day(on_date, region=region)
+    n_trades = reflect_on_day(on_date, region=region)
+    # Pre-compute per-prediction reflection text on every untraded
+    # pick so the weekly evolution agent doesn't have to rationalise
+    # 100s of misses from raw rationale + actual_class. Cheap — one
+    # Sonnet call per strategy, ~20 tickers per call.
+    try:
+        n_preds = reflect_predictions_on_day(on_date, region=region)
+        log.info("Reflected on %d untraded predictions", n_preds)
+    except Exception as e:
+        log.warning("Prediction reflection failed (non-fatal): %s", e)
+    return n_trades
 
 
 def run_weekly_macro_cmd(on_date: date) -> None:

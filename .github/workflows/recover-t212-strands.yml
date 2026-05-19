@@ -13,13 +13,14 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "diag = print T212 history only (no writes). recover = back-fill ledger."
+        description: "diag = print T212 history. recover = back-fill ledger. reflect = LLM reflections on recovered trades."
         required: true
         default: diag
         type: choice
         options:
           - diag
           - recover
+          - reflect
 
 permissions:
   contents: write
@@ -49,6 +50,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e .
 
+      - name: Install Claude Code CLI
+        if: ${{ inputs.mode == 'reflect' }}
+        run: |
+          curl -fsSL https://claude.ai/install.sh | bash
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          claude --version
+
       - name: Diagnostic — dump T212 history for stranded trades
         if: ${{ inputs.mode == 'diag' }}
         env:
@@ -71,13 +79,19 @@ jobs:
           T212_API_SECRET__3: ${{ secrets.T212_API_SECRET__3 }}
         run: python scripts/recover_t212_strands.py
 
+      - name: Reflect — LLM reflections on recovered trades
+        if: ${{ inputs.mode == 'reflect' }}
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: python scripts/reflect_recovered_trades.py
+
       - name: Rebuild dashboard data
-        if: ${{ inputs.mode == 'recover' }}
+        if: ${{ inputs.mode == 'recover' || inputs.mode == 'reflect' }}
         run: python -m trading_bot.dashboard.build
         continue-on-error: true
 
       - name: Commit ledger state back
-        if: ${{ inputs.mode == 'recover' }}
+        if: ${{ inputs.mode == 'recover' || inputs.mode == 'reflect' }}
         run: |
           git config user.name "trading-bot[bot]"
           git config user.email "trading-bot@users.noreply.github.com"
@@ -86,6 +100,10 @@ jobs:
             echo "No changes — nothing to commit"
             exit 0
           fi
-          MSG="recover T212 strands — $(date -u +%Y-%m-%dT%H:%MZ)"
+          case "${{ inputs.mode }}" in
+            recover) MSG="recover T212 strands — $(date -u +%Y-%m-%dT%H:%MZ)" ;;
+            reflect) MSG="reflect on recovered trades — $(date -u +%Y-%m-%dT%H:%MZ)" ;;
+            *) MSG="recover-t212-strands $mode — $(date -u +%Y-%m-%dT%H:%MZ)" ;;
+          esac
           git commit -m "$MSG"
           git push origin HEAD:main

@@ -1,0 +1,149 @@
+"""Generate proper LLM reflections for back-filled rows the daily reflect
+cron missed:
+
+1. **Trades closed by recover_t212_strands**: the recovery script writes
+   a generic "this row was back-filled" placeholder into outcome_notes
+   and risks_observed. We replace it with a real Sonnet reflection.
+
+2. **Untraded predictions for any day that's been graded but not
+   reflected**: catches days where the prediction-reflection pass
+   either didn't run (older pipelines) or failed. The weekly evolution
+   agent reads predictions.jsonl heavily and benefits from pre-baked
+   one-line reflections on every miss.
+
+Idempotent — already-reflected rows are skipped. Triggered via the
+recover-t212-strands workflow's `reflect` mode.
+"""
+from __future__ import annotations
+
+import json
+import logging
+import sys
+from collections import defaultdict
+from datetime import date
+
+from trading_bot.meta.reflection import (
+    _apply_reflections,
+    _reflect_strategy,
+    reflect_predictions_on_day,
+)
+from trading_bot.state.paths import ledger_path, predictions_path
+
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+log = logging.getLogger("reflect_recovered")
+
+
+_PLACEHOLDER_MARKER = "Recovered post-hoc by recover_t212_strands.py"
+
+
+def _iter_records():
+    p = ledger_path()
+    if not p.exists():
+        return
+    with p.open() as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                yield json.loads(line)
+
+
+def main() -> int:
+    targets: list[dict] = []
+    for rec in _iter_records():
+        if rec.get("exit_reason") != "recovered":
+            continue
+        notes = rec.get("outcome_notes") or ""
+        if _PLACEHOLDER_MARKER not in notes:
+            # Already has a real reflection — skip
+            continue
+        targets.append(rec)
+
+    if not targets:
+        log.info("No recovered trades with placeholder reflections — nothing to do")
+        return 0
+
+    by_strategy: dict[str, list[dict]] = defaultdict(list)
+    for t in targets:
+        by_strategy[t["strategy_id"]].append(t)
+
+    log.info(
+        "Re-reflecting on %d recovered trade(s) across %d strategy/strategies",
+        len(targets), len(by_strategy),
+    )
+
+    total_updated = 0
+    for sid, trades in by_strategy.items():
+        # `_reflect_strategy` keys by trade_id and uses a single Sonnet
+        # call covering the day's basket; one call per strategy keeps
+        # cost down even when one strategy has 5 recovered trades.
+        any_date = trades[0].get("exit_date")
+        try:
+            on_date = date.fromisoformat(any_date) if any_date else date.today()
+        except (TypeError, ValueError):
+            on_date = date.today()
+
+        try:
+            notes = _reflect_strategy(sid, trades, on_date)
+        except Exception as e:
+            log.error("Reflection failed for %s: %s", sid, e)
+            continue
+
+        updated = _apply_reflections(trades, notes)
+        log.info("Reflected %d/%d trades for %s", updated, len(trades), sid)
+        total_updated += updated
+
+    log.info("Trade reflection done — %d total trade(s) updated", total_updated)
+
+    # Also catch up on any graded-but-unreflected predictions. Walk
+    # the prediction file once to find candidate dates+regions, then
+    # call the per-day reflector for each. Bounded by the
+    # `reflection` field guard inside, so it's cheap to re-invoke.
+    days_regions: set[tuple[str, str]] = set()
+    pp = predictions_path()
+    if pp.exists():
+        for line in pp.read_text().splitlines():
+            if not line.strip():
+                continue
+            try:
+                r = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if r.get("was_traded"):
+                continue
+            if r.get("actual_class") is None:
+                continue
+            if (r.get("reflection") or "").strip():
+                continue
+            pdate = r.get("prediction_date")
+            region = r.get("region")
+            if pdate and region:
+                days_regions.add((pdate, region))
+
+    if not days_regions:
+        log.info("Prediction reflection — no eligible days/regions to catch up")
+        return 0
+
+    log.info(
+        "Prediction reflection — catching up %d (date, region) pair(s)",
+        len(days_regions),
+    )
+    total_preds = 0
+    for d_iso, region in sorted(days_regions):
+        try:
+            d = date.fromisoformat(d_iso)
+        except ValueError:
+            continue
+        try:
+            n = reflect_predictions_on_day(d, region=region)
+        except Exception as e:
+            log.error("Prediction reflection failed for %s/%s: %s", d_iso, region, e)
+            continue
+        log.info("  %s/%s — %d prediction(s) reflected", d_iso, region, n)
+        total_preds += n
+    log.info("Prediction reflection done — %d row(s) updated", total_preds)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
