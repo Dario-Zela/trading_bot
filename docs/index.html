@@ -263,7 +263,13 @@
           </div>
           <div class="stat">
             <div class="stat-label">Open</div>
-            <div class="stat-value" x-text="current.summary.n_open"></div>
+            <div class="stat-value">
+              <span x-text="current.summary.n_open"></span>
+              <template x-if="current.summary.n_open_multi_day > 0">
+                <span class="muted" style="font-size: 0.7em;"
+                      x-text="' (' + current.summary.n_open_multi_day + ' multi-day)'"></span>
+              </template>
+            </div>
           </div>
           <div class="stat">
             <div class="stat-label">Predictions</div>

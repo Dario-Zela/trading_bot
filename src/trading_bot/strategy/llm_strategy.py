@@ -146,6 +146,47 @@ def _build_recent_self_trades_block(strategy_id: str, region: str, *,
     )
 
 
+def _build_open_positions_block(strategy_id: str, region: str) -> str:
+    """Phase 12G — surface currently-held multi-day positions so the LLM
+    can reason about its exposure before picking today's names. Already-
+    held tickers are auto-dropped by the pipeline pre-entry, but the LLM
+    seeing them lets it: (a) avoid wasting a pick slot on a duplicate,
+    (b) factor existing exposure into sector / correlation reasoning.
+    Empty string when there are no open positions."""
+    from trading_bot.state import read_open_trades
+    from datetime import date as _date
+
+    try:
+        open_trades = read_open_trades(strategy_id=strategy_id, region=region)
+    except Exception:
+        return ""
+    if not open_trades:
+        return ""
+
+    today_iso = _date.today().isoformat()
+    rows: list[str] = []
+    for t in open_trades:
+        ticker = t.get("ticker", "?")
+        entry = t.get("entry_date", "?")
+        target = t.get("target_exit_date") or "(same-day)"
+        thesis = (t.get("thesis") or "").strip()
+        hold = t.get("hold_days") or 1
+        line = f"- **{ticker}** entered {entry}, target exit {target} (hold {hold}d)"
+        if thesis:
+            line += f" — {thesis[:200]}"
+        rows.append(line)
+
+    return (
+        "## Currently-held positions (multi-day carryover)\n\n"
+        f"As of {today_iso}, you have {len(open_trades)} open position(s) "
+        "from prior sessions still within their hold window. Today's picks "
+        "are screened against this list — you cannot re-pick a ticker you "
+        "already hold. Use this view to keep your sector / correlation "
+        "exposure balanced when selecting new names:\n\n"
+        + "\n".join(rows)
+    )
+
+
 class LLMStrategy(Strategy):
     """Strategy backed by Claude Code in single-call mode."""
 
@@ -499,6 +540,12 @@ class LLMStrategy(Strategy):
         recent_trades_block = _build_recent_self_trades_block(cfg.id, cfg.region)
         if recent_trades_block:
             sections.append(recent_trades_block)
+
+        # Phase 12G — show open multi-day positions so the LLM knows what
+        # the strategy is already exposed to before adding new names.
+        open_positions_block = _build_open_positions_block(cfg.id, cfg.region)
+        if open_positions_block:
+            sections.append(open_positions_block)
 
         sections.append("## Your strategy bias / approach\n" + deep_analysis_prompt.strip())
         sections.append("## Final selection instructions\n" + final_select_prompt.strip())

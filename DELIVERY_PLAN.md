@@ -311,22 +311,28 @@ multi-day capability is added incrementally.
       skips trades whose `target_exit_date` is in the future. No
       additional code needed — verify in the next live multi-day run.
 
-### 12F — Dashboard + news brief show open positions
+### 12F — Dashboard + news brief show open positions ✅
 
-- [ ] Dashboard's strategy detail panel: separate "open positions"
-      table from "executed". Already partially there; verify it
-      handles multi-day holds correctly.
+- [x] Per-strategy summary now exposes `n_open_multi_day` alongside
+      `n_open`, separating intentional carryover from stranded
+      same-day entries. The dashboard's stat block renders "X (Y
+      multi-day)" so the user can see at a glance how much capital
+      is held across sessions.
 - [ ] News trading-floor section: include unrealised P&L of
-      currently-held multi-day positions alongside yesterday's exits.
+      currently-held multi-day positions alongside yesterday's
+      exits. Deferred — needs price-fetch + P&L plumbing in the
+      brief aggregator; not a blocker for first live multi-day run.
 
-### 12G — Risk: concurrent open-position cap
+### 12G — Risk: concurrent open-position cap ✅
 
-- [ ] Per-strategy cap on simultaneously-open positions across days
-      so a multi-day strategy doesn't pile up 30 positions.
-- [ ] Already loosely enforced by `max_positions` at entry-time,
-      but with same-day trades that re-zeroed daily; with multi-day,
-      the cap needs to look at currently-open count not just today's
-      new picks.
+- [x] Pipeline now trims today's intents in two passes:
+      (1) drop intents whose ticker is already held by this strategy
+          (no double-up on a multi-day position).
+      (2) trim what's left so `len(currently_open) + len(new)` ≤
+          `cfg.max_positions`.
+- [x] LLM sees a "Currently-held positions" block in its prompt so
+      it can keep sector/correlation exposure balanced when picking
+      new names.
 
 ### Out of scope for this phase
 

@@ -150,6 +150,44 @@ def run_entry(region: str, on_date: date) -> dict[str, list[dict]]:
     # the LLM analysis phase finished early. Caps the wait at 1h.
     _sleep_until_target(region, "entry")
 
+    # Phase 12G — enforce max_positions ACROSS days + dedup tickers
+    # against currently-open positions. Same-day round-trips zero out
+    # the ledger nightly so `max_positions` was naturally a daily cap;
+    # with multi-day holds, prior sessions' open trades stack on top of
+    # today's entries. Two adjustments:
+    #   1. Drop intents whose ticker is already held by this strategy
+    #      (don't double up on a multi-day position).
+    #   2. Trim what's left so total open ≤ cfg.max_positions.
+    for sid, (strategy, intents) in list(intents_by_id.items()):
+        if not intents:
+            continue
+        cfg = strategy.config
+        currently_open = read_open_trades(strategy_id=sid, region=cfg.region)
+        held_tickers = {t.get("ticker") for t in currently_open if t.get("ticker")}
+
+        if held_tickers:
+            kept: list = []
+            for i in intents:
+                if i.ticker in held_tickers:
+                    log.info(
+                        "%s: skipping %s — already held in an open multi-day position",
+                        sid, i.ticker,
+                    )
+                    continue
+                kept.append(i)
+            intents = kept
+
+        slots_remaining = max(0, cfg.max_positions - len(currently_open))
+        if slots_remaining < len(intents):
+            log.info(
+                "%s: %d currently open + %d new picks > %d cap — trimming today's "
+                "intents to %d",
+                sid, len(currently_open), len(intents),
+                cfg.max_positions, slots_remaining,
+            )
+            intents = intents[:slots_remaining]
+        intents_by_id[sid] = (strategy, intents)
+
     # Phase 2: enter() sequentially. Broker API calls — we want
     # deterministic rate against Alpaca / T212 (already throttled per
     # request). Sequential here keeps the order in logs stable too.

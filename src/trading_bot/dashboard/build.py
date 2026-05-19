@@ -72,10 +72,26 @@ def _equity_curve(trades: list[dict], starting_capital: float) -> list[dict]:
 def _summary_stats(trades: list[dict], predictions: list[dict]) -> dict:
     closed = [t for t in trades if t.get("exit_date") and t.get("pnl_gbp") is not None]
     n = len(closed)
+    open_trades = [t for t in trades if not t.get("exit_date")]
+    # Phase 12F — break the open-positions count into "multi-day"
+    # (intentionally held across sessions) vs total. A multi-day
+    # position is one with hold_days > 1 OR target_exit_date in the
+    # future. Legacy rows (no hold_days / no target) are treated as
+    # same-day stranded so the dashboard shows them on the "needs
+    # attention" side, not the "intentional carryover" side.
+    from datetime import date as _date
+    today_iso = _date.today().isoformat()
+    n_open_multi_day = 0
+    for t in open_trades:
+        hd = int(t.get("hold_days") or 1)
+        target = t.get("target_exit_date") or ""
+        if hd > 1 or (target and target > today_iso):
+            n_open_multi_day += 1
     if n == 0:
         return {
             "n_closed": 0,
-            "n_open": sum(1 for t in trades if not t.get("exit_date")),
+            "n_open": len(open_trades),
+            "n_open_multi_day": n_open_multi_day,
             "total_pnl_gbp": 0.0,
             "avg_pnl_pct": 0.0,
             "hit_rate": 0.0,
@@ -86,7 +102,8 @@ def _summary_stats(trades: list[dict], predictions: list[dict]) -> dict:
     wins = sum(1 for t in closed if float(t["pnl_gbp"]) > 0)
     return {
         "n_closed": n,
-        "n_open": sum(1 for t in trades if not t.get("exit_date")),
+        "n_open": len(open_trades),
+        "n_open_multi_day": n_open_multi_day,
         "total_pnl_gbp": round(total_pnl, 2),
         "avg_pnl_pct": round(avg_pnl_pct, 2),
         "hit_rate": round(wins / n, 3),
