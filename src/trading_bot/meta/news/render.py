@@ -202,6 +202,11 @@ def _write_editions_index(parent_dir: Path, *, kind: str) -> None:
     else:
         return
 
+    # Phase 10D — dedup by `id`. iterdir() should already be unique on
+    # disk but a defensive set() also handles symlinks pointing at the
+    # same week which can happen if a macro re-run wrote to a slightly
+    # different dir name and then someone normalised.
+    seen_ids: set[str] = set()
     editions: list[dict[str, str]] = []
     if parent_dir.exists():
         for child in sorted(parent_dir.iterdir(), reverse=True):
@@ -211,6 +216,9 @@ def _write_editions_index(parent_dir: Path, *, kind: str) -> None:
                 continue
             if not (child / "index.html").exists():
                 continue
+            if child.name in seen_ids:
+                continue
+            seen_ids.add(child.name)
             editions.append({"id": child.name, "url": f"../{child.name}/"})
 
     out_path = parent_dir / "editions.json"

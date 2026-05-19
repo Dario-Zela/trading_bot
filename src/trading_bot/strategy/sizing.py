@@ -57,6 +57,15 @@ def adjust_picks(
     cand_by_ticker = {c.ticker: c for c in candidates}
     predictions = predictions or {}
 
+    # Phase 10A — load recently trailed-out tickers. Re-picking these
+    # within the window pays a fresh round-trip (esp. stamp duty), so
+    # we double the cost estimate for them before the gate.
+    try:
+        from trading_bot.state.trail_exits import load_recent_trail_exits
+        trailed_recently = load_recent_trail_exits(days=3)
+    except Exception:
+        trailed_recently = {}
+
     adjustments: list[PickAdjustment] = []
     out: list[dict] = []
     for item in picks_raw:
@@ -94,6 +103,13 @@ def adjust_picks(
         )
         cost_pct = cost_est["total_pct"] * 100.0    # to percentage
 
+        # Phase 10A — re-entry cost surcharge. If we trailed out of this
+        # ticker in the last 3 days, the upcoming round trip is the
+        # *second* one in the pair, so we double the cost estimate.
+        trail_record = trailed_recently.get(ticker)
+        if trail_record:
+            cost_pct *= 2.0
+
         pred = predictions.get(ticker, {}) if isinstance(predictions, dict) else {}
         pred_return = pred.get("predicted_return_pct")
         try:
@@ -119,9 +135,11 @@ def adjust_picks(
             # always wrong for long-only and get dropped here too.
             if pred_return_f < threshold:
                 adj.dropped = True
+                trail_note = " [2× re-entry surcharge]" if trail_record else ""
                 adj.drop_reason = (
                     f"predicted {pred_return_f:+.2f}% < {cfg.cost_gate_multiplier:.1f}× "
                     f"round-trip cost {cost_pct:.2f}% (= {threshold:.2f}% threshold)"
+                    + trail_note
                 )
                 adjustments.append(adj)
                 continue
@@ -161,14 +179,17 @@ def _vol_adjusted_alloc(*, orig_alloc: float, cand, cfg) -> tuple[float, float, 
     position_gbp = risk_budget_gbp / (atr_pct / 100.0)
     alloc_pct = (position_gbp / cfg.capital_gbp) * 100.0
 
-    # Clamp
+    # Clamp — apply MIN first, then MAX last. If min_position_gbp is
+    # configured such that min_alloc > max_position_pct (a config
+    # mistake), max wins, and the position gets dropped downstream when
+    # the LLM-side validation re-checks the bounds.
     min_alloc = (cfg.min_position_gbp / cfg.capital_gbp) * 100.0
     capped = False
-    if alloc_pct > cfg.max_position_pct:
-        alloc_pct = cfg.max_position_pct
-        capped = True
     if alloc_pct < min_alloc:
         alloc_pct = min_alloc
+        capped = True
+    if alloc_pct > cfg.max_position_pct:
+        alloc_pct = cfg.max_position_pct
         capped = True
 
     reason = (
@@ -177,6 +198,32 @@ def _vol_adjusted_alloc(*, orig_alloc: float, cand, cfg) -> tuple[float, float, 
         + (" [clamped]" if capped else "")
     )
     return round(alloc_pct, 2), round(atr_pct, 3), reason
+
+
+def persist_adjustments(strategy_id: str, on_date, adjustments: list[PickAdjustment]) -> None:
+    """Phase 10B — write adjustments to
+    `state/pick_adjustments/{date}.{strategy_id}.jsonl` so the weekly
+    evolution agent can see how often the cost gate dropped picks for
+    each strategy."""
+    if not adjustments:
+        return
+    from dataclasses import asdict
+    from datetime import date as _date
+    import json as _json
+    from trading_bot.state.paths import STATE_ROOT
+    if hasattr(on_date, "isoformat"):
+        iso = on_date.isoformat()
+    else:
+        iso = str(on_date)
+    d = STATE_ROOT / "pick_adjustments"
+    d.mkdir(parents=True, exist_ok=True)
+    p = d / f"{iso}.{strategy_id}.jsonl"
+    try:
+        with p.open("a") as f:
+            for a in adjustments:
+                f.write(_json.dumps(asdict(a)) + "\n")
+    except OSError:
+        pass
 
 
 def format_adjustment_log(adjustments: list[PickAdjustment]) -> str:

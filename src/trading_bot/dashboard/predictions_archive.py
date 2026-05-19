@@ -68,6 +68,25 @@ def render_predictions_archive(docs_root: Path, shell_fn) -> Path:
     return out
 
 
+def _conviction_bucket(c) -> str:
+    """Normalise conviction to one of 'high' / 'medium' / 'low' / ''.
+
+    Strings ('high'/'medium'/'low') pass through; floats (0.0-1.0,
+    legacy per-trade) get bucketed by quantile-ish thresholds."""
+    if c is None or c == "":
+        return ""
+    if isinstance(c, str):
+        s = c.lower().strip()
+        return s if s in {"high", "medium", "low"} else ""
+    try:
+        f = float(c)
+    except (TypeError, ValueError):
+        return ""
+    if f >= 0.7:   return "high"
+    if f >= 0.4:   return "medium"
+    return "low"
+
+
 def _compute_stats(rows: list[dict]) -> dict:
     """Verdict rate by conviction (and overall). For 'graded' we only
     count rows that have a terminal verdict (proven/partial/falsified).
@@ -78,7 +97,7 @@ def _compute_stats(rows: list[dict]) -> dict:
         "open": 0, "graded": 0, "total": 0,
     })
     for r in rows:
-        conv = (r.get("conviction") or "unknown").lower()
+        conv = _conviction_bucket(r.get("conviction")) or "unknown"
         status = (r.get("status") or "open").lower()
         bucket = by_conviction[conv]
         bucket["total"] += 1
@@ -137,7 +156,10 @@ def _build_body(rows: list[dict], stats: dict) -> str:
         rid = html.escape(r.get("id", ""))
         source = html.escape(r.get("source", ""))
         horizon = html.escape(r.get("horizon", ""))
-        conviction = html.escape((r.get("conviction") or "").lower())
+        # Phase 10D — conviction may be a string (high/medium/low) or
+        # a float (0.0-1.0 on per-trade predictions). Normalise to a
+        # bucket so the filter matches both.
+        conviction = html.escape(_conviction_bucket(r.get("conviction")))
         status = html.escape((r.get("status") or "open").lower())
         made_at = html.escape((r.get("made_at") or "")[:10])
         target_date = html.escape(r.get("target_date", ""))

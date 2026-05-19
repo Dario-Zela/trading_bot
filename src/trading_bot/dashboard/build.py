@@ -188,15 +188,57 @@ def build_dashboard_data() -> dict:
     # Phase 8F — surface kill-switch state to the dashboard
     halt_info = _build_halt_info()
 
+    # Phase 10D — pull the latest missed-movers report per region so
+    # the dashboard can surface them inline without a click-through.
+    missed_movers = _build_missed_movers_snapshot()
+
+    # Phase 10D — derive an "as-of" date from the most recent ledger
+    # exit rather than UTC today. Around midnight UTC the UTC-based
+    # "today's P&L" check loses Friday's exits.
+    as_of_iso = _latest_exit_iso(active + archived) or datetime.now(timezone.utc).date().isoformat()
+
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(),
+        "as_of_iso": as_of_iso,
         "regions": sorted(regions_seen) if regions_seen else ["us"],
         "global_overview": global_overview,
         "sector_exposure": sector_exposure,
         "halt": halt_info,
+        "missed_movers": missed_movers,
         "active": active,
         "archived": archived,
     }
+
+
+def _build_missed_movers_snapshot() -> dict:
+    """Read the most recent missed-movers reports per region."""
+    from datetime import timedelta
+    from trading_bot.meta.missed_movers import load_report
+    today = datetime.now(timezone.utc).date()
+    out: dict[str, dict] = {}
+    for offset in range(0, 7):
+        d = today - timedelta(days=offset)
+        for region in ("us", "uk-eu"):
+            if region in out:
+                continue
+            rep = load_report(d, region)
+            if rep:
+                out[region] = rep
+        if len(out) == 2:
+            break
+    return out
+
+
+def _latest_exit_iso(entries: list[dict]) -> str | None:
+    """Most recent exit_date across all closed trades in any tier.
+    Used as the 'today' boundary for headline-P&L calculation."""
+    latest = ""
+    for e in entries:
+        for t in e.get("executed", []):
+            ed = t.get("exit_date") or ""
+            if ed and ed > latest:
+                latest = ed
+    return latest or None
 
 
 def _build_halt_info() -> dict:

@@ -1401,6 +1401,32 @@ body.page-dashboard .pred-class-badge.strong_down { background: rgba(220,38,38,0
 }
 
 /* ============================================================================
+ * Evolution per-strategy cards (Phase 4 / 10D)
+ * Moved from inline styles so a mobile media query can adjust them.
+ * ============================================================================ */
+.evo-card {
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+  padding: 1.5rem 1.8rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.evo-card-headline {
+  font-family: var(--serif-head);
+  font-weight: 700;
+  font-size: 1.65rem;
+  letter-spacing: -0.005em;
+  margin: 0 0 1.2rem;
+}
+.evo-card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  font-size: 0.98rem;
+}
+
+/* ============================================================================
  * Phase 9E — mobile responsiveness
  * Targeted overrides for dashboard layout below 760px (most phones).
  * Newspaper / macro / evolution pages already wrap acceptably via the
@@ -1479,6 +1505,18 @@ body.page-dashboard .pred-class-badge.strong_down { background: rgba(220,38,38,0
 
   /* Single-column body for the lead / editorial */
   .lead-body, .editorial-body { column-count: 1; }
+
+  /* Phase 10D — shrink section-grid brief font sizes so 3-up cards
+     stay legible without overflowing horizontally on phones. */
+  .grid-3 .brief h3 { font-size: 1.12rem; }
+  .grid-3 .brief p { font-size: 0.94rem; }
+  .grid-2 .brief h3 { font-size: 1.22rem; }
+
+  /* Phase 10D — evolution per-strategy cards. Stack the four quadrants
+     into a single column on mobile so headings + bullets aren't crushed. */
+  .evo-card { padding: 1.1rem 1.1rem; }
+  .evo-card-headline { font-size: 1.35rem; }
+  .evo-card-grid { grid-template-columns: 1fr; gap: 1.1rem; }
 }
 
 /* ============================================================================

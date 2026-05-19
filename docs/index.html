@@ -89,6 +89,7 @@
           <div class="overview-head">
             <span class="overview-title">Real broker (paper)</span>
             <span class="overview-tiers" x-text="overview.real.tiers.join(' + ') || 'no real-broker strategies'"></span>
+            <span style="font-family: var(--sans); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); margin-left: 0.4rem;">net of fees</span>
           </div>
           <div class="overview-stats">
             <div class="overview-stat">
@@ -135,6 +136,37 @@
             </div>
           </div>
         </div>
+      </section>
+    </template>
+
+    <!-- Phase 10D — missed-movers panel. Shows the most recent
+         missed-movers report per region (also feeds news + evolution). -->
+    <template x-if="data && data.missed_movers && Object.keys(data.missed_movers).length">
+      <section style="margin: 1.5rem 0; padding: 1rem 1.4rem; background: var(--card); border: 1px solid var(--hairline); border-radius: 6px;">
+        <div style="font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.6rem;">
+          What we missed today
+        </div>
+        <template x-for="[region, rep] in Object.entries(data.missed_movers)" :key="region">
+          <div style="margin-bottom: 0.9rem;">
+            <div style="font-family: var(--sans); font-size: 0.78rem; font-weight: 700; color: var(--ink); margin-bottom: 0.3rem;">
+              <span x-text="region.toUpperCase()"></span>
+              <span style="font-weight: 400; color: var(--ink-muted);" x-text="'— ' + rep.date"></span>
+            </div>
+            <div style="font-family: var(--serif-body); font-size: 0.92rem; color: var(--ink-soft); margin-bottom: 0.45rem; line-height: 1.45;" x-text="rep.summary"></div>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.6rem; font-family: var(--sans); font-size: 0.78rem;">
+              <template x-for="m in (rep.top_movers || []).slice(0, 6)" :key="m.ticker">
+                <span style="padding: 0.15rem 0.5rem; border-radius: 2px; background: var(--paper-dark);"
+                      :title="(m.catalyst || '') + (m.miss_reason ? ' · ' + m.miss_reason : '')">
+                  <strong x-text="m.ticker"></strong>
+                  <span :class="m.move_pct > 0 ? 'up' : 'down'"
+                        x-text="(m.move_pct > 0 ? '+' : '') + m.move_pct.toFixed(2) + '%'"></span>
+                  <span x-show="m.was_traded_by && m.was_traded_by.length"
+                        style="margin-left: 0.4rem; color: var(--c-pos); font-weight: 600;">held</span>
+                </span>
+              </template>
+            </div>
+          </div>
+        </template>
       </section>
     </template>
 
@@ -296,10 +328,13 @@
                             <div style="font-family: var(--sans); font-size: 0.85rem;">
                               <template x-for="[k, v] in Object.entries(t.fees_breakdown)" :key="k">
                                 <span style="margin-right: 1rem;">
-                                  <span x-text="k.replace(/_gbp$/, '').replace(/_/g, ' ')"></span>
+                                  <span x-text="feeLabel(k)"></span>
                                   <strong x-text="'£' + Number(v).toFixed(2)"></strong>
                                 </span>
                               </template>
+                              <span style="margin-left: 0.5rem; color: var(--ink-muted);">
+                                = <strong x-text="'£' + Number(t.fees_gbp).toFixed(2)"></strong> total
+                              </span>
                             </div>
                           </div>
                         </template>
@@ -460,7 +495,11 @@
 
         get overview() {
           const REAL_TIERS = new Set(['alpaca-paper', 'trading212-paper', 't212-live']);
-          const today = new Date().toISOString().slice(0, 10);
+          // Phase 10D — use the latest exit-date in the data as the
+          // "today" boundary, falling back to UTC. Around midnight UTC
+          // the original UTC-based check dropped trades whose exit_date
+          // was the (US/UK) trading day that just ended.
+          const today = (this.data && this.data.as_of_iso) || new Date().toISOString().slice(0, 10);
           const real = { tiers: new Set(), todayPnl: 0, todayN: 0, alltimePnl: 0, alltimeN: 0, alltimeWins: 0 };
           const shadow = { tiers: new Set(['shadow']), todayPnl: 0, todayN: 0, alltimePnl: 0, alltimeN: 0, alltimeWins: 0 };
           for (const s of this.filteredStrategies) {
@@ -567,6 +606,21 @@
           if (v == null) return '—';
           const sign = v > 0 ? '+' : v < 0 ? '−' : '';
           return sign + Math.abs(v).toFixed(2) + '%';
+        },
+
+        feeLabel(key) {
+          // Friendly labels for fees_breakdown keys.
+          const map = {
+            fx_fee_entry_gbp: 'FX (in)',
+            fx_fee_exit_gbp: 'FX (out)',
+            stamp_duty_gbp: 'UK stamp',
+            ptm_levy_gbp: 'PTM levy',
+            french_ftt_gbp: 'FR FTT',
+            italian_ftt_gbp: 'IT FTT',
+            us_sec_fee_gbp: 'US SEC',
+            us_finra_fee_gbp: 'US FINRA',
+          };
+          return map[key] || key.replace(/_gbp$/, '').replace(/_/g, ' ');
         },
 
         formatConviction(c) {

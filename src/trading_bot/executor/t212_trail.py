@@ -39,6 +39,13 @@ DEFAULT_ACTIVATION_PCT = 1.0
 DEFAULT_TRAIL_PCT = 0.8
 _CANCEL_AFTER_PLACE_RETRIES = 2
 
+# Phase 10A — UK LSE shares pay 0.5% stamp duty on every entry. If the
+# trail fires and the strategy re-buys tomorrow we pay it *again*. To
+# keep firing economic, only trail UK shares when we're already up
+# enough that the post-stamp-duty net is meaningfully positive.
+UK_SHARE_ACTIVATION_PCT = 1.8
+UK_SHARE_TRAIL_PCT = 0.6
+
 
 @dataclass
 class T212TrailAction:
@@ -91,6 +98,11 @@ def _trail_one_slot(creds: T212Creds, activation_pct: float, trail_pct: float) -
     }
     actions: list[T212TrailAction] = []
 
+    # Load the cached instrument metadata so we know which positions
+    # are UK LSE shares (stamp-duty-charged) vs ETFs / non-UK. The
+    # cache file is populated at order time and persists across runs.
+    instruments_by_ticker = _load_instruments_cache()
+
     portfolio = _safe_get(f"{base}/equity/portfolio", headers)
     if not isinstance(portfolio, list) or not portfolio:
         return actions
@@ -122,10 +134,20 @@ def _trail_one_slot(creds: T212Creds, activation_pct: float, trail_pct: float) -
         if qty <= 0 or entry <= 0 or cur <= 0:
             continue
         pct_up = (cur / entry - 1.0) * 100.0
-        if pct_up < activation_pct:
+        # Phase 10A — instrument-aware thresholds. UK LSE shares carry a
+        # 0.5% stamp duty on re-entry; the trail's activation has to
+        # leave enough room to clear that on the next trade.
+        inst = instruments_by_ticker.get(ticker, {})
+        is_uk_share = (
+            inst.get("type") == "STOCK"
+            and (inst.get("currencyCode") or "").upper() == "GBP"
+        )
+        eff_activation = UK_SHARE_ACTIVATION_PCT if is_uk_share else activation_pct
+        eff_trail = UK_SHARE_TRAIL_PCT if is_uk_share else trail_pct
+        if pct_up < eff_activation:
             continue
 
-        target_stop = round(cur * (1.0 - trail_pct / 100.0), 4)
+        target_stop = round(cur * (1.0 - eff_trail / 100.0), 4)
         existing_stops = stops_by_ticker.get(ticker, [])
         old_stop_val: float | None = None
         old_stop_id: str | None = None
@@ -177,15 +199,50 @@ def _trail_one_slot(creds: T212Creds, activation_pct: float, trail_pct: float) -
                 status="placed" if old_stop_val is None else "tightened",
             ))
         else:
-            actions.append(T212TrailAction(
-                ticker=ticker, slot=creds.slot, entry_price=entry, current_price=cur,
-                pct_up=pct_up, old_stop=old_stop_val, new_stop=target_stop,
-                status="failed",
-                reason="cancelled old stop but new stop POST failed — position is now UNPROTECTED",
-            ))
+            # Phase 10C — try to recover by re-posting the OLD stop level
+            # before giving up. Better the original protection than none.
+            recovered = False
+            if old_stop_val is not None:
+                recovered = _submit_stop(base, headers, ticker, -qty, old_stop_val)
+            if recovered:
+                actions.append(T212TrailAction(
+                    ticker=ticker, slot=creds.slot, entry_price=entry, current_price=cur,
+                    pct_up=pct_up, old_stop=old_stop_val, new_stop=old_stop_val,
+                    status="failed",
+                    reason=f"new stop POST failed; restored old stop at {old_stop_val:.4f}",
+                ))
+            else:
+                actions.append(T212TrailAction(
+                    ticker=ticker, slot=creds.slot, entry_price=entry, current_price=cur,
+                    pct_up=pct_up, old_stop=old_stop_val, new_stop=target_stop,
+                    status="failed",
+                    reason="cancelled old stop but new stop POST failed AND restore failed — UNPROTECTED",
+                ))
         time.sleep(0.4)
 
     return actions
+
+
+def _load_instruments_cache() -> dict[str, dict]:
+    """Read state/t212_instruments.json and index by ticker. Returns
+    an empty dict on miss so callers can default to non-UK thresholds."""
+    from trading_bot.state.paths import STATE_ROOT
+    p = STATE_ROOT / "t212_instruments.json"
+    if not p.exists():
+        return {}
+    try:
+        raw = json.loads(p.read_text())
+    except (json.JSONDecodeError, OSError):
+        return {}
+    items = raw if isinstance(raw, list) else raw.get("instruments", [])
+    out: dict[str, dict] = {}
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+        tkr = item.get("ticker")
+        if tkr:
+            out[tkr] = item
+    return out
 
 
 def _safe_get(url: str, headers: dict) -> Any:

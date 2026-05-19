@@ -54,13 +54,23 @@ MAX_ALPACA_SLOTS = 3  # how many paper accounts we've provisioned
 MAX_TOTAL_STRATEGIES = 12  # ceiling on spawned variants
 PROMOTION_MIN_TRADES = 10
 PROMOTION_MIN_HIT_RATE = 0.50
+# Phase 10C — tunable so we can promote net-positive-but-marginal
+# strategies in the future without rewriting the gate. Setting it
+# higher than 0 means a strategy needs to actually make money to
+# promote; setting it to 0 allows break-even promotions.
 PROMOTION_MIN_PNL_GBP = 0.0
 PROMOTION_MIN_IC = 0.05
+# Phase 10C — separate from PROMOTION_MIN_IC so we can relax the
+# lower-bound gate independently. Setting this to 0.0 allows promotion
+# whenever the lower CI bound is at-or-above "no edge", even if the
+# point estimate is well above. Default same as POINT_ESTIMATE so the
+# overall gate stays as strict as before.
+PROMOTION_MIN_IC_LOWER = 0.05
 DEMOTION_MAX_DRAWDOWN_PCT = -10.0
 DEMOTION_MIN_HIT_RATE = 0.40
 
 # Phase 9A — A/B confidence intervals. Promotion requires the *lower
-# 95% bound* on IC (Fisher z-transform) to clear PROMOTION_MIN_IC,
+# 95% bound* on IC (Fisher z-transform) to clear PROMOTION_MIN_IC_LOWER,
 # not just the point estimate. Stops promotions on 14 trades where
 # the IC delta is driven by a handful of lucky picks.
 PROMOTION_IC_CI_Z = 1.96      # ~95% one-sided
@@ -612,11 +622,11 @@ def _meets_promotion(m: StrategyMetrics | None, entry: dict) -> bool:
         return False
     if m.ic is None or m.ic < PROMOTION_MIN_IC:
         return False
-    # Phase 9A — the lower 95% CI bound on IC (Fisher z-transform)
-    # must also clear PROMOTION_MIN_IC. Catches IC point estimates
-    # that look fine but rest on a tiny sample.
+    # Phase 9A + 10C — the lower 95% CI bound on IC (Fisher z-transform)
+    # must also clear PROMOTION_MIN_IC_LOWER (separate from point-estimate
+    # threshold so the lower-bound gate can be tuned independently).
     ic_lower = _ic_lower_bound(m.ic, m.n_predictions_graded)
-    if ic_lower is None or ic_lower < PROMOTION_MIN_IC:
+    if ic_lower is None or ic_lower < PROMOTION_MIN_IC_LOWER:
         return False
     return True
 

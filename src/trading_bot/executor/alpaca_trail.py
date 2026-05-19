@@ -165,6 +165,18 @@ def _trail_one_slot(creds: AlpacaCreds, activation_pct: float, trail_pct: float)
             except (TypeError, ValueError):
                 continue
             target_stop = round(current_price * (1.0 - trail_pct / 100.0), 2)
+            # Phase 10C — on sub-$1 stocks, rounding to 2dp can collapse
+            # the new stop onto the current price. Require at least 1
+            # cent below the current to avoid an instant-fire stop.
+            if target_stop >= current_price - 0.01:
+                actions.append(TrailAction(
+                    symbol=symbol, slot=creds.slot, entry_price=entry_price,
+                    current_price=current_price, pct_up=pct_up,
+                    old_stop=old_stop, new_stop=target_stop,
+                    status="skipped",
+                    reason=f"target stop {target_stop} too close to current {current_price} (sub-$1 rounding)",
+                ))
+                continue
             if target_stop <= old_stop:
                 actions.append(TrailAction(
                     symbol=symbol, slot=creds.slot, entry_price=entry_price,

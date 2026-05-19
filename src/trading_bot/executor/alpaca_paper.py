@@ -285,18 +285,24 @@ class AlpacaPaperExecutor(Executor):
                 fees_gbp=fees_gbp,
                 fees_breakdown=fees_breakdown,
             )
-            closed.append(
-                {
-                    **trade,
-                    "exit_date": on_date.isoformat(),
-                    "exit_price": exit_price_to_record,
-                    "pnl_gbp": pnl_gbp if pnl_gbp is not None else 0.0,
-                    "pnl_pct": pnl_pct if pnl_pct is not None else 0.0,
-                    "exit_reason": exit_reason,
-                    "fees_gbp": fees_gbp,
-                    "fees_breakdown": fees_breakdown,
-                }
-            )
+            closed_row = {
+                **trade,
+                "exit_date": on_date.isoformat(),
+                "exit_price": exit_price_to_record,
+                "pnl_gbp": pnl_gbp if pnl_gbp is not None else 0.0,
+                "pnl_pct": pnl_pct if pnl_pct is not None else 0.0,
+                "exit_reason": exit_reason,
+                "fees_gbp": fees_gbp,
+                "fees_breakdown": fees_breakdown,
+            }
+            closed.append(closed_row)
+            # Phase 10A — persist stop-driven exits so re-entries get
+            # taxed properly by the cost gate next session.
+            try:
+                from trading_bot.state.trail_exits import append_trail_exit
+                append_trail_exit(closed_row)
+            except Exception:
+                pass
         return closed
 
     # ---- safety controls ---------------------------------------------------
@@ -582,13 +588,24 @@ class AlpacaPaperExecutor(Executor):
             return None
 
     def _infer_exit_reason(self, trade: dict, exit_price: float) -> str:
+        """Infer whether an exit hit the stop, the take-profit, or
+        the scheduled close-by-market. Phase 10C — old version used
+        `stop_price * 1.005` which treated exits ABOVE the stop as
+        stop fires (wrong direction for a long). Now uses absolute
+        proximity in either direction: exits within ±0.5% of the
+        trigger count as that trigger, capturing the realistic case
+        where a stop fills slightly below its trigger due to slippage.
+        """
         entry = float(trade["entry_price"])
         stop_pct = trade.get("stop_loss_pct")
         tp_pct = trade.get("take_profit_pct")
         if stop_pct is not None:
             stop_price = entry * (1 + stop_pct / 100.0)
-            if exit_price <= stop_price * 1.005:  # within 0.5% slippage tolerance
-                return "stop"
+            # Stop fired if we exited at or below the trigger (any
+            # slippage), or up to 0.5% above (rare edge / market close).
+            if exit_price <= stop_price * 1.005 and stop_price > 0:
+                if exit_price <= stop_price + abs(stop_price) * 0.005:
+                    return "stop"
         if tp_pct is not None:
             tp_price = entry * (1 + tp_pct / 100.0)
             if exit_price >= tp_price * 0.995:

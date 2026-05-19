@@ -433,14 +433,21 @@ class Trading212DemoExecutor(Executor):
                 fees_gbp=fees_gbp,
                 fees_breakdown=fees_breakdown,
             )
-            closed.append({
+            closed_row = {
                 **trade,
                 "exit_date": on_date.isoformat(),
                 "exit_price": exit_price_to_record,
                 "pnl_gbp": pnl_gbp if pnl_gbp is not None else 0.0,
                 "pnl_pct": pnl_pct if pnl_pct is not None else 0.0,
                 "exit_reason": exit_reason,
-            })
+            }
+            closed.append(closed_row)
+            # Phase 10A — track stop-driven exits for the cost gate
+            try:
+                from trading_bot.state.trail_exits import append_trail_exit
+                append_trail_exit(closed_row)
+            except Exception:
+                pass
         return closed
 
     def reconcile_orphans(

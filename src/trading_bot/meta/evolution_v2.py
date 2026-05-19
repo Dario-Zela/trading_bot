@@ -192,6 +192,49 @@ def _build_editorial_prompt(today: date, snapshot: list[dict], applied_actions: 
         action_lines.append(f"- {scope} · {a.get('action')} ({status}) — {a.get('reason', '')[:200]}")
     action_block = "\n".join(action_lines) or "(no actions this week)"
 
+    # Phase 10B — pull cross-cutting signals once for the intro
+    from trading_bot.meta.evolution_inputs import (
+        divergent_strategies, verdict_rates_by_source,
+        halt_history_summary, regime_subtitles,
+    )
+    divergent = divergent_strategies(snapshot)
+    verdict_rates = verdict_rates_by_source()
+    halt_summary = halt_history_summary()
+    regimes = regime_subtitles(days=7)
+
+    divergence_block = ""
+    if divergent:
+        lines = [f"- **{d['sid']}**: {d['region_a']} {d['pct_a']:+.2f}% vs {d['region_b']} {d['pct_b']:+.2f}% (Δ {d['delta']:.2f}pp)"
+                 for d in divergent[:6]]
+        divergence_block = "\n## Strategies diverging across regions (>5pp absolute avg-P&L gap)\n\n" + "\n".join(lines)
+
+    verdict_block = ""
+    if verdict_rates:
+        lines = []
+        for source, c in verdict_rates.items():
+            graded = c.get("graded", 0) or 0
+            if not graded:
+                continue
+            proven_pct = c["proven"] / graded * 100
+            partial_pct = c["partial"] / graded * 100
+            fals_pct = c["falsified"] / graded * 100
+            lines.append(f"- **{source}** ({graded} graded): proven {proven_pct:.0f}% · partial {partial_pct:.0f}% · falsified {fals_pct:.0f}%")
+        if lines:
+            verdict_block = "\n## Falsifiable-call grading (last 4 weeks)\n\n" + "\n".join(lines)
+
+    halt_block = ""
+    if halt_summary.get("n_halts", 0) > 0:
+        halt_block = (
+            f"\n## Kill-switch fired this window\n\n"
+            f"{halt_summary['n_halts']} halt(s) over the last 14 days. Most recent reason: "
+            f"_{halt_summary['most_recent_reason']}_"
+        )
+
+    regime_block = ""
+    if regimes:
+        lines = [f"- {r['date']}: {r['subtitle']}" for r in regimes]
+        regime_block = "\n## Recent regime context (trailing 7 days, daily news subtitles)\n\n" + "\n".join(lines)
+
     sim_block = ""
     if similarity_pairs:
         lines = []
@@ -223,6 +266,10 @@ below.
 ## Auto-actions applied this week
 
 {action_block}
+{divergence_block}
+{verdict_block}
+{halt_block}
+{regime_block}
 {sim_block}
 
 ## Writing rules
@@ -280,12 +327,24 @@ def _build_strategy_report_prompt(sid: str, rows: list[dict], actions: list[dict
             region_lines.append(f"- **{r.get('region')}** [{r.get('tier')}]: (no trades this window)")
     regions_block = "\n".join(region_lines) or "(no regions configured)"
 
-    action_lines = []
+    # Phase 10C — split applied vs skipped instead of mixing them. The
+    # agent was reading both as "what we did this week", but skipped
+    # actions are exactly what we DIDN'T do.
+    applied_lines: list[str] = []
+    skipped_lines: list[str] = []
     for a in actions:
-        status = "applied" if a.get("applied") else "skipped"
         scope = f"@{a.get('region')}" if a.get("region") else " (strategy-wide)"
-        action_lines.append(f"- `{a.get('action')}`{scope} · {status} — {a.get('reason', '')[:200]}")
-    actions_block = "\n".join(action_lines) or "- _no actions applied this week_"
+        line = f"- `{a.get('action')}`{scope} — {a.get('reason', '')[:200]}"
+        if a.get("applied"):
+            applied_lines.append(line)
+        else:
+            skipped_lines.append(line)
+    applied_block = "\n".join(applied_lines) or "- _no actions applied this week_"
+    skipped_block = "\n".join(skipped_lines) or "- _no actions skipped this week_"
+    actions_block = (
+        "**Applied:**\n" + applied_block
+        + "\n\n**Considered but skipped:**\n" + skipped_block
+    )
 
     # Pull this strategy's misses from the trailing-week missed-movers
     # reports — concrete tickers + catalysts + reason hypotheses that
@@ -296,6 +355,51 @@ def _build_strategy_report_prompt(sid: str, rows: list[dict], actions: list[dict
     # via Haiku — these are concrete failure / success modes the agent
     # should cite, not just aggregated metrics.
     notable_trades_block = _notable_trades_lines(sid)
+
+    # Phase 10B — derived signals
+    from trading_bot.meta.evolution_inputs import (
+        fees_pct_of_gross, cost_gate_drop_rate, earnings_gate_hit_rate,
+        sector_concentration, trail_activation_rate, parent_deep_analysis,
+    )
+    fee_pct = fees_pct_of_gross(sid)
+    cost_drop = cost_gate_drop_rate(sid)
+    earnings_hit = earnings_gate_hit_rate(sid)
+    sectors = sector_concentration(sid)
+    trail_rate = trail_activation_rate(sid)
+    deep_md = parent_deep_analysis(sid)
+
+    signals_lines = [
+        f"- **Fees as share of gross P&L** (last 14d): "
+        f"£{fee_pct['fees_gbp']:+,.2f} fees / £{fee_pct['gross_pnl_gbp']:+,.2f} gross "
+        f"→ **{fee_pct['fees_pct_of_gross']:.0f}%** of gross eaten by fees ({fee_pct['n_trades']} trades)",
+    ]
+    if cost_drop["n_picks"]:
+        signals_lines.append(
+            f"- **Cost-gate drops**: {cost_drop['n_dropped']}/{cost_drop['n_picks']} "
+            f"LLM picks dropped by gate ({cost_drop['drop_rate_pct']:.1f}%) — "
+            f"the LLM is repeatedly choosing trades the edge can't cover"
+        )
+    if earnings_hit["n_runs"]:
+        signals_lines.append(
+            f"- **Earnings-gate hits**: {earnings_hit['candidates_dropped']}/{earnings_hit['candidates_total']} "
+            f"candidates dropped pre-earnings over {earnings_hit['n_runs']} runs ({earnings_hit['drop_rate_pct']:.1f}%)"
+        )
+    if trail_rate["n_exits"]:
+        signals_lines.append(
+            f"- **Stop / trail rate**: {trail_rate['n_stops']}/{trail_rate['n_exits']} "
+            f"exits via stop or trail ({trail_rate['stop_rate_pct']:.0f}%)"
+        )
+    if sectors:
+        sector_str = ", ".join(f"{s['sector']} {s['pct']:.0f}%" for s in sectors[:4])
+        signals_lines.append(f"- **Sector concentration** (by traded notional): {sector_str}")
+    signals_block = "\n".join(signals_lines)
+
+    deep_block = ""
+    if deep_md.strip():
+        deep_block = (
+            "\n### This strategy's `deep_analysis.md` (its current bias)\n\n"
+            f"```\n{deep_md}\n```\n"
+        )
 
     sim_lines = []
     for other, corr in similar_pairs:
@@ -323,6 +427,10 @@ for the strategy below.
 
 {actions_block}
 
+### Derived signals (last 14 days)
+
+{signals_block}
+
 ### Missed opportunities this week (from daily missed-movers analysis)
 
 {missed_block}
@@ -331,6 +439,7 @@ for the strategy below.
 
 {notable_trades_block}
 {similar_block}
+{deep_block}
 
 ## What we need
 
@@ -780,10 +889,10 @@ def _render_strategy_card(r: StrategyReport, edition: EvolutionEdition) -> str:
         )
 
     return (
-        '<article style="background: var(--card); border: 1px solid var(--hairline); border-radius: 4px; padding: 1.5rem 1.8rem; margin-bottom: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">'
+        '<article class="evo-card">'
         f'<p class="meta"><span class="accent" style="color: var(--c-evo);">STRATEGY · {html.escape(r.strategy_id.upper())}</span></p>'
-        f'<h3 style="font-family: var(--serif-head); font-weight: 700; font-size: 1.65rem; letter-spacing: -0.005em; margin: 0 0 1.2rem;">{html.escape(r.headline)}</h3>'
-        '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; font-size: 0.98rem;">'
+        f'<h3 class="evo-card-headline">{html.escape(r.headline)}</h3>'
+        '<div class="evo-card-grid">'
         '<div>'
         '<div style="font-family: var(--sans); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-action-promote); margin-bottom: 0.4rem;">What worked</div>'
         f'<ul style="margin: 0; padding-left: 1.2rem; line-height: 1.55;">{_bullets(r.what_worked)}</ul>'

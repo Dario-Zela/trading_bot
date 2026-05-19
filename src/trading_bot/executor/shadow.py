@@ -158,20 +158,25 @@ class ShadowExecutor(Executor):
                 fees_breakdown=fees_breakdown,
             )
 
-            closed.append(
-                {
-                    **trade,
-                    "exit_date": on_date.isoformat(),
-                    "exit_price": exit_price,
-                    "pnl_gbp": pnl_gbp,
-                    "pnl_pct": pnl_pct,
-                    "exit_reason": exit_reason,
-                    "outcome_notes": outcome_notes,
-                    "risks_observed": risks_observed,
-                    "fees_gbp": fees_gbp,
-                    "fees_breakdown": fees_breakdown,
-                }
-            )
+            closed_row = {
+                **trade,
+                "exit_date": on_date.isoformat(),
+                "exit_price": exit_price,
+                "pnl_gbp": pnl_gbp,
+                "pnl_pct": pnl_pct,
+                "exit_reason": exit_reason,
+                "outcome_notes": outcome_notes,
+                "risks_observed": risks_observed,
+                "fees_gbp": fees_gbp,
+                "fees_breakdown": fees_breakdown,
+            }
+            closed.append(closed_row)
+            # Phase 10A — track stop-driven exits for the cost gate
+            try:
+                from trading_bot.state.trail_exits import append_trail_exit
+                append_trail_exit(closed_row)
+            except Exception:
+                pass
         return closed
 
 

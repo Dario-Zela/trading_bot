@@ -46,6 +46,47 @@ def halt_path() -> Path:
     return STATE_ROOT / "halt.json"
 
 
+def _halt_history_path() -> Path:
+    return STATE_ROOT / "halt_history.jsonl"
+
+
+def _append_halt_event(event: dict) -> None:
+    """Phase 10B — append a halt set/clear event to the history log so
+    the weekly evolution agent can see how often the bot has tripped."""
+    p = _halt_history_path()
+    p.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        with p.open("a") as f:
+            f.write(json.dumps(event) + "\n")
+    except OSError as e:
+        log.warning("halt_history write failed: %s", e)
+
+
+def load_halt_history(*, days: int = 14) -> list[dict]:
+    """Read recent halt events for the evolution agent."""
+    p = _halt_history_path()
+    if not p.exists():
+        return []
+    from datetime import timedelta
+    cutoff = (date.today() - timedelta(days=days)).isoformat()
+    out: list[dict] = []
+    try:
+        with p.open() as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    ev = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if (ev.get("at") or "")[:10] >= cutoff:
+                    out.append(ev)
+    except OSError:
+        return []
+    return out
+
+
 def is_halted() -> tuple[bool, HaltRecord | None]:
     """Return (halted, record). Empty/missing file → not halted."""
     p = halt_path()
@@ -58,8 +99,20 @@ def is_halted() -> tuple[bool, HaltRecord | None]:
         return True, None
     halted = bool(data.get("halted", False))
     rec = None
+    # Phase 10C — robust to schema drift: explicit per-field defaults.
+    from dataclasses import fields as _fields, MISSING
     try:
-        rec = HaltRecord(**{k: data[k] for k in HaltRecord.__annotations__ if k in data})
+        kwargs = {}
+        for f in _fields(HaltRecord):
+            if f.name in data:
+                kwargs[f.name] = data[f.name]
+            elif f.default is not MISSING:
+                kwargs[f.name] = f.default
+            elif f.default_factory is not MISSING:    # type: ignore[misc]
+                kwargs[f.name] = f.default_factory()
+            else:
+                kwargs[f.name] = "" if f.type is str else 0
+        rec = HaltRecord(**kwargs)
     except Exception:
         pass
     return halted, rec
@@ -103,6 +156,13 @@ def evaluate_and_set_halt(
             capital_gbp=round(total_live_capital_gbp, 2),
         )
         halt_path().write_text(json.dumps(asdict(rec), indent=2))
+        _append_halt_event({
+            "type": "set",
+            "at": rec.set_at,
+            "yesterday_pnl_gbp": rec.yesterday_pnl_gbp,
+            "yesterday_pnl_pct": rec.yesterday_pnl_pct,
+            "reason": rec.reason,
+        })
         log.error("KILL SWITCH ENGAGED: %s", rec.reason)
         return rec
 
@@ -152,4 +212,8 @@ def clear_halt() -> None:
     p = halt_path()
     if p.exists():
         p.unlink()
+        _append_halt_event({
+            "type": "clear",
+            "at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        })
         log.info("Kill switch cleared (halt.json removed)")

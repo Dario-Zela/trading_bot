@@ -114,12 +114,19 @@ class LLMStrategy(Strategy):
         # earnings date inside that window. Saves tokens AND avoids
         # binary post-print drawdowns the technical signal can't see.
         if cfg.skip_if_earnings_in_days > 0:
+            n_before = len(candidates)
             candidates = self._filter_pre_earnings(
                 candidates, on_date=on_date,
                 window_days=cfg.skip_if_earnings_in_days,
             )
+            n_after = len(candidates)
             log.info("%s: %d candidates after earnings gate (%d-day window)",
-                     cfg.id, len(candidates), cfg.skip_if_earnings_in_days)
+                     cfg.id, n_after, cfg.skip_if_earnings_in_days)
+            # Phase 10B — persist for evolution agent
+            try:
+                self._persist_earnings_gate(cfg.id, on_date, n_before - n_after, n_before)
+            except Exception as e:
+                log.debug("persist earnings-gate failed: %s", e)
             if not candidates:
                 return []
 
@@ -168,7 +175,7 @@ class LLMStrategy(Strategy):
         # Phase 8A + 8B — vol-aware sizing + FX cost gate. Applied
         # BEFORE _parse_picks so the TradeIntents go out with the
         # adjusted allocations. Adjustment log gets emitted to INFO.
-        from trading_bot.strategy.sizing import adjust_picks, format_adjustment_log
+        from trading_bot.strategy.sizing import adjust_picks, format_adjustment_log, persist_adjustments
         picks_raw, adjustments = adjust_picks(
             picks_raw,
             candidates=stage2_candidates,
@@ -176,6 +183,11 @@ class LLMStrategy(Strategy):
             cfg=cfg,
         )
         log.info("%s: pick post-processing\n%s", cfg.id, format_adjustment_log(adjustments))
+        # Phase 10B — persist for the evolution agent to read
+        try:
+            persist_adjustments(cfg.id, on_date, adjustments)
+        except Exception as e:
+            log.debug("persist_adjustments failed: %s", e)
 
         intents = self._parse_picks(picks_raw)
         # Stage 2 predictions (richer reasoning) override Stage 1 for the
@@ -419,6 +431,30 @@ class LLMStrategy(Strategy):
         )
         typical_position_gbp = cfg.capital_gbp * (cfg.max_position_pct / 100.0)
 
+        # Phase 10A — tickers we trailed out of recently. Re-picking
+        # these pays the entry fees again (stamp duty especially on
+        # UK shares), so we flag them inline AND the post-processor
+        # doubles the cost gate for them.
+        from trading_bot.state.trail_exits import load_recent_trail_exits
+        trailed_recently = load_recent_trail_exits(days=3)
+        if trailed_recently:
+            trail_lines = []
+            for tkr, recs in sorted(trailed_recently.items()):
+                latest = max(recs, key=lambda r: r.exit_date)
+                trail_lines.append(
+                    f"- **{tkr}** — trailed out {latest.exit_date} "
+                    f"({latest.pnl_pct:+.2f}%, by {latest.strategy_id})"
+                )
+            sections.append(
+                "## Recently trailed out (re-entries pay full fees again)\n\n"
+                + "\n".join(trail_lines)
+                + "\n\nThe post-processor doubles the cost-gate threshold "
+                  "for these tickers automatically. Only re-pick one if your "
+                  "predicted return clears the doubled threshold AND you have "
+                  "a fresh thesis — yesterday's setup losing money via stop "
+                  "today is usually a reason to step away for a few sessions."
+            )
+
         sections.append("## Candidates (pre-filtered to those in a healthy uptrend)\n")
         for c in candidates:
             ticker_news = news.get(c.ticker, [])
@@ -617,6 +653,18 @@ class LLMStrategy(Strategy):
             except Exception as e:
                 log.debug("get_earnings_info(%s) failed: %s", c.ticker, e)
         return out
+
+    def _persist_earnings_gate(self, sid: str, on_date: date, dropped: int, total: int) -> None:
+        """Phase 10B — log earnings-gate stats per strategy day."""
+        import json as _json
+        from trading_bot.state.paths import STATE_ROOT
+        d = STATE_ROOT / "earnings_gate"
+        d.mkdir(parents=True, exist_ok=True)
+        p = d / f"{on_date.isoformat()}.{sid}.json"
+        p.write_text(_json.dumps({
+            "strategy_id": sid, "date": on_date.isoformat(),
+            "candidates_dropped": dropped, "candidates_total": total,
+        }))
 
     def _filter_pre_earnings(self, candidates: list, *, on_date: date, window_days: int) -> list:
         """Drop candidates whose next earnings date falls inside the

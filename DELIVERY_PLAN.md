@@ -257,6 +257,98 @@ loop. These changes target risk-adjusted P&L, not infrastructure.
 
 ---
 
+## Phase 10 — Trail re-entry cost + audit follow-ups
+
+Triggered by the post-audit observation that the trailing-stop mechanism
+doesn't account for re-entry stamp duty when a position fires mid-day
+and the strategy re-picks the same name tomorrow.
+
+### 10A — Stamp-duty-aware trail re-entry
+
+- [ ] `state/trail_exits.py` — append a record every time an exit
+      closes via `stop` reason (covers the trail's trigger). Stores
+      ticker, region, strategy_id, exit_date in `state/trail_exits.jsonl`.
+- [ ] Hook into Alpaca + T212 + shadow exit paths so any stop-fire is
+      logged.
+- [ ] `strategy/sizing.adjust_picks` reads recent trail-exits and
+      doubles the round-trip cost estimate for any pick whose ticker
+      was trailed out in the last 3 days. The existing 2× gate then
+      becomes effectively 4× for re-picks.
+- [ ] LLM strategy prompt grows a "recently trailed out" section so
+      the model sees these tickers explicitly and can avoid re-picking
+      unless conviction is high enough.
+- [ ] Instrument-aware trail thresholds in `t212_trail.py`:
+      - LSE non-ETF: activation 1.8%, trail 0.6% (so realised gain ≥
+        ~1.2%, clears the 0.5% re-entry stamp duty by a margin)
+      - LSE ETF / AIM / non-UK: defaults (1.0% / 0.8%)
+      - Loaded from `state/t212_instruments.json` cache.
+
+### 10B — Evolution-agent prompt enrichment
+
+The agent currently sees aggregated metrics + missed-movers +
+similarity pairs. The audit identified 10 additional inputs that
+would materially improve its promote/demote/tune calls.
+
+- [ ] Fee-as-share-of-gross per (strategy, region) row — flags
+      strategies whose net-zero P&L is fees-driven rather than
+      signal-driven.
+- [ ] Cost-gate drop rate per strategy — `sizing.PickAdjustment`
+      records get persisted to `state/pick_adjustments/{date}.{sid}.jsonl`
+      and aggregated for the prompt.
+- [ ] Falsifiable-call verdict rates per source (news / macro /
+      evolution) over the trailing 4 weeks.
+- [ ] Earnings-gate hit counts per strategy — track in
+      `state/earnings_gate/{date}.{sid}.json`.
+- [ ] Per-strategy sector concentration (top sectors by traded
+      notional over the window).
+- [ ] Cross-region divergence — pre-compute `divergent_strategies`
+      where `|us_pnl_pct − ukeu_pnl_pct| > threshold`.
+- [ ] Trail activation rate per strategy (from
+      `state/trail_exits.jsonl` from 10A).
+- [ ] Kill-switch history — append to `state/halt_history.jsonl` on
+      every set/clear; surface count + reasons.
+- [ ] News-brief subtitles for the trailing 7 days as regime context.
+- [ ] Parent's `deep_analysis.md` prompt passed for `spawn-variant`
+      decisions so the proposed addendum isn't written blind.
+
+### 10C — Remaining bug fixes
+
+- [ ] `t212_trail.py:155-169` — recover an unprotected position when
+      `_cancel_order` succeeded but `_submit_stop` failed by re-posting
+      a fallback stop at the old level.
+- [ ] `alpaca_trail.py:167` — guard against sub-$1 stocks where
+      rounding to 2dp can equal the current price.
+- [ ] `evolution.py` — split `applied` vs `skipped` actions in the
+      prompt instead of mixing them.
+- [ ] `halt.py:62` — robust `HaltRecord` parsing via `dataclasses.fields()`
+      with explicit defaults.
+- [ ] `sizing.py:165` — re-order clamps so max applies last.
+- [ ] `alpaca_paper.py:582` — verify slippage-tolerance comment matches
+      the code direction.
+- [ ] `evolution.py` — expose `PROMOTION_MIN_PNL_GBP` as a tunable,
+      currently rejecting net-zero strategies hard.
+- [ ] `evolution.py` — separate `PROMOTION_MIN_IC_LOWER` from
+      `PROMOTION_MIN_IC` so the lower-bound check can be relaxed
+      independently.
+
+### 10D — UI follow-ups
+
+- [ ] Dashboard missed-movers panel — surface
+      `state/missed_movers/<today>.<region>.json` directly to the user.
+- [ ] Fees breakdown human-readable labels (FX in / UK stamp / FR FTT
+      / etc.) instead of raw `fees_breakdown` dict keys.
+- [ ] News-edition `.grid-3 .brief` font sizes shrink below 760px.
+- [ ] `predictions_archive` conviction filter handles both string
+      ('high'/'medium'/'low') and float (0.0-1.0) representations.
+- [ ] `evolution.html` per-strategy four-quadrant cards stack cleanly
+      on mobile.
+- [ ] "Net of fees" indicator on the overview-card P&L.
+- [ ] Dashboard "today" boundary uses the latest exit_date in the
+      data, not the UTC date.
+- [ ] `macro/editions.json` dedups duplicate slugs from re-runs.
+
+---
+
 ## Phase 9 — Polish + observability
 
 Nice-to-haves and rough edges. Won't move the P&L needle as much as
