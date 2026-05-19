@@ -58,7 +58,7 @@ jobs:
         run: |
           git config user.name "trading-bot[bot]"
           git config user.email "trading-bot@users.noreply.github.com"
-          git add state/daily_news docs/news || true
+          git add state/daily_news state/predictions docs/news || true
           if git diff --cached --quiet; then
             echo "No brief written; skipping commit"
             exit 0
