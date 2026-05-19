@@ -45,6 +45,10 @@ class StrategyConfig:
     # Phase 8C — earnings gating. Skip candidates with earnings inside
     # this many days. 0 = disabled; 1 = avoid binary events tomorrow.
     skip_if_earnings_in_days: int = 0
+    # Phase 11B — set by the evolution agent on each `tune` action.
+    # `compute_metrics` clips its window to this date so post-tune
+    # IC / hit-rate isn't diluted by pre-tune trades.
+    last_tune_date: str | None = None
 
 
 class Strategy(ABC):

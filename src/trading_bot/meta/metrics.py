@@ -58,9 +58,23 @@ def compute_metrics(
     window_days: int = 14,
     end_date: date | None = None,
 ) -> StrategyMetrics:
-    """Compute metrics for a single (strategy, region) pair over the window."""
+    """Compute metrics for a single (strategy, region) pair over the window.
+
+    Phase 11B — if the strategy has a `last_tune_date` (set by the
+    evolution agent on `tune` actions), the window starts from that
+    date so pre-tune trades don't dilute the post-tune signal.
+    """
     end = end_date or date.today()
     start = end - timedelta(days=window_days)
+    # Apply the last-tune reset if it's MORE recent than the window start
+    tune_iso = _last_tune_date(strategy_id)
+    if tune_iso:
+        try:
+            tune_date = date.fromisoformat(tune_iso)
+            if tune_date > start:
+                start = tune_date
+        except ValueError:
+            pass
 
     m = StrategyMetrics(
         strategy_id=strategy_id,
@@ -112,6 +126,17 @@ def compute_all_metrics(
 # ---------------------------------------------------------------------------
 # Internals
 # ---------------------------------------------------------------------------
+
+def _last_tune_date(strategy_id: str) -> str | None:
+    """Read `last_tune_date` from the strategy's config.yaml.
+    Returns None if the field is absent (strategy not yet tuned)."""
+    try:
+        from trading_bot.strategy.registry import load_strategy_config
+        cfg = load_strategy_config(strategy_id)
+    except Exception:
+        return None
+    return getattr(cfg, "last_tune_date", None)
+
 
 def _iter_lines(path: Path):
     if not path.exists():

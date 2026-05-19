@@ -129,6 +129,29 @@ Aim for a mix:
 
 It's fine to lean toward fewer, higher-quality calls. Do not pad.
 
+## Diversify the themes (mandatory)
+
+The set of predictions you return MUST span genuinely different
+market questions. Reject any draft that has:
+- More than 2 calls about US Treasury yields / Fed policy.
+- More than 2 calls about a single commodity (oil, gold, silver).
+- More than 1 call about the same single ticker (e.g. don't make
+  two NVDA calls in different time horizons).
+- More than 2 calls about geopolitics (Iran / China / etc).
+
+If your initial draft fails the diversity test, drop the weakest
+clustered call and replace it with one of:
+- FX cross (EUR/USD, GBP/USD, USD/JPY)
+- Single-stock M&A or earnings outcome
+- Sector ETF relative-strength call (e.g. XLE outperforms SPY by ≥X%)
+- Credit spread (HY-IG, sovereign 2s10s)
+- Volatility regime (VIX > X or < Y by date)
+- Health-care or biotech FDA / regulatory outcome
+
+Diversity is a hard rule — repeated noise on the same theme tests
+the same model multiple times instead of stress-testing more of
+the bot's reasoning.
+
 ## Required output
 
 Return JSON only:

@@ -427,6 +427,11 @@ def _do_tune(sid: str, raw: dict, cfg: dict, reason: str) -> ActionLog:
         return ActionLog(sid, None, "tune", False, f"No applicable changes. Rejected: {rejected}", {})
 
     cfg.update(clamped)
+    # Phase 11B — stamp the tune date so metrics window resets. Avoids
+    # mixing pre-tune and post-tune trades when the next evolution run
+    # computes IC / hit-rate.
+    from datetime import date as _date
+    cfg["last_tune_date"] = _date.today().isoformat()
     _write_config(sid, cfg)
     return ActionLog(sid, None, "tune", True, reason, {"applied": clamped, "rejected": rejected})
 

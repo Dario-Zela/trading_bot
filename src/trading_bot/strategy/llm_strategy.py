@@ -75,6 +75,77 @@ def _classify(predicted_pct: float, rsi: float | None) -> str:
     return "flat"
 
 
+def _build_recent_self_trades_block(strategy_id: str, region: str, *,
+                                    n_trades: int = 5, days: int = 14) -> str:
+    """Phase 11G — return a markdown block summarising the strategy's
+    last few real trades, so the LLM can see what its own recent
+    decisions led to before making today's pick.
+
+    Skips templated reflections (the fallback that fires when the
+    Haiku reflection agent failed). Empty string when there's nothing
+    to surface."""
+    import json as _json
+    from datetime import date as _date, timedelta
+    from trading_bot.state.paths import ledger_path
+    p = ledger_path()
+    if not p.exists():
+        return ""
+    cutoff = (_date.today() - timedelta(days=days)).isoformat()
+    matched: list[dict] = []
+    try:
+        with p.open() as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    rec = _json.loads(line)
+                except _json.JSONDecodeError:
+                    continue
+                if rec.get("strategy_id") != strategy_id:
+                    continue
+                if rec.get("region") != region:
+                    continue
+                ed = rec.get("exit_date") or ""
+                if not ed or ed < cutoff:
+                    continue
+                if rec.get("exit_reason") in ("cancelled", "cleared"):
+                    continue
+                matched.append(rec)
+    except OSError:
+        return ""
+    if not matched:
+        return ""
+    matched.sort(key=lambda r: r.get("exit_date") or "", reverse=True)
+    rows = []
+    for r in matched[:n_trades]:
+        ticker = r.get("ticker", "?")
+        pct = float(r.get("pnl_pct") or 0)
+        pct = max(-100.0, min(500.0, pct))
+        reason = r.get("exit_reason", "?")
+        notes = (r.get("outcome_notes") or "").strip()
+        # Skip the templated-fallback marker
+        if "(No LLM reflection — fallback text.)" in notes:
+            notes = ""
+        risks = (r.get("risks_observed") or "").strip()
+        if "(reflection agent did not run on this trade)" in risks:
+            risks = ""
+        line = f"- **{ticker} {pct:+.2f}%** ({r.get('exit_date')}, {reason})"
+        if notes:
+            line += f"\n  - Outcome: {notes[:240]}"
+        if risks:
+            line += f"\n  - Risks: {risks[:240]}"
+        rows.append(line)
+    return (
+        "## Your recent trades (last 14 days, top "
+        f"{min(n_trades, len(matched))} most recent)\n\n"
+        "These are your own decisions and their outcomes. Today's pick "
+        "should reflect what you've just learned — if the same setup "
+        "lost money 3 times this week, expect it to keep losing today.\n\n"
+        + "\n".join(rows)
+    )
+
+
 class LLMStrategy(Strategy):
     """Strategy backed by Claude Code in single-call mode."""
 
@@ -413,6 +484,14 @@ class LLMStrategy(Strategy):
         if cross_asset_block:
             sections.append(cross_asset_block)
 
+        # Phase 11G — self-P&L feedback. The strategy sees its 5 most-
+        # recent trades with the LLM-written outcome / risks notes so
+        # it can adjust today's call based on what it just learned —
+        # without waiting for the weekly evolution loop.
+        recent_trades_block = _build_recent_self_trades_block(cfg.id, cfg.region)
+        if recent_trades_block:
+            sections.append(recent_trades_block)
+
         sections.append("## Your strategy bias / approach\n" + deep_analysis_prompt.strip())
         sections.append("## Final selection instructions\n" + final_select_prompt.strip())
 
@@ -510,6 +589,14 @@ class LLMStrategy(Strategy):
             )
             cost_line = f"\n- round-trip cost: {cost['note']}"
 
+            # Phase 11F — relative strength line.
+            rel_line = ""
+            if c.rel_strength_5d is not None or c.rel_strength_20d is not None:
+                bench = c.benchmark or "?"
+                r5 = f"{c.rel_strength_5d:+.2f}%" if c.rel_strength_5d is not None else "?"
+                r20 = f"{c.rel_strength_20d:+.2f}%" if c.rel_strength_20d is not None else "?"
+                rel_line = f"\n- rel-strength vs {bench}: 5d {r5}, 20d {r20}"
+
             sections.append(
                 f"### {c.ticker}\n"
                 f"- close: ${c.close:.2f} (as of {c.as_of})\n"
@@ -519,6 +606,7 @@ class LLMStrategy(Strategy):
                 f"- SMA20 ${c.sma_20:.2f} (above: {c.above_sma_20}), SMA50 ${c.sma_50:.2f} (above: {c.above_sma_50})\n"
                 f"- 5-day return: {c.return_5d_pct:+.2f}%, 20-day: {c.return_20d_pct:+.2f}%\n"
                 f"- volume ratio (today vs 20-day avg): {c.volume_ratio:.2f}"
+                + rel_line
                 + cost_line
                 + earnings_line
                 + insider_line

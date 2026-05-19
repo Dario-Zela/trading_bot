@@ -41,7 +41,12 @@ class ShadowExecutor(Executor):
             return
 
         tickers = [i.ticker for i in intents]
-        history = get_history(tickers, lookback_days=2, end_date=on_date)
+        # Phase 11A — pull a longer history so we can compute a 20-day
+        # average and catch anomalous prints. Earlier we only fetched
+        # 2 days which gave the sanity check no basis to judge.
+        history = get_history(tickers, lookback_days=22, end_date=on_date)
+
+        from trading_bot.tools.price_sanity import is_price_anomalous
 
         for intent in intents:
             bars = history.get(intent.ticker)
@@ -50,6 +55,18 @@ class ShadowExecutor(Executor):
                 # a richer fallback — we just don't record the trade.
                 continue
             entry_price = bars[-1].close
+
+            # Phase 11A — drop on anomalous prices. Catches the
+            # SNDK-at-$1407 case where yfinance returned a split-
+            # not-adjusted close so the shadow filled at a fictional
+            # notional 30× the real one.
+            bad, reason = is_price_anomalous(close=entry_price, bars=bars)
+            if bad:
+                log.warning(
+                    "%s: skipping shadow entry on %s — %s",
+                    strategy_id, intent.ticker, reason,
+                )
+                continue
             allocation_gbp = capital_gbp * (intent.allocation_pct / 100.0)
             quantity = allocation_gbp / entry_price if entry_price > 0 else 0.0
 

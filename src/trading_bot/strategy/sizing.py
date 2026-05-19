@@ -44,6 +44,10 @@ class PickAdjustment:
     sizing_reason: str = ""
 
 
+CORRELATION_CLUSTER_THRESHOLD = 0.7
+CORRELATION_LOOKBACK_DAYS = 90
+
+
 def adjust_picks(
     picks_raw: list[dict],
     *,
@@ -86,6 +90,20 @@ def adjust_picks(
             # LLM picked a ticker that wasn't in stage-2 candidates —
             # rare but possible. Pass through unchanged.
             out.append(item)
+            continue
+
+        # Phase 11A — drop anomalous-price picks before they reach the
+        # broker. Catches SNDK-at-$1407 class of yfinance vendor glitches.
+        from trading_bot.tools.price_sanity import is_price_anomalous
+        bad, reason = is_price_anomalous(close=cand.close, sma_20=cand.sma_20)
+        if bad:
+            adjustments.append(PickAdjustment(
+                ticker=ticker,
+                original_alloc_pct=orig_alloc, adjusted_alloc_pct=0.0,
+                atr_pct=0.0, predicted_return_pct=None,
+                round_trip_cost_pct=0.0,
+                dropped=True, drop_reason=f"anomalous price: {reason}",
+            ))
             continue
 
         # 8A — vol-aware sizing
@@ -162,7 +180,110 @@ def adjust_picks(
         item["allocation_pct"] = adjusted_alloc
         out.append(item)
 
+    # Phase 11E — correlation-aware sizing. Once we know which picks
+    # survived the gates above, group them by 90-day return correlation
+    # and scale down the allocation of any cluster so the total cluster
+    # risk equals the configured per-position risk (rather than summing,
+    # which is what naively independent sizing assumes).
+    if len(out) >= 2:
+        try:
+            out, cluster_log = _apply_correlation_discount(out, today=None)
+            if cluster_log:
+                log.info("Correlation clusters: %s", cluster_log)
+        except Exception as e:
+            log.debug("Correlation discount skipped: %s", e)
+
     return out, adjustments
+
+
+def _apply_correlation_discount(picks: list[dict], *, today=None) -> tuple[list[dict], str]:
+    """Cluster picks by 90-day return correlation > threshold and scale
+    each cluster's allocations by 1/sqrt(cluster_size). Returns the
+    rewritten picks + a short human-readable cluster summary."""
+    from datetime import date as _date
+    from trading_bot.tools import get_history
+
+    tickers = [p["ticker"] for p in picks if isinstance(p, dict) and p.get("ticker")]
+    if len(tickers) < 2:
+        return picks, ""
+
+    end = today or _date.today()
+    try:
+        hist = get_history(tickers, lookback_days=CORRELATION_LOOKBACK_DAYS, end_date=end)
+    except Exception:
+        return picks, ""
+
+    # Daily returns per ticker, aligned on common dates
+    returns_by_ticker: dict[str, dict[str, float]] = {}
+    for tkr in tickers:
+        bars = hist.get(tkr) or []
+        if len(bars) < 10:
+            continue
+        rets: dict[str, float] = {}
+        for i in range(1, len(bars)):
+            prev = bars[i - 1].close
+            curr = bars[i].close
+            if prev > 0:
+                rets[str(bars[i].bar_date)] = (curr / prev - 1.0)
+        if len(rets) >= 10:
+            returns_by_ticker[tkr] = rets
+    if len(returns_by_ticker) < 2:
+        return picks, ""
+
+    # Pairwise correlation
+    def _corr(a: dict[str, float], b: dict[str, float]) -> float | None:
+        common = sorted(set(a.keys()) & set(b.keys()))
+        if len(common) < 10:
+            return None
+        xs = [a[d] for d in common]
+        ys = [b[d] for d in common]
+        n = len(xs)
+        mx = sum(xs) / n
+        my = sum(ys) / n
+        num = sum((x - mx) * (y - my) for x, y in zip(xs, ys))
+        den_x = (sum((x - mx) ** 2 for x in xs)) ** 0.5
+        den_y = (sum((y - my) ** 2 for y in ys)) ** 0.5
+        if den_x == 0 or den_y == 0:
+            return None
+        return num / (den_x * den_y)
+
+    # Union-find over the correlation graph
+    parent: dict[str, str] = {t: t for t in returns_by_ticker}
+
+    def find(t: str) -> str:
+        while parent[t] != t:
+            parent[t] = parent[parent[t]]
+            t = parent[t]
+        return t
+
+    def union(a: str, b: str) -> None:
+        ra, rb = find(a), find(b)
+        if ra != rb:
+            parent[ra] = rb
+
+    keys = sorted(returns_by_ticker.keys())
+    for i in range(len(keys)):
+        for j in range(i + 1, len(keys)):
+            c = _corr(returns_by_ticker[keys[i]], returns_by_ticker[keys[j]])
+            if c is not None and c >= CORRELATION_CLUSTER_THRESHOLD:
+                union(keys[i], keys[j])
+
+    # Cluster size by representative
+    clusters: dict[str, list[str]] = {}
+    for t in keys:
+        clusters.setdefault(find(t), []).append(t)
+
+    # Apply discount
+    summary_parts: list[str] = []
+    for rep, members in clusters.items():
+        if len(members) < 2:
+            continue
+        factor = 1.0 / (len(members) ** 0.5)
+        for p in picks:
+            if p.get("ticker") in members:
+                p["allocation_pct"] = round(float(p.get("allocation_pct", 0)) * factor, 2)
+        summary_parts.append(f"{{{', '.join(members)}}}×{factor:.2f}")
+    return picks, "; ".join(summary_parts)
 
 
 def _vol_adjusted_alloc(*, orig_alloc: float, cand, cfg) -> tuple[float, float, str]:

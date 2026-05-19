@@ -257,6 +257,98 @@ loop. These changes target risk-adjusted P&L, not infrastructure.
 
 ---
 
+## Phase 11 — Signal quality + sizing realism
+
+Triggered by a self-audit of high-level mistakes. 8 items kept after
+honest evaluation; multi-day positioning + per-broker fee modelling
+deferred as separate research projects.
+
+### 11A — Bad-data sanity check on entries
+
+- [ ] Each executor's entry path compares `entry_price` against the
+      prior-day close (from `get_technicals`). If the delta exceeds
+      30%, log + skip the trade. Handles stale yfinance, splits
+      not adjusted, delisted tickers returning a flat price.
+
+### 11B — Reset metrics window on strategy tune
+
+- [ ] Add `last_tune_date` to `StrategyConfig` (per-region in `runs_in`
+      so a multi-region tune doesn't reset both regions).
+- [ ] `evolution._apply_action` updates the field whenever `tune` runs.
+- [ ] `compute_metrics` filters trades to `exit_date >= last_tune_date`
+      so the IC / hit-rate signal isn't diluted by pre-tune trades.
+
+### 11C — Prediction diversity in desks_calls
+
+- [ ] Strengthen the desks_calls prompt: no more than 2 predictions
+      about the same theme (rates / oil / single ticker / sector).
+      The bot's predictions currently cluster around rates + oil.
+
+### 11D — Bot health: IC noise floor
+
+- [ ] `scripts/ic_noise_floor.py` — Monte Carlo simulation. Shuffles
+      the `actual_return_pct` labels in `state/predictions.jsonl` 1000×,
+      recomputes IC each time, plots distribution. Surfaces what an IC
+      of 0.05 actually means relative to noise on our sample sizes.
+- [ ] Output to log + a markdown file under `state/diagnostics/`.
+
+### 11E — Correlation-aware position sizing
+
+- [ ] At `sizing.adjust_picks` time, pull 90-day returns for each pick
+      (cached). Compute pairwise correlation. Cluster picks at
+      `corr > 0.7` — sized down by `1/sqrt(cluster_size)` so the
+      total cluster risk equals the configured per-position risk
+      rather than summing.
+- [ ] Skip if fewer than 2 picks (no cluster to discount).
+
+### 11F — Relative-strength signal in technicals
+
+- [ ] `get_technicals` adds `rel_strength_5d` and `rel_strength_20d`
+      vs the strategy's universe's sector-ETF benchmark (or SPY/IWM
+      for US, FTSE for UK).
+- [ ] Surface in the LLM strategy prompt so the model sees "NVDA
+      +5% over 5 days, but XLK +6% — actually underperforming the
+      sector".
+
+### 11G — Strategy sees recent self-P&L in prompt
+
+- [ ] LLM strategy prompt grows a "Your recent trades (last 14 days)"
+      block — top 5 most-recent trades with outcome_notes, risks_observed,
+      P&L. Closes the feedback loop without going through evolution.
+
+### 11H — Shadow-to-paper calibration script
+
+- [ ] `scripts/shadow_paper_calibration.py` — pairs trades by
+      (strategy_id, region, ticker, date) across the `shadow` tier and
+      the paper-broker tiers. Computes slippage stats: median
+      per-trade delta, distribution, by-broker breakdown.
+- [ ] Acknowledge low-N caveat in the output until we have ≥50
+      paired trades.
+
+### 11I — Technicals-only backtest framework
+
+- [ ] `meta/backtest.py` — feeds a strategy historical technicals as-of
+      a date, runs the LLM call WITH news/macro stubs, records what
+      would have been picked, simulates fills at the next day's close,
+      computes P&L over the date range.
+- [ ] No news / no macro context — bigger validation later when we
+      have a historical news archive. Even tech-only catches "this
+      strategy's signal is just momentum and momentum wasn't working
+      in 2022" class of issues quickly.
+- [ ] `scripts/backtest.py` CLI: `--strategy id --start YYYY-MM-DD --end YYYY-MM-DD`.
+
+### Deferred from the self-audit
+
+- **Multi-day positioning** — biggest unlock but architecturally
+  huge (overnight risk, FX revaluation, ledger schema, T212 cap
+  interaction). Separate research project.
+- **Fees per broker** — only matters once we add Alpaca-live or
+  IBKR. T212-shadow on Alpaca-paper is the current design.
+- **Strategy "no-trade" via conviction floor** — redundant with
+  the cost gate already.
+
+---
+
 ## Phase 10 — Trail re-entry cost + audit follow-ups
 
 Triggered by the post-audit observation that the trailing-stop mechanism
