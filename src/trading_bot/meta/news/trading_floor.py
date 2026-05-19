@@ -303,11 +303,11 @@ def _build_prompt(kind: str, data, day_iso: str) -> str:
 
 def _prompt_single(kind: str, s: _StrategyDay, day_iso: str, *, role: str) -> str:
     winners_block = "\n".join(
-        f"  - {t['ticker']}: £{t['pnl_gbp']:+,.2f} ({t['pnl_pct']*100:+.2f}%)  exit: {t['exit_reason']}"
+        f"  - {t['ticker']}: £{t['pnl_gbp']:+,.2f} ({t['pnl_pct']:+.2f}%)  exit: {t['exit_reason']}"
         for t in s.notable_winners
     ) or "  (no clear standout winners)"
     losers_block = "\n".join(
-        f"  - {t['ticker']}: £{t['pnl_gbp']:+,.2f} ({t['pnl_pct']*100:+.2f}%)  exit: {t['exit_reason']}"
+        f"  - {t['ticker']}: £{t['pnl_gbp']:+,.2f} ({t['pnl_pct']:+.2f}%)  exit: {t['exit_reason']}"
         for t in s.notable_losers
     ) or "  (no clear standout losers)"
     notes_block = ""
@@ -332,7 +332,7 @@ reverse), did one trade carry the day, was there an obvious lesson?
 - **Region / tier:** {s.region} · {s.tier}
 - **Trades closed:** {s.n_closed}  (winners: {s.n_winners} · losers: {s.n_losers})
 - **Total P&L:** £{s.pnl_gbp_total:+,.2f}
-- **Avg P&L per trade:** {s.pnl_pct_avg*100:+.2f}%
+- **Avg P&L per trade:** {s.pnl_pct_avg:+.2f}%
 - **Names traded:** {', '.join(s.tickers) or '(none recorded)'}
 - **Sample thesis:** {s.sample_thesis or '(none recorded)'}
 
@@ -379,7 +379,7 @@ def _prompt_quieter(strategies: list[_StrategyDay], day_iso: str) -> str:
     for s in strategies[:6]:  # cap so the prompt doesn't bloat
         lines.append(
             f"- {s.strategy_id} ({s.region}/{s.tier}): {s.n_closed} closed, "
-            f"£{s.pnl_gbp_total:+,.2f} total ({s.pnl_pct_avg*100:+.2f}% avg). "
+            f"£{s.pnl_gbp_total:+,.2f} total ({s.pnl_pct_avg:+.2f}% avg). "
             f"Names: {', '.join(s.tickers[:6]) or '(n/a)'}."
         )
     body = "\n".join(lines)
@@ -514,7 +514,7 @@ def _fallback_floor_brief(
         body = (
             f"{data.strategy_id} closed {data.n_closed} trades for a total "
             f"P&L of £{data.pnl_gbp_total:+,.2f}, averaging "
-            f"{data.pnl_pct_avg*100:+.2f}% per trade. Names included "
+            f"{data.pnl_pct_avg:+.2f}% per trade. Names included "
             f"{', '.join(data.tickers[:5]) or '(none recorded)'}."
         )
         head = _default_headline(kind, data)

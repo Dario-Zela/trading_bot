@@ -115,7 +115,10 @@ def _trail_one_slot(creds: T212Creds, activation_pct: float, trail_pct: float) -
             continue
         otype = (o.get("type") or "").upper()
         if otype in ("STOP", "STOP_LIMIT"):
-            sym = (o.get("ticker") or "").upper()
+            # T212 internal tickers are CASE-SENSITIVE (e.g. 'TMGl_EQ' —
+            # lowercase 'l' for LSE). Don't uppercase or both the cache
+            # lookup and the in-memory stops index miss.
+            sym = o.get("ticker") or ""
             stops_by_ticker.setdefault(sym, []).append(o)
 
     # Rate-limit headroom: portfolio + orders are 2 requests; each trail
@@ -124,7 +127,9 @@ def _trail_one_slot(creds: T212Creds, activation_pct: float, trail_pct: float) -
     for pos in portfolio:
         if not isinstance(pos, dict):
             continue
-        ticker = (pos.get("ticker") or "").upper()
+        # Preserve T212 case for cache lookup; uppercase a display copy
+        # only where we need it.
+        ticker = pos.get("ticker") or ""
         try:
             qty = float(pos.get("quantity") or 0)
             entry = float(pos.get("averagePrice") or 0)
@@ -134,13 +139,14 @@ def _trail_one_slot(creds: T212Creds, activation_pct: float, trail_pct: float) -
         if qty <= 0 or entry <= 0 or cur <= 0:
             continue
         pct_up = (cur / entry - 1.0) * 100.0
-        # Phase 10A — instrument-aware thresholds. UK LSE shares carry a
-        # 0.5% stamp duty on re-entry; the trail's activation has to
-        # leave enough room to clear that on the next trade.
+        # Phase 10A — instrument-aware thresholds. T212 quotes LSE
+        # shares in pence (currency code 'GBX'), not 'GBP'. Stamp duty
+        # applies to UK shares regardless of the quote unit.
         inst = instruments_by_ticker.get(ticker, {})
+        ccy = (inst.get("currencyCode") or "").upper()
         is_uk_share = (
             inst.get("type") == "STOCK"
-            and (inst.get("currencyCode") or "").upper() == "GBP"
+            and ccy in ("GBP", "GBX")
         )
         eff_activation = UK_SHARE_ACTIVATION_PCT if is_uk_share else activation_pct
         eff_trail = UK_SHARE_TRAIL_PCT if is_uk_share else trail_pct

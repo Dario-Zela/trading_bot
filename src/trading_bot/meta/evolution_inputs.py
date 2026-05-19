@@ -82,7 +82,11 @@ def fees_pct_of_gross(sid: str, region: str | None = None, days: int = _LOOKBACK
         net += float(rec.get("pnl_gbp") or 0.0)
         n += 1
     gross = net + fees
-    pct = (fees / gross * 100.0) if abs(gross) > 0.01 else 0.0
+    # `fees / gross` flips sign when the strategy is gross-negative,
+    # which renders as "−5% of gross eaten by fees" — meaningless. Use
+    # abs(gross) for the share calculation; the gross_pnl_gbp number
+    # itself still carries the sign for the agent to read.
+    pct = (fees / abs(gross) * 100.0) if abs(gross) > 0.01 else 0.0
     return {
         "n_trades": n,
         "fees_gbp": round(fees, 2),
@@ -220,10 +224,12 @@ def verdict_rates_by_source(*, days: int = _VERDICT_LOOKBACK_DAYS) -> dict[str, 
                         rec = json.loads(line)
                     except json.JSONDecodeError:
                         continue
-                    if (rec.get("graded_at") or "")[:10] < cutoff:
-                        # Only count predictions GRADED in the window
-                        if (rec.get("status") or "open") in ("proven", "partial", "falsified", "still-open"):
-                            continue
+                    # Filter by made_at (when the prediction entered the
+                    # log). Counting old open predictions inflates `total`
+                    # and distorts the headline.
+                    made_at = (rec.get("made_at") or "")[:10]
+                    if made_at and made_at < cutoff:
+                        continue
                     counts["total"] += 1
                     status = rec.get("status") or "open"
                     if status in counts:
@@ -276,8 +282,10 @@ def regime_subtitles(*, days: int = 7) -> list[dict]:
 
 def parent_deep_analysis(sid: str, *, max_chars: int = 2000) -> str:
     """Read the strategy's deep_analysis.md prompt so the agent can
-    reason about spawn-variant proposals against the actual bias."""
-    p = Path("strategies") / sid / "prompts" / "deep_analysis.md"
+    reason about spawn-variant proposals against the actual bias.
+    Uses the registry's absolute path so it works regardless of CWD."""
+    from trading_bot.strategy.registry import _strategies_dir
+    p = _strategies_dir() / sid / "prompts" / "deep_analysis.md"
     if not p.exists():
         return ""
     try:
@@ -302,7 +310,9 @@ def divergent_strategies(snapshot: list[dict], *, threshold_pct: float = _DIVERG
         sid = row.get("id") or "?"
         region = row.get("region") or "?"
         m = row.get("metrics") or {}
-        pct = (m.get("avg_pnl_pct") or 0) * 100.0
+        # avg_pnl_pct is ALREADY in percent (mean of ledger pnl_pct);
+        # no second multiplication.
+        pct = float(m.get("avg_pnl_pct") or 0)
         by_sid[sid][region] = pct
     divergent: list[dict] = []
     for sid, regions in by_sid.items():

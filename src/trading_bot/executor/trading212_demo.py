@@ -356,10 +356,19 @@ class Trading212DemoExecutor(Executor):
                     raw = self._fill_price_of(hist)
                     if raw is not None and raw > 0:
                         close_fill_price = self._to_gbp(t212_ticker, raw)
-                        exit_reason = "scheduled"
+                        # Phase 10 — if the matching history entry is a
+                        # STOP order, the trail or initial stop fired
+                        # rather than our scheduled-market close. Tag
+                        # so trail_exits picks it up.
+                        hist_order = (hist.get("order") or {}) if isinstance(hist, dict) else {}
+                        hist_otype = (hist_order.get("type") or "").upper()
+                        if hist_otype in ("STOP", "STOP_LIMIT"):
+                            exit_reason = "trail_stop"
+                        else:
+                            exit_reason = "scheduled"
                         log.info(
-                            "Recovered close for %s from T212 history: exit_price=%.4f",
-                            trade["ticker"], close_fill_price,
+                            "Recovered close for %s from T212 history: exit_price=%.4f (type=%s)",
+                            trade["ticker"], close_fill_price, hist_otype or "?",
                         )
                     else:
                         exit_reason = "cancelled"

@@ -103,12 +103,9 @@ def adjust_picks(
         )
         cost_pct = cost_est["total_pct"] * 100.0    # to percentage
 
-        # Phase 10A — re-entry cost surcharge. If we trailed out of this
-        # ticker in the last 3 days, the upcoming round trip is the
-        # *second* one in the pair, so we double the cost estimate.
-        trail_record = trailed_recently.get(ticker)
-        if trail_record:
-            cost_pct *= 2.0
+        # Phase 10A — re-entry surcharge. Look up case-insensitive
+        # because trail_exits stores upper-cased tickers.
+        trail_record = trailed_recently.get((ticker or "").upper())
 
         pred = predictions.get(ticker, {}) if isinstance(predictions, dict) else {}
         pred_return = pred.get("predicted_return_pct")
@@ -128,14 +125,18 @@ def adjust_picks(
         )
 
         if pred_return_f is not None:
+            # Base threshold: the configured multiplier × round-trip cost.
+            # If we're re-entering a recently trailed-out name, we DO pay
+            # the round-trip cost a second time within the pair — add ONE
+            # extra round-trip cost on top of the configured threshold
+            # (NOT a 2× multiplier on cost_pct, which would compound with
+            # cost_gate_multiplier to 4× the intended barrier).
             threshold = cfg.cost_gate_multiplier * cost_pct
-            # We're long-only — long picks need POSITIVE predicted return
-            # exceeding the threshold. Note: the LLM occasionally picks
-            # negative-predicted-return names with conviction; those are
-            # always wrong for long-only and get dropped here too.
+            if trail_record:
+                threshold += cost_pct
             if pred_return_f < threshold:
                 adj.dropped = True
-                trail_note = " [2× re-entry surcharge]" if trail_record else ""
+                trail_note = " [+1× re-entry surcharge]" if trail_record else ""
                 adj.drop_reason = (
                     f"predicted {pred_return_f:+.2f}% < {cfg.cost_gate_multiplier:.1f}× "
                     f"round-trip cost {cost_pct:.2f}% (= {threshold:.2f}% threshold)"

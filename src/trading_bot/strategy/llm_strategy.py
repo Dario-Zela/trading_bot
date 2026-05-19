@@ -655,14 +655,17 @@ class LLMStrategy(Strategy):
         return out
 
     def _persist_earnings_gate(self, sid: str, on_date: date, dropped: int, total: int) -> None:
-        """Phase 10B — log earnings-gate stats per strategy day."""
+        """Phase 10B — log earnings-gate stats per (date, strategy, region).
+        Filename includes region so a strategy running in both US and
+        UK-EU on the same day doesn't overwrite the first region's row."""
         import json as _json
         from trading_bot.state.paths import STATE_ROOT
         d = STATE_ROOT / "earnings_gate"
         d.mkdir(parents=True, exist_ok=True)
-        p = d / f"{on_date.isoformat()}.{sid}.json"
+        region = (self.config.region or "?").replace("/", "-")
+        p = d / f"{on_date.isoformat()}.{sid}.{region}.json"
         p.write_text(_json.dumps({
-            "strategy_id": sid, "date": on_date.isoformat(),
+            "strategy_id": sid, "region": region, "date": on_date.isoformat(),
             "candidates_dropped": dropped, "candidates_total": total,
         }))
 

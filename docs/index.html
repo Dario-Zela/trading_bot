@@ -39,7 +39,8 @@
         </div>
         <div style="color: var(--ink); font-size: 0.95rem; line-height: 1.55;" x-text="data.halt.reason"></div>
         <div style="margin-top: 0.5rem; font-size: 0.78rem; color: var(--ink-muted);">
-          To clear: delete <code>state/halt.json</code> and push.
+          To clear: run <code>python -c "from trading_bot.state.halt import clear_halt; clear_halt()"</code>
+          then commit + push (logs the clear event to halt_history).
         </div>
       </div>
     </template>

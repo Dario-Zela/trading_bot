@@ -180,7 +180,10 @@ def build_dashboard_data() -> dict:
     # separately from shadow simulation so the user can tell at a glance how
     # much of any headline number reflects actual paper-traded fills vs
     # yfinance-simulated exposure that was never placed at a broker.
-    global_overview = _build_global_overview(active + archived)
+    # Phase 10D — pass as_of_iso so "today's P&L" uses the latest exit_date
+    # rather than UTC today (loses Friday's exits around midnight UTC).
+    as_of_iso = _latest_exit_iso(active + archived) or datetime.now(timezone.utc).date().isoformat()
+    global_overview = _build_global_overview(active + archived, as_of_iso=as_of_iso)
 
     # Phase 9D — sector exposure on currently-open positions (live-tier only).
     sector_exposure = _build_sector_exposure(active + archived)
@@ -191,11 +194,6 @@ def build_dashboard_data() -> dict:
     # Phase 10D — pull the latest missed-movers report per region so
     # the dashboard can surface them inline without a click-through.
     missed_movers = _build_missed_movers_snapshot()
-
-    # Phase 10D — derive an "as-of" date from the most recent ledger
-    # exit rather than UTC today. Around midnight UTC the UTC-based
-    # "today's P&L" check loses Friday's exits.
-    as_of_iso = _latest_exit_iso(active + archived) or datetime.now(timezone.utc).date().isoformat()
 
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(),
@@ -312,11 +310,16 @@ def _build_sector_exposure(entries: list[dict]) -> dict:
 _REAL_BROKER_TIERS = {"alpaca-paper", "trading212-paper", "t212-live"}
 
 
-def _build_global_overview(entries: list[dict]) -> dict:
+def _build_global_overview(entries: list[dict], as_of_iso: str | None = None) -> dict:
     """Aggregate trades across every strategy + region into two buckets:
     real-broker fills (Alpaca / T212) and shadow simulation. Each bucket
-    reports today's P&L, all-time P&L, hit rate, and number of trades."""
-    today = datetime.now(timezone.utc).date().isoformat()
+    reports today's P&L, all-time P&L, hit rate, and number of trades.
+
+    `as_of_iso` (Phase 10D) — what "today" means for the headline P&L.
+    Defaults to UTC today, but the caller passes the latest exit-date
+    in the ledger so the UK/US trading day's exits aren't lost around
+    midnight UTC."""
+    today = as_of_iso or datetime.now(timezone.utc).date().isoformat()
 
     def _bucket() -> dict:
         return {

@@ -319,7 +319,7 @@ def _build_strategy_report_prompt(sid: str, rows: list[dict], actions: list[dict
                 f"- **{r.get('region')}** [{r.get('tier')}]: "
                 f"n={m.get('n_trades', 0)}, hit_rate={(m.get('hit_rate') or 0)*100:.0f}%, "
                 f"P&L £{(m.get('total_pnl_gbp') or 0):+,.2f}, "
-                f"avg_pct={(m.get('avg_pnl_pct') or 0)*100:+.2f}%, "
+                f"avg_pct={(m.get('avg_pnl_pct') or 0):+.2f}%, "
                 f"max_dd={(m.get('max_drawdown_pct') or 0):+.1f}%, "
                 f"IC={(m.get('ic') or 0):+.2f}"
             )
