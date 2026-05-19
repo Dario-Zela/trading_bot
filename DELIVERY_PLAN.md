@@ -210,13 +210,21 @@ loop. These changes target risk-adjusted P&L, not infrastructure.
 - [ ] Strategy LLMs can avoid or size down; rule-based strategy gets
       a hard filter (`skip_if_earnings_in_days <= 1`)
 
-### 8D — Trailing stops on winners (Alpaca first)
+### 8D — Trailing stops on winners ✅
 
-- [ ] New midday-check workflow: ~12:00 UK + ~17:30 UK
-- [ ] Scan open Alpaca positions; if in profit ≥ trail_activation_pct,
-      modify the bracket stop to `high_water - trail_pct`
-- [ ] T212 demo: defer (no bracket support); revisit when we have a
-      midday price-poll path
+- [x] `executor/alpaca_trail.py` — scans positions per slot; positions
+      in profit ≥ `activation_pct` get the bracket-stop child PATCHed
+      upward to `current_price × (1 - trail_pct/100)`. Doesn't lower
+      stops; non-fatal on PATCH 422.
+- [x] `executor/t212_trail.py` — T212's Invest API supports standalone
+      STOP orders but not PATCH; trailing implemented as cancel-and-
+      replace (DELETE existing stop, POST new stop with the higher
+      stopPrice). Negative quantity = sell. Skipped on positions whose
+      existing stop is already at or above the new target.
+- [x] `scripts/midday_trail.py` runs both brokers; `--brokers alpaca`
+      / `--brokers t212` switches available.
+- [x] `.github/workflows/midday-trail.yml` — workflow_dispatch only,
+      exposes both broker secret pairs.
 
 ### 8E — Real per-trade LLM reflection
 

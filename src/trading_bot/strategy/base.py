@@ -30,6 +30,22 @@ class StrategyConfig:
     tools: list[str] = field(default_factory=list)
     model_assignment: dict = field(default_factory=dict)
 
+    # Phase 8A — volatility-aware position sizing. Target fraction of
+    # `capital_gbp` we're willing to lose on a 1-ATR adverse move per
+    # position. The strategy post-processes the LLM's `allocation_pct`
+    # so high-vol names get smaller sizes and low-vol names get larger
+    # ones, with `max_position_pct` as the hard cap. Default 1% gives a
+    # ~3-5x size range across the typical RSI / momentum candidate set.
+    target_daily_risk_pct: float = 1.0
+    # Phase 8B — pre-trade FX cost gate. Drop picks where the LLM's
+    # predicted_return_pct is less than this multiplier × the round-trip
+    # cost (FX + stamp duty + FTT). 2x default means we need ≥2:1
+    # signal-to-cost odds.
+    cost_gate_multiplier: float = 2.0
+    # Phase 8C — earnings gating. Skip candidates with earnings inside
+    # this many days. 0 = disabled; 1 = avoid binary events tomorrow.
+    skip_if_earnings_in_days: int = 0
+
 
 class Strategy(ABC):
     """Base class for any tradeable strategy. Rule-based subclass overrides

@@ -110,14 +110,23 @@ def _build_edition(today: date, snapshot: list[dict], applied_actions: list[dict
         sid = a.get("strategy_id") or "(unknown)"
         actions_by_strategy.setdefault(sid, []).append(a)
 
+    # Phase 8G — pairwise daily-P&L correlation across strategies.
+    # Flagged pairs go into the editorial intro and into each affected
+    # strategy's report card.
+    similarity_pairs = _compute_similarity_pairs(today, list(by_strategy.keys()))
+
     # 1. Editorial intro
-    editorial_md = _write_editorial(today, snapshot, applied_actions)
+    editorial_md = _write_editorial(today, snapshot, applied_actions, similarity_pairs)
 
     # 2. Per-strategy reports — parallel
     reports: list[StrategyReport] = []
     with ThreadPoolExecutor(max_workers=_MAX_PARALLEL_REPORTS) as pool:
         futures = {
-            pool.submit(_write_strategy_report, sid, rows, actions_by_strategy.get(sid, []), today): sid
+            pool.submit(
+                _write_strategy_report, sid, rows,
+                actions_by_strategy.get(sid, []), today,
+                _similar_pairs_for_strategy(sid, similarity_pairs),
+            ): sid
             for sid, rows in by_strategy.items()
         }
         for fut in as_completed(futures):
@@ -145,11 +154,12 @@ def _build_edition(today: date, snapshot: list[dict], applied_actions: list[dict
     )
 
 
-def _write_editorial(today: date, snapshot: list[dict], applied_actions: list[dict]) -> str:
+def _write_editorial(today: date, snapshot: list[dict], applied_actions: list[dict],
+                     similarity_pairs: list[tuple] | None = None) -> str:
     """Run the editorial-intro Sonnet call."""
     if not os.environ.get("CLAUDE_CODE_OAUTH_TOKEN"):
         return _fallback_editorial(today, snapshot, applied_actions)
-    prompt = _build_editorial_prompt(today, snapshot, applied_actions)
+    prompt = _build_editorial_prompt(today, snapshot, applied_actions, similarity_pairs or [])
     try:
         response = run_claude_for_json(prompt, model="sonnet", timeout_seconds=_EDITORIAL_TIMEOUT)
     except ClaudeCodeError as e:
@@ -162,7 +172,8 @@ def _write_editorial(today: date, snapshot: list[dict], applied_actions: list[di
     return _fallback_editorial(today, snapshot, applied_actions)
 
 
-def _build_editorial_prompt(today: date, snapshot: list[dict], applied_actions: list[dict]) -> str:
+def _build_editorial_prompt(today: date, snapshot: list[dict], applied_actions: list[dict],
+                            similarity_pairs: list[tuple]) -> str:
     snapshot_lines = []
     for r in snapshot[:30]:
         m = r.get("metrics") or {}
@@ -181,6 +192,20 @@ def _build_editorial_prompt(today: date, snapshot: list[dict], applied_actions: 
         action_lines.append(f"- {scope} · {a.get('action')} ({status}) — {a.get('reason', '')[:200]}")
     action_block = "\n".join(action_lines) or "(no actions this week)"
 
+    sim_block = ""
+    if similarity_pairs:
+        lines = []
+        for a, b, corr in similarity_pairs[:6]:
+            lines.append(f"- **{a}** and **{b}**: daily-P&L correlation {corr:+.2f}")
+        sim_block = (
+            "\n## Strategies behaving alike (daily-P&L correlation > 0.85 over the window)\n\n"
+            + "\n".join(lines)
+            + "\n\nLean on this in the editorial: too-similar strategies are "
+            "a sign the slate isn't diverse enough. Speculate on the cause "
+            "(overlapping universes? same indicator? same news?) and note "
+            "whether next week's evolution actions should differentiate."
+        )
+
     return f"""You are the editor of The Bot Tribune writing the "this
 week's read" intro for the weekly Evolution page. Week ending
 {today.isoformat()}.
@@ -198,6 +223,7 @@ below.
 ## Auto-actions applied this week
 
 {action_block}
+{sim_block}
 
 ## Writing rules
 
@@ -224,9 +250,10 @@ Return JSON only:
 """
 
 
-def _write_strategy_report(sid: str, rows: list[dict], actions: list[dict], today: date) -> StrategyReport:
+def _write_strategy_report(sid: str, rows: list[dict], actions: list[dict],
+                           today: date, similar_pairs: list[tuple] | None = None) -> StrategyReport:
     """Run the per-strategy Haiku call."""
-    prompt = _build_strategy_report_prompt(sid, rows, actions, today)
+    prompt = _build_strategy_report_prompt(sid, rows, actions, today, similar_pairs or [])
     try:
         response = run_claude_for_json(prompt, model="haiku", timeout_seconds=_REPORT_TIMEOUT)
     except ClaudeCodeError as e:
@@ -235,7 +262,8 @@ def _write_strategy_report(sid: str, rows: list[dict], actions: list[dict], toda
     return _parse_strategy_report(sid, response)
 
 
-def _build_strategy_report_prompt(sid: str, rows: list[dict], actions: list[dict], today: date) -> str:
+def _build_strategy_report_prompt(sid: str, rows: list[dict], actions: list[dict],
+                                  today: date, similar_pairs: list[tuple] = ()) -> str:
     region_lines = []
     for r in rows:
         m = r.get("metrics") or {}
@@ -264,6 +292,18 @@ def _build_strategy_report_prompt(sid: str, rows: list[dict], actions: list[dict
     # the Lessons quadrant can cite directly.
     missed_block = _strategy_missed_lines(sid)
 
+    sim_lines = []
+    for other, corr in similar_pairs:
+        sim_lines.append(f"- **{other}** — daily-P&L correlation {corr:+.2f}")
+    similar_block = (
+        "\n### Strategies this one is moving with\n\n"
+        + ("\n".join(sim_lines) or "_(none — this strategy is uncorrelated with its peers)_")
+        + "\n\nIf the correlations above are high, the Lessons quadrant "
+        "should consider whether this strategy's edge is unique enough "
+        "to keep in the slate, or whether it's effectively a copy of "
+        "the listed peer(s)."
+    )
+
     return f"""You are the desk reporter for The Bot Tribune's weekly
 Evolution page. Week ending {today.isoformat()}. Write the report card
 for the strategy below.
@@ -281,6 +321,7 @@ for the strategy below.
 ### Missed opportunities this week (from daily missed-movers analysis)
 
 {missed_block}
+{similar_block}
 
 ## What we need
 
@@ -322,6 +363,99 @@ Return JSON only:
 }}
 ```
 """
+
+
+_SIMILARITY_THRESHOLD = 0.85
+_SIMILARITY_LOOKBACK_DAYS = 14
+
+
+def _compute_similarity_pairs(today: date, strategy_ids: list[str]) -> list[tuple[str, str, float]]:
+    """Pairwise Pearson correlation of daily P&L across strategies
+    over the trailing 14 days. Returns only pairs with corr above the
+    threshold, sorted by correlation descending."""
+    if len(strategy_ids) < 2:
+        return []
+    from collections import defaultdict
+    from datetime import timedelta
+    import json
+    from trading_bot.state.paths import ledger_path
+    p = ledger_path()
+    if not p.exists():
+        return []
+    cutoff = (today - timedelta(days=_SIMILARITY_LOOKBACK_DAYS)).isoformat()
+    iso_today = today.isoformat()
+
+    # daily_pnl[sid] = {iso_date: pnl_gbp}
+    daily_pnl: dict[str, dict[str, float]] = defaultdict(lambda: defaultdict(float))
+    with p.open() as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                rec = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            ed = rec.get("exit_date")
+            sid = rec.get("strategy_id")
+            if not ed or not sid:
+                continue
+            if ed < cutoff or ed > iso_today:
+                continue
+            if sid not in strategy_ids:
+                continue
+            daily_pnl[sid][ed] += float(rec.get("pnl_gbp") or 0)
+
+    if len(daily_pnl) < 2:
+        return []
+
+    # Align to a common date axis
+    all_dates = sorted({d for series in daily_pnl.values() for d in series.keys()})
+    if len(all_dates) < 3:
+        return []   # not enough data points to compute correlation
+
+    def _series(sid: str) -> list[float]:
+        return [daily_pnl[sid].get(d, 0.0) for d in all_dates]
+
+    pairs: list[tuple[str, str, float]] = []
+    sids = sorted(daily_pnl.keys())
+    for i, a in enumerate(sids):
+        for b in sids[i + 1:]:
+            corr = _pearson(_series(a), _series(b))
+            if corr is None:
+                continue
+            if abs(corr) >= _SIMILARITY_THRESHOLD:
+                pairs.append((a, b, round(corr, 3)))
+    pairs.sort(key=lambda p: p[2], reverse=True)
+    return pairs
+
+
+def _pearson(xs: list[float], ys: list[float]) -> float | None:
+    """Plain Pearson correlation. Returns None if either series has no
+    variance (a constant zero series would otherwise emit NaN)."""
+    n = len(xs)
+    if n < 2 or n != len(ys):
+        return None
+    mx = sum(xs) / n
+    my = sum(ys) / n
+    num = sum((x - mx) * (y - my) for x, y in zip(xs, ys))
+    den_x = (sum((x - mx) ** 2 for x in xs)) ** 0.5
+    den_y = (sum((y - my) ** 2 for y in ys)) ** 0.5
+    if den_x == 0 or den_y == 0:
+        return None
+    return num / (den_x * den_y)
+
+
+def _similar_pairs_for_strategy(sid: str, pairs: list[tuple[str, str, float]]) -> list[tuple[str, float]]:
+    """Filter the global pair list to (other, corr) entries involving
+    `sid`. Used to scope the similarity block to each strategy's card."""
+    out: list[tuple[str, float]] = []
+    for a, b, corr in pairs:
+        if a == sid:
+            out.append((b, corr))
+        elif b == sid:
+            out.append((a, corr))
+    return out
 
 
 def _strategy_missed_lines(sid: str) -> str:

@@ -109,6 +109,20 @@ class LLMStrategy(Strategy):
         if not candidates:
             return []
 
+        # Phase 8C — earnings gating. If the strategy has set
+        # `skip_if_earnings_in_days > 0`, drop candidates with a known
+        # earnings date inside that window. Saves tokens AND avoids
+        # binary post-print drawdowns the technical signal can't see.
+        if cfg.skip_if_earnings_in_days > 0:
+            candidates = self._filter_pre_earnings(
+                candidates, on_date=on_date,
+                window_days=cfg.skip_if_earnings_in_days,
+            )
+            log.info("%s: %d candidates after earnings gate (%d-day window)",
+                     cfg.id, len(candidates), cfg.skip_if_earnings_in_days)
+            if not candidates:
+                return []
+
         # Gather news for the surviving candidates in one batched call
         candidate_tickers = [t.ticker for t in candidates]
         try:
@@ -150,6 +164,19 @@ class LLMStrategy(Strategy):
             return []
 
         stage2_predictions, picks_raw = self._extract_predictions_and_picks(response)
+
+        # Phase 8A + 8B — vol-aware sizing + FX cost gate. Applied
+        # BEFORE _parse_picks so the TradeIntents go out with the
+        # adjusted allocations. Adjustment log gets emitted to INFO.
+        from trading_bot.strategy.sizing import adjust_picks, format_adjustment_log
+        picks_raw, adjustments = adjust_picks(
+            picks_raw,
+            candidates=stage2_candidates,
+            predictions=stage2_predictions,
+            cfg=cfg,
+        )
+        log.info("%s: pick post-processing\n%s", cfg.id, format_adjustment_log(adjustments))
+
         intents = self._parse_picks(picks_raw)
         # Stage 2 predictions (richer reasoning) override Stage 1 for the
         # top-N; Stage 1 fills the rest of the universe for IC computation.
@@ -320,8 +347,28 @@ class LLMStrategy(Strategy):
             f"- max_positions: {cfg.max_positions}\n"
             f"- max_position_pct: {cfg.max_position_pct}%\n"
             f"- min_position_size: £{cfg.min_position_gbp}\n"
+            f"- target_daily_risk: {cfg.target_daily_risk_pct}% of capital per position\n"
             f"- use_stops: {cfg.use_stops}\n"
             f"- use_take_profits: {cfg.use_take_profits}\n"
+            f"\n"
+            f"## Sizing note (important)\n"
+            f"Your `allocation_pct` on each pick is treated as a CONVICTION "
+            f"signal, not the final position size. After you return picks, "
+            f"a post-processor rewrites the allocation to risk-parity sizing "
+            f"so each position carries the same {cfg.target_daily_risk_pct}%-of-"
+            f"capital exposure to a 1-ATR adverse move. High-volatility names "
+            f"end up smaller, low-volatility names end up larger, both "
+            f"clamped to the max/min above. Set `allocation_pct` to express "
+            f"your relative confidence (e.g. 10 vs 5 = 'twice as confident') "
+            f"and don't worry about ATR — that's handled afterwards.\n"
+            f"\n"
+            f"## Cost gate (hard rule)\n"
+            f"Picks where `|predicted_return_pct|` is less than "
+            f"{cfg.cost_gate_multiplier:.1f}× the round-trip cost shown per "
+            f"candidate below will be dropped automatically. Don't pick "
+            f"trades whose expected return doesn't meaningfully clear the "
+            f"fee floor — they cost the strategy money even when the price "
+            f"call is right.\n"
         )
 
         # Trading-cost awareness — strategies are routed through
@@ -570,6 +617,39 @@ class LLMStrategy(Strategy):
             except Exception as e:
                 log.debug("get_earnings_info(%s) failed: %s", c.ticker, e)
         return out
+
+    def _filter_pre_earnings(self, candidates: list, *, on_date: date, window_days: int) -> list:
+        """Drop candidates whose next earnings date falls inside the
+        window. Earnings data lookup is best-effort — if yfinance
+        returns nothing we keep the candidate (better to over-include
+        than over-exclude when data quality is the only obstacle)."""
+        from datetime import timedelta
+        cutoff = on_date + timedelta(days=window_days)
+        kept = []
+        dropped = []
+        for c in candidates:
+            try:
+                info = get_earnings_info(c.ticker)
+            except Exception as e:
+                log.debug("earnings-gate: %s lookup failed (%s) — keeping", c.ticker, e)
+                kept.append(c)
+                continue
+            next_iso = info.next_earnings_date if info else None
+            if not next_iso:
+                kept.append(c)
+                continue
+            try:
+                next_date = date.fromisoformat(next_iso[:10])
+            except ValueError:
+                kept.append(c)
+                continue
+            if on_date <= next_date <= cutoff:
+                dropped.append(f"{c.ticker}({next_iso[:10]})")
+                continue
+            kept.append(c)
+        if dropped:
+            log.info("earnings-gate dropped: %s", ", ".join(dropped))
+        return kept
 
     def _maybe_fetch_insiders(self, tools: set[str], candidates: list) -> dict:
         if "get_insider_trades" not in tools:

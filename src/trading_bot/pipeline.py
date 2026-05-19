@@ -53,6 +53,23 @@ def run_entry(region: str, on_date: date) -> dict[str, list[dict]]:
         log.info("No active strategies for region %s", region)
         return {}
 
+    # Phase 8F — kill switch. Check yesterday's live-tier P&L; halt
+    # new entries on live tiers if it breached the threshold. Shadow
+    # strategies still run (no real money at risk; we want the data).
+    from trading_bot.state.halt import (
+        LIVE_TIERS, evaluate_and_set_halt, is_halted,
+    )
+    live_capital = sum(s.config.capital_gbp for s in strategies if s.config.tier in LIVE_TIERS)
+    if live_capital > 0:
+        evaluate_and_set_halt(on_date, total_live_capital_gbp=live_capital)
+    halted, halt_rec = is_halted()
+    if halted:
+        log.error("Kill switch ENGAGED — skipping live-tier strategies (%s)",
+                  (halt_rec.reason if halt_rec else "no record"))
+        strategies = [s for s in strategies if s.config.tier not in LIVE_TIERS]
+        if not strategies:
+            return {}
+
     # Phase 1: select_picks() in parallel. Each strategy makes its own
     # Claude Code subprocess call; we let up to N run concurrently.
     # yfinance history is process-cached so the first finisher pays the
@@ -127,6 +144,15 @@ def run_exit(region: str, on_date: date) -> dict[str, list[dict]]:
         except Exception as e:
             log.exception("Strategy %s failed in exit phase: %s", strategy.config.id, e)
 
+    # Phase 8E — real per-trade LLM reflection. Replaces the templated
+    # outcome_notes / risks_observed with a Haiku call per trade. Runs
+    # in parallel here at the pipeline level (rather than per-executor)
+    # so we can batch the full day's exits in one fan-out.
+    try:
+        _run_per_trade_reflection(exits, on_date)
+    except Exception as e:
+        log.warning("Per-trade reflection failed (non-fatal): %s", e)
+
     # Post-exit: scan the day's biggest movers across the union of
     # strategy universes and identify which we missed + why. Non-fatal —
     # the analysis writes its own state file and is consumed by the
@@ -142,6 +168,61 @@ def run_exit(region: str, on_date: date) -> dict[str, list[dict]]:
         log.warning("missed-movers analysis failed (non-fatal): %s", e)
 
     return dict(exits)
+
+
+def _run_per_trade_reflection(exits: dict[str, list[dict]], on_date: date) -> None:
+    """Take all exits from this run, fetch any available context (today's
+    bars + news for each ticker), call the reflection agent in parallel,
+    and rewrite the affected ledger rows."""
+    from trading_bot.meta.trade_reflection import reflect_batch
+    from trading_bot.state.ledger import mark_trade_exited
+    from trading_bot.tools.news import get_recent_news
+
+    # Flatten + dedupe across strategies
+    all_trades: list[dict] = []
+    seen_ids: set[str] = set()
+    for sid, trades in exits.items():
+        for t in trades:
+            tid = t.get("trade_id")
+            if not tid or tid in seen_ids:
+                continue
+            if t.get("exit_reason") in ("cancelled", "cleared"):
+                continue   # nothing to reflect on
+            seen_ids.add(tid)
+            all_trades.append(t)
+    if not all_trades:
+        return
+
+    tickers = sorted({t.get("ticker") for t in all_trades if t.get("ticker")})
+    news_by_ticker: dict[str, list] = {}
+    try:
+        raw = get_recent_news(tickers, days=2, limit=5)
+        news_by_ticker = {tk: [{"timestamp": n.timestamp, "headline": n.headline, "summary": n.summary} for n in items] for tk, items in raw.items()}
+    except Exception as e:
+        log.debug("Reflection news fetch failed (continuing without): %s", e)
+
+    log.info("Per-trade reflection: %d trades to score", len(all_trades))
+    reflections = reflect_batch(all_trades, news_by_ticker=news_by_ticker)
+    for trade in all_trades:
+        tid = trade.get("trade_id")
+        if tid not in reflections:
+            continue
+        outcome, risks = reflections[tid]
+        try:
+            mark_trade_exited(
+                trade_id=tid,
+                exit_date=on_date,
+                exit_price=float(trade.get("exit_price") or 0),
+                pnl_gbp=float(trade.get("pnl_gbp") or 0),
+                pnl_pct=float(trade.get("pnl_pct") or 0),
+                exit_reason=trade.get("exit_reason", "scheduled"),
+                outcome_notes=outcome,
+                risks_observed=risks,
+                fees_gbp=float(trade.get("fees_gbp") or 0),
+                fees_breakdown=trade.get("fees_breakdown") or {},
+            )
+        except Exception as e:
+            log.warning("Failed to rewrite reflection for %s: %s", tid, e)
 
 
 def run_clear_slot(slot: int) -> None:
