@@ -1,0 +1,91 @@
+name: Recover T212 strands
+
+# One-off / on-demand recovery for T212-paper trades whose exit cron
+# poll timed out before the broker's SELL fill landed. Queries T212
+# order history, back-fills entry + exit prices for each stranded
+# ledger row, and commits the updated ledger.
+#
+# Trigger manually via the Actions tab when the daily-summary email
+# shows currently-open T212-paper positions that the broker has
+# already cleared (account-status shows 0 positions).
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "diag = print T212 history only (no writes). recover = back-fill ledger."
+        required: true
+        default: diag
+        type: choice
+        options:
+          - diag
+          - recover
+
+permissions:
+  contents: write
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: trading-bot-state
+      cancel-in-progress: false
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+          token: ${{ secrets.STATE_PUSH_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Diagnostic — dump T212 history for stranded trades
+        if: ${{ inputs.mode == 'diag' }}
+        env:
+          T212_API_KEY__1: ${{ secrets.T212_API_KEY__1 }}
+          T212_API_SECRET__1: ${{ secrets.T212_API_SECRET__1 }}
+          T212_API_KEY__2: ${{ secrets.T212_API_KEY__2 }}
+          T212_API_SECRET__2: ${{ secrets.T212_API_SECRET__2 }}
+          T212_API_KEY__3: ${{ secrets.T212_API_KEY__3 }}
+          T212_API_SECRET__3: ${{ secrets.T212_API_SECRET__3 }}
+        run: python scripts/t212_history_diag.py
+
+      - name: Recover — back-fill ledger
+        if: ${{ inputs.mode == 'recover' }}
+        env:
+          T212_API_KEY__1: ${{ secrets.T212_API_KEY__1 }}
+          T212_API_SECRET__1: ${{ secrets.T212_API_SECRET__1 }}
+          T212_API_KEY__2: ${{ secrets.T212_API_KEY__2 }}
+          T212_API_SECRET__2: ${{ secrets.T212_API_SECRET__2 }}
+          T212_API_KEY__3: ${{ secrets.T212_API_KEY__3 }}
+          T212_API_SECRET__3: ${{ secrets.T212_API_SECRET__3 }}
+        run: python scripts/recover_t212_strands.py
+
+      - name: Rebuild dashboard data
+        if: ${{ inputs.mode == 'recover' }}
+        run: python -m trading_bot.dashboard.build
+        continue-on-error: true
+
+      - name: Commit ledger state back
+        if: ${{ inputs.mode == 'recover' }}
+        run: |
+          git config user.name "trading-bot[bot]"
+          git config user.email "trading-bot@users.noreply.github.com"
+          git add state/ledger.jsonl docs/data.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes — nothing to commit"
+            exit 0
+          fi
+          MSG="recover T212 strands — $(date -u +%Y-%m-%dT%H:%MZ)"
+          git commit -m "$MSG"
+          git push origin HEAD:main

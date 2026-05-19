@@ -52,6 +52,17 @@ _TIER = "trading212-paper"
 log = logging.getLogger(__name__)
 
 
+def _history_status(item: dict[str, Any]) -> str:
+    """T212 history items nest the order under `order` with its own
+    `status`. Submit / active-orders endpoints return the order fields
+    at top-level. Handle both shapes so callers don't need to care
+    which endpoint they came from."""
+    if not isinstance(item, dict):
+        return ""
+    inner = item.get("order") if isinstance(item.get("order"), dict) else item
+    return (inner.get("status") or "").lower()
+
+
 class Trading212DemoExecutor(Executor):
     def __init__(self, slot: int):
         self.slot = slot
@@ -946,7 +957,11 @@ class Trading212DemoExecutor(Executor):
         for item in items:
             if not isinstance(item, dict):
                 continue
-            if str(item.get("id")) == oid_str:
+            # T212 history items are shaped {order: {...}, fill: {...}} —
+            # the order id lives inside `order`, not at top-level. Fall
+            # back to `item.id` for any flatter response variants.
+            inner = item.get("order") if isinstance(item.get("order"), dict) else item
+            if str(inner.get("id")) == oid_str:
                 return item
         return None
 
@@ -955,7 +970,7 @@ class Trading212DemoExecutor(Executor):
         *,
         order_id: int | str | None,
         t212_ticker: str,
-        timeout_s: float = 60.0,
+        timeout_s: float = 300.0,
     ) -> dict[str, Any] | None:
         """Poll until the order reaches a terminal state. Returns the order
         record if it FILLED, None if it was cancelled / rejected / didn't
@@ -963,8 +978,10 @@ class Trading212DemoExecutor(Executor):
 
         The poll alternates between the active-orders endpoint (where the
         order lives while pending) and the history endpoint (where it
-        lands after fill). On paper accounts market orders resolve almost
-        instantly, so the loop typically runs once."""
+        lands after fill). On paper accounts market orders usually resolve
+        within seconds, but slot 1 has shown 2-3 minute delays during UK
+        market hours so the default budget is 5 minutes. The cron has
+        plenty of headroom (entry runs ~30 min before close)."""
         if order_id is None:
             return None
         deadline = time.time() + timeout_s
@@ -981,7 +998,7 @@ class Trading212DemoExecutor(Executor):
                 # Not in active list → check history
                 historical = self._get_order_from_history(t212_ticker, order_id)
                 if historical is not None:
-                    status = (historical.get("status") or "").lower()
+                    status = _history_status(historical)
                     if status in ("filled", "executed", "completed"):
                         return historical
                     return None
@@ -989,7 +1006,7 @@ class Trading212DemoExecutor(Executor):
         # Final check after timeout
         historical = self._get_order_from_history(t212_ticker, order_id)
         if historical is not None:
-            status = (historical.get("status") or "").lower()
+            status = _history_status(historical)
             if status in ("filled", "executed", "completed"):
                 return historical
         return None
