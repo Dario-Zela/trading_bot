@@ -1,0 +1,51 @@
+name: Account status
+
+# On-demand diagnostic — queries every configured broker (T212 demo +
+# Alpaca paper) and prints actual balances + open positions to the run
+# log. Useful for comparing against the bot's tracked P&L on the
+# dashboard, e.g. when investigating fee / FX drift.
+#
+# Never commits anything; just reports.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Query broker account status
+        env:
+          T212_API_KEY__1: ${{ secrets.T212_API_KEY__1 }}
+          T212_API_SECRET__1: ${{ secrets.T212_API_SECRET__1 }}
+          T212_API_KEY__2: ${{ secrets.T212_API_KEY__2 }}
+          T212_API_SECRET__2: ${{ secrets.T212_API_SECRET__2 }}
+          T212_API_KEY__3: ${{ secrets.T212_API_KEY__3 }}
+          T212_API_SECRET__3: ${{ secrets.T212_API_SECRET__3 }}
+          ALPACA_API_KEY__1: ${{ secrets.ALPACA_API_KEY__1 }}
+          ALPACA_API_SECRET__1: ${{ secrets.ALPACA_API_SECRET__1 }}
+          ALPACA_API_KEY__2: ${{ secrets.ALPACA_API_KEY__2 }}
+          ALPACA_API_SECRET__2: ${{ secrets.ALPACA_API_SECRET__2 }}
+          ALPACA_API_KEY__3: ${{ secrets.ALPACA_API_KEY__3 }}
+          ALPACA_API_SECRET__3: ${{ secrets.ALPACA_API_SECRET__3 }}
+        run: python scripts/account_status.py
