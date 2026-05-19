@@ -256,14 +256,13 @@ def run_exit(region: str, on_date: date) -> dict[str, list[dict]]:
         except Exception as e:
             log.exception("Strategy %s failed in exit phase: %s", strategy.config.id, e)
 
-    # Phase 8E — real per-trade LLM reflection. Replaces the templated
-    # outcome_notes / risks_observed with a Haiku call per trade. Runs
-    # in parallel here at the pipeline level (rather than per-executor)
-    # so we can batch the full day's exits in one fan-out.
-    try:
-        _run_per_trade_reflection(exits, on_date)
-    except Exception as e:
-        log.warning("Per-trade reflection failed (non-fatal): %s", e)
+    # Per-trade reflection is handled later, in `run_reflect`, by the
+    # Sonnet-based `meta/reflection.py:reflect_on_day` pass. That pass
+    # writes one prompt per strategy summarising the whole day's
+    # basket, which gives richer context than per-trade Haiku calls
+    # and lets the LLM see basket-level patterns. The Haiku pass that
+    # used to live here was overwritten by the Sonnet pass anyway —
+    # ~1 minute of wasted compute every exit cron — so it's gone.
 
     # Post-exit: scan the day's biggest movers across the union of
     # strategy universes and identify which we missed + why. Non-fatal —
@@ -280,61 +279,6 @@ def run_exit(region: str, on_date: date) -> dict[str, list[dict]]:
         log.warning("missed-movers analysis failed (non-fatal): %s", e)
 
     return dict(exits)
-
-
-def _run_per_trade_reflection(exits: dict[str, list[dict]], on_date: date) -> None:
-    """Take all exits from this run, fetch any available context (today's
-    bars + news for each ticker), call the reflection agent in parallel,
-    and rewrite the affected ledger rows."""
-    from trading_bot.meta.trade_reflection import reflect_batch
-    from trading_bot.state.ledger import mark_trade_exited
-    from trading_bot.tools.news import get_recent_news
-
-    # Flatten + dedupe across strategies
-    all_trades: list[dict] = []
-    seen_ids: set[str] = set()
-    for sid, trades in exits.items():
-        for t in trades:
-            tid = t.get("trade_id")
-            if not tid or tid in seen_ids:
-                continue
-            if t.get("exit_reason") in ("cancelled", "cleared"):
-                continue   # nothing to reflect on
-            seen_ids.add(tid)
-            all_trades.append(t)
-    if not all_trades:
-        return
-
-    tickers = sorted({t.get("ticker") for t in all_trades if t.get("ticker")})
-    news_by_ticker: dict[str, list] = {}
-    try:
-        raw = get_recent_news(tickers, days=2, limit=5)
-        news_by_ticker = {tk: [{"timestamp": n.timestamp, "headline": n.headline, "summary": n.summary} for n in items] for tk, items in raw.items()}
-    except Exception as e:
-        log.debug("Reflection news fetch failed (continuing without): %s", e)
-
-    log.info("Per-trade reflection: %d trades to score", len(all_trades))
-    reflections = reflect_batch(all_trades, news_by_ticker=news_by_ticker)
-    for trade in all_trades:
-        tid = trade.get("trade_id")
-        if tid not in reflections:
-            continue
-        outcome, risks = reflections[tid]
-        try:
-            mark_trade_exited(
-                trade_id=tid,
-                exit_date=on_date,
-                exit_price=float(trade.get("exit_price") or 0),
-                pnl_gbp=float(trade.get("pnl_gbp") or 0),
-                pnl_pct=float(trade.get("pnl_pct") or 0),
-                exit_reason=trade.get("exit_reason", "scheduled"),
-                outcome_notes=outcome,
-                risks_observed=risks,
-                fees_gbp=float(trade.get("fees_gbp") or 0),
-                fees_breakdown=trade.get("fees_breakdown") or {},
-            )
-        except Exception as e:
-            log.warning("Failed to rewrite reflection for %s: %s", tid, e)
 
 
 def run_clear_slot(slot: int) -> None:
