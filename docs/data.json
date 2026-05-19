@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-19T15:39:46.738927+00:00",
+  "generated_at": "2026-05-19T16:41:38.619865+00:00",
   "as_of_iso": "2026-05-19",
   "regions": [
     "uk-eu",
@@ -492,7 +492,8 @@
           "actual_return_pct": -0.83,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:35.825027+00:00"
+          "created_at": "2026-05-19T07:48:35.825027+00:00",
+          "reflection": "RSI 35.9 downtrend signal was directionally correct but overstated the move \u2014 actual drop was deeper than predicted, not a flat."
         },
         {
           "strategy_id": "bond-cycle",
@@ -506,7 +507,8 @@
           "actual_return_pct": -0.55,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:35.825518+00:00"
+          "created_at": "2026-05-19T07:48:35.825518+00:00",
+          "reflection": "Best-5d-return optimism was neutralised by persistent below-MA positioning; rate-path divergence never catalysed the predicted flat-positive."
         },
         {
           "strategy_id": "bond-cycle",
@@ -520,7 +522,8 @@
           "actual_return_pct": -0.31,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:35.825619+00:00"
+          "created_at": "2026-05-19T07:48:35.825619+00:00",
+          "reflection": "MACD histogram bearish signal was correct in direction; real-rate headwind kept the move within flat territory rather than extending to mild_down."
         },
         {
           "strategy_id": "bond-cycle",
@@ -534,7 +537,8 @@
           "actual_return_pct": -0.02,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:35.825689+00:00"
+          "created_at": "2026-05-19T07:48:35.825689+00:00",
+          "reflection": "Macro rate headwind assumed persistent decline, but mixed-duration cushioning absorbed the pressure \u2014 actual move was near-zero vs predicted mild_down."
         },
         {
           "strategy_id": "bond-cycle",
@@ -548,7 +552,8 @@
           "actual_return_pct": -0.24,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:35.825846+00:00"
+          "created_at": "2026-05-19T07:48:35.825846+00:00",
+          "reflection": "Above-SMA50 stability held; rate sensitivity was flagged but didn't materialise enough to push beyond the flat band predicted."
         },
         {
           "strategy_id": "bond-cycle",
@@ -986,7 +991,8 @@
           "actual_return_pct": null,
           "actual_class": null,
           "was_traded": false,
-          "created_at": "2026-05-19T14:07:49.456183+00:00"
+          "created_at": "2026-05-19T14:07:49.456183+00:00",
+          "reflection": "Real-rate/dollar thesis was directionally right but silver held support \u2014 no catalyst pushed it past flat into a confirmed decline."
         },
         {
           "strategy_id": "commodity-momentum",
@@ -1000,7 +1006,8 @@
           "actual_return_pct": null,
           "actual_class": null,
           "was_traded": false,
-          "created_at": "2026-05-19T14:07:49.456425+00:00"
+          "created_at": "2026-05-19T14:07:49.456425+00:00",
+          "reflection": "Three bearish setups aligned but failed to trigger follow-through; gold absorbed selling pressure and closed flat."
         },
         {
           "strategy_id": "commodity-momentum",
@@ -1014,7 +1021,8 @@
           "actual_return_pct": null,
           "actual_class": null,
           "was_traded": false,
-          "created_at": "2026-05-19T14:07:49.456486+00:00"
+          "created_at": "2026-05-19T14:07:49.456486+00:00",
+          "reflection": "Dollar and sector headwinds delivered the predicted direction but magnitude stayed within flat, not reaching the mild_down threshold."
         },
         {
           "strategy_id": "commodity-momentum",
@@ -1028,7 +1036,8 @@
           "actual_return_pct": null,
           "actual_class": null,
           "was_traded": false,
-          "created_at": "2026-05-19T14:07:49.456566+00:00"
+          "created_at": "2026-05-19T14:07:49.456566+00:00",
+          "reflection": "No-catalyst flat call correct; MACD deterioration offset the stagflation tailwind for a near-zero session."
         },
         {
           "strategy_id": "commodity-momentum",
@@ -1247,7 +1256,8 @@
           "actual_return_pct": 0.52,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:50:24.955727+00:00"
+          "created_at": "2026-05-19T07:50:24.955727+00:00",
+          "reflection": "Real-rate/dollar thesis was directionally right but silver held support \u2014 no catalyst pushed it past flat into a confirmed decline."
         },
         {
           "strategy_id": "commodity-momentum",
@@ -1261,7 +1271,8 @@
           "actual_return_pct": 0.1,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:50:24.956098+00:00"
+          "created_at": "2026-05-19T07:50:24.956098+00:00",
+          "reflection": "Three bearish setups aligned but failed to trigger follow-through; gold absorbed selling pressure and closed flat."
         },
         {
           "strategy_id": "commodity-momentum",
@@ -1275,7 +1286,8 @@
           "actual_return_pct": -0.35,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:50:24.956174+00:00"
+          "created_at": "2026-05-19T07:50:24.956174+00:00",
+          "reflection": "Dollar and sector headwinds delivered the predicted direction but magnitude stayed within flat, not reaching the mild_down threshold."
         },
         {
           "strategy_id": "commodity-momentum",
@@ -1289,7 +1301,8 @@
           "actual_return_pct": -0.05,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:50:24.956239+00:00"
+          "created_at": "2026-05-19T07:50:24.956239+00:00",
+          "reflection": "No-catalyst flat call correct; MACD deterioration offset the stagflation tailwind for a near-zero session."
         },
         {
           "strategy_id": "commodity-momentum",
@@ -8138,7 +8151,8 @@
           "actual_return_pct": -0.79,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.554464+00:00"
+          "created_at": "2026-05-19T07:47:32.554464+00:00",
+          "reflection": "Blow-off signal fired but buyers absorbed selling, capping the drop at flat rather than the predicted decline."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8152,7 +8166,8 @@
           "actual_return_pct": -1.54,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.554720+00:00"
+          "created_at": "2026-05-19T07:47:32.554720+00:00",
+          "reflection": "RSI exhaustion called correctly but underestimated magnitude; consolidation turned into a sharper give-back than flat."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8166,7 +8181,8 @@
           "actual_return_pct": -3.55,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.554834+00:00"
+          "created_at": "2026-05-19T07:47:32.554834+00:00",
+          "reflection": "Uptrend bias discounted the flagged RSI 77 reversion risk; overbought extension reversed sharply into a loss."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8180,7 +8196,8 @@
           "actual_return_pct": 5.13,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.554911+00:00"
+          "created_at": "2026-05-19T07:47:32.554911+00:00",
+          "reflection": "Sector headwind and drawdown assumed continuation; instead capitulation reversed into a sharp unmodeled relief rally."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8194,7 +8211,8 @@
           "actual_return_pct": -3.33,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.554974+00:00"
+          "created_at": "2026-05-19T07:47:32.554974+00:00",
+          "reflection": "Rate ceiling and negative MACD thesis validated; downtrend extended further than the model projected."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8208,7 +8226,8 @@
           "actual_return_pct": -0.43,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.555036+00:00"
+          "created_at": "2026-05-19T07:47:32.555036+00:00",
+          "reflection": "RSI 83 overbought flagged but trend bias overrode; stock went flat rather than advancing, closer to mean-reversion."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8222,7 +8241,8 @@
           "actual_return_pct": 0.85,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.555095+00:00"
+          "created_at": "2026-05-19T07:47:32.555095+00:00",
+          "reflection": "Mean-reversion pressure overestimated; risk-off tone absent, leaving the overbought stock flat instead of declining."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8236,7 +8256,8 @@
           "actual_return_pct": -1.78,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.555162+00:00"
+          "created_at": "2026-05-19T07:47:32.555162+00:00",
+          "reflection": "Momentum uptrend assumed continuation; utilities macro headwind + RSI fade dominated and flipped the direction."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8250,7 +8271,8 @@
           "actual_return_pct": -1.86,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.555221+00:00"
+          "created_at": "2026-05-19T07:47:32.555221+00:00",
+          "reflection": "Capitulation-not-reversal read correct; bearish industrials + RSI 29 continued selling past the predicted level."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8264,7 +8286,8 @@
           "actual_return_pct": -5.85,
           "actual_class": "strong_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.555319+00:00"
+          "created_at": "2026-05-19T07:47:32.555319+00:00",
+          "reflection": "Downtrend and insider weakness signal correct; magnitude accelerated well beyond the model."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8278,7 +8301,8 @@
           "actual_return_pct": -0.66,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.555398+00:00"
+          "created_at": "2026-05-19T07:47:32.555398+00:00",
+          "reflection": "No macro catalyst in either direction; RSI-neutral thesis held with outcome within flat band."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8292,7 +8316,8 @@
           "actual_return_pct": -0.42,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.555457+00:00"
+          "created_at": "2026-05-19T07:47:32.555457+00:00",
+          "reflection": "Tech momentum assumed; real-rate/dollar headwind neutralized the 5d gain, stalling instead of advancing."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8306,7 +8331,8 @@
           "actual_return_pct": -0.43,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.555514+00:00"
+          "created_at": "2026-05-19T07:47:32.555514+00:00",
+          "reflection": "Beat-without-catalyst thesis correct; RSI neutral + no macro driver kept stock range-bound as modeled."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8320,7 +8346,8 @@
           "actual_return_pct": -3.24,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.555570+00:00"
+          "created_at": "2026-05-19T07:47:32.555570+00:00",
+          "reflection": "Bearish materials macro + declining RSI correct; decline exceeded model as downtrend persisted."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8334,7 +8361,8 @@
           "actual_return_pct": -0.17,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.555625+00:00"
+          "created_at": "2026-05-19T07:47:32.555625+00:00",
+          "reflection": "No clear catalyst and uncertain earnings timing held; outcome within flat band as expected."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8348,7 +8376,8 @@
           "actual_return_pct": 3.11,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.555678+00:00"
+          "created_at": "2026-05-19T07:47:32.555678+00:00",
+          "reflection": "Direction correct; Iran relief headline amplified the financials tailwind beyond the modest gain modeled."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8362,7 +8391,8 @@
           "actual_return_pct": 5.29,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.555733+00:00"
+          "created_at": "2026-05-19T07:47:32.555733+00:00",
+          "reflection": "Iran relief created an unmodeled catalyst; RSI-neutral flat call missed the event-driven surge."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8376,7 +8406,8 @@
           "actual_return_pct": -1.92,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.555792+00:00"
+          "created_at": "2026-05-19T07:47:32.555792+00:00",
+          "reflection": "Real estate sector headwind and overbought RSI underweighted; rate pressure overrode momentum and flipped direction."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8390,7 +8421,8 @@
           "actual_return_pct": -3.28,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.555849+00:00"
+          "created_at": "2026-05-19T07:47:32.555849+00:00",
+          "reflection": "Consistent weakness thesis correct; outcome slightly exceeded the model but within strong_down territory."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8404,7 +8436,8 @@
           "actual_return_pct": -1.94,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.555902+00:00"
+          "created_at": "2026-05-19T07:47:32.555902+00:00",
+          "reflection": "Iran relief assumed but no structural momentum; flat call missed a rotation out of the name."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8418,7 +8451,8 @@
           "actual_return_pct": 3.65,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.555956+00:00"
+          "created_at": "2026-05-19T07:47:32.555956+00:00",
+          "reflection": "Revenue upgrade dismissed as noise against the downtrend; upgrade drove outsized upside, signal underestimated."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8432,7 +8466,8 @@
           "actual_return_pct": 1.79,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.556009+00:00"
+          "created_at": "2026-05-19T07:47:32.556009+00:00",
+          "reflection": "Consumer staples tailwind present; RSI-extended caution limited conviction but direction was right."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8446,7 +8481,8 @@
           "actual_return_pct": -0.83,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.556063+00:00"
+          "created_at": "2026-05-19T07:47:32.556063+00:00",
+          "reflection": "Fading momentum + no macro tailwind held; outcome within flat band as modeled."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8460,7 +8496,8 @@
           "actual_return_pct": -0.55,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.556115+00:00"
+          "created_at": "2026-05-19T07:47:32.556115+00:00",
+          "reflection": "Bearish discretionary macro applied but 5d momentum absorbed the sector headwind, halving the expected decline."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8474,7 +8511,8 @@
           "actual_return_pct": 1.56,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.556168+00:00"
+          "created_at": "2026-05-19T07:47:32.556168+00:00",
+          "reflection": "Ad-spend risk kept conviction low; Iran relief + neutral RSI allowed a mild upside surprise."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8488,7 +8526,8 @@
           "actual_return_pct": 4.07,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.556220+00:00"
+          "created_at": "2026-05-19T07:47:32.556220+00:00",
+          "reflection": "Strong uptrend momentum correct; RSI 81 overbought warning ignored by market, extending gains further than modeled."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8502,7 +8541,8 @@
           "actual_return_pct": 2.53,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.556341+00:00"
+          "created_at": "2026-05-19T07:47:32.556341+00:00",
+          "reflection": "Consumer staples tailwind undercounted; modest conviction missed a stronger macro-aligned rally."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8516,7 +8556,8 @@
           "actual_return_pct": 4.58,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.556433+00:00"
+          "created_at": "2026-05-19T07:47:32.556433+00:00",
+          "reflection": "Real-rate headwind assumed to cap gains; market disregarded macro drag and drove a strong tech rally."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8530,7 +8571,8 @@
           "actual_return_pct": -0.1,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.556493+00:00"
+          "created_at": "2026-05-19T07:47:32.556493+00:00",
+          "reflection": "Bearish discretionary sector limited the 5d rally extension; outcome flat as modeled."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8544,7 +8586,8 @@
           "actual_return_pct": 1.09,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.556553+00:00"
+          "created_at": "2026-05-19T07:47:32.556553+00:00",
+          "reflection": "Chip capex concerns and ultra-low volume expected to cap; market rallied past the modeled ceiling."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8558,7 +8601,8 @@
           "actual_return_pct": -0.77,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.556609+00:00"
+          "created_at": "2026-05-19T07:47:32.556609+00:00",
+          "reflection": "Bearish commodity thesis partially valid but rate impairment effect was too mild to push past flat."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8572,7 +8616,8 @@
           "actual_return_pct": 0.39,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.556663+00:00"
+          "created_at": "2026-05-19T07:47:32.556663+00:00",
+          "reflection": "RSI-73 overbought drag prevailed over momentum, capping the predicted mild_up to flat."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8586,7 +8631,8 @@
           "actual_return_pct": -2.58,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.556716+00:00"
+          "created_at": "2026-05-19T07:47:32.556716+00:00",
+          "reflection": "Rate structural headwind + declining RSI confirmed the downtrend; move fell just short of the strong_down threshold."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8600,7 +8646,8 @@
           "actual_return_pct": -3.61,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.556769+00:00"
+          "created_at": "2026-05-19T07:47:32.556769+00:00",
+          "reflection": "Assumed modest momentum would offset sector drag; Industrials macro headwind won, pulling to mild_down."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8614,7 +8661,8 @@
           "actual_return_pct": -1.15,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.556822+00:00"
+          "created_at": "2026-05-19T07:47:32.556822+00:00",
+          "reflection": "No-macro-support assumption was right, but high volatility resolved the neutral RSI to the downside."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8628,7 +8676,8 @@
           "actual_return_pct": 0.27,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.556874+00:00"
+          "created_at": "2026-05-19T07:47:32.556874+00:00",
+          "reflection": "Expected WTI margin squeeze + below-SMA setup to continue lower; stock absorbed the pressure and stabilised flat."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8642,7 +8691,8 @@
           "actual_return_pct": 3.17,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.556931+00:00"
+          "created_at": "2026-05-19T07:47:32.556931+00:00",
+          "reflection": "Conflicted 5d/20d divergence masked latent buying; Industrials macro drag was outrun by stock-specific demand."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8656,7 +8706,8 @@
           "actual_return_pct": 1.08,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.556986+00:00"
+          "created_at": "2026-05-19T07:47:32.556986+00:00",
+          "reflection": "RSI-67 extension signalled caution but steady 5d/20d momentum carried through the flat prediction to mild_up."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8670,7 +8721,8 @@
           "actual_return_pct": 1.1,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.557039+00:00"
+          "created_at": "2026-05-19T07:47:32.557039+00:00",
+          "reflection": "Assumed materials macro headwind would suppress moves; buyers overcame the bearish sector backdrop."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8684,7 +8736,8 @@
           "actual_return_pct": 1.49,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.557092+00:00"
+          "created_at": "2026-05-19T07:47:32.557092+00:00",
+          "reflection": "Overweighted discretionary sector drag; 5d momentum broke through the anticipated ceiling to mild_up."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8698,7 +8751,8 @@
           "actual_return_pct": -8.34,
           "actual_class": "strong_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.557143+00:00"
+          "created_at": "2026-05-19T07:47:32.557143+00:00",
+          "reflection": "RSI-70 overbought warned of pullback yet predicted mild_up \u2014 strong_down of -8.3% signals a missed idiosyncratic catalyst."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8712,7 +8766,8 @@
           "actual_return_pct": 3.0,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.557194+00:00"
+          "created_at": "2026-05-19T07:47:32.557194+00:00",
+          "reflection": "Assumed below-SMA + negative MACD would continue lower; stock reversed against the structural signal, likely on a stock-specific catalyst."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8726,7 +8781,8 @@
           "actual_return_pct": -0.07,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.557247+00:00"
+          "created_at": "2026-05-19T07:47:32.557247+00:00",
+          "reflection": "Strong 12% 20d momentum met mildly bearish Industrials headwind; the two forces neutralised to flat."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8740,7 +8796,8 @@
           "actual_return_pct": -1.49,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.557338+00:00"
+          "created_at": "2026-05-19T07:47:32.557338+00:00",
+          "reflection": "MACD deterioration + below-SMA confirmation played out; construction cost headwind delivered the predicted mild decline."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8754,7 +8811,8 @@
           "actual_return_pct": 0.08,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.557403+00:00"
+          "created_at": "2026-05-19T07:47:32.557403+00:00",
+          "reflection": "Momentum void + weak sector regime confirmed \u2014 no force broke the flat equilibrium."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8768,7 +8826,8 @@
           "actual_return_pct": -0.24,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.557463+00:00"
+          "created_at": "2026-05-19T07:47:32.557463+00:00",
+          "reflection": "Fuel-cost squeeze and RSI-46 decline expected a strong move; stock absorbed the headwinds and held flat."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8782,7 +8841,8 @@
           "actual_return_pct": 0.31,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.557518+00:00"
+          "created_at": "2026-05-19T07:47:32.557518+00:00",
+          "reflection": "Below-SMA + negative MACD assumed continued weakness; low-volume 5d bounce was enough to neutralise to flat."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8796,7 +8856,8 @@
           "actual_return_pct": -2.15,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.557571+00:00"
+          "created_at": "2026-05-19T07:47:32.557571+00:00",
+          "reflection": "No-conviction flat call missed the sector pull \u2014 mildly bearish Industrials macro dragged to mild_down."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8810,7 +8871,8 @@
           "actual_return_pct": 1.65,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.557624+00:00"
+          "created_at": "2026-05-19T07:47:32.557624+00:00",
+          "reflection": "RSI-71 reversion risk flagged but staples bullish macro override drove mild_up past the flat prediction."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8824,7 +8886,8 @@
           "actual_return_pct": -0.12,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.557676+00:00"
+          "created_at": "2026-05-19T07:47:32.557676+00:00",
+          "reflection": "Neutral 20d momentum and balanced RSI-60 confirmed flat \u2014 macro headwind and 5d gain cancelled out."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8838,7 +8901,8 @@
           "actual_return_pct": 2.02,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.557727+00:00"
+          "created_at": "2026-05-19T07:47:32.557727+00:00",
+          "reflection": "Assumed macro-flip deterioration to continue; stock reversed against weak RSI and negative 20d momentum, wrong direction entirely."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8852,7 +8916,8 @@
           "actual_return_pct": -1.24,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.557778+00:00"
+          "created_at": "2026-05-19T07:47:32.557778+00:00",
+          "reflection": "Post-earnings beat flagged as limited catalyst; RSI-67 extension faded and bullish macro couldn't prevent mild_down."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8866,7 +8931,8 @@
           "actual_return_pct": 0.15,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.557830+00:00"
+          "created_at": "2026-05-19T07:47:32.557830+00:00",
+          "reflection": "Momentum void and neutral RSI confirmed flat \u2014 healthcare bullish macro provided no incremental thrust."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8880,7 +8946,8 @@
           "actual_return_pct": -2.81,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.557881+00:00"
+          "created_at": "2026-05-19T07:47:32.557881+00:00",
+          "reflection": "Materials bearish macro + commodity headwind drove the decline; 20d stabilisation limited it to mild rather than strong."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8894,7 +8961,8 @@
           "actual_return_pct": -1.94,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.557931+00:00"
+          "created_at": "2026-05-19T07:47:32.557931+00:00",
+          "reflection": "Modest signals suggested flat; underlying selling pressure pushed through the expected equilibrium to mild_down."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8908,7 +8976,8 @@
           "actual_return_pct": 0.1,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.557987+00:00"
+          "created_at": "2026-05-19T07:47:32.557987+00:00",
+          "reflection": "Premiumisation headwind balanced the staples tailwind \u2014 RSI-64 neutral and flat outcome aligned precisely."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8922,7 +8991,8 @@
           "actual_return_pct": -2.03,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.558039+00:00"
+          "created_at": "2026-05-19T07:47:32.558039+00:00",
+          "reflection": "RSI-67 extension and fair-value concern were near a bearish signal; stock confirmed the latter with mild_down."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8936,7 +9006,8 @@
           "actual_return_pct": -1.06,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.558090+00:00"
+          "created_at": "2026-05-19T07:47:32.558090+00:00",
+          "reflection": "Energy bullish macro assumed to hold flat, but -3% 20d momentum void showed structural selling overcoming sector support."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8950,7 +9021,8 @@
           "actual_return_pct": 2.12,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.558141+00:00"
+          "created_at": "2026-05-19T07:47:32.558141+00:00",
+          "reflection": "Strong 5d and 20d momentum was underweighted; tech valuation reset tailwind carried to mild_up."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8964,7 +9036,8 @@
           "actual_return_pct": 2.81,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.558192+00:00"
+          "created_at": "2026-05-19T07:47:32.558192+00:00",
+          "reflection": "Poor 20d warranted the flat call, but mildly bullish healthcare macro combined with 5d strength drove mild_up."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8978,7 +9051,8 @@
           "actual_return_pct": 1.58,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.558243+00:00"
+          "created_at": "2026-05-19T07:47:32.558243+00:00",
+          "reflection": "Uber/Delivery Hero news assumed to cap upside, but the catalyst drove more lift than the neutral RSI and delivery-sector neutral macro implied."
         },
         {
           "strategy_id": "macro-aligned",
@@ -8992,7 +9066,8 @@
           "actual_return_pct": -1.11,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.558323+00:00"
+          "created_at": "2026-05-19T07:47:32.558323+00:00",
+          "reflection": "Conflicted 20d uptrend cushioned the bearish macro/RSI-neutral thesis, capping the decline well short of the strong_down target."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9006,7 +9081,8 @@
           "actual_return_pct": 4.45,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.558382+00:00"
+          "created_at": "2026-05-19T07:47:32.558382+00:00",
+          "reflection": "No-momentum/sector-headwind assumption missed an unaccounted catalyst that drove a strong breakout despite bearish macro."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9020,7 +9096,8 @@
           "actual_return_pct": -0.86,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.558433+00:00"
+          "created_at": "2026-05-19T07:47:32.558433+00:00",
+          "reflection": "RSI 72 overbought stalled the M&A tailwind and strong 20d uptrend, absorbing expected gains into consolidation."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9034,7 +9111,8 @@
           "actual_return_pct": 1.67,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.558484+00:00"
+          "created_at": "2026-05-19T07:47:32.558484+00:00",
+          "reflection": "Macro headwind and declining RSI thesis reversed; strong 5d momentum overcame the -10% 20d overhang for a full mean-reversion."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9048,7 +9126,8 @@
           "actual_return_pct": 0.43,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.558541+00:00"
+          "created_at": "2026-05-19T07:47:32.558541+00:00",
+          "reflection": "30Y structural ceiling capped upside as expected but the utilities bearish thesis only half-materialized; stock held flat."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9062,7 +9141,8 @@
           "actual_return_pct": 0.73,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.558595+00:00"
+          "created_at": "2026-05-19T07:47:32.558595+00:00",
+          "reflection": "ADR-trading dynamic and no catalyst played out; neutral RSI and macro kept the stock flat as expected."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9076,7 +9156,8 @@
           "actual_return_pct": -1.66,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.558647+00:00"
+          "created_at": "2026-05-19T07:47:32.558647+00:00",
+          "reflection": "Mildly bearish macro and declining RSI 43 dominated; -11% 20d downtrend drove the predicted directional outcome."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9090,7 +9171,8 @@
           "actual_return_pct": 0.32,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.558734+00:00"
+          "created_at": "2026-05-19T07:47:32.558734+00:00",
+          "reflection": "Assumed WTI fuel cost shock didn't materialise on the day; oversold position below both SMAs provided enough support to hold flat."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9104,7 +9186,8 @@
           "actual_return_pct": 0.13,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.558819+00:00"
+          "created_at": "2026-05-19T07:47:32.558819+00:00",
+          "reflection": "RSI 70 overbought balanced against strong 20d uptrend; Iran-relief tail and mildly bearish macro cancelled to flat as called."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9118,7 +9201,8 @@
           "actual_return_pct": 0.45,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.558878+00:00"
+          "created_at": "2026-05-19T07:47:32.558878+00:00",
+          "reflection": "Bearish MACD cross and stagflationary squeeze thesis failed to pull through; stock found support rather than declining."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9132,7 +9216,8 @@
           "actual_return_pct": 2.3,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.558932+00:00"
+          "created_at": "2026-05-19T07:47:32.558932+00:00",
+          "reflection": "Low conviction and no identified catalyst underweighted the mixed-macro energy/utilities upside potential."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9146,7 +9231,8 @@
           "actual_return_pct": -1.93,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.559011+00:00"
+          "created_at": "2026-05-19T07:47:32.559011+00:00",
+          "reflection": "Bearish macro and dual-negative momentum played out directionally; RSI 44 cushioned the fall just short of the strong_down threshold."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9160,7 +9246,8 @@
           "actual_return_pct": -0.47,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.559112+00:00"
+          "created_at": "2026-05-19T07:47:32.559112+00:00",
+          "reflection": "RSI 37 oversold triggered mean reversion, fully absorbing the 30Y structural headwind and deeply negative momentum."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9174,7 +9261,8 @@
           "actual_return_pct": 3.07,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.559221+00:00"
+          "created_at": "2026-05-19T07:47:32.559221+00:00",
+          "reflection": "Momentum void and mildly bearish macro underestimated; industrials found an upside catalyst not reflected in the flat RSI 53."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9188,7 +9276,8 @@
           "actual_return_pct": 1.7,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.559325+00:00"
+          "created_at": "2026-05-19T07:47:32.559325+00:00",
+          "reflection": "RSI 41 oversold bounce overwhelmed the bearish macro thesis; consumer headwind failed to extend the dual-negative trend."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9202,7 +9291,8 @@
           "actual_return_pct": -0.82,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.559393+00:00"
+          "created_at": "2026-05-19T07:47:32.559393+00:00",
+          "reflection": "Sector headwind capped the 5d/20d uptrend as anticipated; low conviction and neutral RSI 60 confirmed the flat outcome."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9216,7 +9306,8 @@
           "actual_return_pct": 1.14,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.559448+00:00"
+          "created_at": "2026-05-19T07:47:32.559448+00:00",
+          "reflection": "Iran geopolitical premium lifted defense names more than MACD-negative/below-both-SMAs bearish signals suggested."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9230,7 +9321,8 @@
           "actual_return_pct": -4.82,
           "actual_class": "strong_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.559501+00:00"
+          "created_at": "2026-05-19T07:47:32.559501+00:00",
+          "reflection": "Rate headwind and -9.2% 20d downtrend played out fully; real estate/utilities bearish conviction validated by strong_down outcome."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9244,7 +9336,8 @@
           "actual_return_pct": 4.76,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.559554+00:00"
+          "created_at": "2026-05-19T07:47:32.559554+00:00",
+          "reflection": "Luxury demand soft and neutral RSI thesis missed; diversified/luxury caught an unaccounted catalyst for a strong breakout."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9258,7 +9351,8 @@
           "actual_return_pct": -2.4,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.559606+00:00"
+          "created_at": "2026-05-19T07:47:32.559606+00:00",
+          "reflection": "Fair value reset partially materialised; mildly bullish macro cushioned the biotech decline short of the strong_down target."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9272,7 +9366,8 @@
           "actual_return_pct": -0.21,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.559657+00:00"
+          "created_at": "2026-05-19T07:47:32.559657+00:00",
+          "reflection": "RSI 67 extension and valuation reset signal kept the stock range-bound as expected despite the strong 20d trend."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9286,7 +9381,8 @@
           "actual_return_pct": -2.0,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.559758+00:00"
+          "created_at": "2026-05-19T07:47:32.559758+00:00",
+          "reflection": "Conflicted signals resolved bearishly; mildly bearish macro overrode the 20d uptrend to push the stock into mild_down."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9300,7 +9396,8 @@
           "actual_return_pct": -3.88,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.559831+00:00"
+          "created_at": "2026-05-19T07:47:32.559831+00:00",
+          "reflection": "Sector headwind and -7.5% 20d downtrend drove the directional outcome; neutral RSI 50 meant the prediction underestimated depth."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9314,7 +9411,8 @@
           "actual_return_pct": -0.74,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.559893+00:00"
+          "created_at": "2026-05-19T07:47:32.559893+00:00",
+          "reflection": "30Y mortgage ceiling held but the active downtrend below both SMAs failed to deepen on the day; stock sat at the flat/mild_down boundary."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9328,7 +9426,8 @@
           "actual_return_pct": 1.86,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.559968+00:00"
+          "created_at": "2026-05-19T07:47:32.559968+00:00",
+          "reflection": "Strong 14% 20d momentum overcame the mildly bearish sector headwind; uptrend continuation beat the flat assumption."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9342,7 +9441,8 @@
           "actual_return_pct": 0.94,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.560047+00:00"
+          "created_at": "2026-05-19T07:47:32.560047+00:00",
+          "reflection": "RSI 36 oversold triggered mean reversion, fully overriding the bearish macro and weak consumer confidence signals."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9356,7 +9456,8 @@
           "actual_return_pct": 1.1,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.560102+00:00"
+          "created_at": "2026-05-19T07:47:32.560102+00:00",
+          "reflection": "Insider ownership news provided more sentiment lift than the negative 20d trend and low-conviction flat call anticipated."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9370,7 +9471,8 @@
           "actual_return_pct": -2.25,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.560155+00:00"
+          "created_at": "2026-05-19T07:47:32.560155+00:00",
+          "reflection": "Directionally correct; conflicted 20d uptrend cushioned the commodity headwind, capping the decline at mild_down."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9384,7 +9486,8 @@
           "actual_return_pct": -1.45,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.560207+00:00"
+          "created_at": "2026-05-19T07:47:32.560207+00:00",
+          "reflection": "Mixed signals resolved bearishly; macro headwind prevailed over the strong 5d/20d momentum to push the stock lower."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9398,7 +9501,8 @@
           "actual_return_pct": -0.97,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.560325+00:00"
+          "created_at": "2026-05-19T07:47:32.560325+00:00",
+          "reflection": "Neutral RSI and momentum void correctly flagged directionless price action; flat call held."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9412,7 +9516,8 @@
           "actual_return_pct": -1.16,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.560400+00:00"
+          "created_at": "2026-05-19T07:47:32.560400+00:00",
+          "reflection": "Declining RSI and 20d slide nailed the direction; magnitude overshot as selling pressure proved shallower than forecast."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9426,7 +9531,8 @@
           "actual_return_pct": -0.24,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.560456+00:00"
+          "created_at": "2026-05-19T07:47:32.560456+00:00",
+          "reflection": "Neutral RSI and absent momentum correctly signaled no directional conviction; flat call confirmed."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9440,7 +9546,8 @@
           "actual_return_pct": 1.5,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.560515+00:00"
+          "created_at": "2026-05-19T07:47:32.560515+00:00",
+          "reflection": "Rationale discounted the +3.7% 20d residual trend; that momentum carried price above the flat threshold."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9454,7 +9561,8 @@
           "actual_return_pct": 1.06,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.560570+00:00"
+          "created_at": "2026-05-19T07:47:32.560570+00:00",
+          "reflection": "Rationale assumed MACD/SMA bearish alignment would hold; an unmodeled catalyst flipped the session to positive."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9468,7 +9576,8 @@
           "actual_return_pct": 0.36,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.560622+00:00"
+          "created_at": "2026-05-19T07:47:32.560622+00:00",
+          "reflection": "Rationale labelled the 5d bounce a dead-cat; it instead stabilised, absorbing macro-bearish pressure without resuming decline."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9482,7 +9591,8 @@
           "actual_return_pct": -2.9,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.560674+00:00"
+          "created_at": "2026-05-19T07:47:32.560674+00:00",
+          "reflection": "Declining RSI and squeeze pressures confirmed direction; actual drawdown slightly exceeded the strong_down forecast."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9496,7 +9606,8 @@
           "actual_return_pct": -2.79,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.560726+00:00"
+          "created_at": "2026-05-19T07:47:32.560726+00:00",
+          "reflection": "Neutral RSI masked the commodity headwind's severity; bearish macro impulse materialised and overwhelmed the momentum void."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9510,7 +9621,8 @@
           "actual_return_pct": 0.96,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.560777+00:00"
+          "created_at": "2026-05-19T07:47:32.560777+00:00",
+          "reflection": "Rationale leaned on 20d slide and macro headwind; a short-term mean-reversion bounce negated the expected continuation lower."
         },
         {
           "strategy_id": "macro-aligned",
@@ -9524,7 +9636,8 @@
           "actual_return_pct": 0.24,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:47:32.560828+00:00"
+          "created_at": "2026-05-19T07:47:32.560828+00:00",
+          "reflection": "Conflicting momentum and neutral RSI correctly produced no directional move; flat call confirmed."
         },
         {
           "strategy_id": "macro-aligned",
@@ -20998,8 +21111,8 @@
           "pnl_gbp": -36.622872000000015,
           "pnl_pct": -1.025641025641022,
           "exit_reason": "recovered",
-          "outcome_notes": "Recovered post-hoc by recover_t212_strands.py. The exit cron's 60-second poll timed out before T212's fill landed in history; this script back-fills the entry and exit prices from the broker's order history so the ledger matches reality.",
-          "risks_observed": "T212's paper-account fills can lag the submit-response by a few minutes during busy sessions; the exit_scheduled poll budget has been bumped to 5 minutes to absorb this without manual recovery.",
+          "outcome_notes": "Price did recover enough to trigger the 'recovered' exit, but the bounce was shallow \u2014 the -16.8% 20-day decline absorbed the recovery before price could meaningfully close the gap to SMA20. Low-volume exhaustion read was directionally correct but timing was off; seller pressure persisted into the session.",
+          "risks_observed": "An entry at the RSI 30 threshold is still well above capitulation territory for a name with a 16.8% drawdown \u2014 the 'exhaustion' signal was ambiguous. No stop-loss is visible in the structure, so the position was entirely dependent on the recovered trigger firing before further deterioration.",
           "broker_order_id": "49150619723",
           "created_at": "2026-05-19T07:54:31.014231+00:00",
           "updated_at": "2026-05-19T15:39:30.445468+00:00",
@@ -21029,8 +21142,8 @@
           "pnl_gbp": -48.59956799999978,
           "pnl_pct": -2.448355011476644,
           "exit_reason": "recovered",
-          "outcome_notes": "Recovered post-hoc by recover_t212_strands.py. The exit cron's 60-second poll timed out before T212's fill landed in history; this script back-fills the entry and exit prices from the broker's order history so the ledger matches reality.",
-          "risks_observed": "T212's paper-account fills can lag the submit-response by a few minutes during busy sessions; the exit_scheduled poll budget has been bumped to 5 minutes to absorb this without manual recovery.",
+          "outcome_notes": "The 'recovered' exit fired but the loss was the largest in the basket, consistent with a 3.4 ATR extension that rarely snaps back in a single holding period. The 0.13x volume read as exhaustion, but thin volume can also mean no buyers \u2014 price drifted rather than bounced.",
+          "risks_observed": "A 25.76% 20-day decline at RSI 23.7 is well outside normal mean-reversion territory; the reduced allocation acknowledged severity but the setup was closer to a falling-knife than the others. Correlation with other UK small/mid names in the basket amplified downside if any macro catalyst hit the session.",
           "broker_order_id": "49150619736",
           "created_at": "2026-05-19T07:55:32.350137+00:00",
           "updated_at": "2026-05-19T15:39:32.669103+00:00",
@@ -21060,8 +21173,8 @@
           "pnl_gbp": -21.45196000000004,
           "pnl_pct": -0.6375227686703178,
           "exit_reason": "recovered",
-          "outcome_notes": "Recovered post-hoc by recover_t212_strands.py. The exit cron's 60-second poll timed out before T212's fill landed in history; this script back-fills the entry and exit prices from the broker's order history so the ledger matches reality.",
-          "risks_observed": "T212's paper-account fills can lag the submit-response by a few minutes during busy sessions; the exit_scheduled poll budget has been bumped to 5 minutes to absorb this without manual recovery.",
+          "outcome_notes": "The shallowest setup in the basket (RSI 35.2, 1.8 ATRs) produced the smallest loss, suggesting the signal was calibrated correctly relative to the other entries \u2014 the recovery path was cleaner with less extension to unwind. Exit on 'recovered' captured a real, if modest, bounce.",
+          "risks_observed": "RSI 35.2 is borderline for this strategy's threshold and the MACD histogram still negative at entry means momentum had not yet turned \u2014 the trade relied entirely on RSI reversion without confirming price action. Liquidity in MGNS.L may be thin enough that the exit itself moved the price.",
           "broker_order_id": "49150619746",
           "created_at": "2026-05-19T07:56:33.504982+00:00",
           "updated_at": "2026-05-19T15:39:34.881689+00:00",
@@ -21091,8 +21204,8 @@
           "pnl_gbp": -22.41250000000008,
           "pnl_pct": -1.1026293469041604,
           "exit_reason": "recovered",
-          "outcome_notes": "Recovered post-hoc by recover_t212_strands.py. The exit cron's 60-second poll timed out before T212's fill landed in history; this script back-fills the entry and exit prices from the broker's order history so the ledger matches reality.",
-          "risks_observed": "T212's paper-account fills can lag the submit-response by a few minutes during busy sessions; the exit_scheduled poll budget has been bumped to 5 minutes to absorb this without manual recovery.",
+          "outcome_notes": "The defensive utility framing held in the sense that the loss was contained and the recovered exit fired, but SSE's 2.2 ATR extension didn't fully close \u2014 the bounce was real but not enough to overcome entry friction. Sector characteristics limited downside without accelerating the upside.",
+          "risks_observed": "Utility names carry regulatory and rate-sensitivity risk that RSI/ATR models don't capture; a rate-driven selloff looks identical to a mean-reversion setup but doesn't reverse on technicals alone. The basket held four UK-listed names simultaneously, concentrating currency and UK-macro exposure.",
           "broker_order_id": "49150619751",
           "created_at": "2026-05-19T07:57:34.924170+00:00",
           "updated_at": "2026-05-19T15:39:37.116031+00:00",
@@ -21122,8 +21235,8 @@
           "pnl_gbp": -12.513037901880812,
           "pnl_pct": -0.7774798927614013,
           "exit_reason": "recovered",
-          "outcome_notes": "Recovered post-hoc by recover_t212_strands.py. The exit cron's 60-second poll timed out before T212's fill landed in history; this script back-fills the entry and exit prices from the broker's order history so the ledger matches reality.",
-          "risks_observed": "T212's paper-account fills can lag the submit-response by a few minutes during busy sessions; the exit_scheduled poll budget has been bumped to 5 minutes to absorb this without manual recovery.",
+          "outcome_notes": "The tariff overhang identified in the thesis remained live \u2014 sentiment did not stabilise on the day, so the technical bounce was weak and the recovered trigger caught only a shallow move. A macro-driven decline in an auto name rarely reverses on intraday technicals unless the macro catalyst itself resolves.",
+          "risks_observed": "Entering a EUR-denominated name into a GBP P&L book adds FX drag that isn't reflected in the RSI/ATR signal; any EUR weakness on the day compounded the loss. Sector-level tariff risk is a regime shift, not a reversion candidate \u2014 this setup had higher false-signal probability than the domestic UK names in the same basket.",
           "broker_order_id": "49150619762",
           "created_at": "2026-05-19T07:58:35.866862+00:00",
           "updated_at": "2026-05-19T15:39:45.937064+00:00",
@@ -21372,7 +21485,8 @@
           "actual_return_pct": -0.79,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.537218+00:00"
+          "created_at": "2026-05-19T07:49:04.537218+00:00",
+          "reflection": "RSI 76.5 and near-zero volume correctly flagged a top, but exhaustion was mild \u2014 ceiling confirmed, not reversal."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21386,7 +21500,8 @@
           "actual_return_pct": -1.54,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.537463+00:00"
+          "created_at": "2026-05-19T07:49:04.537463+00:00",
+          "reflection": "RSI 81 buyer exhaustion on low volume played out; post-M&A premium unwound as predicted."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21400,7 +21515,8 @@
           "actual_return_pct": -3.55,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.537587+00:00"
+          "created_at": "2026-05-19T07:49:04.537587+00:00",
+          "reflection": "Momentum-intact assumption was wrong; overbought RSI 77.2 triggered a sharper sell-off than the flat call allowed."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21414,7 +21530,8 @@
           "actual_return_pct": 5.13,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.537673+00:00"
+          "created_at": "2026-05-19T07:49:04.537673+00:00",
+          "reflection": "Falling-knife continuation assumption inverted; stock surged, suggesting a missed catalyst or aggressive short-cover."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21428,7 +21545,8 @@
           "actual_return_pct": -0.43,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.537802+00:00"
+          "created_at": "2026-05-19T07:49:04.537802+00:00",
+          "reflection": "Near-zero volume and RSI 82.6 killed upside, but reversion stalled at flat rather than the predicted decline."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21442,7 +21560,8 @@
           "actual_return_pct": 0.85,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.537862+00:00"
+          "created_at": "2026-05-19T07:49:04.537862+00:00",
+          "reflection": "Low-volume exhaustion thesis missed; price drifted modestly positive rather than reversing off RSI 81.2."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21456,7 +21575,8 @@
           "actual_return_pct": -1.78,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.537920+00:00"
+          "created_at": "2026-05-19T07:49:04.537920+00:00",
+          "reflection": "Extended RSI and low-volume cooling played out harder than the flat call implied; no-catalyst read underestimated gravity."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21470,7 +21590,8 @@
           "actual_return_pct": -5.85,
           "actual_class": "strong_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.537978+00:00"
+          "created_at": "2026-05-19T07:49:04.537978+00:00",
+          "reflection": "Generic sector tailwind couldn't absorb a stock-specific negative catalyst absent from the rationale."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21484,7 +21605,8 @@
           "actual_return_pct": -0.66,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.538090+00:00"
+          "created_at": "2026-05-19T07:49:04.538090+00:00",
+          "reflection": "Low-volume RSI elevation correctly flagged directionless action; both predicted and actual land flat."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21498,7 +21620,8 @@
           "actual_return_pct": -0.42,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.538153+00:00"
+          "created_at": "2026-05-19T07:49:04.538153+00:00",
+          "reflection": "Strong 20-day momentum assumed continuation; trend stalled intraday and failed to deliver the mild_up."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21512,7 +21635,8 @@
           "actual_return_pct": -0.43,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.538211+00:00"
+          "created_at": "2026-05-19T07:49:04.538211+00:00",
+          "reflection": "Earnings beat and analyst upgrade support assumed intraday buying pressure; none materialised, price drifted flat."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21526,7 +21650,8 @@
           "actual_return_pct": -3.24,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.538327+00:00"
+          "created_at": "2026-05-19T07:49:04.538327+00:00",
+          "reflection": "Fallback heuristic got direction right but heavily overstated the decline magnitude."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21540,7 +21665,8 @@
           "actual_return_pct": -0.17,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.538402+00:00"
+          "created_at": "2026-05-19T07:49:04.538402+00:00",
+          "reflection": "Fallback heuristic predicted strong_up; stock closed flat \u2014 directional miss."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21554,7 +21680,8 @@
           "actual_return_pct": 3.11,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.538461+00:00"
+          "created_at": "2026-05-19T07:49:04.538461+00:00",
+          "reflection": "Positive news flow overcame overbought RSI 77.9; mild_up call matched and actual gain ran further."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21568,7 +21695,8 @@
           "actual_return_pct": -1.92,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.538517+00:00"
+          "created_at": "2026-05-19T07:49:04.538517+00:00",
+          "reflection": "Fallback heuristic predicted strong_up; stock closed mild_down \u2014 directional miss."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21582,7 +21710,8 @@
           "actual_return_pct": -1.94,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.538578+00:00"
+          "created_at": "2026-05-19T07:49:04.538578+00:00",
+          "reflection": "Fallback heuristic predicted strong_up; stock closed mild_down \u2014 directional miss."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21596,7 +21725,8 @@
           "actual_return_pct": 5.29,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.538632+00:00"
+          "created_at": "2026-05-19T07:49:04.538632+00:00",
+          "reflection": "Fallback heuristic nailed direction; strong_up confirmed, though magnitude overstated."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21610,7 +21740,8 @@
           "actual_return_pct": -3.28,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.538687+00:00"
+          "created_at": "2026-05-19T07:49:04.538687+00:00",
+          "reflection": "Fallback heuristic direction correct (down); actual decline was far milder than the strong_down call."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21624,7 +21755,8 @@
           "actual_return_pct": 3.65,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.538740+00:00"
+          "created_at": "2026-05-19T07:49:04.538740+00:00",
+          "reflection": "Fallback heuristic predicted strong_down; stock closed mild_up \u2014 directional miss."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21638,7 +21770,8 @@
           "actual_return_pct": 1.79,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.538793+00:00"
+          "created_at": "2026-05-19T07:49:04.538793+00:00",
+          "reflection": "Fallback heuristic direction correct; mild_up confirmed but well short of the strong_up target."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21652,7 +21785,8 @@
           "actual_return_pct": -0.83,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.538851+00:00"
+          "created_at": "2026-05-19T07:49:04.538851+00:00",
+          "reflection": "Fallback heuristic predicted strong_up; stock closed flat \u2014 directional miss."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21666,7 +21800,8 @@
           "actual_return_pct": -0.55,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.538906+00:00"
+          "created_at": "2026-05-19T07:49:04.538906+00:00",
+          "reflection": "Fallback heuristic predicted strong_up; stock closed flat \u2014 directional miss."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21680,7 +21815,8 @@
           "actual_return_pct": 1.56,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.538959+00:00"
+          "created_at": "2026-05-19T07:49:04.538959+00:00",
+          "reflection": "Fallback heuristic direction correct; mild_up confirmed, well below the strong_up target."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21694,7 +21830,8 @@
           "actual_return_pct": 4.07,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.539012+00:00"
+          "created_at": "2026-05-19T07:49:04.539012+00:00",
+          "reflection": "Overbought RSI 81.4 pause call inverted; stock surged on a catalyst not captured by the technical signal."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21708,7 +21845,8 @@
           "actual_return_pct": 2.53,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.539065+00:00"
+          "created_at": "2026-05-19T07:49:04.539065+00:00",
+          "reflection": "Fallback heuristic direction correct; mild_up confirmed, well short of the strong_up call."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21722,7 +21860,8 @@
           "actual_return_pct": 4.58,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.539119+00:00"
+          "created_at": "2026-05-19T07:49:04.539119+00:00",
+          "reflection": "Fallback heuristic nailed direction; strong_up realised, though actual gain was roughly half the predicted magnitude."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21736,7 +21875,8 @@
           "actual_return_pct": -0.1,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.539173+00:00"
+          "created_at": "2026-05-19T07:49:04.539173+00:00",
+          "reflection": "Fallback heuristic predicted strong_up; stock closed flat \u2014 no follow-through on the momentum assumption."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21750,7 +21890,8 @@
           "actual_return_pct": 1.09,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.539225+00:00"
+          "created_at": "2026-05-19T07:49:04.539225+00:00",
+          "reflection": "Fallback heuristic direction correct; mild_up realised but far short of the strong_up call."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21764,7 +21905,8 @@
           "actual_return_pct": -0.77,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.539295+00:00"
+          "created_at": "2026-05-19T07:49:04.539295+00:00",
+          "reflection": "Fallback heuristic direction roughly correct; predicted mild_down, stock closed near flat."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21778,7 +21920,8 @@
           "actual_return_pct": 0.39,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.539355+00:00"
+          "created_at": "2026-05-19T07:49:04.539355+00:00",
+          "reflection": "Fallback heuristic predicted strong_up; stock barely moved \u2014 no catalyst to drive the expected run."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21792,7 +21935,8 @@
           "actual_return_pct": -2.58,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.539410+00:00"
+          "created_at": "2026-05-19T07:49:04.539410+00:00",
+          "reflection": "Overbought-pullback heuristic nailed direction; actual decline was shallower than the projected magnitude."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21806,7 +21950,8 @@
           "actual_return_pct": -3.61,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.539469+00:00"
+          "created_at": "2026-05-19T07:49:04.539469+00:00",
+          "reflection": "Heuristic flagged oversold bounce; price continued lower, rejecting the mean-reversion setup."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21820,7 +21965,8 @@
           "actual_return_pct": -1.15,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.539523+00:00"
+          "created_at": "2026-05-19T07:49:04.539523+00:00",
+          "reflection": "Oversold heuristic assumed snap-back; sustained selling overrode the technical floor."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21834,7 +21980,8 @@
           "actual_return_pct": 3.17,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.539630+00:00"
+          "created_at": "2026-05-19T07:49:04.539630+00:00",
+          "reflection": "Oversold bounce signal validated; price reverted toward mean as heuristic anticipated."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21848,7 +21995,8 @@
           "actual_return_pct": 1.08,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.539683+00:00"
+          "created_at": "2026-05-19T07:49:04.539683+00:00",
+          "reflection": "Mean-reversion from oversold level played out; magnitude smaller than projected but direction correct."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21862,7 +22010,8 @@
           "actual_return_pct": 1.1,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.539735+00:00"
+          "created_at": "2026-05-19T07:49:04.539735+00:00",
+          "reflection": "Technical oversold signal correct; price bounced as heuristic expected though well short of target."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21876,7 +22025,8 @@
           "actual_return_pct": 1.49,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.539788+00:00"
+          "created_at": "2026-05-19T07:49:04.539788+00:00",
+          "reflection": "Oversold mean-reversion heuristic worked; bounce confirmed but stayed short of the projected target."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21890,7 +22040,8 @@
           "actual_return_pct": -8.34,
           "actual_class": "strong_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.539841+00:00"
+          "created_at": "2026-05-19T07:49:04.539841+00:00",
+          "reflection": "Heuristic expected oversold bounce; fundamental selling broke the stock sharply lower instead."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21904,7 +22055,8 @@
           "actual_return_pct": 3.0,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.539893+00:00"
+          "created_at": "2026-05-19T07:49:04.539893+00:00",
+          "reflection": "Overbought heuristic predicted pullback; price reversed upward, negating the short-side setup."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21918,7 +22070,8 @@
           "actual_return_pct": -0.07,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.539945+00:00"
+          "created_at": "2026-05-19T07:49:04.539945+00:00",
+          "reflection": "Oversold bounce anticipated; price stalled at resistance and closed flat rather than following through."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21932,7 +22085,8 @@
           "actual_return_pct": 0.08,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.540054+00:00"
+          "created_at": "2026-05-19T07:49:04.540054+00:00",
+          "reflection": "Mean-reversion heuristic expected a bounce; demand was insufficient and price closed flat."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21946,7 +22100,8 @@
           "actual_return_pct": -0.24,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.540109+00:00"
+          "created_at": "2026-05-19T07:49:04.540109+00:00",
+          "reflection": "Overbought heuristic expected pullback; sellers absorbed without driving price meaningfully lower."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21960,7 +22115,8 @@
           "actual_return_pct": 0.31,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.540160+00:00"
+          "created_at": "2026-05-19T07:49:04.540160+00:00",
+          "reflection": "Oversold bounce signal; buying failed to materialise and price closed near unchanged."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21974,7 +22130,8 @@
           "actual_return_pct": -2.15,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.540212+00:00"
+          "created_at": "2026-05-19T07:49:04.540212+00:00",
+          "reflection": "Heuristic saw oversold setup; continued drift lower rejected the mean-reversion premise."
         },
         {
           "strategy_id": "mean-reverter",
@@ -21988,7 +22145,8 @@
           "actual_return_pct": 1.65,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.540276+00:00"
+          "created_at": "2026-05-19T07:49:04.540276+00:00",
+          "reflection": "Heuristic flagged deep oversold; bounce materialised but fell short of the strong_up threshold."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22002,7 +22160,8 @@
           "actual_return_pct": -0.12,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.540332+00:00"
+          "created_at": "2026-05-19T07:49:04.540332+00:00",
+          "reflection": "Oversold heuristic expected bounce; price was indecisive and closed essentially unchanged."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22016,7 +22175,8 @@
           "actual_return_pct": 2.02,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.540385+00:00"
+          "created_at": "2026-05-19T07:49:04.540385+00:00",
+          "reflection": "Overbought heuristic expected pullback; price squeezed higher instead, reversing the predicted direction."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22030,7 +22190,8 @@
           "actual_return_pct": -1.24,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.540437+00:00"
+          "created_at": "2026-05-19T07:49:04.540437+00:00",
+          "reflection": "Oversold bounce expected; stock drifted lower, suggesting the technical floor was not holding."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22044,7 +22205,8 @@
           "actual_return_pct": 0.15,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.540489+00:00"
+          "created_at": "2026-05-19T07:49:04.540489+00:00",
+          "reflection": "Heuristic signalled oversold; buyers lacked follow-through and price settled flat."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22058,7 +22220,8 @@
           "actual_return_pct": -2.81,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.540541+00:00"
+          "created_at": "2026-05-19T07:49:04.540541+00:00",
+          "reflection": "Overbought pullback signal correct in direction; actual decline was smaller than projected."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22072,7 +22235,8 @@
           "actual_return_pct": -1.94,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.540607+00:00"
+          "created_at": "2026-05-19T07:49:04.540607+00:00",
+          "reflection": "Oversold heuristic assumed support held; price continued lower, invalidating the floor."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22086,7 +22250,8 @@
           "actual_return_pct": -2.03,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.540662+00:00"
+          "created_at": "2026-05-19T07:49:04.540662+00:00",
+          "reflection": "Heuristic saw mean-reversion opportunity; selling resumed and negated the technical setup."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22100,7 +22265,8 @@
           "actual_return_pct": -1.06,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.540714+00:00"
+          "created_at": "2026-05-19T07:49:04.540714+00:00",
+          "reflection": "Oversold bounce heuristic missed; price slipped lower rather than reverting to the mean."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22114,7 +22280,8 @@
           "actual_return_pct": 0.1,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.540765+00:00"
+          "created_at": "2026-05-19T07:49:04.540765+00:00",
+          "reflection": "Oversold bounce signal; price found equilibrium but buyers couldn't sustain any upside move."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22128,7 +22295,8 @@
           "actual_return_pct": 1.58,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.540817+00:00"
+          "created_at": "2026-05-19T07:49:04.540817+00:00",
+          "reflection": "Oversold mean-reversion played out; direction confirmed though the move was modest."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22142,7 +22310,8 @@
           "actual_return_pct": 0.73,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.540869+00:00"
+          "created_at": "2026-05-19T07:49:04.540869+00:00",
+          "reflection": "Heuristic expected oversold bounce; price stabilised but could not build upside momentum."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22156,7 +22325,8 @@
           "actual_return_pct": 2.12,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.540921+00:00"
+          "created_at": "2026-05-19T07:49:04.540921+00:00",
+          "reflection": "Mean-reversion from oversold level validated; price bounced as the technical heuristic projected."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22170,7 +22340,8 @@
           "actual_return_pct": 2.81,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.540973+00:00"
+          "created_at": "2026-05-19T07:49:04.540973+00:00",
+          "reflection": "Oversold bounce signal worked; price followed through to the upside in line with the heuristic."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22184,7 +22355,8 @@
           "actual_return_pct": -1.11,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.541025+00:00"
+          "created_at": "2026-05-19T07:49:04.541025+00:00",
+          "reflection": "Overbought pullback signal correct; actual decline was milder than the heuristic's magnitude estimate."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22198,7 +22370,8 @@
           "actual_return_pct": 4.45,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.541077+00:00"
+          "created_at": "2026-05-19T07:49:04.541077+00:00",
+          "reflection": "Heuristic expected overbought pullback; stock surged strongly higher, completely reversing predicted direction."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22212,7 +22385,8 @@
           "actual_return_pct": -0.86,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.541129+00:00"
+          "created_at": "2026-05-19T07:49:04.541129+00:00",
+          "reflection": "Fallback oversold signal expected bounce; price absorbed selling but failed to lift, closing flat."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22226,7 +22400,8 @@
           "actual_return_pct": 1.67,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.541180+00:00"
+          "created_at": "2026-05-19T07:49:04.541180+00:00",
+          "reflection": "Oversold heuristic correct direction; price reverted upward as the technical signal flagged."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22240,7 +22415,8 @@
           "actual_return_pct": 0.43,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.541237+00:00"
+          "created_at": "2026-05-19T07:49:04.541237+00:00",
+          "reflection": "Overbought heuristic called for pullback; stock held flat, reversion stalled."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22254,7 +22430,8 @@
           "actual_return_pct": -1.66,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.541311+00:00"
+          "created_at": "2026-05-19T07:49:04.541311+00:00",
+          "reflection": "Heuristic expected oversold bounce; price continued lower instead of reverting."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22268,7 +22445,8 @@
           "actual_return_pct": 0.13,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.541368+00:00"
+          "created_at": "2026-05-19T07:49:04.541368+00:00",
+          "reflection": "Deep oversold signal expected strong reversion; stock absorbed sellers but failed to lift."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22282,7 +22460,8 @@
           "actual_return_pct": 0.45,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.541421+00:00"
+          "created_at": "2026-05-19T07:49:04.541421+00:00",
+          "reflection": "Overbought heuristic called for pullback; stock held flat rather than reversing."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22296,7 +22475,8 @@
           "actual_return_pct": 0.32,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.541472+00:00"
+          "created_at": "2026-05-19T07:49:04.541472+00:00",
+          "reflection": "Overbought mean-reversion signal expected pullback; price held flat, no reversal materialised."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22310,7 +22490,8 @@
           "actual_return_pct": -1.93,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.541524+00:00"
+          "created_at": "2026-05-19T07:49:04.541524+00:00",
+          "reflection": "Overbought technical signal correct; price pulled back as mean-reversion heuristic expected."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22324,7 +22505,8 @@
           "actual_return_pct": 2.3,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.541575+00:00"
+          "created_at": "2026-05-19T07:49:04.541575+00:00",
+          "reflection": "Oversold bounce heuristic confirmed; price recovered in line with the technical signal."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22338,7 +22520,8 @@
           "actual_return_pct": 3.07,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.541680+00:00"
+          "created_at": "2026-05-19T07:49:04.541680+00:00",
+          "reflection": "Oversold heuristic correct; stock reverted upward, closing in the predicted direction."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22352,7 +22535,8 @@
           "actual_return_pct": 1.7,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.541732+00:00"
+          "created_at": "2026-05-19T07:49:04.541732+00:00",
+          "reflection": "Heuristic assumed overbought exhaustion; stock continued higher, inverting the expected reversion."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22366,7 +22550,8 @@
           "actual_return_pct": -0.82,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.541789+00:00"
+          "created_at": "2026-05-19T07:49:04.541789+00:00",
+          "reflection": "Oversold signal expected bounce; stock drifted flat-to-negative rather than reverting."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22380,7 +22565,8 @@
           "actual_return_pct": 1.14,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.541844+00:00"
+          "created_at": "2026-05-19T07:49:04.541844+00:00",
+          "reflection": "Early bounce signal held; 5-day recovery extended modestly within the broader 20-day downtrend."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22394,7 +22580,8 @@
           "actual_return_pct": -4.82,
           "actual_class": "strong_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.541898+00:00"
+          "created_at": "2026-05-19T07:49:04.541898+00:00",
+          "reflection": "Oversold heuristic missed a continuation sell-off; price broke down sharply instead of reverting."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22408,7 +22595,8 @@
           "actual_return_pct": 4.76,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.541950+00:00"
+          "created_at": "2026-05-19T07:49:04.541950+00:00",
+          "reflection": "Oversold technical signal correct direction; reversion extended well beyond the mild_up target."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22422,7 +22610,8 @@
           "actual_return_pct": -2.4,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.542005+00:00"
+          "created_at": "2026-05-19T07:49:04.542005+00:00",
+          "reflection": "Heuristic read stock as oversold; selling pressure persisted rather than exhausting."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22436,7 +22625,8 @@
           "actual_return_pct": -0.21,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.542058+00:00"
+          "created_at": "2026-05-19T07:49:04.542058+00:00",
+          "reflection": "Oversold bounce anticipated; stock failed to recover, closing near unchanged."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22450,7 +22640,8 @@
           "actual_return_pct": -2.0,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.542110+00:00"
+          "created_at": "2026-05-19T07:49:04.542110+00:00",
+          "reflection": "Technical oversold signal assumed exhaustion; selling continued instead of reversing."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22464,7 +22655,8 @@
           "actual_return_pct": -3.88,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.542162+00:00"
+          "created_at": "2026-05-19T07:49:04.542162+00:00",
+          "reflection": "Heuristic flagged oversold for bounce; stock extended the decline rather than reverting."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22478,7 +22670,8 @@
           "actual_return_pct": -0.74,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.542214+00:00"
+          "created_at": "2026-05-19T07:49:04.542214+00:00",
+          "reflection": "Overbought pullback signal expected; stock consolidated flat, reversion incomplete."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22492,7 +22685,8 @@
           "actual_return_pct": 1.86,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.542280+00:00"
+          "created_at": "2026-05-19T07:49:04.542280+00:00",
+          "reflection": "Oversold heuristic confirmed; modest upside reversion materialised as signalled."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22506,7 +22700,8 @@
           "actual_return_pct": 0.94,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.542336+00:00"
+          "created_at": "2026-05-19T07:49:04.542336+00:00",
+          "reflection": "Heuristic expected overbought pullback; stock held flat, mean-reversion stalled short of target."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22520,7 +22715,8 @@
           "actual_return_pct": 1.1,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.542393+00:00"
+          "created_at": "2026-05-19T07:49:04.542393+00:00",
+          "reflection": "Oversold technical signal worked; price reverted upward in line with the heuristic."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22534,7 +22730,8 @@
           "actual_return_pct": -2.25,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.542447+00:00"
+          "created_at": "2026-05-19T07:49:04.542447+00:00",
+          "reflection": "Overbought mean-reversion heuristic confirmed; price pulled back as the signal flagged."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22548,7 +22745,8 @@
           "actual_return_pct": -1.45,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.542499+00:00"
+          "created_at": "2026-05-19T07:49:04.542499+00:00",
+          "reflection": "Heuristic expected oversold exhaustion; stock resumed decline, defeating the reversion signal."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22562,7 +22760,8 @@
           "actual_return_pct": -0.97,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.542551+00:00"
+          "created_at": "2026-05-19T07:49:04.542551+00:00",
+          "reflection": "Oversold bounce signalled; stock drifted slightly negative rather than reverting."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22576,7 +22775,8 @@
           "actual_return_pct": -0.24,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.542602+00:00"
+          "created_at": "2026-05-19T07:49:04.542602+00:00",
+          "reflection": "Oversold bounce anticipated; no reversion materialised, stock closed near unchanged."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22590,7 +22790,8 @@
           "actual_return_pct": -1.16,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.542652+00:00"
+          "created_at": "2026-05-19T07:49:04.542652+00:00",
+          "reflection": "Overbought heuristic correct; price pulled back in line with the mean-reversion signal."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22604,7 +22805,8 @@
           "actual_return_pct": 1.5,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.542704+00:00"
+          "created_at": "2026-05-19T07:49:04.542704+00:00",
+          "reflection": "Oversold technical heuristic confirmed; price reverted upward as signalled."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22618,7 +22820,8 @@
           "actual_return_pct": -2.79,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.542803+00:00"
+          "created_at": "2026-05-19T07:49:04.542803+00:00",
+          "reflection": "Heuristic assumed oversold exhaustion; stock continued lower instead of bouncing."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22632,7 +22835,8 @@
           "actual_return_pct": 1.06,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.542869+00:00"
+          "created_at": "2026-05-19T07:49:04.542869+00:00",
+          "reflection": "RSI near-oversold + SMA20 deviation mean-reversion played out as predicted."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22646,7 +22850,8 @@
           "actual_return_pct": 0.36,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.542925+00:00"
+          "created_at": "2026-05-19T07:49:04.542925+00:00",
+          "reflection": "Fallback heuristic assumed mean-reversion move; price barely budged, no follow-through."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22660,7 +22865,8 @@
           "actual_return_pct": -2.9,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.542980+00:00"
+          "created_at": "2026-05-19T07:49:04.542980+00:00",
+          "reflection": "Fallback heuristic downside signal confirmed; decline materialised though shallower than predicted."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22674,7 +22880,8 @@
           "actual_return_pct": 0.96,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.543038+00:00"
+          "created_at": "2026-05-19T07:49:04.543038+00:00",
+          "reflection": "Fallback heuristic expected a recovery leg; price stayed flat, no reversion catalyst."
         },
         {
           "strategy_id": "mean-reverter",
@@ -22688,7 +22895,8 @@
           "actual_return_pct": 0.24,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:49:04.543094+00:00"
+          "created_at": "2026-05-19T07:49:04.543094+00:00",
+          "reflection": "Fallback heuristic assumed upside; price flatlined, mean-reversion thesis didn't trigger."
         },
         {
           "strategy_id": "mean-reverter",
@@ -34473,8 +34681,8 @@
           "pnl_gbp": -42.92211980019915,
           "pnl_pct": -1.1297709923664079,
           "exit_reason": "recovered",
-          "outcome_notes": "Recovered post-hoc by recover_t212_strands.py. The exit cron's 60-second poll timed out before T212's fill landed in history; this script back-fills the entry and exit prices from the broker's order history so the ledger matches reality.",
-          "risks_observed": "T212's paper-account fills can lag the submit-response by a few minutes during busy sessions; the exit_scheduled poll budget has been bumped to 5 minutes to absorb this without manual recovery.",
+          "outcome_notes": "Price moved against the position before recovering to the exit level, suggesting the stop was either triggered or the system exited on the partial recovery rather than holding for target. The AI data-centre demand narrative remained intact structurally, but the near-term action implies either profit-taking off the recent run or broader semiconductor sector rotation on the day \u2014 not a thesis invalidation.",
+          "risks_observed": "The +34.5% 20-day move meant significant embedded gains in the float; any macro wobble or sector rotation can flush late momentum entrants even when the thesis is sound. The missing entry price ($0.00) is a data integrity gap that makes it impossible to verify whether the stop was sized correctly relative to realised volatility on the day.",
           "broker_order_id": "49150619689",
           "created_at": "2026-05-19T07:51:27.062066+00:00",
           "updated_at": "2026-05-19T15:39:23.782437+00:00",
@@ -34503,8 +34711,8 @@
           "pnl_gbp": -36.7859240158291,
           "pnl_pct": -1.0739490641301086,
           "exit_reason": "recovered",
-          "outcome_notes": "Recovered post-hoc by recover_t212_strands.py. The exit cron's 60-second poll timed out before T212's fill landed in history; this script back-fills the entry and exit prices from the broker's order history so the ledger matches reality.",
-          "risks_observed": "T212's paper-account fills can lag the submit-response by a few minutes during busy sessions; the exit_scheduled poll budget has been bumped to 5 minutes to absorb this without manual recovery.",
+          "outcome_notes": "The trade exited at a loss despite the price recovering, indicating the recovery was incomplete \u2014 the exit was taken on the bounce rather than at breakeven or target. European bank momentum is highly sensitive to intraday macro signals (rate prints, ECB commentary), and any reversal in short-end rates or credit spreads on the day would have immediately pressured NIM-driven names regardless of the Q1 catalyst.",
+          "risks_observed": "All three basket positions were in trending, recently strong sectors simultaneously \u2014 semiconductors, banks, and consumer staples \u2014 meaning a broad risk-off intraday move would hit all legs at once with no natural hedge. ABN specifically adds FX exposure (EUR/GBP) that is unaccounted for in the exit price, which may have contributed to the sterling-denominated loss even if the local price recovered.",
           "broker_order_id": "49150619696",
           "created_at": "2026-05-19T07:52:28.025409+00:00",
           "updated_at": "2026-05-19T15:39:26.006244+00:00",
@@ -34533,8 +34741,8 @@
           "pnl_gbp": -32.550800000000066,
           "pnl_pct": -0.8519269776876337,
           "exit_reason": "recovered",
-          "outcome_notes": "Recovered post-hoc by recover_t212_strands.py. The exit cron's 60-second poll timed out before T212's fill landed in history; this script back-fills the entry and exit prices from the broker's order history so the ledger matches reality.",
-          "risks_observed": "T212's paper-account fills can lag the submit-response by a few minutes during busy sessions; the exit_scheduled poll budget has been bumped to 5 minutes to absorb this without manual recovery.",
+          "outcome_notes": "RSI was flagged at exactly 70.0 at entry, and the recovered exit with a loss is consistent with a brief overbought pullback that failed to fully retrace \u2014 the defensive/staples bid provided some cushion but not enough to prevent a negative close. The smaller loss relative to the other two legs suggests the reduced position sizing on overbought concern functioned as intended.",
+          "risks_observed": "At RSI 70.0, any catalyst for profit-taking (currency move, sector rotation into risk-on) creates asymmetric downside for late momentum entries; the strategy has no mechanism to distinguish between a healthy consolidation and a trend reversal at that signal level. Basket-level, all three trades sharing a 'recovered but still negative' outcome on the same date points to a common intraday driver \u2014 worth checking whether a single macro event (e.g. USD/EUR move, risk-off spike) explains the simultaneous drawdown across uncorrelated sectors.",
           "broker_order_id": "49150619705",
           "created_at": "2026-05-19T07:53:29.229658+00:00",
           "updated_at": "2026-05-19T15:39:28.231169+00:00",
@@ -34655,7 +34863,8 @@
           "actual_return_pct": -0.79,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.163711+00:00"
+          "created_at": "2026-05-19T07:46:30.163711+00:00",
+          "reflection": "RSI=77 overbought caveat proved correct \u2014 5-day momentum stalled and flipped to a marginal loss rather than extending."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34669,7 +34878,8 @@
           "actual_return_pct": -1.54,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.163975+00:00"
+          "created_at": "2026-05-19T07:46:30.163975+00:00",
+          "reflection": "Post-bid RSI=80.9 unwind exceeded flat forecast as deal uncertainty emerged exactly as the downside scenario described."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34683,7 +34893,8 @@
           "actual_return_pct": -3.55,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.164069+00:00"
+          "created_at": "2026-05-19T07:46:30.164069+00:00",
+          "reflection": "RSI=78 exhaustion signal was the correct read \u2014 rally failed and reversed sharply rather than extending mildly."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34697,7 +34908,8 @@
           "actual_return_pct": 5.13,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.164151+00:00"
+          "created_at": "2026-05-19T07:46:30.164151+00:00",
+          "reflection": "Assumed accelerating downtrend; sharp reversal suggests an unmodelled catalyst or capitulation bounce."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34711,7 +34923,8 @@
           "actual_return_pct": -3.33,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.164214+00:00"
+          "created_at": "2026-05-19T07:46:30.164214+00:00",
+          "reflection": "Downtrend direction correct; RSI=23.7 extreme oversold likely cushioned the decline short of the -4.50% forecast."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34725,7 +34938,8 @@
           "actual_return_pct": -0.43,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.164300+00:00"
+          "created_at": "2026-05-19T07:46:30.164300+00:00",
+          "reflection": "RSI=82 overbought flag proved accurate \u2014 momentum exhausted and tipped slightly negative rather than extending."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34739,7 +34953,8 @@
           "actual_return_pct": 0.85,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.164370+00:00"
+          "created_at": "2026-05-19T07:46:30.164370+00:00",
+          "reflection": "Gain matched prediction almost precisely despite RSI=81 mean-reversion concern \u2014 momentum held through the session."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34753,7 +34968,8 @@
           "actual_return_pct": -1.78,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.164426+00:00"
+          "created_at": "2026-05-19T07:46:30.164426+00:00",
+          "reflection": "Expected RSI=73 healthy trend to extend; reversal implies overbought exhaustion hit earlier than the signal suggested."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34767,7 +34983,8 @@
           "actual_return_pct": -5.85,
           "actual_class": "strong_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.164481+00:00"
+          "created_at": "2026-05-19T07:46:30.164481+00:00",
+          "reflection": "Downtrend direction correct; positive sector news offered zero cushion and selling accelerated well beyond forecast."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34781,7 +34998,8 @@
           "actual_return_pct": -1.86,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.164535+00:00"
+          "created_at": "2026-05-19T07:46:30.164535+00:00",
+          "reflection": "Downtrend direction correct; RSI=29.3 near-oversold absorbed some selling, delivering roughly half the forecast decline."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34795,7 +35013,8 @@
           "actual_return_pct": -0.66,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.164587+00:00"
+          "created_at": "2026-05-19T07:46:30.164587+00:00",
+          "reflection": "Clean RSI=64 setup failed to follow through \u2014 5-day gain reversed without any overbought trigger to explain the stall."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34809,7 +35028,8 @@
           "actual_return_pct": -3.24,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.164753+00:00"
+          "created_at": "2026-05-19T07:46:30.164753+00:00",
+          "reflection": "Downtrend correctly identified; consistent loss pattern accelerated sharply beyond the -0.70% target."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34823,7 +35043,8 @@
           "actual_return_pct": -0.17,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.164810+00:00"
+          "created_at": "2026-05-19T07:46:30.164810+00:00",
+          "reflection": "Unconfirmed 20-day trend correctly capped the 5-day bounce \u2014 stock settled near flat as modelled."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34837,7 +35058,8 @@
           "actual_return_pct": -1.92,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.164863+00:00"
+          "created_at": "2026-05-19T07:46:30.164863+00:00",
+          "reflection": "RSI=73 assessed as healthy, not overbought; reversal suggests exhaustion arrived earlier than the rationale judged."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34851,7 +35073,8 @@
           "actual_return_pct": 3.11,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.164915+00:00"
+          "created_at": "2026-05-19T07:46:30.164915+00:00",
+          "reflection": "Upside direction correct despite RSI=77 pullback warning \u2014 momentum carried 4x beyond the conservative forecast."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34865,7 +35088,8 @@
           "actual_return_pct": -0.55,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.164967+00:00"
+          "created_at": "2026-05-19T07:46:30.164967+00:00",
+          "reflection": "Contradictory 5-day/20-day signals correctly resolved to flat \u2014 neither trend prevailed."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34879,7 +35103,8 @@
           "actual_return_pct": -3.28,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.165019+00:00"
+          "created_at": "2026-05-19T07:46:30.165019+00:00",
+          "reflection": "Accelerating selloff direction correct; drop ran 4x forecast as momentum deterioration proved deeper than modelled."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34893,7 +35118,8 @@
           "actual_return_pct": 5.29,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.165071+00:00"
+          "created_at": "2026-05-19T07:46:30.165071+00:00",
+          "reflection": "RSI=60 healthy trend read correctly but 'modest' label missed a breakout \u2014 gain was nearly 9x the predicted magnitude."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34907,7 +35133,8 @@
           "actual_return_pct": 1.79,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.165123+00:00"
+          "created_at": "2026-05-19T07:46:30.165123+00:00",
+          "reflection": "Dividend narrative and RSI=69 momentum read correctly \u2014 gain doubled forecast as supportive conditions held."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34921,7 +35148,8 @@
           "actual_return_pct": 3.65,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.165173+00:00"
+          "created_at": "2026-05-19T07:46:30.165173+00:00",
+          "reflection": "Analyst upgrade catalyst underweighted \u2014 news-driven bounce far exceeded what the negative 20-day/MACD baseline implied."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34935,7 +35163,8 @@
           "actual_return_pct": -1.94,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.165227+00:00"
+          "created_at": "2026-05-19T07:46:30.165227+00:00",
+          "reflection": "Thin 20-day trend correctly flagged the 5-day bounce as fragile \u2014 stock gave back gains and dipped beyond flat."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34949,7 +35178,8 @@
           "actual_return_pct": 1.56,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.165330+00:00"
+          "created_at": "2026-05-19T07:46:30.165330+00:00",
+          "reflection": "RSI=63 and sector ADR demand read correctly \u2014 gain came in above forecast as sector flows provided extra lift."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34963,7 +35193,8 @@
           "actual_return_pct": -0.83,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.165403+00:00"
+          "created_at": "2026-05-19T07:46:30.165403+00:00",
+          "reflection": "Unconfirmed 20-day trend assessment proved correct \u2014 bounce faded and stock settled near flat."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34977,7 +35208,8 @@
           "actual_return_pct": 4.07,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.165458+00:00"
+          "created_at": "2026-05-19T07:46:30.165458+00:00",
+          "reflection": "RSI=81 overbought concern misfired \u2014 20-day acceleration momentum dominated and pushed gain 4x beyond forecast."
         },
         {
           "strategy_id": "momentum-trader",
@@ -34991,7 +35223,8 @@
           "actual_return_pct": 4.58,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.165511+00:00"
+          "created_at": "2026-05-19T07:46:30.165511+00:00",
+          "reflection": "AI catalyst correctly flagged but weak 20-day underweighted the news impact \u2014 stock broke out 6x the forecast."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35005,7 +35238,8 @@
           "actual_return_pct": -0.1,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.165563+00:00"
+          "created_at": "2026-05-19T07:46:30.165563+00:00",
+          "reflection": "Declining 20-day correctly capped the 5-day bounce \u2014 settled near flat almost exactly as predicted."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35019,7 +35253,8 @@
           "actual_return_pct": 1.09,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.165615+00:00"
+          "created_at": "2026-05-19T07:46:30.165615+00:00",
+          "reflection": "Stalling MACD and near-zero volume correctly signalled weakening momentum \u2014 gain came in below forecast but direction held."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35033,7 +35268,8 @@
           "actual_return_pct": -0.77,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.165668+00:00"
+          "created_at": "2026-05-19T07:46:30.165668+00:00",
+          "reflection": "Bearish MACD and sector correctly called direction; magnitude overestimated \u2014 stock found support far above the -2.80% target."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35047,7 +35283,8 @@
           "actual_return_pct": 0.39,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.165720+00:00"
+          "created_at": "2026-05-19T07:46:30.165720+00:00",
+          "reflection": "RSI=72.7 near-exhaustion and minimal volume correctly called a flat session \u2014 result matched prediction almost to the basis point."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35061,7 +35298,8 @@
           "actual_return_pct": -1.15,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.165772+00:00"
+          "created_at": "2026-05-19T07:46:30.165772+00:00",
+          "reflection": "Deteriorating 20-day correctly flagged the bounce as fragile \u2014 stock fell to a mild loss, deeper than the flat prediction assumed."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35075,7 +35313,8 @@
           "actual_return_pct": -2.58,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.165824+00:00"
+          "created_at": "2026-05-19T07:46:30.165824+00:00",
+          "reflection": "Downtrend alignment confirmed; 5-day/20-day breakdown carried through, actual drop exceeded the mild_down target."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35089,7 +35328,8 @@
           "actual_return_pct": 2.53,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.165880+00:00"
+          "created_at": "2026-05-19T07:46:30.165880+00:00",
+          "reflection": "5-day acceleration signal worked; positive commentary added fuel and lifted it well beyond the mild_up target."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35103,7 +35343,8 @@
           "actual_return_pct": -3.61,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.165933+00:00"
+          "created_at": "2026-05-19T07:46:30.165933+00:00",
+          "reflection": "Expected uncertain momentum to resolve flat; weak 20-day dominated and overwhelmed the 5-day gain."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35117,7 +35358,8 @@
           "actual_return_pct": 0.27,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.165984+00:00"
+          "created_at": "2026-05-19T07:46:30.165984+00:00",
+          "reflection": "Expected macro pressure and MACD breakdown to extend losses; price stabilised despite all bearish signals."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35131,7 +35373,8 @@
           "actual_return_pct": 3.17,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.166035+00:00"
+          "created_at": "2026-05-19T07:46:30.166035+00:00",
+          "reflection": "Expected declining 20-day to cap the bounce at flat; 5-day momentum extended further into mild_up."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35145,7 +35388,8 @@
           "actual_return_pct": 1.65,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.166086+00:00"
+          "created_at": "2026-05-19T07:46:30.166086+00:00",
+          "reflection": "Dual-timeframe momentum signal played out; overbought RSI concern proved immaterial."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35159,7 +35403,8 @@
           "actual_return_pct": 1.08,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.166139+00:00"
+          "created_at": "2026-05-19T07:46:30.166139+00:00",
+          "reflection": "Aligned 5-day/20-day momentum with healthy RSI followed through cleanly."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35173,7 +35418,8 @@
           "actual_return_pct": 1.49,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.166190+00:00"
+          "created_at": "2026-05-19T07:46:30.166190+00:00",
+          "reflection": "Expected declining 20-day to limit bounce to flat; 5-day momentum extended into mild_up territory."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35187,7 +35433,8 @@
           "actual_return_pct": 1.1,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.166242+00:00"
+          "created_at": "2026-05-19T07:46:30.166242+00:00",
+          "reflection": "Expected dominant 20-day downtrend to hold it flat; fair value narrative drove unexpected buying."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35201,7 +35448,8 @@
           "actual_return_pct": -1.49,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.166411+00:00"
+          "created_at": "2026-05-19T07:46:30.166411+00:00",
+          "reflection": "MACD acceleration below both MAs confirmed; low-volume distribution played out as predicted."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35215,7 +35463,8 @@
           "actual_return_pct": 3.0,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.166495+00:00"
+          "created_at": "2026-05-19T07:46:30.166495+00:00",
+          "reflection": "Expected dual-timeframe downtrend to persist; sharp reversal bucked clear technical breakdown."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35229,7 +35478,8 @@
           "actual_return_pct": -0.07,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.166571+00:00"
+          "created_at": "2026-05-19T07:46:30.166571+00:00",
+          "reflection": "Expected strong 20-day momentum and healthy RSI to sustain; stalled at flat despite solid setup."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35243,7 +35493,8 @@
           "actual_return_pct": -0.24,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.166640+00:00"
+          "created_at": "2026-05-19T07:46:30.166640+00:00",
+          "reflection": "Expected downtrend to produce mild decline; move stalled short of mild_down threshold."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35257,7 +35508,8 @@
           "actual_return_pct": 0.08,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.166695+00:00"
+          "created_at": "2026-05-19T07:46:30.166695+00:00",
+          "reflection": "Weak 20-day capped the 5-day bounce; flat outcome matched the low-conviction prediction."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35271,7 +35523,8 @@
           "actual_return_pct": 0.31,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.166749+00:00"
+          "created_at": "2026-05-19T07:46:30.166749+00:00",
+          "reflection": "Expected heavy 20-day loss to dominate the bounce; 5-day recovery proved resilient enough to hold flat."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35285,7 +35538,8 @@
           "actual_return_pct": 2.02,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.166802+00:00"
+          "created_at": "2026-05-19T07:46:30.166802+00:00",
+          "reflection": "Expected confirmed dual-downtrend to continue; sharp reversal bucked clear technical breakdown."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35299,7 +35553,8 @@
           "actual_return_pct": -2.15,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.166854+00:00"
+          "created_at": "2026-05-19T07:46:30.166854+00:00",
+          "reflection": "Expected dual-MA momentum and healthy RSI to sustain; reversed despite no visible technical deterioration."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35313,7 +35568,8 @@
           "actual_return_pct": -0.12,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.166906+00:00"
+          "created_at": "2026-05-19T07:46:30.166906+00:00",
+          "reflection": "Expected 5-day bounce to extend into mild_up; flat 20-day baseline provided no directional support."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35327,7 +35583,8 @@
           "actual_return_pct": 0.15,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.166959+00:00"
+          "created_at": "2026-05-19T07:46:30.166959+00:00",
+          "reflection": "Expected early 5-day momentum to reach mild_up; near-flat 20-day reflected insufficient trend to sustain."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35341,7 +35598,8 @@
           "actual_return_pct": -1.24,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.167010+00:00"
+          "created_at": "2026-05-19T07:46:30.167010+00:00",
+          "reflection": "Expected earnings beat and dual-MA momentum to lift price; sold off despite clear fundamental catalyst."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35355,7 +35613,8 @@
           "actual_return_pct": -2.81,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.167062+00:00"
+          "created_at": "2026-05-19T07:46:30.167062+00:00",
+          "reflection": "5-day loss on flat 20-day bearish signal followed through; actual decline exceeded the mild_down prediction."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35369,7 +35628,8 @@
           "actual_return_pct": 2.12,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.167118+00:00"
+          "created_at": "2026-05-19T07:46:30.167118+00:00",
+          "reflection": "Value recovery thesis with healthy RSI delivered; prior 6-8% momentum continued into mild_up."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35383,7 +35643,8 @@
           "actual_return_pct": -1.94,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.167171+00:00"
+          "created_at": "2026-05-19T07:46:30.167171+00:00",
+          "reflection": "Expected early 5-day bounce to extend; weak 20-day base proved dominant and reversed the gains."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35397,7 +35658,8 @@
           "actual_return_pct": 0.1,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.167223+00:00"
+          "created_at": "2026-05-19T07:46:30.167223+00:00",
+          "reflection": "Premiumization headwinds balanced 5-6% momentum gains; flat outcome matched the offsetting forces."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35411,7 +35673,8 @@
           "actual_return_pct": -2.03,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.167299+00:00"
+          "created_at": "2026-05-19T07:46:30.167299+00:00",
+          "reflection": "Expected healthy RSI and dual-MA momentum to push higher; reversed into mild_down without apparent catalyst."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35425,7 +35688,8 @@
           "actual_return_pct": -1.06,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.167363+00:00"
+          "created_at": "2026-05-19T07:46:30.167363+00:00",
+          "reflection": "Expected declining 20-day to limit the 5-day bounce at flat; decline extended past that threshold."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35439,7 +35703,8 @@
           "actual_return_pct": 0.43,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.167416+00:00"
+          "created_at": "2026-05-19T07:46:30.167416+00:00",
+          "reflection": "Expected bearish MAs and widening MACD to drive lower; near-zero liquidity (vol 0.01) anchored price at flat."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35453,7 +35718,8 @@
           "actual_return_pct": 1.58,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.167468+00:00"
+          "created_at": "2026-05-19T07:46:30.167468+00:00",
+          "reflection": "Expected declining 20-day and Uber news uncertainty to hold flat; 5-day bounce extended despite the headwind."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35467,7 +35733,8 @@
           "actual_return_pct": 0.73,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.167519+00:00"
+          "created_at": "2026-05-19T07:46:30.167519+00:00",
+          "reflection": "Expected early 5-day recovery to reach mild_up; weak 20-day capped the move at flat."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35481,7 +35748,8 @@
           "actual_return_pct": 4.45,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.167570+00:00"
+          "created_at": "2026-05-19T07:46:30.167570+00:00",
+          "reflection": "Expected flat 20-day and 5-day loss to keep it flat; strong_up reversal came with no supporting trend."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35495,7 +35763,8 @@
           "actual_return_pct": -0.86,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.167621+00:00"
+          "created_at": "2026-05-19T07:46:30.167621+00:00",
+          "reflection": "Near-zero volume ratio confirmed no buying pressure; RSI 71.8 overbought signaled exhaustion rather than trend continuation."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35509,7 +35778,8 @@
           "actual_return_pct": 2.81,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.167673+00:00"
+          "created_at": "2026-05-19T07:46:30.167673+00:00",
+          "reflection": "Value play narrative and short-term momentum aligned; 5-day strength carried through despite the weak 20-day base."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35523,7 +35793,8 @@
           "actual_return_pct": 0.13,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.167728+00:00"
+          "created_at": "2026-05-19T07:46:30.167728+00:00",
+          "reflection": "Overbought RSI 70 capped the move; geopolitical tailwind failed to sustain the dual-period trend into further gains."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35537,7 +35808,8 @@
           "actual_return_pct": 1.67,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.167781+00:00"
+          "created_at": "2026-05-19T07:46:30.167781+00:00",
+          "reflection": "Underestimated mean-reversion off the 10% 20-day loss; bounce extended further than the flat call assumed."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35551,7 +35823,8 @@
           "actual_return_pct": -1.11,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.167833+00:00"
+          "created_at": "2026-05-19T07:46:30.167833+00:00",
+          "reflection": "Capital allocation news failed to offset downside momentum; 5-day loss deepened past flat into mild decline as expected."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35565,7 +35838,8 @@
           "actual_return_pct": -0.47,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.167886+00:00"
+          "created_at": "2026-05-19T07:46:30.167886+00:00",
+          "reflection": "Rate headwind and negative MACD pointed bearish, but utilities' defensive bid absorbed selling and limited the decline."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35579,7 +35853,8 @@
           "actual_return_pct": 1.14,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.167938+00:00"
+          "created_at": "2026-05-19T07:46:30.167938+00:00",
+          "reflection": "Expected the severe 17% 20-day downtrend to dominate; the 5-day bounce extended and flipped direction instead."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35593,7 +35868,8 @@
           "actual_return_pct": 4.76,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.167989+00:00"
+          "created_at": "2026-05-19T07:46:30.167989+00:00",
+          "reflection": "Flat call missed a catalyst-driven surge; 5-day bounce was the early signal of a much stronger move, not consolidation."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35607,7 +35883,8 @@
           "actual_return_pct": 3.07,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.168041+00:00"
+          "created_at": "2026-05-19T07:46:30.168041+00:00",
+          "reflection": "Nearly flat 20-day masked latent buying interest; 5-day bounce accelerated into a stronger trend than flat implied."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35621,7 +35898,8 @@
           "actual_return_pct": 0.32,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.168093+00:00"
+          "created_at": "2026-05-19T07:46:30.168093+00:00",
+          "reflection": "Downtrend continuation assumed; support absorbed selling pressure and the stock stabilised rather than extending losses."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35635,7 +35913,8 @@
           "actual_return_pct": -1.93,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.168145+00:00"
+          "created_at": "2026-05-19T07:46:30.168145+00:00",
+          "reflection": "Dual-period loss confirmation played out; selling pressure intensified beyond the prediction, deepening the decline."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35649,7 +35928,8 @@
           "actual_return_pct": -1.66,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.168197+00:00"
+          "created_at": "2026-05-19T07:46:30.168197+00:00",
+          "reflection": "Severe 20-day downtrend dominated despite the 5-day bounce, carrying lower as the momentum signal predicted."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35663,7 +35943,8 @@
           "actual_return_pct": 0.45,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.168248+00:00"
+          "created_at": "2026-05-19T07:46:30.168248+00:00",
+          "reflection": "Distribution signals assumed further selling; stock stabilised, suggesting the 14% 20-day decline had already priced in weakness."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35677,7 +35958,8 @@
           "actual_return_pct": 2.3,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.168341+00:00"
+          "created_at": "2026-05-19T07:46:30.168341+00:00",
+          "reflection": "5-day bounce was stronger than mixed energy sector implied; nearly flat 20-day base supported a larger recovery than flat suggested."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35691,7 +35973,8 @@
           "actual_return_pct": 1.7,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.168404+00:00"
+          "created_at": "2026-05-19T07:46:30.168404+00:00",
+          "reflection": "Expected downtrend continuation from dual-period losses; reversed sharply, likely on mean-reversion off oversold levels."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35705,7 +35988,8 @@
           "actual_return_pct": -4.82,
           "actual_class": "strong_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.168457+00:00"
+          "created_at": "2026-05-19T07:46:30.168457+00:00",
+          "reflection": "5-day bounce treated as stabilisation; it was a dead-cat, with the 9% 20-day decline accelerating into a sharp selloff."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35719,7 +36003,8 @@
           "actual_return_pct": -0.21,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.168509+00:00"
+          "created_at": "2026-05-19T07:46:30.168509+00:00",
+          "reflection": "Valuation reset narrative failed to sustain momentum; RSI 67 approaching overbought stalled the move at flat."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35733,7 +36018,8 @@
           "actual_return_pct": -0.82,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.168560+00:00"
+          "created_at": "2026-05-19T07:46:30.168560+00:00",
+          "reflection": "Moderate RSI and dual-period trend signals proved insufficient to generate follow-through buying."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35747,7 +36033,8 @@
           "actual_return_pct": -2.4,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.168611+00:00"
+          "created_at": "2026-05-19T07:46:30.168611+00:00",
+          "reflection": "Narrative shift couldn't counter the 8% 20-day decline; 5-day bounce faded and downtrend resumed more aggressively than flat implied."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35761,7 +36048,8 @@
           "actual_return_pct": -2.0,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.168663+00:00"
+          "created_at": "2026-05-19T07:46:30.168663+00:00",
+          "reflection": "Healthy RSI and dual-period uptrend assumed continuation; reversed instead, suggesting momentum was more fragile than signals indicated."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35775,7 +36063,8 @@
           "actual_return_pct": -0.74,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.168713+00:00"
+          "created_at": "2026-05-19T07:46:30.168713+00:00",
+          "reflection": "Rate headwind and MA breakdown pointed lower, but mild MACD limited selling; partial move toward prediction, not full realisation."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35789,7 +36078,8 @@
           "actual_return_pct": -3.88,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.168768+00:00"
+          "created_at": "2026-05-19T07:46:30.168768+00:00",
+          "reflection": "Bounce read as consolidation; 8% 20-day decline reasserted with force, making the flat call significantly too optimistic."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35803,7 +36093,8 @@
           "actual_return_pct": 0.94,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.168818+00:00"
+          "created_at": "2026-05-19T07:46:30.168818+00:00",
+          "reflection": "Rising-rate regime and MA breakdown assumed further selling; stock absorbed pressure and bounced, defying the negative trend signal."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35817,7 +36108,8 @@
           "actual_return_pct": -2.25,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.168873+00:00"
+          "created_at": "2026-05-19T07:46:30.168873+00:00",
+          "reflection": "Materials headwind combined with the 5-day loss proved stronger than the modest 20-day gain, pushing well past flat."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35831,7 +36123,8 @@
           "actual_return_pct": 1.1,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.168969+00:00"
+          "created_at": "2026-05-19T07:46:30.168969+00:00",
+          "reflection": "Discounted positive sector news; it outweighed the 11% 20-day downtrend and drove a reversal rather than continuation."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35845,7 +36138,8 @@
           "actual_return_pct": 1.86,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.169037+00:00"
+          "created_at": "2026-05-19T07:46:30.169037+00:00",
+          "reflection": "Oil supply shock tailwind and MA structure played out; positive MACD sustained the move despite the near-flat histogram warning."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35859,7 +36153,8 @@
           "actual_return_pct": -0.97,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.169093+00:00"
+          "created_at": "2026-05-19T07:46:30.169093+00:00",
+          "reflection": "Offsetting 5-day bounce and flat 20-day base correctly resolved as directionless consolidation."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35873,7 +36168,8 @@
           "actual_return_pct": -1.16,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.169147+00:00"
+          "created_at": "2026-05-19T07:46:30.169147+00:00",
+          "reflection": "Dual-period losses overwhelmed the fair value narrative; downside momentum carried through as predicted."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35887,7 +36183,8 @@
           "actual_return_pct": 0.96,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.169200+00:00"
+          "created_at": "2026-05-19T07:46:30.169200+00:00",
+          "reflection": "5-day bounce and 5% 20-day decline offset each other; flat call correctly read the indecision."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35901,7 +36198,8 @@
           "actual_return_pct": -1.45,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.169252+00:00"
+          "created_at": "2026-05-19T07:46:30.169252+00:00",
+          "reflection": "Insider interest and healthy RSI assumed upside; the 8% 20-day downtrend reasserted, reversing the short-term recovery."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35915,7 +36213,8 @@
           "actual_return_pct": 0.55,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.169337+00:00"
+          "created_at": "2026-05-19T07:46:30.169337+00:00",
+          "reflection": "5-day bounce and weak 20-day trend offset correctly; both signals neutralized into flat."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35929,7 +36228,8 @@
           "actual_return_pct": -0.78,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.169484+00:00"
+          "created_at": "2026-05-19T07:46:30.169484+00:00",
+          "reflection": "20-day momentum pressure nearly hit predicted magnitude but landed just inside the flat boundary."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35943,7 +36243,8 @@
           "actual_return_pct": -2.9,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.169581+00:00"
+          "created_at": "2026-05-19T07:46:30.169581+00:00",
+          "reflection": "Dual-period losses confirmed direction; actual drop outran the mild_down call."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35957,7 +36258,8 @@
           "actual_return_pct": -2.79,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.169667+00:00"
+          "created_at": "2026-05-19T07:46:30.169667+00:00",
+          "reflection": "Assumed 5-day bounce would hold; macro/sector pressure overrode it, delivering a genuine decline."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35971,7 +36273,8 @@
           "actual_return_pct": -0.59,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.169769+00:00"
+          "created_at": "2026-05-19T07:46:30.169769+00:00",
+          "reflection": "5-day gain and flat 20-day neutralized correctly; dividend support added no directional lift."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35985,7 +36288,8 @@
           "actual_return_pct": 1.5,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.169873+00:00"
+          "created_at": "2026-05-19T07:46:30.169873+00:00",
+          "reflection": "Dual-period momentum with healthy RSI played out; actual move exceeded the prediction."
         },
         {
           "strategy_id": "momentum-trader",
@@ -35999,7 +36303,8 @@
           "actual_return_pct": -0.48,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:46:30.169971+00:00"
+          "created_at": "2026-05-19T07:46:30.169971+00:00",
+          "reflection": "MACD breakdown and rate ceiling assumed sustained selling; partial recovery capped loss inside flat."
         },
         {
           "strategy_id": "momentum-trader",
@@ -47424,7 +47729,8 @@
           "actual_return_pct": -0.79,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.814648+00:00"
+          "created_at": "2026-05-19T07:48:50.814648+00:00",
+          "reflection": "RSI 77 exhaustion after the +51% surge correctly capped gains; flat held."
         },
         {
           "strategy_id": "news-reactive",
@@ -47438,7 +47744,8 @@
           "actual_return_pct": -1.54,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.814875+00:00"
+          "created_at": "2026-05-19T07:48:50.814875+00:00",
+          "reflection": "RSI 81 overbought was directionally correct but underestimated the unwind; fell to mild_down vs predicted flat."
         },
         {
           "strategy_id": "news-reactive",
@@ -47452,7 +47759,8 @@
           "actual_return_pct": -3.55,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.814960+00:00"
+          "created_at": "2026-05-19T07:48:50.814960+00:00",
+          "reflection": "Catalyst exhaustion was right in direction but the +24% move unwound further than flat predicted."
         },
         {
           "strategy_id": "news-reactive",
@@ -47466,7 +47774,8 @@
           "actual_return_pct": 5.13,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.815028+00:00"
+          "created_at": "2026-05-19T07:48:50.815028+00:00",
+          "reflection": "Rationale assumed -21% momentum continuation; instead a sharp reversal drove strong_up."
         },
         {
           "strategy_id": "news-reactive",
@@ -47480,7 +47789,8 @@
           "actual_return_pct": -3.33,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.815090+00:00"
+          "created_at": "2026-05-19T07:48:50.815090+00:00",
+          "reflection": "Distress-selling read was directionally correct; magnitude overestimated as decline stayed mild_down."
         },
         {
           "strategy_id": "news-reactive",
@@ -47494,7 +47804,8 @@
           "actual_return_pct": -0.43,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.815163+00:00"
+          "created_at": "2026-05-19T07:48:50.815163+00:00",
+          "reflection": "RSI 83 overbought exhaustion signal played out; stock flatlined as expected."
         },
         {
           "strategy_id": "news-reactive",
@@ -47508,7 +47819,8 @@
           "actual_return_pct": 0.85,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.815224+00:00"
+          "created_at": "2026-05-19T07:48:50.815224+00:00",
+          "reflection": "RSI 81 mean-reversion risk correctly capped further upside; flat confirmed."
         },
         {
           "strategy_id": "news-reactive",
@@ -47522,7 +47834,8 @@
           "actual_return_pct": -1.78,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.815313+00:00"
+          "created_at": "2026-05-19T07:48:50.815313+00:00",
+          "reflection": "RSI 73 overbought was directionally right; fell harder than flat predicted into mild_down."
         },
         {
           "strategy_id": "news-reactive",
@@ -47536,7 +47849,8 @@
           "actual_return_pct": -5.85,
           "actual_class": "strong_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.815382+00:00"
+          "created_at": "2026-05-19T07:48:50.815382+00:00",
+          "reflection": "Insider buying assumed a floor; instead selling pressure accelerated to strong_down."
         },
         {
           "strategy_id": "news-reactive",
@@ -47550,7 +47864,8 @@
           "actual_return_pct": -1.86,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.815440+00:00"
+          "created_at": "2026-05-19T07:48:50.815440+00:00",
+          "reflection": "Absence of reversal catalyst confirmed; downtrend continued as predicted."
         },
         {
           "strategy_id": "news-reactive",
@@ -47564,7 +47879,8 @@
           "actual_return_pct": -0.66,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.815497+00:00"
+          "created_at": "2026-05-19T07:48:50.815497+00:00",
+          "reflection": "No-directional-edge call confirmed; stock drifted flat with no catalyst."
         },
         {
           "strategy_id": "news-reactive",
@@ -47578,7 +47894,8 @@
           "actual_return_pct": -0.42,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.815554+00:00"
+          "created_at": "2026-05-19T07:48:50.815554+00:00",
+          "reflection": "Catalyst-priced-in thesis confirmed; flat outcome despite prior strong move."
         },
         {
           "strategy_id": "news-reactive",
@@ -47592,7 +47909,8 @@
           "actual_return_pct": -0.43,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.815610+00:00"
+          "created_at": "2026-05-19T07:48:50.815610+00:00",
+          "reflection": "Earnings beat priced into the +11% 5d move; RSI 67 cap held, outcome was flat not mild_up."
         },
         {
           "strategy_id": "news-reactive",
@@ -47606,7 +47924,8 @@
           "actual_return_pct": -3.24,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.815666+00:00"
+          "created_at": "2026-05-19T07:48:50.815666+00:00",
+          "reflection": "Negative momentum with no offsetting catalyst continued; mild_down matched."
         },
         {
           "strategy_id": "news-reactive",
@@ -47620,7 +47939,8 @@
           "actual_return_pct": 3.11,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.815780+00:00"
+          "created_at": "2026-05-19T07:48:50.815780+00:00",
+          "reflection": "Rationale relied on RSI 78 to cap gains; macro tailwind overrode the overbought signal."
         },
         {
           "strategy_id": "news-reactive",
@@ -47634,7 +47954,8 @@
           "actual_return_pct": -1.92,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.815836+00:00"
+          "created_at": "2026-05-19T07:48:50.815836+00:00",
+          "reflection": "RSI 73 mean-reversion risk materialised beyond the flat prediction into mild_down."
         },
         {
           "strategy_id": "news-reactive",
@@ -47648,7 +47969,8 @@
           "actual_return_pct": -1.94,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.815889+00:00"
+          "created_at": "2026-05-19T07:48:50.815889+00:00",
+          "reflection": "Macro-only driver left no support; stock drifted below flat into mild_down."
         },
         {
           "strategy_id": "news-reactive",
@@ -47662,7 +47984,8 @@
           "actual_return_pct": 5.29,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.815943+00:00"
+          "created_at": "2026-05-19T07:48:50.815943+00:00",
+          "reflection": "Macro-only rationale missed a strong company-level catalyst; surged to strong_up."
         },
         {
           "strategy_id": "news-reactive",
@@ -47676,7 +47999,8 @@
           "actual_return_pct": -3.28,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.815996+00:00"
+          "created_at": "2026-05-19T07:48:50.815996+00:00",
+          "reflection": "Persistent negative momentum with no floor catalyst delivered exactly mild_down."
         },
         {
           "strategy_id": "news-reactive",
@@ -47690,7 +48014,8 @@
           "actual_return_pct": 1.79,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.816049+00:00"
+          "created_at": "2026-05-19T07:48:50.816049+00:00",
+          "reflection": "No company catalyst predicted flat; dividend-stock bid lifted it to mild_up instead."
         },
         {
           "strategy_id": "news-reactive",
@@ -47704,7 +48029,8 @@
           "actual_return_pct": 3.65,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.816106+00:00"
+          "created_at": "2026-05-19T07:48:50.816106+00:00",
+          "reflection": "Expected technical breakdown to dominate; analyst revenue upgrades drove a reversal to mild_up."
         },
         {
           "strategy_id": "news-reactive",
@@ -47718,7 +48044,8 @@
           "actual_return_pct": -0.83,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.816159+00:00"
+          "created_at": "2026-05-19T07:48:50.816159+00:00",
+          "reflection": "Mixed signals and no clear catalyst confirmed; flat outcome as predicted."
         },
         {
           "strategy_id": "news-reactive",
@@ -47732,7 +48059,8 @@
           "actual_return_pct": -0.55,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.816214+00:00"
+          "created_at": "2026-05-19T07:48:50.816214+00:00",
+          "reflection": "Confused signals with no catalyst produced the predicted flat."
         },
         {
           "strategy_id": "news-reactive",
@@ -47746,7 +48074,8 @@
           "actual_return_pct": 1.56,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.816298+00:00"
+          "created_at": "2026-05-19T07:48:50.816298+00:00",
+          "reflection": "Macro sentiment tailwind was stronger than anticipated; drifted to mild_up vs predicted flat."
         },
         {
           "strategy_id": "news-reactive",
@@ -47760,7 +48089,8 @@
           "actual_return_pct": 4.07,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.816367+00:00"
+          "created_at": "2026-05-19T07:48:50.816367+00:00",
+          "reflection": "RSI 81 reversion signal failed; stock continued higher to strong_up despite overbought reading."
         },
         {
           "strategy_id": "news-reactive",
@@ -47774,7 +48104,8 @@
           "actual_return_pct": 4.58,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.816430+00:00"
+          "created_at": "2026-05-19T07:48:50.816430+00:00",
+          "reflection": "Indirect news correctly flagged low edge; SAP caught a broad sector rally to strong_up anyway."
         },
         {
           "strategy_id": "news-reactive",
@@ -47788,7 +48119,8 @@
           "actual_return_pct": 1.09,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.816488+00:00"
+          "created_at": "2026-05-19T07:48:50.816488+00:00",
+          "reflection": "20d +38% priced-in thesis mostly held; AI theme still contributed a mild upside drift."
         },
         {
           "strategy_id": "news-reactive",
@@ -47802,7 +48134,8 @@
           "actual_return_pct": 2.53,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.816552+00:00"
+          "created_at": "2026-05-19T07:48:50.816552+00:00",
+          "reflection": "Analyst catalyst with remaining momentum delivered; mild_up matched."
         },
         {
           "strategy_id": "news-reactive",
@@ -47816,7 +48149,8 @@
           "actual_return_pct": -0.1,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.816683+00:00"
+          "created_at": "2026-05-19T07:48:50.816683+00:00",
+          "reflection": "Mixed signals and no catalyst confirmed; flat outcome as predicted."
         },
         {
           "strategy_id": "news-reactive",
@@ -47830,7 +48164,8 @@
           "actual_return_pct": -0.77,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.816920+00:00"
+          "created_at": "2026-05-19T07:48:50.816920+00:00",
+          "reflection": "Prior earnings miss weighed but less than expected; settled flat rather than mild_down."
         },
         {
           "strategy_id": "news-reactive",
@@ -47844,7 +48179,8 @@
           "actual_return_pct": 0.39,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.817116+00:00"
+          "created_at": "2026-05-19T07:48:50.817116+00:00",
+          "reflection": "RSI-73 exhaustion flagged correctly; price stayed range-bound despite slight positive drift."
         },
         {
           "strategy_id": "news-reactive",
@@ -47858,7 +48194,8 @@
           "actual_return_pct": -1.15,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.817687+00:00"
+          "created_at": "2026-05-19T07:48:50.817687+00:00",
+          "reflection": "No-catalyst flat call; absence of support let price drift to a mild loss without a defined floor."
         },
         {
           "strategy_id": "news-reactive",
@@ -47872,7 +48209,8 @@
           "actual_return_pct": -2.58,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.824220+00:00"
+          "created_at": "2026-05-19T07:48:50.824220+00:00",
+          "reflection": "Momentum-down continuation confirmed; drop ran deeper than predicted, no bounce materialised."
         },
         {
           "strategy_id": "news-reactive",
@@ -47886,7 +48224,8 @@
           "actual_return_pct": -3.61,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.864740+00:00"
+          "created_at": "2026-05-19T07:48:50.864740+00:00",
+          "reflection": "Expected neutral on no catalyst; lack of support exposed it to broader selling pressure."
         },
         {
           "strategy_id": "news-reactive",
@@ -47900,7 +48239,8 @@
           "actual_return_pct": 0.27,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.864875+00:00"
+          "created_at": "2026-05-19T07:48:50.864875+00:00",
+          "reflection": "Assumed downtrend continuation on RSI-35 and SMA breakdown; price flatlined instead of falling."
         },
         {
           "strategy_id": "news-reactive",
@@ -47914,7 +48254,8 @@
           "actual_return_pct": 3.17,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.864949+00:00"
+          "created_at": "2026-05-19T07:48:50.864949+00:00",
+          "reflection": "Mixed signals read as flat; an unidentified catalyst drove an outsized move to the upside."
         },
         {
           "strategy_id": "news-reactive",
@@ -47928,7 +48269,8 @@
           "actual_return_pct": 1.08,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.865030+00:00"
+          "created_at": "2026-05-19T07:48:50.865030+00:00",
+          "reflection": "Steady uptrend read as near-flat; mild continuation slightly exceeded the no-catalyst flat call."
         },
         {
           "strategy_id": "news-reactive",
@@ -47942,7 +48284,8 @@
           "actual_return_pct": 1.1,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.865096+00:00"
+          "created_at": "2026-05-19T07:48:50.865096+00:00",
+          "reflection": "Fair-value bounce catalyst worked; direction and magnitude both matched cleanly."
         },
         {
           "strategy_id": "news-reactive",
@@ -47956,7 +48299,8 @@
           "actual_return_pct": 1.49,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.865156+00:00"
+          "created_at": "2026-05-19T07:48:50.865156+00:00",
+          "reflection": "Mixed 5d/20d signals predicted flat; an untracked catalyst pushed a clean upside move."
         },
         {
           "strategy_id": "news-reactive",
@@ -47970,7 +48314,8 @@
           "actual_return_pct": -8.34,
           "actual_class": "strong_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.865215+00:00"
+          "created_at": "2026-05-19T07:48:50.865215+00:00",
+          "reflection": "RSI-70 exhaustion flagged but sized as flat; actual reversal was a sharp crash, not a drift."
         },
         {
           "strategy_id": "news-reactive",
@@ -47984,7 +48329,8 @@
           "actual_return_pct": 3.0,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.865300+00:00"
+          "created_at": "2026-05-19T07:48:50.865300+00:00",
+          "reflection": "Assumed structural downtrend below both SMAs would hold; price reversed sharply with no noted catalyst."
         },
         {
           "strategy_id": "news-reactive",
@@ -47998,7 +48344,8 @@
           "actual_return_pct": -0.07,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.865373+00:00"
+          "created_at": "2026-05-19T07:48:50.865373+00:00",
+          "reflection": "No-catalyst flat call confirmed; price barely moved."
         },
         {
           "strategy_id": "news-reactive",
@@ -48012,7 +48359,8 @@
           "actual_return_pct": -1.49,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.865431+00:00"
+          "created_at": "2026-05-19T07:48:50.865431+00:00",
+          "reflection": "Oversold RSI-35 didn't trigger a bounce; momentum-down continuation confirmed."
         },
         {
           "strategy_id": "news-reactive",
@@ -48026,7 +48374,8 @@
           "actual_return_pct": 0.08,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.865487+00:00"
+          "created_at": "2026-05-19T07:48:50.865487+00:00",
+          "reflection": "Neutral mixed-signal read held; price was essentially unchanged."
         },
         {
           "strategy_id": "news-reactive",
@@ -48040,7 +48389,8 @@
           "actual_return_pct": -0.24,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.865544+00:00"
+          "created_at": "2026-05-19T07:48:50.865544+00:00",
+          "reflection": "Expected negative 5d momentum to continue lower; price stabilised rather than extending the slide."
         },
         {
           "strategy_id": "news-reactive",
@@ -48054,7 +48404,8 @@
           "actual_return_pct": 0.31,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.865599+00:00"
+          "created_at": "2026-05-19T07:48:50.865599+00:00",
+          "reflection": "Mixed-signal neutral call correct; neither the recent up nor the longer decline dominated."
         },
         {
           "strategy_id": "news-reactive",
@@ -48068,7 +48419,8 @@
           "actual_return_pct": 1.65,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.865654+00:00"
+          "created_at": "2026-05-19T07:48:50.865654+00:00",
+          "reflection": "Steady small uptrend slightly outpaced the flat call with no specific catalyst identified."
         },
         {
           "strategy_id": "news-reactive",
@@ -48082,7 +48434,8 @@
           "actual_return_pct": -2.15,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.865715+00:00"
+          "created_at": "2026-05-19T07:48:50.865715+00:00",
+          "reflection": "Predicted flat on small up; no catalyst left it exposed and selling dominated the session."
         },
         {
           "strategy_id": "news-reactive",
@@ -48096,7 +48449,8 @@
           "actual_return_pct": -0.12,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.865773+00:00"
+          "created_at": "2026-05-19T07:48:50.865773+00:00",
+          "reflection": "No-catalyst neutral read correct; small up and longer flat balanced to near-zero."
         },
         {
           "strategy_id": "news-reactive",
@@ -48110,7 +48464,8 @@
           "actual_return_pct": 2.02,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.865828+00:00"
+          "created_at": "2026-05-19T07:48:50.865828+00:00",
+          "reflection": "Assumed negative 5d momentum would persist; price reversed sharply, disproving the continuation thesis."
         },
         {
           "strategy_id": "news-reactive",
@@ -48124,7 +48479,8 @@
           "actual_return_pct": 0.15,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.865939+00:00"
+          "created_at": "2026-05-19T07:48:50.865939+00:00",
+          "reflection": "No-catalyst flat call confirmed; small uptrend continued at a negligible pace."
         },
         {
           "strategy_id": "news-reactive",
@@ -48138,7 +48494,8 @@
           "actual_return_pct": -2.81,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.865993+00:00"
+          "created_at": "2026-05-19T07:48:50.865993+00:00",
+          "reflection": "Negative momentum continuation confirmed; loss ran deeper than predicted."
         },
         {
           "strategy_id": "news-reactive",
@@ -48152,7 +48509,8 @@
           "actual_return_pct": -1.94,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.866046+00:00"
+          "created_at": "2026-05-19T07:48:50.866046+00:00",
+          "reflection": "Predicted flat on steady uptrend; no catalyst left it vulnerable to mild selling."
         },
         {
           "strategy_id": "news-reactive",
@@ -48166,7 +48524,8 @@
           "actual_return_pct": -2.03,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.866101+00:00"
+          "created_at": "2026-05-19T07:48:50.866101+00:00",
+          "reflection": "Predicted flat on steady uptrend; no catalyst allowed mild selling to dominate."
         },
         {
           "strategy_id": "news-reactive",
@@ -48180,7 +48539,8 @@
           "actual_return_pct": -1.06,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.866155+00:00"
+          "created_at": "2026-05-19T07:48:50.866155+00:00",
+          "reflection": "Mixed-signal flat call; absence of a catalyst let price drift lower without support."
         },
         {
           "strategy_id": "news-reactive",
@@ -48194,7 +48554,8 @@
           "actual_return_pct": 0.1,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.866208+00:00"
+          "created_at": "2026-05-19T07:48:50.866208+00:00",
+          "reflection": "Premiumization-pressure news expected to weigh; price absorbed the negative news and held flat."
         },
         {
           "strategy_id": "news-reactive",
@@ -48208,7 +48569,8 @@
           "actual_return_pct": 0.73,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.866262+00:00"
+          "created_at": "2026-05-19T07:48:50.866262+00:00",
+          "reflection": "No-catalyst flat call confirmed; price drifted fractionally positive within noise."
         },
         {
           "strategy_id": "news-reactive",
@@ -48222,7 +48584,8 @@
           "actual_return_pct": 2.12,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.866342+00:00"
+          "created_at": "2026-05-19T07:48:50.866342+00:00",
+          "reflection": "Technical setup above SMAs with positive MACD confirmed; soft catalyst drove a move beyond the mild-up target."
         },
         {
           "strategy_id": "news-reactive",
@@ -48236,7 +48599,8 @@
           "actual_return_pct": 1.58,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.866400+00:00"
+          "created_at": "2026-05-19T07:48:50.866400+00:00",
+          "reflection": "Uber stake news read as mixed; market resolved it positively, driving a clean upside move."
         },
         {
           "strategy_id": "news-reactive",
@@ -48250,7 +48614,8 @@
           "actual_return_pct": 2.81,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.866454+00:00"
+          "created_at": "2026-05-19T07:48:50.866454+00:00",
+          "reflection": "Soft valuation commentary dismissed as no hard catalyst; market acted on it, driving a strong upside surprise."
         },
         {
           "strategy_id": "news-reactive",
@@ -48264,7 +48629,8 @@
           "actual_return_pct": 4.45,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.866564+00:00"
+          "created_at": "2026-05-19T07:48:50.866564+00:00",
+          "reflection": "Momentum-down assumption missed a sharp mean-reversion; the 5d selloff proved exhaustion, not continuation."
         },
         {
           "strategy_id": "news-reactive",
@@ -48278,7 +48644,8 @@
           "actual_return_pct": -0.86,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.866619+00:00"
+          "created_at": "2026-05-19T07:48:50.866619+00:00",
+          "reflection": "RSI-72 exhaustion read correctly; post-M&A drift stayed contained and flat as expected."
         },
         {
           "strategy_id": "news-reactive",
@@ -48292,7 +48659,8 @@
           "actual_return_pct": 1.67,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.866675+00:00"
+          "created_at": "2026-05-19T07:48:50.866675+00:00",
+          "reflection": "Mixed-signals flat call understated residual upward bias; no catalyst but mild drift higher prevailed."
         },
         {
           "strategy_id": "news-reactive",
@@ -48306,7 +48674,8 @@
           "actual_return_pct": 0.43,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.866728+00:00"
+          "created_at": "2026-05-19T07:48:50.866728+00:00",
+          "reflection": "Oversold RSI-36 cushioned further decline; expected bearish continuation stalled at support."
         },
         {
           "strategy_id": "news-reactive",
@@ -48320,7 +48689,8 @@
           "actual_return_pct": -1.66,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.866782+00:00"
+          "created_at": "2026-05-19T07:48:50.866782+00:00",
+          "reflection": "Longer-term downtrend in the mixed-signals read prevailed over the short-term uptick."
         },
         {
           "strategy_id": "news-reactive",
@@ -48334,7 +48704,8 @@
           "actual_return_pct": 0.13,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.866836+00:00"
+          "created_at": "2026-05-19T07:48:50.866836+00:00",
+          "reflection": "Overbought RSI-70 exhaustion read correct; macro catalyst faded and stock held flat as expected."
         },
         {
           "strategy_id": "news-reactive",
@@ -48348,7 +48719,8 @@
           "actual_return_pct": 0.45,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.866889+00:00"
+          "created_at": "2026-05-19T07:48:50.866889+00:00",
+          "reflection": "Persistent-selling assumption met oversold stabilisation; downside capped short of the mild-down target."
         },
         {
           "strategy_id": "news-reactive",
@@ -48362,7 +48734,8 @@
           "actual_return_pct": 0.32,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.866948+00:00"
+          "created_at": "2026-05-19T07:48:50.866948+00:00",
+          "reflection": "Momentum-down read stalled; broader market bid absorbed the selling pressure and kept the stock flat."
         },
         {
           "strategy_id": "news-reactive",
@@ -48376,7 +48749,8 @@
           "actual_return_pct": -0.47,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.867004+00:00"
+          "created_at": "2026-05-19T07:48:50.867004+00:00",
+          "reflection": "Pre-earnings downtrend logic sound but oversold RSI halted the move just inside the flat band."
         },
         {
           "strategy_id": "news-reactive",
@@ -48390,7 +48764,8 @@
           "actual_return_pct": -1.93,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.867058+00:00"
+          "created_at": "2026-05-19T07:48:50.867058+00:00",
+          "reflection": "Negative 5d momentum confirmed; continued selling delivered the mild-down outcome as expected."
         },
         {
           "strategy_id": "news-reactive",
@@ -48404,7 +48779,8 @@
           "actual_return_pct": 2.3,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.867113+00:00"
+          "created_at": "2026-05-19T07:48:50.867113+00:00",
+          "reflection": "Generic roundup correctly signalled no single-stock catalyst, but unmodelled sector tailwind drove the gain."
         },
         {
           "strategy_id": "news-reactive",
@@ -48418,7 +48794,8 @@
           "actual_return_pct": 1.14,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.867167+00:00"
+          "created_at": "2026-05-19T07:48:50.867167+00:00",
+          "reflection": "RSI-40 oversold bounce from a deep 20d drawdown provided the reversal the no-catalyst read dismissed."
         },
         {
           "strategy_id": "news-reactive",
@@ -48432,7 +48809,8 @@
           "actual_return_pct": 3.07,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.867225+00:00"
+          "created_at": "2026-05-19T07:48:50.867225+00:00",
+          "reflection": "Mixed 5d/20d and no catalyst assumed neutrality; an unidentified demand driver pushed a 3% breakout."
         },
         {
           "strategy_id": "news-reactive",
@@ -48446,7 +48824,8 @@
           "actual_return_pct": 1.7,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.867297+00:00"
+          "created_at": "2026-05-19T07:48:50.867297+00:00",
+          "reflection": "Expected momentum continuation from 5d decline; stock reversed sharply, revealing the dip as a mean-reversion setup."
         },
         {
           "strategy_id": "news-reactive",
@@ -48460,7 +48839,8 @@
           "actual_return_pct": -0.82,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.867355+00:00"
+          "created_at": "2026-05-19T07:48:50.867355+00:00",
+          "reflection": "No catalyst flat correct; small steady upward drift failed to sustain and settled flat."
         },
         {
           "strategy_id": "news-reactive",
@@ -48474,7 +48854,8 @@
           "actual_return_pct": -4.82,
           "actual_class": "strong_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.867409+00:00"
+          "created_at": "2026-05-19T07:48:50.867409+00:00",
+          "reflection": "Mixed-signals flat call missed the longer-term downtrend accelerating into a strong 4.8% drop."
         },
         {
           "strategy_id": "news-reactive",
@@ -48488,7 +48869,8 @@
           "actual_return_pct": 4.76,
           "actual_class": "strong_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.867462+00:00"
+          "created_at": "2026-05-19T07:48:50.867462+00:00",
+          "reflection": "Flat on mixed signals; an unmodelled catalyst drove a near-5% surge the no-catalyst read couldn't capture."
         },
         {
           "strategy_id": "news-reactive",
@@ -48502,7 +48884,8 @@
           "actual_return_pct": -0.21,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.867515+00:00"
+          "created_at": "2026-05-19T07:48:50.867515+00:00",
+          "reflection": "Analyst target reductions correctly offset mild positive drift; stock stayed range-bound as expected."
         },
         {
           "strategy_id": "news-reactive",
@@ -48516,7 +48899,8 @@
           "actual_return_pct": -2.4,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.867574+00:00"
+          "created_at": "2026-05-19T07:48:50.867574+00:00",
+          "reflection": "Range-bound SMA read assumed flat; negligible catalyst was right, but range support broke to the downside."
         },
         {
           "strategy_id": "news-reactive",
@@ -48530,7 +48914,8 @@
           "actual_return_pct": -2.0,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.867631+00:00"
+          "created_at": "2026-05-19T07:48:50.867631+00:00",
+          "reflection": "Steady-up bias assumed continuation; unidentified selling pressure reversed direction below the flat threshold."
         },
         {
           "strategy_id": "news-reactive",
@@ -48544,7 +48929,8 @@
           "actual_return_pct": -3.88,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.867683+00:00"
+          "created_at": "2026-05-19T07:48:50.867683+00:00",
+          "reflection": "Longer-term downtrend reasserted over the short-term uptick, pushing well past the flat call."
         },
         {
           "strategy_id": "news-reactive",
@@ -48558,7 +48944,8 @@
           "actual_return_pct": -0.74,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.867737+00:00"
+          "created_at": "2026-05-19T07:48:50.867737+00:00",
+          "reflection": "Downtrend default expected further decline; oversold RSI-34 limited the move to flat rather than extending lower."
         },
         {
           "strategy_id": "news-reactive",
@@ -48572,7 +48959,8 @@
           "actual_return_pct": 1.86,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.867795+00:00"
+          "created_at": "2026-05-19T07:48:50.867795+00:00",
+          "reflection": "Catalyst-exhausted flat call missed modest extension of the 20d surge; overbought read understated residual momentum."
         },
         {
           "strategy_id": "news-reactive",
@@ -48586,7 +48974,8 @@
           "actual_return_pct": 0.94,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.867851+00:00"
+          "created_at": "2026-05-19T07:48:50.867851+00:00",
+          "reflection": "Oversold RSI-36 without bounce catalyst assumed continued selling; mean-reversion buyers emerged and flattened the drop."
         },
         {
           "strategy_id": "news-reactive",
@@ -48600,7 +48989,8 @@
           "actual_return_pct": -2.25,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.867903+00:00"
+          "created_at": "2026-05-19T07:48:50.867903+00:00",
+          "reflection": "Generic materials roundup correctly signalled no specific upside; sector selling pushed below the flat call."
         },
         {
           "strategy_id": "news-reactive",
@@ -48614,7 +49004,8 @@
           "actual_return_pct": 1.1,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.867956+00:00"
+          "created_at": "2026-05-19T07:48:50.867956+00:00",
+          "reflection": "Pre-earnings binary caution muted direction correctly; stock drifted up as market leaned constructive ahead of results."
         },
         {
           "strategy_id": "news-reactive",
@@ -48628,7 +49019,8 @@
           "actual_return_pct": -1.45,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.868010+00:00"
+          "created_at": "2026-05-19T07:48:50.868010+00:00",
+          "reflection": "Energy tailwind and insider interest anticipated sector lift; single-stock selling overwhelmed the macro bid."
         },
         {
           "strategy_id": "news-reactive",
@@ -48642,7 +49034,8 @@
           "actual_return_pct": -0.97,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.868063+00:00"
+          "created_at": "2026-05-19T07:48:50.868063+00:00",
+          "reflection": "No-catalyst flat correct; small upward drift reversed to a marginal decline within noise."
         },
         {
           "strategy_id": "news-reactive",
@@ -48656,7 +49049,8 @@
           "actual_return_pct": -0.24,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.868126+00:00"
+          "created_at": "2026-05-19T07:48:50.868126+00:00",
+          "reflection": "No-catalyst flat correct; small upward bias and mild pullback both stayed within the flat band."
         },
         {
           "strategy_id": "news-reactive",
@@ -48670,7 +49064,8 @@
           "actual_return_pct": -1.16,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.868183+00:00"
+          "created_at": "2026-05-19T07:48:50.868183+00:00",
+          "reflection": "Below-SMA weakness and no actionable catalyst correctly signalled no upside; stock slipped through the flat floor."
         },
         {
           "strategy_id": "news-reactive",
@@ -48684,7 +49079,8 @@
           "actual_return_pct": 1.5,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.868236+00:00"
+          "created_at": "2026-05-19T07:48:50.868236+00:00",
+          "reflection": "Flat call missed upside; no-catalyst assumption failed as price found mild bid anyway."
         },
         {
           "strategy_id": "news-reactive",
@@ -48698,7 +49094,8 @@
           "actual_return_pct": -2.79,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.868306+00:00"
+          "created_at": "2026-05-19T07:48:50.868306+00:00",
+          "reflection": "Recent-up read assumed continuation; underlying longer-term flat masked building sell pressure."
         },
         {
           "strategy_id": "news-reactive",
@@ -48712,7 +49109,8 @@
           "actual_return_pct": 1.06,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.868427+00:00"
+          "created_at": "2026-05-19T07:48:50.868427+00:00",
+          "reflection": "RSI=39 mean-reversion triggered despite negative momentum, overriding the bearish trend signal."
         },
         {
           "strategy_id": "news-reactive",
@@ -48726,7 +49124,8 @@
           "actual_return_pct": 0.36,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.868483+00:00"
+          "created_at": "2026-05-19T07:48:50.868483+00:00",
+          "reflection": "Mixed-signal flat call confirmed; price drifted fractionally positive within noise range."
         },
         {
           "strategy_id": "news-reactive",
@@ -48740,7 +49139,8 @@
           "actual_return_pct": -2.9,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.868537+00:00"
+          "created_at": "2026-05-19T07:48:50.868537+00:00",
+          "reflection": "Negative 5d momentum carried through and extended, validating the downside conviction."
         },
         {
           "strategy_id": "news-reactive",
@@ -48754,7 +49154,8 @@
           "actual_return_pct": -0.27,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.868590+00:00"
+          "created_at": "2026-05-19T07:48:50.868590+00:00",
+          "reflection": "Positive momentum above both SMAs stalled; Reebok/O'Neal story priced in, no incremental catalyst to sustain lift."
         },
         {
           "strategy_id": "news-reactive",
@@ -48768,7 +49169,8 @@
           "actual_return_pct": 0.96,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:48:50.868643+00:00"
+          "created_at": "2026-05-19T07:48:50.868643+00:00",
+          "reflection": "Mixed-signal flat assumed equilibrium; mild upside bias in recent leg reasserted against longer-term drag."
         },
         {
           "strategy_id": "news-reactive",
@@ -56775,7 +57177,8 @@
           "actual_return_pct": -0.02,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:38:38.502216+00:00"
+          "created_at": "2026-05-19T07:38:38.502216+00:00",
+          "reflection": "Dead-cat bounce call was directionally right but the move reverted to flat rather than continuing down \u2014 distribution signal overstated near-term selling pressure."
         },
         {
           "strategy_id": "sector-rotator",
@@ -56789,7 +57192,8 @@
           "actual_return_pct": -1.28,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:38:38.502326+00:00"
+          "created_at": "2026-05-19T07:38:38.502326+00:00",
+          "reflection": "MACD-negative + below-SMA20 + real-rate headwinds all fired; XLK crack analogy held and the ETF dropped harder than predicted."
         },
         {
           "strategy_id": "sector-rotator",
@@ -56803,7 +57207,8 @@
           "actual_return_pct": -0.4,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:38:38.502487+00:00"
+          "created_at": "2026-05-19T07:38:38.502487+00:00",
+          "reflection": "MACD deceleration flagged correctly but above-MA position absorbed macro headwinds, keeping the move within flat-zone despite negative 20d drag."
         },
         {
           "strategy_id": "sector-rotator",
@@ -56817,7 +57222,8 @@
           "actual_return_pct": -1.33,
           "actual_class": "mild_down",
           "was_traded": false,
-          "created_at": "2026-05-19T07:38:38.502554+00:00"
+          "created_at": "2026-05-19T07:38:38.502554+00:00",
+          "reflection": "Above-MA / mild-MACD-turn read as flat upside, but macro bearishness on Materials (gold/silver collapse, dollar strength) overwhelmed technicals and drove a sharp decline."
         },
         {
           "strategy_id": "sector-rotator",
@@ -56831,7 +57237,8 @@
           "actual_return_pct": -0.08,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:38:38.502621+00:00"
+          "created_at": "2026-05-19T07:38:38.502621+00:00",
+          "reflection": "No-edge call confirmed \u2014 MACD and 20d signals were too weak to give direction, and the ETF stayed effectively flat."
         },
         {
           "strategy_id": "sector-rotator",
@@ -56845,7 +57252,8 @@
           "actual_return_pct": -0.35,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:38:38.502690+00:00"
+          "created_at": "2026-05-19T07:38:38.502690+00:00",
+          "reflection": "Bearish technical structure (sub-50 RSI, accelerating MACD decline) was real but the move stopped at the flat/mild-down boundary rather than extending."
         },
         {
           "strategy_id": "sector-rotator",
@@ -56859,7 +57267,8 @@
           "actual_return_pct": -0.72,
           "actual_class": "flat",
           "was_traded": false,
-          "created_at": "2026-05-19T07:38:38.502753+00:00"
+          "created_at": "2026-05-19T07:38:38.502753+00:00",
+          "reflection": "Deeply negative MACD histogram and energy-cost headwind predicted mild-down correctly, though actual decline was roughly twice the magnitude forecast."
         },
         {
           "strategy_id": "sector-rotator",
@@ -56873,7 +57282,8 @@
           "actual_return_pct": 1.13,
           "actual_class": "mild_up",
           "was_traded": false,
-          "created_at": "2026-05-19T07:38:38.502812+00:00"
+          "created_at": "2026-05-19T07:38:38.502812+00:00",
+          "reflection": "Rationale focused on absent near-term momentum and ignored curve-steepening NIM tailwind, which drove a sustained rally instead of the expected mild decline."
         },
         {
           "strategy_id": "sector-rotator",
