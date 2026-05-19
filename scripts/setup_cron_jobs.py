@@ -70,14 +70,18 @@ SCHEDULES: list[dict] = [
         "hour": 16, "minute": 0,
         "wdays": [1, 2, 3, 4, 5],
     },
-    # Daily — runs ~1h before UK-EU entry to give the brief time to land.
+    # Daily news brief — runs ~1h before UK-EU entry on trading days, and
+    # on weekends too: world / geopolitics / tech don't stop on Saturday,
+    # and the publication reads better as a 7-day rhythm. Monday's brief
+    # still benefits because Sunday's Gulf / Asia overnight news has by
+    # then been triaged.
     {
         "name": "daily-news-brief",
         "workflow": "daily-news-brief.yml",
         "inputs": {},
         "tz": "Europe/London",
         "hour": 7, "minute": 30,
-        "wdays": [1, 2, 3, 4, 5],  # Mon-Fri
+        "wdays": [1, 2, 3, 4, 5, 6, 0],   # every day
     },
     # Early-morning grader — scores any open prediction whose target_date
     # has passed. Runs at 05:00 UTC: after US close (~21:00 UTC prior day),
