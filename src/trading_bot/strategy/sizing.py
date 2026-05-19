@@ -42,6 +42,9 @@ class PickAdjustment:
     dropped: bool = False
     drop_reason: str = ""
     sizing_reason: str = ""
+    # Phase 12C — record the horizon used at gate time so the audit log
+    # can show why a multi-day pick was held to a higher bar.
+    hold_days: int = 1
 
 
 CORRELATION_CLUSTER_THRESHOLD = 0.7
@@ -134,6 +137,20 @@ def adjust_picks(
         except (TypeError, ValueError):
             pred_return_f = None
 
+        # Phase 12C — pick up the LLM's requested horizon. The cost gate
+        # scales linearly with hold_days so a 5-day pick must beat a 5×
+        # higher predicted-return bar than a 1-day pick. Rationale: the
+        # round-trip cost is paid once regardless, but the extra days
+        # carry extra market-exposure variance — only worth committing
+        # capital for if the thesis genuinely has more juice.
+        try:
+            hold_days = int(item.get("hold_days") or 1)
+        except (TypeError, ValueError):
+            hold_days = 1
+        if hold_days < 1:
+            hold_days = 1
+        horizon_multiplier = float(hold_days)
+
         adj = PickAdjustment(
             ticker=ticker,
             original_alloc_pct=orig_alloc,
@@ -142,31 +159,39 @@ def adjust_picks(
             predicted_return_pct=pred_return_f,
             round_trip_cost_pct=cost_pct,
             sizing_reason=sizing_reason,
+            hold_days=hold_days,
         )
 
         if pred_return_f is not None:
-            # Base threshold: the configured multiplier × round-trip cost.
+            # Base threshold: the configured multiplier × round-trip cost
+            # × horizon multiplier (Phase 12C). For hold_days=1 the
+            # horizon multiplier is 1.0 and behaviour matches Wave 1.
             # If we're re-entering a recently trailed-out name, we DO pay
             # the round-trip cost a second time within the pair — add ONE
             # extra round-trip cost on top of the configured threshold
             # (NOT a 2× multiplier on cost_pct, which would compound with
             # cost_gate_multiplier to 4× the intended barrier).
-            threshold = cfg.cost_gate_multiplier * cost_pct
+            base_threshold = cfg.cost_gate_multiplier * cost_pct * horizon_multiplier
+            threshold = base_threshold
             if trail_record:
                 threshold += cost_pct
             if pred_return_f < threshold:
                 adj.dropped = True
-                base_threshold = cfg.cost_gate_multiplier * cost_pct
+                horizon_tag = (
+                    f" × {horizon_multiplier:.0f} (hold {hold_days}d)"
+                    if hold_days > 1 else ""
+                )
                 if trail_record:
                     adj.drop_reason = (
                         f"predicted {pred_return_f:+.2f}% < base {base_threshold:.2f}% "
-                        f"+ re-entry surcharge {cost_pct:.2f}% = {threshold:.2f}% threshold"
+                        f"{horizon_tag} + re-entry surcharge {cost_pct:.2f}% = "
+                        f"{threshold:.2f}% threshold"
                     )
                 else:
                     adj.drop_reason = (
                         f"predicted {pred_return_f:+.2f}% < "
                         f"{cfg.cost_gate_multiplier:.1f}× round-trip cost "
-                        f"{cost_pct:.2f}% (= {threshold:.2f}% threshold)"
+                        f"{cost_pct:.2f}%{horizon_tag} (= {threshold:.2f}% threshold)"
                     )
                 adjustments.append(adj)
                 continue

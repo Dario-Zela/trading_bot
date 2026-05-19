@@ -452,6 +452,14 @@ class LLMStrategy(Strategy):
             f"trades whose expected return doesn't meaningfully clear the "
             f"fee floor — they cost the strategy money even when the price "
             f"call is right.\n"
+            f"\n"
+            f"**Multi-day holds raise the bar.** The gate's threshold is "
+            f"multiplied by `hold_days` — a 5-day pick must beat "
+            f"5 × {cfg.cost_gate_multiplier:.1f}× round-trip cost. So if "
+            f"the cost is 0.4%, a 1-day pick needs >{cfg.cost_gate_multiplier * 0.4:.1f}% "
+            f"predicted return; a 5-day pick needs >{cfg.cost_gate_multiplier * 0.4 * 5:.1f}%. "
+            f"Don't reach for a longer hold to get more conviction — pick "
+            f"the shortest horizon the thesis allows.\n"
         )
 
         # Trading-cost awareness — strategies are routed through
@@ -640,6 +648,7 @@ class LLMStrategy(Strategy):
             "  \"allocation_pct\": <float>,\n"
             "  \"stop_loss_pct\": <float or null>,\n"
             "  \"take_profit_pct\": <float or null>,\n"
+            "  \"hold_days\": 1 | 2 | 3 | 5 | 10,\n"
             "  \"thesis\": \"<1-2 sentence rationale>\"\n"
             "}\n"
             "```\n\n"
@@ -649,6 +658,22 @@ class LLMStrategy(Strategy):
             "and `take_profit_pct` > 0 if set, or both null. Cash is a valid position — "
             "return `picks: []` if nothing is compelling, but still score every "
             "candidate in `predictions`.\n\n"
+            "**`hold_days` — pick the right horizon for the thesis.** "
+            "Choose from {1, 2, 3, 5, 10} trading days. The cost gate scales "
+            "linearly with horizon, so a 5-day pick must clear a 5× higher "
+            "predicted-return bar than a 1-day pick — only ask for the longer "
+            "hold if the thesis genuinely needs it. Guidance:\n"
+            "- `1` — event-driven, earnings reaction, catalyst-priced-in-today, "
+            "gap continuation. Default for momentum scalps.\n"
+            "- `2-3` — multi-day momentum continuation, breakout confirmation, "
+            "sector rotation that needs a couple of sessions to play out.\n"
+            "- `5` — mean reversion to 20d SMA, macro-aligned overshoots, "
+            "post-earnings drift, technical setups with stop wider than 1d "
+            "noise allows.\n"
+            "- `10` — strategic/positional plays where the thesis is structural "
+            "(macro regime shift, central-bank pivot, commodity supercycle).\n"
+            "If unsure, `1` is always safe. Stops + take-profits remain bracket "
+            "orders that fire intra-day regardless of `hold_days`.\n\n"
             "Full required shape:\n\n"
             "```json\n"
             "{ \"predictions\": [...], \"picks\": [...] }\n"
@@ -925,6 +950,26 @@ class LLMStrategy(Strategy):
 
             stop = item.get("stop_loss_pct")
             tp = item.get("take_profit_pct")
+
+            # Phase 12B — hold_days must be in the whitelist or we fall back
+            # to 1 (Wave 1 same-day behaviour). The whitelist is small so the
+            # LLM can't pick e.g. 17 days, which would slip past every cost-
+            # gate calibration we've done.
+            hold_raw = item.get("hold_days")
+            hold_days = 1
+            if hold_raw is not None:
+                try:
+                    hold_int = int(float(hold_raw))
+                except (TypeError, ValueError):
+                    hold_int = 1
+                if hold_int in (1, 2, 3, 5, 10):
+                    hold_days = hold_int
+                else:
+                    log.warning(
+                        "%s: %s hold_days=%s not in {1,2,3,5,10} — defaulting to 1",
+                        cfg.id, ticker, hold_raw,
+                    )
+
             intents.append(
                 TradeIntent(
                     ticker=str(ticker).upper(),
@@ -932,10 +977,22 @@ class LLMStrategy(Strategy):
                     stop_loss_pct=float(stop) if stop is not None else None,
                     take_profit_pct=float(tp) if tp is not None else None,
                     thesis=str(item.get("thesis") or ""),
+                    hold_days=hold_days,
                 )
             )
 
         # Apply the max_positions cap defensively
         intents = intents[: cfg.max_positions]
-        log.info("%s: parsed %d picks from LLM response", cfg.id, len(intents))
+        if intents:
+            from collections import Counter
+            horizons = Counter(i.hold_days for i in intents)
+            horizon_summary = ", ".join(
+                f"{n}×{d}d" for d, n in sorted(horizons.items())
+            )
+            log.info(
+                "%s: parsed %d picks from LLM response (horizons: %s)",
+                cfg.id, len(intents), horizon_summary,
+            )
+        else:
+            log.info("%s: parsed 0 picks from LLM response", cfg.id)
         return intents

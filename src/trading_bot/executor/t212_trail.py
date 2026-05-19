@@ -103,6 +103,13 @@ def _trail_one_slot(creds: T212Creds, activation_pct: float, trail_pct: float) -
     # cache file is populated at order time and persists across runs.
     instruments_by_ticker = _load_instruments_cache()
 
+    # Phase 12D — figure out which T212 positions are multi-day so we can
+    # place GTC stops on them (instead of DAY stops that would expire each
+    # session and leave the position naked overnight). Cross-references
+    # the ledger's open trades — same-day round-trips stay on DAY stops
+    # so we don't leave orphaned GTC stops if the exit cron drops a beat.
+    multi_day_t212_tickers = _build_multi_day_ticker_set(instruments_by_ticker)
+
     portfolio = _safe_get(f"{base}/equity/portfolio", headers)
     if not isinstance(portfolio, list) or not portfolio:
         return actions
@@ -196,20 +203,29 @@ def _trail_one_slot(creds: T212Creds, activation_pct: float, trail_pct: float) -
             ))
             continue
 
+        # Phase 12D — multi-day positions get GTC stops so they survive
+        # overnight. Same-day round-trips stay on DAY validity so the
+        # stop self-expires at session close.
+        time_validity = "GTC" if ticker in multi_day_t212_tickers else "DAY"
+
         # Place new stop. Negative quantity = sell.
-        placed = _submit_stop(base, headers, ticker, -qty, target_stop)
+        placed = _submit_stop(base, headers, ticker, -qty, target_stop, time_validity=time_validity)
         if placed:
             actions.append(T212TrailAction(
                 ticker=ticker, slot=creds.slot, entry_price=entry, current_price=cur,
                 pct_up=pct_up, old_stop=old_stop_val, new_stop=target_stop,
                 status="placed" if old_stop_val is None else "tightened",
+                reason=f"validity={time_validity}",
             ))
         else:
             # Phase 10C — try to recover by re-posting the OLD stop level
             # before giving up. Better the original protection than none.
             recovered = False
             if old_stop_val is not None:
-                recovered = _submit_stop(base, headers, ticker, -qty, old_stop_val)
+                recovered = _submit_stop(
+                    base, headers, ticker, -qty, old_stop_val,
+                    time_validity=time_validity,
+                )
             if recovered:
                 actions.append(T212TrailAction(
                     ticker=ticker, slot=creds.slot, entry_price=entry, current_price=cur,
@@ -227,6 +243,46 @@ def _trail_one_slot(creds: T212Creds, activation_pct: float, trail_pct: float) -
         time.sleep(0.4)
 
     return actions
+
+
+def _build_multi_day_ticker_set(instruments_by_ticker: dict[str, dict]) -> set[str]:
+    """Phase 12D — return the set of T212 tickers whose matching ledger
+    trade has `hold_days > 1`. These get GTC stops in the trail loop so
+    they survive overnight; same-day round-trips stay on DAY validity.
+
+    Cross-references all open ledger trades (across all strategies bound
+    to T212 slots — the trail script runs against the slot, not per-
+    strategy) and translates each yfinance ticker forward to its T212
+    equivalent via the cached instruments list.
+    """
+    if not instruments_by_ticker:
+        return set()
+    try:
+        from trading_bot.state import read_open_trades
+        from trading_bot.tools.t212_instruments import Translator
+    except Exception as e:
+        log.warning("multi-day ticker set: import failed (%s) — defaulting to empty", e)
+        return set()
+
+    open_trades = read_open_trades()
+    if not open_trades:
+        return set()
+
+    multi_day_yf = {
+        t["ticker"]
+        for t in open_trades
+        if int(t.get("hold_days") or 1) > 1 and t.get("tier") == "trading212-paper"
+    }
+    if not multi_day_yf:
+        return set()
+
+    translator = Translator(list(instruments_by_ticker.values()))
+    out: set[str] = set()
+    for yf in multi_day_yf:
+        t212 = translator.translate(yf)
+        if t212:
+            out.add(t212)
+    return out
 
 
 def _load_instruments_cache() -> dict[str, dict]:
@@ -279,8 +335,21 @@ def _cancel_order(base: str, headers: dict, order_id: str) -> bool:
     return False
 
 
-def _submit_stop(base: str, headers: dict, ticker: str, quantity: float, stop_price: float) -> bool:
-    payload = {"ticker": ticker, "quantity": quantity, "stopPrice": stop_price, "timeValidity": "DAY"}
+def _submit_stop(
+    base: str,
+    headers: dict,
+    ticker: str,
+    quantity: float,
+    stop_price: float,
+    *,
+    time_validity: str = "DAY",
+) -> bool:
+    payload = {
+        "ticker": ticker,
+        "quantity": quantity,
+        "stopPrice": stop_price,
+        "timeValidity": time_validity,
+    }
     for attempt in range(_CANCEL_AFTER_PLACE_RETRIES + 1):
         try:
             r = requests.post(

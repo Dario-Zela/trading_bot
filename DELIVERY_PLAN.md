@@ -277,33 +277,39 @@ multi-day capability is added incrementally.
 - [ ] Backwards-compat: legacy rows with no `target_exit_date` get
       treated as "exit today" (same as before).
 
-### 12B — Strategy LLM picks horizon
+### 12B — Strategy LLM picks horizon ✅
 
-- [ ] LLM strategy prompt explains `hold_days` ∈ {1, 2, 3, 5} with
-      guidance on when each fits (event-driven → 1, momentum → 2-3,
-      mean-reversion → 3-5, macro → 5+).
-- [ ] LLM picks return `hold_days` per ticker; rule-based / momentum-
-      stub default to 1.
-- [ ] `_parse_picks` validates against {1, 2, 3, 5, 10} whitelist.
+- [x] LLM strategy prompt explains `hold_days` ∈ {1, 2, 3, 5, 10}
+      with guidance on when each fits (event-driven → 1, momentum →
+      2-3, mean-reversion → 3-5, structural/macro → 10).
+- [x] LLM picks return `hold_days` per ticker; rule-based / momentum-
+      stub default to 1 via `TradeIntent.hold_days = 1`.
+- [x] `_parse_picks` validates against {1, 2, 3, 5, 10}; invalid
+      values fall back to 1 with a warning.
 
-### 12C — Cost gate scales with horizon
+### 12C — Cost gate scales with horizon ✅
 
-- [ ] Multi-day trades shouldn't pass the cost gate with the same
-      threshold as same-day — they carry more market exposure. The
-      predicted return threshold grows linearly with `hold_days` to
-      reflect "extra beta exposure deserves extra alpha".
+- [x] Multi-day trades clear a higher predicted-return bar. The
+      threshold is `cost_gate_multiplier × cost_pct × hold_days`,
+      i.e. a 5-day pick needs 5× the alpha of a 1-day pick to pass.
+      LLM prompt explains the scaling and shows the worked threshold.
 
-### 12D — T212 stops upgrade DAY → GTC
+### 12D — T212 stops upgrade DAY → GTC ✅
 
-- [ ] When `hold_days > 1`, the trail script uses `timeValidity: "GTC"`
-      instead of `DAY` so stops survive overnight.
-- [ ] Alpaca brackets already persist; no change.
+- [x] Trail script picks GTC for tickers whose open ledger trade has
+      `hold_days > 1`, DAY for everything else.
+- [x] `exit_scheduled` cancels any open STOP / STOP_LIMIT orders for
+      a ticker before placing the market close, so leftover GTC stops
+      can't fire against a re-entry later. Helper indexes open
+      stops once per exit pass.
+- [x] Alpaca brackets already persist GTC; no change.
 
-### 12E — Per-trade reflection waits for actual close
+### 12E — Per-trade reflection waits for actual close ✅
 
-- [ ] `outcome_notes` / `risks_observed` only get written when the
-      position actually exits (not at the entry-day close for
-      multi-day trades).
+- [x] Implicitly handled by 12A: `_run_per_trade_reflection` runs
+      only on trades that `exit_scheduled` returns, and that filter
+      skips trades whose `target_exit_date` is in the future. No
+      additional code needed — verify in the next live multi-day run.
 
 ### 12F — Dashboard + news brief show open positions
 

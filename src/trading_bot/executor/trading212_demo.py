@@ -322,6 +322,15 @@ class Trading212DemoExecutor(Executor):
 
             actionable.append((trade, t212_ticker))
 
+        # Phase 12D — when multi-day positions land here, the trail script
+        # may have placed a GTC stop on them. Cancel any open STOP orders
+        # for tickers we're about to close so the GTC stop can't fire
+        # against a future re-entry on the same instrument. Done once
+        # up front to amortise the GET against the per-trade close loop.
+        stops_to_cancel = self._index_stops_for_tickers(
+            {t212_ticker for _, t212_ticker in actionable}
+        )
+
         # Phase 1 — fire-and-forget: submit every close order without
         # waiting for any to fill. Every order goes into T212's queue
         # immediately; we collect fills in phase 2 after they've all had
@@ -342,6 +351,15 @@ class Trading212DemoExecutor(Executor):
                 # in history for a matching sell on this date.
                 submitted.append((trade, t212_ticker, None, "no_position"))
                 continue
+
+            # Phase 12D — cancel any open stop(s) on this ticker before
+            # the market close, so a leftover GTC stop can't fire against
+            # a re-entry tomorrow. We don't need the close to wait for the
+            # cancel to land — if it loses the race, T212 still won't fire
+            # a stop on a zero position.
+            for stop_id in stops_to_cancel.get(t212_ticker, []):
+                self._delete_order_silent(stop_id)
+
             qty = -float(position.get("quantity") or trade["quantity"])
             close_order = self._submit_market_order(t212_ticker=t212_ticker, quantity=qty)
             if close_order is None:
@@ -990,6 +1008,58 @@ class Trading212DemoExecutor(Executor):
             log.warning("Position fetch returned %s for %s", response.status_code, t212_ticker)
             return None
         return response.json()
+
+    def _index_stops_for_tickers(self, tickers: set[str]) -> dict[str, list[str]]:
+        """Phase 12D — fetch open orders once, return a per-ticker map of
+        STOP / STOP_LIMIT order IDs. Used by exit_scheduled to clear out
+        leftover GTC stops before closing the underlying positions.
+        Returns an empty dict on any error (we'd rather skip cancellation
+        than block the close)."""
+        if not tickers:
+            return {}
+        try:
+            response = requests.get(
+                self._url("/equity/orders"), headers=self._headers(), timeout=10,
+            )
+        except requests.RequestException as e:
+            log.debug("T212 stops index failed: %s", e)
+            return {}
+        if not response.ok:
+            return {}
+        try:
+            orders = response.json() or []
+        except json.JSONDecodeError:
+            return {}
+        out: dict[str, list[str]] = {}
+        for order in orders if isinstance(orders, list) else []:
+            if not isinstance(order, dict):
+                continue
+            otype = (order.get("type") or "").upper()
+            if otype not in ("STOP", "STOP_LIMIT"):
+                continue
+            tkr = order.get("ticker")
+            oid = order.get("id")
+            if not tkr or tkr not in tickers or oid is None:
+                continue
+            out.setdefault(tkr, []).append(str(oid))
+        return out
+
+    def _delete_order_silent(self, order_id: str) -> None:
+        """Best-effort DELETE of a single order. Logs at debug only; we
+        never want stop-cleanup to block the close path."""
+        try:
+            r = requests.delete(
+                self._url(f"/equity/orders/{order_id}"),
+                headers=self._headers(),
+                timeout=10,
+            )
+            if not (r.ok or r.status_code == 404):
+                log.debug(
+                    "T212 cancel stop %s returned %d: %s",
+                    order_id, r.status_code, r.text[:150],
+                )
+        except requests.RequestException as e:
+            log.debug("T212 cancel stop %s errored: %s", order_id, e)
 
     def _cancel_all_orders(self) -> None:
         try:
