@@ -143,29 +143,82 @@
     <!-- Phase 10D — missed-movers panel. Shows the most recent
          missed-movers report per region (also feeds news + evolution). -->
     <template x-if="data && data.missed_movers && Object.keys(data.missed_movers).length">
-      <section style="margin: 1.5rem 0; padding: 1rem 1.4rem; background: var(--card); border: 1px solid var(--hairline); border-radius: 6px;">
+      <section style="margin: 1.5rem 0; padding: 1.1rem 1.4rem 1.2rem; background: var(--card); border: 1px solid var(--hairline); border-radius: 6px;">
         <div style="font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.6rem;">
           What we missed today
         </div>
         <template x-for="[region, rep] in Object.entries(data.missed_movers)" :key="region">
-          <div style="margin-bottom: 0.9rem;">
-            <div style="font-family: var(--sans); font-size: 0.78rem; font-weight: 700; color: var(--ink); margin-bottom: 0.3rem;">
+          <div style="margin-bottom: 1.1rem;">
+            <div style="font-family: var(--sans); font-size: 0.78rem; font-weight: 700; color: var(--ink); margin-bottom: 0.35rem;">
               <span x-text="region.toUpperCase()"></span>
-              <span style="font-weight: 400; color: var(--ink-muted);" x-text="'— ' + rep.date"></span>
+              <span style="font-weight: 400; color: var(--ink-muted);" x-text="'— ' + rep.date + ' · ' + (rep.top_movers ? rep.top_movers.length : 0) + ' notable moves'"></span>
             </div>
-            <div style="font-family: var(--serif-body); font-size: 0.92rem; color: var(--ink-soft); margin-bottom: 0.45rem; line-height: 1.45;" x-text="rep.summary"></div>
-            <div style="display: flex; flex-wrap: wrap; gap: 0.6rem; font-family: var(--sans); font-size: 0.78rem;">
-              <template x-for="m in (rep.top_movers || []).slice(0, 6)" :key="m.ticker">
-                <span style="padding: 0.15rem 0.5rem; border-radius: 2px; background: var(--paper-dark);"
-                      :title="(m.catalyst || '') + (m.miss_reason ? ' · ' + m.miss_reason : '')">
-                  <strong x-text="m.ticker"></strong>
-                  <span :class="m.move_pct > 0 ? 'up' : 'down'"
-                        x-text="(m.move_pct > 0 ? '+' : '') + m.move_pct.toFixed(2) + '%'"></span>
-                  <span x-show="m.was_traded_by && m.was_traded_by.length"
-                        style="margin-left: 0.4rem; color: var(--c-pos); font-weight: 600;">held</span>
-                </span>
+            <p style="font-family: var(--serif-body); font-size: 0.92rem; color: var(--ink-soft); margin: 0 0 0.75rem; line-height: 1.5;" x-text="rep.summary"></p>
+            <table style="width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: 0.82rem;">
+              <thead>
+                <tr style="text-align: left; color: var(--ink-muted); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;">
+                  <th style="padding: 0.3rem 0.4rem 0.3rem 0;">Ticker</th>
+                  <th style="padding: 0.3rem 0.4rem; text-align: right;">Move</th>
+                  <th style="padding: 0.3rem 0.4rem;">Status</th>
+                  <th style="padding: 0.3rem 0.4rem;">Catalyst</th>
+                  <th style="padding: 0.3rem 0; text-align: right;"></th>
+                </tr>
+              </thead>
+              <template x-for="m in (rep.top_movers || [])" :key="region + ':' + m.ticker">
+                <tbody>
+                  <tr style="border-top: 1px solid var(--hairline);">
+                    <td style="padding: 0.45rem 0.4rem 0.45rem 0; font-family: var(--serif-body); font-weight: 700;" x-text="m.ticker"></td>
+                    <td :class="m.move_pct > 0 ? 'up' : 'down'"
+                        style="padding: 0.45rem 0.4rem; text-align: right; font-variant-numeric: tabular-nums;"
+                        x-text="(m.move_pct > 0 ? '+' : '') + m.move_pct.toFixed(2) + '%'"></td>
+                    <td style="padding: 0.45rem 0.4rem;">
+                      <template x-if="m.was_traded_by && m.was_traded_by.length">
+                        <span style="color: var(--c-pos); font-weight: 700;">held</span>
+                      </template>
+                      <template x-if="!(m.was_traded_by && m.was_traded_by.length)">
+                        <span style="color: var(--ink-muted);">missed</span>
+                      </template>
+                    </td>
+                    <td style="padding: 0.45rem 0.4rem; color: var(--ink-soft); max-width: 32rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+                        x-text="m.catalyst || '—'"></td>
+                    <td style="padding: 0.45rem 0; text-align: right;">
+                      <template x-if="(m.catalyst || '').length || (m.miss_reason || '').length">
+                        <a href="#" @click.prevent="expanded = (expanded === 'mm:' + region + ':' + m.ticker) ? null : 'mm:' + region + ':' + m.ticker"
+                           style="font-size: 0.78rem; color: var(--ink-muted); text-decoration: underline;"
+                           x-text="expanded === 'mm:' + region + ':' + m.ticker ? 'hide' : 'why?'"></a>
+                      </template>
+                    </td>
+                  </tr>
+                  <tr x-show="expanded === 'mm:' + region + ':' + m.ticker">
+                    <td colspan="5" style="background: var(--paper-dark); padding: 0.85rem 1rem 0.9rem; font-family: var(--serif-body); font-size: 0.92rem; line-height: 1.5;">
+                      <template x-if="(m.catalyst || '').trim()">
+                        <div style="margin-bottom: 0.65rem;">
+                          <div style="font-family: var(--sans); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.2rem;">Catalyst</div>
+                          <div x-text="m.catalyst"></div>
+                        </div>
+                      </template>
+                      <template x-if="(m.miss_reason || '').trim()">
+                        <div style="margin-bottom: 0.65rem;">
+                          <div style="font-family: var(--sans); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.2rem;">Reasons we missed it</div>
+                          <div x-text="m.miss_reason"></div>
+                        </div>
+                      </template>
+                      <template x-if="(m.suggestion || '').trim()">
+                        <div>
+                          <div style="font-family: var(--sans); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.2rem;">Suggestion</div>
+                          <div x-text="m.suggestion"></div>
+                        </div>
+                      </template>
+                      <template x-if="m.in_universe_of && m.in_universe_of.length">
+                        <div style="margin-top: 0.65rem; font-family: var(--sans); font-size: 0.78rem; color: var(--ink-muted);">
+                          In universe of: <span x-text="m.in_universe_of.join(', ')"></span>
+                        </div>
+                      </template>
+                    </td>
+                  </tr>
+                </tbody>
               </template>
-            </div>
+            </table>
           </div>
         </template>
       </section>

@@ -59,6 +59,7 @@ class MissedMover:
     was_traded_by: list[str] = field(default_factory=list)    # strategy ids that traded today
     catalyst: str = ""                              # one-line news driver
     miss_reason: str = ""                           # one-line filter hypothesis
+    suggestion: str = ""                            # one-line change that would catch a future analogue
     failed: bool = False                            # true if LLM classification errored
 
 
@@ -243,15 +244,16 @@ def _classify_all(movers: list[MissedMover], today: date, region: str) -> None:
         for fut in as_completed(futures):
             m = futures[fut]
             try:
-                catalyst, reason = fut.result()
+                catalyst, reason, suggestion = fut.result()
                 m.catalyst = catalyst
                 m.miss_reason = reason
+                m.suggestion = suggestion
             except Exception as e:
                 log.warning("missed-movers: classification failed for %s: %s", m.ticker, e)
                 m.failed = True
 
 
-def _classify_one(m: MissedMover, today: date, region: str) -> tuple[str, str]:
+def _classify_one(m: MissedMover, today: date, region: str) -> tuple[str, str, str]:
     prompt = _build_classification_prompt(m, today, region)
     response = run_claude_for_json(
         prompt, model="sonnet",
@@ -259,10 +261,15 @@ def _classify_one(m: MissedMover, today: date, region: str) -> tuple[str, str]:
         extra_args=_CLASSIFIER_TOOLS,
     )
     if not isinstance(response, dict):
-        return "(could not classify)", "(no reason hypothesis)"
+        return "(could not classify)", "(no reason hypothesis)", ""
     catalyst = str(response.get("catalyst") or "").strip()[:280]
     reason = str(response.get("miss_reason") or "").strip()[:320]
-    return catalyst or "(no clear catalyst found)", reason or "(no reason hypothesis)"
+    suggestion = str(response.get("suggestion") or "").strip()[:320]
+    return (
+        catalyst or "(no clear catalyst found)",
+        reason or "(no reason hypothesis)",
+        suggestion,
+    )
 
 
 def _build_classification_prompt(m: MissedMover, today: date, region: str) -> str:
@@ -296,7 +303,7 @@ hypothesise why the bot's filters likely passed on it.
 
 ## What to produce
 
-A two-field verdict:
+A three-field verdict:
 
 1. **catalyst** (≤200 chars) — one sentence on WHAT moved the stock.
    Examples: "Q1 revenue beat $44B vs $43B est; raised FY guidance" /
@@ -315,9 +322,23 @@ A two-field verdict:
    - It was outside the universe entirely (smaller cap, ADR-only)
    - The strategies that hold it were saturated on position count
 
-If `in_universe_of` is empty above, lead with "outside any active
-strategy's universe" and explain what cap/sector category it falls
-into. If non-empty, focus on what filter likely excluded it.
+   If `in_universe_of` is empty above, lead with "outside any active
+   strategy's universe" and explain what cap/sector category it falls
+   into. If non-empty, focus on what filter likely excluded it.
+
+3. **suggestion** (≤240 chars) — one sentence on a concrete change
+   that would catch the *next* analogue of this miss without breaking
+   the rest of the strategy. Examples:
+   - "Earnings-gate should release names with post-results gap ≥
+     +X% within Y minutes of open"
+   - "Add a `dollar_index_short_proxy` so commodity strategies can
+     express USD-weakness via gold even on long-only constraints"
+   - "Bump momentum-trader's volume floor; the gap-up filter missed
+     this because it requires ≥1.5× avg volume in the prior session"
+   - "(no actionable change — outside risk tolerance / requires
+     short capability we don't have)" when an honest no-op fits.
+
+   Stay concrete (cite a parameter or rule), don't generalise.
 
 ## Required output
 
@@ -326,7 +347,8 @@ Return JSON only:
 ```json
 {{
   "catalyst": "<one sentence>",
-  "miss_reason": "<one-two sentences>"
+  "miss_reason": "<one-two sentences>",
+  "suggestion": "<one sentence>"
 }}
 ```
 """
