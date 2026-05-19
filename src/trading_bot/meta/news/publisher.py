@@ -39,7 +39,8 @@ from trading_bot.meta.news.triage import TriagedCandidate
 log = logging.getLogger(__name__)
 
 
-_PUBLISH_TIMEOUT = 240
+_PUBLISH_TIMEOUT = 600    # heavier on busy days (40+ candidates); macro hit
+                          # the same wall last week, news caught it next.
 
 
 # Canonical byline roster. The publisher MUST choose from these — we

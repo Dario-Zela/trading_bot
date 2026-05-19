@@ -20,7 +20,12 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # 30 min was tight on a busy day: 42 candidates, 6 parallel Sonnet
+    # article writers each doing WebSearch + WebFetch for images +
+    # source verification. Worst-case path through the pipeline:
+    # discovery 4m + triage 3m + publisher 10m + articles 12m + summary
+    # 1m ≈ 30m with no slack. Bumping to 60 gives genuine headroom.
+    timeout-minutes: 60
     steps:
       - name: Check out repo
         uses: actions/checkout@v5
