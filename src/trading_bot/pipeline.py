@@ -41,10 +41,16 @@ def _executor_for_strategy(config: StrategyConfig) -> Executor:
 _MAX_PARALLEL_STRATEGIES = 4
 
 
-# Phase 10E — target market-local times the actual orders should hit.
-# The cron fires 30 min earlier (setup_cron_jobs.py) so the multi-stage
-# pipeline finishes near these targets. If we finish faster than that,
-# `_sleep_until_target` holds the orders until the right moment.
+# Target market-local times that orders should hit.
+#
+# Entry targets: the cron fires 30 min before these (see
+# setup_cron_jobs.py) so the multi-stage analysis can finish; the
+# `_sleep_until_target` guard in `run_entry` then holds any
+# orders until the actual target if we finished early.
+#
+# Exit targets: the cron fires AT these times directly, no lead,
+# and the exit pipeline submits immediately. Post-trade work
+# (reflection, missed-movers, dashboard, email) happens after.
 _MARKET_TARGETS: dict[tuple[str, str], tuple[str, int, int]] = {
     ("us", "entry"):    ("America/New_York",  9, 35),
     ("us", "exit"):     ("America/New_York", 15, 30),
@@ -227,11 +233,14 @@ def run_exit(region: str, on_date: date) -> dict[str, list[dict]]:
         log.info("No active strategies for region %s", region)
         return {}
 
-    # Phase 10E — exits have no LLM analysis phase, so sleep upfront.
-    # The exit pipeline runs broker-API calls top-to-bottom; we want
-    # those to land at 30 min before close, not whenever the runner
-    # spins up.
-    _sleep_until_target(region, "exit")
+    # Exits have no pre-trade analysis to overlap with broker latency,
+    # so the cron is scheduled to fire AT the target market-local time
+    # and the close goes out immediately. The reflection + missed-
+    # movers + dashboard rebuild that follow are all post-trade and
+    # don't need to land before any market deadline. (Entries are the
+    # opposite: cron fires 30 min early to give the multi-stage LLM
+    # analysis room, then `_sleep_until_target` aligns the actual
+    # order submission with the market target.)
 
     exits: dict[str, list[dict]] = defaultdict(list)
     for strategy in strategies:

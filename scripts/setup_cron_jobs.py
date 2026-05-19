@@ -36,16 +36,24 @@ CRON_BASE = "https://api.cron-job.org"
 # All times are in the market's local timezone — cron-job.org handles DST
 # per timezone, so we don't have to maintain UTC offsets ourselves.
 SCHEDULES: list[dict] = [
-    # US — NYSE 09:30–16:00 ET. The multi-stage pipeline takes ~25-30
-    # min end-to-end (discovery → triage → publisher → 6 parallel
-    # writers → render). Fire 30 min ahead of the market windows so
-    # entries actually hit ~09:35 and exits hit ~15:30.
+    # US — NYSE 09:30–16:00 ET.
+    #
+    # ENTRY: cron fires 30 min before the target. The multi-stage
+    # pipeline (discovery → triage → 6 parallel writers → render +
+    # LLM picks) takes ~25-30 min; when it finishes early, the
+    # `_sleep_until_target` guard inside pipeline.py aligns the
+    # actual order submission with the market-local target.
+    #
+    # EXIT: cron fires AT the target time directly. Exits have no
+    # pre-trade analysis to absorb, so they submit immediately and
+    # the post-trade work (reflection, missed-movers, dashboard,
+    # email) happens leisurely afterwards — no market deadline.
     {
         "name": "pipeline-us entry",
         "workflow": "pipeline-us.yml",
         "inputs": {"mode": "entry"},
         "tz": "America/New_York",
-        "hour": 9, "minute": 5,           # was 09:35 → -30 min
+        "hour": 9, "minute": 5,           # 30 min before 09:35 target
         "wdays": [1, 2, 3, 4, 5],
     },
     {
@@ -53,16 +61,17 @@ SCHEDULES: list[dict] = [
         "workflow": "pipeline-us.yml",
         "inputs": {"mode": "exit"},
         "tz": "America/New_York",
-        "hour": 15, "minute": 0,          # was 15:30 → -30 min
+        "hour": 15, "minute": 30,         # AT the 15:30 target — no lead
         "wdays": [1, 2, 3, 4, 5],
     },
-    # UK-EU — LSE 08:00–16:30 BST/GMT. Same 30-min lead-time.
+    # UK-EU — LSE 08:00–16:30 BST/GMT. Same pattern: entry leads
+    # by 30 min, exit fires at the target.
     {
         "name": "pipeline-uk-eu entry",
         "workflow": "pipeline-uk-eu.yml",
         "inputs": {"mode": "entry"},
         "tz": "Europe/London",
-        "hour": 8, "minute": 5,           # was 08:35 → -30 min
+        "hour": 8, "minute": 5,           # 30 min before 08:35 target
         "wdays": [1, 2, 3, 4, 5],
     },
     {
@@ -70,7 +79,7 @@ SCHEDULES: list[dict] = [
         "workflow": "pipeline-uk-eu.yml",
         "inputs": {"mode": "exit"},
         "tz": "Europe/London",
-        "hour": 15, "minute": 30,         # was 16:00 → -30 min
+        "hour": 16, "minute": 0,          # AT the 16:00 target — no lead
         "wdays": [1, 2, 3, 4, 5],
     },
     # Daily news brief — runs ~1h before UK-EU entry on trading days, and
