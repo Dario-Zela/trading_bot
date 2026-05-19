@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-19T15:14:42.140619+00:00",
+  "generated_at": "2026-05-19T15:39:46.738927+00:00",
   "as_of_iso": "2026-05-19",
   "regions": [
     "uk-eu",
@@ -11,12 +11,12 @@
         "alpaca-paper",
         "trading212-paper"
       ],
-      "today_pnl_gbp": 0.0,
-      "today_n_trades": 0,
-      "alltime_pnl_gbp": 98.71,
-      "alltime_n_trades": 43,
+      "today_pnl_gbp": -253.86,
+      "today_n_trades": 8,
+      "alltime_pnl_gbp": -155.15,
+      "alltime_n_trades": 51,
       "alltime_n_wins": 11,
-      "alltime_hit_rate": 0.256,
+      "alltime_hit_rate": 0.216,
       "regions": {
         "us": {
           "today_pnl_gbp": 0.0,
@@ -25,10 +25,10 @@
           "alltime_n_trades": 30
         },
         "uk-eu": {
-          "today_pnl_gbp": 0.0,
-          "today_n_trades": 0,
-          "alltime_pnl_gbp": 16.28,
-          "alltime_n_trades": 13
+          "today_pnl_gbp": -253.86,
+          "today_n_trades": 8,
+          "alltime_pnl_gbp": -237.58,
+          "alltime_n_trades": 21
         }
       }
     },
@@ -79,25 +79,10 @@
         "sector": "Utilities",
         "gbp": 2695.22,
         "pct": 12.8
-      },
-      {
-        "sector": "Consumer Cyclical",
-        "gbp": 0.0,
-        "pct": 0.0
-      },
-      {
-        "sector": "Financial Services",
-        "gbp": 0.0,
-        "pct": 0.0
-      },
-      {
-        "sector": "Consumer Defensive",
-        "gbp": 0.0,
-        "pct": 0.0
       }
     ],
     "total_gbp": 21028.51,
-    "n_positions": 16
+    "n_positions": 8
   },
   "halt": {
     "halted": false
@@ -116,6 +101,7 @@
       "summary": {
         "n_closed": 0,
         "n_open": 0,
+        "n_open_multi_day": 0,
         "total_pnl_gbp": 0.0,
         "avg_pnl_pct": 0.0,
         "hit_rate": 0.0,
@@ -353,6 +339,7 @@
       "summary": {
         "n_closed": 4,
         "n_open": 0,
+        "n_open_multi_day": 0,
         "total_pnl_gbp": -42.81,
         "avg_pnl_pct": -0.08,
         "hit_rate": 0.0,
@@ -913,6 +900,7 @@
       "summary": {
         "n_closed": 1,
         "n_open": 1,
+        "n_open_multi_day": 0,
         "total_pnl_gbp": -35.86,
         "avg_pnl_pct": -0.72,
         "hit_rate": 0.0,
@@ -1168,6 +1156,7 @@
       "summary": {
         "n_closed": 2,
         "n_open": 0,
+        "n_open_multi_day": 0,
         "total_pnl_gbp": 95.48,
         "avg_pnl_pct": 1.38,
         "hit_rate": 1.0,
@@ -1596,6 +1585,7 @@
       "summary": {
         "n_closed": 50,
         "n_open": 5,
+        "n_open_multi_day": 0,
         "total_pnl_gbp": -42.15,
         "avg_pnl_pct": -0.04,
         "hit_rate": 0.04,
@@ -3178,6 +3168,7 @@
       "summary": {
         "n_closed": 15,
         "n_open": 0,
+        "n_open_multi_day": 0,
         "total_pnl_gbp": -121.55,
         "avg_pnl_pct": -0.31,
         "hit_rate": 0.267,
@@ -3660,6 +3651,7 @@
       "summary": {
         "n_closed": 6,
         "n_open": 2,
+        "n_open_multi_day": 0,
         "total_pnl_gbp": 133.34,
         "avg_pnl_pct": 0.81,
         "hit_rate": 0.333,
@@ -8007,6 +7999,7 @@
       "summary": {
         "n_closed": 4,
         "n_open": 0,
+        "n_open_multi_day": 0,
         "total_pnl_gbp": 0.0,
         "avg_pnl_pct": 0.0,
         "hit_rate": 0.0,
@@ -16603,6 +16596,7 @@
       "summary": {
         "n_closed": 5,
         "n_open": 5,
+        "n_open_multi_day": 0,
         "total_pnl_gbp": -8.97,
         "avg_pnl_pct": -0.09,
         "hit_rate": 0.6,
@@ -20914,11 +20908,12 @@
       "universe": "uk_eu_extended",
       "capital_gbp": 10000.0,
       "summary": {
-        "n_closed": 9,
-        "n_open": 5,
-        "total_pnl_gbp": 16.28,
-        "avg_pnl_pct": 0.11,
-        "hit_rate": 0.667,
+        "n_closed": 14,
+        "n_open": 0,
+        "n_open_multi_day": 0,
+        "total_pnl_gbp": -125.32,
+        "avg_pnl_pct": -0.36,
+        "hit_rate": 0.429,
         "n_predictions": 595
       },
       "equity_curve": [
@@ -20961,6 +20956,26 @@
         {
           "date": "2026-05-18",
           "equity": 10016.28
+        },
+        {
+          "date": "2026-05-19",
+          "equity": 9979.66
+        },
+        {
+          "date": "2026-05-19",
+          "equity": 9931.06
+        },
+        {
+          "date": "2026-05-19",
+          "equity": 9909.61
+        },
+        {
+          "date": "2026-05-19",
+          "equity": 9887.19
+        },
+        {
+          "date": "2026-05-19",
+          "equity": 9874.68
         }
       ],
       "executed": [
@@ -20978,16 +20993,22 @@
           "stop_loss_pct": -6.0,
           "take_profit_pct": 10.0,
           "thesis": "Cleanest mean-reversion setup: RSI 29.3 (below 30 threshold), price 1.9 ATRs below the 20-day MA at \u00a31.30, and no news-driven catalyst for the -16.8% 20-day decline. Low volume today suggests seller exhaustion rather than continued distribution.",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
-          "outcome_notes": null,
-          "risks_observed": null,
+          "exit_date": "2026-05-19",
+          "exit_price": 1.158,
+          "pnl_gbp": -36.622872000000015,
+          "pnl_pct": -1.025641025641022,
+          "exit_reason": "recovered",
+          "outcome_notes": "Recovered post-hoc by recover_t212_strands.py. The exit cron's 60-second poll timed out before T212's fill landed in history; this script back-fills the entry and exit prices from the broker's order history so the ledger matches reality.",
+          "risks_observed": "T212's paper-account fills can lag the submit-response by a few minutes during busy sessions; the exit_scheduled poll budget has been bumped to 5 minutes to absorb this without manual recovery.",
           "broker_order_id": "49150619723",
           "created_at": "2026-05-19T07:54:31.014231+00:00",
-          "updated_at": "2026-05-19T07:54:31.014242+00:00"
+          "updated_at": "2026-05-19T15:39:30.445468+00:00",
+          "fees_gbp": 16.030872,
+          "fees_breakdown": {
+            "fx_fee_entry_gbp": 3.0116,
+            "fx_fee_exit_gbp": 2.9807,
+            "stamp_duty_gbp": 10.0386
+          }
         },
         {
           "trade_id": "mean-reverter-1cae528c1753",
@@ -21003,16 +21024,22 @@
           "stop_loss_pct": -8.0,
           "take_profit_pct": 12.0,
           "thesis": "Extreme RSI 23.7 with price 3.4 ATRs below SMA20 and no fundamental news to explain the -25.76% 20-day decline; very low volume today (0.13x average) points to technical exhaustion. Smaller allocation accounts for the unusual severity of the decline.",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
-          "outcome_notes": null,
-          "risks_observed": null,
+          "exit_date": "2026-05-19",
+          "exit_price": 2.5500000000000003,
+          "pnl_gbp": -48.59956799999978,
+          "pnl_pct": -2.448355011476644,
+          "exit_reason": "recovered",
+          "outcome_notes": "Recovered post-hoc by recover_t212_strands.py. The exit cron's 60-second poll timed out before T212's fill landed in history; this script back-fills the entry and exit prices from the broker's order history so the ledger matches reality.",
+          "risks_observed": "T212's paper-account fills can lag the submit-response by a few minutes during busy sessions; the exit_scheduled poll budget has been bumped to 5 minutes to absorb this without manual recovery.",
           "broker_order_id": "49150619736",
           "created_at": "2026-05-19T07:55:32.350137+00:00",
-          "updated_at": "2026-05-19T07:55:32.350148+00:00"
+          "updated_at": "2026-05-19T15:39:32.669103+00:00",
+          "fees_gbp": 11.927568,
+          "fees_breakdown": {
+            "fx_fee_entry_gbp": 2.2467,
+            "fx_fee_exit_gbp": 2.1917,
+            "stamp_duty_gbp": 7.4891
+          }
         },
         {
           "trade_id": "mean-reverter-e20f751f9c33",
@@ -21028,16 +21055,22 @@
           "stop_loss_pct": -6.0,
           "take_profit_pct": 8.0,
           "thesis": "RSI 35.2 with price 1.8 ATRs below SMA20 and no news catalyst for the -10.76% 20-day pullback; MACD histogram negative but RSI at levels that historically precede mean-reversion bounces.",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
-          "outcome_notes": null,
-          "risks_observed": null,
+          "exit_date": "2026-05-19",
+          "exit_price": 43.64,
+          "pnl_gbp": -21.45196000000004,
+          "pnl_pct": -0.6375227686703178,
+          "exit_reason": "recovered",
+          "outcome_notes": "Recovered post-hoc by recover_t212_strands.py. The exit cron's 60-second poll timed out before T212's fill landed in history; this script back-fills the entry and exit prices from the broker's order history so the ledger matches reality.",
+          "risks_observed": "T212's paper-account fills can lag the submit-response by a few minutes during busy sessions; the exit_scheduled poll budget has been bumped to 5 minutes to absorb this without manual recovery.",
           "broker_order_id": "49150619746",
           "created_at": "2026-05-19T07:56:33.504982+00:00",
-          "updated_at": "2026-05-19T07:56:33.504994+00:00"
+          "updated_at": "2026-05-19T15:39:34.881689+00:00",
+          "fees_gbp": 11.93196,
+          "fees_breakdown": {
+            "fx_fee_entry_gbp": 2.2399,
+            "fx_fee_exit_gbp": 2.2256,
+            "stamp_duty_gbp": 7.4664
+          }
         },
         {
           "trade_id": "mean-reverter-0921700ecd56",
@@ -21053,16 +21086,22 @@
           "stop_loss_pct": -5.0,
           "take_profit_pct": 7.0,
           "thesis": "RSI 36.8 and 2.2 ATRs below SMA20 with no company-specific negative news; defensive utility characteristics reduce falling-knife risk relative to cyclical names, making this a lower-risk mean-reversion entry.",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
-          "outcome_notes": null,
-          "risks_observed": null,
+          "exit_date": "2026-05-19",
+          "exit_price": 23.32,
+          "pnl_gbp": -22.41250000000008,
+          "pnl_pct": -1.1026293469041604,
+          "exit_reason": "recovered",
+          "outcome_notes": "Recovered post-hoc by recover_t212_strands.py. The exit cron's 60-second poll timed out before T212's fill landed in history; this script back-fills the entry and exit prices from the broker's order history so the ledger matches reality.",
+          "risks_observed": "T212's paper-account fills can lag the submit-response by a few minutes during busy sessions; the exit_scheduled poll budget has been bumped to 5 minutes to absorb this without manual recovery.",
           "broker_order_id": "49150619751",
           "created_at": "2026-05-19T07:57:34.924170+00:00",
-          "updated_at": "2026-05-19T07:57:34.924183+00:00"
+          "updated_at": "2026-05-19T15:39:37.116031+00:00",
+          "fees_gbp": 9.412500000000001,
+          "fees_breakdown": {
+            "fx_fee_entry_gbp": 1.7685,
+            "fx_fee_exit_gbp": 1.749,
+            "stamp_duty_gbp": 5.895
+          }
         },
         {
           "trade_id": "mean-reverter-1c35897d2382",
@@ -21078,16 +21117,21 @@
           "stop_loss_pct": -5.0,
           "take_profit_pct": 7.0,
           "thesis": "RSI 35.1 and 2.2 ATRs below SMA20 with no stock-specific bad news; the -11% 20-day decline appears sector/macro-driven (tariff overhang) rather than fundamental deterioration, making a technical bounce plausible as sentiment stabilises.",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
-          "outcome_notes": null,
-          "risks_observed": null,
+          "exit_date": "2026-05-19",
+          "exit_price": 64.08577650308608,
+          "pnl_gbp": -12.513037901880812,
+          "pnl_pct": -0.7774798927614013,
+          "exit_reason": "recovered",
+          "outcome_notes": "Recovered post-hoc by recover_t212_strands.py. The exit cron's 60-second poll timed out before T212's fill landed in history; this script back-fills the entry and exit prices from the broker's order history so the ledger matches reality.",
+          "risks_observed": "T212's paper-account fills can lag the submit-response by a few minutes during busy sessions; the exit_scheduled poll budget has been bumped to 5 minutes to absorb this without manual recovery.",
           "broker_order_id": "49150619762",
           "created_at": "2026-05-19T07:58:35.866862+00:00",
-          "updated_at": "2026-05-19T07:58:35.866874+00:00"
+          "updated_at": "2026-05-19T15:39:45.937064+00:00",
+          "fees_gbp": 3.4741902027153966,
+          "fees_breakdown": {
+            "fx_fee_entry_gbp": 1.7439,
+            "fx_fee_exit_gbp": 1.7303
+          }
         },
         {
           "trade_id": "mean-reverter-reconciled-7df6a330",
@@ -29660,6 +29704,7 @@
       "summary": {
         "n_closed": 16,
         "n_open": 2,
+        "n_open_multi_day": 0,
         "total_pnl_gbp": 0.0,
         "avg_pnl_pct": 0.0,
         "hit_rate": 0.0,
@@ -34366,10 +34411,11 @@
       "universe": "uk_eu_extended",
       "capital_gbp": 10000.0,
       "summary": {
-        "n_closed": 4,
-        "n_open": 3,
-        "total_pnl_gbp": 0.0,
-        "avg_pnl_pct": 0.0,
+        "n_closed": 7,
+        "n_open": 0,
+        "n_open_multi_day": 0,
+        "total_pnl_gbp": -112.26,
+        "avg_pnl_pct": -0.44,
         "hit_rate": 0.0,
         "n_predictions": 585
       },
@@ -34393,6 +34439,18 @@
         {
           "date": "2026-05-17",
           "equity": 10000.0
+        },
+        {
+          "date": "2026-05-19",
+          "equity": 9957.08
+        },
+        {
+          "date": "2026-05-19",
+          "equity": 9920.29
+        },
+        {
+          "date": "2026-05-19",
+          "equity": 9887.74
         }
       ],
       "executed": [
@@ -34410,16 +34468,21 @@
           "stop_loss_pct": -9.0,
           "take_profit_pct": 14.0,
           "thesis": "Cleanest momentum trade in the list \u2014 Infineon's +11%/+34.5% 5d/20d returns, non-overbought RSI (65.9), and strongly positive MACD reflect genuine demand for power semiconductors in AI data-centre buildouts; stop set at ~2x ATR below close, target at ~3x ATR.",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
-          "outcome_notes": null,
-          "risks_observed": null,
+          "exit_date": "2026-05-19",
+          "exit_price": 56.06856101512909,
+          "pnl_gbp": -42.92211980019915,
+          "pnl_pct": -1.1297709923664079,
+          "exit_reason": "recovered",
+          "outcome_notes": "Recovered post-hoc by recover_t212_strands.py. The exit cron's 60-second poll timed out before T212's fill landed in history; this script back-fills the entry and exit prices from the broker's order history so the ledger matches reality.",
+          "risks_observed": "T212's paper-account fills can lag the submit-response by a few minutes during busy sessions; the exit_scheduled poll budget has been bumped to 5 minutes to absorb this without manual recovery.",
           "broker_order_id": "49150619689",
           "created_at": "2026-05-19T07:51:27.062066+00:00",
-          "updated_at": "2026-05-19T07:51:27.062080+00:00"
+          "updated_at": "2026-05-19T15:39:23.782437+00:00",
+          "fees_gbp": 8.965835627664328,
+          "fees_breakdown": {
+            "fx_fee_entry_gbp": 4.5084,
+            "fx_fee_exit_gbp": 4.4575
+          }
         },
         {
           "trade_id": "momentum-trader-0d7216865e46",
@@ -34435,16 +34498,21 @@
           "stop_loss_pct": -5.0,
           "take_profit_pct": 7.0,
           "thesis": "ABN AMRO just beat Q1 forecasts with analyst upgrades following; +11% 5d with accelerating MACD histogram and yield curve steepening providing a structural NIM tailwind for European bank margins \u2014 fundamental catalyst reinforcing the technical trend.",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
-          "outcome_notes": null,
-          "risks_observed": null,
+          "exit_date": "2026-05-19",
+          "exit_price": 27.913069906234742,
+          "pnl_gbp": -36.7859240158291,
+          "pnl_pct": -1.0739490641301086,
+          "exit_reason": "recovered",
+          "outcome_notes": "Recovered post-hoc by recover_t212_strands.py. The exit cron's 60-second poll timed out before T212's fill landed in history; this script back-fills the entry and exit prices from the broker's order history so the ledger matches reality.",
+          "risks_observed": "T212's paper-account fills can lag the submit-response by a few minutes during busy sessions; the exit_scheduled poll budget has been bumped to 5 minutes to absorb this without manual recovery.",
           "broker_order_id": "49150619696",
           "created_at": "2026-05-19T07:52:28.025409+00:00",
-          "updated_at": "2026-05-19T07:52:28.025420+00:00"
+          "updated_at": "2026-05-19T15:39:26.006244+00:00",
+          "fees_gbp": 7.998406200000645,
+          "fees_breakdown": {
+            "fx_fee_entry_gbp": 4.0208,
+            "fx_fee_exit_gbp": 3.9776
+          }
         },
         {
           "trade_id": "momentum-trader-5110c56632f6",
@@ -34460,16 +34528,22 @@
           "stop_loss_pct": -6.0,
           "take_profit_pct": 7.0,
           "thesis": "British American Tobacco is the clearest expression of the macro view's Consumer Staples defensive bid \u2014 +17% 20d, above both MAs, strong MACD momentum; position sized below max given RSI at 70.0 approaching overbought.",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
-          "outcome_notes": null,
-          "risks_observed": null,
+          "exit_date": "2026-05-19",
+          "exit_price": 48.88,
+          "pnl_gbp": -32.550800000000066,
+          "pnl_pct": -0.8519269776876337,
+          "exit_reason": "recovered",
+          "outcome_notes": "Recovered post-hoc by recover_t212_strands.py. The exit cron's 60-second poll timed out before T212's fill landed in history; this script back-fills the entry and exit prices from the broker's order history so the ledger matches reality.",
+          "risks_observed": "T212's paper-account fills can lag the submit-response by a few minutes during busy sessions; the exit_scheduled poll budget has been bumped to 5 minutes to absorb this without manual recovery.",
           "broker_order_id": "49150619705",
           "created_at": "2026-05-19T07:53:29.229658+00:00",
-          "updated_at": "2026-05-19T07:53:29.229670+00:00"
+          "updated_at": "2026-05-19T15:39:28.231169+00:00",
+          "fees_gbp": 15.750800000000002,
+          "fees_breakdown": {
+            "fx_fee_entry_gbp": 2.958,
+            "fx_fee_exit_gbp": 2.9328,
+            "stamp_duty_gbp": 9.86
+          }
         },
         {
           "trade_id": "8fe37c7c-d642-4c63-b7f5-f9ee817a76f3",
@@ -42773,6 +42847,7 @@
       "summary": {
         "n_closed": 9,
         "n_open": 1,
+        "n_open_multi_day": 0,
         "total_pnl_gbp": 91.4,
         "avg_pnl_pct": 0.46,
         "hit_rate": 0.222,
@@ -47161,6 +47236,7 @@
       "summary": {
         "n_closed": 5,
         "n_open": 0,
+        "n_open_multi_day": 0,
         "total_pnl_gbp": -107.93,
         "avg_pnl_pct": -1.1,
         "hit_rate": 0.0,
@@ -55876,6 +55952,7 @@
       "summary": {
         "n_closed": 5,
         "n_open": 2,
+        "n_open_multi_day": 0,
         "total_pnl_gbp": 53.77,
         "avg_pnl_pct": 0.28,
         "hit_rate": 0.6,
@@ -56457,6 +56534,7 @@
       "summary": {
         "n_closed": 7,
         "n_open": 0,
+        "n_open_multi_day": 0,
         "total_pnl_gbp": -16.21,
         "avg_pnl_pct": -0.01,
         "hit_rate": 0.286,
