@@ -49,9 +49,16 @@ def merge_file(repo_root: Path, save_root: Path, rel_path: str, key: str | None)
     if key is None:
         merged = remote_lines + local_lines
     else:
+        # Local first, then remote. Dedupe keeps the FIRST occurrence
+        # of each primary key — so a row edited in place locally (e.g.
+        # state/ledger.jsonl rows getting their exit_date / pnl_gbp
+        # populated by the exit phase) wins over the stale remote
+        # version that pre-dates this run. Earlier ordering (remote
+        # first) silently dropped every trade closure on any exit cron
+        # that raced with another push and fell into this fallback.
         seen: set[str] = set()
         merged: list[str] = []
-        for line in remote_lines + local_lines:
+        for line in local_lines + remote_lines:
             try:
                 k = json.loads(line).get(key)
             except json.JSONDecodeError:

@@ -312,6 +312,11 @@ def _build_sector_exposure(entries: list[dict], region: str | None = None) -> di
     from trading_bot.tools.sectors import bulk_lookup
 
     today = datetime.now(timezone.utc).date()
+    # End-of-yesterday and end-of-(today − 7) — the snapshots represent
+    # "state at close on that day", so a trade ENTERED on the cutoff
+    # date itself belongs in the snapshot. Off-by-one earlier here meant
+    # yesterday's bucket dropped any trades entered yesterday, producing
+    # misleading deltas.
     cutoff_1d = (today - timedelta(days=1)).isoformat()
     cutoff_1w = (today - timedelta(days=7)).isoformat()
 
@@ -357,9 +362,9 @@ def _build_sector_exposure(entries: list[dict], region: str | None = None) -> di
             continue
         entry_date = t.get("entry_date") or ""
         now[sector] += notional
-        if entry_date and entry_date < cutoff_1d:
+        if entry_date and entry_date <= cutoff_1d:
             d1[sector] += notional
-        if entry_date and entry_date < cutoff_1w:
+        if entry_date and entry_date <= cutoff_1w:
             d7[sector] += notional
         if t.get("exit_date"):
             n_closed += 1
