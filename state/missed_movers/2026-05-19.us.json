@@ -1,0 +1,191 @@
+{
+  "date": "2026-05-19",
+  "region": "us",
+  "universes_checked": [
+    "sp1500",
+    "us_etfs_bond",
+    "us_etfs_commodity",
+    "us_etfs_sector"
+  ],
+  "n_tickers_checked": 1527,
+  "summary": "Held 2 of today's 10 biggest US movers.\n\n\u2022 4 upside misses \u2014 VITL +11%, RXO +11%, CLSK +9%, MXL +8%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (DCH -9%, CHWY -9%, SSTK -7%, AMN -7%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: VITL (+10.75%) \u2014 Cluster of 5 officer/director open-market purchases (~$175K combined at $8.00\u2013$8.51, disclosed May 13\u201318 via Form 4) sparked short-covering after stock had fallen ~25% on Q1 EPS miss and margin collapse on May 7. Why we passed: News-reactive and momentum-trader both had bearish context: a May 7 EPS miss (-$0.03 vs +$0.07 est), gross margin collapse (28.3% vs 38.5% prior year), and multiple analyst downgrades had put VITL in a downtrend/negative-news bucket. The insider-buying signal arrived as SEC filings, not a conventional news headline, by",
+  "top_movers": [
+    {
+      "ticker": "AGYS",
+      "move_pct": 12.45,
+      "close": 78.94,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [
+        "news-reactive",
+        "macro-aligned",
+        "momentum-trader"
+      ],
+      "catalyst": "Q4 FY2026 earnings double beat: EPS $0.63 vs $0.50 est, revenue $82.9M vs $81.6M est (+11.7% YoY), 17th consecutive record quarter; FY2027 guidance raised to $365\u2013370M midpoint above consensus.",
+      "miss_reason": "Earnings were released after the prior close, so the +12% gap was fully formed pre-open. News-reactive and momentum-trader likely hit an earnings-day embargo or a max-gap-at-open filter (e.g. >8%), while mean-reverter and control-rule-based correctly avoid chasing post-earnings gaps.",
+      "suggestion": "Add an earnings-gate release rule in news-reactive: if post-earnings gap \u22658% AND EPS beat \u226515%, permit a reduced-size entry within the first 30 minutes of open using a hard stop at the prior-close, bypassing the standard gap-size exclusion.",
+      "failed": false
+    },
+    {
+      "ticker": "VITL",
+      "move_pct": 10.749,
+      "close": 9.17,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [],
+      "catalyst": "Cluster of 5 officer/director open-market purchases (~$175K combined at $8.00\u2013$8.51, disclosed May 13\u201318 via Form 4) sparked short-covering after stock had fallen ~25% on Q1 EPS miss and margin collapse on May 7.",
+      "miss_reason": "News-reactive and momentum-trader both had bearish context: a May 7 EPS miss (-$0.03 vs +$0.07 est), gross margin collapse (28.3% vs 38.5% prior year), and multiple analyst downgrades had put VITL in a downtrend/negative-news bucket. The insider-buying signal arrived as SEC filings, not a conventional news headline, by",
+      "suggestion": "Extend news-reactive's signal feed to ingest SEC Form 4 EDGAR filings; trigger a long entry when \u22653 insiders buy open-market within a 10-day window totalling \u2265$50K on a name that has already pulled back \u226520% from its 60-day high.",
+      "failed": false
+    },
+    {
+      "ticker": "RXO",
+      "move_pct": 10.628,
+      "close": 21.13,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "CLSK",
+      "move_pct": 9.301,
+      "close": 14.69,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [],
+      "catalyst": "Bernstein initiated CLSK at Outperform mid-session on May 19, citing bitcoin miners' AI data-center optionality from CleanSpark's 1.8 GW power footprint; earlier Maxim/Macquarie upgrades to $22 PT provided additional tailwind.",
+      "miss_reason": "CLSK had already surged ~50% in the prior month, likely tripping momentum-trader's RSI/overbought ceiling. Bernstein's initiation fired intraday rather than pre-open, so news-reactive had no early signal \u2014 the move was largely resolved before a post-gap entry could be sized.",
+      "suggestion": "Add tier-1 sell-side initiations (Outperform/Buy) as a standalone trigger in news-reactive with a \u226430-min entry window and a relaxed RSI ceiling (e.g. raise to 85) specifically for names carrying a confirmed infrastructure-pivot or AI-capacity catalyst tag.",
+      "failed": false
+    },
+    {
+      "ticker": "AZTA",
+      "move_pct": 8.682,
+      "close": 17.65,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [
+        "control-rule-based"
+      ],
+      "catalyst": "No fresh company-specific news on 2026-05-19; move is a technical oversold bounce ~13 days after a ~25% earnings-day crash (May 6) on Q2 FY2026 revenue miss and $149M goodwill impairment, with RSI deeply oversold near 52-week lows.",
+      "miss_reason": "Mean-reverter likely excluded AZTA via an earnings-event gate that blocks entry on recent post-gap names to avoid catching falling knives. Momentum-trader won't go long a stock down 26% YTD in a confirmed downtrend. News-reactive found only negative signals (securities fraud investigations May 7\u201318).",
+      "suggestion": "Extend mean-reverter's earnings-event gate with a re-entry window: after \u226510 sessions post-gap, allow entry if RSI < 32 AND intraday volume \u2265 1.5\u00d7 20-day average \u2014 this catches post-crash technical bounces without lifting the gate during the initial panic phase.",
+      "failed": false
+    },
+    {
+      "ticker": "MXL",
+      "move_pct": 8.461,
+      "close": 94.86,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [],
+      "catalyst": "Continuation of post-Q1 earnings rally (rev +43% YoY to $137M, infra +136%, Q2 guide $160-170M vs ~$137M est); wave of analyst upgrades to $55-$75 PTs (Loop Capital, Needham, Roth) extended the 75%+ 3-week run.",
+      "miss_reason": "Initial ~40% premarket gap on Apr 23 earnings day likely exceeded momentum-trader's and news-reactive's max-gap-entry threshold, blocking first-day positioning. By May 19, with MXL up ~75% in 3 weeks, overbought RSI (~85+) would have barred control-rule-based and mean-reverter entries.",
+      "suggestion": "Add a catalyst-continuation re-entry rule to news-reactive: if a post-earnings gap-up name reclaims its 10-day MA on >1.5\u00d7 avg volume within 15 sessions of the initial event, allow a fresh entry \u2014 bypassing the gap-filter that froze the original signal.",
+      "failed": false
+    },
+    {
+      "ticker": "DCH",
+      "move_pct": -9.435,
+      "close": 5.615,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [],
+      "catalyst": "Post-earnings analyst target cuts (TD Cowen $8\u2192$7 Hold, Stifel $8\u2192$6.70 Hold) plus continued institutional unwinding of Dowlais-integration risk drove selling ~11 days after DCH's May 8 Q1 beat; net loss of $100M in Q1 deepened valuation concern despite the revenue beat.",
+      "miss_reason": "The primary news event (May 8 earnings beat + guidance raise) was 11 days stale on May 19, giving news-reactive no fresh entry signal. The sub-$6 price, net-loss financials, and post-gap drift profile likely triggered quality/price-floor filters in momentum-trader and mean-reverter; mean-reverter may have been biased l",
+      "suggestion": "Add an analyst-consensus-revision gate to news-reactive: \u22652 PT cuts of \u226510% within 10 days of an earnings event should re-open a short-side signal window, capped at 5 sessions post-last-cut, so the strategy can participate in sell-the-news continuation without requiring same-day news.",
+      "failed": false
+    },
+    {
+      "ticker": "CHWY",
+      "move_pct": -9.154,
+      "close": 19.65,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [],
+      "catalyst": "California AG unsealed price-fixing evidence naming Chewy alongside Amazon, Walmart, and others; CEO's JPM conference appearance failed to stem the selloff, driving CHWY to a new 52-week low.",
+      "miss_reason": "Intraday antitrust unsealing left no pre-market signal; news-reactive lacks a regulatory-filing trigger. Mean-reverter skips shorting oversold names; momentum's prior-session volume floor likely excluded CHWY given its thin recent turnover.",
+      "suggestion": "Add a regulatory-catalyst gate to news-reactive: when an 8-K tagged 'antitrust'/'price-fixing' drops intraday and the stock is below its 20-day MA, trigger a short entry within 15 min of the filing with a 3% stop.",
+      "failed": false
+    },
+    {
+      "ticker": "SSTK",
+      "move_pct": -7.421,
+      "close": 15.47,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [],
+      "catalyst": "CMA conditionally cleared Getty merger (May 15) requiring editorial divestitures (Rex Features, Backgrid, Splash News); $35M FTC subscription settlement (May 13) compounded selling in a stock already near its 52-week low.",
+      "miss_reason": "News was 4 days stale by May 19 (CMA ruling May 15), so news-reactive passed. SSTK's structural downtrend near 52-week lows likely tripped a price-floor or adverse-trend filter in momentum-trader and mean-reverter.",
+      "suggestion": "Extend news-reactive's catalyst window to T+5 for regulatory/M&A 8-Ks and re-arm a short signal on new 20-day-low breaks with \u22651.3\u00d7 avg volume \u2014 requires enabling short capability for this strategy.",
+      "failed": false
+    },
+    {
+      "ticker": "AMN",
+      "move_pct": -6.826,
+      "close": 26.89,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [],
+      "catalyst": "Post-earnings rally faded as market digested Q2 2026 guidance ($627.5M midpoint, 1.3% below consensus), signalling sharp normalisation after $722M in one-off labor-disruption revenue drove the Q1 beat.",
+      "miss_reason": "Stock was overbought (RSI flagged, ~+40% post-Q1 earnings in 12 days), blocking a fresh long-momentum entry. The -6.8% fade is short-only; news-reactive passed as the May 7 earnings catalyst was stale with no fresh trigger today.",
+      "suggestion": "If mean-reverter gains short capability, add a post-earnings fade gate: RSI >72 AND price +35%+ in \u226415 sessions on a below-consensus forward guide triggers a short entry; otherwise no actionable change under long-only constraints.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-05-19T20:22:55.001883+00:00"
+}
