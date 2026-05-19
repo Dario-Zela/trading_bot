@@ -355,35 +355,74 @@ Return JSON only:
 
 
 def _build_summary(movers: list[MissedMover], today: date, region: str) -> str:
-    """One short paragraph summarising the day's biggest movers and
-    the bot's coverage of them. Used by the daily news brief."""
+    """Multi-line synopsis: a one-line headline followed by themed
+    bullets. Newlines are preserved by the dashboard (and any other
+    consumer that respects `white-space: pre-line`).
+
+    Themes the bullets surface, when applicable:
+      1. Upside misses split by gainer count and their biggest names.
+      2. Downside misses called out for the long-only blind spot.
+      3. The single most-instructive miss (largest |move|) with its
+         catalyst — useful for the daily news brief.
+    """
     if not movers:
         return f"No notable movers identified in {region} on {today.isoformat()}."
+
+    region_label = {"us": "US", "uk-eu": "UK/EU"}.get(region, region.upper())
     traded = [m for m in movers if m.was_traded_by]
     untraded = [m for m in movers if not m.was_traded_by]
-    n_in_universe = sum(1 for m in untraded if m.in_universe_of)
-    n_outside = len(untraded) - n_in_universe
-    parts = []
-    parts.append(
-        f"Of the {len(movers)} biggest movers in the {region} universe today, "
-        f"the bot held {len(traded)} and missed {len(untraded)}"
+    gainers = [m for m in untraded if m.move_pct > 0]
+    losers = [m for m in untraded if m.move_pct < 0]
+
+    # Headline
+    headline = (
+        f"Held {len(traded)} of today's {len(movers)} biggest {region_label} movers."
     )
-    if untraded:
-        parts.append(
-            f" — {n_in_universe} were in a strategy's universe but filtered out, "
-            f"{n_outside} were outside coverage entirely."
+
+    bullets: list[str] = []
+
+    # Upside misses — the strategies passed on these despite the
+    # universe coverage. Name the top 5 by move size for cite-ability
+    # in the news brief.
+    if gainers:
+        top_g = sorted(gainers, key=lambda m: m.move_pct, reverse=True)[:5]
+        tag = ", ".join(
+            f"{m.ticker} {m.move_pct:+.0f}%" for m in top_g
         )
-    else:
-        parts.append(".")
+        bullets.append(
+            f"• {len(gainers)} upside miss{'es' if len(gainers) != 1 else ''} — "
+            f"{tag}. These cleared the universe screen but no strategy "
+            f"picked them up; the morning brief either filtered them on "
+            f"a catalyst/RSI/earnings rule or had nothing positive to "
+            f"trigger an entry."
+        )
+
+    # Downside misses — long-only constraint
+    if losers:
+        top_l = sorted(losers, key=lambda m: m.move_pct)[:4]
+        tag = ", ".join(f"{m.ticker} {m.move_pct:+.0f}%" for m in top_l)
+        bullets.append(
+            f"• {len(losers)} downside move{'s' if len(losers) != 1 else ''} "
+            f"({tag}) are unreachable on a long-only basket — no mechanism "
+            f"to express a short or pair-trade."
+        )
+
+    # The single most-instructive miss
     if untraded:
         biggest = max(untraded, key=lambda m: abs(m.move_pct))
-        parts.append(
-            f" The biggest miss was {biggest.ticker} ({biggest.move_pct:+.2f}%)"
+        line = (
+            f"• Most instructive miss: {biggest.ticker} "
+            f"({biggest.move_pct:+.2f}%)"
         )
         if biggest.catalyst:
-            parts.append(f" — {biggest.catalyst}")
-        parts.append(".")
-    return "".join(parts)
+            line += f" — {biggest.catalyst}"
+        if biggest.miss_reason:
+            line += f" Why we passed: {biggest.miss_reason}"
+        bullets.append(line)
+
+    if not bullets:
+        return headline
+    return headline + "\n\n" + "\n\n".join(bullets)
 
 
 # ---------------------------------------------------------------------------
