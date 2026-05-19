@@ -125,6 +125,30 @@
       </section>
     </template>
 
+    <!-- Sector exposure on currently-open positions (live-tier only) -->
+    <template x-if="data && data.sector_exposure && data.sector_exposure.by_sector && data.sector_exposure.by_sector.length">
+      <section style="margin: 1.5rem 0 2rem; padding: 1rem 1.4rem; background: var(--card); border: 1px solid var(--hairline); border-radius: 6px;">
+        <div style="font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.6rem;">
+          Sector exposure · <span x-text="data.sector_exposure.n_positions"></span> open position(s)
+        </div>
+        <div style="display: flex; gap: 0.4rem; height: 28px; border-radius: 2px; overflow: hidden;">
+          <template x-for="row in data.sector_exposure.by_sector" :key="row.sector">
+            <div :style="'flex-basis: ' + row.pct + '%; background: ' + sectorColor(row.sector) + '; color: white; font-family: var(--sans); font-size: 0.7rem; line-height: 28px; text-align: center; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 0.4rem;'"
+                 :title="row.sector + ': ' + row.pct + '%'"
+                 x-text="row.pct >= 8 ? (row.sector + ' ' + row.pct + '%') : ''"></div>
+          </template>
+        </div>
+        <div style="margin-top: 0.6rem; font-family: var(--sans); font-size: 0.72rem; color: var(--ink-muted);">
+          <template x-for="row in data.sector_exposure.by_sector" :key="row.sector">
+            <span style="margin-right: 1.2rem;">
+              <span :style="'display:inline-block; width:8px; height:8px; border-radius:2px; background:' + sectorColor(row.sector) + '; margin-right:4px;'"></span>
+              <span x-text="row.sector + ' ' + row.pct + '%'"></span>
+            </span>
+          </template>
+        </div>
+      </section>
+    </template>
+
     <!-- The slate: strategy cards -->
     <div class="section-label plain">
       <span>The slate</span>
@@ -530,6 +554,18 @@
           if (v == null) return '—';
           const sign = v > 0 ? '+' : v < 0 ? '−' : '';
           return sign + Math.abs(v).toFixed(2) + '%';
+        },
+
+        sectorColor(sector) {
+          // Deterministic palette — same sector always gets the same colour
+          // across the bar and the legend.
+          const palette = ['#1e3a8a', '#0f766e', '#b45309', '#6b21a8', '#065f46',
+                           '#92400e', '#0e7490', '#7e22ce', '#8b1e1e', '#166534',
+                           '#374151'];
+          const s = String(sector || 'Unknown');
+          let hash = 0;
+          for (let i = 0; i < s.length; i++) hash = (hash * 31 + s.charCodeAt(i)) | 0;
+          return palette[Math.abs(hash) % palette.length];
         },
 
         formatTimestamp(ts) {

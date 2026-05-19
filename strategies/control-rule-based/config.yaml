@@ -20,3 +20,6 @@ runs_in:
 - region: uk-eu
   tier: shadow
   universe: uk_eu_extended
+# Phase 8C — drop candidates with earnings inside the window. Technical
+# signal becomes unreliable across a binary print, so we avoid the day.
+skip_if_earnings_in_days: 1

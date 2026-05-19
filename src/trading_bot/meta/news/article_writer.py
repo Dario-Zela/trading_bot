@@ -101,9 +101,120 @@ def write_articles(
         if p.slug not in articles:
             articles[p.slug] = _fallback_article(p, triaged)
 
+    # Phase 9B — image relevance check. The writer's first-pass image
+    # search occasionally returns something off-topic (generic stock
+    # photo, wrong company). Fan out a fast Haiku verifier; drop the
+    # image when it comes back "no". Fast + cheap; failures are silent.
+    _verify_hero_images(articles, plan, triaged)
+
     n_failed = sum(1 for a in articles.values() if a.failed)
     log.info("Articles complete: %d written, %d fallback", len(articles) - n_failed, n_failed)
     return articles
+
+
+def _verify_hero_images(
+    articles: dict[str, FullArticle],
+    plan: NewsPlan,
+    triaged: list[TriagedCandidate],
+) -> None:
+    """Phase 9B — second-pass relevance check. For every article whose
+    writer returned an image_url, ask Haiku whether the image looks
+    on-topic given the headline + caption + first paragraph. Verdicts:
+    'yes' keeps it, 'borderline' / 'no' drops the hero so the page
+    renders without a misleading photo."""
+    pieces_with_images = [
+        p for p in plan.pieces
+        if p.slug in articles and articles[p.slug].image_url and not articles[p.slug].failed
+    ]
+    if not pieces_with_images:
+        return
+    log.info("Image relevance: verifying %d hero images", len(pieces_with_images))
+    with ThreadPoolExecutor(max_workers=_MAX_PARALLEL) as pool:
+        futures = {
+            pool.submit(_verify_one_image, p, articles[p.slug], triaged): p
+            for p in pieces_with_images
+        }
+        n_dropped = 0
+        for fut in as_completed(futures):
+            piece = futures[fut]
+            try:
+                verdict = fut.result()
+            except Exception as e:
+                log.debug("Image verifier failed for %r: %s — keeping image", piece.slug, e)
+                continue
+            if verdict in ("no", "borderline"):
+                art = articles[piece.slug]
+                log.info("Image dropped for %r (verdict %s): %s",
+                         piece.slug, verdict, art.image_url[:90])
+                art.image_url = ""
+                art.image_caption = ""
+                art.image_credit = ""
+                n_dropped += 1
+        if n_dropped:
+            log.info("Image relevance: %d dropped, %d kept",
+                     n_dropped, len(pieces_with_images) - n_dropped)
+
+
+_IMAGE_CHECK_TIMEOUT = 60
+
+
+def _verify_one_image(piece, article, triaged) -> str:
+    """Single Haiku verifier. Returns 'yes' / 'borderline' / 'no'."""
+    body_first_para = ""
+    if article.body_md:
+        body_first_para = article.body_md.split("\n\n")[0][:400]
+    prompt = f"""You verify whether an article's hero image looks
+on-topic. Brief judgment call — yes / borderline / no — based on the
+headline, caption, and opening paragraph.
+
+## The piece
+
+- Headline: {piece.headline}
+- Section: {piece.section}
+- First paragraph: {body_first_para}
+
+## The image
+
+- URL: {article.image_url}
+- Caption (writer's): {article.image_caption}
+- Credit: {article.image_credit}
+
+## Rules
+
+- "yes" — the image clearly relates to the story's subject (the named
+  company, the named person, the named event). Includes generic-but-
+  appropriate (a stock chart for a markets piece, a refinery for an
+  energy piece) if the headline genuinely warrants it.
+- "borderline" — the image is loosely related but generic where a
+  specific image would be expected (e.g., a generic skyline for a
+  named company's headquarters story).
+- "no" — clearly off-topic (wrong company, wrong country, wildly
+  generic on a specific story).
+
+Use WebFetch to load the URL only if needed to disambiguate; usually
+the caption + URL filename is enough.
+
+## Required output
+
+```json
+{{
+  "verdict": "yes" | "borderline" | "no",
+  "note": "<one line on why>"
+}}
+```
+"""
+    try:
+        response = run_claude_for_json(
+            prompt, model="haiku",
+            timeout_seconds=_IMAGE_CHECK_TIMEOUT,
+            extra_args=["--allowedTools", "WebFetch"],
+        )
+    except ClaudeCodeError:
+        return "yes"     # on failure, keep the image — better an iffy pic than none
+    if not isinstance(response, dict):
+        return "yes"
+    v = (response.get("verdict") or "").strip().lower()
+    return v if v in {"yes", "borderline", "no"} else "yes"
 
 
 def _write_one(

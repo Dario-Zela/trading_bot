@@ -1400,6 +1400,87 @@ body.page-dashboard .pred-class-badge.strong_down { background: rgba(220,38,38,0
 }
 
 /* ============================================================================
+ * Phase 9E — mobile responsiveness
+ * Targeted overrides for dashboard layout below 760px (most phones).
+ * Newspaper / macro / evolution pages already wrap acceptably via the
+ * existing 900px grid-2/grid-3 breakpoints; the dashboard's strategy
+ * grid + detail panel are the ones that overflow.
+ * ============================================================================ */
+@media (max-width: 760px) {
+  /* Tighter paper padding so we don't waste 1/3 of the screen on margins */
+  .paper { padding: 1rem 0.9rem 3rem; }
+  .masthead h1 { font-size: 3.4rem; line-height: 0.95; }
+  .masthead .subtitle { font-size: 1rem; }
+
+  /* App nav: stack tabs + font picker vertically when they collide */
+  .app-nav { padding: 0.5rem 0.9rem; gap: 0.8rem; flex-wrap: wrap; }
+  .app-nav .brand { width: 100%; }
+  .app-nav .spacer { display: none; }
+  .font-picker { width: 100%; justify-content: flex-start; gap: 0.25rem; }
+  .font-picker button { padding: 0.18rem 0.42rem; }
+
+  /* Edition nav (prev / latest / next) stays inline but smaller */
+  .edition-nav { font-size: 0.62rem; gap: 0.5rem; }
+  .edition-nav-link { padding: 0.1rem 0.25rem; }
+
+  /* Dashboard-specific */
+  body.page-dashboard .masthead {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+  body.page-dashboard .masthead h1 { font-size: 2rem; }
+  body.page-dashboard .overview-row {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+  body.page-dashboard .overview-stats {
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  body.page-dashboard .strategy-grid {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+  }
+  body.page-dashboard .detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  body.page-dashboard .detail-header .right {
+    text-align: left;
+    min-width: 0;
+  }
+  body.page-dashboard .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  body.page-dashboard .filters {
+    flex-direction: column;
+    align-items: stretch !important;
+  }
+  body.page-dashboard .filter-group { flex-wrap: wrap; }
+  body.page-dashboard .search { max-width: none; }
+
+  /* Trades table — horizontal scroll rather than crushing columns */
+  body.page-dashboard .trades-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+
+  /* Newspaper drop caps shrink — they overpower a phone column */
+  .lead-body p:first-of-type::first-letter,
+  .editorial-body p:first-of-type::first-letter {
+    font-size: 3.4rem;
+    margin: 0.3rem 0.4rem -0.1rem 0;
+  }
+  .brief h3 + p::first-letter { font-size: 2.2rem; }
+
+  /* Single-column body for the lead / editorial */
+  .lead-body, .editorial-body { column-count: 1; }
+}
+
+/* ============================================================================
  * Colophon footer
  * ============================================================================ */
 .colophon {

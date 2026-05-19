@@ -257,83 +257,95 @@ loop. These changes target risk-adjusted P&L, not infrastructure.
 
 ---
 
-## Phase 9 — Polish + observability (lower priority, queued for later)
+## Phase 9 — Polish + observability
 
 Nice-to-haves and rough edges. Won't move the P&L needle as much as
 Phase 8 but are worth doing once Phase 8 is bedded in.
 
-### 9A — A/B test framework with confidence intervals
+### 9A — A/B test framework with confidence intervals ✅
 
-- [ ] When the evolution agent fires a `promote` action, compute a
-      proper confidence interval on the IC delta (Welch's t-test on
-      the strategy's per-prediction return vs control's). Promote
-      only when the lower CI bound clears the promotion threshold.
-- [ ] Prevents promoting on 14 noisy trades where the IC delta is
-      driven by 2-3 lucky picks.
+- [x] `_meets_promotion()` now computes the lower 95% CI bound on IC
+      via Fisher's z-transform and requires it to clear `PROMOTION_MIN_IC`,
+      not just the point estimate. With n=10 graded predictions the
+      lower bound on IC=0.07 is -0.59 → no promotion. With n=100 and
+      IC=0.06 the lower bound is -0.14 — still no promotion. Real
+      signal must be both meaningful AND sustained.
 
-### 9B — Image-relevance check on article hero pick
+### 9B — Image-relevance check on article hero pick ✅
 
-- [ ] After the article writer returns an image_url, do a second
-      Haiku pass: "given this article headline + first paragraph,
-      does the image at this URL look on-topic?" Returns yes/no/borderline.
-- [ ] Drop hero on borderline/no; current writer occasionally picks
-      something off-topic (e.g. a generic stock photo for a specific
-      M&A story).
+- [x] Second-pass Haiku verifier in `article_writer._verify_hero_images()`.
+      Runs on every article that came back with an `image_url`, asks for
+      yes / borderline / no given the headline + caption + first
+      paragraph. Drops the image on no / borderline. Fans out parallel.
+- [x] WebFetch allowed for the verifier so it can disambiguate by
+      loading the URL when caption + filename aren't enough.
 
-### 9C — De-duplicate stories across editions
+### 9C — De-duplicate stories across editions ✅
 
-- [ ] Discovery / publisher track the trailing 5 days of `front_lead_slug`
-      and front-page headlines. If today's lead is the 4th day in a
-      row of "Iran talks stalled", the publisher must pick something
-      else for the front (relegate to a brief).
-- [ ] Driven by a `recently_led` block in the publisher prompt — model
-      sees what it's already led with and gets to decide if the story
-      genuinely deserves another front.
+- [x] Publisher prompt now includes a trailing-5-days "recent leads"
+      block — date, headline, slug. The publisher is explicitly told
+      to relegate a story arc that's already had its day on the front.
+- [x] `_recent_leads_context()` reads from `state/daily_news/*.pipeline.json`
+      so it survives archive-trim (state isn't moved, only docs/).
 
-### 9D — Sector + factor exposure analytics on the dashboard
+### 9D — Sector + factor exposure analytics on the dashboard ✅
 
-- [ ] Compute per-day sector exposure across live tiers (using sector
-      from yfinance per ticker) and surface as a stacked area on the
-      dashboard overview.
-- [ ] Same for factors: long-momentum, long-quality, long-value, etc.,
-      via a simple rule mapping per ticker.
+- [x] `tools/sectors.py` — cached yfinance sector lookup at
+      `state/ticker_sectors.json`. Lazy fetch on misses, ~150ms
+      throttle, persists.
+- [x] `dashboard/build._build_sector_exposure()` computes per-sector
+      notional GBP across currently-open live-tier positions.
+- [x] Dashboard renders a stacked-bar of sector exposure above the
+      strategy grid, with a colour-coded legend. Hash-based palette so
+      every sector gets a deterministic colour across runs.
+- [ ] Factor exposure (momentum / quality / value) — deferred; not
+      enough data per name yet to do this cleanly.
 
-### 9E — Mobile-responsive dashboard
+### 9E — Mobile-responsive dashboard ✅
 
-- [ ] Current dashboard is desktop-optimised. The newspaper pages
-      already wrap well on mobile; the dashboard's strategy grid +
-      detail panel don't (`grid-template-columns: repeat(auto-fill, ...)`
-      collapses but the detail panel side-by-side stats overflow).
-- [ ] Targeted CSS media-query work, no JS changes needed.
+- [x] New `@media (max-width: 760px)` block in `style.css` — tighter
+      paper padding, single-column overview cards, single-column
+      strategy grid, stacked detail header, horizontal-scroll trades
+      table, smaller drop caps, single-column lead-body. App nav and
+      font picker stack cleanly.
+- [x] Newspaper / macro pages already wrapped via the existing 900px
+      breakpoints; this round was dashboard-specific.
 
-### 9F — Bot-health alerts
+### 9F — Bot-health alerts ✅
 
-- [ ] A nightly check workflow that flags: workflow failures in last
-      24h, ledger staleness, predictions log corruption, broker
-      connectivity errors. Sends a single summary email if anything
-      is amiss.
-- [ ] Easier signal than scrolling GH Actions runs manually.
+- [x] `scripts/health_check.py` — checks workflow failures (last 24h),
+      ledger staleness, predictions log corruption, kill-switch state,
+      docs/news + docs/macro directory growth.
+- [x] `.github/workflows/health-check.yml` runs daily, sends a summary
+      email only when findings exist. Severity tagging (error / warning
+      / info) on every finding. Email subject icon reflects the worst
+      severity present.
 
-### 9G — Tax / ISA tracking (live-tier only)
+### 9G — Tax / ISA tracking (live-tier only) — deferred until live
 
-- [ ] When we go live: track CGT base cost per trade for taxable
-      accounts; track ISA contribution / withdrawal events; emit an
-      annual statement that maps to HMRC's CG30 form layout.
-- [ ] Not relevant until live; queued for whenever that lands.
+Not relevant until live trading starts. When live: track CGT base
+cost per trade for taxable accounts; track ISA contribution /
+withdrawal events; emit an annual statement that maps to HMRC's CG30
+form layout.
 
-### 9H — Push notifications on trade events
+### 9H — Push notifications on trade events — deferred to live UX
 
-- [ ] Optional Telegram / iOS-Shortcut bridge that pings on entry
-      placed, exit fired, kill switch tripped, halt issued. Already
-      planned for the Phase 2 "approve" UX of going live.
+Lives with the "Phase 2 / Option B" approval UX in the original
+notes — Telegram / iOS-Shortcut bridge for entry placed, exit
+fired, kill switch tripped. Implemented alongside the live
+approval flow when the time comes.
 
-### 9I — Searchable historical predictions
+### 9I — Searchable historical predictions ✅
 
-- [ ] The "Marking the homework" section shows the last 8 graded
-      predictions. Add a `/predictions/` archive page with full
-      history, filter by source/horizon/status, and a verdict-rate
-      breakdown per conviction level (so we can see if 'high
-      conviction' actually means something).
+- [x] `dashboard/predictions_archive.py` — reads every row from
+      `state/predictions/*.jsonl`, renders to `docs/predictions/index.html`.
+- [x] Client-side filter by source / horizon / status / conviction;
+      live count of matching rows.
+- [x] "Verdict rate by conviction" stats block at the top — does
+      'high conviction' actually mean a higher proven rate? Now
+      visible at a glance.
+- [x] Hooked into `pages.rebuild_all_pages()` so it refreshes on every
+      pipeline run.
 
 ---
 

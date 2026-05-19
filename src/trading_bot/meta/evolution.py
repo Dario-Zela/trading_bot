@@ -59,6 +59,12 @@ PROMOTION_MIN_IC = 0.05
 DEMOTION_MAX_DRAWDOWN_PCT = -10.0
 DEMOTION_MIN_HIT_RATE = 0.40
 
+# Phase 9A — A/B confidence intervals. Promotion requires the *lower
+# 95% bound* on IC (Fisher z-transform) to clear PROMOTION_MIN_IC,
+# not just the point estimate. Stops promotions on 14 trades where
+# the IC delta is driven by a handful of lucky picks.
+PROMOTION_IC_CI_Z = 1.96      # ~95% one-sided
+
 # Fields the agent is allowed to tune on Tier 0/1 strategies (strategy-wide,
 # applied at the top level — all regions inherit). Region-specific entries
 # in runs_in can override these, but the agent doesn't touch overrides.
@@ -606,7 +612,39 @@ def _meets_promotion(m: StrategyMetrics | None, entry: dict) -> bool:
         return False
     if m.ic is None or m.ic < PROMOTION_MIN_IC:
         return False
+    # Phase 9A — the lower 95% CI bound on IC (Fisher z-transform)
+    # must also clear PROMOTION_MIN_IC. Catches IC point estimates
+    # that look fine but rest on a tiny sample.
+    ic_lower = _ic_lower_bound(m.ic, m.n_predictions_graded)
+    if ic_lower is None or ic_lower < PROMOTION_MIN_IC:
+        return False
     return True
+
+
+def _ic_lower_bound(ic: float, n: int) -> float | None:
+    """Lower 95% CI for the IC using Fisher's z-transform.
+
+    z = 0.5 * ln((1+r)/(1-r));  SE_z = 1/sqrt(n-3)
+    z_lower = z - 1.96 * SE_z
+    r_lower = (e^(2z) - 1) / (e^(2z) + 1)
+
+    Returns None when the sample is too small (<5 graded predictions
+    we can't credibly compute an interval) or when r is at the
+    boundary (|r|=1 means a degenerate sample).
+    """
+    if n < 5 or ic is None:
+        return None
+    import math
+    if abs(ic) >= 0.999:
+        return ic                # boundary case; return point estimate
+    try:
+        z = 0.5 * math.log((1 + ic) / (1 - ic))
+        se = 1.0 / math.sqrt(n - 3)
+    except (ValueError, ZeroDivisionError):
+        return None
+    z_lower = z - PROMOTION_IC_CI_Z * se
+    e2z = math.exp(2 * z_lower)
+    return (e2z - 1) / (e2z + 1)
 
 
 def _meets_demotion(m: StrategyMetrics | None, entry: dict) -> bool:

@@ -149,6 +149,11 @@ def _build_prompt(triaged: list[TriagedCandidate], today: date) -> str:
         f"  - {name}: {blurb}" for name, blurb in BYLINES.items()
     )
 
+    # Phase 9C — recent-leads context. The publisher reads the trailing
+    # 5 days' front-page leads so it doesn't promote the same story
+    # arc 4 sessions running.
+    recent_leads_block = _recent_leads_context(today)
+
     return f"""You are the publisher of The Bot Tribune for {today.isoformat()}.
 The triage desk has scored every candidate. Your job: pick the lead,
 organise the rest into sections, assign a byline, and write the day's
@@ -157,6 +162,7 @@ masthead subtitle.
 ## The roster (already sorted by triage score, highest first)
 
 {roster}
+{recent_leads_block}
 
 ## Byline roster (you MUST use these — do not invent new names)
 
@@ -215,6 +221,14 @@ principle and rooted in today's lead. Examples:
 - "Will the chip-sector pullback hold below the 50-day, or bounce on AMD?"
 
 Dry. No "we wonder" / "could it be that..." padding.
+
+## Don't lead with the same story 4 days running
+
+If the recent-leads block above shows you've already led with this
+story arc for several days, relegate it. The reader has read it.
+Pick a different lead even if it's score-wise the second-best — a
+fresh angle is worth one rank point of triage score. The
+already-led story can stay as a section feature; just don't re-front it.
 
 ## Required output
 
@@ -393,6 +407,41 @@ def _heuristic_plan(triaged: list[TriagedCandidate], today: date) -> NewsPlan:
         notes="heuristic plan (LLM unavailable)",
         todays_question="",
     )
+
+
+def _recent_leads_context(today: date) -> str:
+    """Phase 9C — pull the front-page lead headlines from the last 5
+    days of pipeline JSON dumps. Empty string when there's no
+    history (or when the directory's been archive-trimmed away)."""
+    import json as _json
+    from datetime import timedelta
+    from trading_bot.state.paths import STATE_ROOT
+    state_dir = STATE_ROOT / "daily_news"
+    if not state_dir.exists():
+        return ""
+    items: list[tuple[str, str, str]] = []   # (date, headline, slug)
+    for offset in range(1, 6):
+        d = (today - timedelta(days=offset)).isoformat()
+        p = state_dir / f"{d}.pipeline.json"
+        if not p.exists():
+            continue
+        try:
+            payload = _json.loads(p.read_text())
+        except _json.JSONDecodeError:
+            continue
+        plan = payload.get("stages", {}).get("publisher", {}) or {}
+        lead_slug = plan.get("front_lead_slug", "")
+        pieces = plan.get("pieces", []) or []
+        lead = next((pc for pc in pieces if pc.get("slug") == lead_slug), None)
+        if lead:
+            items.append((d, lead.get("headline", "(unknown)"), lead_slug))
+    if not items:
+        return ""
+    lines = ["", "## Recent front-page leads (last 5 days)", ""]
+    for d, headline, slug in items:
+        lines.append(f"- **{d}** — *{headline}*  (slug: `{slug}`)")
+    lines.append("")
+    return "\n".join(lines)
 
 
 _SLUG_RE = re.compile(r"[^a-z0-9]+")

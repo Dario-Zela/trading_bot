@@ -182,13 +182,63 @@ def build_dashboard_data() -> dict:
     # yfinance-simulated exposure that was never placed at a broker.
     global_overview = _build_global_overview(active + archived)
 
+    # Phase 9D — sector exposure on currently-open positions (live-tier only).
+    sector_exposure = _build_sector_exposure(active + archived)
+
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "regions": sorted(regions_seen) if regions_seen else ["us"],
         "global_overview": global_overview,
+        "sector_exposure": sector_exposure,
         "active": active,
         "archived": archived,
     }
+
+
+def _build_sector_exposure(entries: list[dict]) -> dict:
+    """Phase 9D — what sectors are we long in today, by notional GBP?
+    Returns {by_sector: [...], total_gbp: ...}. Uses cached sectors;
+    cold-cache adds ~50ms per ticker so the first dashboard build per
+    new ticker is slow but subsequent runs are instant."""
+    from collections import defaultdict
+    from trading_bot.tools.sectors import bulk_lookup
+
+    open_positions: list[dict] = []
+    for entry in entries:
+        for t in entry.get("executed", []):
+            if t.get("exit_date"):
+                continue
+            if t.get("tier") not in _REAL_BROKER_TIERS:
+                continue
+            open_positions.append(t)
+    if not open_positions:
+        return {"by_sector": [], "total_gbp": 0.0, "n_positions": 0}
+
+    tickers = sorted({t.get("ticker") for t in open_positions if t.get("ticker")})
+    sector_map = bulk_lookup(tickers)
+
+    by_sector: dict[str, float] = defaultdict(float)
+    total = 0.0
+    for t in open_positions:
+        sector = sector_map.get(t.get("ticker")) or "Unknown"
+        try:
+            entry_price = float(t.get("entry_price") or 0)
+            qty = float(t.get("quantity") or 0)
+            notional = abs(entry_price * qty)
+        except (TypeError, ValueError):
+            continue
+        # Alpaca rows store USD-priced entries; the dashboard's overview
+        # already labels those as USD-mislabelled-GBP. Treat the
+        # notional as-is for relative breakdown; the % comparison is
+        # the metric, not the absolute £.
+        by_sector[sector] += notional
+        total += notional
+    rows = sorted(
+        [{"sector": s, "gbp": round(v, 2), "pct": round(v / total * 100, 1)}
+         for s, v in by_sector.items()],
+        key=lambda r: r["gbp"], reverse=True,
+    )
+    return {"by_sector": rows, "total_gbp": round(total, 2), "n_positions": len(open_positions)}
 
 
 _REAL_BROKER_TIERS = {"alpaca-paper", "trading212-paper", "t212-live"}

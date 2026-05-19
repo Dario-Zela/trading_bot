@@ -667,6 +667,12 @@ def rebuild_all_pages() -> dict:
     n_news = render_news_pages()
     n_macro = render_macro_pages()
     have_evolution = render_evolution_page()
+    # Phase 9I — predictions archive page
+    try:
+        from trading_bot.dashboard.predictions_archive import render_predictions_archive
+        render_predictions_archive(docs_root(), _shell)
+    except Exception as e:
+        log.warning("Predictions archive render failed (non-fatal): %s", e)
     return {"news": n_news, "macro": n_macro, "evolution": have_evolution}
 
 
