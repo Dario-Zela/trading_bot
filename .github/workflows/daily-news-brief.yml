@@ -69,11 +69,41 @@ jobs:
             exit 0
           fi
           git commit -m "daily news brief — $(date -u +%Y-%m-%d)"
+
+          # First try: plain rebase. Most common case is clean drift
+          # (no overlapping edits). Retries use "-X theirs" which,
+          # during a rebase, takes the LOCAL commit's version on
+          # conflict — that's what we want for docs/news/index.html
+          # and the per-date state files, both of which are fully
+          # regenerated each run and so always reflect today's
+          # authoritative output. (Rebase semantics flip "ours" and
+          # "theirs" relative to merge — `theirs` here = local.)
           for i in 1 2 3; do
-            git pull --rebase --autostash origin main || git rebase --abort || true
-            if git push; then exit 0; fi
+            strategy=""
+            if [ "$i" -gt 1 ]; then
+              strategy="-X theirs"
+            fi
+            if git pull --rebase --autostash $strategy origin main && git push; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
             echo "Push attempt $i failed, retrying..."
             sleep 2
           done
-          echo "Could not push after 3 attempts"
+          echo "Could not push after 3 attempts — recovery step will try Claude-assisted resolution"
           exit 1
+
+      - name: Recovery — Claude resolves conflicts
+        if: failure()
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: |
+          # Last-resort recovery: drive a Python helper that uses
+          # the Claude Code CLI to actually read each conflicting
+          # file, decide which side to keep (per a path-specific
+          # policy), write the resolution back, and continue the
+          # rebase + push. Only fires when the prior commit step
+          # failed (`if: failure()`).
+          git config user.name "trading-bot[bot]"
+          git config user.email "trading-bot@users.noreply.github.com"
+          python .github/scripts/claude_resolve_conflicts.py
