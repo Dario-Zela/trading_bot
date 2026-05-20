@@ -169,7 +169,10 @@ class Trading212DemoExecutor(Executor):
             # Phase 12A — multi-day positioning
             from trading_bot.tools.calendar import add_trading_days
             hold_days = max(1, int(intent.hold_days))
-            target_exit = add_trading_days(on_date, hold_days, region)
+            # hold_days = total trading days the position is held.
+            # hold_days=1 → exit today's close (no overnight).
+            # hold_days=2 → one overnight, exit next trading day. Etc.
+            target_exit = add_trading_days(on_date, hold_days - 1, region)
 
             client_order_id = f"{strategy_id}-{uuid.uuid4().hex[:12]}"
             order = self._submit_market_order(

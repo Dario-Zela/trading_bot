@@ -141,7 +141,10 @@ class AlpacaPaperExecutor(Executor):
             # Phase 12A — multi-day positioning support
             from trading_bot.tools.calendar import add_trading_days
             hold_days = max(1, int(intent.hold_days))
-            target_exit = add_trading_days(on_date, hold_days, region)
+            # hold_days = total trading days the position is held.
+            # hold_days=1 → exit today's close (no overnight).
+            # hold_days=2 → one overnight, exit next trading day. Etc.
+            target_exit = add_trading_days(on_date, hold_days - 1, region)
             record = TradeRecord(
                 trade_id=client_order_id,
                 strategy_id=strategy_id,
