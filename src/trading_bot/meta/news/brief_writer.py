@@ -148,6 +148,25 @@ and why it matters, in plain English.
    "we'll see what happens."
 6. **End with a forward-look or implication.** What does this set up?
    What's worth watching?
+7. **Work with the facts you have.** Some triage facts may be marked
+   `[verify: …]` or contain placeholders for figures you don't have.
+   Do NOT refuse to write or ask for additional data. Instead:
+     - Drop the unverified figure entirely if it's not load-bearing
+       ("gilt yields remained elevated" instead of "the 10y closed
+       at [X]%").
+     - Or use the qualitative direction ("higher than recent weeks",
+       "near multi-month peaks") without naming a number.
+   The full article will fact-check and source-cite later. Your job
+   right now is the structured standfirst; produce one regardless.
+
+## Hard contract
+
+You MUST return the JSON object specified below, with a populated
+`body_md`. Returning a request-for-data, a list of questions, or an
+explanation of why you can't write is a failure of this contract.
+If the facts genuinely don't support a confident take, write a short
+generic standfirst from the angle + headline and acknowledge the
+beat at a high level — but always return the JSON.
 
 ## Required output
 
