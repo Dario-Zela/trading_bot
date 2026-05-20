@@ -8,7 +8,7 @@
     "us_etfs_commodity"
   ],
   "n_tickers_checked": 476,
-  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 RS1.L +15%, SHAW.L +7%, ASML.AS +6%, MKS.L +6%, STMPA.PA +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (AEP.L -21%, CWR.L -9%, WKL.AS -5%, KNOS.L -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: AEP.L (-20.90%) \u2014 Indonesian Government unveiled CPO export-policy proposals on 20 May 2026; AEP.L's RNS acknowledged indirect pricing risk to domestic CPO sales, triggering a -21% sell-off on regulatory uncertainty around scope and implementation. Why we passed: Company RNS stated 'no direct impact', muting NLP sentiment below the news-reactive trigger threshold. Momentum-trader had no short signal \u2014 stock sat near 52-week highs with no prior negative drift; bot lacks short capability to act on a sudden gap-down.",
+  "summary": "Held 1 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 RS1.L +15%, SHAW.L +7%, ASML.AS +7%, MKS.L +7%, WOSG.L +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 3 downside moves (AEP.L -21%, CWR.L -8%, CCR.L -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: AEP.L (-21.08%) \u2014 Anglo-Eastern Plantations filed RNS at 11:40 AM BST disclosing Indonesian government proposals for new CPO export restrictions, directly threatening AEP's Indonesia-derived palm oil revenues and triggering a sharp intraday re-rating. Why we passed: AEP Plantations has very thin LSE daily volume (~38m shares outstanding, low ADV) likely placing it below the bot's liquidity floor across all strategies. The catalyst was also a pure bearish intraday shock \u2014 no long-only strategy can profitably express a directional view on a >20% government-policy gap-down without sh",
   "top_movers": [
     {
       "ticker": "RS1.L",
@@ -22,117 +22,15 @@
         "news-reactive"
       ],
       "was_traded_by": [],
-      "catalyst": "FY26 annual results: adj. operating profit \u00a3265M beat consensus; cash conversion 109% vs 80% target; \u00a3100M buyback launched; Distrelec synergies \u00a340M+ exceeded expectations.",
-      "miss_reason": "RS1.L was almost certainly inside an earnings-blackout gate \u2014 systematic strategies typically halt new positioning in names reporting full-year results to avoid binary event risk. The move was priced in at open; no clean intraday entry signal remained for momentum-trader (gap too large, RSI spiked) or news-reactive (pr",
-      "suggestion": "News-reactive earnings gate should auto-release names with a results-day open gap \u2265 +5% that sustains price above the VWAP for \u2265 45 min post-open, allowing continuation entries on validated beats rather than blocking the name the entire session.",
+      "catalyst": "RS Group FY2026 full-year results (20 May): adj. operating profit \u00a3265M and revenue \u00a32.88B both beat consensus; board simultaneously announced a \u00a3100M 12-month share buyback.",
+      "miss_reason": "Earnings-gate blocked pre-announcement positioning across all strategies. The ~8% open gap (600.5p \u2192 ~648p) then exceeded news-reactive's gap-entry ceiling, locking every strategy out of the further +6% continuation leg that ran to the 690p close.",
+      "suggestion": "Add a post-earnings continuation rule to news-reactive: if open gap \u22655% AND price holds above the first 5-min VWAP AND a capital-return event (buyback/special dividend) is simultaneously announced, permit a scaled entry within the first 30 min of open.",
       "failed": false
     },
     {
       "ticker": "SHAW.L",
-      "move_pct": 7.325,
-      "close": 3.15,
-      "in_universe_of": [
-        "control-rule-based",
-        "macro-aligned",
-        "mean-reverter",
-        "momentum-trader",
-        "news-reactive"
-      ],
-      "was_traded_by": [],
-      "catalyst": "Delayed institutional re-rating of Shawbrook's 14 May Q1 update (loan book +2.6% to \u00a319.7bn, FY26 ROTE ~17% reaffirmed, maiden dividend guided for FY27) combined with pre-AGM positioning ahead of the 21 May AGM.",
-      "miss_reason": "Momentum filters excluded SHAW.L after a ~40% drawdown from its 518p 52-week high; news-reactive's stale-signal window had already expired 6 days after the 14 May RNS; mean-reverter's minimum-volume or RSI-recovery threshold likely blocked entry as the stock drifted near its 52-week low.",
-      "suggestion": "Extend news-reactive's catalyst re-evaluation to 7 sessions: re-arm entry if price stays within 2% of the results-day close on days N+1..+6 then breaks higher on \u22651.3\u00d7 30-day average volume.",
-      "failed": false
-    },
-    {
-      "ticker": "ASML.AS",
-      "move_pct": 5.909,
-      "close": 1322.8,
-      "in_universe_of": [
-        "control-rule-based",
-        "macro-aligned",
-        "mean-reverter",
-        "momentum-trader",
-        "news-reactive"
-      ],
-      "was_traded_by": [],
-      "catalyst": "UBS double-upgraded ASML to Buy and raised its price target from \u20ac1,600 to \u20ac1,900, naming it Europe's top semiconductor pick; shares gapped ~2.8% pre-market and extended to +5.91% by close.",
-      "miss_reason": "The move was priced in pre-market via a broker-note catalyst the news-reactive strategy likely has no feed for. Momentum-trader was probably blocked by an RSI overbought filter \u2014 ASML had already rallied ~98% in the prior 52 weeks \u2014 and a gap-up ceiling that rejected the open-print.",
-      "suggestion": "Add a tier-1 analyst-upgrade signal to news-reactive: trigger entry when a top-10 broker raises rating by \u22652 notches OR lifts PT by \u226515%, and extend the gap-up allowance parameter from its current ceiling to 3% to accommodate pre-market analyst-driven gaps.",
-      "failed": false
-    },
-    {
-      "ticker": "MKS.L",
-      "move_pct": 5.906,
-      "close": 3.461,
-      "in_universe_of": [
-        "control-rule-based",
-        "macro-aligned",
-        "mean-reverter",
-        "momentum-trader",
-        "news-reactive"
-      ],
-      "was_traded_by": [],
-      "catalyst": "FY2026 full-year results released 20 May beat consensus: adj. pre-tax profit \u00a3671.4M vs \u00a3665M est.; Q4 clothing LFL +4.3%, food +6.7%; dividend raised to 4.2p; FY2027 profit growth guided.",
-      "miss_reason": "Scheduled earnings day: most strategies gate MKS.L to avoid binary event risk. The gap materialised at the open (+5\u20136%) on pre-market RNS, breaching typical intraday gap-size filters; news-reactive requires post-open signal confirmation and cannot pre-position on pre-market prints.",
-      "suggestion": "Add an earnings-beat release rule to news-reactive: if pre-market RNS shows adj. profit > consensus by \u22651%, lift the earnings gate and allow entry on the first 5-min bar after open, capped at 0.5\u00d7 normal position size to contain binary-event tail risk.",
-      "failed": false
-    },
-    {
-      "ticker": "STMPA.PA",
-      "move_pct": 5.791,
-      "close": 55.17,
-      "in_universe_of": [
-        "control-rule-based",
-        "macro-aligned",
-        "mean-reverter",
-        "momentum-trader",
-        "news-reactive"
-      ],
-      "was_traded_by": [],
-      "catalyst": "Pre-Nvidia-earnings semiconductor sector rally (NVDA reporting Q1 FY26 after close); ASML's same-day UBS upgrade to top European pick dragged correlated Paris-listed chip names including STMPA higher.",
-      "miss_reason": "Up ~67% in a month on back-to-back gaps (May 4 +6%, May 13 +9.4%); RSI likely hit momentum-trader's ceiling. News-reactive already fired on STM's Q1 beat and Starlink deal; today's move was a sector lift with no fresh STM-specific signal.",
-      "suggestion": "Add an NVDA-earnings event window to momentum-trader: on the day of Nvidia's after-close report, lift the RSI ceiling for European semiconductor proxies (STMPA.PA, IFX.DE) if sector ETF intraday volume exceeds 1.2\u00d7 its 20-day average.",
-      "failed": false
-    },
-    {
-      "ticker": "WOSG.L",
-      "move_pct": 4.352,
-      "close": 6.6837,
-      "in_universe_of": [
-        "control-rule-based",
-        "macro-aligned",
-        "mean-reverter",
-        "momentum-trader",
-        "news-reactive"
-      ],
-      "was_traded_by": [],
-      "catalyst": "Post-earnings continuation drift: WOSG beat FY2026 consensus on May 14 (rev \u00a31.83B, +13% CC, US +24%) with EBIT ahead of expectations; lagged analyst price-target upgrades are driving residual institutional buying six sessions later.",
-      "miss_reason": "The May 14 earnings gap (~15%) almost certainly triggered an earnings-gate lockout across all strategies. Today's drift has no discrete fresh catalyst, so news-reactive skips it; post-gap volume and RSI conditions fall outside momentum-trader's standard breakout filter.",
-      "suggestion": "Add a post-earnings re-entry window to momentum-trader: after a results-day gap \u2265+10%, re-enable the name after 3 sessions if price holds above the gap close and volume normalises to \u22650.8\u00d7 its 20-day average, to capture analyst-upgrade drift.",
-      "failed": false
-    },
-    {
-      "ticker": "AEP.L",
-      "move_pct": -20.899,
-      "close": 17.6,
-      "in_universe_of": [
-        "control-rule-based",
-        "macro-aligned",
-        "mean-reverter",
-        "momentum-trader",
-        "news-reactive"
-      ],
-      "was_traded_by": [],
-      "catalyst": "Indonesian Government unveiled CPO export-policy proposals on 20 May 2026; AEP.L's RNS acknowledged indirect pricing risk to domestic CPO sales, triggering a -21% sell-off on regulatory uncertainty around scope and implementation.",
-      "miss_reason": "Company RNS stated 'no direct impact', muting NLP sentiment below the news-reactive trigger threshold. Momentum-trader had no short signal \u2014 stock sat near 52-week highs with no prior negative drift; bot lacks short capability to act on a sudden gap-down.",
-      "suggestion": "Add a CPO-policy regulatory feed to news-reactive; when an Indonesian government commodity-export announcement is detected, override neutral RNS sentiment scores and flag plantation names for short-side review within 30 minutes of open.",
-      "failed": false
-    },
-    {
-      "ticker": "CWR.L",
-      "move_pct": -9.091,
-      "close": 5.9136,
+      "move_pct": 7.496,
+      "close": 3.155,
       "in_universe_of": [
         "control-rule-based",
         "macro-aligned",
@@ -147,9 +45,9 @@
       "failed": true
     },
     {
-      "ticker": "WKL.AS",
-      "move_pct": -4.6,
-      "close": 63.04,
+      "ticker": "ASML.AS",
+      "move_pct": 6.725,
+      "close": 1333.0,
       "in_universe_of": [
         "control-rule-based",
         "macro-aligned",
@@ -158,15 +56,15 @@
         "news-reactive"
       ],
       "was_traded_by": [],
-      "catalyst": "Pre-AGM positioning pressure (shareholder meeting 2026-05-21, \u20ac2.52 dividend vote) compounding persistent AI-disruption sentiment; JPMorgan flagged UpToDate facing churn/pricing risk, driving WKL -33% YTD.",
-      "miss_reason": "WKL is in a structural downtrend with no intraday news catalyst \u2014 news-reactive requires a fresh signal, not trend continuation. Long-only constraint blocks momentum-trader from acting on negative momentum; mean-reverter's falling-knife filter suppresses longs on names trading >20% below 200-DMA.",
-      "suggestion": "Add a pre-AGM event gate: suppress mean-reverter long entries on any name with a major shareholder vote within 48 h, as event-window selling systematically biases these days negative and invalidates the reversion assumption.",
+      "catalyst": "UBS upgraded ASML and raised price target from \u20ac1,600 to \u20ac1,900 (+19%), citing AI chip supply tightening and a semiconductor capex cycle extending to 2028; stock opened ~6% higher on the note.",
+      "miss_reason": "Analyst-upgrade catalyst landed pre-market; the ~6% open gap likely breached momentum-trader's max-gap-at-entry filter and pushed RSI above news-reactive's overbought ceiling, leaving all five strategies in observer mode while the move was already priced in.",
+      "suggestion": "Add a Tier-1-analyst-upgrade gate in news-reactive: if an overnight upgrade with PT raise \u226515% is detected and open gap is +3\u20138%, allow entry in the first 30 min with a tighter 1% hard stop, bypassing the RSI ceiling for this signal class only.",
       "failed": false
     },
     {
-      "ticker": "KNOS.L",
-      "move_pct": -4.019,
-      "close": 8.12,
+      "ticker": "MKS.L",
+      "move_pct": 6.64,
+      "close": 3.485,
       "in_universe_of": [
         "control-rule-based",
         "macro-aligned",
@@ -175,11 +73,111 @@
         "news-reactive"
       ],
       "was_traded_by": [],
-      "catalyst": "FY2026 adj PBT margin fell 2.4pp to 16% (from 18%) on contractor/NI cost inflation and buyback suspension; post-results selling extended into T+2 as market weighted margin deterioration over the revenue/bookings beat.",
-      "miss_reason": "News-reactive saw May 18 results but the muted +0.43% T+0 reaction was below any short-signal threshold; control-rule-based post-earnings blackout (typically 2-3 days) was still active on T+2, locking KNOS.L out during today's margin-driven drift leg.",
-      "suggestion": "Shorten post-earnings blackout to 1 day for names where T+0 reaction is <\u00b11%, then allow news-reactive a T+1/T+2 short entry if adj margin contracted >1pp AND buyback guidance was cut, with stop at the results-day intraday high.",
+      "catalyst": "FY2026 results beat: adjusted PBT \u00a3671.4m vs \u00a3655m Shore Capital est.; food sales +7% YoY; higher full-year dividend (4.2p) proposed despite cyber-attack drag on H1 profit.",
+      "miss_reason": "Scheduled earnings release (pre-announced 20 May) triggers a pre-results exclusion gate in systematic strategies; the entire +6.64% move was an open-auction gap on a profit beat that required positioning before market open or at the first print \u2014 no prior-session technical signal existed to enter.",
+      "suggestion": "Earnings-gate should auto-release names where reported PBT beats consensus by \u22652% and the open-auction indicative price implies a gap \u2265+3%; news-reactive can then enter within 15 min of LSE open on confirmed beats rather than staying gated all session.",
+      "failed": false
+    },
+    {
+      "ticker": "WOSG.L",
+      "move_pct": 6.557,
+      "close": 6.825,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [],
+      "catalyst": "FY26 trading update (14-May): record revenue \u00a31.83B (+13% cc), US sales +24% to $1.24B, EBIT guidance raised to \u00a3152-155M; today's move is post-beat broker upgrade / institutional follow-through with no new discrete catalyst.",
+      "miss_reason": "News-reactive would have been eligible on 14-May's +15% gap; today has no fresh catalyst so the news-gate stays closed. Momentum-trader likely excluded it: RSI overbought after the gap and a recent-gap-cooldown filter bars new entries within the standard T+1-to-T+5 exclusion window.",
+      "suggestion": "Add a post-earnings continuation rule to momentum-trader: if a name gaps >10% on a results/trading-update day and then prints a new closing high on any T+1\u2013T+5 session, suppress the gap-cooldown exclusion and allow a fresh entry sized at \u226450% normal position.",
+      "failed": false
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": 5.983,
+      "close": 55.27,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [],
+      "catalyst": "Mizuho raised STM price target to $68 from $56 (~21%), reinforcing the post-Q1 beat story ($3.10B rev, +23% YoY; Q2 guide $3.45B) and Starlink LEO supply deal (\u20ac3B cumulative 2026-28), lifting shares to a 52-week high.",
+      "miss_reason": "After a ~56% one-month rally RSI was deep in overbought territory, almost certainly tripping momentum-trader's entry filter. News-reactive likely closed its position post-earnings 3 weeks ago; today's move was an analyst PT-revision drift, not a fresh binary catalyst that would re-open a signal.",
+      "suggestion": "Add a tier-1 broker PT-revision trigger to news-reactive: when a universe name receives a \u226515% PT raise with a buy rating, allow a same-day entry even if RSI > 70, sized at 50% of normal to cap overbought-reversal risk.",
+      "failed": false
+    },
+    {
+      "ticker": "AEP.L",
+      "move_pct": -21.079,
+      "close": 17.56,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [],
+      "catalyst": "Anglo-Eastern Plantations filed RNS at 11:40 AM BST disclosing Indonesian government proposals for new CPO export restrictions, directly threatening AEP's Indonesia-derived palm oil revenues and triggering a sharp intraday re-rating.",
+      "miss_reason": "AEP Plantations has very thin LSE daily volume (~38m shares outstanding, low ADV) likely placing it below the bot's liquidity floor across all strategies. The catalyst was also a pure bearish intraday shock \u2014 no long-only strategy can profitably express a directional view on a >20% government-policy gap-down without sh",
+      "suggestion": "Extend news-reactive's RNS watchlist to include LSE commodity-sector names above a minimum \u00a3200k ADV threshold with Indonesia/Malaysia exposure; pair with an intraday short-trigger rule on RNS keyword matches ('export levy', 'export restriction', 'export ban') if short capability is ever added.",
+      "failed": false
+    },
+    {
+      "ticker": "CWR.L",
+      "move_pct": -8.455,
+      "close": 5.955,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "USO",
+      "move_pct": -5.485,
+      "close": 144.57,
+      "in_universe_of": [
+        "commodity-momentum"
+      ],
+      "was_traded_by": [
+        "commodity-momentum"
+      ],
+      "catalyst": "Trump announced 19 May he called off a planned US military strike on Iran at Gulf allies' request, deflating crude's war-risk premium; WTI fell ~5% on eased Strait of Hormuz supply-disruption fears.",
+      "miss_reason": "Commodity-momentum held a long-USO signal built on the Iran-war scarcity premium; the reversal was a pre-market geopolitical headline creating a >3% opening gap, likely caught by the gap-exclusion filter. Long-only mandate meant the short side was never actionable.",
+      "suggestion": "Add a geopolitical de-escalation flag (news-sentiment feed): when triggered pre-market, suppress long commodity-ETF entries and allow short re-entry on gaps \u22652%, bypassing the gap-exclusion filter for geopolitical-reversal events only.",
+      "failed": false
+    },
+    {
+      "ticker": "CCR.L",
+      "move_pct": -4.53,
+      "close": 1.096,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [],
+      "catalyst": "C&C Group FY2026 finals (18 May): group revenue -6%, op. profit \u20ac70.5M; distribution dragged by BBG/Budweiser exit & weak hospitality volumes; two-session post-results selloff continued into 20 May.",
+      "miss_reason": "Results RNS dropped 07:00 on 18 May \u2014 earnings gate likely held CCR off limits for \u00b12 days around announcement. By 20 May the primary news signal had already fired; news-reactive needs same-session entry and momentum lacked a prior-day directional setup.",
+      "suggestion": "Earnings-gate should release names with a post-results gap \u22653% within 30 min of LSE open on RNS day, letting news-reactive enter a short on the announcement session rather than sitting out the two-day post-results drift.",
       "failed": false
     }
   ],
-  "generated_at": "2026-05-20T15:09:12.098101+00:00"
+  "generated_at": "2026-05-20T16:23:33.514901+00:00"
 }
