@@ -1,26 +1,32 @@
-name: Recover T212 strands
+name: T212 diagnostic + reflection catchup
 
-# One-off / on-demand recovery for T212-paper trades whose exit cron
-# poll timed out before the broker's SELL fill landed. Queries T212
-# order history, back-fills entry + exit prices for each stranded
-# ledger row, and commits the updated ledger.
+# On-demand diagnostic + reflection-backfill workflow.
 #
-# Trigger manually via the Actions tab when the daily-summary email
-# shows currently-open T212-paper positions that the broker has
-# already cleared (account-status shows 0 positions).
+# The "recover" + "recover-alpaca" modes that lived here previously
+# back-filled stranded broker positions when the exit cron mis-handled
+# them. Both have been retired — the underlying bugs (T212 history-
+# shape parse, Alpaca bracket-only recovery, smart-merge dropping
+# closure rows) are fixed in the main exit_scheduled path, so future
+# cron runs no longer produce the strand patterns they cleaned up.
+#
+# Two modes remain:
+#   diag    — dump T212 history for currently-open T212-paper trades.
+#             Useful for inspecting broker latency / fill order state.
+#   reflect — catch up LLM reflections (per-trade outcome notes +
+#             per-prediction reflection) for any day/region where the
+#             daily reflect cron missed rows. Mostly historical
+#             backfill at this point.
 
 on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "diag = print T212 history. recover = back-fill T212 ledger. recover-alpaca = back-fill Alpaca cancelled rows. reflect = LLM reflections."
+        description: "diag = print T212 history. reflect = LLM reflections on already-closed trades + ungraded predictions."
         required: true
         default: diag
         type: choice
         options:
           - diag
-          - recover
-          - recover-alpaca
           - reflect
 
 permissions:
@@ -73,28 +79,6 @@ jobs:
           T212_API_SECRET__3: ${{ secrets.T212_API_SECRET__3 }}
         run: python scripts/t212_history_diag.py
 
-      - name: Recover — back-fill T212 ledger
-        if: ${{ inputs.mode == 'recover' }}
-        env:
-          T212_API_KEY__1: ${{ secrets.T212_API_KEY__1 }}
-          T212_API_SECRET__1: ${{ secrets.T212_API_SECRET__1 }}
-          T212_API_KEY__2: ${{ secrets.T212_API_KEY__2 }}
-          T212_API_SECRET__2: ${{ secrets.T212_API_SECRET__2 }}
-          T212_API_KEY__3: ${{ secrets.T212_API_KEY__3 }}
-          T212_API_SECRET__3: ${{ secrets.T212_API_SECRET__3 }}
-        run: python scripts/recover_t212_strands.py
-
-      - name: Recover — back-fill Alpaca cancelled rows
-        if: ${{ inputs.mode == 'recover-alpaca' }}
-        env:
-          ALPACA_API_KEY__1: ${{ secrets.ALPACA_API_KEY__1 }}
-          ALPACA_API_SECRET__1: ${{ secrets.ALPACA_API_SECRET__1 }}
-          ALPACA_API_KEY__2: ${{ secrets.ALPACA_API_KEY__2 }}
-          ALPACA_API_SECRET__2: ${{ secrets.ALPACA_API_SECRET__2 }}
-          ALPACA_API_KEY__3: ${{ secrets.ALPACA_API_KEY__3 }}
-          ALPACA_API_SECRET__3: ${{ secrets.ALPACA_API_SECRET__3 }}
-        run: python scripts/recover_alpaca_cancelled.py
-
       - name: Reflect — LLM reflections on recovered trades
         if: ${{ inputs.mode == 'reflect' }}
         env:
@@ -102,12 +86,12 @@ jobs:
         run: python scripts/reflect_recovered_trades.py
 
       - name: Rebuild dashboard data
-        if: ${{ inputs.mode == 'recover' || inputs.mode == 'recover-alpaca' || inputs.mode == 'reflect' }}
+        if: ${{ inputs.mode == 'reflect' }}
         run: python -m trading_bot.dashboard.build
         continue-on-error: true
 
       - name: Commit ledger state back
-        if: ${{ always() && (inputs.mode == 'recover' || inputs.mode == 'recover-alpaca' || inputs.mode == 'reflect') }}
+        if: ${{ always() && inputs.mode == 'reflect' }}
         run: |
           git config user.name "trading-bot[bot]"
           git config user.email "trading-bot@users.noreply.github.com"
@@ -117,8 +101,6 @@ jobs:
             exit 0
           fi
           case "${{ inputs.mode }}" in
-            recover)         MSG="recover T212 strands — $(date -u +%Y-%m-%dT%H:%MZ)" ;;
-            recover-alpaca)  MSG="recover Alpaca cancelled rows — $(date -u +%Y-%m-%dT%H:%MZ)" ;;
             reflect)         MSG="reflect on recovered trades + predictions — $(date -u +%Y-%m-%dT%H:%MZ)" ;;
             *)               MSG="recover-t212-strands ${{ inputs.mode }} — $(date -u +%Y-%m-%dT%H:%MZ)" ;;
           esac

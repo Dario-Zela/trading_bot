@@ -1,18 +1,25 @@
-"""Generate proper LLM reflections for back-filled rows the daily reflect
-cron missed:
+"""Catchup script — runs Sonnet reflections on rows the daily
+reflect cron missed.
 
-1. **Trades closed by recover_t212_strands**: the recovery script writes
-   a generic "this row was back-filled" placeholder into outcome_notes
-   and risks_observed. We replace it with a real Sonnet reflection.
+Two backfill cases:
 
-2. **Untraded predictions for any day that's been graded but not
-   reflected**: catches days where the prediction-reflection pass
-   either didn't run (older pipelines) or failed. The weekly evolution
-   agent reads predictions.jsonl heavily and benefits from pre-baked
-   one-line reflections on every miss.
+1. **Trades with a placeholder reflection.** Earlier, deprecated
+   recovery scripts (recover_t212_strands.py, recover_alpaca_
+   cancelled.py — both retired now that the main exit path handles
+   their cases) wrote a "this row was back-filled" placeholder into
+   outcome_notes when they closed historical strands. Rows still
+   carrying that placeholder get re-reflected here with the real
+   per-strategy Sonnet pass.
+
+2. **Untraded predictions graded but not reflected.** Daily reflect
+   crons that pre-date the prediction-reflection feature (or that
+   failed for one day) leave rows with actual_class populated but
+   no reflection text. The weekly evolution agent reads
+   predictions.jsonl heavily and benefits from pre-baked one-line
+   reflections on every miss.
 
 Idempotent — already-reflected rows are skipped. Triggered via the
-recover-t212-strands workflow's `reflect` mode.
+T212-diagnostic workflow's `reflect` mode.
 """
 from __future__ import annotations
 
