@@ -175,12 +175,38 @@ class AlpacaPaperExecutor(Executor):
         region: str,
         on_date: date,
     ) -> list[dict]:
+        # First pass: sweep the Alpaca portfolio for positions that don't
+        # match an open ledger row. Same rationale as T212's orphan
+        # reconciliation — a prior entry's ledger write may have been
+        # lost (timeout, smart-merge race) but the broker filled the
+        # order anyway. The first strategy whose exit runs here claims
+        # the orphans; subsequent strategies for the same slot won't
+        # see them again because the rows are now in the ledger.
+        # Attribution is imperfect when multiple strategies share a slot
+        # but the alternative is the position sitting unmanaged.
+        try:
+            recovered = self.reconcile_orphans(
+                attribute_to_strategy=strategy_id,
+                region=region,
+                on_date=on_date,
+            )
+            if recovered:
+                log.info(
+                    "Recovered %d Alpaca orphan position(s) into %s's ledger: %s",
+                    len(recovered), strategy_id, [r["ticker"] for r in recovered],
+                )
+        except Exception as e:
+            log.warning("Alpaca orphan reconcile failed for %s (non-fatal): %s", strategy_id, e)
+
         # Sweep ALL open trades for this strategy+region. If a prior
         # session missed its exit (holiday, workflow failure, broker
         # outage) those trades sit stranded with exit_date=None. The
         # close-by-current-position logic below handles them — Alpaca
-        # returns the live position if still open, the bracket-leg-fill
-        # path handles closes that fired intraday.
+        # returns the live position if still open; the bracket-leg-fill
+        # path handles closes that fired intraday; the _find_recent_sell
+        # fallback handles closes that fired via plain market sell
+        # (e.g. a prior session's market-on-close that didn't commit
+        # its ledger update).
         open_trades = read_open_trades(strategy_id=strategy_id, region=region)
         if not open_trades:
             return []
@@ -665,6 +691,96 @@ class AlpacaPaperExecutor(Executor):
             if (leg.get("status") or "").lower() == "filled" and leg.get("filled_avg_price") is not None:
                 return leg
         return None
+
+    def reconcile_orphans(
+        self,
+        *,
+        attribute_to_strategy: str,
+        region: str,
+        on_date: date,
+    ) -> list[dict]:
+        """Symmetric to T212's reconcile_orphans. Find positions that
+        Alpaca holds but the ledger doesn't, write entries for them so
+        the daily exit can close them normally. Hits the same root
+        cause: a previous entry run dropped the ledger write (timeout,
+        smart-merge race, etc.) but the broker filled the order anyway.
+
+        Returns the list of recovered trades. Safe to invoke
+        unconditionally — empty broker portfolio is a fast no-op."""
+        try:
+            response = requests.get(
+                self._url("/v2/positions"),
+                headers=self._headers(),
+                timeout=15,
+            )
+        except requests.RequestException as e:
+            log.error("Alpaca positions fetch errored during reconcile: %s", e)
+            return []
+        if not response.ok:
+            log.error(
+                "Alpaca positions fetch returned %s during reconcile: %s",
+                response.status_code, response.text[:200],
+            )
+            return []
+        try:
+            positions = response.json() or []
+        except Exception:
+            return []
+        if not isinstance(positions, list) or not positions:
+            return []
+
+        # Tickers we already have an OPEN ledger row for, in this region,
+        # entered today or earlier. Don't reconcile something we already
+        # know about.
+        existing_open = read_open_trades(region=region)
+        existing_tickers = {t.get("ticker") for t in existing_open if t.get("ticker")}
+
+        recovered: list[dict] = []
+        for pos in positions:
+            if not isinstance(pos, dict):
+                continue
+            ticker = pos.get("symbol")
+            if not ticker or ticker in existing_tickers:
+                continue
+
+            try:
+                quantity = float(pos.get("qty") or 0)
+                entry_price = float(pos.get("avg_entry_price") or 0)
+            except (TypeError, ValueError):
+                continue
+            if quantity <= 0 or entry_price <= 0:
+                continue
+
+            client_order_id = f"{attribute_to_strategy}-reconciled-{uuid.uuid4().hex[:8]}"
+            record = TradeRecord(
+                trade_id=client_order_id,
+                strategy_id=attribute_to_strategy,
+                region=region,
+                tier=_TIER,
+                ticker=ticker,
+                side="long",
+                entry_date=on_date.isoformat(),
+                entry_price=entry_price,
+                quantity=quantity,
+                allocation_pct=0.0,
+                thesis=(
+                    f"Reconciled from Alpaca portfolio (slot {self.slot}) — "
+                    "original ledger entry missing (likely an entry-run timeout "
+                    "or smart-merge race). Daily exit will close this normally."
+                ),
+                currency="USD",
+                exchange="NYSE",
+                instrument_type="share",
+            )
+            append_trade(record)
+            log.info(
+                "Reconciled Alpaca orphan: %s qty=%.4f @ %.4f → attributed to %s",
+                ticker, quantity, entry_price, attribute_to_strategy,
+            )
+            recovered.append({
+                "ticker": ticker, "quantity": quantity, "entry_price": entry_price,
+            })
+        return recovered
 
     def _close_position(self, ticker: str) -> dict[str, Any] | None:
         """Liquidate the position at market and return the resulting order

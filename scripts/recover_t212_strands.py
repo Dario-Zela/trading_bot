@@ -1,22 +1,23 @@
-"""One-off recovery for T212-paper trades stranded by a poll-timeout.
+"""One-off cleanup for T212-paper trades stranded by poll-timeout.
 
-On 2026-05-19, the uk-eu exit cron submitted SELL orders for 8 open
-T212-paper positions and abandoned the polls after 60s. T212 filled
-the SELLs minutes later (slot 1 portfolio went to 0) but the ledger
-was never marked exited. Compounding that, the original BUY entries
-this morning had also timed out and were recorded with entry_price=0
-+ a `broker_order_id` pending reconciliation — which the exit run
-then failed to reconcile because of a separate history-shape bug.
+**Status: deprecated as a routine tool.** The cases this script
+addresses — entry/exit fill-poll timeouts, history-shape parse
+issues, smart-merge dropping closure rows — are now all handled by
+`trading212_demo.exit_scheduled`: the poll budget was bumped to
+5 minutes, `_get_order_from_history` correctly reads nested
+shape, and `_find_recent_sell` is the no-position fallback. Future
+exit cron runs should never strand a trade in the way that
+created the original 8 broken rows on 2026-05-19.
 
-This script:
-
-1. Finds every open T212-paper trade older than today's morning.
-2. For each, queries T212 history to find both the BUY (entry) and
-   the SELL (exit) by ticker and date.
-3. Recovers entry_price + exit_price + computes fees + writes the
-   exit to the ledger via mark_trade_exited.
+This script is kept on disk to fix up rows that were ALREADY in
+the bad state before the main-path fixes landed. It walks the
+ledger, queries T212 history for matching BUY/SELL pairs by
+ticker+date, recovers entry_price + exit_price + fees, and writes
+the exit via `mark_trade_exited`.
 
 Idempotent — already-exited rows are skipped. Safe to re-run.
+Will exit fast with no changes once the historical strands are
+all repaired.
 
 Triggered via the `recover-t212-strands` workflow_dispatch workflow.
 """

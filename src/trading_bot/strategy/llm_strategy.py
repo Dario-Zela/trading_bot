@@ -928,6 +928,10 @@ class LLMStrategy(Strategy):
                 rationale = "Not scored by LLM; fallback technical heuristic."
 
             was_traded = ticker in picked_tickers
+            # Capture which tools were active for this run so the
+            # attribution layer can later compute IC by tool-combination.
+            # Sorted for stable equality checks downstream.
+            tools_used = sorted(set(cfg.tools or []))
             append_prediction(
                 PredictionRecord(
                     strategy_id=cfg.id,
@@ -939,6 +943,7 @@ class LLMStrategy(Strategy):
                     conviction=round(float(conviction), 2),
                     rationale=rationale,
                     was_traded=was_traded,
+                    tools_used=tools_used,
                 )
             )
 

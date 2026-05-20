@@ -270,6 +270,41 @@ def _metrics_to_dict(m: StrategyMetrics) -> dict:
     }
 
 
+def _build_tool_attribution_block(snapshot: list[dict]) -> str:
+    """Per-strategy tool-attribution summary spliced into the evolution
+    prompt. One section per strategy, listing each tool's IC delta over
+    the trailing 60-day window. Empty for strategies without graded
+    predictions yet."""
+    try:
+        from trading_bot.meta.tool_attribution import attribution_summary_lines
+    except Exception as e:
+        log.warning("tool attribution unavailable: %s", e)
+        return "_(tool attribution unavailable)_"
+
+    # Strategy IDs appear multiple times in the snapshot (once per
+    # region); collapse to a unique set so we don't emit duplicate
+    # blocks. Attribution is strategy-wide because the `tools` list
+    # is strategy-wide too.
+    seen: set[str] = set()
+    blocks: list[str] = []
+    for row in snapshot:
+        sid = row.get("id")
+        if not sid or sid in seen:
+            continue
+        seen.add(sid)
+        try:
+            lines = attribution_summary_lines(sid)
+        except Exception as e:
+            log.warning("attribution failed for %s: %s", sid, e)
+            continue
+        if not lines.strip():
+            continue
+        blocks.append(f"**{sid}**\n{lines}")
+    if not blocks:
+        return "_(no graded predictions yet — attribution will populate as data accumulates)_"
+    return "\n\n".join(blocks)
+
+
 def _read_external_research() -> str:
     """Return the latest external research brief as markdown, or a
     placeholder if no brief has been generated yet (e.g. the very
@@ -301,6 +336,11 @@ def _build_prompt(today: date, snapshot: list[dict], lessons: str) -> str:
     # can ground spawn-variant proposals in current literature
     # rather than re-inventing.
     external_block = _read_external_research()
+
+    # Tool attribution — per-strategy IC delta by tool over the last
+    # 60 days. Tells the agent which prompt inputs are pulling weight
+    # vs. dead weight that should be tuned out of the `tools` list.
+    tool_attribution_block = _build_tool_attribution_block(snapshot)
     return f"""You are the weekly evolution agent for the trading bot. Today is
 {today.isoformat()}. Each strategy can run independently across regions
 (`us`, `uk-eu`, `asia`), with its own tier and slot per region. Below is a
@@ -364,6 +404,23 @@ the variant's edge to a cited finding) and tier-2-candidate picks
 that's a confidence signal worth flagging). Don't propose anything
 that requires capability we don't have — options, leverage,
 intraday. Don't restate the research; cite it.
+
+## Tool attribution (does each prompt input actually move IC?)
+
+Per-strategy IC contribution by tool, computed over the trailing
+60-day prediction window. `with` = days the tool was in the prompt;
+`without` = days it wasn't. Δ > +0.05 → keep; Δ < −0.05 → tune
+the strategy's `tools` list to drop it. Insufficient = sample too
+small to call (one side has <20 rows).
+
+{tool_attribution_block}
+
+When a tool reads as `negative` for a strategy, your `tune` action
+can DROP it from the strategy's `tools` list via the standard
+`changes` field (`{{"tools": [...]}}` — list the kept tools, omit
+the dropped ones). Don't drop tools labelled "insufficient" — wait
+for more data before acting. This loop is how the prompt
+configuration learns over time.
 
 ## Recent lessons (failures / corrections)
 

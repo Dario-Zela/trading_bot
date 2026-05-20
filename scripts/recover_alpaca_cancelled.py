@@ -1,19 +1,19 @@
-"""One-off recovery for Alpaca-paper ledger rows that got marked
-`cancelled` with exit_price=0 because the exit_scheduled "no
-position" branch couldn't find a filled bracket leg.
+"""One-off cleanup for Alpaca-paper ledger rows marked `cancelled`
+with exit_price=0.
 
-This happens specifically when the position was closed by a plain
-market sell on a prior session (not by a bracket trigger), and the
-ledger update with the real exit_price was dropped by smart-merge
-or otherwise didn't reach main. The recovery branch tried to
-extract a filled stop/take-profit leg from the parent order, found
-none, and gave up.
+**Status: deprecated as a routine tool.** The case this script
+addresses — a market-sell close whose ledger update was dropped by
+smart-merge — is now handled inside `alpaca_paper.exit_scheduled`
+itself: the "no position" branch falls back to `_find_recent_sell`
+on Alpaca order history, so a fresh exit cron recovers the exit
+price automatically. Future runs should never produce the
+cancelled-with-£0 pattern in the first place.
 
-This script walks the ledger for rows matching that pattern, queries
-Alpaca's `/v2/orders` history for a recent SELL on the ticker, and
-back-fills exit_price + pnl_gbp + pnl_pct via `mark_trade_exited`.
-
-Idempotent — rows already with a non-zero exit_price are skipped.
+This script is kept on disk to fix up rows that were ALREADY in
+the bad state before the main-path fix landed. Idempotent — only
+touches rows still at exit_price=0, leaves everything else.
+Safe to dispatch at any time; will exit fast with no changes once
+the historical rows are repaired.
 """
 from __future__ import annotations
 

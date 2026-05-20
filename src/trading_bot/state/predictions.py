@@ -25,6 +25,17 @@ class PredictionRecord:
     actual_class: str | None = None
     was_traded: bool = False
 
+    # Per-prediction context that explains what inputs the strategy saw
+    # when it produced this row. Used by the tool-attribution layer to
+    # measure IC contribution per input — when this strategy got the
+    # daily news brief vs not, what did its IC look like? Reflection
+    # post-grade by the same LLM that reads it in subsequent prompts.
+    # Empty / None for strategies that don't yet emit it.
+    tools_used: list[str] = field(default_factory=list)
+    # Free-form one-line reflection on whether prediction held up.
+    # Populated by the daily reflect_predictions_on_day pass.
+    reflection: str = ""
+
     created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
 
