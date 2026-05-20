@@ -50,6 +50,26 @@ class StrategyConfig:
     # IC / hit-rate isn't diluted by pre-tune trades.
     last_tune_date: str | None = None
 
+    # Tier 2 candidate flag — set by the weekly evolution agent on
+    # strategies it thinks are worth elevating to a graduated tier.
+    # The flag is the agent's prediction; next week's run grades the
+    # candidate's realised performance to validate the analysis. Two
+    # ledger-side fields support that self-check:
+    #
+    #   tier2_candidate         True if the agent has flagged it this
+    #                           cycle; the dashboard renders a gold
+    #                           border for these strategies.
+    #   tier2_marked_at         ISO date the flag was set, so the
+    #                           next evolution run knows how much
+    #                           realised performance to score against.
+    #   tier2_thesis            One-line explanation from the agent
+    #                           of why this strategy deserves the
+    #                           candidate flag; the next run reads
+    #                           this back when grading.
+    tier2_candidate: bool = False
+    tier2_marked_at: str | None = None
+    tier2_thesis: str = ""
+
 
 class Strategy(ABC):
     """Base class for any tradeable strategy. Rule-based subclass overrides

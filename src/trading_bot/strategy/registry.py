@@ -50,6 +50,9 @@ def _to_config(raw: dict) -> StrategyConfig:
         cost_gate_multiplier=float(raw.get("cost_gate_multiplier", 2.0)),
         skip_if_earnings_in_days=int(raw.get("skip_if_earnings_in_days", 0)),
         last_tune_date=raw.get("last_tune_date"),
+        tier2_candidate=bool(raw.get("tier2_candidate", False)),
+        tier2_marked_at=raw.get("tier2_marked_at"),
+        tier2_thesis=str(raw.get("tier2_thesis") or ""),
     )
 
 

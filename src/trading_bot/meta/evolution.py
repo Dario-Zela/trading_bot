@@ -225,6 +225,13 @@ def _build_snapshot(
                 "stop_loss_pct": cfg.get("stop_loss_pct"),
                 "take_profit_pct": cfg.get("take_profit_pct"),
                 "capital_gbp": cfg.get("capital_gbp"),
+                # Tier 2 candidate state — set by a prior evolution run
+                # as a self-prediction. Surfacing it here lets the agent
+                # grade its own past judgement: did the realised metrics
+                # support the prediction?
+                "tier2_candidate": bool(cfg.get("tier2_candidate", False)),
+                "tier2_marked_at": cfg.get("tier2_marked_at"),
+                "tier2_thesis": cfg.get("tier2_thesis"),
                 "metrics": _metrics_to_dict(m) if m else None,
                 "meets_promotion_criteria": _meets_promotion(m, entry) if m else False,
                 "meets_demotion_criteria": _meets_demotion(m, entry) if m else False,
@@ -282,6 +289,16 @@ You can auto-execute these actions on **Tier 0 (shadow)** and **Tier 1
 - `promote` — Tier 0 → Tier 1 for **one region** (we'll assign a free Alpaca slot)
 - `demote` — Tier 1 → Tier 0 for **one region** (we'll clear the slot)
 - `spawn-variant` — clone an existing strategy with prompt + config diffs
+- `mark-tier2-candidate` — strategy-wide self-prediction: "this one is
+  worth elevating, and I'm putting my reputation on it." The flag
+  surfaces a gold border on the dashboard and stays set until you
+  retract or confirm next week. **Include a `thesis` field** with
+  the one-line case for why — next week's run reads it back to grade
+  your judgement against realised performance. Pick at most 2-3 per
+  week; this is meant to be a confidence signal, not a list of
+  every strategy that's mildly positive.
+- `unmark-tier2-candidate` — clears the flag (use when last week's
+  prediction didn't bear out, or the conviction has faded).
 
 For **Tier 2 (live)** strategies you can ONLY recommend with `request-tier-2`
 — that opens a GitHub Issue for the user to approve.
@@ -334,7 +351,12 @@ demote MUST include `region`; tune / spawn-variant do not:
        "config_overrides": {{ "max_positions": 3, ... }},
        "deep_analysis_addendum": "Markdown text appended to the parent's deep_analysis.md to express the variant's bias",
        "reason": "1-2 sentences — why this variant has a meaningfully different edge from the parent" }},
-    {{ "strategy_id": "<id>", "region": "<region>", "action": "request-tier-2", "reason": "Detailed case for live promotion" }}
+    {{ "strategy_id": "<id>", "region": "<region>", "action": "request-tier-2", "reason": "Detailed case for live promotion" }},
+    {{ "strategy_id": "<id>", "action": "mark-tier2-candidate",
+       "thesis": "One-line prediction (≤300 chars) — what's the edge, what should we see by next week",
+       "reason": "Why now (the data point that swung you)" }},
+    {{ "strategy_id": "<id>", "action": "unmark-tier2-candidate",
+       "reason": "Why we're retracting (prediction missed, conviction faded, etc)" }}
   ]
 }}
 ```
@@ -401,6 +423,17 @@ def _apply_action(
         # Recorded only; the issue creator picks these up
         return ActionLog(sid, region, action, False, reason, {"requires_human_approval": True})
 
+    # Tier 2 candidate flag — strategy-wide self-prediction the agent
+    # writes to track which strategies it thinks are worth elevating.
+    # Surfaces as a gold border on the dashboard. The next weekly run
+    # grades the candidate's realised performance to validate the
+    # analysis. `mark-tier2-candidate` sets the flag; the action handler
+    # itself ignores `region` even when present.
+    if action == "mark-tier2-candidate":
+        return _do_mark_tier2(sid, cfg, reason, raw)
+    if action == "unmark-tier2-candidate":
+        return _do_unmark_tier2(sid, cfg, reason)
+
     return ActionLog(sid, region, action, False, f"Unknown action; ignored. ({reason})", {})
 
 
@@ -434,6 +467,40 @@ def _do_tune(sid: str, raw: dict, cfg: dict, reason: str) -> ActionLog:
     cfg["last_tune_date"] = _date.today().isoformat()
     _write_config(sid, cfg)
     return ActionLog(sid, None, "tune", True, reason, {"applied": clamped, "rejected": rejected})
+
+
+def _do_mark_tier2(sid: str, cfg: dict, reason: str, raw: dict) -> ActionLog:
+    """Flag a strategy as a Tier 2 candidate. The flag is the weekly
+    evolution agent's prediction that this strategy is worth elevating;
+    the next run scores realised performance against the analysis the
+    agent recorded here, so we can measure whether the agent's
+    judgement is actually predictive.
+
+    `thesis` (≤300 chars) is the agent's one-line justification — used
+    by next week's run as the prediction being graded."""
+    from datetime import date as _date
+    thesis = str(raw.get("thesis") or "").strip()[:300]
+    cfg["tier2_candidate"] = True
+    cfg["tier2_marked_at"] = _date.today().isoformat()
+    if thesis:
+        cfg["tier2_thesis"] = thesis
+    _write_config(sid, cfg)
+    return ActionLog(
+        sid, None, "mark-tier2-candidate", True, reason,
+        {"tier2_marked_at": cfg["tier2_marked_at"], "thesis_present": bool(thesis)},
+    )
+
+
+def _do_unmark_tier2(sid: str, cfg: dict, reason: str) -> ActionLog:
+    """Clear the Tier 2 candidate flag — the prior week's prediction
+    didn't bear out, so the agent retracts it. We keep the
+    `tier2_marked_at` + `tier2_thesis` fields nulled so the dashboard
+    border drops away cleanly on the next render."""
+    cfg["tier2_candidate"] = False
+    cfg["tier2_marked_at"] = None
+    cfg["tier2_thesis"] = ""
+    _write_config(sid, cfg)
+    return ActionLog(sid, None, "unmark-tier2-candidate", True, reason, {})
 
 
 def _do_promote(

@@ -1035,6 +1035,31 @@ body.page-dashboard .strategy-card-tile.selected {
   border-color: var(--ink);
   box-shadow: 0 0 0 2px var(--ink);
 }
+/* Tier 2 candidate — set by the weekly evolution agent as a self-
+   prediction of "this strategy is worth elevating". A warm gold
+   border + corner star pin makes the prediction visible at a
+   glance; pairs with the agent's `tier2_thesis` shown on hover. */
+body.page-dashboard .strategy-card-tile.tier2-candidate {
+  border-color: #c8961f;
+  box-shadow: 0 0 0 2px rgba(200, 150, 31, 0.35);
+  position: relative;
+}
+body.page-dashboard .strategy-card-tile.tier2-candidate.selected {
+  border-color: var(--ink);
+  box-shadow:
+    0 0 0 2px var(--ink),
+    0 0 0 4px rgba(200, 150, 31, 0.55);
+}
+body.page-dashboard .strategy-card-tile .tier2-pin {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.55rem;
+  font-family: var(--sans);
+  font-size: 1rem;
+  color: #c8961f;
+  line-height: 1;
+  pointer-events: none;
+}
 body.page-dashboard .card-name {
   font-family: var(--serif-head);
   font-weight: 700;

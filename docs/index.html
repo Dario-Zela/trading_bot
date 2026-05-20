@@ -273,8 +273,13 @@
 
     <div class="strategy-grid">
       <template x-for="s in filteredStrategies" :key="s.key || s.id">
-        <div class="strategy-card-tile" :class="{ selected: selected === (s.key || s.id) }"
+        <div class="strategy-card-tile"
+             :class="{ selected: selected === (s.key || s.id), 'tier2-candidate': s.tier2_candidate }"
+             :title="s.tier2_candidate ? ('Tier 2 candidate — ' + (s.tier2_thesis || 'flagged by weekly evolution')) : ''"
              @click="selectStrategy(s.key || s.id)">
+          <template x-if="s.tier2_candidate">
+            <span class="tier2-pin" title="Tier 2 candidate (weekly evolution prediction)">★</span>
+          </template>
           <div class="card-name" x-text="s.display_name"></div>
           <div class="card-badges">
             <span class="badge" :class="'tier-' + s.tier" x-text="s.tier"></span>
