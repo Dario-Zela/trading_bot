@@ -13,13 +13,14 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "diag = print T212 history. recover = back-fill ledger. reflect = LLM reflections on recovered trades."
+        description: "diag = print T212 history. recover = back-fill T212 ledger. recover-alpaca = back-fill Alpaca cancelled rows. reflect = LLM reflections."
         required: true
         default: diag
         type: choice
         options:
           - diag
           - recover
+          - recover-alpaca
           - reflect
 
 permissions:
@@ -72,7 +73,7 @@ jobs:
           T212_API_SECRET__3: ${{ secrets.T212_API_SECRET__3 }}
         run: python scripts/t212_history_diag.py
 
-      - name: Recover — back-fill ledger
+      - name: Recover — back-fill T212 ledger
         if: ${{ inputs.mode == 'recover' }}
         env:
           T212_API_KEY__1: ${{ secrets.T212_API_KEY__1 }}
@@ -83,6 +84,17 @@ jobs:
           T212_API_SECRET__3: ${{ secrets.T212_API_SECRET__3 }}
         run: python scripts/recover_t212_strands.py
 
+      - name: Recover — back-fill Alpaca cancelled rows
+        if: ${{ inputs.mode == 'recover-alpaca' }}
+        env:
+          ALPACA_API_KEY__1: ${{ secrets.ALPACA_API_KEY__1 }}
+          ALPACA_API_SECRET__1: ${{ secrets.ALPACA_API_SECRET__1 }}
+          ALPACA_API_KEY__2: ${{ secrets.ALPACA_API_KEY__2 }}
+          ALPACA_API_SECRET__2: ${{ secrets.ALPACA_API_SECRET__2 }}
+          ALPACA_API_KEY__3: ${{ secrets.ALPACA_API_KEY__3 }}
+          ALPACA_API_SECRET__3: ${{ secrets.ALPACA_API_SECRET__3 }}
+        run: python scripts/recover_alpaca_cancelled.py
+
       - name: Reflect — LLM reflections on recovered trades
         if: ${{ inputs.mode == 'reflect' }}
         env:
@@ -90,29 +102,25 @@ jobs:
         run: python scripts/reflect_recovered_trades.py
 
       - name: Rebuild dashboard data
-        if: ${{ inputs.mode == 'recover' || inputs.mode == 'reflect' }}
+        if: ${{ inputs.mode == 'recover' || inputs.mode == 'recover-alpaca' || inputs.mode == 'reflect' }}
         run: python -m trading_bot.dashboard.build
         continue-on-error: true
 
       - name: Commit ledger state back
-        if: ${{ always() && (inputs.mode == 'recover' || inputs.mode == 'reflect') }}
+        if: ${{ always() && (inputs.mode == 'recover' || inputs.mode == 'recover-alpaca' || inputs.mode == 'reflect') }}
         run: |
           git config user.name "trading-bot[bot]"
           git config user.email "trading-bot@users.noreply.github.com"
-          # Predictions reflections live alongside the ledger
-          # reflections — include both so partial progress survives
-          # a workflow cancel / timeout. `always()` means we still
-          # commit if the reflect step itself ran out of budget
-          # mid-day; tomorrow's run picks up where we stopped.
           git add state/ledger.jsonl state/predictions.jsonl docs/data.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No changes — nothing to commit"
             exit 0
           fi
           case "${{ inputs.mode }}" in
-            recover) MSG="recover T212 strands — $(date -u +%Y-%m-%dT%H:%MZ)" ;;
-            reflect) MSG="reflect on recovered trades + predictions — $(date -u +%Y-%m-%dT%H:%MZ)" ;;
-            *) MSG="recover-t212-strands ${{ inputs.mode }} — $(date -u +%Y-%m-%dT%H:%MZ)" ;;
+            recover)         MSG="recover T212 strands — $(date -u +%Y-%m-%dT%H:%MZ)" ;;
+            recover-alpaca)  MSG="recover Alpaca cancelled rows — $(date -u +%Y-%m-%dT%H:%MZ)" ;;
+            reflect)         MSG="reflect on recovered trades + predictions — $(date -u +%Y-%m-%dT%H:%MZ)" ;;
+            *)               MSG="recover-t212-strands ${{ inputs.mode }} — $(date -u +%Y-%m-%dT%H:%MZ)" ;;
           esac
           git commit -m "$MSG"
           git push origin HEAD:main

@@ -239,16 +239,22 @@ class AlpacaPaperExecutor(Executor):
                     else:
                         exit_reason = self._infer_exit_reason(trade, close_fill_price)
                 else:
-                    # No position. Either a bracket leg fired intraday or
-                    # the entry never filled. Re-fetch the entry order with
-                    # nested=true to see if a child (stop / take-profit)
-                    # filled and at what price. If so, that IS the exit fill.
+                    # No position. Three cases to handle, in order:
+                    #
+                    # (1) Bracket leg (stop or take-profit) fired intra-day.
+                    #     Re-fetch the entry order with nested=true; if a
+                    #     leg has status=filled, that's the exit fill.
+                    # (2) Position was closed via plain market sell on a
+                    #     prior session whose ledger update didn't reach
+                    #     main (e.g. smart-merge race dropped the row).
+                    #     Bracket legs would be cancelled, not filled, so
+                    #     case (1) misses this. Fall back to a recent-
+                    #     sell lookup via /v2/orders history.
+                    # (3) Neither — the entry never filled or the order
+                    #     was cancelled. Mark cancelled, P&L unrecoverable.
                     parent = self._get_order_by_client_id(trade["trade_id"])
                     leg_fill = self._extract_filled_leg(parent) if parent else None
-                    if leg_fill is None:
-                        close_fill_price = None
-                        exit_reason = "cancelled"
-                    else:
+                    if leg_fill is not None:
                         close_fill_price = float(leg_fill["filled_avg_price"])
                         leg_type = (leg_fill.get("order_type") or "").lower()
                         if "stop" in leg_type:
@@ -257,6 +263,19 @@ class AlpacaPaperExecutor(Executor):
                             exit_reason = "take_profit"
                         else:
                             exit_reason = "scheduled"
+                    else:
+                        # Case (2): scan recent sells for this ticker.
+                        recent_sell = self._find_recent_sell(trade["ticker"], on_date)
+                        if recent_sell is not None:
+                            close_fill_price = float(recent_sell["filled_avg_price"])
+                            exit_reason = "scheduled"
+                            log.info(
+                                "Recovered close for %s from Alpaca order history: "
+                                "exit_price=%.4f", trade["ticker"], close_fill_price,
+                            )
+                        else:
+                            close_fill_price = None
+                            exit_reason = "cancelled"
             except Exception as e:
                 log.error("Exit failed for %s: %s", trade["ticker"], e)
                 continue
@@ -577,6 +596,64 @@ class AlpacaPaperExecutor(Executor):
                     return order
             time.sleep(0.5)
         return order  # last seen; may still be pending
+
+    def _find_recent_sell(
+        self, ticker: str, on_date: date, *, lookback_days: int = 7,
+    ) -> dict[str, Any] | None:
+        """Query Alpaca's order history for the most recent FILLED SELL
+        on `ticker` within the last `lookback_days`. Used as a fallback
+        in exit_scheduled when a position has already been closed by a
+        prior session but its ledger update never landed in main (e.g.
+        smart-merge race dropping the closure rows).
+
+        Returns the order dict (with filled_avg_price) or None."""
+        from datetime import timedelta as _td
+        after = (on_date - _td(days=lookback_days)).isoformat()
+        try:
+            response = requests.get(
+                self._url("/v2/orders"),
+                headers=self._headers(),
+                params={
+                    "status": "closed",
+                    "symbols": ticker,
+                    "side": "sell",
+                    "after": after,
+                    "limit": 50,
+                    "direction": "desc",
+                },
+                timeout=15,
+            )
+        except requests.RequestException as e:
+            log.debug("Alpaca order-history fetch errored for %s: %s", ticker, e)
+            return None
+        if not response.ok:
+            log.debug(
+                "Alpaca order-history returned %s for %s",
+                response.status_code, ticker,
+            )
+            return None
+        try:
+            orders = response.json() or []
+        except Exception:
+            return None
+        if not isinstance(orders, list):
+            return None
+        # Pick the newest FILLED SELL that matches the date window. Alpaca
+        # `direction=desc` returns newest first; we still verify on
+        # filled_avg_price presence and that the fill date sits within
+        # the window so we don't grab a stale order.
+        for order in orders:
+            if not isinstance(order, dict):
+                continue
+            if (order.get("status") or "").lower() != "filled":
+                continue
+            if (order.get("side") or "").lower() != "sell":
+                continue
+            fap = order.get("filled_avg_price")
+            if fap is None:
+                continue
+            return order
+        return None
 
     def _extract_filled_leg(self, parent: dict[str, Any]) -> dict[str, Any] | None:
         """Given a bracket parent order, find the leg (stop or take-profit)
