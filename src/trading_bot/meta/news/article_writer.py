@@ -84,11 +84,16 @@ def write_articles(
     related_pool = [(p.slug, p.headline, p.section) for p in plan.pieces]
 
     with ThreadPoolExecutor(max_workers=_MAX_PARALLEL) as pool:
-        futures = {
-            pool.submit(_write_one, p, triaged[p.triage_index], today, related_pool): p
-            for p in plan.pieces
-            if 0 <= p.triage_index < len(triaged)
-        }
+        futures = {}
+        for p in plan.pieces:
+            # Use the merged-source list when present; fall back to the
+            # singleton primary for older plans / heuristic output. Both
+            # filtered to in-range indices.
+            indices = p.triage_indices or ([p.triage_index] if p.triage_index >= 0 else [])
+            sources = [triaged[i] for i in indices if 0 <= i < len(triaged)]
+            if not sources:
+                continue
+            futures[pool.submit(_write_one, p, sources, today, related_pool)] = p
         for fut in as_completed(futures):
             piece = futures[fut]
             try:
@@ -219,11 +224,11 @@ the caption + URL filename is enough.
 
 def _write_one(
     piece: PlannedPiece,
-    triaged: TriagedCandidate,
+    sources: list[TriagedCandidate],
     today: date,
     related_pool: list[tuple[str, str, str]],
 ) -> FullArticle:
-    prompt = _build_prompt(piece, triaged, today, related_pool)
+    prompt = _build_prompt(piece, sources, today, related_pool)
     try:
         response = run_claude_for_json(
             prompt,
@@ -233,19 +238,52 @@ def _write_one(
         )
     except ClaudeCodeError as e:
         log.warning("Article Sonnet failed for %r: %s", piece.slug, e)
-        return _fallback_article(piece, [triaged])
+        return _fallback_article(piece, sources)
     return _parse_article(piece, response)
 
 
 def _build_prompt(
     piece: PlannedPiece,
-    triaged: TriagedCandidate,
+    sources: list[TriagedCandidate],
     today: date,
     related_pool: list[tuple[str, str, str]],
 ) -> str:
     persona = BYLINES.get(piece.byline, "Staff writer.")
-    facts_block = "\n".join(f"  - {f}" for f in triaged.key_facts) if triaged.key_facts else "  (none — work from the angle and what you find via web search)"
-    sources_block = "\n".join(f"  - {s}" for s in triaged.source_hints) if triaged.source_hints else "  (none provided — find your own)"
+    primary = sources[0]
+    is_cluster = len(sources) > 1
+
+    # Build the facts / sources blocks across every merged source. The
+    # writer is told to synthesise rather than write a list of mini-
+    # articles — the cluster gives breadth, the synthesis gives depth.
+    fact_lines: list[str] = []
+    src_lines: list[str] = []
+    for i, t in enumerate(sources, start=1):
+        if is_cluster:
+            fact_lines.append(f"### Angle {i}: {t.title}")
+            if t.angle:
+                fact_lines.append(f"_{t.angle}_")
+                fact_lines.append("")
+        for f in (t.key_facts or []):
+            fact_lines.append(f"- {f}")
+        if is_cluster:
+            fact_lines.append("")
+        for s in (t.source_hints or []):
+            src_lines.append(f"  - {s}")
+    facts_block = "\n".join(fact_lines).strip() or "(no triage facts — work from the angle and what you find via web search)"
+    sources_block = "\n".join(src_lines) if src_lines else "  (none provided — find your own)"
+
+    if is_cluster:
+        cluster_note = (
+            f"\n## Cluster context\n\n"
+            f"This piece merges **{len(sources)} triaged candidates** "
+            f"into one story. The angles below all touch the same "
+            f"underlying event — synthesise across them rather than "
+            f"writing a list of separate beats. Lead with the strongest "
+            f"angle, weave in supporting threads, end on the implication "
+            f"that ties them together.\n"
+        )
+    else:
+        cluster_note = ""
 
     # Cross-link pool: pieces in this edition the writer might reference
     related_block = "\n".join(
@@ -255,9 +293,9 @@ def _build_prompt(
     ) or "  (none)"
 
     tier_guidance = {
-        "lead": "FRONT PAGE LEAD. The defining piece of the day — go long if the story warrants, but don't pad. Aim for the depth a serious reader would want; a tight 600 words can beat a sprawling 2000.",
-        "feature": "Feature piece. Write to the length the story deserves — anywhere from 400 to 1500+ words. Don't artificially extend.",
-        "brief": "This piece is tier=brief — but the full article still gets the writer's attention. 300-500 words is a reasonable target; longer if there's substance.",
+        "lead": "FRONT PAGE LEAD. The defining piece of the day — write at the depth a serious reader would want. Target 900-1400 words for a solo lead; a clustered lead can sustainably go to 1500-2000. Use sub-headings to break the body into 3-5 movements.",
+        "feature": "Feature piece. Solo features 600-1000 words; clustered features 900-1500 to do justice to the multiple threads. Use 2-3 sub-headings (## ...) so the eye has somewhere to land.",
+        "brief": "Brief slot — but the full article is still a proper read. Solo briefs 400-600 words; clustered briefs 500-800. One sub-heading is fine; two is the ceiling.",
     }.get(piece.tier, "Write to the length the story deserves.")
 
     return f"""You are {piece.byline} writing the full article for The Bot
@@ -270,10 +308,10 @@ Your beat persona: {persona}
 - **Kicker:** {piece.kicker}
 - **Section:** {piece.section}
 - **Tier:** {piece.tier} — {tier_guidance}
-- **Angle:** {triaged.angle}
-- **One-line:** {triaged.one_line}
-- **Why it matters:** {triaged.why_it_matters}
-
+- **Angle:** {primary.angle}
+- **One-line:** {primary.one_line}
+- **Why it matters:** {primary.why_it_matters}
+{cluster_note}
 ## Key facts (from triage)
 
 {facts_block}
@@ -289,7 +327,7 @@ Your beat persona: {persona}
 ## You have these tools available
 
 - **WebSearch** — use to verify facts, find quotes, check named actors,
-  confirm dates, and locate a fitting image.
+  confirm dates, and locate fitting images.
 - **WebFetch** — use to load specific URLs (a candidate image URL to
   confirm it returns a real image, a source article to read it
   properly, etc.).
@@ -299,14 +337,25 @@ facts are a starting point, not the final word — verify them, expand
 them, find quotes and concrete numbers, and reach for sources beyond
 the hints. If something doesn't check out, drop it.
 
-## Hero image — finding one
+## Images — hero + inline
 
-Use WebSearch to find a strong, topical image. Prefer:
-- **Wikipedia / Wikimedia Commons** images (stable hot-link URLs,
-  unambiguous licensing, e.g. `https://upload.wikimedia.org/...`)
+Pieces are meant to read like a real newspaper section. The hero
+image goes at the top of the article; inline images break up the
+body and visualise specific moments in the story. Aim for:
+
+- **lead / feature pieces with clusters**: 2-4 inline images on top
+  of the hero. A relevant chart, a named person, a building / city,
+  a product shot — let the visuals do narrative work.
+- **solo features**: 1-2 inline images plus the hero.
+- **briefs**: hero only is fine; one inline only if it carries
+  meaning the prose doesn't.
+
+For each image find a stable direct URL (ending .jpg / .png / .webp):
+- **Wikipedia / Wikimedia Commons** images first (stable, licensed,
+  e.g. `https://upload.wikimedia.org/...`)
 - Major-publication photo URLs if you find them on a search result
   (Reuters, AP, FT, etc.) — hot-linking works in practice
-- Stock-photo URLs (Unsplash, etc.) when the topic is generic
+- Stock-photo URLs (Unsplash, Pexels) when the topic is generic
 
 Avoid:
 - Image search RESULT pages (these don't render; you need the actual
@@ -314,8 +363,10 @@ Avoid:
 - Images behind login walls (Twitter image CDN often fails)
 - Generic stock photos when a specific topical image exists
 
-Use WebFetch to verify the URL returns an image. If you can't find a
-good image, leave `image_url` empty rather than ship a bad one.
+Use WebFetch to verify each URL returns an image. If a slot would
+require a bad/wrong photo, just leave it empty — fewer good images
+beats one misleading one. Place inline images inside the body_md
+where they fit narratively (use the `![caption](url)` markdown).
 
 ## Writing rules
 
@@ -327,16 +378,31 @@ good image, leave `image_url` empty rather than ship a bad one.
    ("this suggests..."), point at the evidence that supports it.
 4. **Concrete over abstract.** "The bill passed 52-48" beats "the bill
    passed narrowly."
-5. **No clichés, no breathless framing, no clickbait.** "Stunning",
+5. **Voice matters.** This is a newspaper, not a wire feed. Use
+   varied sentence rhythms, the occasional turn of phrase, a scene-
+   setting paragraph where it lands. Per the byline persona: not
+   purple, but not flat. Think mid-broadsheet — FT magazine,
+   Economist long-read, NYT business feature.
+6. **No clichés, no breathless framing, no clickbait.** "Stunning",
    "watershed", "everything we knew is wrong" — cut them.
-6. **Don't address the reader.** No "we'll see", no "your portfolio",
+7. **Don't address the reader.** No "we'll see", no "your portfolio",
    no "as we noted yesterday."
-7. **Variety in sentence length.** Real newspapers don't read like
-   marketing copy.
-8. **End with what's next.** A natural forward-look — what to watch,
-   what's at stake, when the next data point lands.
-9. **No word cap.** Write as long as the topic warrants. Don't pad;
-   don't truncate. A short piece on a small story is correct.
+8. **Sub-headings as structural beats.** For longer pieces, use 2-5
+   `## Sub-heading` lines that mark distinct movements — context →
+   the event → reaction → implication. Don't bury everything in one
+   wall of paragraphs.
+9. **End with what's next.** A natural forward-look — what to watch,
+   what's at stake, when the next data point lands. Avoid "stay
+   tuned" — name the specific catalyst.
+
+## Cluster synthesis (when this piece merges multiple sources)
+
+If the cluster context above shows multiple angles, your job is to
+weave them, not list them. Devote a sub-heading per major thread,
+return to the spine of the central story at each transition, and
+in the closer tie the threads together into the implication that
+covers them all. The reader should finish thinking "I got the
+whole shape of this story", not "I read seven mini-articles".
 
 ## "In one sentence" callout
 
@@ -350,10 +416,10 @@ Return JSON only:
 
 ```json
 {{
-  "body_md": "<the full article as markdown. Use ## for sub-headings if useful, blockquotes for quotes, em-dashes — like this — not '--'. NO headline or byline in the body.>",
+  "body_md": "<the full article as markdown. Sub-headings use ##, blockquotes for quotes, em-dashes — like this — not '--'. Inline images go in the body via ![caption](url). NO headline or byline in the body.>",
   "in_one_sentence": "<one sentence TL;DR, ≤180 chars>",
-  "image_url": "<direct image URL, or empty string>",
-  "image_caption": "<one-line caption describing what the image shows>",
+  "image_url": "<direct hero image URL, or empty string>",
+  "image_caption": "<one-line caption describing the hero image>",
   "image_credit": "<photographer / outlet / Wikipedia author — whoever should be credited>",
   "sources": [
     {{"title": "<source title or outlet>", "url": "<source url>"}},
@@ -413,11 +479,21 @@ def _parse_article(piece: PlannedPiece, response: dict | list) -> FullArticle:
 
 def _fallback_article(piece: PlannedPiece, triaged: list[TriagedCandidate] | TriagedCandidate | None) -> FullArticle:
     """Used when the writer is unavailable or fails. We surface the
-    triage facts so the page still says something concrete."""
+    triage facts so the page still says something concrete.
+
+    `triaged` accepts either:
+      • the full triage list (we index by piece.triage_index), or
+      • the per-piece merged source list (we use the first entry as
+        the primary), or
+      • a single TriagedCandidate."""
     t = None
     if isinstance(triaged, list) and triaged:
+        # Try index lookup first (full triage list); fall back to
+        # treating the list as the per-piece merged sources.
         if 0 <= piece.triage_index < len(triaged):
             t = triaged[piece.triage_index]
+        else:
+            t = triaged[0]
     elif isinstance(triaged, TriagedCandidate):
         t = triaged
 

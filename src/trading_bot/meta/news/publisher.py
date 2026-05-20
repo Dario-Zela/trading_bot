@@ -76,7 +76,14 @@ _LLM_SECTIONS = {
 @dataclass
 class PlannedPiece:
     """One story slot in the day's plan. Brief/article writers consume
-    this; they get the triage record separately for the facts."""
+    this; they get the triage record(s) separately for the facts.
+
+    Stories can MERGE multiple triaged candidates into a single piece —
+    `triage_indices` is the merged set, `triage_index` is the primary
+    (used for back-compat with older code paths that consume one
+    record at a time). The article writer reads all merged sources
+    and synthesises across them so the reader isn't given ten
+    overlapping Fed pieces; the brief writer reads just the primary."""
     slug: str                           # URL slug for the sub-page filename
     section: str
     headline: str                       # publisher may rewrite triage's title
@@ -84,7 +91,8 @@ class PlannedPiece:
     byline: str                         # one of BYLINES.keys()
     one_line: str                       # ~one-sentence summary for the front page
     tier: str                           # "lead" | "feature" | "brief"
-    triage_index: int                   # back-reference into the triage list
+    triage_index: int                   # primary source — back-reference into triage list
+    triage_indices: list = field(default_factory=list)  # all merged sources
 
 
 @dataclass
@@ -173,32 +181,52 @@ masthead subtitle.
 1. **Front lead** — exactly one. Usually the highest-scoring piece with
    broad implications, but you can prefer a lower-scored piece if it
    reads better as the day's headline. Mark it tier="lead", section="Front".
-2. **Sections** — always render: Markets, World, Tech & science,
+2. **Cluster aggressively.** If multiple triaged candidates cover the
+   same underlying story — same central event, same actor, same
+   directional implication — MERGE them into a single piece. List
+   every member of the cluster in `triage_indices` (in priority
+   order, primary first). Example: ten triage rows about the Fed all
+   become **one** Markets piece with all ten indices listed.
+   Heuristics for "same story":
+   - Same headline noun phrase (Fed, BoE, Gaza, Apple earnings, …)
+     with different angles → merge.
+   - Same company across different outlets → merge.
+   - Same regulatory action with different reaction pieces → merge.
+   - Two genuinely independent angles on the same actor (e.g. an
+     earnings beat AND a leadership reshuffle) → keep separate.
+   The reader gets richer, longer pieces with multiple sourced
+   angles instead of repetitive listicles. The writer downstream is
+   told to synthesise — your job is just the clustering.
+3. **Sections** — always render: Markets, World, Tech & science,
    Beyond the tape (drop if a section has zero pieces). Render
    Climate, Health, Sport, Culture only when you have ≥1 piece that
    genuinely fits — don't pad to fill them.
-3. **Do NOT include** "Trading floor" or "Desk's calls" sections — those
+4. **Do NOT include** "Trading floor" or "Desk's calls" sections — those
    are added by separate stages after you.
-4. **Tier** — each piece is "lead" (front only), "feature" (mid-size,
+5. **Tier** — each piece is "lead" (front only), "feature" (mid-size,
    usually score 7+), or "brief" (small slot). Section pages mix
-   features and briefs naturally.
-5. **Headline** — you may rewrite the triage headline if it's weak or
+   features and briefs naturally. A clustered piece carrying 5+
+   merged sources almost always rates "feature" or "lead", not "brief".
+6. **Headline** — you may rewrite the triage headline if it's weak or
    tabloid. Keep it accurate. Sentence-case with proper nouns; no
-   ALL-CAPS, no clickbait.
-6. **Kicker** — small-caps line above the headline. Usually the
+   ALL-CAPS, no clickbait. For a clustered piece, the headline
+   should capture the whole arc, not just the top member.
+7. **Kicker** — small-caps line above the headline. Usually the
    section + a single-word topic tag. Examples: "MARKETS · RATES",
    "WORLD · GAZA", "TECH · AI POLICY". Front lead's kicker is just
    the topic in caps, no "FRONT".
-7. **Byline** — match the section to the persona where natural.
+8. **Byline** — match the section to the persona where natural.
    Multiple pieces by the same byline in one section is fine; it's a
    real newspaper.
-8. **One-line** — a single sentence the front page can use as the
+9. **One-line** — a single sentence the front page can use as the
    stand-first under the headline. Briefs use it as the brief body.
-9. **Slug** — short, hyphenated, lowercase, URL-safe, unique within
-   the edition. E.g., "fed-holds-rates", "uk-cpi-prints-hot".
-10. **Volume** — no fixed cap per section. Use as many or as few as
-    triage produced and the day deserves. A lazy day is allowed to be
-    a lazy day.
+10. **Slug** — short, hyphenated, lowercase, URL-safe, unique within
+    the edition. E.g., "fed-holds-rates", "uk-cpi-prints-hot".
+11. **Volume** — no fixed cap per section. Use as many or as few as
+    triage produced and the day deserves, AFTER clustering. If you
+    end up with 25 candidates and they cluster into 8 distinct
+    stories, ship 8 pieces — not 25. A lazy day is allowed to be a
+    lazy day.
 
 ## Masthead subtitle
 
@@ -240,7 +268,7 @@ Return JSON only:
   "todays_question": "<one falsifiable question ≤120 chars>",
   "pieces": [
     {{
-      "triage_index": <int — index into the roster above>,
+      "triage_indices": [<int>, <int>, ...],  // primary first; one index for a solo story, many for a merged cluster
       "section": "Front" | "Markets" | "World" | "Tech & science" | "Climate" | "Health" | "Sport" | "Culture" | "Beyond the tape",
       "headline": "<rewritten or unchanged>",
       "kicker": "<SECTION · TOPIC or TOPIC>",
@@ -278,12 +306,28 @@ def _parse_plan(response: dict | list, triaged: list[TriagedCandidate], today: d
     for raw in raw_pieces:
         if not isinstance(raw, dict):
             continue
-        try:
-            idx = int(raw.get("triage_index", -1))
-        except (TypeError, ValueError):
+        # Accept both new shape (triage_indices: [int, ...]) and legacy
+        # shape (triage_index: int). Normalise to a deduped list of
+        # in-range indices; the first one is the "primary".
+        indices_raw = raw.get("triage_indices")
+        if not isinstance(indices_raw, list):
+            indices_raw = [raw.get("triage_index", -1)]
+        idx_list: list[int] = []
+        seen_idx: set[int] = set()
+        for v in indices_raw:
+            try:
+                vi = int(v)
+            except (TypeError, ValueError):
+                continue
+            if vi < 0 or vi >= len(triaged):
+                continue
+            if vi in seen_idx:
+                continue
+            seen_idx.add(vi)
+            idx_list.append(vi)
+        if not idx_list:
             continue
-        if idx < 0 or idx >= len(triaged):
-            continue
+        idx = idx_list[0]
 
         section = str(raw.get("section") or "").strip()
         if section not in _LLM_SECTIONS:
@@ -313,6 +357,7 @@ def _parse_plan(response: dict | list, triaged: list[TriagedCandidate], today: d
             one_line=str(raw.get("one_line") or triaged[idx].one_line).strip()[:320],
             tier=tier,
             triage_index=idx,
+            triage_indices=idx_list,
         )
         pieces.append(piece)
         if tier == "lead" and not lead_slug:
@@ -390,6 +435,7 @@ def _heuristic_plan(triaged: list[TriagedCandidate], today: date) -> NewsPlan:
             one_line=t.one_line or t.angle,
             tier=tier,
             triage_index=i,
+            triage_indices=[i],
         ))
 
     # Reorder: Front first, then a fixed section order, then everything else
@@ -494,6 +540,7 @@ def plan_from_json(data: dict) -> NewsPlan:
             one_line=str(p.get("one_line", "")),
             tier=str(p.get("tier", "brief")),
             triage_index=int(p.get("triage_index", -1)),
+            triage_indices=[int(x) for x in (p.get("triage_indices") or [p.get("triage_index", -1)]) if isinstance(x, (int, float))],
         ))
     return NewsPlan(
         edition_date=str(data.get("edition_date", "")),

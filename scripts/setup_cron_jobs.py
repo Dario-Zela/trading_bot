@@ -92,7 +92,11 @@ SCHEDULES: list[dict] = [
         "workflow": "daily-news-brief.yml",
         "inputs": {},
         "tz": "Europe/London",
-        "hour": 7, "minute": 30,
+        # 07:15 BST gives ~50 min headroom before UK-EU entry at 08:05.
+        # A slow brief (Sonnet article writes + render) can push past
+        # 25-30 min; 50 min of slack keeps the entry pipeline from
+        # firing before the brief has committed.
+        "hour": 7, "minute": 15,
         "wdays": [1, 2, 3, 4, 5, 6, 0],   # every day
     },
     # Early-morning grader — scores any open prediction whose target_date
