@@ -66,19 +66,63 @@ def run_backtest(
     start_date: date,
     end_date: date,
     limit_days: int | None = None,
+    region: str | None = None,
 ) -> BacktestReport:
     """Replay a strategy over the given date range. Returns a
-    BacktestReport. Caller is responsible for writing the markdown."""
-    from trading_bot.strategy.registry import load_strategy_config
+    BacktestReport. Caller is responsible for writing the markdown.
+
+    When `region` is supplied, the strategy's config is overridden
+    with that region's `runs_in` entry — tier, universe, slot, and
+    the region itself. Multi-region strategies otherwise default to
+    their top-level region (usually "us"), which means a UK-EU
+    backtest would silently run against the US universe."""
+    from trading_bot.strategy.registry import load_strategy_config, _strategies_dir
     from trading_bot.strategy.control_rule_based import ControlRuleBased
     from trading_bot.strategy.momentum_stub import MomentumTraderStub
     from trading_bot.strategy.llm_strategy import LLMStrategy
+    import yaml
 
     cfg = load_strategy_config(strategy_id)
+    if region:
+        # Pull the runs_in entry for this region and apply its
+        # overrides to the cfg the strategy will see. Falls back to
+        # the top-level config if the strategy is single-region or
+        # doesn't have a matching entry.
+        try:
+            raw = yaml.safe_load(
+                (_strategies_dir() / strategy_id / "config.yaml").read_text()
+            )
+        except Exception as e:
+            log.warning("backtest: could not re-read %s config for region override: %s",
+                        strategy_id, e)
+            raw = {}
+        runs_in = raw.get("runs_in") if isinstance(raw, dict) else None
+        if isinstance(runs_in, list):
+            for entry in runs_in:
+                if not isinstance(entry, dict):
+                    continue
+                if entry.get("region") == region:
+                    cfg.region = region
+                    cfg.tier = entry.get("tier", cfg.tier)
+                    cfg.universe = entry.get("universe", cfg.universe)
+                    aslot = entry.get("alpaca_slot")
+                    tslot = entry.get("t212_slot")
+                    if aslot is not None:
+                        cfg.alpaca_slot = int(aslot)
+                    if tslot is not None:
+                        cfg.t212_slot = int(tslot)
+                    break
+        else:
+            # Single-region config — just verify the region matches
+            # what the caller asked for so we don't silently backtest
+            # the wrong universe.
+            if cfg.region != region:
+                log.warning(
+                    "backtest: %s is single-region (%s) but caller asked for %s — using %s",
+                    strategy_id, cfg.region, region, cfg.region,
+                )
+
     impl = cfg.implementation
-    # Direct instantiation (skips runs_in expansion — we backtest one
-    # (strategy, region) at a time, region comes from the top-level
-    # cfg.region field).
     if impl == "rule_based":
         strat = ControlRuleBased(cfg)
     elif impl == "momentum_stub":
@@ -208,7 +252,10 @@ def run_weekly_backtest_pass(today: date, window_days: int = 14) -> dict:
         log.warning("backtest pass: no active strategies")
         return {"window_days": window_days, "strategies": []}
 
-    start = today - timedelta(days=window_days + 4)   # ~3-4 extra calendar days for weekend buffer
+    # `window_days` is trading-days targeted; add headroom for two
+    # weekends + possible holidays so the calendar window actually
+    # yields the intended trading-day count after filtering.
+    start = today - timedelta(days=window_days + 7)
     end = today - timedelta(days=1)                   # backtest stops yesterday so we can resolve next-day fills
 
     results: list[dict] = []
@@ -222,6 +269,7 @@ def run_weekly_backtest_pass(today: date, window_days: int = 14) -> dict:
                 start_date=start,
                 end_date=end,
                 limit_days=None,
+                region=region,   # crucial for multi-region strategies
             )
         except Exception as e:
             log.warning("backtest pass: %s failed: %s", sid, e)

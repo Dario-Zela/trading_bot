@@ -729,10 +729,21 @@ class AlpacaPaperExecutor(Executor):
         if not isinstance(positions, list) or not positions:
             return []
 
-        # Tickers we already have an OPEN ledger row for, in this region,
-        # entered today or earlier. Don't reconcile something we already
-        # know about.
-        existing_open = read_open_trades(region=region)
+        # Tickers we already have an OPEN ledger row for at THIS slot
+        # — alpaca-paper trades only, region-filtered, AND scoped to
+        # this executor's slot. Without the slot scope, a multi-slot
+        # setup would treat another slot's open AAPL as "already
+        # known" and refuse to reconcile this slot's orphan AAPL —
+        # the two would silently double up.
+        existing_open = [
+            t for t in read_open_trades(region=region)
+            if t.get("tier") == _TIER
+        ]
+        # The ledger doesn't store alpaca_slot per trade today, so we
+        # match by ticker within the region/tier. This is the right
+        # scope while we have only slot 1 in active use; if multi-slot
+        # deployments land later, persist `alpaca_slot` on TradeRecord
+        # and filter on it here too.
         existing_tickers = {t.get("ticker") for t in existing_open if t.get("ticker")}
 
         recovered: list[dict] = []

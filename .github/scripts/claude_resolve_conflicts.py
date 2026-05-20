@@ -134,11 +134,17 @@ def _trigger_conflict_state() -> list[str]:
     already = _unmerged_files()
     if already:
         return already
-    # Fetch + rebase deliberately, expecting conflict.
-    subprocess.run(["git", "fetch", "origin", "main"], check=False)
+    # Fetch + rebase deliberately, expecting conflict. Hard 60-sec
+    # timeout on the fetch so an unreachable remote can't hang the
+    # workflow indefinitely (the runner's overall timeout would
+    # eventually trip but that's much later and much noisier).
+    subprocess.run(
+        ["git", "fetch", "origin", "main"],
+        check=False, timeout=60,
+    )
     r = subprocess.run(
         ["git", "rebase", "origin/main"],
-        capture_output=True, text=True, check=False,
+        capture_output=True, text=True, check=False, timeout=60,
     )
     if r.returncode == 0:
         # Rebase succeeded cleanly — no conflict to resolve.

@@ -17,15 +17,40 @@ import sys
 from pathlib import Path
 
 
-# (path, primary-key field for dedup; None = position-based, no dedup)
+# (path, primary-key for dedup):
+#   str            → dedup on a single field
+#   tuple[str,...] → composite key built from named fields
+#   None           → no dedup (use only when the file is genuinely
+#                    append-only with no logical primary key)
 TARGETS = [
     ("state/ledger.jsonl", "trade_id"),
-    ("state/predictions.jsonl", None),
+    # predictions.jsonl is logically keyed by (strategy_id, region,
+    # ticker, prediction_date). Without dedup, every smart-merge
+    # fallback would concatenate both sides → duplicate rows for
+    # every overlapping (strategy, ticker, date), which biased the
+    # downstream IC calculations until this fix landed.
+    ("state/predictions.jsonl", ("strategy_id", "region", "ticker", "prediction_date")),
     ("state/macro/predictions.jsonl", "prediction_id"),
 ]
 
 
-def merge_file(repo_root: Path, save_root: Path, rel_path: str, key: str | None) -> int:
+def _composite_key(rec: dict, key_spec):
+    """Build the dedup key. Returns None if any required field is
+    missing — those rows fall through to append-without-dedup."""
+    if isinstance(key_spec, str):
+        return rec.get(key_spec)
+    if isinstance(key_spec, (list, tuple)):
+        parts: list = []
+        for k in key_spec:
+            v = rec.get(k)
+            if v is None:
+                return None
+            parts.append(v)
+        return tuple(parts)
+    return None
+
+
+def merge_file(repo_root: Path, save_root: Path, rel_path: str, key) -> int:
     """Merge the saved local copy into the repo's (just-reset) version.
     Returns the number of new lines added from local."""
     repo_file = repo_root / rel_path
@@ -56,11 +81,11 @@ def merge_file(repo_root: Path, save_root: Path, rel_path: str, key: str | None)
         # version that pre-dates this run. Earlier ordering (remote
         # first) silently dropped every trade closure on any exit cron
         # that raced with another push and fell into this fallback.
-        seen: set[str] = set()
+        seen: set = set()
         merged: list[str] = []
         for line in local_lines + remote_lines:
             try:
-                k = json.loads(line).get(key)
+                k = _composite_key(json.loads(line), key)
             except json.JSONDecodeError:
                 continue
             if k is None:

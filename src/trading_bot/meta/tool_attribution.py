@@ -71,9 +71,13 @@ def _iter_graded_predictions(
     *,
     window_days: int = 60,
     end_date: date | None = None,
+    require_tools_used: bool = False,
 ) -> Iterator[dict]:
     """Yield prediction rows with actual_return_pct populated, filtered
-    by strategy + trailing window."""
+    by strategy + trailing window. When `require_tools_used=True`, rows
+    that pre-date the `tools_used` field (missing or empty list) are
+    skipped — necessary for tool-attribution math so legacy rows don't
+    pollute the per-tool baselines."""
     p = predictions_path()
     if not p.exists():
         return
@@ -95,6 +99,13 @@ def _iter_graded_predictions(
             pdate = rec.get("prediction_date") or ""
             if not pdate or pdate < cutoff:
                 continue
+            if require_tools_used:
+                tu = rec.get("tools_used")
+                if not isinstance(tu, list) or not tu:
+                    # Pre-tools_used row — exclude from attribution
+                    # math so legacy rows don't end up in the "without"
+                    # baseline for every tool the strategy uses today.
+                    continue
             yield rec
 
 
@@ -149,7 +160,10 @@ def compute_tool_mask_ic(
     with N different tool configurations over the last N days; here's
     how each performed"."""
     grouped: dict[tuple[str, ...], list[dict]] = defaultdict(list)
-    for rec in _iter_graded_predictions(strategy_id, window_days=window_days, end_date=end_date):
+    for rec in _iter_graded_predictions(
+        strategy_id, window_days=window_days, end_date=end_date,
+        require_tools_used=True,
+    ):
         mask = tuple(sorted(rec.get("tools_used") or []))
         grouped[mask].append(rec)
 
@@ -183,7 +197,10 @@ def compute_tool_deltas(
     swing IC wildly. The threshold is arbitrary; we err on the side
     of "no judgement" until the data is meaningful.
     """
-    all_rows = list(_iter_graded_predictions(strategy_id, window_days=window_days, end_date=end_date))
+    all_rows = list(_iter_graded_predictions(
+        strategy_id, window_days=window_days, end_date=end_date,
+        require_tools_used=True,
+    ))
     if not all_rows:
         return []
 
