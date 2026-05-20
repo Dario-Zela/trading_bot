@@ -1,0 +1,191 @@
+{
+  "date": "2026-05-20",
+  "region": "us",
+  "universes_checked": [
+    "sp1500",
+    "us_etfs_bond",
+    "us_etfs_commodity",
+    "us_etfs_sector"
+  ],
+  "n_tickers_checked": 1527,
+  "summary": "Held 5 of today's 10 biggest US movers.\n\n\u2022 2 upside misses \u2014 ROIV +15%, RH +10%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 3 downside moves (HAS -8%, NTNX -7%, DUOL -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: ROIV (+15.40%) \u2014 Q4 FY2026 earnings (reported May 20): EPS $0.28 vs -$0.33 est (beat), driven by $770M Moderna patent-settlement gain and FDA Breakthrough Therapy Designation for brepocitinib in cutaneous sarcoidosis. Why we passed: Catalyst was a scheduled earnings release requiring pre-market positioning to capture the gap; news-reactive signals fire post-open after the bulk of the move was already realised. Revenue missed ($2.52M vs $3.82M est), creating mixed signals that likely tripped conservative dual-confirmation filters on earnings-day en",
+  "top_movers": [
+    {
+      "ticker": "ROIV",
+      "move_pct": 15.402,
+      "close": 32.555,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [],
+      "catalyst": "Q4 FY2026 earnings (reported May 20): EPS $0.28 vs -$0.33 est (beat), driven by $770M Moderna patent-settlement gain and FDA Breakthrough Therapy Designation for brepocitinib in cutaneous sarcoidosis.",
+      "miss_reason": "Catalyst was a scheduled earnings release requiring pre-market positioning to capture the gap; news-reactive signals fire post-open after the bulk of the move was already realised. Revenue missed ($2.52M vs $3.82M est), creating mixed signals that likely tripped conservative dual-confirmation filters on earnings-day en",
+      "suggestion": "News-reactive strategy should add an earnings-beat gate that releases biotech names with EPS surprise \u2265 +$0.50 and opening gap \u2265 +10% within 5 minutes of market open, entering a scaled position at first-bar close rather than waiting for intraday signal confirmation.",
+      "failed": false
+    },
+    {
+      "ticker": "ENPH",
+      "move_pct": 12.04,
+      "close": 52.39,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [
+        "momentum-trader"
+      ],
+      "catalyst": "US-China 90-day tariff truce expected to lift Enphase gross margins ~2pp, compounded by IQ9S-3P commercial microinverter pre-order launch and a $52M safe-harbor deal pushing backlog to $873M.",
+      "miss_reason": "ENPH had already surged ~32% in the prior week on the microinverter launch (May 14-15); by May 20 RSI was almost certainly deep in overbought territory (>80), tripping momentum-trader's RSI ceiling filter. The name looked like a laggard chaser, not a fresh signal, after that multi-day run.",
+      "suggestion": "Add a catalyst-continuation exception to momentum-trader's RSI filter: if a verified macro policy event (tariff truce) co-occurs with a product/backlog catalyst within the same 5-day window, allow RSI up to 85 for one entry session rather than the standard cutoff.",
+      "failed": false
+    },
+    {
+      "ticker": "RXO",
+      "move_pct": 11.784,
+      "close": 23.62,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [
+        "control-rule-based"
+      ],
+      "catalyst": "Unscheduled May 19 pre-open brokerage update reversed prior seasonal-decline guidance: May truckload gross profit per load now 'at least flat' vs. April; April volume beat Cass Freight Index by ~200bps.",
+      "miss_reason": "Stock had already rallied ~30% in two weeks (Q1 beat May 7 + Stifel upgrade May 15), likely tripping RSI-overbought filters on momentum-trader and mean-reverter; the unscheduled pre-open 8-K gapped price before news-reactive could establish an intraday position.",
+      "suggestion": "Add an unscheduled intra-quarter 8-K guidance-raise trigger to news-reactive: if GP/load or EBITDA outlook is revised upward outside a standard earnings window and open-gap is \u226415%, bypass the RSI ceiling and allow entry within 30 min of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "LPG",
+      "move_pct": 11.496,
+      "close": 47.185,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [
+        "control-rule-based"
+      ],
+      "catalyst": "Q4 FY2026 earnings beat: EPS $1.89 vs $1.48 est (+28%), revenue $151.9M vs $130.6M est (+16%); record TCE rates and irregular $1.00/share dividend declared.",
+      "miss_reason": "control-rule-based traded it, but momentum-trader and news-reactive almost certainly have an earnings-day blackout gate that blocks new entries to avoid gap risk \u2014 a standard guard that fires regardless of beat magnitude. Mean-reverter had no edge: a clean earnings gap-up is a breakout, not a fade setup.",
+      "suggestion": "Momentum-trader's earnings gate should release names where reported EPS beat \u2265 20% and post-open volume \u2265 1.5\u00d7 20-day avg within the first 30 minutes, allowing a trend-following entry on confirmed high-conviction earnings gaps.",
+      "failed": false
+    },
+    {
+      "ticker": "LSCC",
+      "move_pct": 10.477,
+      "close": 137.2571,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [
+        "control-rule-based"
+      ],
+      "catalyst": "WSTS projected 25%+ global semiconductor market growth in 2026; Intel's 22% data-center beat and Omdia forecast upgrade sparked broad sector buying, amplified by LSCC's bullish JP Morgan conference appearance on May 19.",
+      "miss_reason": "The driver was a sector-level macro signal (WSTS/Omdia forecasts + Intel read-through), not an LSCC-specific release, bypassing news-reactive's company-specific screener. Momentum-trader likely excluded the name via an overbought RSI or max-gap filter after LSCC's 50%+ YTD run entering the day.",
+      "suggestion": "Add a semiconductor-industry-forecast trigger to news-reactive: when WSTS or Omdia publishes an upgrade \u2265+5 ppt to annual growth, release top-quartile-momentum names in the semis universe for entry within a 24 h window, subject to normal position-size limits.",
+      "failed": false
+    },
+    {
+      "ticker": "RH",
+      "move_pct": 10.386,
+      "close": 134.825,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "HAS",
+      "move_pct": -8.407,
+      "close": 89.01,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [],
+      "catalyst": "Q1 EPS beat ($1.47 vs $1.26 est) but FY revenue guidance held at low-end (3-5% constant currency) and a March cyberattack delays $40-60M of Q2 consumer-products revenue to H2, spooking investors on the forward outlook.",
+      "miss_reason": "HAS reported pre-market on earnings day (May 20 call at 08:30 ET) \u2014 the earnings-gate filter almost certainly quarantined it from intraday strategies. The decline required parsing a mixed print (EPS beat + guidance disappointment + cyberattack drag), favouring pre-open positioning over post-signal entry; a post-gap sho",
+      "suggestion": "Earnings-gate should release names with a gap-down \u22655% at open on earnings day where FY guidance is maintained below consensus median, allowing news-reactive to enter within the first 30 minutes \u2014 but only if short capability is enabled; otherwise flag as '(no actionable change \u2014 requires short leg)'.",
+      "failed": false
+    },
+    {
+      "ticker": "NTNX",
+      "move_pct": -7.044,
+      "close": 44.87,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "USO",
+      "move_pct": -5.864,
+      "close": 143.9901,
+      "in_universe_of": [
+        "commodity-momentum"
+      ],
+      "was_traded_by": [
+        "commodity-momentum"
+      ],
+      "catalyst": "WTI crude fell >5% on reports Trump declared US-Iran talks in 'final stages', raising Strait of Hormuz reopening hopes; satellite data confirmed supertankers transiting the strait, signalling easing of the naval blockade.",
+      "miss_reason": "Commodity-momentum was likely long-only and held no USO position after the prior trend exhausted (crude had already spiked ~60% since Feb). The reversal was a sudden diplomatic catalyst\u2014not a technical signal\u2014so pre-session momentum filters saw no entry, and short capability would have been needed to profit.",
+      "suggestion": "Add a geopolitical-reversal exit rule: when a held commodity long has gained \u226540% over 60 sessions AND a monitored news-sentiment feed registers 'ceasefire/supply-restoration' keywords, flatten the position at open rather than waiting for momentum crossover.",
+      "failed": false
+    },
+    {
+      "ticker": "DUOL",
+      "move_pct": -5.627,
+      "close": 107.68,
+      "in_universe_of": [
+        "control-rule-based",
+        "macro-aligned",
+        "mean-reverter",
+        "momentum-trader",
+        "news-reactive"
+      ],
+      "was_traded_by": [],
+      "catalyst": "Post-Q1 2026 earnings drift: Duolingo's May 4 report beat revenue ($292M vs $289M est.) but bookings guidance of +10\u201312% FY26 sharply disappointed; 'engagement-over-monetization' pivot and rising Treasury yields amplified the continued sell-off on May 20.",
+      "miss_reason": "The earnings catalyst was 16 days stale \u2014 outside news-reactive's lookback window. DUOL's confirmed -80% from-peak downtrend suppresses any long momentum signal. The partial bounce from $104 to $113 pre-May-20 erased the extreme oversold level that would trigger mean-reverter entry.",
+      "suggestion": "Extend news-reactive's earnings-overhang window to 20 sessions for names where reported bookings guidance delta is \u2264 \u201315% vs. consensus; secondary post-guidance drift in that window is systematic and currently untraded.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-05-20T19:44:55.733887+00:00"
+}
