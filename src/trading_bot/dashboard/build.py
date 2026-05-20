@@ -227,6 +227,10 @@ def build_dashboard_data() -> dict:
     # the dashboard can surface them inline without a click-through.
     missed_movers = _build_missed_movers_snapshot()
 
+    # External research brief from the weekly scan. Optional; if the
+    # scan hasn't run yet the dashboard panel just hides.
+    external_research = _build_external_research_snapshot()
+
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "as_of_iso": as_of_iso,
@@ -234,6 +238,7 @@ def build_dashboard_data() -> dict:
         "global_overview": global_overview,
         "sector_exposure": sector_exposure,
         "halt": halt_info,
+        "external_research": external_research,
         "missed_movers": missed_movers,
         "active": active,
         "archived": archived,
@@ -269,6 +274,29 @@ def _latest_exit_iso(entries: list[dict]) -> str | None:
             if ed and ed > latest:
                 latest = ed
     return latest or None
+
+
+def _build_external_research_snapshot() -> dict | None:
+    """Surface the latest weekly external-research brief. Returns
+    None if no scan has run yet — the dashboard's panel just hides."""
+    try:
+        from trading_bot.meta.external_research import latest_brief
+    except Exception:
+        return None
+    try:
+        b = latest_brief()
+    except Exception:
+        return None
+    if b is None:
+        return None
+    return {
+        "week_iso": b.week_iso,
+        "generated_at": b.generated_at,
+        "headline": b.headline,
+        "themes": b.themes,
+        "body_md": b.body_md,
+        "sources": b.sources,
+    }
 
 
 def _build_halt_info() -> dict:

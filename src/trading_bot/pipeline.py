@@ -379,7 +379,8 @@ def main(argv: list[str] | None = None) -> int:
         "mode",
         choices=[
             "entry", "exit", "clear-slot", "reflect", "summary",
-            "weekly-macro", "weekly-evolution", "daily-news-brief",
+            "weekly-macro", "weekly-evolution", "weekly-external-research",
+            "daily-news-brief",
             "grade-predictions",
             "t212-reconcile-orphans",
         ],
@@ -427,6 +428,12 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.mode == "weekly-evolution":
         run_weekly_evolution_cmd(on_date)
+        return 0
+
+    if args.mode == "weekly-external-research":
+        from trading_bot.meta.external_research import run_external_research
+        summary = run_external_research(on_date)
+        log.info("Weekly external research summary: %s", summary)
         return 0
 
     if args.mode == "daily-news-brief":

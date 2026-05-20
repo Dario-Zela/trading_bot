@@ -227,6 +227,49 @@
       </section>
     </template>
 
+    <!-- External research panel: surfaces the latest weekly brief
+         the evolution agent reads when deciding spawn-variants /
+         tier-2 candidates. Hides when no brief has been generated
+         (first run, etc.). -->
+    <template x-if="data && data.external_research && data.external_research.headline">
+      <section style="margin: 1.5rem 0; padding: 1.1rem 1.4rem 1.2rem; background: var(--card); border: 1px solid var(--hairline); border-radius: 6px;">
+        <div style="display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.6rem;">
+          <span style="font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted);">
+            External research
+          </span>
+          <span style="font-family: var(--sans); font-size: 0.74rem; color: var(--ink-muted);"
+                x-text="data.external_research.week_iso + ' · ' + data.external_research.themes.length + ' themes'"></span>
+        </div>
+        <p style="font-family: var(--serif-body); font-size: 1.05rem; color: var(--ink); margin: 0 0 1rem; line-height: 1.5;"
+           x-text="data.external_research.headline"></p>
+        <template x-for="t in data.external_research.themes" :key="t.theme">
+          <div style="margin-bottom: 0.85rem; padding-left: 0.6rem; border-left: 3px solid var(--hairline);">
+            <div style="font-family: var(--sans); font-size: 0.85rem; font-weight: 700; color: var(--ink); margin-bottom: 0.2rem;"
+                 x-text="t.theme"></div>
+            <div style="font-family: var(--sans); font-size: 0.86rem; color: var(--ink-soft); line-height: 1.55;"
+                 x-text="t.summary"></div>
+            <template x-if="t.implication">
+              <div style="font-family: var(--sans); font-size: 0.78rem; color: var(--ink-muted); margin-top: 0.25rem;">
+                <strong>Implication:</strong> <span x-text="t.implication"></span>
+              </div>
+            </template>
+          </div>
+        </template>
+        <template x-if="data.external_research.sources && data.external_research.sources.length">
+          <details style="margin-top: 0.6rem;">
+            <summary style="cursor: pointer; font-family: var(--sans); font-size: 0.78rem; color: var(--ink-muted);">
+              Sources (<span x-text="data.external_research.sources.length"></span>)
+            </summary>
+            <ul style="margin: 0.4rem 0 0; padding-left: 1.2rem; font-family: var(--sans); font-size: 0.78rem; color: var(--ink-muted);">
+              <template x-for="s in data.external_research.sources" :key="s">
+                <li><a :href="s" target="_blank" rel="noopener" style="color: inherit;" x-text="s"></a></li>
+              </template>
+            </ul>
+          </details>
+        </template>
+      </section>
+    </template>
+
     <!-- Sector exposure — per-sector mini column chart (1w / 1d /
          today at increasing opacity). Filters by region selector;
          counts both open and closed trades to read as a footprint

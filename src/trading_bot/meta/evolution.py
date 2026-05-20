@@ -270,11 +270,37 @@ def _metrics_to_dict(m: StrategyMetrics) -> dict:
     }
 
 
+def _read_external_research() -> str:
+    """Return the latest external research brief as markdown, or a
+    placeholder if no brief has been generated yet (e.g. the very
+    first weekly run)."""
+    try:
+        from trading_bot.meta.external_research import latest_brief
+    except Exception as e:
+        log.warning("could not import external_research module: %s", e)
+        return "_(external research module unavailable)_"
+    try:
+        b = latest_brief()
+    except Exception as e:
+        log.warning("could not read external research brief: %s", e)
+        return "_(external research brief read failed)_"
+    if b is None:
+        return "_(no external research brief available yet — first scan may not have run)_"
+    return f"**Brief from {b.week_iso}** (generated {b.generated_at[:10]})\n\n{b.body_md}"
+
+
 def _build_prompt(today: date, snapshot: list[dict], lessons: str) -> str:
     free_slots = _free_alpaca_slots(snapshot)
     n_active = sum(1 for s in snapshot if s.get("active"))
 
     snapshot_json = json.dumps(snapshot, indent=2)
+
+    # Pick up the most recent external research brief (from the
+    # scan step that runs earlier in the weekly-evolution workflow).
+    # Surfaces what's being researched in quant finance so the agent
+    # can ground spawn-variant proposals in current literature
+    # rather than re-inventing.
+    external_block = _read_external_research()
     return f"""You are the weekly evolution agent for the trading bot. Today is
 {today.isoformat()}. Each strategy can run independently across regions
 (`us`, `uk-eu`, `asia`), with its own tier and slot per region. Below is a
@@ -327,6 +353,17 @@ Other constraints:
 ```json
 {snapshot_json}
 ```
+
+## External research (recent quant finance literature)
+
+{external_block}
+
+Use the external research to inform spawn-variant proposals (anchor
+the variant's edge to a cited finding) and tier-2-candidate picks
+(if a paper's findings align with a strategy we're already running,
+that's a confidence signal worth flagging). Don't propose anything
+that requires capability we don't have — options, leverage,
+intraday. Don't restate the research; cite it.
 
 ## Recent lessons (failures / corrections)
 
