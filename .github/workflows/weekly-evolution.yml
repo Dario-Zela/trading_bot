@@ -58,6 +58,19 @@ jobs:
           python -m trading_bot.pipeline weekly-external-research || \
             echo "External research scan failed (non-fatal)"
 
+      - name: Backtest pass (replay every strategy on last 14d)
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: |
+          # Replay every active strategy over the trailing 14 days
+          # using today's code + prompts. Surface result to the
+          # evolution prompt as a "what would current code have done
+          # last week vs what actually happened" sanity check.
+          # Non-fatal — evolution still runs with last week's summary
+          # if this step misses (or no summary at all on first run).
+          python -m trading_bot.pipeline weekly-backtest-pass || \
+            echo "Backtest pass failed (non-fatal)"
+
       - name: Run weekly evolution
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}

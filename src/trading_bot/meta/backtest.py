@@ -171,6 +171,117 @@ def run_backtest(
     )
 
 
+def run_weekly_backtest_pass(today: date, window_days: int = 14) -> dict:
+    """Replay every active strategy over the trailing `window_days`
+    using TODAY's code + prompts. Writes a per-strategy JSON report
+    to `state/backtest/<iso-week>/<strategy>.json` plus a roll-up
+    `state/backtest/<iso-week>/summary.json` the evolution prompt
+    reads.
+
+    Caveat: LLM strategies hit Claude live during the replay, which
+    means tools like WebSearch see TODAY's web — that's lookahead
+    bias. The result still has signal as a "what would current code
+    do on yesterday's bars" sanity check, but it's not a clean
+    out-of-sample backtest. The summary file records this caveat so
+    downstream readers don't over-interpret.
+
+    Triggered weekly from the evolution workflow; safe to dispatch
+    on demand.
+    """
+    from trading_bot.strategy.registry import _load_all_configs  # noqa: WPS433
+    import yaml as _yaml
+
+    iso_year, iso_week, _ = today.isocalendar()
+    out_dir = STATE_ROOT / "backtest" / f"{iso_year}-W{iso_week:02d}"
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    cfg_dir = STATE_ROOT.parent / "strategies"
+    if not cfg_dir.exists():
+        cfg_dir = (STATE_ROOT / "..").resolve() / "strategies"
+
+    # Discover every active strategy / region pair to backtest. We
+    # call into the registry's loader rather than re-walking the yaml
+    # ourselves, so the multi-region expansion stays consistent.
+    from trading_bot.strategy.registry import load_active_strategies
+    active = load_active_strategies(region=None)
+    if not active:
+        log.warning("backtest pass: no active strategies")
+        return {"window_days": window_days, "strategies": []}
+
+    start = today - timedelta(days=window_days + 4)   # ~3-4 extra calendar days for weekend buffer
+    end = today - timedelta(days=1)                   # backtest stops yesterday so we can resolve next-day fills
+
+    results: list[dict] = []
+    for strat in active:
+        sid = strat.config.id
+        region = strat.config.region
+        log.info("backtest pass: %s/%s window %s → %s", sid, region, start, end)
+        try:
+            report = run_backtest(
+                sid,
+                start_date=start,
+                end_date=end,
+                limit_days=None,
+            )
+        except Exception as e:
+            log.warning("backtest pass: %s failed: %s", sid, e)
+            results.append({
+                "strategy_id": sid, "region": region,
+                "error": str(e)[:240],
+            })
+            continue
+
+        # Drop the per-trade detail when serialising the roll-up so
+        # the evolution prompt doesn't drown in noise. The full
+        # report still lives in the markdown the existing harness writes.
+        results.append({
+            "strategy_id": sid,
+            "region": region,
+            "window": f"{start.isoformat()} → {end.isoformat()}",
+            "n_days": report.n_days,
+            "n_trades": report.n_trades,
+            "total_pnl_pct": report.total_pnl_pct,
+            "avg_pnl_pct": report.avg_pnl_pct,
+            "hit_rate": report.hit_rate,
+            "win_loss_ratio": report.win_loss_ratio,
+        })
+
+        # Per-strategy markdown
+        write_report(report)
+
+    summary = {
+        "generated_for_iso_week": f"{iso_year}-W{iso_week:02d}",
+        "window_days": window_days,
+        "lookahead_bias_caveat": (
+            "LLM strategies fetched live web context during replay (WebSearch "
+            "sees today's news). Treat the numbers as a structural sanity "
+            "check, not a clean out-of-sample test."
+        ),
+        "strategies": results,
+    }
+    summary_path = out_dir / "summary.json"
+    summary_path.write_text(json.dumps(summary, indent=2))
+    log.info("backtest pass: wrote %s (%d strategies)", summary_path, len(results))
+    return summary
+
+
+def latest_backtest_summary() -> dict | None:
+    """Read the most recent weekly backtest summary, if any."""
+    d = STATE_ROOT / "backtest"
+    if not d.exists():
+        return None
+    week_dirs = sorted([p for p in d.iterdir() if p.is_dir()])
+    if not week_dirs:
+        return None
+    path = week_dirs[-1] / "summary.json"
+    if not path.exists():
+        return None
+    try:
+        return json.loads(path.read_text())
+    except (json.JSONDecodeError, OSError):
+        return None
+
+
 def _trading_days_in_range(start: date, end: date, region: str) -> list[date]:
     """Approximate trading-day filter using the existing calendar tool.
     Excludes weekends + known holidays for the region."""

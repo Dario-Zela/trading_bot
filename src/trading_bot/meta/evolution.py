@@ -270,6 +270,42 @@ def _metrics_to_dict(m: StrategyMetrics) -> dict:
     }
 
 
+def _build_backtest_block() -> str:
+    """Read the latest weekly backtest summary and render it as a
+    markdown table for the evolution prompt. Empty placeholder if
+    none has been generated yet."""
+    try:
+        from trading_bot.meta.backtest import latest_backtest_summary
+    except Exception:
+        return "_(backtest module unavailable)_"
+    summary = latest_backtest_summary()
+    if not summary or not summary.get("strategies"):
+        return "_(no backtest summary available yet — pre-step may not have run)_"
+    lines: list[str] = []
+    lines.append(
+        f"Window: {summary.get('window_days')}-day walk-forward, "
+        f"replayed under today's code + prompts. **Caveat:** "
+        f"{summary.get('lookahead_bias_caveat', '')}"
+    )
+    lines.append("")
+    lines.append("| Strategy | Region | Trades | Total P&L% | Hit% | W/L |")
+    lines.append("|---|---|---:|---:|---:|---:|")
+    for s in summary["strategies"]:
+        if s.get("error"):
+            lines.append(
+                f"| {s.get('strategy_id')} | {s.get('region')} | — | "
+                f"_error: {s['error'][:60]}_ | — | — |"
+            )
+            continue
+        lines.append(
+            f"| {s.get('strategy_id')} | {s.get('region')} | "
+            f"{s.get('n_trades', 0)} | {s.get('total_pnl_pct', 0):+.2f}% | "
+            f"{(s.get('hit_rate', 0) or 0)*100:.0f}% | "
+            f"{s.get('win_loss_ratio', 0):.2f} |"
+        )
+    return "\n".join(lines)
+
+
 def _build_tool_attribution_block(snapshot: list[dict]) -> str:
     """Per-strategy tool-attribution summary spliced into the evolution
     prompt. One section per strategy, listing each tool's IC delta over
@@ -341,6 +377,11 @@ def _build_prompt(today: date, snapshot: list[dict], lessons: str) -> str:
     # 60 days. Tells the agent which prompt inputs are pulling weight
     # vs. dead weight that should be tuned out of the `tools` list.
     tool_attribution_block = _build_tool_attribution_block(snapshot)
+
+    # Backtest summary from the pre-step. Shows "what would today's
+    # code have done last 14 days" per strategy — useful as a sanity
+    # check before tuning prompts further.
+    backtest_block = _build_backtest_block()
     return f"""You are the weekly evolution agent for the trading bot. Today is
 {today.isoformat()}. Each strategy can run independently across regions
 (`us`, `uk-eu`, `asia`), with its own tier and slot per region. Below is a
@@ -405,6 +446,18 @@ that's a confidence signal worth flagging). Don't propose anything
 that requires capability we don't have — options, leverage,
 intraday. Don't restate the research; cite it.
 
+## Walk-forward backtest (today's code on the last 14 days)
+
+{backtest_block}
+
+If a strategy's backtested P&L is positive but its LIVE P&L over
+the same window is negative, something in the production pipeline
+is bleeding the edge — usually the cost gate / sizing / earnings
+gate filtering picks that backtest accepted. Likely tunes: lower
+cost_gate_multiplier, drop the earnings filter window, raise
+max_position_pct. If the backtested P&L is ALSO negative, the
+strategy has no replicable edge — demote it or rewrite the prompt.
+
 ## Tool attribution (does each prompt input actually move IC?)
 
 Per-strategy IC contribution by tool, computed over the trailing
@@ -455,12 +508,32 @@ demote MUST include `region`; tune / spawn-variant do not:
 }}
 ```
 
-Be conservative. Most rows should be `keep` most weeks. Promote only when
-the data clearly supports it; demote only when the trend is unmistakable.
-A strategy performing well in one region but poorly in another is normal —
-treat those decisions independently. Spawning variants should be rare —
-only when you see a genuinely different edge that the parent's prompt
-isn't capturing.
+Action thresholds (use the data, don't be sentimental):
+
+- **Keep** is the default. Most rows should be `keep` most weeks.
+- **Demote** when a strategy on `alpaca-paper` has *any* of: IC
+  noise-floor verdict = 'noise' AND n ≥ 30, OR trailing 14d P&L is
+  negative for the second consecutive week, OR trailing hit-rate
+  is under 35% with n ≥ 20. Don't sit on losers waiting for them
+  to turn — the slot is more valuable than the sunk-cost prompt
+  iteration.
+- **Tune** when the backtest column shows the strategy WOULD have
+  done better under current code than it actually did live — the
+  cost gate / earnings filter / sizing is bleeding edge. Target
+  the most likely culprit; one tune action can adjust several
+  fields.
+- **Spawn-variant** is rare — only when a paper from the external
+  research block lines up with a gap in the slate, or when one
+  region's metrics are wildly better than another's (suggests a
+  prompt that needs regional specialisation).
+- **mark-tier2-candidate** for strategies that just cleared the IC
+  noise floor with conviction; you're betting the data is real and
+  next week will confirm.
+
+A strategy performing well in one region but poorly in another is
+normal — treat those decisions independently. Don't accumulate
+no-edge strategies for breadth; a smaller slate of working
+strategies beats a wide slate of mostly-noise ones.
 """
 
 

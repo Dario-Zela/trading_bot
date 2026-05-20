@@ -380,6 +380,7 @@ def main(argv: list[str] | None = None) -> int:
         choices=[
             "entry", "exit", "clear-slot", "reflect", "summary",
             "weekly-macro", "weekly-evolution", "weekly-external-research",
+            "weekly-backtest-pass",
             "daily-news-brief",
             "grade-predictions",
             "t212-reconcile-orphans",
@@ -434,6 +435,16 @@ def main(argv: list[str] | None = None) -> int:
         from trading_bot.meta.external_research import run_external_research
         summary = run_external_research(on_date)
         log.info("Weekly external research summary: %s", summary)
+        return 0
+
+    if args.mode == "weekly-backtest-pass":
+        from trading_bot.meta.backtest import run_weekly_backtest_pass
+        summary = run_weekly_backtest_pass(on_date)
+        log.info(
+            "Weekly backtest pass: %d strategies replayed (window=%d days)",
+            len(summary.get("strategies") or []),
+            int(summary.get("window_days") or 0),
+        )
         return 0
 
     if args.mode == "daily-news-brief":
