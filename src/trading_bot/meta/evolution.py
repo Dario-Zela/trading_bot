@@ -357,11 +357,15 @@ def _build_backtest_block() -> str:
 
 def _build_tool_attribution_block(snapshot: list[dict]) -> str:
     """Per-strategy tool-attribution summary spliced into the evolution
-    prompt. One section per strategy, listing each tool's IC delta over
-    the trailing 60-day window. Empty for strategies without graded
-    predictions yet."""
+    prompt. One section per strategy: each tool's IC delta over the
+    trailing 60-day window PLUS an IC-by-prefilter-mode comparison
+    (lets the agent A/B-test Sonnet pre-filter vs Python heuristic
+    vs no filter once at least one strategy has run under both modes).
+    Empty for strategies without graded predictions yet."""
     try:
-        from trading_bot.meta.tool_attribution import attribution_summary_lines
+        from trading_bot.meta.tool_attribution import (
+            attribution_summary_lines, prefilter_summary_lines,
+        )
     except Exception as e:
         log.warning("tool attribution unavailable: %s", e)
         return "_(tool attribution unavailable)_"
@@ -378,13 +382,23 @@ def _build_tool_attribution_block(snapshot: list[dict]) -> str:
             continue
         seen.add(sid)
         try:
-            lines = attribution_summary_lines(sid)
+            tool_lines = attribution_summary_lines(sid)
         except Exception as e:
             log.warning("attribution failed for %s: %s", sid, e)
+            tool_lines = ""
+        try:
+            prefilter_lines = prefilter_summary_lines(sid)
+        except Exception as e:
+            log.warning("prefilter attribution failed for %s: %s", sid, e)
+            prefilter_lines = ""
+        if not tool_lines.strip() and not prefilter_lines.strip():
             continue
-        if not lines.strip():
-            continue
-        blocks.append(f"**{sid}**\n{lines}")
+        parts: list[str] = [f"**{sid}**"]
+        if tool_lines.strip():
+            parts.append("_Tools:_\n" + tool_lines)
+        if prefilter_lines.strip():
+            parts.append("_Pre-filter mode comparison:_\n" + prefilter_lines)
+        blocks.append("\n".join(parts))
     if not blocks:
         return "_(no graded predictions yet — attribution will populate as data accumulates)_"
     return "\n\n".join(blocks)

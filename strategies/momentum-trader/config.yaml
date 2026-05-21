@@ -28,11 +28,11 @@ runs_in:
 - region: us
   tier: alpaca-paper
   alpaca_slot: 1
-  universe: sp1500
+  universe: t212_isa_us
 - region: uk-eu
   tier: trading212-paper
   t212_slot: 1
-  universe: uk_eu_extended
+  universe: t212_isa_uk_eu
 # Phase 8C — drop candidates with earnings inside the window. Technical
 # signal becomes unreliable across a binary print, so we avoid the day.
 skip_if_earnings_in_days: 1

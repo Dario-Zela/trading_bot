@@ -384,6 +384,9 @@ def main(argv: list[str] | None = None) -> int:
             "daily-news-brief",
             "grade-predictions",
             "t212-reconcile-orphans",
+            "ohlcv-prune",
+            "ohlcv-daily-update",
+            "ohlcv-backfill",
         ],
     )
     parser.add_argument("--region", default="us", choices=["us", "uk-eu"])
@@ -445,6 +448,74 @@ def main(argv: list[str] | None = None) -> int:
             len(summary.get("strategies") or []),
             int(summary.get("window_days") or 0),
         )
+        return 0
+
+    if args.mode == "ohlcv-prune":
+        # 1-year rolling cutoff. Called from weekly-evolution after the
+        # main evolution pass. Bounds the local SQLite OHLCV cache size
+        # by dropping bars older than 365 days. Idempotent.
+        from trading_bot.tools.ohlcv_store import prune_old, row_count, store_size_bytes
+        deleted = prune_old(365)
+        log.info(
+            "ohlcv prune: deleted %d bars; remaining %d rows; db size %.1f MB",
+            deleted, row_count(), store_size_bytes() / 1_048_576,
+        )
+        return 0
+
+    if args.mode == "ohlcv-daily-update":
+        # Post-close warm-up: fetch today's bar for every ticker active
+        # across all strategies' universes, write back to the local store
+        # so tomorrow's morning entry pipeline reads from cache instead
+        # of yfinance. Idempotent — re-running is safe (INSERT OR REPLACE).
+        from trading_bot.strategy.registry import load_active_strategies
+        from trading_bot.tools.universe import get_universe
+        from trading_bot.tools.history import get_history
+        from trading_bot.tools.ohlcv_store import row_count
+        active = load_active_strategies(region=None)
+        all_tickers: set[str] = set()
+        for s in active:
+            try:
+                all_tickers.update(get_universe(s.config.universe))
+            except Exception as e:
+                log.warning("ohlcv-daily-update: skipping %s (%s)", s.config.universe, e)
+        log.info("ohlcv-daily-update: %d unique tickers across %d active strategies",
+                 len(all_tickers), len(active))
+        # Fetching with a 5-day lookback (not 1) makes the write-back
+        # backfill any gaps from a missed run. get_history writes to the
+        # store internally.
+        if all_tickers:
+            n_before = row_count()
+            get_history(sorted(all_tickers), lookback_days=5, end_date=on_date)
+            n_after = row_count()
+            log.info("ohlcv-daily-update: cache rows %d → %d (Δ %d)",
+                     n_before, n_after, n_after - n_before)
+        return 0
+
+    if args.mode == "ohlcv-backfill":
+        # One-time bulk backfill: fetch 70 trading days of OHLCV for
+        # every ticker across all active strategies' universes. Run
+        # this once after switching to the t212_isa universes so the
+        # first morning entry doesn't pay a ~12-min cold-cache hit.
+        from trading_bot.strategy.registry import load_active_strategies
+        from trading_bot.tools.universe import get_universe
+        from trading_bot.tools.history import get_history
+        from trading_bot.tools.ohlcv_store import row_count, store_size_bytes
+        active = load_active_strategies(region=None)
+        all_tickers: set[str] = set()
+        for s in active:
+            try:
+                all_tickers.update(get_universe(s.config.universe))
+            except Exception as e:
+                log.warning("ohlcv-backfill: skipping %s (%s)", s.config.universe, e)
+        log.info("ohlcv-backfill: %d unique tickers, fetching 70-day history",
+                 len(all_tickers))
+        if all_tickers:
+            n_before = row_count()
+            get_history(sorted(all_tickers), lookback_days=70, end_date=on_date)
+            n_after = row_count()
+            log.info("ohlcv-backfill: cache rows %d → %d (Δ %d); db size %.1f MB",
+                     n_before, n_after, n_after - n_before,
+                     store_size_bytes() / 1_048_576)
         return 0
 
     if args.mode == "daily-news-brief":

@@ -29,10 +29,10 @@ runs_in:
 - region: us
   tier: alpaca-paper
   alpaca_slot: 3
-  universe: sp1500
+  universe: t212_isa_us
 - region: uk-eu
   tier: shadow
-  universe: uk_eu_extended
+  universe: t212_isa_uk_eu
 # LLM strategies use the Sonnet-driven per-strategy pre-filter so the
 # universe is narrowed with the strategy's lens before the expensive
 # technicals fetch + Stage-1 Haiku scoring. See prompts/prefilter.md

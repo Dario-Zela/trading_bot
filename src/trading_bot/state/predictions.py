@@ -32,6 +32,12 @@ class PredictionRecord:
     # post-grade by the same LLM that reads it in subsequent prompts.
     # Empty / None for strategies that don't yet emit it.
     tools_used: list[str] = field(default_factory=list)
+    # Pre-filter mode active when this prediction was generated. Lets the
+    # tool-attribution layer slice IC by mode (llm / python / off) so the
+    # evolution agent can A/B-test whether the strategy-aware Sonnet
+    # filter actually moves the needle vs the legacy Python heuristic.
+    # Empty for rows generated before the per-strategy filter shipped.
+    prefilter_mode: str = ""
     # Free-form one-line reflection on whether prediction held up.
     # Populated by the daily reflect_predictions_on_day pass.
     reflection: str = ""

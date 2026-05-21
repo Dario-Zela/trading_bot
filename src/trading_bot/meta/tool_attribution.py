@@ -267,3 +267,66 @@ def attribution_summary_lines(strategy_id: str, *, window_days: int = 60) -> str
             f"Δ {delta_s} ({d.verdict})"
         )
     return "\n".join(lines)
+
+
+def compute_prefilter_mode_ic(
+    strategy_id: str,
+    *,
+    window_days: int = 60,
+    end_date: date | None = None,
+) -> dict[str, dict]:
+    """Group this strategy's graded predictions by `prefilter_mode` and
+    compute IC + hit rate for each. Used by the evolution agent to
+    A/B-test the Sonnet pre-filter vs the legacy Python heuristic vs
+    no filter at all.
+
+    Returns {mode: {n_predictions, n_days, ic, hit_rate}}. Modes with
+    fewer than 5 predictions return ic=None (Pearson is unstable below).
+    """
+    grouped: dict[str, list[dict]] = defaultdict(list)
+    for rec in _iter_graded_predictions(
+        strategy_id, window_days=window_days, end_date=end_date,
+        require_tools_used=False,    # don't filter — prefilter_mode is
+                                     # independent of the tools_used field
+    ):
+        mode = (rec.get("prefilter_mode") or "").strip().lower()
+        if not mode:
+            mode = "(unknown)"        # legacy rows from before the field
+        grouped[mode].append(rec)
+
+    out: dict[str, dict] = {}
+    for mode, rows in grouped.items():
+        ic, hit = _ic_for_rows(rows)
+        dates = {r.get("prediction_date") for r in rows if r.get("prediction_date")}
+        out[mode] = {
+            "n_predictions": len(rows),
+            "n_days": len(dates),
+            "ic": ic,
+            "hit_rate": hit,
+        }
+    return out
+
+
+def prefilter_summary_lines(strategy_id: str, *, window_days: int = 60) -> str:
+    """One-block markdown summary of prefilter_mode IC for a strategy.
+    Returns an empty string if all rows fall in one bucket (no comparison
+    possible) or no data exists."""
+    buckets = compute_prefilter_mode_ic(strategy_id, window_days=window_days)
+    if not buckets:
+        return ""
+    # Only emit if there's actual comparison to make (≥ 2 modes, each
+    # with ≥ 5 predictions — same threshold _pearson uses)
+    actionable = {m: b for m, b in buckets.items() if (b["n_predictions"] or 0) >= 5}
+    if len(actionable) < 2:
+        return ""
+    lines: list[str] = []
+    for mode, b in sorted(actionable.items(), key=lambda kv: -(kv[1]["n_predictions"] or 0)):
+        ic = b["ic"]
+        ic_s = f"{ic:+.3f}" if ic is not None else "—"
+        hit = b["hit_rate"]
+        hit_s = f"{hit * 100:.0f}%" if hit is not None else "—"
+        lines.append(
+            f"- prefilter_mode=`{mode}` — IC {ic_s} (n={b['n_predictions']}, "
+            f"days={b['n_days']}, hit-rate {hit_s})"
+        )
+    return "\n".join(lines)

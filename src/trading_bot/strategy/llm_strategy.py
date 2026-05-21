@@ -1006,6 +1006,7 @@ class LLMStrategy(Strategy):
                     rationale=rationale,
                     was_traded=was_traded,
                     tools_used=tools_used,
+                    prefilter_mode=(cfg.prefilter_mode or "").lower().strip(),
                 )
             )
 

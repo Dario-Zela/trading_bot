@@ -84,6 +84,17 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python -m trading_bot.pipeline weekly-evolution
 
+      - name: Prune local OHLCV cache (1-year rolling cutoff)
+        env:
+          # No secrets needed — this is pure local SQLite maintenance
+          # that drops bars older than 365 days. Idempotent. Non-fatal
+          # if it hits an unexpected schema (would just leave the file
+          # untouched).
+          DUMMY: "1"
+        run: |
+          python -m trading_bot.pipeline ohlcv-prune || \
+            echo "OHLCV prune failed (non-fatal)"
+
       - name: Commit state + config changes back
         run: |
           git config user.name "trading-bot[bot]"
