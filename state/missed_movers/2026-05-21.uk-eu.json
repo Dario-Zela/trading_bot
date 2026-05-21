@@ -1,0 +1,122 @@
+{
+  "date": "2026-05-21",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 ICG.L +3%, DSFIR.AS +3%, MRK.DE +3%, IMCD.AS +3%, III.L +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (AUTO.L -8%, CTEC.L -5%, CBK.DE -3%, AIR.PA -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: AUTO.L (-7.94%) \u2014 FY26 revenue +4% to \u00a3624.3m broadly in line, but mgmt flagged a lower FY2027 ARPR starting run rate and elevated Deal Builder cancellations; FY27 op-profit guidance of \u00a3395\u2013415m disappointed vs consensus. Why we passed: Outside any active strategy's universe. AUTO.L is a FTSE 100 large-cap UK online automotive marketplace; the ~8% drop was a post-earnings guidance-miss gap requiring pre-open positioning on results day before price discovery at the open.",
+  "top_movers": [
+    {
+      "ticker": "ICG.L",
+      "move_pct": 3.437,
+      "close": 18.96,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "ICG released FY2026 final results on 21 May: $17B fundraising beat forecasts, FRE +23% to \u00a3350M, record operating cash flow of \u00a3861M, and a 16th consecutive ordinary dividend increase.",
+      "miss_reason": "Outside any active strategy's universe. ICG.L is a FTSE 100 alternative asset manager whose +3.44% move was driven by a scheduled full-year earnings release \u2014 a catalyst-type event requiring pre-announcement universe inclusion, not a real-time signal.",
+      "suggestion": "Add a pre-earnings expansion pass: any FTSE 100 name with a confirmed results date within 2 calendar days should be admitted to the news-reactive universe; enter on gap \u2265+2% with volume \u22651.2\u00d7 20-day avg in the first 30 minutes.",
+      "failed": false
+    },
+    {
+      "ticker": "DSFIR.AS",
+      "move_pct": 3.426,
+      "close": 70.04,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "DSM-Firmenich begins dual listing on SIX Swiss Exchange effective 2026-05-21, alongside a \u20ac540M share buyback program, broadening investor access and signalling capital returns.",
+      "miss_reason": "Outside any active strategy's universe; DSM-Firmenich is a large-cap (~\u20ac25B mkt cap) Euronext Amsterdam materials/nutrition name. Today's move was a scheduled corporate-action catalyst (new exchange listing + buyback launch) invisible to intraday momentum or mean-reversion signals.",
+      "suggestion": "Add a corporate-action pre-filter ingesting dual-listing effective dates and buyback-initiation filings \u226548h ahead; place qualifying names on a day-of watchlist for the catalyst-gap strategy with a dedicated position-size cap.",
+      "failed": false
+    },
+    {
+      "ticker": "MRK.DE",
+      "move_pct": 3.218,
+      "close": 126.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Phase 3 TroFuse-005 trial (announced May 18) showed sacituzumab tirumotecan met dual OS+PFS endpoints in advanced endometrial cancer \u2014 first TROP2 ADC to achieve this; market continued re-rating the oncology pipeline on May 21.",
+      "miss_reason": "Outside any active strategy's universe. MRK.DE is a DAX 40 diversified conglomerate not covered by sector filters; the catalyst was a binary Phase 3 readout on May 18 requiring pre-announcement positioning \u2014 May 21 was 3-day continuation drift.",
+      "suggestion": "Add DAX large-cap pharma names to a catalyst-continuation universe; trigger entries on confirmed Phase 3 OS+PFS beats with \u2265+2% cumulative drift within 3 sessions post-announcement and volume \u22651.3\u00d7 20-day avg.",
+      "failed": false
+    },
+    {
+      "ticker": "IMCD.AS",
+      "move_pct": 3.011,
+      "close": 94.42,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found for May 21; likely technical breakout above key \u20ac94 resistance with European specialty-chemicals sector rotation \u2014 Jefferies raised PT \u20ac108\u2192\u20ac122 on May 11 and Goldman reaffirmed Buy May 14.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IMCD is an AEX-listed mid-large-cap specialty chemicals distributor not in current sector filters. Move appears technical/sector-driven with no pre-market news signal to trigger a reactive strategy.",
+      "suggestion": "Add AEX-listed specialty chemicals distributors to a momentum universe with a breakout filter (close > 20-day resistance + volume \u22651.2\u00d7 avg) to capture sector-rotation moves; requires no new short capability.",
+      "failed": false
+    },
+    {
+      "ticker": "III.L",
+      "move_pct": 2.983,
+      "close": 22.44,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-FY2026-results recovery: stock fell ~19% on May 14 on Action's LFL slowdown to 2.4%; the concurrent \u00a3750m buyback (first in 21 yrs) drove active repurchases at \u00a318.38\u2013\u00a322.42, underpinning a multi-session rebound.",
+      "miss_reason": "Outside any active strategy's universe: 3i is a FTSE 100 closed-end PE/investment company (diversified financials), excluded from operating-company strategies. Move is also a delayed post-results bounce from May 14 selloff \u2014 misses same-day signal filters.",
+      "suggestion": "Add a post-results bounce screen: FTSE 100 investment companies down >10% on results day with a concurrent buyback \u2265\u00a3500m should be queued for mean-reversion entry within 5 sessions, capped at 1% NAV exposure per name.",
+      "failed": false
+    },
+    {
+      "ticker": "BAB.L",
+      "move_pct": 2.742,
+      "close": 10.68,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Babcock's May 20 announcement of a new 10-supplier strategic supply chain framework for its defence portfolio reignited sentiment; stock had fallen ~24% since \u00a3200M buyback completion at 1094p on April 28.",
+      "miss_reason": "Outside any active strategy's universe. Babcock (~\u00a35B UK defence/engineering) was in a sharp post-buyback downtrend that would disqualify it from momentum filters; catching the bounce required pre-open ingestion of the May 20 RNS announcement.",
+      "suggestion": "Extend the UK mid-cap industrials universe to include FTSE 250 defence names (BAB.L, QinetiQ); add a news-scan gate on LSE RNS releases so contract/partnership announcements flag eligible entries before market open the following session.",
+      "failed": false
+    },
+    {
+      "ticker": "AUTO.L",
+      "move_pct": -7.941,
+      "close": 4.5689,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FY26 revenue +4% to \u00a3624.3m broadly in line, but mgmt flagged a lower FY2027 ARPR starting run rate and elevated Deal Builder cancellations; FY27 op-profit guidance of \u00a3395\u2013415m disappointed vs consensus.",
+      "miss_reason": "Outside any active strategy's universe. AUTO.L is a FTSE 100 large-cap UK online automotive marketplace; the ~8% drop was a post-earnings guidance-miss gap requiring pre-open positioning on results day before price discovery at the open.",
+      "suggestion": "Add a FTSE 100 earnings-event rule: on results day, flag names where FY+1 op-profit guidance midpoint trails prior consensus by \u22653% and intraday open gap is \u22655%; route to a gap-fade or short overlay at open if short capability exists.",
+      "failed": false
+    },
+    {
+      "ticker": "CTEC.L",
+      "move_pct": -5.042,
+      "close": 2.034,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Pre-market RNS AGM trading update revealed InnovaMatrix revenues down ~24% YoY (FY guidance cut to 'at least $75m' from $99m prior year) plus caution on Medicare reimbursement uncertainty for Advanced Wound Care.",
+      "miss_reason": "Outside any active strategy's universe. CTEC.L is a large-cap FTSE 100 medical-devices name (~\u00a33-4bn mkt cap); the catalyst was a pre-market RNS guidance cut requiring pre-open short positioning that post-open momentum and news-reactive filters arrive too late to act on.",
+      "suggestion": "Add FTSE 100 healthcare names to news-reactive universe with a pre-market RNS scanner flagging guidance-cut keywords ('at least $X', product revenue below prior-year actuals); trigger short entry within 15 min of open on gap-down \u22652% \u2014 requires short capability, else honest no-op.",
+      "failed": false
+    },
+    {
+      "ticker": "CBK.DE",
+      "move_pct": -3.176,
+      "close": 35.97,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "CBK.DE went ex-dividend on 2026-05-21 (EUR 1.10/share approved at May 20 AGM); the ~\u20ac1.10 dividend strip mechanically accounts for virtually all of the \u22123.18% close-to-close decline.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CBK.DE is a DAX large-cap German bank (~\u20ac23B market cap) in a sector likely excluded by the active strategies. Independently, the move is a mechanical dividend-ex adjustment, not a momentum or mean-reversion signal, so no technical filter would have produced a valid entry.",
+      "suggestion": "Add an ex-dividend adjustment to the missed-movers screen: subtract the declared dividend from close-to-close return on ex-date before ranking, so mechanical payout strips don't surface as apparent gap candidates and pollute the signal list.",
+      "failed": false
+    },
+    {
+      "ticker": "AIR.PA",
+      "move_pct": -3.092,
+      "close": 168.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Airbus warned airlines of further A350 delivery delays due to production bottlenecks at its ex-Spirit AeroSystems Kinston NC fuselage plant; Paris Court of Appeal also convicted Airbus over AF447 crash same day.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AIR.PA is a mega-cap CAC 40 industrial excluded by the bot's cap/sector filters. Both catalysts broke pre-open, favouring pre-positioned shorts over reactive intraday signals.",
+      "suggestion": "Expand the news-reactive strategy's universe to include CAC 40 large-cap industrials and add a supply-chain-warning event trigger (\u22652% implied gap at open) to allow same-day short entries on delivery-delay headlines.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-05-21T17:10:29.421781+00:00"
+}
