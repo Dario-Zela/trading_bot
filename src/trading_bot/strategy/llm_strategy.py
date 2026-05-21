@@ -651,7 +651,23 @@ class LLMStrategy(Strategy):
                 notional_gbp=typical_position_gbp,
                 quantity=typical_position_gbp / max(c.close, 1.0),
             )
-            cost_line = f"\n- round-trip cost: {cost['note']}"
+            # Surface the actionable hurdle alongside the raw cost — the
+            # LLM otherwise has to mentally combine the schedule, the
+            # candidate's cost, cfg.cost_gate_multiplier, and hold_days
+            # to know whether a pick has a chance. Show the 1-day and
+            # 5-day return floors directly so it picks names that have
+            # the headroom to clear them BEFORE writing predicted_return_pct.
+            cost_pct = (cost.get("total_pct") or 0.0) * 100.0
+            mult = float(cfg.cost_gate_multiplier or 2.0)
+            hurdle_1d = cost_pct * mult
+            hurdle_5d = cost_pct * mult * 5
+            cost_line = (
+                f"\n- round-trip cost: {cost['note']}"
+                f"\n- minimum predicted_return_pct to clear cost gate: "
+                f"**{hurdle_1d:+.2f}%** (1-day hold) / "
+                f"**{hurdle_5d:+.2f}%** (5-day hold). "
+                f"Picks below this floor will be auto-dropped."
+            )
 
             # Phase 11F — relative strength line.
             rel_line = ""

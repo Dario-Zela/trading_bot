@@ -92,6 +92,13 @@ TUNABLE_FIELDS = {
     "stop_loss_pct": (-15.0, -1.0),
     "take_profit_pct": (1.0, 20.0),
     "capital_gbp": (1000.0, 30000.0),
+    # cost_gate_multiplier — minimum predicted-return / round-trip-cost
+    # ratio for a pick to survive the gate. 2.0 = "pick must clear 2×
+    # fees". Lower lets more marginal trades through (more activity, more
+    # vulnerable to flipping on small moves); higher demands stronger
+    # conviction. UK-EU strategies tend to need this higher than US
+    # because UK Stamp Duty alone is 0.5% on every share purchase.
+    "cost_gate_multiplier": (0.5, 5.0),
 }
 
 
