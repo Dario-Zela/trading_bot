@@ -31,8 +31,7 @@ runs_in:
   tier: shadow
   universe: t212_isa_us
 - region: uk-eu
-  tier: trading212-paper
-  t212_slot: 1
+  tier: shadow
   universe: t212_isa_uk_eu
 # Phase 8C — drop candidates with earnings inside the window. Technical
 # signal becomes unreliable across a binary print, so we avoid the day.

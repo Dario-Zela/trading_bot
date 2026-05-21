@@ -31,8 +31,7 @@ runs_in:
   alpaca_slot: 3
   universe: t212_isa_us
 - region: uk-eu
-  tier: trading212-paper
-  t212_slot: 1
+  tier: shadow
   universe: t212_isa_uk_eu
 # LLM strategies use the Sonnet-driven per-strategy pre-filter so the
 # universe is narrowed with the strategy's lens before the expensive
