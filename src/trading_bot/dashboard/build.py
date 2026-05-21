@@ -537,7 +537,12 @@ def main(argv: list[str] | None = None) -> int:
         summary = rebuild_all_pages()
         log.info("Rebuilt static pages: %s", summary)
     except Exception as e:
-        log.warning("Static page rebuild failed (non-fatal): %s", e)
+        # Bump to ERROR (was WARNING — invisible in CI logs that filter
+        # to ERROR+). Static-page failures are non-fatal for the data
+        # pipeline but they mask real template bugs (e.g. f-string
+        # syntax errors inside news/article_writer.py prompts). Log with
+        # the full traceback so the next failure surfaces immediately.
+        log.error("Static page rebuild failed (non-fatal): %s", e, exc_info=True)
     return 0
 
 

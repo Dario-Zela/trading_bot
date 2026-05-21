@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 from dataclasses import asdict, dataclass, field
 from datetime import date, timedelta
 from pathlib import Path
@@ -252,16 +253,38 @@ def run_weekly_backtest_pass(today: date, window_days: int = 14) -> dict:
     end = today - timedelta(days=1)                   # backtest stops yesterday so we can resolve next-day fills
 
     results: list[dict] = []
+    # Per-strategy day cap. LLM strategies hit Claude once per trading
+    # day with tools — at ~2-3 min per call, a 14-day walk for one
+    # strategy can take 30-40 min. With 6 LLM strategies × 2 regions
+    # that's 6-8 hours, well past the GitHub Actions workflow timeout.
+    # Cap LLM walks at 5 trading days (enough to detect prompt-vs-live
+    # divergence for the evolution agent's "is the cost gate bleeding
+    # edge?" signal). Rule-based strategies are cheap, get the full
+    # window. Override via the BACKTEST_LLM_DAYS env var if you want
+    # a fuller replay (set to 0 to skip LLM strategies entirely).
+    llm_day_cap = int(os.environ.get("BACKTEST_LLM_DAYS", "5"))
+
     for strat in active:
         sid = strat.config.id
         region = strat.config.region
-        log.info("backtest pass: %s/%s window %s → %s", sid, region, start, end)
+        impl = strat.config.implementation
+        cap = None
+        if impl == "llm":
+            if llm_day_cap <= 0:
+                log.info("backtest pass: skipping %s/%s (LLM, BACKTEST_LLM_DAYS=0)", sid, region)
+                results.append({
+                    "strategy_id": sid, "region": region,
+                    "skipped": "LLM backtest disabled via BACKTEST_LLM_DAYS=0",
+                })
+                continue
+            cap = llm_day_cap
+        log.info("backtest pass: %s/%s window %s → %s (limit_days=%s)", sid, region, start, end, cap)
         try:
             report = run_backtest(
                 sid,
                 start_date=start,
                 end_date=end,
-                limit_days=None,
+                limit_days=cap,
                 region=region,   # crucial for multi-region strategies
             )
         except Exception as e:

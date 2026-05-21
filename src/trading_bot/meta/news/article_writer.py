@@ -417,15 +417,15 @@ the kicker or headline — it's the substance compressed to one line.
 
 ## Hard contract
 
-Your response MUST begin with the `{` of the JSON object. Do NOT write
+Your response MUST begin with the `{{` of the JSON object. Do NOT write
 any preamble, narration, planning, or explanation before the JSON.
 Don't say "Let me compose…" or "Now I have enough…" or "Here is the
 output:" — those phrases waste output tokens and have repeatedly caused
 the JSON to truncate mid-body when Sonnet's response budget runs short.
-Open with `{`, close with `}`, nothing else.
+Open with `{{`, close with `}}`, nothing else.
 
 If you find yourself wanting to explain what you did, resist — that's
-output budget the closing `}` needs to fit. Write the article in
+output budget the closing `}}` needs to fit. Write the article in
 `body_md` as the article itself, and let it speak for you.
 
 ## Required output
