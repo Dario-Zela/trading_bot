@@ -395,6 +395,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--date", help="ISO date (defaults to today)")
     parser.add_argument("--email", action="store_true", help="Send summary email after exit")
     parser.add_argument("--slot", type=int, help="Alpaca slot number (used by clear-slot)")
+    parser.add_argument(
+        "--slice", type=int, default=0,
+        help="(ohlcv-backfill / ohlcv-stooq-fill-gaps) which slice of the ticker list to process (0-indexed)",
+    )
+    parser.add_argument(
+        "--of", type=int, default=1,
+        help="(ohlcv-backfill / ohlcv-stooq-fill-gaps) total number of slices",
+    )
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args(argv)
 
@@ -524,6 +532,21 @@ def main(argv: list[str] | None = None) -> int:
         )
         if not missing:
             return 0
+        # Slice the missing list so the warmup workflow can run M
+        # shorter steps for live visibility.
+        if args.of > 1:
+            n = max(1, args.of)
+            i = max(0, min(args.slice, n - 1))
+            chunk_size = (len(missing) + n - 1) // n
+            lo = i * chunk_size
+            hi = min(lo + chunk_size, len(missing))
+            missing = missing[lo:hi]
+            log.info(
+                "stooq-fill-gaps: slice %d/%d — %d tickers in this slice",
+                i + 1, n, len(missing),
+            )
+            if not missing:
+                return 0
 
         n_before = row_count()
         # Per-ticker write-back so a workflow timeout doesn't lose
@@ -554,9 +577,12 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.mode == "ohlcv-backfill":
         # One-time bulk backfill: fetch 70 trading days of OHLCV for
-        # every ticker across all active strategies' universes. Run
-        # this once after switching to the t212_isa universes so the
-        # first morning entry doesn't pay a ~12-min cold-cache hit.
+        # every ticker across all active strategies' universes.
+        #
+        # --slice N --of M slices the deterministically-sorted ticker
+        # list so the warmup workflow can run M shorter steps instead
+        # of one 45-min step. Each step's log becomes visible the
+        # moment it completes, giving ~6-min visibility cadence.
         from trading_bot.strategy.registry import load_active_strategies
         from trading_bot.tools.universe import get_universe
         from trading_bot.tools.history import get_history
@@ -568,11 +594,25 @@ def main(argv: list[str] | None = None) -> int:
                 all_tickers.update(get_universe(s.config.universe))
             except Exception as e:
                 log.warning("ohlcv-backfill: skipping %s (%s)", s.config.universe, e)
-        log.info("ohlcv-backfill: %d unique tickers, fetching 70-day history",
-                 len(all_tickers))
-        if all_tickers:
+        sorted_tickers = sorted(all_tickers)
+        n_total = len(sorted_tickers)
+        if args.of > 1:
+            n = max(1, args.of)
+            i = max(0, min(args.slice, n - 1))
+            chunk_size = (n_total + n - 1) // n
+            lo = i * chunk_size
+            hi = min(lo + chunk_size, n_total)
+            slice_tickers = sorted_tickers[lo:hi]
+            log.info(
+                "ohlcv-backfill: slice %d/%d — tickers %d-%d of %d total",
+                i + 1, n, lo, hi, n_total,
+            )
+        else:
+            slice_tickers = sorted_tickers
+            log.info("ohlcv-backfill: %d unique tickers, fetching 70-day history", n_total)
+        if slice_tickers:
             n_before = row_count()
-            get_history(sorted(all_tickers), lookback_days=70, end_date=on_date)
+            get_history(slice_tickers, lookback_days=70, end_date=on_date)
             n_after = row_count()
             log.info("ohlcv-backfill: cache rows %d → %d (Δ %d); db size %.1f MB",
                      n_before, n_after, n_after - n_before,

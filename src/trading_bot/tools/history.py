@@ -129,6 +129,12 @@ def get_history(
     _write_bars = None
     if StoredBar is not None:
         from trading_bot.tools.ohlcv_store import write_bars as _write_bars  # noqa: F401
+    n_batches = (len(needs_fetch) + _BATCH_SIZE - 1) // _BATCH_SIZE
+    # Heartbeat every PROGRESS_EVERY batches so the log streams progress
+    # rather than going silent for 30-45 min. Stdout flushes after each
+    # log call, so the next gh-log fetch sees the line.
+    PROGRESS_EVERY = max(1, n_batches // 20)   # ~20 heartbeats per run
+    _start_t = time.time()
     for i in range(0, len(needs_fetch), _BATCH_SIZE):
         chunk = needs_fetch[i : i + _BATCH_SIZE]
         df = yf.download(
@@ -155,6 +161,17 @@ def get_history(
                 _write_bars(rows)
             except Exception as e:
                 log.warning("OHLCV store write-back (batch %d) failed: %s", i // _BATCH_SIZE, e)
+        # Progress heartbeat — every PROGRESS_EVERY batches log
+        # cumulative state. Lets the operator see the loop is alive
+        # (no silent 30-minute stretches).
+        batch_idx = (i // _BATCH_SIZE) + 1
+        if batch_idx % PROGRESS_EVERY == 0 or batch_idx == n_batches:
+            elapsed = time.time() - _start_t
+            log.info(
+                "yfinance progress: batch %d/%d (%d tickers requested, %d fetched so far, %.0fs elapsed)",
+                batch_idx, n_batches, min(i + _BATCH_SIZE, len(needs_fetch)),
+                len(fresh_from_yf), elapsed,
+            )
         # Sleep between chunks (not after the last one)
         if i + _BATCH_SIZE < len(needs_fetch):
             time.sleep(_BATCH_SLEEP_S)

@@ -222,10 +222,19 @@ def fetch_history_bulk(
         time.sleep(_REQUEST_SPACING_S)
         return tkr, bars
 
-    log.info("stooq bulk fetch: %d tickers via %d-way parallel", len(tickers), _MAX_PARALLEL)
+    log.info("stooq bulk fetch: %d tickers via %d-way parallel (spacing=%.1fs)",
+             len(tickers), _MAX_PARALLEL, _REQUEST_SPACING_S)
+    # Heartbeat every ~5% so the log streams progress (matters most in
+    # serial mode where a thousand-ticker fetch is 25-30 min — silent
+    # log for that long looks identical to a deadlock).
+    progress_every = max(10, len(tickers) // 20)
+    n_done = 0
+    n_failed = 0
+    start_t = time.time()
     with ThreadPoolExecutor(max_workers=_MAX_PARALLEL) as pool:
         futs = {pool.submit(_one, t): t for t in tickers}
         for fut in as_completed(futs):
+            n_done += 1
             try:
                 tkr, bars = fut.result()
                 if bars:
@@ -235,8 +244,19 @@ def fetch_history_bulk(
                             on_result(tkr, bars)
                         except Exception as e:
                             log.warning("stooq on_result callback failed for %s: %s", tkr, e)
+                else:
+                    n_failed += 1
             except Exception as e:
+                n_failed += 1
                 t = futs[fut]
                 log.debug("stooq future failed for %s: %s", t, e)
+            if n_done % progress_every == 0 or n_done == len(tickers):
+                elapsed = time.time() - start_t
+                rate = n_done / elapsed if elapsed > 0 else 0
+                eta = (len(tickers) - n_done) / rate if rate > 0 else 0
+                log.info(
+                    "stooq progress: %d/%d done (%d ok, %d fail), %.0fs elapsed, ETA %.0fs",
+                    n_done, len(tickers), len(out), n_failed, elapsed, eta,
+                )
     log.info("stooq bulk fetch: returned %d/%d tickers with bars", len(out), len(tickers))
     return out
