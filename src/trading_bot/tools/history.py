@@ -119,8 +119,16 @@ def get_history(
     )
 
     # 3. yfinance fallback for misses. Chunk batched to avoid rate limits.
+    # Write-back to the SQLite store happens PER BATCH, not at the end —
+    # so a workflow timeout / cancel mid-loop preserves whatever's
+    # already been fetched. The end-of-function "all-at-once" write was
+    # what caused the warmup workflow's 90-min timeout to lose ALL
+    # progress despite ~8k tickers being downloaded.
     end_ts = pd.Timestamp(end) + pd.Timedelta(days=1)
     fresh_from_yf: dict[str, list[Bar]] = {}
+    _write_bars = None
+    if StoredBar is not None:
+        from trading_bot.tools.ohlcv_store import write_bars as _write_bars  # noqa: F401
     for i in range(0, len(needs_fetch), _BATCH_SIZE):
         chunk = needs_fetch[i : i + _BATCH_SIZE]
         df = yf.download(
@@ -132,7 +140,21 @@ def get_history(
             progress=False,
             threads=False,
         )
-        fresh_from_yf.update(_flatten(df, chunk, lookback_days))
+        batch_results = _flatten(df, chunk, lookback_days)
+        fresh_from_yf.update(batch_results)
+        # Per-batch write-back. Any later failure / interrupt leaves
+        # everything fetched so far safely on disk.
+        if _write_bars is not None and batch_results:
+            try:
+                rows = [
+                    StoredBar(ticker=tkr, bar_date=b.bar_date, open=b.open,
+                              high=b.high, low=b.low, close=b.close, volume=b.volume)
+                    for tkr, bars in batch_results.items()
+                    for b in bars
+                ]
+                _write_bars(rows)
+            except Exception as e:
+                log.warning("OHLCV store write-back (batch %d) failed: %s", i // _BATCH_SIZE, e)
         # Sleep between chunks (not after the last one)
         if i + _BATCH_SIZE < len(needs_fetch):
             time.sleep(_BATCH_SLEEP_S)
@@ -143,20 +165,6 @@ def get_history(
             len(fresh_from_yf), len(needs_fetch), lookback_days,
         )
         out.update(fresh_from_yf)
-        # Write back to the local store so subsequent runs hit the cache.
-        if StoredBar is not None:
-            try:
-                stored_rows = [
-                    StoredBar(ticker=tkr, bar_date=b.bar_date, open=b.open,
-                              high=b.high, low=b.low, close=b.close, volume=b.volume)
-                    for tkr, bars in fresh_from_yf.items()
-                    for b in bars
-                ]
-                from trading_bot.tools.ohlcv_store import write_bars as _wb
-                n = _wb(stored_rows)
-                log.debug("OHLCV store write-back: %d bars cached", n)
-            except Exception as e:
-                log.warning("OHLCV store write-back failed (non-fatal): %s", e)
 
     # 4. Stooq fallback for whatever yfinance still missed. Short-
     #    circuits cleanly if STOOQ_API_KEY isn't set in the env. Tickers
@@ -165,10 +173,27 @@ def get_history(
     #    succeed here. Same write-back-to-store contract.
     stooq_misses = [t for t in needs_fetch if t not in out]
     if stooq_misses:
+        # Per-ticker on_result callback so each Stooq response writes to
+        # the local store the moment it lands — preserves progress even
+        # if a workflow timeout fires mid-fetch.
+        from trading_bot.tools.ohlcv_store import write_bars as _wb_stooq
+        def _persist_one(tkr: str, bars: list[dict]) -> None:
+            if not bars or StoredBar is None:
+                return
+            try:
+                _wb_stooq([
+                    StoredBar(ticker=tkr, bar_date=b["bar_date"],
+                              open=b["open"], high=b["high"], low=b["low"],
+                              close=b["close"], volume=b["volume"])
+                    for b in bars
+                ])
+            except Exception as e:
+                log.debug("Stooq per-ticker write-back failed for %s: %s", tkr, e)
         try:
             from trading_bot.tools.stooq import fetch_history_bulk
             stooq_results = fetch_history_bulk(
                 stooq_misses, lookback_days=lookback_days, end_date=end,
+                on_result=_persist_one,
             )
         except Exception as e:
             log.warning("Stooq fallback failed (non-fatal): %s", e)
@@ -178,8 +203,9 @@ def get_history(
                 "stooq fallback: recovered %d/%d tickers yfinance missed",
                 len(stooq_results), len(stooq_misses),
             )
-            from trading_bot.tools.ohlcv_store import write_bars as _wb
-            new_rows: list[StoredBar] = [] if StoredBar is not None else None
+            # Per-ticker write-back already happened via on_result above —
+            # just hydrate the in-memory `out` dict for the caller.
+            new_rows: list[StoredBar] = []   # unused now, kept for symmetry
             for tkr, bars in stooq_results.items():
                 converted = [
                     Bar(ticker=tkr, bar_date=b["bar_date"], open=b["open"],
@@ -188,6 +214,8 @@ def get_history(
                     for b in bars
                 ]
                 out[tkr] = converted
+                # The bulk write-back below is now a no-op safety net
+                # (the per-ticker callback already persisted these).
                 if StoredBar is not None:
                     new_rows.extend(
                         StoredBar(ticker=tkr, bar_date=b.bar_date, open=b.open,

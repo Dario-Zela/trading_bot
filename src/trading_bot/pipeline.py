@@ -526,17 +526,24 @@ def main(argv: list[str] | None = None) -> int:
             return 0
 
         n_before = row_count()
-        stooq_results = fetch_history_bulk(missing, lookback_days=70, end_date=end)
-        rows: list[StoredBar] = []
-        for tkr, bars in stooq_results.items():
-            for b in bars:
-                rows.append(StoredBar(
-                    ticker=tkr, bar_date=b["bar_date"],
-                    open=b["open"], high=b["high"], low=b["low"],
-                    close=b["close"], volume=b["volume"],
-                ))
-        if rows:
-            write_bars(rows)
+        # Per-ticker write-back so a workflow timeout doesn't lose
+        # everything fetched — each successful Stooq call persists
+        # immediately.
+        def _persist_one(tkr: str, bars: list[dict]) -> None:
+            if not bars:
+                return
+            try:
+                write_bars([
+                    StoredBar(ticker=tkr, bar_date=b["bar_date"],
+                              open=b["open"], high=b["high"], low=b["low"],
+                              close=b["close"], volume=b["volume"])
+                    for b in bars
+                ])
+            except Exception as e:
+                log.debug("stooq-fill-gaps write-back failed for %s: %s", tkr, e)
+        stooq_results = fetch_history_bulk(
+            missing, lookback_days=70, end_date=end, on_result=_persist_one,
+        )
         n_after = row_count()
         log.info(
             "stooq-fill-gaps: %d/%d missing tickers recovered from Stooq; "

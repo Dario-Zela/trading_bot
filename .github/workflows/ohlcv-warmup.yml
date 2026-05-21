@@ -28,6 +28,16 @@ jobs:
   warmup:
     runs-on: ubuntu-latest
     timeout-minutes: 90
+    # Job-level env so STOOQ_API_KEY is available to EVERY step,
+    # including the yfinance backfill step where get_history's Stooq
+    # fallback fires for tickers yfinance couldn't fetch. Without
+    # this, every backfill silently missed thousands of tickers
+    # (the Stooq pass that came after couldn't even start before the
+    # 90-min timeout killed the workflow).
+    env:
+      STOOQ_API_KEY: ${{ secrets.STOOQ_API_KEY }}
+      STOOQ_MAX_PARALLEL: "6"
+      STOOQ_REQUEST_SPACING: "0.15"
     steps:
       - name: Check out repo
         uses: actions/checkout@v5
@@ -66,21 +76,16 @@ jobs:
           "
 
       - name: yfinance backfill (70-day for full active universe)
-        env:
-          # yfinance doesn't auth, but a CI IP rotates more than a
-          # home IP so rate-limit risk is lower.
-          DUMMY: "1"
         run: |
+          # Stooq fallback inside get_history fires when yfinance misses
+          # a ticker — STOOQ_API_KEY comes through from the job-level env.
           python -m trading_bot.pipeline ohlcv-backfill --region us || \
             echo "yfinance backfill exited non-zero (continuing — Stooq pass will fill gaps)"
 
       - name: Stooq gap-fill (recovers yfinance misses)
-        env:
-          STOOQ_API_KEY: ${{ secrets.STOOQ_API_KEY }}
-          # Fresh CI IP — can run at higher concurrency than local
-          STOOQ_MAX_PARALLEL: "6"
-          STOOQ_REQUEST_SPACING: "0.15"
         run: |
+          # STOOQ_API_KEY, STOOQ_MAX_PARALLEL, STOOQ_REQUEST_SPACING all
+          # inherited from the job-level env.
           if [ -z "$STOOQ_API_KEY" ]; then
             echo "STOOQ_API_KEY secret not set — skipping Stooq pass"
             echo "Get a key at https://stooq.com/q/d/?s=aapl.us&get_apikey"

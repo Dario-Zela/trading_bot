@@ -191,10 +191,18 @@ def fetch_history_bulk(
     *,
     lookback_days: int = 70,
     end_date: date | None = None,
+    on_result: "callable | None" = None,
 ) -> dict[str, list[dict]]:
     """Parallel-fetch Stooq history for many tickers. Returns
     {yfinance_ticker: [bar_dict, ...]} for tickers Stooq has coverage on.
-    Tickers without coverage are silently omitted."""
+    Tickers without coverage are silently omitted.
+
+    `on_result(ticker, bars)` fires for each successful fetch the moment
+    it lands (before all parallel workers complete). Use this to
+    persist results incrementally — a workflow timeout mid-fetch then
+    preserves everything that completed beforehand instead of losing
+    the whole batch.
+    """
     tickers = [t for t in yf_tickers if t]
     if not tickers:
         return {}
@@ -220,6 +228,11 @@ def fetch_history_bulk(
                 tkr, bars = fut.result()
                 if bars:
                     out[tkr] = bars
+                    if on_result is not None:
+                        try:
+                            on_result(tkr, bars)
+                        except Exception as e:
+                            log.warning("stooq on_result callback failed for %s: %s", tkr, e)
             except Exception as e:
                 t = futs[fut]
                 log.debug("stooq future failed for %s: %s", t, e)
