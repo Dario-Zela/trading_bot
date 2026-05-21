@@ -95,16 +95,19 @@ jobs:
             exit)
               python -m trading_bot.pipeline exit --region uk-eu
               python -m trading_bot.pipeline reflect --region uk-eu || echo "Reflection step failed (non-fatal)"
-              # Cache warm-up was previously on this critical path but fetching
-              # yfinance for the ~15k full active universe on a cold cache took
-              # 45-90 min and stuck the exit workflow indefinitely. Now handled
-              # by the dedicated ohlcv-warmup workflow (manual + scheduled);
-              # the entry pipeline's restored actions/cache state covers the
-              # daily case.
               python -m trading_bot.dashboard.build
               python -m trading_bot.pipeline summary --region uk-eu
               ;;
             *)
+              # Pre-step — append overnight / pre-market closes to the
+              # local OHLCV cache before the strategies make picks.
+              # Fast on warm cache: get_history's 3-day grace + universe
+              # data-coverage filter mean most tickers are cache hits
+              # with one new bar appended; only the few stale tickers
+              # actually touch yfinance. Non-fatal — entry still runs
+              # against the cache state it has if this step fails.
+              python -m trading_bot.pipeline ohlcv-daily-update --region uk-eu || \
+                echo "OHLCV pre-entry update failed (non-fatal)"
               python -m trading_bot.pipeline entry --region uk-eu
               ;;
           esac
