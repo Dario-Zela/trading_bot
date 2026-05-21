@@ -49,9 +49,19 @@ def get_history(
 ) -> dict[str, list[Bar]]:
     """Fetch daily OHLCV for the given tickers over the lookback window.
 
-    Wave 1 uses yfinance (no auth, batched). yfinance returns trading days only.
-    Returns a dict {ticker: [Bar, ...]} in chronological order, most-recent last.
-    Tickers with no data are omitted from the result.
+    Read path:
+      1. In-process cache (sorted-tuple keyed) — handles repeated calls
+         from parallel strategies fanning out for the same universe.
+      2. SQLite OHLCV store (state/ohlcv.db) — local cache that grows
+         organically as the bot fetches. Skips yfinance entirely for
+         tickers whose full window we already have.
+      3. yfinance batched download — only invoked for tickers MISSING
+         from the local store, or whose stored coverage doesn't reach
+         the requested end_date. Results written back to the store on
+         the way through.
+
+    Returns a dict {ticker: [Bar, ...]} in chronological order,
+    most-recent last. Tickers with no data anywhere are omitted.
     """
     tickers = list(tickers)
     if not tickers:
@@ -65,16 +75,54 @@ def get_history(
         # doesn't corrupt the cache. Bar objects themselves are frozen.
         return {k: list(v) for k, v in cached.items()}
 
-    # Pad the lookback so we always cover requested trading days even across weekends/holidays
+    # Pad the lookback so we always cover requested trading days even
+    # across weekends/holidays. The store read uses the same padded
+    # window so coverage matches what yfinance would have returned.
     period = max(lookback_days * 2 + 5, 10)
-    end_ts = pd.Timestamp(end) + pd.Timedelta(days=1)
+    start_date = end - pd.Timedelta(days=period).to_pytimedelta()
 
-    # Chunk the request to avoid yfinance rate-limiting on shared CI IPs.
-    # `threads=False` per-batch (yfinance multithreads aggressively when
-    # tickers > 1; on Yahoo's shared rate-limit pool that blows up fast).
     out: dict[str, list[Bar]] = {}
-    for i in range(0, len(tickers), _BATCH_SIZE):
-        chunk = tickers[i : i + _BATCH_SIZE]
+    needs_fetch: list[str] = []
+
+    # 2. Local SQLite store. Read in bulk for all requested tickers.
+    try:
+        from trading_bot.tools.ohlcv_store import read_bars_bulk, write_bars, StoredBar
+        store_hits = read_bars_bulk(tickers, start_date, end)
+    except Exception as e:
+        log.warning("OHLCV store read failed (falling through to yfinance): %s", e)
+        store_hits = {}
+        StoredBar = None       # type: ignore
+
+    # Decide which tickers to fetch from yfinance: any that the store
+    # doesn't have OR whose latest stored bar is more than 1 trading day
+    # before `end`. The +3-day grace accounts for weekends/holidays.
+    grace = pd.Timedelta(days=3)
+    for tkr in tickers:
+        rows = store_hits.get(tkr, [])
+        if not rows:
+            needs_fetch.append(tkr)
+            continue
+        latest = rows[-1].bar_date
+        if pd.Timestamp(end) - pd.Timestamp(latest) > grace:
+            needs_fetch.append(tkr)
+            continue
+        # Store coverage is good enough — promote to output as Bar objects.
+        out[tkr] = [
+            Bar(ticker=tkr, bar_date=r.bar_date, open=r.open, high=r.high,
+                low=r.low, close=r.close, volume=r.volume)
+            for r in rows[-lookback_days:]
+        ]
+
+    log.info(
+        "history cache: %d/%d tickers served from local store, %d need yfinance",
+        len(out), len(tickers), len(needs_fetch),
+    )
+
+    # 3. yfinance fallback for misses. Chunk batched to avoid rate limits.
+    end_ts = pd.Timestamp(end) + pd.Timedelta(days=1)
+    fresh_from_yf: dict[str, list[Bar]] = {}
+    for i in range(0, len(needs_fetch), _BATCH_SIZE):
+        chunk = needs_fetch[i : i + _BATCH_SIZE]
         df = yf.download(
             tickers=chunk,
             period=f"{period}d",
@@ -84,15 +132,32 @@ def get_history(
             progress=False,
             threads=False,
         )
-        out.update(_flatten(df, chunk, lookback_days))
+        fresh_from_yf.update(_flatten(df, chunk, lookback_days))
         # Sleep between chunks (not after the last one)
-        if i + _BATCH_SIZE < len(tickers):
+        if i + _BATCH_SIZE < len(needs_fetch):
             time.sleep(_BATCH_SLEEP_S)
 
-    log.info(
-        "yfinance history: %d/%d tickers returned bars (lookback=%dd)",
-        len(out), len(tickers), lookback_days,
-    )
+    if fresh_from_yf:
+        log.info(
+            "yfinance history: %d/%d tickers returned bars (lookback=%dd)",
+            len(fresh_from_yf), len(needs_fetch), lookback_days,
+        )
+        out.update(fresh_from_yf)
+        # Write back to the local store so subsequent runs hit the cache.
+        if StoredBar is not None:
+            try:
+                stored_rows = [
+                    StoredBar(ticker=tkr, bar_date=b.bar_date, open=b.open,
+                              high=b.high, low=b.low, close=b.close, volume=b.volume)
+                    for tkr, bars in fresh_from_yf.items()
+                    for b in bars
+                ]
+                from trading_bot.tools.ohlcv_store import write_bars as _wb
+                n = _wb(stored_rows)
+                log.debug("OHLCV store write-back: %d bars cached", n)
+            except Exception as e:
+                log.warning("OHLCV store write-back failed (non-fatal): %s", e)
+
     _HISTORY_CACHE[cache_key] = out
     return {k: list(v) for k, v in out.items()}
 

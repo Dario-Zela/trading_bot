@@ -27,3 +27,10 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# Local OHLCV cache — grows to ~50 MB over a year, regenerates on demand
+# via tools.history fall-through to yfinance. State is mutable and not
+# worth committing; the bot works without it (just slower for the first
+# few runs while it warms up).
+state/ohlcv.db
+state/ohlcv.db-*
