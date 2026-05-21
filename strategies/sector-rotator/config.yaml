@@ -36,7 +36,8 @@ runs_in:
     tier: shadow
     universe: us_etfs_sector
   - region: uk-eu
-    tier: shadow
+    tier: trading212-paper
+    t212_slot: 1
     universe: eu_etfs_sector
 # LLM strategies use the Sonnet-driven per-strategy pre-filter so the
 # universe is narrowed with the strategy's lens before the expensive
