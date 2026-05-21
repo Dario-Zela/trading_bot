@@ -494,7 +494,14 @@ def main(argv: list[str] | None = None) -> int:
         # store internally.
         if all_tickers:
             n_before = row_count()
-            get_history(sorted(all_tickers), lookback_days=5, end_date=on_date)
+            # max_grace_days=0 forces a refresh for any ticker whose
+            # latest cached bar isn't end_date itself. Without this the
+            # daily-update would silently serve stale data from cache —
+            # exactly the drift we're trying to fix.
+            get_history(
+                sorted(all_tickers), lookback_days=5,
+                end_date=on_date, max_grace_days=0,
+            )
             n_after = row_count()
             log.info("ohlcv-daily-update: cache rows %d → %d (Δ %d)",
                      n_before, n_after, n_after - n_before)

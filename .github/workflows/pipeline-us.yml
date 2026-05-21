@@ -97,11 +97,9 @@ jobs:
               python -m trading_bot.pipeline clear-slot --slot "${{ inputs.slot }}"
               ;;
             *)
-              # Pre-step — append overnight closes to the local OHLCV
-              # cache so the strategies pick on fresh data. Fast on
-              # warm cache; non-fatal if it fails.
-              python -m trading_bot.pipeline ohlcv-daily-update --region us || \
-                echo "OHLCV pre-entry update failed (non-fatal)"
+              # OHLCV cache refresh happens in a separate workflow
+              # (ohlcv-daily-update.yml) triggered alongside the news
+              # brief; entry just reads from the warm cache.
               python -m trading_bot.pipeline entry --region us
               ;;
           esac

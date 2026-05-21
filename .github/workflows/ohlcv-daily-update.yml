@@ -1,0 +1,92 @@
+name: OHLCV daily update
+
+# Fires on the SAME external cron as `daily-news-brief.yml` (Mon-Fri
+# ~06:30 UTC) so both workflows run concurrently on separate GitHub
+# Actions runners. By the time the UK-EU entry pipeline fires ~1h
+# later, both are done and the actions/cache has the freshly-updated
+# OHLCV state.
+#
+# Triggered via workflow_dispatch by the same cron-job.org schedule
+# pointing at this workflow as the news brief.
+#
+# What this does:
+#   1. Restore state/ohlcv.db from actions/cache (latest ohlcv-db-v1-*)
+#   2. Run `ohlcv-daily-update` with max_grace_days=0 — forces a fetch
+#      for any ticker whose latest cached bar isn't today's date
+#   3. Save the refreshed cache back to actions/cache
+#
+# Runtime: ~15 min on first run after a stale cache, ~2-5 min once
+# warm. Non-blocking for the entry pipeline (separate workflow).
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: ohlcv-daily-update
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      STOOQ_API_KEY: ${{ secrets.STOOQ_API_KEY }}
+      # Serial is the only reliable Stooq concurrency on CI IPs
+      STOOQ_MAX_PARALLEL: "1"
+      STOOQ_REQUEST_SPACING: "0.6"
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install Python package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Restore OHLCV cache
+        uses: actions/cache/restore@v4
+        with:
+          path: state/ohlcv.db
+          key: ohlcv-db-v1-${{ github.run_id }}
+          restore-keys: |
+            ohlcv-db-v1-
+
+      - name: Cache stats (before)
+        run: |
+          python -c "
+          from trading_bot.tools.ohlcv_store import row_count, store_size_bytes, init_store
+          init_store()
+          print(f'before: rows={row_count():,}, size={store_size_bytes()/1_048_576:.1f} MB')
+          "
+
+      - name: Run daily OHLCV update
+        run: |
+          # max_grace_days=0 inside the command forces refresh of any
+          # ticker whose latest bar isn't end_date — otherwise the
+          # 3-day grace serves stale data and the cache drifts daily.
+          python -m trading_bot.pipeline ohlcv-daily-update --region us
+
+      - name: Cache stats (after)
+        run: |
+          python -c "
+          from trading_bot.tools.ohlcv_store import row_count, store_size_bytes
+          print(f'after:  rows={row_count():,}, size={store_size_bytes()/1_048_576:.1f} MB')
+          "
+
+      - name: Save OHLCV cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: state/ohlcv.db
+          key: ohlcv-db-v1-${{ github.run_id }}

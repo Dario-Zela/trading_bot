@@ -99,15 +99,10 @@ jobs:
               python -m trading_bot.pipeline summary --region uk-eu
               ;;
             *)
-              # Pre-step — append overnight / pre-market closes to the
-              # local OHLCV cache before the strategies make picks.
-              # Fast on warm cache: get_history's 3-day grace + universe
-              # data-coverage filter mean most tickers are cache hits
-              # with one new bar appended; only the few stale tickers
-              # actually touch yfinance. Non-fatal — entry still runs
-              # against the cache state it has if this step fails.
-              python -m trading_bot.pipeline ohlcv-daily-update --region uk-eu || \
-                echo "OHLCV pre-entry update failed (non-fatal)"
+              # OHLCV cache refresh happens in a separate workflow
+              # (ohlcv-daily-update.yml) triggered alongside the news
+              # brief, ~1h before this entry runs. The actions/cache
+              # restore step above picks up the freshened state.
               python -m trading_bot.pipeline entry --region uk-eu
               ;;
           esac

@@ -46,19 +46,29 @@ def get_history(
     tickers: Iterable[str],
     lookback_days: int = 5,
     end_date: date | None = None,
+    *,
+    max_grace_days: int = 3,
 ) -> dict[str, list[Bar]]:
     """Fetch daily OHLCV for the given tickers over the lookback window.
 
     Read path:
       1. In-process cache (sorted-tuple keyed) — handles repeated calls
          from parallel strategies fanning out for the same universe.
-      2. SQLite OHLCV store (state/ohlcv.db) — local cache that grows
-         organically as the bot fetches. Skips yfinance entirely for
-         tickers whose full window we already have.
+      2. SQLite OHLCV store (state/ohlcv.db) — local cache. Served
+         from cache when its latest bar is within `max_grace_days` of
+         `end_date`.
       3. yfinance batched download — only invoked for tickers MISSING
          from the local store, or whose stored coverage doesn't reach
-         the requested end_date. Results written back to the store on
-         the way through.
+         `end_date` within the grace window. Results written back to
+         the store per-batch (so partial progress survives a kill).
+
+    `max_grace_days` controls cache-vs-fetch tradeoff:
+      - 3 (default) — tolerant; strategies' mid-day get_history calls
+        accept up-to-3-day-old bars rather than slow-fetch each time
+      - 0 — strict; ohlcv-daily-update uses this to FORCE a fetch for
+        any ticker whose latest stored bar isn't end_date itself.
+        Needed for the cache-freshness pre-step before morning entry,
+        otherwise grace serves stale data and the cache drifts.
 
     Returns a dict {ticker: [Bar, ...]} in chronological order,
     most-recent last. Tickers with no data anywhere are omitted.
@@ -94,9 +104,10 @@ def get_history(
         StoredBar = None       # type: ignore
 
     # Decide which tickers to fetch from yfinance: any that the store
-    # doesn't have OR whose latest stored bar is more than 1 trading day
-    # before `end`. The +3-day grace accounts for weekends/holidays.
-    grace = pd.Timedelta(days=3)
+    # doesn't have OR whose latest stored bar is more than `max_grace_days`
+    # behind `end`. Default 3-day grace accounts for weekends/holidays;
+    # callers can pass 0 to force a refresh whenever cache isn't at end_date.
+    grace = pd.Timedelta(days=max(0, max_grace_days))
     for tkr in tickers:
         rows = store_hits.get(tkr, [])
         if not rows:
