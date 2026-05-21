@@ -1,0 +1,106 @@
+name: OHLCV cache warm-up
+
+# Manually dispatched maintenance workflow. Builds / refreshes the
+# local SQLite OHLCV cache (state/ohlcv.db) from yfinance + Stooq so
+# subsequent morning entry pipelines read from disk instead of doing
+# a cold network fetch.
+#
+# Persistence: uses actions/cache to keep state/ohlcv.db alive between
+# workflow runs. The pipeline-{us,uk-eu}.yml workflows use the same
+# cache key so they automatically restore the warmed cache at the
+# start of their morning run and save any updates at the end.
+#
+# Run this once after major universe changes (e.g. switching strategies
+# to t212_isa_*) so the first morning entry pipeline doesn't pay the
+# full cold-cache yfinance/Stooq fetch.
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: ohlcv-warmup
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  warmup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install Python package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Restore OHLCV cache
+        # Restore-only at the start. Save happens explicitly at the
+        # end of the job so the cache REFRESHES every run (default
+        # actions/cache@v4 only saves on cache miss).
+        uses: actions/cache/restore@v4
+        with:
+          path: state/ohlcv.db
+          key: ohlcv-db-v1-${{ github.run_id }}
+          # Fall back to any older entry under the same prefix.
+          restore-keys: |
+            ohlcv-db-v1-
+
+      - name: Cache stats (before)
+        run: |
+          python -c "
+          from trading_bot.tools.ohlcv_store import row_count, store_size_bytes, init_store
+          init_store()
+          print(f'before: rows={row_count():,}, size={store_size_bytes()/1_048_576:.1f} MB')
+          "
+
+      - name: yfinance backfill (70-day for full active universe)
+        env:
+          # yfinance doesn't auth, but a CI IP rotates more than a
+          # home IP so rate-limit risk is lower.
+          DUMMY: "1"
+        run: |
+          python -m trading_bot.pipeline ohlcv-backfill --region us || \
+            echo "yfinance backfill exited non-zero (continuing — Stooq pass will fill gaps)"
+
+      - name: Stooq gap-fill (recovers yfinance misses)
+        env:
+          STOOQ_API_KEY: ${{ secrets.STOOQ_API_KEY }}
+          # Fresh CI IP — can run at higher concurrency than local
+          STOOQ_MAX_PARALLEL: "6"
+          STOOQ_REQUEST_SPACING: "0.15"
+        run: |
+          if [ -z "$STOOQ_API_KEY" ]; then
+            echo "STOOQ_API_KEY secret not set — skipping Stooq pass"
+            echo "Get a key at https://stooq.com/q/d/?s=aapl.us&get_apikey"
+            exit 0
+          fi
+          python -m trading_bot.pipeline ohlcv-stooq-fill-gaps --region us
+
+      - name: Cache stats (after)
+        run: |
+          python -c "
+          from trading_bot.tools.ohlcv_store import row_count, store_size_bytes
+          print(f'after:  rows={row_count():,}, size={store_size_bytes()/1_048_576:.1f} MB')
+          "
+
+      - name: Save OHLCV cache
+        # `if: always()` so a partial backfill still persists what got
+        # cached before the failure. Unique key per run guarantees the
+        # save actually happens (default action only saves on miss).
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: state/ohlcv.db
+          key: ohlcv-db-v1-${{ github.run_id }}

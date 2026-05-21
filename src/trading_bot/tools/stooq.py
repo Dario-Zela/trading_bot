@@ -58,8 +58,14 @@ log = logging.getLogger(__name__)
 _BASE_URL = "https://stooq.com/q/d/l/"
 _USER_AGENT = "trading-bot/0.1 (research; +https://github.com/Dario-Zela/trading_bot)"
 _TIMEOUT_S = 12
-_MAX_PARALLEL = 8       # Stooq tolerates parallel fetches but throttle to be polite
-_REQUEST_SPACING_S = 0.05
+# Stooq's free tier throttles per-IP — burst >3 concurrent connections
+# in a short window puts the IP into a SYN_SENT lockout for several
+# hours. Override via env vars so workflows running on fresh CI IPs
+# can dial up; local re-runs from a throttled IP stay polite.
+#   STOOQ_MAX_PARALLEL    — concurrent workers (default 3)
+#   STOOQ_REQUEST_SPACING — inter-request sleep per worker (default 0.3s)
+_MAX_PARALLEL = int(os.environ.get("STOOQ_MAX_PARALLEL", "3"))
+_REQUEST_SPACING_S = float(os.environ.get("STOOQ_REQUEST_SPACING", "0.3"))
 
 
 # yfinance suffix → Stooq country code

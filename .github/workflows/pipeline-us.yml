@@ -61,6 +61,14 @@ jobs:
           echo "$HOME/.local/bin" >> $GITHUB_PATH
           claude --version || (echo "claude not on PATH after install"; exit 1)
 
+      - name: Restore OHLCV cache
+        uses: actions/cache/restore@v4
+        with:
+          path: state/ohlcv.db
+          key: ohlcv-db-v1-${{ github.run_id }}
+          restore-keys: |
+            ohlcv-db-v1-
+
       - name: Run pipeline (${{ steps.mode.outputs.mode }})
         env:
           BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
@@ -96,6 +104,13 @@ jobs:
               python -m trading_bot.pipeline entry --region us
               ;;
           esac
+
+      - name: Save OHLCV cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: state/ohlcv.db
+          key: ohlcv-db-v1-${{ github.run_id }}
 
       - name: Commit state and dashboard back
         run: |
