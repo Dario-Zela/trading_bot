@@ -528,14 +528,16 @@ class Trading212DemoExecutor(Executor):
         normally. Used when a prior entry run dropped the ledger write
         (fill-poll timeout before the pending-record fix). Returns the
         list of recovered trades."""
-        try:
-            response = requests.get(
-                self._url("/equity/portfolio"),
-                headers=self._headers(),
-                timeout=15,
-            )
-        except requests.RequestException as e:
-            log.error("T212 portfolio fetch errored during reconcile: %s", e)
+        # Go through `_request_with_retry` so a 429 during reconcile (T212's
+        # free tier rate-limits per-endpoint at ~1 req/s) doesn't silently
+        # skip orphan recovery. Bare requests.get returned None on the 429
+        # and the exit proceeded without ever seeing positions T212 still
+        # held, leaving open trades to drift across the close.
+        response = self._request_with_retry(
+            "GET", self._url("/equity/portfolio"), headers=self._headers(),
+        )
+        if response is None:
+            log.error("T212 portfolio fetch errored during reconcile (network)")
             return []
         if not response.ok:
             log.error(

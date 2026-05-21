@@ -33,6 +33,7 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     steps:
       - name: Check out repo
         uses: actions/checkout@v5
@@ -89,11 +90,9 @@ jobs:
               # then build dashboard, then email summary.
               python -m trading_bot.pipeline exit --region us
               python -m trading_bot.pipeline reflect --region us || echo "Reflection step failed (non-fatal)"
-              # Warm the local OHLCV cache with today's bar across every active
-              # universe so tomorrow's morning entry reads from cache instead
-              # of yfinance.
-              python -m trading_bot.pipeline ohlcv-daily-update --region us || \
-                echo "OHLCV daily-update failed (non-fatal)"
+              # Cache warm-up moved off the exit critical path — fetching
+              # yfinance for the ~15k active universe took 45-90 min on a
+              # cold cache. Handled by the dedicated ohlcv-warmup workflow.
               python -m trading_bot.dashboard.build
               python -m trading_bot.pipeline summary --region us
               ;;

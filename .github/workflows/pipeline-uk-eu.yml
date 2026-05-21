@@ -27,6 +27,10 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
+    # Cap at 90 min — historical runs are 15-30 min, and a 6-hour GH
+    # default lets a deadlock run for hours unnoticed. If we hit this
+    # cap something is genuinely stuck and needs investigation.
+    timeout-minutes: 90
     steps:
       - name: Check out repo
         uses: actions/checkout@v5
@@ -91,11 +95,12 @@ jobs:
             exit)
               python -m trading_bot.pipeline exit --region uk-eu
               python -m trading_bot.pipeline reflect --region uk-eu || echo "Reflection step failed (non-fatal)"
-              # Warm the local OHLCV cache with today's bar across every active
-              # universe so tomorrow's morning entry reads from cache instead
-              # of yfinance. Non-fatal if it fails — entry will fall back.
-              python -m trading_bot.pipeline ohlcv-daily-update --region uk-eu || \
-                echo "OHLCV daily-update failed (non-fatal)"
+              # Cache warm-up was previously on this critical path but fetching
+              # yfinance for the ~15k full active universe on a cold cache took
+              # 45-90 min and stuck the exit workflow indefinitely. Now handled
+              # by the dedicated ohlcv-warmup workflow (manual + scheduled);
+              # the entry pipeline's restored actions/cache state covers the
+              # daily case.
               python -m trading_bot.dashboard.build
               python -m trading_bot.pipeline summary --region uk-eu
               ;;
