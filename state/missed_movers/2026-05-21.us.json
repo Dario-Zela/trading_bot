@@ -1,0 +1,122 @@
+{
+  "date": "2026-05-21",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 RL +16%, LITE +12%, IBM +11%, SNDK +10%, WSM +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (INTU -20%, WMT -7%, SATS -6%, CASY -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: INTU (-19.82%) \u2014 Intuit Q3 FY2026 beat EPS ($12.80 vs $12.28 est) and raised FY guidance, but announced a 17% workforce cut (~3,200 jobs) and $300\u2013340M restructuring charge, triggering a ~20% selloff. Why we passed: Outside any active strategy's universe \u2014 INTU is a large-cap software/fintech name. The move originated in after-hours trading on May 20 following the earnings print; by the open the gap was fully formed, leaving post-open momentum/mean-reversion signals chasing a move that had already occurred.",
+  "top_movers": [
+    {
+      "ticker": "RL",
+      "move_pct": 15.552,
+      "close": 380.445,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q4 FY2026 earnings beat: revenue $2.0B vs $1.84B est, record full-year >$8B, operating margin +140 bps; 9.6% dividend raise to $1.00/share added to bullish tone.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RL is a large-cap luxury apparel name not currently screened. The bulk of the +15% move was locked in pre-market on the earnings release, making post-open momentum entry impractical for the full gain.",
+      "suggestion": "Add an earnings-gap scanner covering S&P 500 consumer-discretionary names: flag pre-market gap \u2265+8% on earnings day and enter within 15 min of open contingent on volume \u22651.5\u00d7 the 20-day average to filter noise.",
+      "failed": false
+    },
+    {
+      "ticker": "LITE",
+      "move_pct": 11.694,
+      "close": 969.58,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Nvidia Q1 FY2027 blowout (+85% YoY revenue, $81.6B) sparked an AI-infrastructure sympathy rally; Lumentum, a key optical-component supplier for AI datacenters, surged on sector read-through following its own strong Q3 beat reported May 5.",
+      "miss_reason": "Outside any active strategy's universe. LITE is a large-cap photonics name (~$10B+ market cap); the +12% move was an intraday sympathy play on Nvidia's prior-evening earnings print, requiring pre-positioning or a sub-hour news-reactive trigger the bot currently lacks.",
+      "suggestion": "Add a sector-sympathy trigger: when a hyperscaler/GPU name reports a beat implying \u2265+5% move after close, automatically promote correlated AI-infrastructure suppliers (optical, networking) into the momentum universe for next-session open.",
+      "failed": false
+    },
+    {
+      "ticker": "IBM",
+      "move_pct": 10.507,
+      "close": 248.64,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "U.S. government awarded ~$1B in CHIPS Act quantum computing funding to IBM to build a superconducting wafer fab, validating its quantum leadership and sparking a broad quantum-sector rally on May 21.",
+      "miss_reason": "IBM is outside any active strategy's universe \u2014 large-cap blue-chip excluded from momentum/mean-reversion universes targeting more volatile names. The catalyst was a discretionary government announcement with no pre-market technical signal to trigger entry.",
+      "suggestion": "Create a catalyst-breakout sleeve that admits any S&P 500 name with a verified government-contract or CHIPS Act headline and a pre-open gap \u2265+7% on volume \u22652\u00d7 20-day average, with a hard 1-day hold and 2% trailing stop.",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": 9.726,
+      "close": 1528.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Samsung's chip union declared an 18-day strike on May 21, threatening ~2-3% global NAND supply; a May 19 Citigroup price-target raise to $2,025 (+52%) amplified the re-rating into the supply-shock headline.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SNDK is a late-2024 WDC spinoff at $1,528/share, likely excluded by a per-share price cap or a minimum-history requirement (~12 months of clean price data). The move was a cross-ticker supply shock invisible to self-contained momentum filters.",
+      "suggestion": "Add SNDK to the semiconductor universe with a history-backfill waiver for post-spinoff names \u22656 months old; add a cross-ticker NAND supply-shock trigger that auto-flags SNDK and MU for momentum entry when a Samsung/Kioxia labor-action headline is detected pre-open.",
+      "failed": false
+    },
+    {
+      "ticker": "WSM",
+      "move_pct": 7.051,
+      "close": 192.96,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q1 FY2026 EPS of $1.93 beat consensus by 7.3%; comps +4.8% with West Elm +8.5% and B2B +13.7%; FY2026 operating margin guidance of 17.5\u201318.1% reiterated.",
+      "miss_reason": "Outside any active strategy's universe. WSM (~$12B mid-large-cap specialty retail) moved on a pre-market earnings release; capturing it requires either advance pre-earnings positioning or a sub-30-min gap-up reaction window \u2014 neither of which the current strategies implement.",
+      "suggestion": "Add an earnings-surprise gate: screen pre-market prints for EPS beat \u22655% with positive comps; allow a gap-up momentum entry on names meeting that bar within the first 30 min of open, even if outside the normal strategy universe.",
+      "failed": false
+    },
+    {
+      "ticker": "COHR",
+      "move_pct": 6.625,
+      "close": 382.25,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Nvidia beat Q1 FY2027 estimates on May 20 with record revenue of $81.6B (+85% YoY) and Data Center of $75.2B; COHR, a $2B Nvidia-backed AI optics supplier, rallied on the supply-chain halo effect.",
+      "miss_reason": "Outside any active strategy's universe \u2014 COHR is a large-cap AI photonics name (~$38B market cap); the move was a Nvidia-earnings halo requiring pre-positioned supply-chain exposure, not a standalone momentum or mean-reversion signal the bot's filters monitor.",
+      "suggestion": "Add a Nvidia-supply-chain optics basket (COHR, LITE, IPGP) to the universe with a post-NVDA-earnings entry rule: enter top AI-photonics suppliers within 30 min of open when NVDA beats EPS by \u22653%, at 0.5\u00d7 normal position size.",
+      "failed": false
+    },
+    {
+      "ticker": "INTU",
+      "move_pct": -19.816,
+      "close": 307.8505,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Intuit Q3 FY2026 beat EPS ($12.80 vs $12.28 est) and raised FY guidance, but announced a 17% workforce cut (~3,200 jobs) and $300\u2013340M restructuring charge, triggering a ~20% selloff.",
+      "miss_reason": "Outside any active strategy's universe \u2014 INTU is a large-cap software/fintech name. The move originated in after-hours trading on May 20 following the earnings print; by the open the gap was fully formed, leaving post-open momentum/mean-reversion signals chasing a move that had already occurred.",
+      "suggestion": "Add an earnings-gap watchlist for large-cap names (market cap >$30B) reporting after-hours: if after-hours move exceeds \u00b112%, flag for a short-side fade entry at open with a hard stop at 1.5\u00d7 the overnight gap, gated on above-average pre-market volume confirmation.",
+      "failed": false
+    },
+    {
+      "ticker": "WMT",
+      "move_pct": -6.706,
+      "close": 122.075,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q1 FY2027 EPS/revenue met estimates but Q2 EPS guidance of $0.72\u20130.74 missed $0.75 consensus; CFO flagged high gas prices and fading tax-refund tailwind squeezing U.S. consumers.",
+      "miss_reason": "Outside any active strategy's universe \u2014 WMT is a mega-cap consumer-staples name likely excluded by sector or market-cap filters. Move was earnings-guided at open; momentum/mean-reversion signals had no pre-event informational edge.",
+      "suggestion": "Add a post-earnings gap filter for mega-cap consumer names (gap \u2264 \u22124% at open on guidance miss) to a news-reactive strategy universe; requires short capability \u2014 if strategies are long-only, treat as no-op until short leg is available.",
+      "failed": false
+    },
+    {
+      "ticker": "SATS",
+      "move_pct": -5.518,
+      "close": 133.975,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sell-the-news profit-taking after SpaceX's IPO filing went public May 20; SATS had rallied 543% in 12 months as a SpaceX proxy via its ~$11B spectrum-for-equity stake, making it vulnerable to sharp reversal on the filing event.",
+      "miss_reason": "Outside any active strategy's universe; SATS trades as a special-situation SpaceX IPO proxy up ~543% YoY \u2014 extreme prior-period returns and event-driven volatility profile almost certainly breach momentum-universe max-prior-return or ADV-stability filters.",
+      "suggestion": "Add an IPO-proxy event-decay gate: satellite/telecom names with prior 12m return >200% and a directly-held parent IPO filing event enter a short-bias catalyst watchlist for the session immediately following the filing date.",
+      "failed": false
+    },
+    {
+      "ticker": "CASY",
+      "move_pct": -4.647,
+      "close": 812.89,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "A Yahoo Finance valuation piece published today flagged CASY 13.2% overvalued ($753 fair value vs ~$853 price), triggering profit-taking after a 29% 90-day rally; compounded by a broad consumer staples selloff as oil surged past $100/barrel on Iran supply fears.",
+      "miss_reason": "Outside any active strategy's universe. CASY is a ~$16B large-cap convenience-store chain, likely outside sector or market-cap scope of active strategies; the drop was a valuation re-rating accelerated by macro pressure \u2014 not a pre-positionable technical or momentum signal.",
+      "suggestion": "If short capability exists, add large-cap consumer staples (mktcap >$10B) to a mean-reversion universe and flag names with 90-day return >25% AND price >10% above consensus target within 3 weeks of earnings as short candidates on sector-down days.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-05-21T19:33:21.905612+00:00"
+}
