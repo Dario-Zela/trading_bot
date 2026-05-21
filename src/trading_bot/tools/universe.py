@@ -273,7 +273,14 @@ def _t212_isa_eligible_universe(*, venues: set[str] | None = None) -> list[str]:
 
     Returns sorted list of yfinance tickers. Skips instruments whose
     T212 venue suffix isn't in _T212_SUFFIX_TO_YF (some smaller
-    European venues we don't yet handle)."""
+    European venues we don't yet handle).
+
+    Result is post-filtered against the local OHLCV cache: tickers that
+    yfinance + Stooq couldn't fetch (Xetra structured-product mirrors,
+    delisted Q-suffix names, dead small-caps) get dropped so the LLM
+    pre-filter doesn't waste tokens ranking instruments the strategies
+    can't actually use. Bootstrap-safe: if the cache is sparse (< 1000
+    tickers in the last 14 days), the filter is bypassed."""
     items = _load_t212_universe_raw()
     if not items:
         return []
@@ -288,7 +295,55 @@ def _t212_isa_eligible_universe(*, venues: set[str] | None = None) -> list[str]:
         if yf is None:
             continue
         out.add(yf)
-    return sorted(out)
+    return _filter_against_data_cache(sorted(out))
+
+
+@lru_cache(maxsize=1)
+def _tickers_with_recent_data(window_days: int = 14) -> frozenset[str]:
+    """Return the set of yfinance tickers that have at least one bar in
+    the local OHLCV cache within the last `window_days`. Empty set if
+    the cache is missing / unreadable / not yet populated."""
+    try:
+        from datetime import date as _date, timedelta as _td
+        from trading_bot.tools.ohlcv_store import _conn  # noqa: WPS437
+        cutoff = (_date.today() - _td(days=window_days)).isoformat()
+        with _conn() as c:
+            rows = c.execute(
+                "SELECT DISTINCT ticker FROM bars WHERE bar_date >= ?",
+                (cutoff,),
+            ).fetchall()
+        return frozenset(r["ticker"] for r in rows)
+    except Exception as e:
+        log.warning("could not query OHLCV cache for data-coverage filter: %s", e)
+        return frozenset()
+
+
+def _filter_against_data_cache(
+    tickers: list[str],
+    *,
+    min_cache_size: int = 1000,
+) -> list[str]:
+    """Drop tickers from `tickers` that have no data in the local
+    OHLCV cache. Bootstrap-safe: if the cache has fewer than
+    `min_cache_size` tickers with recent bars, return the input
+    unchanged — assume the cache is freshly initialised and any
+    filtering would be over-restrictive."""
+    with_data = _tickers_with_recent_data()
+    if len(with_data) < min_cache_size:
+        log.info(
+            "universe data-coverage filter: cache has only %d tickers with recent data — "
+            "bypassing filter (need >= %d to activate)",
+            len(with_data), min_cache_size,
+        )
+        return tickers
+    filtered = [t for t in tickers if t in with_data]
+    dropped = len(tickers) - len(filtered)
+    if dropped:
+        log.info(
+            "universe data-coverage filter: dropped %d/%d tickers with no recent cache hits",
+            dropped, len(tickers),
+        )
+    return filtered
 
 
 def get_universe(universe_id: str) -> list[str]:
