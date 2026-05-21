@@ -1,9 +1,16 @@
 from __future__ import annotations
 
+import json
+import logging
+from functools import lru_cache
 from io import StringIO
+from pathlib import Path
 
 import pandas as pd
 import requests
+
+
+log = logging.getLogger(__name__)
 
 
 _SP500_WIKI_URL = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
@@ -131,6 +138,159 @@ _AEX25 = [
 ]
 
 
+# ---------------------------------------------------------------------------
+# T212 instrument file → yfinance universe
+# ---------------------------------------------------------------------------
+
+# Map the T212 internal venue-suffix letter (BARC**l**_EQ → LSE) to a
+# yfinance ticker suffix. T212 uses a single lowercase character right
+# before "_EQ" to encode the listing venue. Two letters share semantics:
+# 'n' shows up on Euronext Amsterdam-listed lines (ASMLn_EQ = ASML.AS)
+# but 'a' is also Amsterdam — we treat both the same.
+_T212_SUFFIX_TO_YF = {
+    "l": ".L",     # LSE main + AIM (GBP / GBX)
+    "i": ".L",     # International order book (LSE) — GDRs etc
+    "a": ".AS",    # Amsterdam (Euronext)
+    "n": ".AS",    # Same — Amsterdam tertiary listings
+    "p": ".PA",    # Paris (Euronext)
+    "d": ".DE",    # Xetra (Deutsche Börse)
+    "m": ".MI",    # Milan
+    "e": ".MC",    # Madrid
+    "s": ".SW",    # Swiss
+    "h": ".HE",    # Helsinki
+}
+
+
+def _t212_to_yfinance_ticker(t212_ticker: str, short_name: str | None = None) -> str | None:
+    """Convert a T212 instrument (internal ticker + shortName) to a
+    yfinance ticker. Returns None if the venue suffix isn't recognised.
+
+    T212's `ticker` field encodes the venue (BARC**l**_EQ = LSE) but
+    its base is often a legacy stock-exchange epic that's diverged
+    from the modern yfinance symbol (T212 `DCl_EQ` is Currys, but
+    yfinance is `CURY.L` — DC was the pre-rebrand Dixons Carphone
+    epic). The `shortName` field tracks the current ticker, so we
+    prefer it when available.
+    """
+    if not t212_ticker or not t212_ticker.endswith("_EQ"):
+        return None
+    if "_US_EQ" in t212_ticker:
+        # yfinance uses dash for class shares (BRK-B, BF-B), T212 uses
+        # dot in shortName (BRK.B). Normalise to yfinance convention.
+        base = (short_name or t212_ticker.replace("_US_EQ", "")).strip().upper()
+        return base.replace(".", "-") if base else None
+    if len(t212_ticker) < 5:
+        return None
+    suffix_char = t212_ticker[-4]
+    yf_suffix = _T212_SUFFIX_TO_YF.get(suffix_char)
+    if yf_suffix is None:
+        return None
+    base = (short_name or t212_ticker[:-4]).strip().upper()
+    if not base or not base.replace(".", "").replace("-", "").isalnum():
+        return None
+    return f"{base}{yf_suffix}"
+
+
+# Substrings in instrument names that flag products as non-ISA-eligible
+# or otherwise undesirable for the bot (leveraged ETPs, inverse, short).
+# T212 ISA explicitly excludes leveraged / inverse products per HMRC's
+# "complex instruments" guidance; we filter pre-flight rather than
+# discover at order time.
+_NON_ISA_NAME_FILTERS = (
+    "3X ", "2X ", "DAILY LEVERAGED", "DAILY SHORT", "DAILY INVERSE",
+    "LEVERAGED", "INVERSE", "SHORT ETF", "ULTRASHORT", "ULTRA SHORT",
+    "BEAR ETF", "BULL ETF",     # Direxion-style branding
+)
+
+
+def _is_isa_eligible(inst: dict) -> bool:
+    """Heuristic ISA eligibility filter for a T212 instrument record.
+
+    T212's catalog doesn't carry an explicit ISA flag, but the rules
+    are deterministic enough to reproduce:
+      - WARRANTs are never ISA-eligible
+      - ETFs need to be UCITS-compliant; US-domiciled ETFs (ISIN starts
+        with "US") are non-UCITS by definition
+      - Leveraged / inverse products are barred regardless of wrapper
+    """
+    typ = (inst.get("type") or "").upper()
+    if typ == "WARRANT":
+        return False
+    isin = (inst.get("isin") or "").upper()
+    if typ == "ETF" and isin.startswith("US"):
+        return False
+    name = (inst.get("name") or "").upper()
+    if any(flag in name for flag in _NON_ISA_NAME_FILTERS):
+        return False
+    return True
+
+
+def _t212_instruments_path() -> Path:
+    """Locate the cached T212 instrument file. State dir is two levels
+    up from this module (src/trading_bot/tools/universe.py)."""
+    return Path(__file__).resolve().parents[3] / "state" / "t212_instruments.json"
+
+
+@lru_cache(maxsize=1)
+def _load_t212_universe_raw() -> list[dict]:
+    """Read the cached T212 instrument file and return the parsed list.
+    Empty list if the file is missing — callers fall back to scraped
+    Wikipedia universes."""
+    path = _t212_instruments_path()
+    if not path.exists():
+        log.warning("T212 instrument cache missing at %s — falling back to scraped universes", path)
+        return []
+    try:
+        raw = json.loads(path.read_text())
+    except (json.JSONDecodeError, OSError) as e:
+        log.warning("Could not parse %s: %s", path, e)
+        return []
+    items = raw if isinstance(raw, list) else (raw.get("instruments") or [])
+    return [i for i in items if isinstance(i, dict)]
+
+
+def _t212_venue(t212_ticker: str) -> str:
+    """Bucket a T212 ticker into a coarse venue label used by region
+    filters. Returns 'US', 'LSE', 'XETR', 'PAR', 'AMS', 'MIL', 'MAD',
+    'SWX', 'HEL', or '' if unrecognised."""
+    if "_US_EQ" in t212_ticker:
+        return "US"
+    if not t212_ticker.endswith("_EQ") or len(t212_ticker) < 5:
+        return ""
+    suffix = t212_ticker[-4]
+    return {
+        "l": "LSE", "i": "LSE",
+        "a": "AMS", "n": "AMS",
+        "p": "PAR", "d": "XETR", "m": "MIL",
+        "e": "MAD", "s": "SWX", "h": "HEL",
+    }.get(suffix, "")
+
+
+def _t212_isa_eligible_universe(*, venues: set[str] | None = None) -> list[str]:
+    """Build a yfinance-ticker universe from the cached T212 instrument
+    file, filtered to ISA-eligible instruments and optionally to a set
+    of venues (e.g. {'LSE'} for UK-only, {'US'} for US-only).
+
+    Returns sorted list of yfinance tickers. Skips instruments whose
+    T212 venue suffix isn't in _T212_SUFFIX_TO_YF (some smaller
+    European venues we don't yet handle)."""
+    items = _load_t212_universe_raw()
+    if not items:
+        return []
+    out: set[str] = set()
+    for inst in items:
+        if not _is_isa_eligible(inst):
+            continue
+        t212 = inst.get("ticker") or ""
+        if venues is not None and _t212_venue(t212) not in venues:
+            continue
+        yf = _t212_to_yfinance_ticker(t212, inst.get("shortName"))
+        if yf is None:
+            continue
+        out.add(yf)
+    return sorted(out)
+
+
 def get_universe(universe_id: str) -> list[str]:
     """Return a ticker list for the named universe.
 
@@ -142,6 +302,13 @@ def get_universe(universe_id: str) -> list[str]:
     - EU equities: 'dax40', 'cac40', 'aex25', 'eu_blue_chips' (DAX+CAC+AEX)
     - UK+EU combined: 'uk_eu_blue_chips' (FTSE100+DAX+CAC+AEX),
                        'uk_eu_extended' (FTSE350+DAX+CAC+AEX+UCITS ETFs, ~470 names)
+    - T212 ISA-eligible (sourced from cached T212 instrument file, filtered
+      to drop warrants + US-domiciled ETFs + leveraged products):
+        't212_isa_uk'     — LSE-listed (UK shares + UCITS ETFs + GDRs)
+        't212_isa_us'     — US-listed (NYSE/NASDAQ stocks; no US-ISIN ETFs)
+        't212_isa_eu'     — XETR + PAR + AMS + MIL + MAD + SWX + HEL
+        't212_isa_uk_eu'  — UK + EU combined
+        't212_isa_global' — every ISA-eligible instrument T212 lists
     """
     if universe_id == "sp500":
         return _fetch_sp500()
@@ -188,6 +355,21 @@ def get_universe(universe_id: str) -> list[str]:
         return sorted(combined)
     if universe_id == "uk_ucits_etfs":
         return list(_UK_UCITS_ETFS)
+    # T212-sourced ISA-eligible universes (broader than scraped index lists)
+    if universe_id == "t212_isa_uk":
+        return _t212_isa_eligible_universe(venues={"LSE"})
+    if universe_id == "t212_isa_us":
+        return _t212_isa_eligible_universe(venues={"US"})
+    if universe_id == "t212_isa_eu":
+        return _t212_isa_eligible_universe(
+            venues={"XETR", "PAR", "AMS", "MIL", "MAD", "SWX", "HEL"}
+        )
+    if universe_id == "t212_isa_uk_eu":
+        return _t212_isa_eligible_universe(
+            venues={"LSE", "XETR", "PAR", "AMS", "MIL", "MAD", "SWX", "HEL"}
+        )
+    if universe_id == "t212_isa_global":
+        return _t212_isa_eligible_universe(venues=None)
     if universe_id == "us_etfs_sector":
         return list(_US_ETFS_SECTOR)
     if universe_id == "us_etfs_bond":
