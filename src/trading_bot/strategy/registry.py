@@ -53,6 +53,8 @@ def _to_config(raw: dict) -> StrategyConfig:
         tier2_candidate=bool(raw.get("tier2_candidate", False)),
         tier2_marked_at=raw.get("tier2_marked_at"),
         tier2_thesis=str(raw.get("tier2_thesis") or ""),
+        prefilter_mode=str(raw.get("prefilter_mode") or "python").lower().strip(),
+        prefilter_top_n=int(raw.get("prefilter_top_n", 100)),
     )
 
 

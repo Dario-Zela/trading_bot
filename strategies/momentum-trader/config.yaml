@@ -36,3 +36,9 @@ runs_in:
 # Phase 8C — drop candidates with earnings inside the window. Technical
 # signal becomes unreliable across a binary print, so we avoid the day.
 skip_if_earnings_in_days: 1
+# LLM strategies use the Sonnet-driven per-strategy pre-filter so the
+# universe is narrowed with the strategy's lens before the expensive
+# technicals fetch + Stage-1 Haiku scoring. See prompts/prefilter.md
+# for this strategy's filter prompt. Tunable by evolution agent.
+prefilter_mode: llm
+prefilter_top_n: 100

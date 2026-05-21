@@ -99,6 +99,25 @@ TUNABLE_FIELDS = {
     # conviction. UK-EU strategies tend to need this higher than US
     # because UK Stamp Duty alone is 0.5% on every share purchase.
     "cost_gate_multiplier": (0.5, 5.0),
+    # prefilter_top_n — size of the shortlist the LLM pre-filter returns
+    # to the strategy. Higher = more diversity for Stage-2 to work with;
+    # lower = more concentrated, less LLM token spend at the per-candidate
+    # scoring stages. Stage-1 Haiku also caps in its own prompt, so this
+    # is the absolute upper bound on what Stage-1 sees.
+    "prefilter_top_n": (20, 300),
+}
+
+# Enum-style tunable fields. Same `tune` action verb; clamping rule is
+# "value must be in the allowed set" instead of "value in numeric range".
+TUNABLE_STRING_FIELDS = {
+    # prefilter_mode — how the strategy narrows the universe before the
+    # expensive yfinance technicals fetch.
+    #   "llm":    per-strategy Sonnet call with strategies/<id>/prompts/prefilter.md
+    #             — strategy-aware, but ~60-90s per call
+    #   "python": legacy heuristic — fetch all universe technicals, sort by |5d return|
+    #   "off":    no pre-filter (universe goes straight to Stage-1; only
+    #             safe for small universes or rule-based strategies)
+    "prefilter_mode": {"llm", "python", "off"},
 }
 
 
@@ -252,6 +271,9 @@ def _build_snapshot(
                 "stop_loss_pct": cfg.get("stop_loss_pct"),
                 "take_profit_pct": cfg.get("take_profit_pct"),
                 "capital_gbp": cfg.get("capital_gbp"),
+                "cost_gate_multiplier": cfg.get("cost_gate_multiplier"),
+                "prefilter_mode": cfg.get("prefilter_mode"),
+                "prefilter_top_n": cfg.get("prefilter_top_n"),
                 # Tier 2 candidate state — set by a prior evolution run
                 # as a self-prediction. Surfacing it here lets the agent
                 # grade its own past judgement: did the realised metrics
@@ -442,6 +464,22 @@ For **Tier 2 (live)** strategies you can ONLY recommend with `request-tier-2`
 Tunable fields (clipped to these ranges if you exceed them; tune is
 strategy-wide, applied at the top of config.yaml):
 {json.dumps({k: list(v) for k, v in TUNABLE_FIELDS.items()}, indent=2)}
+
+Enum-style tunable fields (value must be one of the allowed strings):
+{json.dumps({k: sorted(v) for k, v in TUNABLE_STRING_FIELDS.items()}, indent=2)}
+
+`prefilter_mode` is a structural switch worth special attention:
+  - "llm" routes the universe through a Sonnet pre-filter using
+    strategies/<id>/prompts/prefilter.md. Strategy-aware (mean-reverter
+    sees different names than momentum-trader from the same universe),
+    but ~60-90s per call. Recommended default for LLM-driven strategies.
+  - "python" is the legacy heuristic (sort by |5d return|, take top-N).
+    Strategy-AGNOSTIC — biases every strategy toward big movers, which
+    is wrong for mean-reversion and macro lenses. Reserved as a fallback.
+  - "off" disables the pre-filter entirely. Only safe for rule-based
+    strategies (control-rule-based) whose own logic IS the filter.
+If you see a strategy with positive Stage-1+ IC but the pre-filter
+mode = "python", a flip to "llm" is a reasonable tune to propose.
 
 Other constraints:
 - Free Alpaca slots available: {free_slots}
@@ -636,16 +674,26 @@ def _do_tune(sid: str, raw: dict, cfg: dict, reason: str) -> ActionLog:
     clamped: dict = {}
     rejected: dict = {}
     for field_name, requested in changes_raw.items():
-        if field_name not in TUNABLE_FIELDS:
-            rejected[field_name] = "field not tunable"
+        # Numeric range-bounded field
+        if field_name in TUNABLE_FIELDS:
+            lo, hi = TUNABLE_FIELDS[field_name]
+            try:
+                val = type(lo)(requested)
+            except (TypeError, ValueError):
+                rejected[field_name] = "wrong type"
+                continue
+            clamped[field_name] = max(lo, min(hi, val))
             continue
-        lo, hi = TUNABLE_FIELDS[field_name]
-        try:
-            val = type(lo)(requested)
-        except (TypeError, ValueError):
-            rejected[field_name] = "wrong type"
+        # String enum field (e.g. prefilter_mode)
+        if field_name in TUNABLE_STRING_FIELDS:
+            allowed = TUNABLE_STRING_FIELDS[field_name]
+            val = str(requested).lower().strip() if requested is not None else ""
+            if val not in allowed:
+                rejected[field_name] = f"value '{val}' not in allowed set {sorted(allowed)}"
+                continue
+            clamped[field_name] = val
             continue
-        clamped[field_name] = max(lo, min(hi, val))
+        rejected[field_name] = "field not tunable"
 
     if not clamped:
         return ActionLog(sid, None, "tune", False, f"No applicable changes. Rejected: {rejected}", {})

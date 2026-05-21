@@ -70,6 +70,24 @@ class StrategyConfig:
     tier2_marked_at: str | None = None
     tier2_thesis: str = ""
 
+    # Per-strategy universe pre-filter mode. The Python sort by
+    # |return_5d_pct| (legacy `_prefilter`) biases every strategy
+    # toward the biggest movers, which is wrong for mean-reversion,
+    # macro, and defensive lenses. The LLM mode runs a per-strategy
+    # Sonnet call BEFORE the expensive technicals fetch, returning a
+    # strategy-aware shortlist. The `off` mode is for rule-based
+    # strategies whose select-picks logic already does its own
+    # ranking (control-rule-based).
+    #
+    #   "llm"    — Sonnet pre-filter using strategies/<id>/prompts/prefilter.md
+    #   "python" — legacy behaviour, fetch all universe technicals, then sort by |5d return|
+    #   "off"    — no pre-filter, the full universe goes downstream
+    #
+    # `prefilter_top_n` caps the size of the filtered shortlist.
+    # Tunable by the evolution agent within (20, 300).
+    prefilter_mode: str = "python"
+    prefilter_top_n: int = 100
+
 
 class Strategy(ABC):
     """Base class for any tradeable strategy. Rule-based subclass overrides

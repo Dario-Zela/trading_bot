@@ -211,12 +211,48 @@ class LLMStrategy(Strategy):
 
         prompts = self._load_prompts()
 
-        # Pre-filter the universe with cheap Python so we don't pay tokens for
-        # candidates that obviously don't fit. Same filter style as the stub.
+        # Universe pre-filter. Three modes (set on cfg.prefilter_mode):
+        #   - "llm":    Sonnet pre-filter with strategy-specific lens.
+        #               Replaces both the upstream universe fetch (we now
+        #               only fetch technicals for the LLM's shortlist) AND
+        #               the bias-toward-big-movers of the Python sort.
+        #   - "python": legacy — fetch all universe technicals, sort by |5d|.
+        #   - "off":    no pre-filter (only safe for small universes).
+        # On LLM failure we fall back to Python so the pipeline degrades
+        # gracefully rather than going dark.
         tickers = get_universe(cfg.universe)
-        log.info("%s: scoring %d universe candidates", cfg.id, len(tickers))
-        techs = get_technicals(tickers, end_date=on_date)
-        candidates = self._prefilter(techs)
+        log.info("%s: %d universe candidates, mode=%s",
+                 cfg.id, len(tickers), cfg.prefilter_mode)
+
+        prefilter_mode = (cfg.prefilter_mode or "python").lower().strip()
+        if prefilter_mode == "llm":
+            from trading_bot.strategy.universe_filter import llm_universe_filter
+            shortlist = llm_universe_filter(
+                cfg, tickers, on_date,
+                top_n=max(int(cfg.prefilter_top_n or 100), 20),
+            )
+            if shortlist is None:
+                log.warning("%s: LLM pre-filter failed — falling back to Python sort",
+                            cfg.id)
+                techs = get_technicals(tickers, end_date=on_date)
+                candidates = self._prefilter(techs)
+            elif not shortlist:
+                log.info("%s: LLM pre-filter returned empty shortlist — no picks today", cfg.id)
+                return []
+            else:
+                log.info("%s: LLM pre-filter returned %d names — fetching technicals",
+                         cfg.id, len(shortlist))
+                techs = get_technicals(shortlist, end_date=on_date)
+                # The shortlist is already strategy-aware; we just need to
+                # drop anything yfinance couldn't price + cap to top_n.
+                candidates = [techs[t] for t in shortlist if t in techs and techs[t].rsi_14 is not None]
+        elif prefilter_mode == "off":
+            techs = get_technicals(tickers, end_date=on_date)
+            candidates = [t for t in techs.values() if t.rsi_14 is not None]
+        else:  # "python" or anything unrecognised
+            techs = get_technicals(tickers, end_date=on_date)
+            candidates = self._prefilter(techs)
+
         log.info("%s: %d candidates passed pre-filter", cfg.id, len(candidates))
         if not candidates:
             return []
