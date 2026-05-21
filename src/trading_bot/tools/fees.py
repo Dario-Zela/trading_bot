@@ -217,7 +217,12 @@ _UK_LSE_EXCHANGES = {"LSE", "LSE_INTL", "LSEAIM"}     # LSEAIM kept as code, see
 _UK_AIM_EXCHANGES = {"LSEAIM", "AIM"}
 
 # Instruments exempt from UK stamp duty even on the LSE main market.
-_STAMP_DUTY_EXEMPT_TYPES = {"etf", "etn", "bond", "gilt", "trust"}
+# NOTE: closed-end investment trusts (e.g. SMT.L, FCIT.L, CTY.L) are NOT
+# exempt — HMRC treats them as ordinary shares of an investment company.
+# "trust" is intentionally NOT in this set, despite the naming overlap.
+# Open-ended unit trusts and OEICs aren't exchange-traded, so the bot
+# never sees them.
+_STAMP_DUTY_EXEMPT_TYPES = {"etf", "etn", "bond", "gilt"}
 
 # French / Italian exchange codes (T212 uses ISO MIC codes for some)
 _FRENCH_EXCHANGES = {"XPAR", "EPA", "PA"}
@@ -251,8 +256,18 @@ def compute_fees(ctx: TradeContext) -> FeeBreakdown:
         b.fx_fee_entry_gbp = entry_gbp * T212_FX_FEE_PER_LEG
         b.fx_fee_exit_gbp = exit_gbp * T212_FX_FEE_PER_LEG
 
-    # --- UK stamp duty (purchases only, LSE non-ETF non-AIM) ---
-    if exch in _UK_LSE_EXCHANGES and exch not in _UK_AIM_EXCHANGES and typ not in _STAMP_DUTY_EXEMPT_TYPES:
+    # --- UK stamp duty (purchases only, LSE non-ETF non-AIM, UK-register) ---
+    # GDRs trade on LSE's International Order Book in USD/EUR/etc. They
+    # entitle the holder to foreign shares held by a depository bank,
+    # NOT shares on a UK register — HMRC's SDRT charging condition isn't
+    # met. yfinance flags these via the .IL suffix (yf_ticker_classify
+    # returns LSE/USD for them); within compute_fees we detect by
+    # exchange=LSE AND currency != GBP. Same logic also excludes the
+    # rare USD-denominated LSE non-GDR listings, which are similarly
+    # not on the UK share register.
+    on_uk_register = (ccy == "GBP")
+    if (exch in _UK_LSE_EXCHANGES and exch not in _UK_AIM_EXCHANGES
+            and typ not in _STAMP_DUTY_EXEMPT_TYPES and on_uk_register):
         b.stamp_duty_gbp = entry_gbp * UK_STAMP_DUTY_RATE
 
     # --- PTM levy (flat fee, both legs, only above threshold) ---
@@ -318,7 +333,9 @@ def estimate_round_trip_cost_pct(
     if ccy != "GBP":
         b.fx_fee_entry_gbp = notional_gbp * T212_FX_FEE_PER_LEG
         b.fx_fee_exit_gbp = notional_gbp * T212_FX_FEE_PER_LEG
-    if exch in _UK_LSE_EXCHANGES and exch not in _UK_AIM_EXCHANGES and typ not in _STAMP_DUTY_EXEMPT_TYPES:
+    on_uk_register = (ccy == "GBP")
+    if (exch in _UK_LSE_EXCHANGES and exch not in _UK_AIM_EXCHANGES
+            and typ not in _STAMP_DUTY_EXEMPT_TYPES and on_uk_register):
         b.stamp_duty_gbp = notional_gbp * UK_STAMP_DUTY_RATE
     if notional_gbp > T212_PTM_THRESHOLD_GBP:
         b.ptm_levy_gbp = 2 * T212_PTM_LEVY_GBP    # both legs
