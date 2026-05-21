@@ -280,13 +280,16 @@ class Trading212DemoExecutor(Executor):
         except Exception as e:
             log.warning("Orphan reconcile failed for %s (non-fatal): %s", strategy_id, e)
 
-        # Sweep ALL open trades for this strategy+region. Same rationale
-        # as the other executors: prior-session strands (holiday, workflow
-        # failure, T212 outage) get picked up here. _find_recent_sell looks
-        # at today's history when there's no live position; for true
-        # multi-day strands the position will simply be re-closed-or-marked
-        # cancelled rather than silently lingering forever.
-        open_trades = read_open_trades(strategy_id=strategy_id, region=region)
+        # Sweep ALL open trades for this strategy+region — but ONLY at
+        # this executor's tier. After a promotion (shadow → T212-paper)
+        # the strategy may have lingering shadow-tier rows; those must
+        # be handled by the shadow executor, not here. Without this
+        # filter the T212 executor was logging "T212 position still
+        # within hold window" for shadow rows it had no business
+        # touching (observed 2026-05-21 after sector-rotator promotion).
+        open_trades = read_open_trades(
+            strategy_id=strategy_id, region=region, tier=_TIER,
+        )
         if not open_trades:
             return []
 
@@ -552,10 +555,20 @@ class Trading212DemoExecutor(Executor):
             return []
 
         translator = self._get_translator()
-        # Build a reverse map: T212 ticker -> yfinance ticker for any
-        # ledger entries we already have today
-        existing_today = read_open_trades(region=region, on_date=on_date)
-        existing_yf_tickers = {t["ticker"] for t in existing_today}
+        # Build the set of T212-paper ledger tickers that are CURRENTLY
+        # OPEN in the region (any strategy on this shared slot, any
+        # entry date). Two prior bugs this fixes:
+        #   1. on_date=today filter missed multi-day positions entered
+        #      yesterday but still open on T212 — they'd get
+        #      "orphan-reconciled" into a second ledger row.
+        #   2. Multiple T212-paper strategies share slot 1. Strategy A's
+        #      open trade for CURY.L belongs to A; strategy B's reconcile
+        #      should see it and skip, not claim it as B's orphan.
+        # Solution: read ALL open T212-paper trades in the region across
+        # all strategies. Filter by tier so shadow/alpaca-paper rows on
+        # the same region don't confuse the lookup.
+        existing_open = read_open_trades(region=region, tier=_TIER)
+        existing_yf_tickers = {t["ticker"] for t in existing_open}
 
         recovered: list[dict] = []
         for pos in positions:

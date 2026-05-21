@@ -210,7 +210,12 @@ class AlpacaPaperExecutor(Executor):
         # fallback handles closes that fired via plain market sell
         # (e.g. a prior session's market-on-close that didn't commit
         # its ledger update).
-        open_trades = read_open_trades(strategy_id=strategy_id, region=region)
+        # Tier-filter — alpaca-paper executor only owns alpaca-paper
+        # rows. Shadow / T212 lingerers from a recent demotion stay out
+        # of this loop.
+        open_trades = read_open_trades(
+            strategy_id=strategy_id, region=region, tier=_TIER,
+        )
         if not open_trades:
             return []
 

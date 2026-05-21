@@ -116,7 +116,12 @@ class ShadowExecutor(Executor):
         # those trades sit stranded with exit_date=None. We close them here
         # at today's yfinance close — small mark-to-market drift but no
         # silent strand.
-        open_trades = read_open_trades(strategy_id=strategy_id, region=region)
+        # Tier-filter — after a shadow strategy gets demoted from a
+        # broker tier, lingering shadow rows are this executor's job;
+        # broker rows belong to the broker executor.
+        open_trades = read_open_trades(
+            strategy_id=strategy_id, region=region, tier=_TIER,
+        )
         if not open_trades:
             return []
 

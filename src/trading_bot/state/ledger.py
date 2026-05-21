@@ -89,12 +89,17 @@ def read_open_trades(
     strategy_id: str | None = None,
     region: str | None = None,
     on_date: date | None = None,
+    tier: str | None = None,
 ) -> list[dict]:
     """Return trades that have not yet been exited.
 
-    Optionally filter by strategy, region, or entry date. The default behaviour
-    returns every open trade in the ledger; the exit job uses the date filter
-    to find today's positions.
+    Optionally filter by strategy, region, entry date, or tier. The default
+    returns every open trade in the ledger.
+
+    `tier` matters when a strategy has been promoted/demoted mid-life: the
+    executor for the new tier should NOT touch trades belonging to the old
+    tier (T212 executor processing a shadow-tier trade caused the
+    "T212 position still within hold window" misattribution on 2026-05-21).
     """
     out = []
     for rec in _iter_records():
@@ -105,6 +110,8 @@ def read_open_trades(
         if region is not None and rec.get("region") != region:
             continue
         if on_date is not None and rec.get("entry_date") != on_date.isoformat():
+            continue
+        if tier is not None and rec.get("tier") != tier:
             continue
         out.append(rec)
     return out
