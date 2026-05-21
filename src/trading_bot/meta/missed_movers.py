@@ -77,6 +77,19 @@ class MissedMoversReport:
 # Public entry
 # ---------------------------------------------------------------------------
 
+# Decoupled missed-movers universe per region. The strategies' actual
+# universes (now t212_isa_* derivations with ~6.9k-8.5k names) are far
+# too wide for this diagnostic — fetching history for 8500 tickers
+# every exit was the main hang point in today's UK-EU exit run. The
+# "missed" movers we care about are the ones liquid enough that a
+# competent strategy COULD have caught them; that's almost always
+# in the major-index blue-chip list.
+_MISSED_MOVERS_UNIVERSE_BY_REGION = {
+    "us": "sp500",                # ~500 names
+    "uk-eu": "uk_eu_blue_chips",  # FTSE100 + DAX40 + CAC40 + AEX25 = ~205 names
+}
+
+
 def analyze_missed_movers(today: date, region: str) -> MissedMoversReport:
     """Run the missed-movers analysis for `region` on `today`.
 
@@ -92,7 +105,8 @@ def analyze_missed_movers(today: date, region: str) -> MissedMoversReport:
         return MissedMoversReport(date=today.isoformat(), region=region,
                                   universes_checked=[], n_tickers_checked=0)
 
-    # 1) Union of universes the strategies actually use
+    # The set of strategy IDs is still needed downstream so we can label
+    # each missed mover with "which strategy could have caught this".
     universe_to_strategies: dict[str, list[str]] = {}
     for s in strategies:
         u = s.config.universe or ""
@@ -100,22 +114,25 @@ def analyze_missed_movers(today: date, region: str) -> MissedMoversReport:
             continue
         universe_to_strategies.setdefault(u, []).append(s.config.id)
 
-    universes_checked = sorted(universe_to_strategies.keys())
-    if not universes_checked:
+    # 1) Curated missed-movers universe. Far smaller than the strategy
+    # candidate universes — see _MISSED_MOVERS_UNIVERSE_BY_REGION above.
+    universe_id = _MISSED_MOVERS_UNIVERSE_BY_REGION.get(region)
+    if not universe_id:
+        log.warning("missed-movers: no curated universe for region %r — skipping", region)
         return MissedMoversReport(date=today.isoformat(), region=region,
                                   universes_checked=[], n_tickers_checked=0)
-
+    universes_checked = [universe_id]
     all_tickers: set[str] = set()
     ticker_to_universes: dict[str, list[str]] = {}
-    for uid in universes_checked:
-        try:
-            tickers = get_universe(uid)
-        except Exception as e:
-            log.warning("missed-movers: failed to load universe %r: %s", uid, e)
-            continue
-        for t in tickers:
-            all_tickers.add(t)
-            ticker_to_universes.setdefault(t, []).append(uid)
+    try:
+        tickers = get_universe(universe_id)
+    except Exception as e:
+        log.warning("missed-movers: failed to load universe %r: %s", universe_id, e)
+        return MissedMoversReport(date=today.isoformat(), region=region,
+                                  universes_checked=[], n_tickers_checked=0)
+    for t in tickers:
+        all_tickers.add(t)
+        ticker_to_universes.setdefault(t, []).append(universe_id)
 
     if not all_tickers:
         return MissedMoversReport(date=today.isoformat(), region=region,
