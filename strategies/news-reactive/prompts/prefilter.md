@@ -19,4 +19,4 @@ When the news brief is sparse (slow news day), expand to:
 - Names with imminent known catalysts in the NEXT 1-2 days (Fed meetings, drug data, earnings) that have already started to move on positioning
 - Sector leaders where macro-sector themes from the brief apply (e.g. "oil sells off" → integrated majors)
 
-Don't return names just because they're in the universe — every shortlist entry needs a concrete catalyst you can name. If you can't find {top_n} legitimate catalyst-driven names, return fewer rather than padding with no-catalyst noise.
+Don't return names just because they're in the universe — every shortlist entry needs a concrete catalyst you can name. If you can't find enough legitimate catalyst-driven names to fill the requested shortlist, return fewer rather than padding with no-catalyst noise.
