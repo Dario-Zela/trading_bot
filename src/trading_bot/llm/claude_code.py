@@ -129,7 +129,7 @@ def run_claude_for_json(
 
 
 def _extract_json(text: str):
-    # 1. Look for ```json fenced block
+    # 1. Look for closed ```json fenced block.
     fenced = re.search(r"```(?:json)?\s*\n(.*?)\n```", text, re.DOTALL)
     if fenced:
         candidate = fenced.group(1).strip()
@@ -138,7 +138,7 @@ def _extract_json(text: str):
         except json.JSONDecodeError:
             pass  # fall through
 
-    # 2. Try the entire stripped text as JSON
+    # 2. Try the entire stripped text as JSON.
     stripped = text.strip()
     if stripped and stripped[0] in "[{":
         try:
@@ -146,7 +146,7 @@ def _extract_json(text: str):
         except json.JSONDecodeError:
             pass
 
-    # 3. Find first balanced {...} or [...] in the text
+    # 3. Find first balanced {...} or [...] in the text.
     for open_ch, close_ch in [("{", "}"), ("[", "]")]:
         start = text.find(open_ch)
         if start < 0:
@@ -164,7 +164,132 @@ def _extract_json(text: str):
                     except json.JSONDecodeError:
                         break
 
+    # 4. Truncation recovery — Sonnet sometimes hits its output token
+    #    limit mid-JSON, so the closing fence + trailing braces never
+    #    arrive. Salvage what we have:
+    #      a. Find the start of an unfenced ```json block (no closing
+    #         fence to match in step 1).
+    #      b. Within that body, attempt to close any unterminated string
+    #         and balance braces/brackets, then re-parse.
+    open_fence = re.search(r"```(?:json)?\s*\n", text)
+    body_start = open_fence.end() if open_fence else None
+    if body_start is None:
+        first_brace = text.find("{")
+        if first_brace >= 0:
+            body_start = first_brace
+    if body_start is not None:
+        body = text[body_start:]
+        # Drop any trailing ``` if it was a sole opening line miscount.
+        body = re.sub(r"\s*```\s*$", "", body)
+        repaired = _repair_truncated_json(body)
+        if repaired is not None:
+            try:
+                result = json.loads(repaired)
+                log.warning(
+                    "Claude Code response was truncated; recovered partial JSON "
+                    "(%d → %d chars). Output token limit may need attention.",
+                    len(text), len(repaired),
+                )
+                return result
+            except json.JSONDecodeError:
+                pass
+
     raise ClaudeCodeError(
         f"No parseable JSON found in Claude Code response.\n"
         f"Response (first 400 chars): {text[:400]}"
     )
+
+
+def _repair_truncated_json(body: str) -> str | None:
+    """Best-effort repair for JSON output that got cut mid-stream.
+
+    Walks the body character-by-character tracking string state and
+    bracket depth, then appends whatever closing characters are needed
+    to make the result syntactically complete. Inside an unterminated
+    string the trailing fragment is discarded (better to lose the last
+    line of body_md than to confuse the JSON parser with a stray quote).
+    Returns the repaired string, or None if the body has nothing
+    JSON-like in it.
+    """
+    if "{" not in body and "[" not in body:
+        return None
+
+    stack: list[str] = []
+    in_string = False
+    escape = False
+    last_safe_end = -1   # furthest index whose prefix is parseable so far
+
+    for i, ch in enumerate(body):
+        if escape:
+            escape = False
+            continue
+        if in_string:
+            if ch == "\\":
+                escape = True
+            elif ch == '"':
+                in_string = False
+                last_safe_end = i
+            continue
+        if ch == '"':
+            in_string = True
+            continue
+        if ch in "{[":
+            stack.append(ch)
+        elif ch in "}]":
+            if stack:
+                opener = stack.pop()
+                if (opener, ch) not in (("{", "}"), ("[", "]")):
+                    return None
+                if not stack:
+                    last_safe_end = i
+
+    if not stack and not in_string:
+        return body          # already well-formed, just no closing fence
+
+    truncated_at = last_safe_end + 1 if last_safe_end >= 0 else len(body)
+    prefix = body[:truncated_at]
+
+    # If we stopped inside an unterminated string, walk back to the
+    # last structural boundary (comma, opening brace, opening bracket)
+    # and drop the incomplete key/value pair. Keep the opening brace
+    # itself when that's the boundary, so we end up with an empty
+    # object/array rather than nothing at all.
+    if in_string:
+        last_comma = prefix.rfind(",")
+        last_open_obj = prefix.rfind("{")
+        last_open_arr = prefix.rfind("[")
+        cut = max(last_comma, last_open_obj, last_open_arr)
+        if cut < 0:
+            return None
+        if cut == last_open_obj or cut == last_open_arr:
+            prefix = prefix[: cut + 1]   # keep the opening brace
+        else:
+            prefix = prefix[:cut]        # drop the trailing comma
+
+    # Replay just the prefix to know what brackets remain open.
+    pending: list[str] = []
+    in_s = False
+    esc = False
+    for ch in prefix:
+        if esc:
+            esc = False
+            continue
+        if in_s:
+            if ch == "\\":
+                esc = True
+            elif ch == '"':
+                in_s = False
+            continue
+        if ch == '"':
+            in_s = True
+            continue
+        if ch in "{[":
+            pending.append(ch)
+        elif ch in "}]" and pending:
+            pending.pop()
+
+    closers = []
+    for opener in reversed(pending):
+        closers.append("}" if opener == "{" else "]")
+    repaired = prefix.rstrip().rstrip(",") + "".join(closers)
+    return repaired

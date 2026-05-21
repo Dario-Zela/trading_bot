@@ -293,10 +293,15 @@ def _build_prompt(
     ) or "  (none)"
 
     tier_guidance = {
-        "lead": "FRONT PAGE LEAD. The defining piece of the day — write at the depth a serious reader would want. Target 900-1400 words for a solo lead; a clustered lead can sustainably go to 1500-2000. Use sub-headings to break the body into 3-5 movements.",
-        "feature": "Feature piece. Solo features 600-1000 words; clustered features 900-1500 to do justice to the multiple threads. Use 2-3 sub-headings (## ...) so the eye has somewhere to land.",
-        "brief": "Brief slot — but the full article is still a proper read. Solo briefs 400-600 words; clustered briefs 500-800. One sub-heading is fine; two is the ceiling.",
-    }.get(piece.tier, "Write to the length the story deserves.")
+        # Word ranges are tightened from earlier versions — the previous
+        # 1500-2000 target was hitting Sonnet's output-token ceiling and
+        # truncating the closing JSON fence, which broke the parser. These
+        # ceilings keep the body comfortably below ~3,000 tokens including
+        # the surrounding JSON fields.
+        "lead": "FRONT PAGE LEAD. Write at the depth a serious reader would want — 700-1100 words. Use 3-4 sub-headings (## ...) to break the body into clear movements. A clustered lead can stretch to 1200 if necessary, but DON'T pad to fill space.",
+        "feature": "Feature piece. 500-900 words; clustered features can reach 1000. Use 2-3 sub-headings. Substance over length.",
+        "brief": "Brief slot — the full article is still a proper read. 350-550 words; clustered briefs up to 700. One sub-heading is fine; two is the ceiling.",
+    }.get(piece.tier, "Write to the length the story deserves — 500-800 words is a reasonable default.")
 
     return f"""You are {piece.byline} writing the full article for The Bot
 Tribune on {today.isoformat()}.
@@ -410,9 +415,20 @@ A single sentence (≤180 chars) — the TL;DR for the impatient reader.
 Goes in a callout box near the top of the article. Not the same as
 the kicker or headline — it's the substance compressed to one line.
 
-## Required output
+## Hard contract
 
-Return JSON only:
+Your response MUST begin with the `{` of the JSON object. Do NOT write
+any preamble, narration, planning, or explanation before the JSON.
+Don't say "Let me compose…" or "Now I have enough…" or "Here is the
+output:" — those phrases waste output tokens and have repeatedly caused
+the JSON to truncate mid-body when Sonnet's response budget runs short.
+Open with `{`, close with `}`, nothing else.
+
+If you find yourself wanting to explain what you did, resist — that's
+output budget the closing `}` needs to fit. Write the article in
+`body_md` as the article itself, and let it speak for you.
+
+## Required output
 
 ```json
 {{
@@ -428,8 +444,6 @@ Return JSON only:
   "related_slugs": ["<slug from the cross-link pool above that's actually relevant — or empty list>"]
 }}
 ```
-
-Do not include any text outside the JSON.
 """
 
 
