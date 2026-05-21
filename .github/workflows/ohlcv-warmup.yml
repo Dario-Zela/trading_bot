@@ -36,8 +36,11 @@ jobs:
     # 90-min timeout killed the workflow).
     env:
       STOOQ_API_KEY: ${{ secrets.STOOQ_API_KEY }}
-      STOOQ_MAX_PARALLEL: "6"
-      STOOQ_REQUEST_SPACING: "0.15"
+      # Serial is the only reliable mode — even 6-way on a fresh CI IP
+      # triggered Stooq's TCP-layer throttle. Slower but doesn't kill
+      # the IP for hours. ~30-45 min for 1k missing tickers.
+      STOOQ_MAX_PARALLEL: "1"
+      STOOQ_REQUEST_SPACING: "0.6"
     steps:
       - name: Check out repo
         uses: actions/checkout@v5

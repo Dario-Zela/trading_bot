@@ -58,14 +58,16 @@ log = logging.getLogger(__name__)
 _BASE_URL = "https://stooq.com/q/d/l/"
 _USER_AGENT = "trading-bot/0.1 (research; +https://github.com/Dario-Zela/trading_bot)"
 _TIMEOUT_S = 12
-# Stooq's free tier throttles per-IP — burst >3 concurrent connections
-# in a short window puts the IP into a SYN_SENT lockout for several
-# hours. Override via env vars so workflows running on fresh CI IPs
-# can dial up; local re-runs from a throttled IP stay polite.
-#   STOOQ_MAX_PARALLEL    — concurrent workers (default 3)
-#   STOOQ_REQUEST_SPACING — inter-request sleep per worker (default 0.3s)
-_MAX_PARALLEL = int(os.environ.get("STOOQ_MAX_PARALLEL", "3"))
-_REQUEST_SPACING_S = float(os.environ.get("STOOQ_REQUEST_SPACING", "0.3"))
+# Stooq's free tier throttles per-IP at the TCP layer — ANY concurrent
+# burst (even 3-way locally / 6-way in CI) puts the IP into a
+# SYN_SENT lockout that lasts hours. Empirically the ONLY reliable
+# behaviour is fully sequential with deliberate spacing between
+# requests. Slow (~30 min for 1k tickers) but doesn't blacklist us.
+# Env-var overrides remain in case a future-tier key relaxes this.
+#   STOOQ_MAX_PARALLEL    — concurrent workers (default 1, serial)
+#   STOOQ_REQUEST_SPACING — inter-request sleep (default 0.6s)
+_MAX_PARALLEL = int(os.environ.get("STOOQ_MAX_PARALLEL", "1"))
+_REQUEST_SPACING_S = float(os.environ.get("STOOQ_REQUEST_SPACING", "0.6"))
 
 
 # yfinance suffix → Stooq country code
