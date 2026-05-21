@@ -73,6 +73,7 @@ jobs:
           ALPACA_API_KEY__3: ${{ secrets.ALPACA_API_KEY__3 }}
           ALPACA_API_SECRET__3: ${{ secrets.ALPACA_API_SECRET__3 }}
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          STOOQ_API_KEY: ${{ secrets.STOOQ_API_KEY }}
         run: |
           case "${{ steps.mode.outputs.mode }}" in
             exit)

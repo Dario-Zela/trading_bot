@@ -72,6 +72,12 @@ jobs:
           T212_API_KEY__1: ${{ secrets.T212_API_KEY__1 }}
           T212_API_SECRET__1: ${{ secrets.T212_API_SECRET__1 }}
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          # Stooq is the secondary OHLCV source — used by ohlcv-daily-update +
+          # ohlcv-stooq-fill-gaps to recover yfinance misses. Free key, captcha-gated.
+          # Set as a repo secret: visit
+          # https://stooq.com/q/d/?s=aapl.us&get_apikey, solve captcha,
+          # copy the apikey value out of the URL.
+          STOOQ_API_KEY: ${{ secrets.STOOQ_API_KEY }}
         run: |
           case "${{ steps.mode.outputs.mode }}" in
             exit)

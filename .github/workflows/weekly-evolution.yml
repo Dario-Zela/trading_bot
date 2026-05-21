@@ -61,6 +61,7 @@ jobs:
       - name: Backtest pass (replay every strategy on last 14d)
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          STOOQ_API_KEY: ${{ secrets.STOOQ_API_KEY }}
         run: |
           # Replay every active strategy over the trailing 14 days
           # using today's code + prompts. Surface result to the
@@ -80,6 +81,8 @@ jobs:
           ALPACA_API_SECRET__2: ${{ secrets.ALPACA_API_SECRET__2 }}
           ALPACA_API_KEY__3: ${{ secrets.ALPACA_API_KEY__3 }}
           ALPACA_API_SECRET__3: ${{ secrets.ALPACA_API_SECRET__3 }}
+          # Stooq fallback for the backtest-pass yfinance gaps
+          STOOQ_API_KEY: ${{ secrets.STOOQ_API_KEY }}
           # gh CLI uses GH_TOKEN to authenticate against the GitHub API for issue creation
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python -m trading_bot.pipeline weekly-evolution

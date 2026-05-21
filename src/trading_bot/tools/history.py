@@ -158,6 +158,49 @@ def get_history(
             except Exception as e:
                 log.warning("OHLCV store write-back failed (non-fatal): %s", e)
 
+    # 4. Stooq fallback for whatever yfinance still missed. Short-
+    #    circuits cleanly if STOOQ_API_KEY isn't set in the env. Tickers
+    #    yfinance failed on (rebranded epics, slash-in-name lines like
+    #    AGM/A, smaller European listings yfinance doesn't index) often
+    #    succeed here. Same write-back-to-store contract.
+    stooq_misses = [t for t in needs_fetch if t not in out]
+    if stooq_misses:
+        try:
+            from trading_bot.tools.stooq import fetch_history_bulk
+            stooq_results = fetch_history_bulk(
+                stooq_misses, lookback_days=lookback_days, end_date=end,
+            )
+        except Exception as e:
+            log.warning("Stooq fallback failed (non-fatal): %s", e)
+            stooq_results = {}
+        if stooq_results:
+            log.info(
+                "stooq fallback: recovered %d/%d tickers yfinance missed",
+                len(stooq_results), len(stooq_misses),
+            )
+            from trading_bot.tools.ohlcv_store import write_bars as _wb
+            new_rows: list[StoredBar] = [] if StoredBar is not None else None
+            for tkr, bars in stooq_results.items():
+                converted = [
+                    Bar(ticker=tkr, bar_date=b["bar_date"], open=b["open"],
+                        high=b["high"], low=b["low"], close=b["close"],
+                        volume=b["volume"])
+                    for b in bars
+                ]
+                out[tkr] = converted
+                if StoredBar is not None:
+                    new_rows.extend(
+                        StoredBar(ticker=tkr, bar_date=b.bar_date, open=b.open,
+                                  high=b.high, low=b.low, close=b.close,
+                                  volume=b.volume)
+                        for b in converted
+                    )
+            if StoredBar is not None and new_rows:
+                try:
+                    _wb(new_rows)
+                except Exception as e:
+                    log.warning("OHLCV store write-back (stooq) failed: %s", e)
+
     _HISTORY_CACHE[cache_key] = out
     return {k: list(v) for k, v in out.items()}
 

@@ -387,6 +387,7 @@ def main(argv: list[str] | None = None) -> int:
             "ohlcv-prune",
             "ohlcv-daily-update",
             "ohlcv-backfill",
+            "ohlcv-stooq-fill-gaps",
         ],
     )
     parser.add_argument("--region", default="us", choices=["us", "uk-eu"])
@@ -489,6 +490,59 @@ def main(argv: list[str] | None = None) -> int:
             n_after = row_count()
             log.info("ohlcv-daily-update: cache rows %d → %d (Δ %d)",
                      n_before, n_after, n_after - n_before)
+        return 0
+
+    if args.mode == "ohlcv-stooq-fill-gaps":
+        # Second-pass backfill: walk every active strategy's universe,
+        # find tickers MISSING from the local cache (yfinance failures
+        # — wrong format, rebranded, no coverage), and fetch them from
+        # Stooq as the fallback source. Idempotent: re-running is safe.
+        from datetime import timedelta
+        from trading_bot.strategy.registry import load_active_strategies
+        from trading_bot.tools.universe import get_universe
+        from trading_bot.tools.ohlcv_store import (
+            read_bars_bulk, write_bars, row_count, StoredBar,
+        )
+        from trading_bot.tools.stooq import fetch_history_bulk
+        active = load_active_strategies(region=None)
+        all_tickers: set[str] = set()
+        for s in active:
+            try:
+                all_tickers.update(get_universe(s.config.universe))
+            except Exception as e:
+                log.warning("stooq-fill-gaps: skipping %s (%s)", s.config.universe, e)
+
+        # Identify tickers that have NO bars in the local store for the
+        # trailing 70-day window (i.e. yfinance failed entirely for them).
+        end = on_date
+        start = end - timedelta(days=70 * 2 + 5)
+        hits = read_bars_bulk(sorted(all_tickers), start, end)
+        missing = sorted(all_tickers - set(hits.keys()))
+        log.info(
+            "stooq-fill-gaps: %d/%d tickers missing from cache after yfinance pass",
+            len(missing), len(all_tickers),
+        )
+        if not missing:
+            return 0
+
+        n_before = row_count()
+        stooq_results = fetch_history_bulk(missing, lookback_days=70, end_date=end)
+        rows: list[StoredBar] = []
+        for tkr, bars in stooq_results.items():
+            for b in bars:
+                rows.append(StoredBar(
+                    ticker=tkr, bar_date=b["bar_date"],
+                    open=b["open"], high=b["high"], low=b["low"],
+                    close=b["close"], volume=b["volume"],
+                ))
+        if rows:
+            write_bars(rows)
+        n_after = row_count()
+        log.info(
+            "stooq-fill-gaps: %d/%d missing tickers recovered from Stooq; "
+            "cache rows %d → %d (Δ %d)",
+            len(stooq_results), len(missing), n_before, n_after, n_after - n_before,
+        )
         return 0
 
     if args.mode == "ohlcv-backfill":
