@@ -73,7 +73,7 @@ def compute_metrics(
             tune_date = date.fromisoformat(tune_iso)
             if tune_date > start:
                 start = tune_date
-        except ValueError:
+        except (TypeError, ValueError):
             pass
 
     m = StrategyMetrics(

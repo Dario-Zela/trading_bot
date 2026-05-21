@@ -232,16 +232,9 @@ def run_weekly_backtest_pass(today: date, window_days: int = 14) -> dict:
     Triggered weekly from the evolution workflow; safe to dispatch
     on demand.
     """
-    from trading_bot.strategy.registry import _load_all_configs  # noqa: WPS433
-    import yaml as _yaml
-
     iso_year, iso_week, _ = today.isocalendar()
     out_dir = STATE_ROOT / "backtest" / f"{iso_year}-W{iso_week:02d}"
     out_dir.mkdir(parents=True, exist_ok=True)
-
-    cfg_dir = STATE_ROOT.parent / "strategies"
-    if not cfg_dir.exists():
-        cfg_dir = (STATE_ROOT / "..").resolve() / "strategies"
 
     # Discover every active strategy / region pair to backtest. We
     # call into the registry's loader rather than re-walking the yaml

@@ -69,6 +69,13 @@ PROMOTION_MIN_IC_LOWER = 0.05
 DEMOTION_MAX_DRAWDOWN_PCT = -10.0
 DEMOTION_MIN_HIT_RATE = 0.40
 
+# T212 demo account caps total holdings at £50k. We keep auto-promotion
+# under £40k of committed `capital_gbp` so there's £10k of headroom for
+# realised losses (the account balance drifts down with each loss, and
+# new positions need cash to open). Manual promotions via config edits
+# can still push higher — this is the auto-promotion guard only.
+T212_PROMOTE_BUDGET_HEADROOM_GBP = 40_000.0
+
 # Phase 9A — A/B confidence intervals. Promotion requires the *lower
 # 95% bound* on IC (Fisher z-transform) to clear PROMOTION_MIN_IC_LOWER,
 # not just the point estimate. Stops promotions on 14 trades where
@@ -133,7 +140,19 @@ def run_weekly_evolution(today: date) -> dict:
     for raw in actions_raw:
         if not isinstance(raw, dict):
             continue
-        log_entry = _apply_action(raw, metrics=metrics, configs=configs)
+        try:
+            log_entry = _apply_action(raw, metrics=metrics, configs=configs)
+        except Exception as e:
+            sid = raw.get("strategy_id") or "?"
+            action = raw.get("action") or "?"
+            log.warning("evolution: action %s for %s threw — recording skip: %s",
+                        action, sid, e)
+            applied.append(ActionLog(
+                sid, raw.get("region"), action, False,
+                f"Action raised {type(e).__name__}: {str(e)[:200]}",
+                {},
+            ))
+            continue
         if log_entry is None:
             continue
         if log_entry.action == "request-tier-2":
@@ -217,6 +236,7 @@ def _build_snapshot(
                 "region": region,
                 "tier": entry.get("tier", cfg.get("tier", "shadow")),
                 "alpaca_slot": entry.get("alpaca_slot", cfg.get("alpaca_slot")),
+                "t212_slot": entry.get("t212_slot", cfg.get("t212_slot")),
                 "universe": entry.get("universe", cfg.get("universe")),
                 "active": cfg.get("active"),
                 # Strategy-wide config fields (shared across regions)
@@ -393,8 +413,8 @@ You can auto-execute these actions on **Tier 0 (shadow)** and **Tier 1
 (alpaca-paper)** strategies:
 - `keep` — no change
 - `tune` — edit specific fields (strategy-wide, no region — affects every region the strategy runs in)
-- `promote` — Tier 0 → Tier 1 for **one region** (we'll assign a free Alpaca slot)
-- `demote` — Tier 1 → Tier 0 for **one region** (we'll clear the slot)
+- `promote` — Tier 0 (shadow) → Tier 1 for **one region**. Target tier is region-dependent: US rows promote to `alpaca-paper` (we assign a free numbered Alpaca slot); UK-EU rows promote to `trading212-paper` (single shared slot=1, gated by a £40k capital-budget ceiling across all T212-paper strategies — £10k headroom under the £50k account cap for realised losses).
+- `demote` — Tier 1 → Tier 0 (shadow) for **one region**. Works against BOTH paper-broker tiers: `alpaca-paper` (we cancel open orders + free the Alpaca slot) and `trading212-paper` (we free the T212 slot; any open positions exit naturally on the next exit cron).
 - `spawn-variant` — clone an existing strategy with prompt + config diffs
 - `mark-tier2-candidate` — strategy-wide self-prediction: "this one is
   worth elevating, and I'm putting my reputation on it." The flag
@@ -421,7 +441,7 @@ Other constraints:
 - Currently active strategies: {n_active} of max {MAX_TOTAL_STRATEGIES}
 - Don't spawn a variant if it'd push active total over the cap
 - Promote / demote actions require a `region` field naming which region to act on
-- Promotion requires `meets_promotion_criteria=true` AND a free slot
+- Promotion requires `meets_promotion_criteria=true` AND a free slot (US/Alpaca) or budget headroom (UK-EU/T212)
 - Demotion requires `meets_demotion_criteria=true`
 - Spawned variants start on Tier 0 shadow, must have a different `id`
 - Trading212 demo (Tier 1.5, UK-EU only) caps total account balance at £{int(T212_PAPER_BUDGET_GBP):,}.
@@ -511,12 +531,14 @@ demote MUST include `region`; tune / spawn-variant do not:
 Action thresholds (use the data, don't be sentimental):
 
 - **Keep** is the default. Most rows should be `keep` most weeks.
-- **Demote** when a strategy on `alpaca-paper` has *any* of: IC
-  noise-floor verdict = 'noise' AND n ≥ 30, OR trailing 14d P&L is
-  negative for the second consecutive week, OR trailing hit-rate
-  is under 35% with n ≥ 20. Don't sit on losers waiting for them
-  to turn — the slot is more valuable than the sunk-cost prompt
-  iteration.
+- **Demote** when a strategy on `alpaca-paper` OR `trading212-paper`
+  has *any* of: IC noise-floor verdict = 'noise' AND n ≥ 30, OR
+  trailing 14d P&L is negative for the second consecutive week, OR
+  trailing hit-rate is under 35% with n ≥ 20. Don't sit on losers
+  waiting for them to turn — the slot is more valuable than the
+  sunk-cost prompt iteration. Same threshold applies whether the
+  strategy is on Alpaca (US) or T212 (UK-EU); the action handler
+  picks the right slot to free.
 - **Tune** when the backtest column shows the strategy WOULD have
   done better under current code than it actually did live — the
   cost gate / earnings filter / sizing is bleeding edge. Target
@@ -562,9 +584,15 @@ def _apply_action(
 
     cfg = configs[sid]
 
-    # Tune is strategy-wide
+    # Strategy-wide actions — no region needed. Dispatch before the
+    # region gate below so the LLM can omit `region` on these without
+    # tripping the "requires a region" rejection.
     if action == "tune":
         return _do_tune(sid, raw, cfg, reason)
+    if action == "mark-tier2-candidate":
+        return _do_mark_tier2(sid, cfg, reason, raw)
+    if action == "unmark-tier2-candidate":
+        return _do_unmark_tier2(sid, cfg, reason)
 
     # All other actions need a region
     if not region:
@@ -589,17 +617,6 @@ def _apply_action(
     if action == "request-tier-2":
         # Recorded only; the issue creator picks these up
         return ActionLog(sid, region, action, False, reason, {"requires_human_approval": True})
-
-    # Tier 2 candidate flag — strategy-wide self-prediction the agent
-    # writes to track which strategies it thinks are worth elevating.
-    # Surfaces as a gold border on the dashboard. The next weekly run
-    # grades the candidate's realised performance to validate the
-    # analysis. `mark-tier2-candidate` sets the flag; the action handler
-    # itself ignores `region` even when present.
-    if action == "mark-tier2-candidate":
-        return _do_mark_tier2(sid, cfg, reason, raw)
-    if action == "unmark-tier2-candidate":
-        return _do_unmark_tier2(sid, cfg, reason)
 
     return ActionLog(sid, region, action, False, f"Unknown action; ignored. ({reason})", {})
 
@@ -684,6 +701,31 @@ def _do_promote(
     if not m or not _meets_promotion(m, entry):
         return ActionLog(sid, region, "promote", False, "Does not meet promotion criteria", {"metrics": _metrics_to_dict(m) if m else None})
 
+    # UK-EU promotions go to T212-paper (single shared slot=1, no
+    # slot allocation — the gate is the total capital_gbp budget
+    # across all T212-paper strategies).
+    if region == "uk-eu":
+        candidate_capital = float(cfg.get("capital_gbp") or 0.0)
+        committed = _t212_committed_capital(configs)
+        if committed + candidate_capital > T212_PROMOTE_BUDGET_HEADROOM_GBP:
+            return ActionLog(
+                sid, region, "promote", False,
+                (f"T212 auto-promote budget exceeded: committed £{committed:,.0f} + "
+                 f"this strategy's £{candidate_capital:,.0f} would clear the "
+                 f"£{int(T212_PROMOTE_BUDGET_HEADROOM_GBP):,} ceiling"),
+                {"committed_gbp": committed, "candidate_gbp": candidate_capital},
+            )
+        entry["tier"] = "trading212-paper"
+        entry["t212_slot"] = 1
+        _write_config(sid, cfg)
+        return ActionLog(
+            sid, region, "promote", True, reason,
+            {"target_tier": "trading212-paper", "t212_slot": 1,
+             "committed_gbp_after": committed + candidate_capital},
+        )
+
+    # US (and any other region) promotions go to alpaca-paper with a
+    # numbered slot pool.
     free_slot = _next_free_slot(configs)
     if free_slot is None:
         return ActionLog(sid, region, "promote", False, f"No free Alpaca slot (max={MAX_ALPACA_SLOTS})", {})
@@ -691,7 +733,26 @@ def _do_promote(
     entry["tier"] = "alpaca-paper"
     entry["alpaca_slot"] = free_slot
     _write_config(sid, cfg)
-    return ActionLog(sid, region, "promote", True, reason, {"slot": free_slot})
+    return ActionLog(sid, region, "promote", True, reason, {"target_tier": "alpaca-paper", "alpaca_slot": free_slot})
+
+
+def _t212_committed_capital(configs: dict[str, dict]) -> float:
+    """Sum of `capital_gbp` across every strategy already on
+    `trading212-paper` (across all its runs_in entries). The T212 demo
+    account is one shared £50k pool, so this is the budget gate."""
+    total = 0.0
+    for cfg in configs.values():
+        on_t212 = False
+        for entry in _regions_for_config(cfg):
+            if entry.get("tier") == "trading212-paper":
+                on_t212 = True
+                break
+        if on_t212:
+            try:
+                total += float(cfg.get("capital_gbp") or 0.0)
+            except (TypeError, ValueError):
+                continue
+    return total
 
 
 def _do_demote(
@@ -702,18 +763,35 @@ def _do_demote(
     m: StrategyMetrics | None,
     reason: str,
 ) -> ActionLog:
-    if entry.get("tier") != "alpaca-paper":
-        return ActionLog(sid, region, "demote", False, f"Not on alpaca-paper tier in {region} — nothing to demote from", {})
+    tier = entry.get("tier")
+    if tier not in ("alpaca-paper", "trading212-paper"):
+        return ActionLog(
+            sid, region, "demote", False,
+            f"Not on a demotable broker tier in {region} (tier={tier}) — nothing to demote from",
+            {},
+        )
     if not m or not _meets_demotion(m, entry):
         return ActionLog(sid, region, "demote", False, "Does not meet demotion criteria", {"metrics": _metrics_to_dict(m) if m else None})
 
-    slot = entry.get("alpaca_slot")
-    cleared = _try_clear_slot(slot) if slot else False
+    details: dict = {"from_tier": tier}
+    if tier == "alpaca-paper":
+        slot = entry.get("alpaca_slot")
+        cleared = _try_clear_slot(slot) if slot else False
+        entry["alpaca_slot"] = None
+        details.update({"slot_cleared": cleared, "previous_slot": slot, "slot_kind": "alpaca"})
+    else:  # trading212-paper
+        slot = entry.get("t212_slot")
+        # No automatic T212 broker-clear: any open positions on this slot
+        # ride out their scheduled exit naturally on the next exit cron.
+        # We just free the config so the next entry run no longer routes
+        # this strategy to T212 — same semantic as the Alpaca path, just
+        # without the active cancellation call.
+        entry["t212_slot"] = None
+        details.update({"slot_cleared": False, "previous_slot": slot, "slot_kind": "t212"})
 
     entry["tier"] = "shadow"
-    entry["alpaca_slot"] = None
     _write_config(sid, cfg)
-    return ActionLog(sid, region, "demote", True, reason, {"slot_cleared": cleared, "previous_slot": slot})
+    return ActionLog(sid, region, "demote", True, reason, details)
 
 
 _SAFE_VARIANT_ID_RE = re.compile(r"^[a-z0-9][a-z0-9_-]{1,40}$")
@@ -897,7 +975,10 @@ def _ic_lower_bound(ic: float, n: int) -> float | None:
 
 
 def _meets_demotion(m: StrategyMetrics | None, entry: dict) -> bool:
-    if not m or entry.get("tier") != "alpaca-paper":
+    # Both broker paper tiers are demotable back to shadow when a
+    # strategy stops earning its slot. `t212-live` stays out — that
+    # path requires human approval.
+    if not m or entry.get("tier") not in ("alpaca-paper", "trading212-paper"):
         return False
     if m.max_drawdown_pct <= DEMOTION_MAX_DRAWDOWN_PCT:
         return True
