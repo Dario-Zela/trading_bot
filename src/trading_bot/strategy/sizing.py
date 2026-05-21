@@ -22,6 +22,7 @@ from dataclasses import dataclass
 
 from trading_bot.tools.fees import (
     estimate_round_trip_cost_pct,
+    infer_instrument_type,
     yf_ticker_classify,
 )
 
@@ -120,7 +121,7 @@ def adjust_picks(
         exch, ccy = yf_ticker_classify(ticker)
         cost_est = estimate_round_trip_cost_pct(
             tier=cfg.tier, currency=ccy, exchange=exch,
-            instrument_type="share",
+            instrument_type=infer_instrument_type(ticker),
             notional_gbp=max(notional_gbp, 1.0),
             quantity=notional_gbp / max(cand.close, 1.0),
         )

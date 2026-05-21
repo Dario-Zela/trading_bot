@@ -62,6 +62,43 @@ _EU_ETFS_BOND = [
     "IHYG.L",   # EUR high yield
 ]
 
+# LSE-listed UCITS ETFs — all stamp-duty exempt (ETFs aren't subject to
+# SDRT in the UK), so they carry only the FX fee for non-GBP-denominated
+# lines and zero broker-side cost for GBP ones. Hand-curated to cover the
+# major asset classes UK retail can access without leaving T212. Adding
+# these to the UK-EU candidate pool gives the LLM strategies cheap
+# alternatives to UK individual shares (which pay 0.5% stamp duty on
+# every purchase) — especially valuable for marginal trades where the
+# expected move is under the SDRT hurdle.
+_UK_UCITS_ETFS = [
+    # Core UK / Europe (GBP)
+    "ISF.L",   # iShares Core FTSE 100
+    "VUKE.L",  # Vanguard FTSE 100
+    "CUKX.L",  # iShares FTSE 100 Acc
+    "VMID.L",  # Vanguard FTSE 250
+    "VEUR.L",  # Vanguard FTSE Developed Europe ex-UK (EUR exposure)
+    "IEUX.L",  # iShares MSCI Europe ex-UK
+    # Core US / Global (USD-denominated UCITS — 0.30% FX, no stamp)
+    "VUSA.L",  # Vanguard S&P 500
+    "IUSA.L",  # iShares S&P 500
+    "CSPX.L",  # iShares Core S&P 500 Acc
+    "VWRL.L",  # Vanguard FTSE All-World
+    "VWRP.L",  # Vanguard FTSE All-World Acc
+    "IWDA.L",  # iShares Core MSCI World Acc
+    "SWDA.L",  # iShares Core MSCI World (same fund, GBP line)
+    "EQQQ.L",  # Invesco NASDAQ 100
+    # Asia / Emerging Markets — the bot's stated Asian-exposure pipeline
+    "VJPN.L",  # Vanguard FTSE Japan
+    "CPJ1.L",  # iShares Core MSCI Japan IMI
+    "VAPX.L",  # Vanguard FTSE Developed Asia Pacific ex-Japan
+    "VFEM.L",  # Vanguard FTSE Emerging Markets
+    "IEEM.L",  # iShares Core MSCI Emerging Markets IMI
+    # Commodities (physical-backed ETCs — also exempt from SDRT)
+    "SGLN.L",  # iShares Physical Gold (GBP)
+    "SSLV.L",  # iShares Physical Silver (GBP)
+]
+
+
 # AEX 25 — hand-curated list of Amsterdam-listed Euronext names. Small and
 # stable (the AEX index has 25 components), so easier to hardcode than scrape.
 _AEX25 = [
@@ -101,9 +138,10 @@ def get_universe(universe_id: str) -> list[str]:
     - US equities: 'sp500', 'sp400', 'sp600', 'sp1500' (500+400+600 combined)
     - US ETFs: 'us_etfs_sector', 'us_etfs_bond', 'us_etfs_commodity'
     - UK equities: 'ftse100', 'ftse250', 'ftse350' (100+250 combined)
+    - UK ETFs: 'uk_ucits_etfs' (~20 LSE-listed UCITS, SDRT-exempt)
     - EU equities: 'dax40', 'cac40', 'aex25', 'eu_blue_chips' (DAX+CAC+AEX)
     - UK+EU combined: 'uk_eu_blue_chips' (FTSE100+DAX+CAC+AEX),
-                       'uk_eu_extended' (FTSE350+DAX+CAC+AEX, ~450 names)
+                       'uk_eu_extended' (FTSE350+DAX+CAC+AEX+UCITS ETFs, ~470 names)
     """
     if universe_id == "sp500":
         return _fetch_sp500()
@@ -145,8 +183,11 @@ def get_universe(universe_id: str) -> list[str]:
             | set(_fetch_dax40())
             | set(_fetch_cac40())
             | set(_AEX25)
+            | set(_UK_UCITS_ETFS)
         )
         return sorted(combined)
+    if universe_id == "uk_ucits_etfs":
+        return list(_UK_UCITS_ETFS)
     if universe_id == "us_etfs_sector":
         return list(_US_ETFS_SECTOR)
     if universe_id == "us_etfs_bond":

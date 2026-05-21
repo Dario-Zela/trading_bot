@@ -570,7 +570,8 @@ class LLMStrategy(Strategy):
         # estimate is realistic for THIS strategy's sizing — not a generic
         # number the model has to convert from %.
         from trading_bot.tools.fees import (
-            estimate_round_trip_cost_pct, yf_ticker_classify,
+            estimate_round_trip_cost_pct, infer_instrument_type,
+            yf_ticker_classify,
         )
         typical_position_gbp = cfg.capital_gbp * (cfg.max_position_pct / 100.0)
 
@@ -647,7 +648,7 @@ class LLMStrategy(Strategy):
             exch, ccy = yf_ticker_classify(c.ticker)
             cost = estimate_round_trip_cost_pct(
                 tier="trading212-paper", currency=ccy, exchange=exch,
-                instrument_type="share",
+                instrument_type=infer_instrument_type(c.ticker),
                 notional_gbp=typical_position_gbp,
                 quantity=typical_position_gbp / max(c.close, 1.0),
             )

@@ -181,15 +181,84 @@ _YF_SUFFIX_TO_VENUE = {
 }
 
 
+# LSE-listed UCITS ETFs that trade in USD despite the .L suffix. The
+# `.L` → GBP default in _YF_SUFFIX_TO_VENUE is correct for shares and
+# the GBP-denominated ETF lines, but a number of USD-denominated UCITS
+# ETF lines on LSE share the .L suffix (Vanguard's USD line of FTSE
+# All-World is VWRL.L; the GBP-denominated line is VWRP.L, etc.). For
+# the fee model to compute round-trip cost correctly at decision time
+# we need to mark these explicitly — otherwise the FX leg is omitted
+# and the cost line under-states by 0.30%.
+_LSE_USD_DENOMINATED = {
+    "VWRL.L",   # Vanguard FTSE All-World (USD line; VWRP.L is GBP)
+    "VUSA.L",   # Vanguard S&P 500 (USD)
+    "IUSA.L",   # iShares S&P 500 (USD)
+    "CSPX.L",   # iShares Core S&P 500 Acc (USD)
+    "IWDA.L",   # iShares Core MSCI World Acc (USD; SWDA.L is GBP)
+    "EQQQ.L",   # Invesco NASDAQ 100 (USD)
+    "VJPN.L",   # Vanguard FTSE Japan (USD)
+    "CPJ1.L",   # iShares Core MSCI Japan IMI (USD)
+    "VAPX.L",   # Vanguard FTSE Developed Asia Pac ex-Japan (USD)
+    "VFEM.L",   # Vanguard FTSE Emerging Markets (USD)
+    "IEEM.L",   # iShares Core MSCI Emerging Markets IMI (USD)
+    "SGLN.L",   # iShares Physical Gold (USD-denominated, GBP-traded version is SGLD.L)
+    "SSLV.L",   # iShares Physical Silver (USD)
+}
+
+
 def yf_ticker_classify(yf_ticker: str) -> tuple[str, str]:
     """Map a yfinance ticker to (exchange_code, currency_code). Bare
-    tickers (no dot) default to NYSE/USD."""
-    if not yf_ticker or "." not in yf_ticker:
+    tickers (no dot) default to NYSE/USD. Per-ticker overrides handle
+    LSE-listed UCITS ETFs whose .L line trades in USD."""
+    if not yf_ticker:
+        return ("NYSE", "USD")
+    # Per-ticker USD override (LSE UCITS ETFs whose .L line is USD)
+    if yf_ticker in _LSE_USD_DENOMINATED:
+        return ("LSE", "USD")
+    if "." not in yf_ticker:
         return ("NYSE", "USD")
     for suffix, venue in _YF_SUFFIX_TO_VENUE.items():
         if yf_ticker.endswith(suffix):
             return venue
     return ("", "USD")
+
+
+# Hardcoded set of yfinance tickers we know are ETFs (or physically-backed
+# ETCs) and therefore stamp-duty-exempt. Used by infer_instrument_type()
+# below so the candidate-scoring path correctly drops the SDRT hurdle on
+# UCITS ETFs added to the universe. Imported lazily to avoid a circular
+# dependency with trading_bot.tools.universe.
+_ETF_TICKER_CACHE: set[str] | None = None
+
+
+def _etf_ticker_set() -> set[str]:
+    global _ETF_TICKER_CACHE
+    if _ETF_TICKER_CACHE is not None:
+        return _ETF_TICKER_CACHE
+    out: set[str] = set()
+    try:
+        from trading_bot.tools.universe import (
+            _UK_UCITS_ETFS, _US_ETFS_SECTOR, _US_ETFS_BOND, _US_ETFS_COMMODITY,
+            _EU_ETFS_SECTOR, _EU_ETFS_BOND,
+        )
+        for lst in (_UK_UCITS_ETFS, _US_ETFS_SECTOR, _US_ETFS_BOND,
+                    _US_ETFS_COMMODITY, _EU_ETFS_SECTOR, _EU_ETFS_BOND):
+            out.update(lst)
+    except Exception:
+        pass
+    _ETF_TICKER_CACHE = out
+    return out
+
+
+def infer_instrument_type(yf_ticker: str) -> str:
+    """Return 'etf' for tickers in any of the hardcoded ETF lists,
+    'share' otherwise. Used by the candidate-scoring path (which only
+    has the yfinance ticker, not a T212 instrument record) so the SDRT
+    hurdle is dropped on UCITS-ETF candidates before the LLM sees the
+    per-pick cost line."""
+    if not yf_ticker:
+        return "share"
+    return "etf" if yf_ticker in _etf_ticker_set() else "share"
 
 
 def t212_instrument_type(inst_type: str) -> str:
