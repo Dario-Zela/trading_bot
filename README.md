@@ -63,6 +63,8 @@ GitHub Actions' built-in cron is unreliable (we observed silent dropped triggers
 
 (Plus maintenance crons: `health-check`, `archive-trim`, and the `ohlcv-*` cache jobs — see `scripts/setup_cron_jobs.py` for the authoritative schedule.)
 
+> **Trailing stops are GBP-only on T212.** T212's API rejects stop orders on non-base-currency instruments (`POST /equity/orders/stop` → 400 "Invalid payload"), so the UK-EU midday trail only protects GBP/GBX (UK) positions. EU/US instruments in the `t212_isa_uk_eu` universe are bought fine (market orders auto-FX) but get **no intraday trailing stop** — they're closed by the scheduled EOD exit instead. Alpaca (US tier) has no such restriction.
+
 Provision the cron-job.org schedules from `scripts/setup_cron_jobs.py` (one-shot). All workflows also accept `workflow_dispatch` for manual runs from the Actions tab.
 
 ## Dashboard + email
