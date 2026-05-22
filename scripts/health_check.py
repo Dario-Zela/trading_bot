@@ -27,7 +27,7 @@ from typing import Any
 
 import requests
 
-from trading_bot.state.paths import STATE_ROOT, ledger_path
+from trading_bot.state.paths import STATE_ROOT, ledger_path, predictions_path
 
 
 log = logging.getLogger("health_check")
@@ -165,12 +165,15 @@ def _check_ledger_staleness(threshold_days: int) -> list[HealthFinding]:
 
 
 def _check_predictions_corruption() -> list[HealthFinding]:
-    """Walk every state/predictions/*.jsonl line; flag if any won't parse."""
+    """Flag unparseable rows in the prediction stores: the primary flat file
+    (state/predictions.jsonl — drives IC / metrics / the demotion gate, and
+    is rewritten in place by reflection so most at risk of a torn write) plus
+    the per-source files under state/predictions/ (news, macro)."""
     out: list[HealthFinding] = []
-    pred_dir = STATE_ROOT / "predictions"
-    if not pred_dir.exists():
-        return out
-    for p in pred_dir.glob("*.jsonl"):
+    files = [predictions_path()] + sorted((STATE_ROOT / "predictions").glob("*.jsonl"))
+    for p in files:
+        if not p.exists():
+            continue
         bad_lines = 0
         try:
             with p.open() as f:
