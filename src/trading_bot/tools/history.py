@@ -4,6 +4,7 @@ import json
 import logging
 import os
 import tempfile
+import threading
 import time
 from dataclasses import dataclass
 from datetime import date, datetime
@@ -266,15 +267,21 @@ from trading_bot.state.paths import STATE_ROOT  # noqa: E402
 
 _LSE_CCY_PATH = STATE_ROOT / "lse_quote_ccy.json"
 _LSE_CCY: dict[str, str] | None = None
+# get_history runs under parallel select_picks threads, so mutating the shared
+# cache and json.dump-ing it must be serialised — otherwise a concurrent insert
+# during the dump raises "dict changed size during iteration".
+_LSE_CCY_LOCK = threading.Lock()
 
 
 def _load_lse_ccy() -> dict[str, str]:
     global _LSE_CCY
     if _LSE_CCY is None:
-        try:
-            _LSE_CCY = json.loads(_LSE_CCY_PATH.read_text())
-        except (OSError, ValueError):
-            _LSE_CCY = {}
+        with _LSE_CCY_LOCK:
+            if _LSE_CCY is None:  # double-checked
+                try:
+                    _LSE_CCY = json.loads(_LSE_CCY_PATH.read_text())
+                except (OSError, ValueError):
+                    _LSE_CCY = {}
     return _LSE_CCY
 
 
@@ -320,8 +327,12 @@ def _lse_quote_is_pence(ticker: str) -> bool:
         # Safe default: most of the LSE universe is pence, so a total lookup
         # failure keeps the historical /100 rather than risking a 100x blow-up.
         ccy = resolved or "GBp"
-        cache[ticker] = ccy
-        _save_lse_ccy(cache)
+        # Mutate + persist under the lock so a concurrent dump can't trip on a
+        # mid-flight insert. The network lookup above stays OUTSIDE the lock so
+        # parallel lookups don't serialise.
+        with _LSE_CCY_LOCK:
+            cache[ticker] = ccy
+            _save_lse_ccy(cache)
     return ccy == "GBp"
 
 

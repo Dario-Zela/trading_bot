@@ -363,7 +363,10 @@ def run_summary(region: str, on_date: date) -> None:
                     continue
                 if region is not None and r.get("region") != region:
                     continue
-                exits[r["strategy_id"]].append(r)
+                sid = r.get("strategy_id")
+                if not sid:
+                    continue  # well-formed JSON but no strategy_id — skip, don't KeyError
+                exits[sid].append(r)
 
     subject, body_text, body_html = render_daily_summary(
         run_date=on_date,

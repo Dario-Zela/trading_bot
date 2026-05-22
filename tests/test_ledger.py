@@ -5,6 +5,7 @@ from datetime import date
 
 from trading_bot.state.ledger import (
     TradeRecord,
+    _iter_records,
     append_trade,
     ledger_path,
     mark_trade_exited,
@@ -39,12 +40,30 @@ def test_corrupt_line_is_skipped_not_fatal(state_root):
     assert {t["trade_id"] for t in open_trades} == {"a", "b"}
 
 
-def test_mark_trade_exited_sets_fields(state_root):
+def test_mark_trade_exited_persists_fields(state_root):
     append_trade(_rec("a"))
     mark_trade_exited(
         trade_id="a", exit_date=date(2026, 5, 22), exit_price=110.0,
-        pnl_gbp=15.0, pnl_pct=10.0, exit_reason="scheduled",
+        pnl_gbp=15.0, pnl_pct=10.0, exit_reason="scheduled", fees_gbp=1.5,
     )
     assert read_open_trades() == []  # no longer open
-    # entry_fx_rate field exists and defaults to None
+    # The exit fields are actually written back (not just "no longer open").
+    row = next(r for r in _iter_records() if r["trade_id"] == "a")
+    assert row["exit_date"] == "2026-05-22"
+    assert row["exit_price"] == 110.0
+    assert row["pnl_gbp"] == 15.0
+    assert row["exit_reason"] == "scheduled"
+    assert row["fees_gbp"] == 1.5
+
+
+def test_read_open_trades_tier_filter(state_root):
+    # The tier filter exists to stop a new-tier executor touching an old-tier
+    # trade (the 2026-05-21 cross-tier misattribution fix).
+    append_trade(_rec("a", tier="alpaca-paper"))
+    append_trade(_rec("b", tier="shadow"))
+    assert {t["trade_id"] for t in read_open_trades(tier="alpaca-paper")} == {"a"}
+    assert {t["trade_id"] for t in read_open_trades(tier="shadow")} == {"b"}
+
+
+def test_entry_fx_rate_defaults_none():
     assert _rec("z").entry_fx_rate is None

@@ -481,7 +481,7 @@ class Trading212DemoExecutor(Executor):
                             trade["ticker"],
                         )
 
-            entry_price = float(trade["entry_price"])
+            entry_price = float(trade.get("entry_price") or 0.0)  # may be None if reconcile failed
             quantity = float(trade["quantity"])
             fees_gbp = 0.0
             fees_breakdown: dict = {}

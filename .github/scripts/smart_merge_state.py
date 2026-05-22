@@ -31,7 +31,15 @@ TARGETS = [
     # downstream IC calculations until this fix landed.
     ("state/predictions.jsonl", ("strategy_id", "region", "ticker", "prediction_date")),
     ("state/macro/predictions.jsonl", "prediction_id"),
+    # Other append-only JSONL the pipeline writes. Line-unioned here so the
+    # fallback never clobbers a concurrent run's rows. (A path containing '*'
+    # is glob-expanded against the local save below.)
+    ("state/trail_exits.jsonl", ("ticker", "region", "strategy_id", "exit_date")),
+    ("state/pick_adjustments/*.jsonl", "ticker"),
 ]
+
+# Keep the pipeline workflows' restore-loop grep exclusion in sync with these
+# paths — anything merged here must NOT also be local-wins-restored there.
 
 
 def _composite_key(rec: dict, key_spec):
@@ -102,14 +110,23 @@ def merge_file(repo_root: Path, save_root: Path, rel_path: str, key) -> int:
     return max(new_lines, 0)
 
 
+def _expand(save_root: Path, rel_path: str) -> list[str]:
+    """Glob-expand a target against the local save (the files THIS run has).
+    Remote-only files need no merge — the reset already left them at remote."""
+    if "*" not in rel_path:
+        return [rel_path]
+    return sorted(p.relative_to(save_root).as_posix() for p in save_root.glob(rel_path))
+
+
 def main(repo_root_str: str, save_root_str: str) -> int:
     repo_root = Path(repo_root_str)
     save_root = Path(save_root_str)
     total_added = 0
     for rel_path, key in TARGETS:
-        added = merge_file(repo_root, save_root, rel_path, key)
-        print(f"  {rel_path}: +{added} from local")
-        total_added += added
+        for actual in _expand(save_root, rel_path):
+            added = merge_file(repo_root, save_root, actual, key)
+            print(f"  {actual}: +{added} from local")
+            total_added += added
     print(f"Total new rows merged: {total_added}")
     return 0
 

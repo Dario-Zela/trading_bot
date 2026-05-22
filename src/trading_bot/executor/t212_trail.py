@@ -180,15 +180,11 @@ def _trail_one_slot(creds: T212Creds, activation_pct: float, trail_pct: float) -
         target_stop = round(cur * (1.0 - eff_trail / 100.0), 2)
         existing_stops = stops_by_ticker.get(ticker, [])
         old_stop_val: float | None = None
-        old_stop_id: str | None = None
         if existing_stops:
             try:
                 old_stop_val = max(float(s.get("stopPrice") or 0) for s in existing_stops)
-                old_stop_id = next(str(s.get("id")) for s in existing_stops
-                                   if float(s.get("stopPrice") or 0) == old_stop_val)
-            except (TypeError, ValueError, StopIteration):
+            except (TypeError, ValueError):
                 old_stop_val = None
-                old_stop_id = None
 
         if old_stop_val is not None and old_stop_val >= target_stop:
             actions.append(T212TrailAction(

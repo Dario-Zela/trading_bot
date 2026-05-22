@@ -36,3 +36,5 @@ target-version = "py311"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+# src layout + the workflow helper, so `pytest` works without an editable install.
+pythonpath = ["src", ".github/scripts"]

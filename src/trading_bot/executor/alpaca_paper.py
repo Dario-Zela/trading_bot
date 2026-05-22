@@ -87,7 +87,12 @@ class AlpacaPaperExecutor(Executor):
             if usd_per_gbp is None or not (1.0 < usd_per_gbp < 1.8):  # sanity band
                 log.warning("Alpaca sizing: USDGBP fetch failed or out of band (%s) — using 1:1 fallback", usd_per_gbp)
                 allocation_usd = allocation_gbp
-                entry_fx_rate = 1.0  # matches the 1:1 sizing fallback
+                # No real FX rate available. Persist None (not 1.0): a 1.0 here
+                # would be truthy and shadow the 0.79 fallback in the exit
+                # chain `live or entry_fx_rate or 0.79`, treating USD P&L as
+                # GBP 1:1 (~27% overstated) on a double-FX-failure. None lets
+                # the exit fall through to the 0.79 approximation.
+                entry_fx_rate = None
             else:
                 allocation_usd = allocation_gbp * usd_per_gbp
                 # Persist the rate used so exit P&L can reuse it if the

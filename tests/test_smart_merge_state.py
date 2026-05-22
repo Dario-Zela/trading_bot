@@ -27,6 +27,27 @@ def test_union_dedups_on_key_local_wins(tmp_path):
     assert by_id["a"]["exit_date"] == "2026-05-22" # local (closed) wins over stale remote
 
 
+def test_trail_exits_composite_key_via_main(tmp_path):
+    repo, save = tmp_path / "repo", tmp_path / "save"
+    row = {"ticker": "AAA", "region": "us", "strategy_id": "s",
+           "exit_date": "2026-05-22", "pnl_pct": 1}
+    _write(repo / "state/trail_exits.jsonl", [row])
+    _write(save / "state/trail_exits.jsonl", [row, {**row, "ticker": "BBB", "pnl_pct": 2}])
+    sms.main(str(repo), str(save))
+    rows = [json.loads(l) for l in (repo / "state/trail_exits.jsonl").read_text().splitlines()]
+    assert sorted(r["ticker"] for r in rows) == ["AAA", "BBB"]  # union, no dup of AAA
+
+
+def test_glob_target_merges_dynamic_pick_adjustment_files(tmp_path):
+    repo, save = tmp_path / "repo", tmp_path / "save"
+    # Only the local run created this per-date/strategy file.
+    _write(save / "state/pick_adjustments/2026-05-22.mom.jsonl", [{"ticker": "USO", "x": 1}])
+    sms.main(str(repo), str(save))
+    out = repo / "state/pick_adjustments/2026-05-22.mom.jsonl"
+    assert out.exists()  # glob target created the file in the reset repo
+    assert json.loads(out.read_text().splitlines()[0])["ticker"] == "USO"
+
+
 def test_composite_key_dedup(tmp_path):
     repo, save = tmp_path / "repo", tmp_path / "save"
     key = ("strategy_id", "region", "ticker", "prediction_date")

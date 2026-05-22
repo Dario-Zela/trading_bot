@@ -145,7 +145,7 @@ jobs:
           # and the currency cache through the hard reset, while files a
           # concurrent run changed stay at the remote version (no clobber).
           CHANGED_STATE=$(git diff --name-only HEAD~1 HEAD -- state \
-            | grep -vE 'state/(ledger|predictions|macro/predictions)\.jsonl$' || true)
+            | grep -vE 'state/(ledger|predictions|macro/predictions|trail_exits)\.jsonl$|state/pick_adjustments/.*\.jsonl$' || true)
           git fetch origin main
           git reset --hard origin/main
           python3 .github/scripts/smart_merge_state.py "$PWD" /tmp/save
