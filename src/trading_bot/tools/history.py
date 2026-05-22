@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import json
 import logging
+import os
+import tempfile
 import time
 from dataclasses import dataclass
 from datetime import date, datetime
@@ -261,6 +264,83 @@ def get_history(
     return {k: list(v) for k, v in out.items()}
 
 
+# --- LSE quote-currency detection ------------------------------------
+# yfinance quotes ordinary LSE shares in pence ('GBp'), which must be
+# divided by 100 to reach pounds. But many LSE-listed ETF / bond / UCITS
+# lines quote in whole 'GBP', 'USD', or 'EUR' and must NOT be divided.
+# Keying the /100 on the '.L' suffix alone silently mangled those lines
+# (IGLS.L and HYGG.L are GBP, IHYG.L is EUR, VWRL.L is GBP, CSPX.L is USD,
+# ...) by 100x — and the bad price then mis-sized the position. The trade
+# currency from fees.yf_ticker_classify can't disambiguate this: it returns
+# "GBP" for both pence-quoted SHEL.L and pound-quoted IGLS.L. So we read the
+# real quote currency from yfinance once per ticker and cache it both in
+# process and in a sidecar JSON (the universe is bounded, so the file warms
+# once and then costs nothing). On any lookup failure we assume pence — the
+# correct default for the overwhelming majority of the LSE universe — so a
+# transient yfinance hiccup can't suddenly 100x an ordinary share.
+from trading_bot.state.paths import STATE_ROOT  # noqa: E402
+
+_LSE_CCY_PATH = STATE_ROOT / "lse_quote_ccy.json"
+_LSE_CCY: dict[str, str] | None = None
+
+
+def _load_lse_ccy() -> dict[str, str]:
+    global _LSE_CCY
+    if _LSE_CCY is None:
+        try:
+            _LSE_CCY = json.loads(_LSE_CCY_PATH.read_text())
+        except (OSError, ValueError):
+            _LSE_CCY = {}
+    return _LSE_CCY
+
+
+def _save_lse_ccy(cache: dict[str, str]) -> None:
+    # Atomic, race-tolerant: a unique temp file per writer + os.replace means
+    # concurrent select_picks threads can't corrupt the destination. A lost
+    # write just costs a re-fetch — it's a cache, not source of truth.
+    try:
+        STATE_ROOT.mkdir(parents=True, exist_ok=True)
+        fd, tmp = tempfile.mkstemp(dir=str(STATE_ROOT), suffix=".lse_ccy.tmp")
+        try:
+            with os.fdopen(fd, "w") as f:
+                json.dump(cache, f, sort_keys=True)
+            os.replace(tmp, _LSE_CCY_PATH)
+        finally:
+            if os.path.exists(tmp):
+                os.unlink(tmp)
+    except OSError as e:
+        log.debug("could not persist LSE currency cache: %s", e)
+
+
+def _lse_quote_is_pence(ticker: str) -> bool:
+    """True if yfinance quotes this LSE ticker in pence (GBp), so its OHLC
+    must be divided by 100 to reach pounds. Ordinary shares are pence;
+    GBP/USD/EUR-quoted ETF & bond lines are not. Result cached per ticker."""
+    cache = _load_lse_ccy()
+    ccy = cache.get(ticker)
+    if ccy is None:
+        resolved: str | None = None
+        try:
+            tk = yf.Ticker(ticker)
+            c = getattr(tk.fast_info, "currency", None)
+            if not c:
+                # fast_info omits currency for many ETP / leveraged-tracker
+                # lines (Leverage Shares, Ossiam, etc.); the heavier .info
+                # carries it. Worth the extra call — these are exactly the
+                # non-pence USD/EUR lines we must NOT divide.
+                c = (tk.info or {}).get("currency")
+            if c:
+                resolved = str(c)
+        except Exception as e:
+            log.debug("LSE currency lookup failed for %s; assuming pence: %s", ticker, e)
+        # Safe default: most of the LSE universe is pence, so a total lookup
+        # failure keeps the historical /100 rather than risking a 100x blow-up.
+        ccy = resolved or "GBp"
+        cache[ticker] = ccy
+        _save_lse_ccy(cache)
+    return ccy == "GBp"
+
+
 def _flatten(df: pd.DataFrame, tickers: list[str], lookback_days: int) -> dict[str, list[Bar]]:
     """Build {ticker: [Bar]} from yfinance's mixed-shape output.
 
@@ -269,9 +349,11 @@ def _flatten(df: pd.DataFrame, tickers: list[str], lookback_days: int) -> dict[s
     MultiIndex (ticker, price) or (price, ticker). We normalise to flat
     Open/High/Low/Close/Volume columns before iterating.
 
-    Currency normalisation: LSE-listed tickers (`.L`) are quoted in pence,
-    not pounds. We divide OHLC by 100 so downstream sizing math is in £.
-    Volume stays in raw share count.
+    Currency normalisation: ordinary LSE shares (`.L`) are quoted by
+    yfinance in pence, so we divide OHLC by 100 to get £. But LSE-listed
+    ETF/bond/UCITS lines often quote in whole GBP/USD/EUR and must NOT be
+    divided — `_lse_quote_is_pence` checks the real quote currency rather
+    than assuming every `.L` is pence. Volume stays in raw share count.
     """
     out: dict[str, list[Bar]] = {}
     is_single = len(tickers) == 1
@@ -281,8 +363,9 @@ def _flatten(df: pd.DataFrame, tickers: list[str], lookback_days: int) -> dict[s
         if sub is None or sub.empty:
             continue
         sub = sub.dropna().tail(lookback_days)
-        # LSE quotes in pence, divide by 100 to get £.
-        price_scale = 0.01 if ticker.endswith(".L") else 1.0
+        # Pence-correction only for genuinely pence-quoted (.L) lines; GBP/
+        # USD/EUR-quoted ETF & bond lines on LSE must not be divided.
+        price_scale = 0.01 if (ticker.endswith(".L") and _lse_quote_is_pence(ticker)) else 1.0
         bars: list[Bar] = []
         for ts in sub.index:
             try:
