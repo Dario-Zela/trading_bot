@@ -56,6 +56,7 @@ class TradeRecord:
     currency: str = "GBP"
     exchange: str = ""
     instrument_type: str = "share"
+    entry_fx_rate: float | None = None  # GBP per unit of `currency` at entry; reused as exit-FX fallback
     fees_gbp: float = 0.0
     fees_breakdown: dict = field(default_factory=dict)
 

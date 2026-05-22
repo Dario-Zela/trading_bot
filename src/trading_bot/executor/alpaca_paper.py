@@ -82,12 +82,17 @@ class AlpacaPaperExecutor(Executor):
             # 1:1 GBP→USD under-sized by ~21% (USDGBP ≈ 0.79). On FX-fetch
             # failure we fall back to the old 1:1 to keep the pipeline
             # alive — better an under-sized position than no fill.
-            usd_per_gbp = (1.0 / to_gbp_multiplier("USD")) if to_gbp_multiplier("USD") else None
+            usd_to_gbp_rate = to_gbp_multiplier("USD")  # GBP per USD
+            usd_per_gbp = (1.0 / usd_to_gbp_rate) if usd_to_gbp_rate else None
             if usd_per_gbp is None or not (1.0 < usd_per_gbp < 1.8):  # sanity band
                 log.warning("Alpaca sizing: USDGBP fetch failed or out of band (%s) — using 1:1 fallback", usd_per_gbp)
                 allocation_usd = allocation_gbp
+                entry_fx_rate = 1.0  # matches the 1:1 sizing fallback
             else:
                 allocation_usd = allocation_gbp * usd_per_gbp
+                # Persist the rate used so exit P&L can reuse it if the
+                # exit-day FX fetch fails — better than a frozen magic number.
+                entry_fx_rate = usd_to_gbp_rate
             # Bracket orders require whole shares on Alpaca — fractional orders
             # are restricted to "simple" (non-bracketed) orders. Round down so
             # we never over-allocate; if the result rounds to zero the position
@@ -166,6 +171,7 @@ class AlpacaPaperExecutor(Executor):
                 currency="USD",
                 exchange="NYSE",
                 instrument_type="share",
+                entry_fx_rate=entry_fx_rate,
                 hold_days=hold_days,
                 target_exit_date=target_exit.isoformat(),
             )
@@ -329,7 +335,10 @@ class AlpacaPaperExecutor(Executor):
                 # actually pay. Alpaca paper itself charges nothing; this
                 # divergence is intentional.
                 pnl_usd = (close_fill_price - entry_price) * quantity
-                usd_to_gbp = to_gbp_multiplier("USD") or 0.79
+                # Prefer the live exit-day rate; on FX-fetch failure reuse the
+                # rate persisted at entry (a real observed rate), and only then
+                # fall back to a frozen approximation.
+                usd_to_gbp = to_gbp_multiplier("USD") or trade.get("entry_fx_rate") or 0.79
                 gross_pnl_gbp = pnl_usd * usd_to_gbp
                 entry_notional_gbp = abs(entry_price * quantity * usd_to_gbp)
                 exit_notional_gbp = abs(close_fill_price * quantity * usd_to_gbp)
