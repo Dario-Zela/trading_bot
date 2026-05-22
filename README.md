@@ -35,14 +35,14 @@ Eight active strategies under `strategies/`:
 |---|---|---|---|
 | `momentum-trader` | LLM trend-following | Alpaca slot 1 | T212 slot 1 |
 | `mean-reverter` | LLM counter-trend | Alpaca slot 2 | T212 slot 1 |
-| `news-reactive` | LLM event-driven | Alpaca slot 3 | shadow |
-| `macro-aligned` | LLM top-down (sector + macro view) | shadow | shadow |
+| `news-reactive` | LLM event-driven | Alpaca slot 3 | T212 slot 1 |
+| `macro-aligned` | LLM top-down (sector + macro view) | shadow | T212 slot 1 |
 | `control-rule-based` | Deterministic baseline (top-N prior-day gainers) | shadow | shadow |
 | `commodity-momentum` | LLM commodity-ETF | shadow | shadow |
-| `sector-rotator` | LLM sector ETF rotation | shadow | shadow |
+| `sector-rotator` | LLM sector ETF rotation | shadow | T212 slot 1 |
 | `bond-cycle` | LLM rates / duration | shadow | shadow |
 
-Each strategy has a `config.yaml` with `runs_in:` per-region entries (region, tier, slot, universe), plus prompts (`wide_scoring.md`, `deep_analysis.md`, `final_select.md`) for the LLM stages. The evolution agent can edit configs and prompts within safety bounds; human approval is needed only for tier-2 transitions.
+Each strategy has a `config.yaml` with `runs_in:` per-region entries (region, tier, slot, universe), plus prompts (`prefilter.md`, `deep_analysis.md`, `final_select.md`) for the LLM stages. Multiple UK-EU strategies share T212 slot 1 — their combined `capital_gbp` draws on the single £50k paper budget. The evolution agent can edit configs and prompts within safety bounds; human approval is needed only for tier-2 transitions.
 
 ## Daily cycle
 
@@ -50,12 +50,18 @@ GitHub Actions' built-in cron is unreliable (we observed silent dropped triggers
 
 | Workflow | When (market-local) | Region | Action |
 |---|---|---|---|
-| `pipeline-us.yml` | Mon–Fri 09:35 ET | US | entry |
-| `pipeline-us.yml` | Mon–Fri 15:30 ET | US | exit + reflect + dashboard + email |
+| `grade-predictions.yml` | Daily 05:00 UTC | — | score predictions whose target date has passed |
+| `daily-news-brief.yml` | Daily ~07:15 UK | — | generate the news brief (dashboard "Bot Tribune") |
 | `pipeline-uk-eu.yml` | Mon–Fri 08:35 UK | UK-EU | entry |
+| `pipeline-us.yml` | Mon–Fri 09:35 ET | US | entry |
+| `midday-trail-uk-eu.yml` | Mon–Fri ~12:00 UK | UK-EU | ratchet trailing stops mid-session |
+| `midday-trail-us.yml` | Mon–Fri ~12:30 ET | US | ratchet trailing stops mid-session |
 | `pipeline-uk-eu.yml` | Mon–Fri 16:00 UK | UK-EU | exit + reflect + dashboard + email |
-| `weekly-macro.yml` | Sun 17:00 UTC | — | macro view refresh |
+| `pipeline-us.yml` | Mon–Fri 15:30 ET | US | exit + reflect + dashboard + email |
 | `weekly-evolution.yml` | Sat 09:00 UTC | — | strategy promote / demote / tune / spawn |
+| `weekly-macro.yml` | Sun 17:00 UTC | — | macro view refresh |
+
+(Plus maintenance crons: `health-check`, `archive-trim`, and the `ohlcv-*` cache jobs — see `scripts/setup_cron_jobs.py` for the authoritative schedule.)
 
 Provision the cron-job.org schedules from `scripts/setup_cron_jobs.py` (one-shot). All workflows also accept `workflow_dispatch` for manual runs from the Actions tab.
 
@@ -88,7 +94,6 @@ python -m trading_bot.pipeline exit --region uk-eu --email
 # Weekly meta-jobs
 python -m trading_bot.pipeline weekly-macro
 python -m trading_bot.pipeline weekly-evolution
-python -m trading_bot.pipeline dst-sync
 
 # Slot management (Alpaca only — wipes the slot for re-assignment)
 python -m trading_bot.pipeline clear-slot --slot 1
@@ -114,12 +119,12 @@ Repo secrets (GitHub Actions environment):
 ├── pyproject.toml
 ├── .github/workflows/        # cron-scheduled CI workflows
 ├── src/trading_bot/
-│   ├── pipeline.py           # CLI entry point (entry / exit / reflect / summary / weekly-*)
+│   ├── pipeline.py           # CLI entry point (entry / exit / reflect / summary / weekly-* / grade-predictions / daily-news-brief / ohlcv-* / clear-slot)
 │   ├── tools/                # universes, history, news, filings, macro view, T212 instruments
 │   ├── strategy/             # base classes + registry + per-implementation strategies
 │   ├── executor/             # ShadowExecutor, AlpacaPaperExecutor, Trading212DemoExecutor
 │   ├── state/                # ledger / predictions / paths
-│   ├── meta/                 # metrics, reflection, macro, evolution, dst_sync
+│   ├── meta/                 # metrics, reflection, macro, evolution, grade_predictions, backtest
 │   ├── notify/               # email rendering + send
 │   └── dashboard/            # static HTML build
 ├── strategies/               # per-strategy config.yaml + prompts (LLM-evolvable)
