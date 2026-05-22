@@ -60,6 +60,14 @@ def _safe_float(val, *, default: float) -> float:
         return default
 
 
+def _fmt(val, spec: str, na: str = "?") -> str:
+    """Format an optional numeric for a prompt line; None → `na`. Deep-analysis
+    candidates legitimately carry None technicals (e.g. sma_50 / MACD on a
+    <55-bar history), and an unguarded f-string format on None raises
+    TypeError and kills the whole strategy's pick run."""
+    return format(val, spec) if val is not None else na
+
+
 def _classify(predicted_pct: float, rsi: float | None) -> str:
     """Bucket a candidate into one of the five directional classes used for
     prediction grading. Crude version based on the 5d return + RSI; replaced
@@ -716,13 +724,13 @@ class LLMStrategy(Strategy):
 
             sections.append(
                 f"### {c.ticker}\n"
-                f"- close: ${c.close:.2f} (as of {c.as_of})\n"
-                f"- RSI(14): {c.rsi_14:.1f}\n"
-                f"- MACD line/signal/hist: {c.macd_line:+.3f} / {c.macd_signal:+.3f} / {c.macd_histogram:+.3f}\n"
-                f"- ATR(14): ${c.atr_14:.2f}\n"
-                f"- SMA20 ${c.sma_20:.2f} (above: {c.above_sma_20}), SMA50 ${c.sma_50:.2f} (above: {c.above_sma_50})\n"
-                f"- 5-day return: {c.return_5d_pct:+.2f}%, 20-day: {c.return_20d_pct:+.2f}%\n"
-                f"- volume ratio (today vs 20-day avg): {c.volume_ratio:.2f}"
+                f"- close: ${_fmt(c.close, '.2f')} (as of {c.as_of})\n"
+                f"- RSI(14): {_fmt(c.rsi_14, '.1f')}\n"
+                f"- MACD line/signal/hist: {_fmt(c.macd_line, '+.3f')} / {_fmt(c.macd_signal, '+.3f')} / {_fmt(c.macd_histogram, '+.3f')}\n"
+                f"- ATR(14): ${_fmt(c.atr_14, '.2f')}\n"
+                f"- SMA20 ${_fmt(c.sma_20, '.2f')} (above: {c.above_sma_20}), SMA50 ${_fmt(c.sma_50, '.2f')} (above: {c.above_sma_50})\n"
+                f"- 5-day return: {_fmt(c.return_5d_pct, '+.2f')}%, 20-day: {_fmt(c.return_20d_pct, '+.2f')}%\n"
+                f"- volume ratio (today vs 20-day avg): {_fmt(c.volume_ratio, '.2f')}"
                 + rel_line
                 + cost_line
                 + earnings_line
