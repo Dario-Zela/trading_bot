@@ -55,7 +55,7 @@ jobs:
           pip install -e .
 
       - name: Restore OHLCV cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: state/ohlcv.db
           key: ohlcv-db-v1-${{ github.run_id }}
@@ -97,7 +97,7 @@ jobs:
       # workflow + the 3-day grace window recover any transient gap.
       - name: Save OHLCV cache
         if: always()
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: state/ohlcv.db
           key: ohlcv-db-v1-${{ github.run_id }}

@@ -61,8 +61,8 @@ jobs:
       - name: Restore OHLCV cache
         # Restore-only at the start. Save happens explicitly at the
         # end of the job so the cache REFRESHES every run (default
-        # actions/cache@v4 only saves on cache miss).
-        uses: actions/cache/restore@v4
+        # actions/cache@v5 only saves on cache miss).
+        uses: actions/cache/restore@v5
         with:
           path: state/ohlcv.db
           key: ohlcv-db-v1-${{ github.run_id }}
@@ -129,7 +129,7 @@ jobs:
         # cached before the failure. Unique key per run guarantees the
         # save actually happens (default action only saves on miss).
         if: always()
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: state/ohlcv.db
           key: ohlcv-db-v1-${{ github.run_id }}

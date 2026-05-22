@@ -72,7 +72,7 @@ jobs:
         # Save under a NEW unique key. The restore-keys: ohlcv-db-v1-
         # prefix in every consuming workflow will pick this up as the
         # most recent matching entry.
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: state/ohlcv.db
           key: ohlcv-db-v1-seed-${{ github.run_id }}
