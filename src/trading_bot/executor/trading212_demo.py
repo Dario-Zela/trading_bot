@@ -1092,14 +1092,14 @@ class Trading212DemoExecutor(Executor):
         than block the close)."""
         if not tickers:
             return {}
-        try:
-            response = requests.get(
-                self._url("/equity/orders"), headers=self._headers(), timeout=10,
-            )
-        except requests.RequestException as e:
-            log.debug("T212 stops index failed: %s", e)
-            return {}
-        if not response.ok:
+        # Use the 429-aware retry wrapper (same as the reconcile path). A bare
+        # requests.get returns {} on a transient 429, silently skipping the
+        # pre-close stop cleanup — so a stale GTC stop could later fire against
+        # a future re-entry in the same ticker.
+        response = self._request_with_retry(
+            "GET", self._url("/equity/orders"), headers=self._headers(),
+        )
+        if response is None or not response.ok:
             return {}
         try:
             orders = response.json() or []
