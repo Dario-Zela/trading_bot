@@ -151,6 +151,20 @@ def _trail_one_slot(creds: T212Creds, activation_pct: float, trail_pct: float) -
         # applies to UK shares regardless of the quote unit.
         inst = instruments_by_ticker.get(ticker, {})
         ccy = (inst.get("currencyCode") or "").upper()
+        # T212 (GBP-base account) won't place stop orders on non-base-currency
+        # instruments — POST /equity/orders/stop returns 400 "Invalid payload"
+        # for them. (Market buys auto-FX across currencies, but stop/limit
+        # orders are restricted to the account's main currency.) So EU/US
+        # positions can't get an intraday trailing stop; they're still closed
+        # by the scheduled EOD exit. Skip rather than fail the run every pass.
+        if ccy not in ("GBP", "GBX"):
+            actions.append(T212TrailAction(
+                ticker=ticker, slot=creds.slot, entry_price=entry, current_price=cur,
+                pct_up=pct_up, old_stop=None, new_stop=0.0,
+                status="skipped",
+                reason=f"non-base-currency ({ccy or '?'}) — T212 rejects stops on it; covered by scheduled exit",
+            ))
+            continue
         is_uk_share = (
             inst.get("type") == "STOCK"
             and ccy in ("GBP", "GBX")
