@@ -181,27 +181,22 @@ _YF_SUFFIX_TO_VENUE = {
 }
 
 
-# LSE-listed UCITS ETFs that trade in USD despite the .L suffix. The
-# `.L` → GBP default in _YF_SUFFIX_TO_VENUE is correct for shares and
-# the GBP-denominated ETF lines, but a number of USD-denominated UCITS
-# ETF lines on LSE share the .L suffix (Vanguard's USD line of FTSE
-# All-World is VWRL.L; the GBP-denominated line is VWRP.L, etc.). For
-# the fee model to compute round-trip cost correctly at decision time
-# we need to mark these explicitly — otherwise the FX leg is omitted
-# and the cost line under-states by 0.30%.
+# LSE-listed UCITS ETF/ETC lines that genuinely trade in USD despite the .L
+# suffix, so a GBP account pays an FX leg on them. The `.L` → GBP default in
+# _YF_SUFFIX_TO_VENUE is right for ordinary shares and the GBP/GBX-denominated
+# ETF lines; only the truly-USD ones need this override.
+#
+# Reconciled 2026-05 against BOTH yfinance quote currency and T212's own
+# instrument `currencyCode` (the two agree): the previously-listed VWRL/VUSA/
+# VJPN/VAPX/VFEM (GBP) and IUSA/EQQQ/CPJ1/IEEM/SGLN (GBX, i.e. pence) lines
+# were WRONG — they settle in sterling and incur NO FX fee — so they've been
+# removed (they were over-stating cost by ~0.30% and mis-tagging shadow P&L).
+# Note: executed T212 trades carry the broker's own currencyCode straight to
+# compute_fees, so this set only affects the shadow tier and the decision-time
+# cost estimate (both yfinance-based).
 _LSE_USD_DENOMINATED = {
-    "VWRL.L",   # Vanguard FTSE All-World (USD line; VWRP.L is GBP)
-    "VUSA.L",   # Vanguard S&P 500 (USD)
-    "IUSA.L",   # iShares S&P 500 (USD)
-    "CSPX.L",   # iShares Core S&P 500 Acc (USD)
-    "IWDA.L",   # iShares Core MSCI World Acc (USD; SWDA.L is GBP)
-    "EQQQ.L",   # Invesco NASDAQ 100 (USD)
-    "VJPN.L",   # Vanguard FTSE Japan (USD)
-    "CPJ1.L",   # iShares Core MSCI Japan IMI (USD)
-    "VAPX.L",   # Vanguard FTSE Developed Asia Pac ex-Japan (USD)
-    "VFEM.L",   # Vanguard FTSE Emerging Markets (USD)
-    "IEEM.L",   # iShares Core MSCI Emerging Markets IMI (USD)
-    "SGLN.L",   # iShares Physical Gold (USD-denominated, GBP-traded version is SGLD.L)
+    "CSPX.L",   # iShares Core S&P 500 Acc (USD; not on T212, shadow-only)
+    "IWDA.L",   # iShares Core MSCI World Acc (USD; SWDA.L is the GBP line)
     "SSLV.L",   # iShares Physical Silver (USD)
 }
 
