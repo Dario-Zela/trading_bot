@@ -75,7 +75,10 @@ jobs:
           # max_grace_days=0 inside the command forces refresh of any
           # ticker whose latest bar isn't end_date — otherwise the
           # 3-day grace serves stale data and the cache drifts daily.
+          # Both regions: the single shared ohlcv.db feeds the UK-EU pipeline
+          # too, so refreshing only US left .L/.DE/etc. bars to go stale.
           python -m trading_bot.pipeline ohlcv-daily-update --region us
+          python -m trading_bot.pipeline ohlcv-daily-update --region uk-eu
 
       - name: Cache stats (after)
         run: |
@@ -84,6 +87,14 @@ jobs:
           print(f'after:  rows={row_count():,}, size={store_size_bytes()/1_048_576:.1f} MB')
           "
 
+      # KNOWN LIMITATION (accepted): the cache is keyed by run_id with a
+      # restore-keys: ohlcv-db-v1- prefix. If two OHLCV-writing runs overlap
+      # they each restore the same base and save a fork, so the later save
+      # wins and the other's freshly-fetched bars are lost (re-fetched next
+      # run). Cron spacing keeps the writers (this job, the two pipeline
+      # entries, warmup) mostly non-overlapping; the per-run keys also
+      # accumulate but GitHub evicts past the 10 GB cap. Left as-is — the seed
+      # workflow + the 3-day grace window recover any transient gap.
       - name: Save OHLCV cache
         if: always()
         uses: actions/cache/save@v4

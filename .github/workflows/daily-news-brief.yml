@@ -78,6 +78,13 @@ jobs:
           # regenerated each run and so always reflect today's
           # authoritative output. (Rebase semantics flip "ours" and
           # "theirs" relative to merge — `theirs` here = local.)
+          #
+          # KNOWN LIMITATION (accepted): this commit also includes
+          # state/predictions, which is append/mutate (not regenerated). On
+          # the -X theirs retry a concurrent writer's prediction rows (e.g.
+          # grade-predictions) could be clobbered. Cron spacing (grader 05:00
+          # UTC, brief ~06:30) makes an overlap on the retry path rare, so it's
+          # left as-is rather than splitting the commit.
           for i in 1 2 3; do
             strategy=""
             if [ "$i" -gt 1 ]; then

@@ -138,9 +138,23 @@ jobs:
           echo "Falling back to smart-merge strategy..."
           mkdir -p /tmp/save
           cp -r state /tmp/save/ 2>/dev/null || true
+          # Capture the non-JSONL state files THIS run changed (vs the base it
+          # committed on). The 3 line-unioned JSONL files are excluded —
+          # smart_merge_state.py merges those with remote. Restoring only our
+          # changed files (local-wins) preserves e.g. kill-switch/halt state
+          # and the currency cache through the hard reset, while files a
+          # concurrent run changed stay at the remote version (no clobber).
+          CHANGED_STATE=$(git diff --name-only HEAD~1 HEAD -- state \
+            | grep -vE 'state/(ledger|predictions|macro/predictions)\.jsonl$' || true)
           git fetch origin main
           git reset --hard origin/main
           python3 .github/scripts/smart_merge_state.py "$PWD" /tmp/save
+          for f in $CHANGED_STATE; do
+            if [ -f "/tmp/save/$f" ]; then
+              mkdir -p "$(dirname "$f")"
+              cp "/tmp/save/$f" "$f"
+            fi
+          done
           python -m trading_bot.dashboard.build || true
           git add state docs || true
           if git diff --cached --quiet; then
