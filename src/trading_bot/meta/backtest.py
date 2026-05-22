@@ -165,8 +165,11 @@ def run_backtest(
         day_pnl_pct = 0.0
         for intent in intents:
             bars = hist.get(intent.ticker) or []
-            # Find the bar whose date == d (entry) and the next one (exit)
-            entry_idx = next((i for i, b in enumerate(bars) if str(b.bar_date) == d.isoformat()), None)
+            # Entry = first bar on-or-after d, exit = the next bar. Using
+            # >= d (not == d) means a data gap or a holiday the approximate
+            # calendar missed enters at the next available close instead of
+            # silently dropping the pick. bars are chronological ascending.
+            entry_idx = next((i for i, b in enumerate(bars) if b.bar_date >= d), None)
             if entry_idx is None or entry_idx + 1 >= len(bars):
                 continue
             entry_price = float(bars[entry_idx].close)
