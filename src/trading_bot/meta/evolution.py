@@ -149,7 +149,7 @@ def run_weekly_evolution(today: date) -> dict:
     prompt = _build_prompt(today, snapshot, _read_lessons())
 
     try:
-        recommendations = run_claude_for_json(prompt, model="sonnet")
+        recommendations = run_claude_for_json(prompt, model="sonnet", retries=2)
     except ClaudeCodeError as e:
         log.error("evolution: Claude call failed: %s", e)
         return {"error": str(e)}

@@ -12,6 +12,7 @@ import logging
 import os
 import re
 import subprocess
+import time
 from dataclasses import dataclass
 
 
@@ -40,11 +41,49 @@ def run_claude(
     model: str = "sonnet",
     timeout_seconds: int = _DEFAULT_TIMEOUT,
     extra_args: list[str] | None = None,
+    retries: int = 0,
 ) -> ClaudeCodeResult:
     """Invoke `claude -p <prompt>` and return the parsed result.
 
     Raises ClaudeCodeError on non-zero exit code or unparseable output.
+
+    `retries` — number of *additional* attempts on ClaudeCodeError (timeouts,
+    transient non-zero exits), with exponential backoff between them. Default 0
+    (single attempt) preserves behaviour for the many per-item callers
+    (per-strategy picks, per-prediction grading) where one failure shouldn't
+    multiply runtime. Weekly one-shot jobs (evolution, macro) set retries>0 so
+    a single transient blip doesn't cost the whole cycle.
     """
+    attempts = max(1, retries + 1)
+    last_err: ClaudeCodeError | None = None
+    for attempt in range(attempts):
+        try:
+            return _run_claude_once(
+                prompt, model=model, timeout_seconds=timeout_seconds,
+                extra_args=extra_args,
+            )
+        except ClaudeCodeError as e:
+            last_err = e
+            if attempt + 1 < attempts:
+                backoff = 5 * (attempt + 1)  # 5s, 10s, ...
+                log.warning(
+                    "claude attempt %d/%d failed (%s) — retrying in %ds",
+                    attempt + 1, attempts, e, backoff,
+                )
+                time.sleep(backoff)
+    assert last_err is not None
+    raise last_err
+
+
+def _run_claude_once(
+    prompt: str,
+    *,
+    model: str = "sonnet",
+    timeout_seconds: int = _DEFAULT_TIMEOUT,
+    extra_args: list[str] | None = None,
+) -> ClaudeCodeResult:
+    """Single Claude Code CLI invocation. See run_claude for the retrying
+    public entry point."""
     token = os.environ.get("CLAUDE_CODE_OAUTH_TOKEN")
     if not token:
         raise ClaudeCodeError(
@@ -118,13 +157,18 @@ def run_claude_for_json(
     model: str = "sonnet",
     timeout_seconds: int = _DEFAULT_TIMEOUT,
     extra_args: list[str] | None = None,
+    retries: int = 0,
 ) -> dict | list:
     """Convenience: invoke Claude and extract a JSON block from the response.
 
     Looks for a JSON code fence first (```json ... ```), falls back to the
     first {...} or [...] in the text. Raises ClaudeCodeError if none is found.
+    `retries` is forwarded to run_claude (see its docstring).
     """
-    result = run_claude(prompt, model=model, timeout_seconds=timeout_seconds, extra_args=extra_args)
+    result = run_claude(
+        prompt, model=model, timeout_seconds=timeout_seconds,
+        extra_args=extra_args, retries=retries,
+    )
     return _extract_json(result.text)
 
 

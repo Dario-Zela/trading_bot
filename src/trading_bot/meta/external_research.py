@@ -99,6 +99,7 @@ def run_external_research(today: date) -> dict:
             model="sonnet",
             timeout_seconds=_TIMEOUT,
             extra_args=_CLAUDE_EXTRA_ARGS,
+            retries=2,
         )
     except ClaudeCodeError as e:
         log.error("external_research: Claude call failed: %s", e)

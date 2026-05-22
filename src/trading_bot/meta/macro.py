@@ -79,7 +79,7 @@ def run_weekly_macro(today: date) -> dict:
     )
 
     try:
-        result = run_claude(prompt, model="sonnet")
+        result = run_claude(prompt, model="sonnet", retries=2)
     except ClaudeCodeError as e:
         log.error("macro: Claude call failed: %s", e)
         return {"error": str(e)}
