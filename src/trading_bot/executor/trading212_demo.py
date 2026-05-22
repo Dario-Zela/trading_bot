@@ -87,8 +87,21 @@ class Trading212DemoExecutor(Executor):
         translator = self._get_translator()
         free_cash = self._get_free_cash()
         if free_cash is None:
+            # Don't proceed uncapped — a transient free-cash read failure must
+            # not let us blow the shared £50k T212 paper budget. Fall back to a
+            # conservative ledger-derived figure: the cap minus the GBP entry
+            # cost of every open T212-paper position (across strategies, since
+            # they share one budget). Under-counts pending entries (sentinel
+            # price 0), which only makes it more conservative on the downside.
+            committed = sum(
+                float(t.get("entry_price") or 0) * float(t.get("quantity") or 0)
+                for t in read_open_trades(tier=_TIER)
+            )
+            free_cash = max(0.0, T212_PAPER_BUDGET_GBP - committed)
             log.warning(
-                "Could not read T212 free cash — proceeding without budget pre-flight"
+                "Could not read T212 free cash — using ledger-derived budget "
+                "£%.2f (cap £%.0f − committed £%.2f)",
+                free_cash, T212_PAPER_BUDGET_GBP, committed,
             )
         else:
             log.info(
