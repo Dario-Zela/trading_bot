@@ -236,29 +236,13 @@ def get_history(
             )
             # Per-ticker write-back already happened via on_result above —
             # just hydrate the in-memory `out` dict for the caller.
-            new_rows: list[StoredBar] = []   # unused now, kept for symmetry
             for tkr, bars in stooq_results.items():
-                converted = [
+                out[tkr] = [
                     Bar(ticker=tkr, bar_date=b["bar_date"], open=b["open"],
                         high=b["high"], low=b["low"], close=b["close"],
                         volume=b["volume"])
                     for b in bars
                 ]
-                out[tkr] = converted
-                # The bulk write-back below is now a no-op safety net
-                # (the per-ticker callback already persisted these).
-                if StoredBar is not None:
-                    new_rows.extend(
-                        StoredBar(ticker=tkr, bar_date=b.bar_date, open=b.open,
-                                  high=b.high, low=b.low, close=b.close,
-                                  volume=b.volume)
-                        for b in converted
-                    )
-            if StoredBar is not None and new_rows:
-                try:
-                    _wb(new_rows)
-                except Exception as e:
-                    log.warning("OHLCV store write-back (stooq) failed: %s", e)
 
     _HISTORY_CACHE[cache_key] = out
     return {k: list(v) for k, v in out.items()}
