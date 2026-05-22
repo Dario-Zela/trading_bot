@@ -354,7 +354,11 @@ def run_summary(region: str, on_date: date) -> None:
                 line = line.strip()
                 if not line:
                     continue
-                r = json.loads(line)
+                try:
+                    r = json.loads(line)
+                except json.JSONDecodeError as e:
+                    log.warning("summary: skipping unparseable ledger line: %s", e)
+                    continue
                 if r.get("exit_date") != target:
                     continue
                 if region is not None and r.get("region") != region:

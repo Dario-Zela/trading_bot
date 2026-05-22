@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 import json
+import logging
 from dataclasses import asdict, dataclass, field
 from datetime import date, datetime, timezone
 from typing import Iterator
 
 from trading_bot.state.paths import ledger_path
+
+log = logging.getLogger(__name__)
 
 
 @dataclass
@@ -81,8 +84,14 @@ def _iter_records() -> Iterator[dict]:
     with path.open() as f:
         for line in f:
             line = line.strip()
-            if line:
+            if not line:
+                continue
+            try:
                 yield json.loads(line)
+            except json.JSONDecodeError as e:
+                # A single torn/partial line (e.g. a crash mid-write) must not
+                # abort every consumer (exits, reconcile, summary, dashboard).
+                log.warning("ledger: skipping unparseable line: %s", e)
 
 
 def read_open_trades(
