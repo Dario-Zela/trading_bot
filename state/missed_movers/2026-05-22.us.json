@@ -1,0 +1,122 @@
+{
+  "date": "2026-05-22",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 RL +14%, IBM +12%, LITE +11%, SNDK +11%, STX +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (INTU -20%, SATS -9%, WMT -7%, DE -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: INTU (-20.12%) \u2014 Q3 FY2026 EPS beat ($12.80 vs $12.28 est) and raised FY revenue guidance to ~$21.36B, but a simultaneous 17% workforce cut (~3,200 jobs) and $300\u2013340M restructuring charge triggered a ~20% sell-off. Why we passed: Outside any active strategy's universe. INTU is a mega-cap software/fintech name; the -20% drop was a post-earnings restructuring shock announced after-hours on May 20, requiring pre-open positioning that only earnings-event coverage could provide \u2014 intraday signals arrived too late.",
+  "top_movers": [
+    {
+      "ticker": "RL",
+      "move_pct": 14.275,
+      "close": 376.24,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q4 FY2026 beat reported May 21 after close: revenue $1.98B vs $1.85B est, EPS $2.80 vs $2.54 est; first-ever >$8B full-year revenue; 10% dividend hike and bullish FY27 margin/Asia guidance.",
+      "miss_reason": "Outside any active strategy's universe. RL is a large-cap consumer discretionary name; the +14% gap was seeded by after-hours earnings on May 21, so only pre-open positioning via earnings-catalyst logic could have captured it.",
+      "suggestion": "Add an earnings-reaction entry rule: for S&P 500 consumer names with after-hours gap \u2265+8% on beat+raised-guidance prints, allow a market-open entry capped at 0.5\u00d7 normal size with a 3% intraday stop.",
+      "failed": false
+    },
+    {
+      "ticker": "IBM",
+      "move_pct": 11.84,
+      "close": 251.64,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "U.S. Commerce Dept awarded IBM a $1B CHIPS Act grant \u2014 matched by $1B IBM capital \u2014 to build 'Anderon,' America's first dedicated 300mm quantum chip foundry in Albany NY, announced pre-market on May 21.",
+      "miss_reason": "Outside any active strategy's universe (large-cap legacy tech, not covered by momentum or mean-reversion screeners). The catalyst was a pre-market government grant announcement \u2014 a policy-driven gap where intraday signals arrive after the bulk of the +12% move is already priced in.",
+      "suggestion": "Add a government-grant news gate: flag any name receiving a \u2265$500M CHIPS Act / DoD award pre-market and allow a one-session long entry at open, even for names outside the regular screener universe, with a hard 2% stop below open.",
+      "failed": false
+    },
+    {
+      "ticker": "LITE",
+      "move_pct": 10.92,
+      "close": 962.86,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Nvidia Q1 FY2027 record revenue ($81.6B, +85% YoY) drove sympathy rally in AI optics suppliers; amplified by LITE's Nasdaq-100 inclusion on May 18 and the May 21 launch of the 2\u00d7 leveraged ETF LITU.",
+      "miss_reason": "Outside any active strategy's universe. LITE (~$963/share, large-cap AI optics) joined the Nasdaq-100 only on May 18; if universe snapshots run weekly, the name likely had not yet propagated into any screener before Nvidia earnings triggered today's sympathy move.",
+      "suggestion": "Schedule a daily universe refresh that ingests new Nasdaq-100 constituents within one session of their index inclusion, so recently added large-caps like LITE enter the momentum screener before their first major catalyst fires.",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": 10.514,
+      "close": 1538.97,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Nvidia's Q3 2026 earnings beat (revenue +85% YoY, $81.6B record, 92% from AI data centres) signalled surging NAND demand, lifting SanDisk as the primary flash supplier beneficiary; Melius raised PT to $2,350.",
+      "miss_reason": "Outside any active strategy's universe. SNDK had already surged ~330% YTD by May 22 (extreme RSI); the +10.5% move was a sympathy catalyst off Nvidia's AI earnings beat \u2014 not SNDK-specific news \u2014 requiring cross-asset signal linkage the bot does not have.",
+      "suggestion": "Add a NAND-sympathy entry rule: when NVDA reports a revenue beat \u2265+15% vs consensus, scan NAND proxies (SNDK, MU) for a gap-open entry at next open, exempting them from the RSI \u226470 filter for that single session.",
+      "failed": false
+    },
+    {
+      "ticker": "STX",
+      "move_pct": 7.275,
+      "close": 805.71,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 beat (EPS $3.39 vs $1.60 YoY, revenue +44%) drove a multi-week rally extended by AI/HDD sector tailwinds, Samsung supply-disruption fears tightening memory supply, and a $186M debt-exchange deal announced May 20.",
+      "miss_reason": "Outside any active strategy's universe. STX is a large-cap NASDAQ storage hardware name whose +7% move was sustained post-earnings drift weeks after the Apr 28 print; capturing it required positioning at the earnings beat, not a reactive post-move signal.",
+      "suggestion": "Add a post-earnings continuation sleeve for large-cap HDD names (STX, WDC): enter within 3 sessions of a \u2265+8% earnings-day gap while price > 20-day MA, capped at 2% portfolio weight per name.",
+      "failed": false
+    },
+    {
+      "ticker": "GLW",
+      "move_pct": 6.126,
+      "close": 191.7599,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Analyst PT raises from Citi ($225) and UBS ($223) sustain the AI-optics re-rating begun by the May 6 NVIDIA $3.2B manufacturing partnership; GLW positioned as critical fiber supplier for AI data center buildout.",
+      "miss_reason": "Outside any active strategy's universe. GLW is a large-cap (~$40B) specialty-glass/fiber name at all-time highs; today's +6% is part of a weeks-long re-rating post NVIDIA deal, with no clean single-session entry signal for momentum or gap-up screens.",
+      "suggestion": "Add a catalyst-continuation sub-strategy: names with \u22653 analyst PT raises in 30 days AND price within 5% of 52-week high enter a watchlist; trigger entry on any subsequent day with gap \u2265+3% on \u22651.5\u00d7 avg volume and RSI <78.",
+      "failed": false
+    },
+    {
+      "ticker": "INTU",
+      "move_pct": -20.121,
+      "close": 306.68,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 FY2026 EPS beat ($12.80 vs $12.28 est) and raised FY revenue guidance to ~$21.36B, but a simultaneous 17% workforce cut (~3,200 jobs) and $300\u2013340M restructuring charge triggered a ~20% sell-off.",
+      "miss_reason": "Outside any active strategy's universe. INTU is a mega-cap software/fintech name; the -20% drop was a post-earnings restructuring shock announced after-hours on May 20, requiring pre-open positioning that only earnings-event coverage could provide \u2014 intraday signals arrived too late.",
+      "suggestion": "Add mega-cap US software names (mkt cap >$40B) to a news-reactive earnings universe; gate short (or 'avoid long') entries on post-results gap \u2264-12% confirmed within 30 min of open to capture outsized restructuring-driven dislocations like this one.",
+      "failed": false
+    },
+    {
+      "ticker": "SATS",
+      "move_pct": -8.674,
+      "close": 129.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "SpaceX's public IPO filing (May 20) triggered profit-taking in SATS's sharp rally as an indirect SpaceX proxy, compounded by spectrum deal timing uncertainty, a going-concern 10-Q disclosure, and heavy CEO/COO insider selling.",
+      "miss_reason": "Outside any active strategy's universe. SATS is a speculative SpaceX pre-IPO proxy (up ~543% in 12 months) with a going-concern flag and debt/equity of 3.17 \u2014 disqualified by quality screens and any volatility-cap or balance-sheet filter before a signal is even generated.",
+      "suggestion": "No actionable change \u2014 capturing this move requires a pre-IPO sentiment / proxy-basket overlay; the going-concern disclosure and extreme trailing return place it outside acceptable risk tolerance for any current systematic strategy.",
+      "failed": false
+    },
+    {
+      "ticker": "WMT",
+      "move_pct": -6.863,
+      "close": 121.87,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Walmart Q1 FY2027 earnings (reported May 21): revenue ~$175.7B in line, EPS $0.66 in line, but Q2 EPS guidance $0.72\u2013$0.74 missed ~$0.75 Street est., plus ~$175M fuel/logistics headwind flagged.",
+      "miss_reason": "Outside any active strategy's universe \u2014 WMT is a mega-cap consumer staples name (~$300B+ mkt cap) likely below the bot's beta/volatility thresholds or outside its sector scope. The catalyst was a post-close earnings release requiring pre-market positioning; post-open signal strategies cannot react profitably to an ove",
+      "suggestion": "Add an earnings-gap watchlist covering S&P-20 consumer-staples names: release them into the mean-reversion universe within 15 min of open if gap \u2265 5% on earnings day, capped at 0.5\u00d7 normal position size to limit event risk.",
+      "failed": false
+    },
+    {
+      "ticker": "DE",
+      "move_pct": -5.881,
+      "close": 527.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 EPS beat ($6.55 vs $5.70 est) was partially inflated by a one-time $272M tariff refund; FY2026 net income guidance held unchanged at $4.5\u20135.0B, Production & Precision Ag revenue fell 14% YoY, and a $1.2B full-year tariff headwind remains.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DE is a mega-cap Dow component (~$145B market cap, ~$527/share) likely excluded by sector or price-tier filters. The drop was earnings-driven with a ~7% pre-market gap; post-open reactive signals arrive too late to capture the initial leg.",
+      "suggestion": "Add an earnings-gap watchlist for S&P 100 names: if close-to-open gap \u2264 -4% on earnings day and 30-min volume \u22651.5\u00d7 20-day avg, allow a mean-reversion long entry, gated by confirming the EPS beat wasn't >50% one-time items (flags low-quality beats like this tariff refund).",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-05-22T19:33:14.303827+00:00"
+}
