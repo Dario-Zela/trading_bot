@@ -7,9 +7,10 @@ Walks the stop up on any position in profit:
   order for the symbol (if any), POST a fresh stop at the new
   price. T212's Invest API doesn't expose a PATCH on stops.
 
-Run by `.github/workflows/midday-trail.yml` at ~17:00 UK
-(mid-US-session, ~UK after-close so both brokers' positions are
-visible). Doesn't modify the underlying ledger — the trail
+Run by two region-split workflows: `midday-trail-us.yml` (~12:30 ET,
+mid-NYSE session, scans Alpaca) and `midday-trail-uk-eu.yml` (~12:00 UK,
+mid-LSE session, scans T212). Each trails only its own broker during
+that market's session. Doesn't modify the underlying ledger — the trail
 adjustment lives entirely broker-side; if a stop fires the existing
 exit pipeline picks up the close via order history.
 
