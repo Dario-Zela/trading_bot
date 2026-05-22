@@ -390,9 +390,17 @@ def _slice_ticker(df: pd.DataFrame, ticker: str, is_single: bool) -> pd.DataFram
     else:
         return None
     if isinstance(sub.columns, pd.MultiIndex):
-        # Flatten — innermost level should be the OHLCV name.
+        # Flatten to the OHLCV field name. Don't assume it's the innermost
+        # level: a single-ticker download can come back as (Price, Ticker)
+        # *or* (Ticker, Price), so picking c[-1] blindly yields ticker-named
+        # columns and every "Open"/"Close" lookup then KeyErrors (silently
+        # dropping the ticker). Pick whichever level holds the price field.
+        _PRICE_FIELDS = {"Open", "High", "Low", "Close", "Adj Close", "Volume"}
         sub = sub.copy()
-        sub.columns = [c[-1] if isinstance(c, tuple) else c for c in sub.columns]
+        sub.columns = [
+            next((p for p in c if p in _PRICE_FIELDS), c[-1]) if isinstance(c, tuple) else c
+            for c in sub.columns
+        ]
     return sub
 
 
