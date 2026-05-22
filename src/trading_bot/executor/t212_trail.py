@@ -160,7 +160,10 @@ def _trail_one_slot(creds: T212Creds, activation_pct: float, trail_pct: float) -
         if pct_up < eff_activation:
             continue
 
-        target_stop = round(cur * (1.0 - eff_trail / 100.0), 4)
+        # 2dp — T212 reports these instrument prices at 2 decimals and
+        # rejects finer-precision stopPrice payloads with 400 "Invalid
+        # payload" (a 4dp price, e.g. 1222.2432, was rejected live).
+        target_stop = round(cur * (1.0 - eff_trail / 100.0), 2)
         existing_stops = stops_by_ticker.get(ticker, [])
         old_stop_val: float | None = None
         old_stop_id: str | None = None
@@ -182,64 +185,48 @@ def _trail_one_slot(creds: T212Creds, activation_pct: float, trail_pct: float) -
             ))
             continue
 
-        # Cancel any existing stop(s) for this symbol before placing the new one
-        cancel_ok = True
-        if existing_stops:
-            for stp in existing_stops:
-                sid = str(stp.get("id") or "")
-                if not sid:
-                    continue
-                ok = _cancel_order(base, headers, sid)
-                if not ok:
-                    cancel_ok = False
-                    break
-                time.sleep(0.4)
-        if not cancel_ok:
-            actions.append(T212TrailAction(
-                ticker=ticker, slot=creds.slot, entry_price=entry, current_price=cur,
-                pct_up=pct_up, old_stop=old_stop_val, new_stop=target_stop,
-                status="failed",
-                reason="failed to cancel existing stop — leaving old stop in place",
-            ))
-            continue
-
         # Phase 12D — multi-day positions get GTC stops so they survive
         # overnight. Same-day round-trips stay on DAY validity so the
         # stop self-expires at session close.
         time_validity = "GTC" if ticker in multi_day_t212_tickers else "DAY"
 
-        # Place new stop. Negative quantity = sell.
+        # Safety reorder: place the new (tighter) stop BEFORE cancelling the
+        # old one. T212 has no modify-stop endpoint, so trailing is
+        # cancel+replace — but cancelling first means a rejected placement
+        # leaves the position with NO stop (this happened live: a 4dp price
+        # cancelled the old stop, then the new POST and the restore both
+        # failed → UNPROTECTED). Placing first guarantees we never strip
+        # protection: if the new placement is rejected we simply leave the
+        # existing stop untouched, and we only cancel the old stop once the
+        # new one is confirmed live.
         placed = _submit_stop(base, headers, ticker, -qty, target_stop, time_validity=time_validity)
-        if placed:
+        if not placed:
             actions.append(T212TrailAction(
                 ticker=ticker, slot=creds.slot, entry_price=entry, current_price=cur,
                 pct_up=pct_up, old_stop=old_stop_val, new_stop=target_stop,
-                status="placed" if old_stop_val is None else "tightened",
-                reason=f"validity={time_validity}",
+                status="failed",
+                reason=(
+                    "new stop POST failed — left existing stop in place"
+                    if existing_stops
+                    else "new stop POST failed — position has no stop (UNPROTECTED)"
+                ),
             ))
-        else:
-            # Phase 10C — try to recover by re-posting the OLD stop level
-            # before giving up. Better the original protection than none.
-            recovered = False
-            if old_stop_val is not None:
-                recovered = _submit_stop(
-                    base, headers, ticker, -qty, old_stop_val,
-                    time_validity=time_validity,
-                )
-            if recovered:
-                actions.append(T212TrailAction(
-                    ticker=ticker, slot=creds.slot, entry_price=entry, current_price=cur,
-                    pct_up=pct_up, old_stop=old_stop_val, new_stop=old_stop_val,
-                    status="failed",
-                    reason=f"new stop POST failed; restored old stop at {old_stop_val:.4f}",
-                ))
-            else:
-                actions.append(T212TrailAction(
-                    ticker=ticker, slot=creds.slot, entry_price=entry, current_price=cur,
-                    pct_up=pct_up, old_stop=old_stop_val, new_stop=target_stop,
-                    status="failed",
-                    reason="cancelled old stop but new stop POST failed AND restore failed — UNPROTECTED",
-                ))
+            continue
+
+        # New stop is live — cancel the prior stop(s) so only the new one
+        # remains. A failed cancel here leaves a redundant (looser) stop, not
+        # an unprotected position, so it's the safe direction to err.
+        for stp in existing_stops:
+            sid = str(stp.get("id") or "")
+            if sid:
+                _cancel_order(base, headers, sid)
+                time.sleep(0.4)
+        actions.append(T212TrailAction(
+            ticker=ticker, slot=creds.slot, entry_price=entry, current_price=cur,
+            pct_up=pct_up, old_stop=old_stop_val, new_stop=target_stop,
+            status="placed" if old_stop_val is None else "tightened",
+            reason=f"validity={time_validity}",
+        ))
         time.sleep(0.4)
 
     return actions
