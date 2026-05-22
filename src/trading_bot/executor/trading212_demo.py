@@ -325,11 +325,13 @@ class Trading212DemoExecutor(Executor):
                 if reconciled is not None:
                     recovered = self._fill_price_of(reconciled)
                     if recovered is not None and recovered > 0:
-                        trade["entry_price"] = self._to_gbp(t212_ticker, recovered)
-                        log.info(
-                            "Reconciled pending entry for %s (order %s): entry_price=%.4f from T212 history",
-                            trade["ticker"], trade["broker_order_id"], trade["entry_price"],
-                        )
+                        converted = self._to_gbp(t212_ticker, recovered)
+                        if converted is not None:
+                            trade["entry_price"] = converted
+                            log.info(
+                                "Reconciled pending entry for %s (order %s): entry_price=%.4f from T212 history",
+                                trade["ticker"], trade["broker_order_id"], converted,
+                            )
                 if not trade.get("entry_price") or float(trade["entry_price"]) == 0.0:
                     log.warning(
                         "Could not reconcile entry price for pending order %s on %s — "
@@ -422,14 +424,18 @@ class Trading212DemoExecutor(Executor):
                         # so trail_exits picks it up.
                         hist_order = (hist.get("order") or {}) if isinstance(hist, dict) else {}
                         hist_otype = (hist_order.get("type") or "").upper()
-                        if hist_otype in ("STOP", "STOP_LIMIT"):
-                            exit_reason = "trail_stop"
+                        exit_reason = "trail_stop" if hist_otype in ("STOP", "STOP_LIMIT") else "scheduled"
+                        if close_fill_price is None:
+                            log.warning(
+                                "Recovered close for %s from T212 history but FX conversion "
+                                "failed — closing with unrecoverable P&L",
+                                trade["ticker"],
+                            )
                         else:
-                            exit_reason = "scheduled"
-                        log.info(
-                            "Recovered close for %s from T212 history: exit_price=%.4f (type=%s)",
-                            trade["ticker"], close_fill_price, hist_otype or "?",
-                        )
+                            log.info(
+                                "Recovered close for %s from T212 history: exit_price=%.4f (type=%s)",
+                                trade["ticker"], close_fill_price, hist_otype or "?",
+                            )
                     else:
                         exit_reason = "cancelled"
                 else:
@@ -455,6 +461,12 @@ class Trading212DemoExecutor(Executor):
                 else:
                     close_fill_price = self._to_gbp(t212_ticker, raw_fill)
                     exit_reason = "scheduled"
+                    if close_fill_price is None:
+                        log.warning(
+                            "T212 close FILLED for %s but FX conversion failed — "
+                            "closing with unrecoverable P&L",
+                            trade["ticker"],
+                        )
 
             entry_price = float(trade["entry_price"])
             quantity = float(trade["quantity"])
@@ -598,7 +610,14 @@ class Trading212DemoExecutor(Executor):
                 entry_price = float(avg_price)
             except (TypeError, ValueError):
                 continue
-            entry_price = self._to_gbp(t212_ticker, entry_price)
+            entry_price_gbp = self._to_gbp(t212_ticker, entry_price)
+            if entry_price_gbp is None:
+                log.warning(
+                    "Can't convert orphan entry price for %s to GBP — skipping reconcile",
+                    yf_ticker,
+                )
+                continue
+            entry_price = entry_price_gbp
 
             client_order_id = f"{attribute_to_strategy}-reconciled-{uuid.uuid4().hex[:8]}"
             record = TradeRecord(
@@ -806,27 +825,35 @@ class Trading212DemoExecutor(Executor):
                 continue
         return None
 
-    def _to_gbp(self, t212_ticker: str, raw_price: float) -> float:
+    def _to_gbp(self, t212_ticker: str, raw_price: float) -> float | None:
         """Normalize a T212-reported price to the ledger's base unit (£).
 
         T212 quotes LSE in GBX (pence — divide by 100), EUR/USD/etc. in
         their native currency (multiply by spot FX rate). FX rates come
         from yfinance via the fx module and are cached per process.
-        Falls back to raw_price (unchanged) only if both the instrument
-        record and FX lookup are unavailable — caller decides whether
-        the resulting figure is trustworthy.
+
+        Returns None when the conversion can't be trusted — the instrument
+        record is missing (currency unknown) or the FX rate is unavailable.
+        Callers MUST treat None as "price unknown" (record pending / skip /
+        unrecoverable P&L) rather than recording native units as if they
+        were GBP. GBP/GBX use fixed factors and never fail; only EUR/USD/etc.
+        can hit the FX-unavailable path.
         """
         inst = self._get_translator().get_instrument(t212_ticker)
         if inst is None:
-            return raw_price
+            log.warning(
+                "No T212 instrument record for %s — cannot convert %s to GBP",
+                t212_ticker, raw_price,
+            )
+            return None
         ccy = (inst.get("currencyCode") or "").upper()
         mult = to_gbp_multiplier(ccy)
         if mult is None:
             log.warning(
-                "FX rate unavailable for %s (currency=%s) — leaving %s price as-is in native units",
-                t212_ticker, ccy, t212_ticker,
+                "FX rate unavailable for %s (currency=%s) — cannot convert to GBP",
+                t212_ticker, ccy,
             )
-            return raw_price
+            return None
         return raw_price * mult
 
     _STALE_LOOKBACK_DAYS = 7
