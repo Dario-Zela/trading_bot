@@ -85,7 +85,7 @@ def compute_metrics(
     )
 
     trades_window = _read_trades(strategy_id, region, start, end)
-    _fill_trade_metrics(m, trades_window)
+    _fill_trade_metrics(m, trades_window, _strategy_capital_gbp(strategy_id))
 
     preds_window = _read_predictions(strategy_id, region, start, end)
     _fill_prediction_metrics(m, preds_window)
@@ -193,7 +193,19 @@ def _read_predictions(strategy_id: str, region: str, start: date, end: date) -> 
     return out
 
 
-def _fill_trade_metrics(m: StrategyMetrics, trades: list[dict]) -> None:
+def _strategy_capital_gbp(strategy_id: str) -> float:
+    """Configured capital for a strategy, used to normalise drawdown to a
+    percentage. Falls back to £10k if the config can't be loaded (e.g. a
+    spawned variant whose config was since removed)."""
+    try:
+        from trading_bot.strategy.registry import load_strategy_config
+        cap = float(load_strategy_config(strategy_id).capital_gbp)
+        return cap if cap > 0 else 10000.0
+    except Exception:
+        return 10000.0
+
+
+def _fill_trade_metrics(m: StrategyMetrics, trades: list[dict], capital_gbp: float = 10000.0) -> None:
     if not trades:
         return
     pnl_pcts: list[float] = []
@@ -226,8 +238,10 @@ def _fill_trade_metrics(m: StrategyMetrics, trades: list[dict]) -> None:
         peak = max(peak, cum)
         dd = cum - peak  # negative when below peak
         max_dd = min(max_dd, dd)
-    # Express as pct of strategy capital — approximate using £10k default
-    m.max_drawdown_pct = round((max_dd / 10000.0) * 100.0, 2)
+    # Express as pct of the strategy's configured capital so the demotion
+    # gate compares like-for-like across differently-sized strategies.
+    denom = capital_gbp if capital_gbp > 0 else 10000.0
+    m.max_drawdown_pct = round((max_dd / denom) * 100.0, 2)
 
 
 def _fill_prediction_metrics(m: StrategyMetrics, preds: list[dict]) -> None:
