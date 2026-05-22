@@ -172,13 +172,27 @@ def run_claude_for_json(
     return _extract_json(result.text)
 
 
+def _loads_lenient(s: str):
+    """json.loads, but tolerant of trailing commas — the most common defect in
+    JSON emitted by smaller models (Haiku's wide-scoring stage hit exactly this
+    live). Strict parsing is attempted first, so well-formed JSON is parsed
+    unchanged and the good path is never altered; the cleanup only runs on text
+    that already failed a strict parse. Raises json.JSONDecodeError on total
+    failure, so existing callers' `except json.JSONDecodeError` still applies."""
+    try:
+        return json.loads(s)
+    except json.JSONDecodeError:
+        cleaned = re.sub(r",(\s*[}\]])", r"\1", s)  # comma before } or ]
+        return json.loads(cleaned)
+
+
 def _extract_json(text: str):
     # 1. Look for closed ```json fenced block.
     fenced = re.search(r"```(?:json)?\s*\n(.*?)\n```", text, re.DOTALL)
     if fenced:
         candidate = fenced.group(1).strip()
         try:
-            return json.loads(candidate)
+            return _loads_lenient(candidate)
         except json.JSONDecodeError:
             pass  # fall through
 
@@ -186,15 +200,19 @@ def _extract_json(text: str):
     stripped = text.strip()
     if stripped and stripped[0] in "[{":
         try:
-            return json.loads(stripped)
+            return _loads_lenient(stripped)
         except json.JSONDecodeError:
             pass
 
-    # 3. Find first balanced {...} or [...] in the text.
-    for open_ch, close_ch in [("{", "}"), ("[", "]")]:
-        start = text.find(open_ch)
-        if start < 0:
-            continue
+    # 3. Find the first balanced {...} or [...] in DOCUMENT ORDER — whichever
+    #    opener appears first. (Trying '{' before '[' unconditionally mis-reads
+    #    a bare array of pick objects in prose as just its first object.)
+    openers = sorted(
+        (text.find(o), o, c)
+        for o, c in (("{", "}"), ("[", "]"))
+        if text.find(o) >= 0
+    )
+    for start, open_ch, close_ch in openers:
         depth = 0
         for i in range(start, len(text)):
             if text[i] == open_ch:
@@ -204,7 +222,7 @@ def _extract_json(text: str):
                 if depth == 0:
                     candidate = text[start : i + 1]
                     try:
-                        return json.loads(candidate)
+                        return _loads_lenient(candidate)
                     except json.JSONDecodeError:
                         break
 
@@ -228,7 +246,7 @@ def _extract_json(text: str):
         repaired = _repair_truncated_json(body)
         if repaired is not None:
             try:
-                result = json.loads(repaired)
+                result = _loads_lenient(repaired)
                 log.warning(
                     "Claude Code response was truncated; recovered partial JSON "
                     "(%d → %d chars). Output token limit may need attention.",
