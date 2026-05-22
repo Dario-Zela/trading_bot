@@ -283,6 +283,11 @@ def t212_instrument_type(inst_type: str) -> str:
 
 # Exchanges with UK stamp duty on share purchases. LSE main market only.
 _UK_LSE_EXCHANGES = {"LSE", "LSE_INTL", "LSEAIM"}     # LSEAIM kept as code, see exemption below
+
+# GBX (pence) is the same currency as GBP, just a 1/100 sub-unit. T212 tags
+# ordinary LSE shares as "GBX", so the fee model must treat it like GBP:
+# no FX fee, and on the UK share register for stamp-duty purposes.
+_GBP_UNITS = frozenset({"GBP", "GBX"})
 _UK_AIM_EXCHANGES = {"LSEAIM", "AIM"}
 
 # Instruments exempt from UK stamp duty even on the LSE main market.
@@ -321,7 +326,7 @@ def compute_fees(ctx: TradeContext) -> FeeBreakdown:
     exit_gbp = ctx.exit_notional_gbp
 
     # --- FX fees (T212 + Alpaca-shadow) ---
-    if ccy != "GBP":
+    if ccy not in _GBP_UNITS:
         b.fx_fee_entry_gbp = entry_gbp * T212_FX_FEE_PER_LEG
         b.fx_fee_exit_gbp = exit_gbp * T212_FX_FEE_PER_LEG
 
@@ -334,7 +339,7 @@ def compute_fees(ctx: TradeContext) -> FeeBreakdown:
     # exchange=LSE AND currency != GBP. Same logic also excludes the
     # rare USD-denominated LSE non-GDR listings, which are similarly
     # not on the UK share register.
-    on_uk_register = (ccy == "GBP")
+    on_uk_register = ccy in _GBP_UNITS
     if (exch in _UK_LSE_EXCHANGES and exch not in _UK_AIM_EXCHANGES
             and typ not in _STAMP_DUTY_EXEMPT_TYPES and on_uk_register):
         b.stamp_duty_gbp = entry_gbp * UK_STAMP_DUTY_RATE
@@ -399,10 +404,10 @@ def estimate_round_trip_cost_pct(
     ccy = (currency or "GBP").upper()
     exch = (exchange or "").upper()
     typ = (instrument_type or "share").lower()
-    if ccy != "GBP":
+    if ccy not in _GBP_UNITS:
         b.fx_fee_entry_gbp = notional_gbp * T212_FX_FEE_PER_LEG
         b.fx_fee_exit_gbp = notional_gbp * T212_FX_FEE_PER_LEG
-    on_uk_register = (ccy == "GBP")
+    on_uk_register = ccy in _GBP_UNITS
     if (exch in _UK_LSE_EXCHANGES and exch not in _UK_AIM_EXCHANGES
             and typ not in _STAMP_DUTY_EXEMPT_TYPES and on_uk_register):
         b.stamp_duty_gbp = notional_gbp * UK_STAMP_DUTY_RATE
