@@ -1,0 +1,122 @@
+{
+  "date": "2026-05-22",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 ICG.L +3%, MRK.DE +3%, DSFIR.AS +3%, III.L +2%, ZAL.DE +2%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (CTEC.L -8%, AUTO.L -6%, STLAP.PA -4%, CBK.DE -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: CTEC.L (-7.66%) \u2014 AGM 4-month trading update (21 May) showed organic revenue growth of 1.6% vs 2.8% Visible Alpha consensus; InnovaMatrix drag (~300 bp) and Infusion Care miss triggered the -7.7% sell-off on 22 May. Why we passed: Outside any active strategy's universe \u2014 CTEC.L is a FTSE 100 medical-device large-cap. The decline was a catalyst gap (AGM trading update miss) requiring pre-announcement positioning; end-of-day momentum/mean-reversion signals cannot capture an intraday gap opened on a fundamental surprise.",
+  "top_movers": [
+    {
+      "ticker": "ICG.L",
+      "move_pct": 3.164,
+      "close": 18.91,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FY2026 full-year results (RNS released 21 May post-close): fundraising $17B materially beat consensus, FRE +23% to \u00a3350M, fee-earning AUM +11% to $87B; 16th consecutive annual dividend increase.",
+      "miss_reason": "Outside any active strategy's universe. ICG.L is a FTSE 100 alternative asset manager (private credit/equity). The gain was a post-results gap at open on 22 May driven by earnings published after close on 21 May; capturing it required pre-open positioning on results day, which no current strategy implements for this se",
+      "suggestion": "Add FTSE 100 asset-managers (ICB sector 8777) to the earnings-event universe and configure the earnings-gate to release names showing a post-close RNS gap \u2265+2% at open on results day.",
+      "failed": false
+    },
+    {
+      "ticker": "MRK.DE",
+      "move_pct": 2.688,
+      "close": 126.05,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q1 2026 beat (EPS \u20ac2.11 vs \u20ac1.99 est; EBITDA guidance raised to \u20ac5.7\u20136.1B) continuing to lift shares 9 days post-results; AI semiconductor materials boom in the Electronics segment adds sector tailwind.",
+      "miss_reason": "Outside any active strategy's universe. MRK.DE (DAX ~\u20ac55B conglomerate: healthcare, life science, semiconductor materials) sits across sector boundaries; primary +6% earnings-day move on May 13 precedes any post-signal reactive entry.",
+      "suggestion": "Expand uk-eu universe to include STOXX 600 diversified-science names (MRK.DE class); add a post-earnings-gap filter \u2014 \u2265+4% results-day gap plus guidance raise \u2014 allowing a 3-to-5-day continuation entry capped at a -1.5% stop.",
+      "failed": false
+    },
+    {
+      "ticker": "DSFIR.AS",
+      "move_pct": 2.688,
+      "close": 69.54,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "DSM-Firmenich's dual listing on SIX Swiss Exchange went live May 21, drawing fresh Swiss institutional demand; ongoing \u20ac540M share buyback provides additional floor support.",
+      "miss_reason": "Outside any active strategy's universe \u2014 large-cap Euronext Amsterdam specialty-ingredients stock (~\u20ac18B market cap). Move was driven by a pre-announced calendar event (new exchange listing effective), not a real-time price breakout detectable by technical screens.",
+      "suggestion": "Add a corporate-action calendar gate: flag names with an upcoming or just-effective exchange listing/index-addition (T-1 to T+2) as candidate watch-list entries, reviewed daily with a conservative size cap, to capture structural-demand events like this one.",
+      "failed": false
+    },
+    {
+      "ticker": "III.L",
+      "move_pct": 2.478,
+      "close": 22.33,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-results analyst upgrade on 19 May: seven analysts raised FY2027 consensus revenue 13% to \u00a36.2B and EPS to \u00a35.77, extending a delayed bounce from the ~12% results-day sell-off on 14 May.",
+      "miss_reason": "Outside any active strategy's universe. 3i is a FTSE 100 PE firm whose NAV-driven pricing resists momentum signals; the +2.48% is a 3-day lag on analyst upgrades from 19 May, not an intraday gap-up that a news-reactive bot could front-run.",
+      "suggestion": "Add a post-results recovery scan: flag FTSE 100 names with results-day drawdown \u22658% that receive analyst EPS consensus upgrades \u22655% within 3 sessions; enter on volume-confirmed reversal day (\u22651.2\u00d7 20-day avg vol), 5-day hold limit.",
+      "failed": false
+    },
+    {
+      "ticker": "ZAL.DE",
+      "move_pct": 2.286,
+      "close": 20.58,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Goldman Sachs published a BaFin voting-rights notification disclosing it crossed the 3% threshold in Zalando on 14 May 2026 (Europe-wide distribution: 22 May), signalling institutional accumulation; Q1 2026 adjusted EBIT margin also improved YoY to 2.2%.",
+      "miss_reason": "Outside any active strategy's universe. ZAL.DE is a XETRA large-cap e-commerce name; the intraday driver was a regulatory substantial-shareholding disclosure \u2014 a non-recurring, pre-positioning signal that momentum and mean-reversion filters cannot capture once the filing is published.",
+      "suggestion": "Add a BaFin/EU transparency-notification monitor that flags XETRA names with a \u22653% voting-rights threshold crossing for same-session long entry review, gated by a minimum 1\u00d7 avg-volume confirmation in the first 30 minutes.",
+      "failed": false
+    },
+    {
+      "ticker": "IGG.L",
+      "move_pct": 2.105,
+      "close": 18.43,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "19 May AGM trading update showed Q1 organic revenue +19% YoY to \u00a3331m, net trading revenue +25%, FY2026 guidance raised to +10\u201315% organic growth with mid-40% EBITDA margins; stock continued digesting the beat three days later.",
+      "miss_reason": "Outside any active strategy's universe. IGG.L (FTSE 250 retail CFD/spread-bet broker) is likely excluded by sector filters. The +2.10% move is a 3-day lagged digest of the 19 May AGM update; news-reactive strategies firing only on the announcement day would miss such delayed absorption.",
+      "suggestion": "Add FTSE 250 financial-services names with ADTV \u2265\u00a33m to the news-reactive universe, and extend universe eligibility to T+1\u2013T+3 after any trading update where the announcement-day return exceeds +1.5%.",
+      "failed": false
+    },
+    {
+      "ticker": "CTEC.L",
+      "move_pct": -7.656,
+      "close": 1.978,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "AGM 4-month trading update (21 May) showed organic revenue growth of 1.6% vs 2.8% Visible Alpha consensus; InnovaMatrix drag (~300 bp) and Infusion Care miss triggered the -7.7% sell-off on 22 May.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CTEC.L is a FTSE 100 medical-device large-cap. The decline was a catalyst gap (AGM trading update miss) requiring pre-announcement positioning; end-of-day momentum/mean-reversion signals cannot capture an intraday gap opened on a fundamental surprise.",
+      "suggestion": "For the news-reactive strategy, add an RNS trading-update event calendar so FTSE 100/250 names with scheduled AGM/interim updates are flagged; gate short entries on gap-down \u22655% and volume \u22651.5\u00d7 20-day average within 30 min of open.",
+      "failed": false
+    },
+    {
+      "ticker": "AUTO.L",
+      "move_pct": -5.929,
+      "close": 4.6687,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FY26 annual results (year to 31 Mar 2026) missed consensus \u2014 revenue \u00a3624.3M below estimates; FY27 op-profit guidance midpoint ~\u00a3405M vs analyst consensus \u00a3418M; JPMorgan kept Underweight, citing 'challenging road ahead'.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AUTO.L is a FTSE 100 large-cap digital automotive marketplace. The decline was earnings-catalyst-driven (full-year results + below-consensus FY27 guidance in a 7am RNS), requiring pre-positioning before the open to capture the move.",
+      "suggestion": "Add an earnings-gate screener for FTSE 100/250 names releasing full-year RNS results: if FY+1 guidance midpoint misses buy-side consensus by \u22651.5%, flag for a momentum-short entry within 30 min of open, gated by minimum \u00a350M ADV to match existing liquidity floors.",
+      "failed": false
+    },
+    {
+      "ticker": "STLAP.PA",
+      "move_pct": -4.2,
+      "close": 6.158,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Stellantis Investor Day 'FaSTLAne 2030' plan (May 21) disappointed; stock opened ~7% lower on May 21, staged intraday recovery, then resumed selling on May 22 as overnight digest found 7% AOI margin target and 2027 FCF timeline underwhelming.",
+      "miss_reason": "Outside any active strategy's universe. Stellantis (~\u20ac26B market cap, EU large-cap auto OEM) carries chronic margin pressure, posted a \u20ac22.3B net loss in 2025, and is likely excluded by fundamental quality or sector filters before any momentum/news signal is evaluated.",
+      "suggestion": "(no actionable change \u2014 the May 22 leg is a post-Investor-Day short-fade requiring short-selling capability; the name's turnaround volatility profile makes it unsuitable for the long-only universe without a dedicated OEM mean-reversion strategy with earnings-event gating)",
+      "failed": false
+    },
+    {
+      "ticker": "CBK.DE",
+      "move_pct": -3.957,
+      "close": 35.68,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "EUR 1.10 dividend went ex 2026-05-21 (~3% mechanical strip); residual ~1% reflects caution after Commerzbank's board rejected UniCredit's \u20ac37B all-share bid on May 18 as undervalued.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CBK.DE is a DAX large-cap under active M&A siege. ~75% of the move is a mechanical ex-div strip (EUR 1.10), not a true signal; a momentum bot without ex-date awareness fires on noise.",
+      "suggestion": "Add an ex-dividend date look-up to the signal pipeline: suppress any name within T\u00b10 of its ex-date from generating momentum/mean-reversion entries, to avoid mistaking scheduled income strips for genuine price breaks.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-05-22T15:05:32.196269+00:00"
+}
