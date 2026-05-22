@@ -283,6 +283,15 @@ def _parse_response(text: str, week_id: str) -> tuple[str, list[MacroPrediction]
     """Extract the three sections from Claude's response."""
     # 1. View markdown: everything before the first ```predictions block
     pred_block_match = re.search(r"```predictions\s*\n", text, re.IGNORECASE)
+    if pred_block_match is None:
+        # No fence → no predictions/grades get parsed AND the prediction prose
+        # leaks into the view markdown. Surface it rather than silently
+        # publishing a polluted view with zero predictions recorded.
+        log.warning(
+            "macro: no ```predictions fence in LLM response — view may include "
+            "prediction prose and no predictions/grades will be recorded for %s",
+            week_id,
+        )
     view_md = text[: pred_block_match.start()].strip() if pred_block_match else text.strip()
     # Strip a leading "### 1. New macro view" type heading if present
     view_md = re.sub(r"^#{1,3}\s+1\.?\s*New macro view.*?\n", "", view_md, flags=re.IGNORECASE)

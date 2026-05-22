@@ -67,8 +67,10 @@ def get_technicals(
 ) -> dict[str, Technicals]:
     """Compute a fixed set of technical indicators for each ticker.
 
-    Returns {ticker: Technicals}. Tickers with insufficient history (less than
-    ~55 trading days for the 50-day SMA + Wilder warmup) are omitted.
+    Returns {ticker: Technicals}. Tickers with fewer than 30 trading days of
+    history are omitted entirely. Longer-window indicators (e.g. the 50-day
+    SMA, which wants ~55 bars for a clean value) are reported as None when a
+    returned ticker doesn't have enough bars for them.
     """
     if isinstance(tickers, str):
         tickers = [tickers]

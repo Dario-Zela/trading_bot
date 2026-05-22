@@ -255,8 +255,6 @@ def _build_subject(run_date: date, region: str, exits: dict[str, list[dict]]) ->
     Keeps the date + region prefix at the front so inbox scanning still
     works; the P&L tail makes 'did today win or lose?' a one-glance read.
     """
-    broker_pnl = broker_n = 0.0, 0
-    shadow_pnl = shadow_n = 0.0, 0
     broker_total = 0.0
     broker_count = 0
     shadow_total = 0.0
