@@ -1,0 +1,78 @@
+name: OHLCV cache seed (one-shot)
+
+# Manually dispatched. Decompresses state/seed/ohlcv.db.zst (a local
+# cache snapshot with full 70-day depth across ~14k tickers) and
+# saves it into actions/cache so subsequent pipeline workflows
+# restore a complete cache state.
+#
+# Needed when the rolling actions/cache state has drifted to the
+# point that LLM strategies' get_technicals returns 0 candidates
+# (insufficient bars-per-ticker for RSI/MACD computation).
+#
+# Run this ONCE, then remove the state/seed/ tree from the repo —
+# it's a one-shot bootstrap.
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: ohlcv-seed
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Decompress seed into place
+        run: |
+          if [ ! -f state/seed/ohlcv.db.zst ]; then
+            echo "state/seed/ohlcv.db.zst not present — nothing to seed"
+            exit 1
+          fi
+          mkdir -p state
+          # zstd is pre-installed on ubuntu-latest GH runners.
+          # --long is needed because the input was compressed with --long
+          # (allows larger back-references; required on decompression).
+          zstd --decompress --long -o state/ohlcv.db state/seed/ohlcv.db.zst
+          ls -lh state/ohlcv.db
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Sanity-check the seeded cache
+        run: |
+          python -c "
+          from trading_bot.tools.ohlcv_store import row_count, store_size_bytes
+          print(f'seeded cache: rows={row_count():,}, size={store_size_bytes()/1_048_576:.1f} MB')
+          # Spot-check a few well-known tickers
+          import sqlite3
+          c = sqlite3.connect('state/ohlcv.db')
+          for tkr in ('AAPL', 'NVDA', 'BARC.L', 'EXH1.DE', 'CURY.L'):
+              r = c.execute('SELECT COUNT(*) FROM bars WHERE ticker = ?', (tkr,)).fetchone()
+              print(f'  {tkr}: {r[0]} bars')
+          "
+
+      - name: Save OHLCV cache
+        # Save under a NEW unique key. The restore-keys: ohlcv-db-v1-
+        # prefix in every consuming workflow will pick this up as the
+        # most recent matching entry.
+        uses: actions/cache/save@v4
+        with:
+          path: state/ohlcv.db
+          key: ohlcv-db-v1-seed-${{ github.run_id }}
