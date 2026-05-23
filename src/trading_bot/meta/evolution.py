@@ -319,44 +319,6 @@ def _metrics_to_dict(m: StrategyMetrics) -> dict:
     }
 
 
-def _build_backtest_block() -> str:
-    """Read the latest weekly backtest summary and render it as a
-    markdown table for the evolution prompt. Empty placeholder if
-    none has been generated yet."""
-    try:
-        from trading_bot.meta.backtest import latest_backtest_summary
-    except Exception:
-        return "_(backtest module unavailable)_"
-    summary = latest_backtest_summary()
-    if not summary or not summary.get("strategies"):
-        return "_(no backtest summary available yet — pre-step may not have run)_"
-    lines: list[str] = []
-    # Backwards-compat: older summary files have `lookahead_bias_caveat`
-    # (the replay-era field); newer ones have `methodology_note`.
-    note = summary.get("methodology_note") or summary.get("lookahead_bias_caveat") or ""
-    lines.append(
-        f"Window: {summary.get('window_days')}-day. **Methodology:** {note}"
-    )
-    lines.append("")
-    lines.append("| Strategy | Region | Source | Trades | Total P&L% | Hit% | W/L |")
-    lines.append("|---|---|---|---:|---:|---:|---:|")
-    for s in summary["strategies"]:
-        if s.get("error"):
-            lines.append(
-                f"| {s.get('strategy_id')} | {s.get('region')} | — | — | "
-                f"_error: {s['error'][:60]}_ | — | — |"
-            )
-            continue
-        lines.append(
-            f"| {s.get('strategy_id')} | {s.get('region')} | "
-            f"{s.get('source', '—')} | "
-            f"{s.get('n_trades', 0)} | {s.get('total_pnl_pct', 0):+.2f}% | "
-            f"{(s.get('hit_rate', 0) or 0)*100:.0f}% | "
-            f"{s.get('win_loss_ratio', 0):.2f} |"
-        )
-    return "\n".join(lines)
-
-
 def _build_tool_attribution_block(snapshot: list[dict]) -> str:
     """Per-strategy tool-attribution summary spliced into the evolution
     prompt. One section per strategy: each tool's IC delta over the
@@ -443,10 +405,6 @@ def _build_prompt(today: date, snapshot: list[dict], lessons: str) -> str:
     # vs. dead weight that should be tuned out of the `tools` list.
     tool_attribution_block = _build_tool_attribution_block(snapshot)
 
-    # Backtest summary from the pre-step. Shows "what would today's
-    # code have done last 14 days" per strategy — useful as a sanity
-    # check before tuning prompts further.
-    backtest_block = _build_backtest_block()
     return f"""You are the weekly evolution agent for the trading bot. Today is
 {today.isoformat()}. Each strategy can run independently across regions
 (`us`, `uk-eu`, `asia`), with its own tier and slot per region. Below is a
@@ -527,18 +485,6 @@ that's a confidence signal worth flagging). Don't propose anything
 that requires capability we don't have — options, leverage,
 intraday. Don't restate the research; cite it.
 
-## Walk-forward backtest (today's code on the last 14 days)
-
-{backtest_block}
-
-If a strategy's backtested P&L is positive but its LIVE P&L over
-the same window is negative, something in the production pipeline
-is bleeding the edge — usually the cost gate / sizing / earnings
-gate filtering picks that backtest accepted. Likely tunes: lower
-cost_gate_multiplier, drop the earnings filter window, raise
-max_position_pct. If the backtested P&L is ALSO negative, the
-strategy has no replicable edge — demote it or rewrite the prompt.
-
 ## Tool attribution (does each prompt input actually move IC?)
 
 Per-strategy IC contribution by tool, computed over the trailing
@@ -600,11 +546,10 @@ Action thresholds (use the data, don't be sentimental):
   sunk-cost prompt iteration. Same threshold applies whether the
   strategy is on Alpaca (US) or T212 (UK-EU); the action handler
   picks the right slot to free.
-- **Tune** when the backtest column shows the strategy WOULD have
-  done better under current code than it actually did live — the
-  cost gate / earnings filter / sizing is bleeding edge. Target
-  the most likely culprit; one tune action can adjust several
-  fields.
+- **Tune** when the live IC / hit-rate / P&L signal points at a
+  specific bleeder — cost gate, earnings filter, sizing, or a
+  tool the attribution block flags as negative. Target the most
+  likely culprit; one tune action can adjust several fields.
 - **Spawn-variant** is rare — only when a paper from the external
   research block lines up with a gap in the slate, or when one
   region's metrics are wildly better than another's (suggests a

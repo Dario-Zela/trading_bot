@@ -46,12 +46,10 @@ jobs:
           claude --version
 
       - name: Restore OHLCV cache
-        # Without this the rule-based backtest replay below calls
-        # get_history() over the entire 6.7k US + 7.7k UK t212 universe
-        # × 14 days fresh from yfinance, which rate-limits and stalls
-        # the workflow for hours. The shared ohlcv-db-v1-* cache key is
-        # the same one the daily-update + pipeline workflows use, so
-        # this restores whatever the most recent update wrote.
+        # missed-movers + reflection prep call get_history() during the
+        # evolution agent's prompt assembly; without the restored cache
+        # they fall through to yfinance and rate-limit. Same
+        # ohlcv-db-v1-* key the daily-update + pipeline workflows use.
         uses: actions/cache/restore@v5
         with:
           path: state/ohlcv.db
@@ -72,20 +70,6 @@ jobs:
           python -m trading_bot.pipeline weekly-external-research || \
             echo "External research scan failed (non-fatal)"
 
-      - name: Backtest pass (replay every strategy on last 14d)
-        env:
-          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          STOOQ_API_KEY: ${{ secrets.STOOQ_API_KEY }}
-        run: |
-          # Replay every active strategy over the trailing 14 days
-          # using today's code + prompts. Surface result to the
-          # evolution prompt as a "what would current code have done
-          # last week vs what actually happened" sanity check.
-          # Non-fatal — evolution still runs with last week's summary
-          # if this step misses (or no summary at all on first run).
-          python -m trading_bot.pipeline weekly-backtest-pass || \
-            echo "Backtest pass failed (non-fatal)"
-
       - name: Run weekly evolution
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
@@ -95,7 +79,8 @@ jobs:
           ALPACA_API_SECRET__2: ${{ secrets.ALPACA_API_SECRET__2 }}
           ALPACA_API_KEY__3: ${{ secrets.ALPACA_API_KEY__3 }}
           ALPACA_API_SECRET__3: ${{ secrets.ALPACA_API_SECRET__3 }}
-          # Stooq fallback for the backtest-pass yfinance gaps
+          # Stooq is the OHLCV secondary, used as a yfinance fallback by
+          # missed-movers + reflection's get_history() calls.
           STOOQ_API_KEY: ${{ secrets.STOOQ_API_KEY }}
           # gh CLI uses GH_TOKEN to authenticate against the GitHub API for issue creation
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

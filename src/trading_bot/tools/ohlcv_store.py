@@ -11,8 +11,8 @@ Why local cache:
     for the universe. With the per-strategy LLM pre-filter that's
     already reduced to ~40s, but the cache makes EVEN that ~free
     after warm-up.
-  - Backtests (weekly evolution's walk-forward pass) become fast and
-    reproducible without hammering yfinance.
+  - Evolution-time reads (reflection + missed-movers prep) become
+    fast and reproducible without hammering yfinance.
   - The data is owned by us, so a yfinance outage doesn't kill the
     morning pipeline.
 
