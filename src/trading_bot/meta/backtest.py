@@ -1,33 +1,38 @@
-"""Phase 11I — technicals-only backtest framework.
+"""Phase 11I — backtest framework for the weekly evolution agent.
 
-Walk a date range; for each trading day, invoke the strategy's
-`select_picks(on_date)` against historical data (yfinance already
-supports `end_date` everywhere), simulate fills at *the next day's*
-close, record P&L, and aggregate.
+Two paths, picked by strategy implementation:
 
-Bounded scope:
-- Rule-based + momentum-stub strategies replay fully (deterministic).
-- LLM strategies can replay too, but they'll hit the live Claude
-  Code subprocess per day → expensive + slow. The `--limit-days N`
-  flag exists for that mode so you can sanity-check on 5 days
-  before committing to a year.
-- News / macro context is NOT replayed — they don't have historical
-  archives. The LLM sees today's macro stub when called in backtest
-  mode. Acknowledged limitation; results are conservative.
+- Rule-based + momentum-stub strategies: `run_backtest` walks a date
+  range, invokes `select_picks(on_date)` against historical data, and
+  simulates fills at the next-day close. Deterministic and cheap.
 
-Outputs a Backtest dataclass + writes a markdown report to
+- LLM strategies: `grade_from_live_predictions` reads
+  `state/predictions.jsonl` and aggregates the picks the strategy
+  *actually* emitted during the window, scored by the live
+  prediction-grader. No Claude calls at backtest time. No lookahead
+  bias — these are the bets the strategy genuinely made, not what a
+  re-invoked LLM would pick today with a backdated label.
+
+We deliberately do *not* replay LLM strategies any more. Re-asking
+present-day Claude "what would you have picked last Tuesday?" mostly
+measures today-Claude with hindsight (the prompt-time tools fetch
+current data; the underlying model is the current weights), not the
+strategy's historical edge. The live-predictions path uses the real
+picks that actually traded, so the resulting metrics are what the
+evolution agent should be making decisions on.
+
+Outputs a BacktestReport dataclass + a markdown summary under
 `state/diagnostics/backtest_<strategy>_<start>_<end>.md`.
 """
 from __future__ import annotations
 
 import json
 import logging
-import os
 from dataclasses import asdict, dataclass, field
 from datetime import date, timedelta
 from pathlib import Path
 
-from trading_bot.state.paths import STATE_ROOT
+from trading_bot.state.paths import STATE_ROOT, predictions_path
 from trading_bot.tools.history import get_history
 
 
@@ -219,22 +224,99 @@ def run_backtest(
     )
 
 
+def grade_from_live_predictions(
+    strategy_id: str, region: str, start_date: date, end_date: date,
+) -> BacktestReport:
+    """Aggregate the strategy's actually-emitted live predictions in
+    [start_date, end_date] from `state/predictions.jsonl`. Returns a
+    BacktestReport with the same shape as `run_backtest` so the
+    weekly summary schema is uniform across LLM and rule-based
+    strategies.
+
+    Each record in predictions.jsonl carries `actual_return_pct`,
+    populated by the prediction-grader when the holding period
+    resolves. Picks not yet graded (last 1–2 days) are skipped.
+    Entry/exit prices are not tracked in predictions, so the synthesized
+    _BackTrade entries leave those at 0.0 — the markdown writer prints
+    "—" for them.
+    """
+    path = predictions_path()
+    trades: list[_BackTrade] = []
+    by_day: dict[str, float] = {}
+    if path.exists():
+        with path.open() as f:
+            for line in f:
+                try:
+                    r = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if r.get("strategy_id") != strategy_id:
+                    continue
+                if r.get("region") != region:
+                    continue
+                d_str = r.get("prediction_date")
+                if not d_str:
+                    continue
+                try:
+                    d = date.fromisoformat(d_str)
+                except ValueError:
+                    continue
+                if d < start_date or d > end_date:
+                    continue
+                actual = r.get("actual_return_pct")
+                if actual is None:
+                    continue
+                pnl = float(actual)
+                trades.append(_BackTrade(
+                    date=d_str,
+                    ticker=r.get("ticker", ""),
+                    entry_price=0.0,
+                    exit_price=0.0,
+                    pnl_pct=round(pnl, 3),
+                    allocation_pct=0.0,
+                ))
+                by_day[d_str] = round(by_day.get(d_str, 0.0) + pnl, 3)
+
+    if not trades:
+        return BacktestReport(
+            strategy_id=strategy_id, region=region,
+            start_date=start_date.isoformat(), end_date=end_date.isoformat(),
+            n_days=len(by_day), n_trades=0,
+            total_pnl_pct=0.0, avg_pnl_pct=0.0, hit_rate=0.0, win_loss_ratio=0.0,
+            by_day_pnl=by_day, trades=[],
+        )
+    pnls = [t.pnl_pct for t in trades]
+    wins = [p for p in pnls if p > 0]
+    losses = [p for p in pnls if p < 0]
+    avg_win = sum(wins) / len(wins) if wins else 0.0
+    avg_loss = sum(losses) / len(losses) if losses else 0.0
+    wl = abs(avg_win / avg_loss) if avg_loss else 0.0
+    return BacktestReport(
+        strategy_id=strategy_id, region=region,
+        start_date=start_date.isoformat(), end_date=end_date.isoformat(),
+        n_days=len(by_day), n_trades=len(trades),
+        total_pnl_pct=round(sum(pnls), 3),
+        avg_pnl_pct=round(sum(pnls) / len(pnls), 3),
+        hit_rate=round(len(wins) / len(trades), 3),
+        win_loss_ratio=round(wl, 3),
+        by_day_pnl=by_day,
+        trades=trades,
+    )
+
+
 def run_weekly_backtest_pass(today: date, window_days: int = 14) -> dict:
-    """Replay every active strategy over the trailing `window_days`
-    using TODAY's code + prompts. Writes a per-strategy JSON report
-    to `state/backtest/<iso-week>/<strategy>.json` plus a roll-up
-    `state/backtest/<iso-week>/summary.json` the evolution prompt
-    reads.
+    """Produce per-strategy 14-day metrics for the evolution agent.
 
-    Caveat: LLM strategies hit Claude live during the replay, which
-    means tools like WebSearch see TODAY's web — that's lookahead
-    bias. The result still has signal as a "what would current code
-    do on yesterday's bars" sanity check, but it's not a clean
-    out-of-sample backtest. The summary file records this caveat so
-    downstream readers don't over-interpret.
+    Routing by implementation:
+    - rule_based / momentum_stub → `run_backtest` (cheap deterministic
+      replay; LLM not invoked).
+    - llm → `grade_from_live_predictions` (reads picks the strategy
+      actually emitted live during the window; no Claude calls, no
+      lookahead bias).
 
-    Triggered weekly from the evolution workflow; safe to dispatch
-    on demand.
+    Writes a roll-up `state/backtest/<iso-week>/summary.json` the
+    evolution prompt reads, plus per-strategy markdown under
+    `state/diagnostics/`. Runs in seconds; safe to dispatch on demand.
     """
     iso_year, iso_week, _ = today.isocalendar()
     out_dir = STATE_ROOT / "backtest" / f"{iso_year}-W{iso_week:02d}"
@@ -253,43 +335,26 @@ def run_weekly_backtest_pass(today: date, window_days: int = 14) -> dict:
     # weekends + possible holidays so the calendar window actually
     # yields the intended trading-day count after filtering.
     start = today - timedelta(days=window_days + 7)
-    end = today - timedelta(days=1)                   # backtest stops yesterday so we can resolve next-day fills
+    end = today - timedelta(days=1)                   # stop yesterday so we can resolve next-day fills
 
     results: list[dict] = []
-    # Per-strategy day cap. LLM strategies hit Claude once per trading
-    # day with tools — at ~2-3 min per call, a 14-day walk for one
-    # strategy can take 30-40 min. With 6 LLM strategies × 2 regions
-    # that's 6-8 hours, well past the GitHub Actions workflow timeout.
-    # Cap LLM walks at 5 trading days (enough to detect prompt-vs-live
-    # divergence for the evolution agent's "is the cost gate bleeding
-    # edge?" signal). Rule-based strategies are cheap, get the full
-    # window. Override via the BACKTEST_LLM_DAYS env var if you want
-    # a fuller replay (set to 0 to skip LLM strategies entirely).
-    llm_day_cap = int(os.environ.get("BACKTEST_LLM_DAYS", "5"))
 
     for strat in active:
         sid = strat.config.id
         region = strat.config.region
         impl = strat.config.implementation
-        cap = None
-        if impl == "llm":
-            if llm_day_cap <= 0:
-                log.info("backtest pass: skipping %s/%s (LLM, BACKTEST_LLM_DAYS=0)", sid, region)
-                results.append({
-                    "strategy_id": sid, "region": region,
-                    "skipped": "LLM backtest disabled via BACKTEST_LLM_DAYS=0",
-                })
-                continue
-            cap = llm_day_cap
-        log.info("backtest pass: %s/%s window %s → %s (limit_days=%s)", sid, region, start, end, cap)
+        log.info("backtest pass: %s/%s impl=%s window %s → %s", sid, region, impl, start, end)
         try:
-            report = run_backtest(
-                sid,
-                start_date=start,
-                end_date=end,
-                limit_days=cap,
-                region=region,   # crucial for multi-region strategies
-            )
+            if impl == "llm":
+                report = grade_from_live_predictions(
+                    sid, region, start_date=start, end_date=end,
+                )
+                source = "live-predictions"
+            else:
+                report = run_backtest(
+                    sid, start_date=start, end_date=end, region=region,
+                )
+                source = "replay"
         except Exception as e:
             log.warning("backtest pass: %s failed: %s", sid, e)
             results.append({
@@ -311,18 +376,22 @@ def run_weekly_backtest_pass(today: date, window_days: int = 14) -> dict:
             "avg_pnl_pct": report.avg_pnl_pct,
             "hit_rate": report.hit_rate,
             "win_loss_ratio": report.win_loss_ratio,
+            "source": source,
         })
 
         # Per-strategy markdown
-        write_report(report)
+        write_report(report, source=source)
 
     summary = {
         "generated_for_iso_week": f"{iso_year}-W{iso_week:02d}",
         "window_days": window_days,
-        "lookahead_bias_caveat": (
-            "LLM strategies fetched live web context during replay (WebSearch "
-            "sees today's news). Treat the numbers as a structural sanity "
-            "check, not a clean out-of-sample test."
+        "methodology_note": (
+            "LLM strategies are scored on the picks they actually emitted live "
+            "during the window (from state/predictions.jsonl, graded by the "
+            "live prediction-grader). Rule-based and momentum-stub strategies "
+            "are replayed deterministically against historical bars. No LLM "
+            "is re-invoked at backtest time, so the numbers are the strategy's "
+            "real performance, free of replay/lookahead bias."
         ),
         "strategies": results,
     }
@@ -362,31 +431,59 @@ def _trading_days_in_range(start: date, end: date, region: str) -> list[date]:
     return out
 
 
-def write_report(report: BacktestReport) -> Path:
-    """Write a markdown report under state/diagnostics/."""
+def write_report(report: BacktestReport, *, source: str = "replay") -> Path:
+    """Write a markdown report under state/diagnostics/.
+
+    `source` is "replay" (rule-based / momentum-stub deterministic walk)
+    or "live-predictions" (LLM strategies scored on real emitted picks).
+    The Limitations section adapts so the human reader knows which
+    methodology produced the numbers.
+    """
     d = STATE_ROOT / "diagnostics"
     d.mkdir(parents=True, exist_ok=True)
     p = d / f"backtest_{report.strategy_id}_{report.start_date}_{report.end_date}.md"
     with p.open("w") as f:
         f.write(f"# Backtest — {report.strategy_id} ({report.region})\n\n")
         f.write(f"**Window:** {report.start_date} → {report.end_date}  \n")
+        f.write(f"**Source:** {source}  \n")
         f.write(f"**Trading days:** {report.n_days}  \n")
         f.write(f"**Trades:** {report.n_trades}  \n\n")
         f.write("## Aggregate\n\n")
-        f.write(f"- Total P&L: **{report.total_pnl_pct:+.2f}%** (sum of daily weighted returns)\n")
+        f.write(f"- Total P&L: **{report.total_pnl_pct:+.2f}%** (sum of per-trade returns)\n")
         f.write(f"- Avg P&L per trade: {report.avg_pnl_pct:+.2f}%\n")
         f.write(f"- Hit rate: {report.hit_rate * 100:.1f}%\n")
         f.write(f"- Win/loss ratio: {report.win_loss_ratio:.2f}\n\n")
-        f.write("## Limitations\n\n")
-        f.write("- Technicals only — no news / macro replay.\n")
-        f.write("- Fills modelled at next-day close. No slippage / fees.\n")
-        f.write("- Single-region; multi-region strategies need separate runs.\n\n")
+        f.write("## Methodology\n\n")
+        if source == "live-predictions":
+            f.write(
+                "- Scored from `state/predictions.jsonl` — the picks this "
+                "strategy actually emitted live during the window, graded by "
+                "the live prediction-grader.\n"
+                "- No replay, no LLM re-invocation, no lookahead bias.\n"
+                "- Includes only resolved predictions; the last 1–2 days may "
+                "still be ungraded.\n\n"
+            )
+        else:
+            f.write(
+                "- Deterministic replay of `select_picks(on_date)` against "
+                "historical bars.\n"
+                "- Fills modelled at next-day close. No slippage / fees.\n"
+                "- Single-region; multi-region strategies need separate runs.\n\n"
+            )
         # Sample trades
         if report.trades:
             f.write("## First 20 trades\n\n")
-            f.write("| Date | Ticker | Entry | Exit | P&L % | Alloc % |\n")
-            f.write("|---|---|---:|---:|---:|---:|\n")
-            for t in report.trades[:20]:
-                f.write(f"| {t.date} | {t.ticker} | ${t.entry_price:.2f} | "
-                        f"${t.exit_price:.2f} | {t.pnl_pct:+.2f}% | {t.allocation_pct:.1f}% |\n")
+            if source == "live-predictions":
+                # Entry/exit prices aren't carried in predictions; print just
+                # date / ticker / realised P&L.
+                f.write("| Date | Ticker | P&L % |\n")
+                f.write("|---|---|---:|\n")
+                for t in report.trades[:20]:
+                    f.write(f"| {t.date} | {t.ticker} | {t.pnl_pct:+.2f}% |\n")
+            else:
+                f.write("| Date | Ticker | Entry | Exit | P&L % | Alloc % |\n")
+                f.write("|---|---|---:|---:|---:|---:|\n")
+                for t in report.trades[:20]:
+                    f.write(f"| {t.date} | {t.ticker} | ${t.entry_price:.2f} | "
+                            f"${t.exit_price:.2f} | {t.pnl_pct:+.2f}% | {t.allocation_pct:.1f}% |\n")
     return p

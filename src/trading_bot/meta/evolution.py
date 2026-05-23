@@ -331,23 +331,25 @@ def _build_backtest_block() -> str:
     if not summary or not summary.get("strategies"):
         return "_(no backtest summary available yet — pre-step may not have run)_"
     lines: list[str] = []
+    # Backwards-compat: older summary files have `lookahead_bias_caveat`
+    # (the replay-era field); newer ones have `methodology_note`.
+    note = summary.get("methodology_note") or summary.get("lookahead_bias_caveat") or ""
     lines.append(
-        f"Window: {summary.get('window_days')}-day walk-forward, "
-        f"replayed under today's code + prompts. **Caveat:** "
-        f"{summary.get('lookahead_bias_caveat', '')}"
+        f"Window: {summary.get('window_days')}-day. **Methodology:** {note}"
     )
     lines.append("")
-    lines.append("| Strategy | Region | Trades | Total P&L% | Hit% | W/L |")
-    lines.append("|---|---|---:|---:|---:|---:|")
+    lines.append("| Strategy | Region | Source | Trades | Total P&L% | Hit% | W/L |")
+    lines.append("|---|---|---|---:|---:|---:|---:|")
     for s in summary["strategies"]:
         if s.get("error"):
             lines.append(
-                f"| {s.get('strategy_id')} | {s.get('region')} | — | "
+                f"| {s.get('strategy_id')} | {s.get('region')} | — | — | "
                 f"_error: {s['error'][:60]}_ | — | — |"
             )
             continue
         lines.append(
             f"| {s.get('strategy_id')} | {s.get('region')} | "
+            f"{s.get('source', '—')} | "
             f"{s.get('n_trades', 0)} | {s.get('total_pnl_pct', 0):+.2f}% | "
             f"{(s.get('hit_rate', 0) or 0)*100:.0f}% | "
             f"{s.get('win_loss_ratio', 0):.2f} |"
