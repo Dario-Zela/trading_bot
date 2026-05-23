@@ -953,8 +953,11 @@ def _render_slate_table(edition: EvolutionEdition) -> str:
         pnl = (m.get("total_pnl_gbp") or 0.0) or 0.0
         pnl_cls = "up" if pnl > 0 else ("down" if pnl < 0 else "")
         hit = (m.get("hit_rate") or 0.0) * 100
-        n = m.get("n_trades", 0)
-        ic = m.get("ic", 0.0)
+        n = m.get("n_trades") or 0
+        # `.get(key, default)` only fires the default on a missing key; for
+        # IC/n_trades, compute_all_metrics writes None when there are no
+        # graded predictions, which would crash the f-string format.
+        ic = m.get("ic") or 0.0
         out.append(
             f'<tr>'
             f'<td class="sector">{html.escape(r.get("id", ""))}</td>'

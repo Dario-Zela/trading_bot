@@ -86,6 +86,13 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python -m trading_bot.pipeline weekly-evolution
 
+      - name: Rebuild dashboard (post-evolution)
+        # Demote / promote / tune actions edit the strategy configs.
+        # Without this step the main dashboard at docs/index.html keeps
+        # showing the pre-evolution tier state until Monday's first
+        # pipeline run, hiding the action the agent just took.
+        run: python -m trading_bot.dashboard.build || echo "dashboard build failed (non-fatal)"
+
       - name: Save OHLCV cache
         # Saved with the run_id key so the next workflow's restore step
         # picks it up via the ohlcv-db-v1- restore-keys prefix.
