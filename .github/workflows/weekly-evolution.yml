@@ -45,6 +45,20 @@ jobs:
           echo "$HOME/.local/bin" >> $GITHUB_PATH
           claude --version
 
+      - name: Restore OHLCV cache
+        # Without this the rule-based backtest replay below calls
+        # get_history() over the entire 6.7k US + 7.7k UK t212 universe
+        # × 14 days fresh from yfinance, which rate-limits and stalls
+        # the workflow for hours. The shared ohlcv-db-v1-* cache key is
+        # the same one the daily-update + pipeline workflows use, so
+        # this restores whatever the most recent update wrote.
+        uses: actions/cache/restore@v5
+        with:
+          path: state/ohlcv.db
+          key: ohlcv-db-v1-${{ github.run_id }}
+          restore-keys: |
+            ohlcv-db-v1-
+
       - name: Scan external research (Sonnet + WebSearch)
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
@@ -86,6 +100,15 @@ jobs:
           # gh CLI uses GH_TOKEN to authenticate against the GitHub API for issue creation
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python -m trading_bot.pipeline weekly-evolution
+
+      - name: Save OHLCV cache
+        # Saved with the run_id key so the next workflow's restore step
+        # picks it up via the ohlcv-db-v1- restore-keys prefix.
+        if: always()
+        uses: actions/cache/save@v5
+        with:
+          path: state/ohlcv.db
+          key: ohlcv-db-v1-${{ github.run_id }}
 
       - name: Prune local OHLCV cache (1-year rolling cutoff)
         env:
