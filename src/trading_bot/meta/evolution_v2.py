@@ -906,6 +906,11 @@ def _render_body(edition: EvolutionEdition) -> str:
     # Slate table — one row per (strategy, region) with metrics
     parts.append(_render_slate_table(edition))
 
+    # External research summary — one card per theme. Distinct visual
+    # treatment from the per-strategy cards because this content is
+    # *input* to the evolution agent's thinking, not its output.
+    parts.append(_render_research_section(edition))
+
     # Per-strategy report cards
     parts.append(
         '<div class="section-label evo">'
@@ -927,6 +932,85 @@ def _render_body(edition: EvolutionEdition) -> str:
     )
     parts.append('</main>')
     return "\n".join(parts)
+
+
+def _render_research_section(edition: EvolutionEdition) -> str:
+    """The external-research themes the evolution agent read into this
+    week's decisions. One card per theme, with the implication colour-
+    coded by type (fits / spawn-candidate / out-of-scope).
+
+    Reads `state/external_research/<iso-week>.json` directly from disk
+    so the rendered page reflects the exact themes the agent saw.
+    Empty string if no brief exists yet.
+    """
+    from trading_bot.state.paths import STATE_ROOT
+    # Parse "2026-05-23" → iso week "2026-W21" to find the brief file.
+    try:
+        y, m, d = (int(p) for p in edition.week_end.split("-"))
+        iso_y, iso_w, _ = date(y, m, d).isocalendar()
+    except Exception:
+        return ""
+    path = STATE_ROOT / "external_research" / f"{iso_y}-W{iso_w:02d}.json"
+    if not path.exists():
+        return ""
+    try:
+        brief = json.loads(path.read_text())
+    except Exception:
+        return ""
+    themes = brief.get("themes") or []
+    if not themes:
+        return ""
+
+    headline = brief.get("headline") or ""
+
+    out = [
+        '<div class="section-label evo">'
+        '  <span>What we read this week</span>'
+        f'  <span class="ord">{len(themes)} finding{"s" if len(themes) != 1 else ""}</span>'
+        '</div>',
+    ]
+    if headline:
+        out.append(
+            f'<p style="font-style: italic; color: var(--ink-muted); '
+            f'margin: 0 0 1.2rem 0; line-height: 1.5;">{html.escape(headline)}</p>'
+        )
+    for t in themes:
+        title = t.get("theme", "Untitled")
+        summary = t.get("summary", "")
+        implication = (t.get("implication") or "").strip()
+        # Tag implications by prefix so they're visually scannable.
+        if implication.startswith("fits existing:"):
+            tag = "FITS"; color = "var(--c-action-tune)"
+        elif implication.startswith("spawn-candidate"):
+            tag = "SPAWN CANDIDATE"; color = "var(--c-action-promote)"
+        elif implication.startswith("out of scope"):
+            tag = "METHODOLOGICAL"; color = "var(--ink-soft)"
+        else:
+            tag = "NOTE"; color = "var(--ink-soft)"
+        out.append(
+            '<article class="evo-card">'
+            f'<p class="meta"><span class="accent" style="color: {color};">'
+            f'RESEARCH · {html.escape(tag)}</span></p>'
+            f'<h3 class="evo-card-headline">{html.escape(title)}</h3>'
+            f'<p style="line-height: 1.55; margin: 0 0 0.8rem 0;">{html.escape(summary)}</p>'
+            f'<p style="font-size: 0.92rem; color: var(--ink-muted); margin: 0; '
+            f'padding-top: 0.6rem; border-top: 1px solid var(--hairline);">'
+            f'<strong style="color: {color};">Implication.</strong> '
+            f'{html.escape(implication)}</p>'
+            '</article>'
+        )
+    # Source attribution at the bottom
+    sources = brief.get("sources") or []
+    if sources:
+        links = " · ".join(
+            f'<a href="{html.escape(s)}" style="color: var(--ink-muted);">[{i+1}]</a>'
+            for i, s in enumerate(sources)
+        )
+        out.append(
+            f'<p style="font-size: 0.85rem; color: var(--ink-muted); '
+            f'margin: 0.5rem 0 1.5rem 0;"><em>Sources: {links}</em></p>'
+        )
+    return "\n".join(out)
 
 
 def _render_slate_table(edition: EvolutionEdition) -> str:
