@@ -27,16 +27,12 @@ model_assignment:
   final_select: sonnet
 runs_in:
 - region: us
-  tier: alpaca-paper
-  alpaca_slot: 3
+  tier: shadow
+  alpaca_slot: null
   universe: t212_isa_us
 - region: uk-eu
-  tier: trading212-paper
-  t212_slot: 1
+  tier: shadow
+  t212_slot: null
   universe: t212_isa_uk_eu
-# LLM strategies use the Sonnet-driven per-strategy pre-filter so the
-# universe is narrowed with the strategy's lens before the expensive
-# technicals fetch + Stage-1 Haiku scoring. See prompts/prefilter.md
-# for this strategy's filter prompt. Tunable by evolution agent.
 prefilter_mode: llm
 prefilter_top_n: 100
