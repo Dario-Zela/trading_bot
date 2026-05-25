@@ -81,11 +81,110 @@ def build_and_render_evolution(
     `shell_fn` is `pages._shell` — accepted as a parameter to avoid
     cycle issues.
     """
+    # Persist this week's decisions to the decision log BEFORE grading,
+    # so the snapshot used here is captured as the "pre-action" state.
+    try:
+        _append_decision_log(today, applied_actions, snapshot)
+    except Exception as e:
+        log.warning("decision_log append failed (non-fatal): %s", e)
+
+    # Grade any aged decisions in-place. The grade rows are picked up
+    # by `_render_decision_grading_section` on render below.
+    try:
+        _grade_aged_decisions(today, snapshot, age_weeks=4)
+    except Exception as e:
+        log.warning("decision_log grading failed (non-fatal): %s", e)
+
     edition = _build_edition(today, snapshot, applied_actions)
-    page = _render_page(edition, shell_fn=shell_fn)
+
+    # Main page at docs/evolution.html (depth=0).
+    page = _render_page(edition, shell_fn=shell_fn, depth=0)
     out_path = docs_root / "evolution.html"
     out_path.write_text(page)
+
+    # Archive copy at docs/evolution/<iso-week>.html (depth=1). This
+    # gives a permanent URL for each week the user can compare against.
+    try:
+        _write_archive_copy(edition, docs_root=docs_root, shell_fn=shell_fn)
+        _write_archive_index(docs_root=docs_root, shell_fn=shell_fn)
+    except Exception as e:
+        log.warning("Evolution archive write failed (non-fatal): %s", e)
+
     log.info("Rendered evolution edition → %s (%d strategies)", out_path, len(edition.reports))
+    return out_path
+
+
+def _archive_dir(docs_root: Path) -> Path:
+    p = docs_root / "evolution"
+    p.mkdir(parents=True, exist_ok=True)
+    return p
+
+
+def _iso_week_for(date_str: str) -> str:
+    """Return e.g. '2026-W21' for an ISO date string like '2026-05-23'."""
+    y, m, d = (int(p) for p in date_str.split("-"))
+    iso_y, iso_w, _ = date(y, m, d).isocalendar()
+    return f"{iso_y}-W{iso_w:02d}"
+
+
+def _write_archive_copy(edition: EvolutionEdition, *, docs_root: Path, shell_fn) -> Path:
+    """Write the same edition to docs/evolution/<iso-week>.html. Pages
+    live one directory deeper so they need depth=1 for asset URLs."""
+    iso_week = _iso_week_for(edition.week_end)
+    page = _render_page(edition, shell_fn=shell_fn, depth=1)
+    out_path = _archive_dir(docs_root) / f"{iso_week}.html"
+    out_path.write_text(page)
+    log.info("Wrote archive copy → %s", out_path)
+    return out_path
+
+
+def _write_archive_index(*, docs_root: Path, shell_fn) -> Path:
+    """Generate docs/evolution/index.html listing every archived weekly
+    edition in reverse chronological order."""
+    archive_dir = _archive_dir(docs_root)
+    entries: list[tuple[str, str]] = []
+    for f in sorted(archive_dir.glob("*-W*.html"), reverse=True):
+        iso_week = f.stem  # e.g. '2026-W21'
+        entries.append((iso_week, f.name))
+
+    if not entries:
+        body = (
+            '<main class="paper">'
+            '<header class="masthead"><h1>Evolution archive</h1></header>'
+            '<p>No archived weeks yet. Check back after Saturday\'s run.</p>'
+            '</main>'
+        )
+    else:
+        rows = "\n".join(
+            f'<tr>'
+            f'<td class="sector"><a href="./{html.escape(name)}">{html.escape(iso_week)}</a></td>'
+            f'</tr>'
+            for iso_week, name in entries
+        )
+        body = (
+            '<main class="paper">'
+            '<header class="masthead">'
+            '  <h1>The Bot Tribune<span class="sub">— Evolution archive</span></h1>'
+            '</header>'
+            '<div class="masthead-strip">'
+            f'  <span><strong>Archive</strong></span>'
+            f'  <span>{len(entries)} week{"s" if len(entries) != 1 else ""}</span>'
+            '</div>'
+            '<div class="sectors-table"><table><tbody>'
+            f'{rows}'
+            '</tbody></table></div>'
+            '</main>'
+        )
+    page = shell_fn(
+        title="Evolution archive",
+        body_html=body,
+        current="evolution",
+        depth=1,
+        page_class="evolution",
+    )
+    out_path = archive_dir / "index.html"
+    out_path.write_text(page)
+    log.info("Wrote archive index → %s (%d entries)", out_path, len(entries))
     return out_path
 
 
@@ -862,18 +961,18 @@ def _md_to_html(md_text: str) -> str:
     return md_lib.markdown(md_text or "", extensions=["tables", "fenced_code", "sane_lists", "nl2br"])
 
 
-def _render_page(edition: EvolutionEdition, *, shell_fn) -> str:
-    body_html = _render_body(edition)
+def _render_page(edition: EvolutionEdition, *, shell_fn, depth: int = 0) -> str:
+    body_html = _render_body(edition, depth=depth)
     return shell_fn(
         title=f"Evolution — week ending {edition.week_end}",
         body_html=body_html,
         current="evolution",
-        depth=0,
+        depth=depth,
         page_class="evolution",
     )
 
 
-def _render_body(edition: EvolutionEdition) -> str:
+def _render_body(edition: EvolutionEdition, *, depth: int = 0) -> str:
     parts: list[str] = []
     parts.append('<main class="paper">')
 
@@ -884,14 +983,18 @@ def _render_body(edition: EvolutionEdition) -> str:
         '</header>'
     )
 
-    # Masthead strip
+    # Masthead strip. The archive link uses a depth-aware href so the
+    # link works from both docs/evolution.html (depth=0 → ./evolution/)
+    # and docs/evolution/<iso-week>.html (depth=1 → ./).
     n_strategies = len({r.strategy_id for r in edition.reports})
     n_actions_applied = sum(1 for a in edition.action_log if a.get("applied"))
+    archive_href = "evolution/" if depth == 0 else "./"
     parts.append(
         '<div class="masthead-strip">'
         f'  <span><strong>Evolution</strong></span>'
         f'  <span>{n_strategies} strateg{"ies" if n_strategies != 1 else "y"} reviewed</span>'
         f'  <span>{n_actions_applied} action{"s" if n_actions_applied != 1 else ""} applied</span>'
+        f'  <span><a href="{archive_href}" style="color: var(--ink-muted);">Previous weeks →</a></span>'
         '</div>'
     )
 
@@ -910,6 +1013,18 @@ def _render_body(edition: EvolutionEdition) -> str:
     # treatment from the per-strategy cards because this content is
     # *input* to the evolution agent's thinking, not its output.
     parts.append(_render_research_section(edition))
+
+    # Research → action gap. Cross-references the implications in the
+    # research brief with the actions the agent actually took, so the
+    # reader can see when the research surfaced a candidate the agent
+    # ignored.
+    parts.append(_render_research_action_gap(edition))
+
+    # How past calls aged. Looks back at decisions made N weeks ago
+    # (persisted in state/decision_log.jsonl), pulls current metrics
+    # for those (strategy, region) pairs, and grades each decision
+    # against the post-action outcome.
+    parts.append(_render_decision_grading_section(edition))
 
     # Per-strategy report cards
     parts.append(
@@ -1010,6 +1125,457 @@ def _render_research_section(edition: EvolutionEdition) -> str:
             f'<p style="font-size: 0.85rem; color: var(--ink-muted); '
             f'margin: 0.5rem 0 1.5rem 0;"><em>Sources: {links}</em></p>'
         )
+    return "\n".join(out)
+
+
+def _render_research_action_gap(edition: EvolutionEdition) -> str:
+    """Cross-reference research-brief implications with the agent's actions.
+
+    Each implication of the form `fits existing: <sid>` or
+    `spawn-candidate: <... variant of <parent>>` carries an expected
+    agent action. We compare against `edition.action_log` and surface
+    each pair as either ACTED (research's suggestion produced a
+    matching tune/spawn/demote) or GAP (research said something the
+    agent didn't act on). Methodological / out-of-scope implications
+    are skipped — they're framing, not asks.
+
+    The point is to track whether the WebSearch brief is being treated
+    as decoration or as input the agent reads and decides against.
+    """
+    from trading_bot.state.paths import STATE_ROOT
+    try:
+        y, m, d = (int(p) for p in edition.week_end.split("-"))
+        iso_y, iso_w, _ = date(y, m, d).isocalendar()
+    except Exception:
+        return ""
+    path = STATE_ROOT / "external_research" / f"{iso_y}-W{iso_w:02d}.json"
+    if not path.exists():
+        return ""
+    try:
+        brief = json.loads(path.read_text())
+    except Exception:
+        return ""
+    themes = brief.get("themes") or []
+    if not themes:
+        return ""
+
+    # Index actions by strategy id so the lookups below are O(themes).
+    actions_by_sid: dict[str, list[dict]] = {}
+    for a in edition.action_log:
+        if not a.get("applied"):
+            continue
+        sid = a.get("strategy_id") or ""
+        actions_by_sid.setdefault(sid, []).append(a)
+
+    rows = []
+    for t in themes:
+        implication = (t.get("implication") or "").strip()
+        theme_title = t.get("theme", "Untitled")
+        expected_sid, expected_kind = _parse_implication(implication)
+        if not expected_kind:
+            continue  # methodological / out-of-scope — no expected action
+        verdict, action_summary = _grade_research_alignment(
+            expected_sid, expected_kind, actions_by_sid,
+        )
+        rows.append({
+            "theme": theme_title,
+            "implication": implication,
+            "expected_sid": expected_sid,
+            "expected_kind": expected_kind,
+            "verdict": verdict,
+            "action_summary": action_summary,
+        })
+
+    if not rows:
+        return ""
+
+    n_gaps = sum(1 for r in rows if r["verdict"] == "GAP")
+    out = [
+        '<div class="section-label evo">'
+        '  <span>Research said vs we did</span>'
+        f'  <span class="ord">{n_gaps} gap{"s" if n_gaps != 1 else ""} · {len(rows)} testable</span>'
+        '</div>',
+    ]
+    for r in rows:
+        color = "var(--c-action-demote)" if r["verdict"] == "GAP" else "var(--c-action-promote)"
+        symbol = "GAP" if r["verdict"] == "GAP" else "ACTED"
+        out.append(
+            '<article class="evo-card" style="padding: 0.9rem 1.1rem;">'
+            f'<p class="meta" style="margin: 0 0 0.4rem 0;">'
+            f'<span class="accent" style="color: {color};">{symbol}</span>'
+            f'<span style="color: var(--ink-muted); margin-left: 0.6rem;">{html.escape(r["expected_kind"])}'
+            f'{" · " + html.escape(r["expected_sid"]) if r["expected_sid"] else ""}</span></p>'
+            f'<div style="font-weight: 600; margin-bottom: 0.3rem;">{html.escape(r["theme"])}</div>'
+            f'<div style="font-size: 0.9rem; color: var(--ink-muted); line-height: 1.5;">'
+            f'<strong>Action taken:</strong> {html.escape(r["action_summary"])}'
+            f'</div>'
+            '</article>'
+        )
+    return "\n".join(out)
+
+
+def _parse_implication(implication: str) -> tuple[str, str]:
+    """Extract (expected_strategy_id, expected_action_kind) from an
+    implication string. Returns ('', '') for methodological / out-of-
+    scope implications.
+
+    Examples:
+      'fits existing: momentum-trader' → ('momentum-trader', 'tune-or-keep')
+      'spawn-candidate: filing-drift variant of news-reactive — ...' →
+        ('news-reactive', 'spawn-variant')
+      'out of scope: methodological warning ...' → ('', '')
+    """
+    s = (implication or "").strip().lower()
+    if s.startswith("fits existing:"):
+        rest = implication[len("fits existing:"):].strip()
+        # take the first token before whitespace or em-dash
+        sid = rest.split()[0].rstrip(",").rstrip("—").strip() if rest else ""
+        return sid, "tune-or-keep"
+    if s.startswith("spawn-candidate"):
+        # Look for 'variant of <sid>'
+        import re
+        m = re.search(r"variant of ([a-z0-9][a-z0-9_\-]*)", implication, re.IGNORECASE)
+        if m:
+            return m.group(1), "spawn-variant"
+        return "", "spawn-variant"
+    return "", ""
+
+
+def _grade_research_alignment(
+    expected_sid: str, expected_kind: str, actions_by_sid: dict[str, list[dict]],
+) -> tuple[str, str]:
+    """Given the research's expectation, look at the actions actually
+    taken on that strategy and return (verdict, human-readable summary).
+
+    Verdict is 'ACTED' if at least one action of the expected
+    kind landed; 'GAP' if not.
+    """
+    if expected_kind == "spawn-variant":
+        # Any spawn-variant action this week counts (parent might match or
+        # not — still a sign the agent considered new strategies).
+        all_actions = [a for actions in actions_by_sid.values() for a in actions]
+        spawned = [a for a in all_actions if a.get("action") == "spawn-variant"]
+        if not spawned:
+            return "GAP", "no spawn-variant action this week"
+        # Did any spawn match the expected parent?
+        parent_match = [a for a in spawned if a.get("strategy_id") == expected_sid]
+        if parent_match:
+            return "ACTED", f"spawned a variant of {expected_sid}"
+        return "GAP", (
+            f"agent spawned {spawned[0].get('strategy_id')} variant, "
+            f"but research pointed at {expected_sid or '(no parent named)'}"
+        )
+
+    # tune-or-keep: any non-`keep` action on the expected sid, or a
+    # `keep` that's been recorded as a deliberate hold, counts as
+    # "considered". A demote against the research's recommendation is
+    # interesting and gets flagged as ACTED (the agent acted) but with
+    # a directional note.
+    actions = actions_by_sid.get(expected_sid, [])
+    if not actions:
+        return "GAP", f"no action on {expected_sid} this week"
+    non_keep = [a for a in actions if a.get("action") != "keep"]
+    if non_keep:
+        kinds = sorted({a.get("action") for a in non_keep if a.get("action")})
+        scopes = sorted({
+            f"{a.get('region')}" for a in non_keep if a.get("region")
+        })
+        scope_str = " (" + ", ".join(scopes) + ")" if scopes else ""
+        return "ACTED", f"{', '.join(kinds)} on {expected_sid}{scope_str}"
+    # All keeps — the agent saw the strategy and chose to do nothing.
+    # Still count as ACTED, but flag tone.
+    n_regions = len(actions)
+    return "ACTED", (
+        f"kept {expected_sid} across {n_regions} region{'s' if n_regions != 1 else ''} "
+        f"— research read but no config change"
+    )
+
+
+# ---------------------------------------------------------------------------
+# Decision grading (Phase 11)
+# ---------------------------------------------------------------------------
+
+def _decision_log_path() -> Path:
+    from trading_bot.state.paths import STATE_ROOT
+    return STATE_ROOT / "decision_log.jsonl"
+
+
+def _aggregate_strategy_metrics(rows_metrics: list[dict]) -> dict:
+    """Sum P&L and n_trades, average IC and hit_rate across regions for
+    a strategy-wide decision (where region is None)."""
+    if not rows_metrics:
+        return {}
+    valid_ic = [(r or {}).get("ic") for r in rows_metrics if (r or {}).get("ic") is not None]
+    valid_hit = [(r or {}).get("hit_rate") for r in rows_metrics if (r or {}).get("hit_rate") is not None]
+    return {
+        "total_pnl_gbp": sum(((r or {}).get("total_pnl_gbp") or 0.0) for r in rows_metrics),
+        "ic": sum(valid_ic) / len(valid_ic) if valid_ic else None,
+        "hit_rate": sum(valid_hit) / len(valid_hit) if valid_hit else None,
+        "n_trades": sum(((r or {}).get("n_trades") or 0) for r in rows_metrics),
+    }
+
+
+def _append_decision_log(today: date, applied_actions: list[dict], snapshot: list[dict]) -> None:
+    """Persist this week's applied actions with their pre-action metrics
+    so future runs can grade them against post-action outcomes."""
+    p = _decision_log_path()
+    iso_y, iso_w, _ = today.isocalendar()
+    week_iso = f"{iso_y}-W{iso_w:02d}"
+
+    snap_by_pair: dict[tuple[str, str], dict] = {}
+    snap_by_sid: dict[str, list[dict]] = {}
+    for r in snapshot:
+        sid = r.get("id") or ""
+        region = r.get("region") or ""
+        m = r.get("metrics") or {}
+        snap_by_pair[(sid, region)] = m
+        snap_by_sid.setdefault(sid, []).append(m)
+
+    existing_keys: set[tuple] = set()
+    if p.exists():
+        for line in p.read_text().splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                rec = json.loads(line)
+            except Exception:
+                continue
+            existing_keys.add((
+                rec.get("week_iso"), rec.get("strategy_id"),
+                rec.get("region"), rec.get("action"),
+            ))
+
+    new_records: list[dict] = []
+    for a in applied_actions:
+        if not a.get("applied"):
+            continue
+        sid = a.get("strategy_id") or ""
+        region = a.get("region")
+        action = a.get("action") or ""
+        key = (week_iso, sid, region, action)
+        if key in existing_keys:
+            continue
+        if region:
+            pre = snap_by_pair.get((sid, region), {})
+        else:
+            pre = _aggregate_strategy_metrics(snap_by_sid.get(sid, []))
+        new_records.append({
+            "week_iso": week_iso,
+            "decided_at": today.isoformat(),
+            "strategy_id": sid,
+            "region": region,
+            "action": action,
+            "reason": (a.get("reason") or "")[:400],
+            "details": a.get("details") or {},
+            "pre_metrics": pre,
+            "post_metrics": None,
+            "grade": None,
+            "graded_at": None,
+        })
+
+    if not new_records:
+        return
+    p.parent.mkdir(parents=True, exist_ok=True)
+    with p.open("a") as f:
+        for rec in new_records:
+            f.write(json.dumps(rec) + "\n")
+    log.info("decision_log: appended %d records for %s", len(new_records), week_iso)
+
+
+def _grade_one_decision(action: str, pre: dict, post: dict) -> dict:
+    """Heuristic grade for a single past decision. The thresholds are
+    deliberately loose — three buckets only, no false precision. The
+    point is to surface obviously-bad calls (e.g. a demoted strategy
+    that recovered strongly) and obviously-good ones (a tune that
+    moved IC the predicted way), not to compute a score.
+    """
+    pre_ic = pre.get("ic") if pre.get("ic") is not None else 0.0
+    pre_pnl = pre.get("total_pnl_gbp") if pre.get("total_pnl_gbp") is not None else 0.0
+    post_ic = post.get("ic") if post.get("ic") is not None else 0.0
+    post_pnl = post.get("total_pnl_gbp") if post.get("total_pnl_gbp") is not None else 0.0
+    delta_ic = post_ic - pre_ic
+    delta_pnl = post_pnl - pre_pnl
+
+    verdict = "MIXED"
+    note = ""
+    if action == "demote":
+        # Good if it stayed bad; bad if it rebounded materially.
+        if post_ic > 0.1 and post_pnl > 0:
+            verdict = "BAD"; note = "rebounded after demotion"
+        elif post_ic <= 0:
+            verdict = "GOOD"; note = "stayed below zero IC"
+        else:
+            note = "modest recovery — call ambiguous"
+    elif action == "promote":
+        if post_ic > 0 and post_pnl > 0:
+            verdict = "GOOD"; note = "post-promotion IC + P&L positive"
+        elif post_ic < -0.05 or post_pnl < -50:
+            verdict = "BAD"; note = "regressed after promotion"
+        else:
+            note = "promotion hasn't paid off yet"
+    elif action == "tune":
+        if delta_ic > 0.05 or delta_pnl > 50:
+            verdict = "GOOD"; note = "IC/P&L moved the predicted way"
+        elif delta_ic < -0.05 or delta_pnl < -50:
+            verdict = "BAD"; note = "tune made things worse"
+        else:
+            note = "no material change yet"
+    elif action == "spawn-variant":
+        if post_ic > 0.05:
+            verdict = "GOOD"; note = "spawned variant has positive IC"
+        elif post_ic < -0.05:
+            verdict = "BAD"; note = "spawned variant underperforming"
+        else:
+            note = "spawned variant inconclusive"
+    elif action == "keep":
+        if delta_ic < -0.1 or delta_pnl < -100:
+            verdict = "BAD"; note = "kept but performance deteriorated"
+        elif delta_ic > 0.05 or delta_pnl > 50:
+            verdict = "GOOD"; note = "kept and improved"
+        else:
+            note = "kept, no material change"
+    else:
+        note = "non-graded action type"
+
+    return {
+        "verdict": verdict,
+        "note": note,
+        "delta_ic": delta_ic,
+        "delta_pnl": delta_pnl,
+    }
+
+
+def _grade_aged_decisions(today: date, snapshot: list[dict], age_weeks: int = 4) -> None:
+    """Walk state/decision_log.jsonl. For each record that is at least
+    `age_weeks` old AND has no grade yet, compute post_metrics from the
+    current snapshot and assign a verdict. Persist updates in-place."""
+    from datetime import timedelta
+    p = _decision_log_path()
+    if not p.exists():
+        return
+
+    snap_by_pair: dict[tuple[str, str], dict] = {}
+    snap_by_sid: dict[str, list[dict]] = {}
+    for r in snapshot:
+        sid = r.get("id") or ""
+        region = r.get("region") or ""
+        m = r.get("metrics") or {}
+        snap_by_pair[(sid, region)] = m
+        snap_by_sid.setdefault(sid, []).append(m)
+
+    cutoff = today - timedelta(weeks=age_weeks)
+    records: list[dict] = []
+    for line in p.read_text().splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            records.append(json.loads(line))
+        except Exception:
+            continue
+
+    changed = False
+    for rec in records:
+        if rec.get("grade") is not None:
+            continue
+        decided = rec.get("decided_at")
+        if not decided:
+            continue
+        try:
+            decided_d = date.fromisoformat(decided)
+        except Exception:
+            continue
+        if decided_d > cutoff:
+            continue  # too young
+
+        sid = rec.get("strategy_id") or ""
+        region = rec.get("region")
+        action = rec.get("action") or ""
+        if region:
+            post = snap_by_pair.get((sid, region), {})
+        else:
+            post = _aggregate_strategy_metrics(snap_by_sid.get(sid, []))
+        rec["post_metrics"] = post
+        rec["grade"] = _grade_one_decision(action, rec.get("pre_metrics") or {}, post)
+        rec["graded_at"] = today.isoformat()
+        changed = True
+
+    if changed:
+        with p.open("w") as f:
+            for rec in records:
+                f.write(json.dumps(rec) + "\n")
+        log.info("decision_log: graded %d aged records",
+                 sum(1 for r in records if r.get("graded_at") == today.isoformat()))
+
+
+def _render_decision_grading_section(edition: EvolutionEdition) -> str:
+    """Render the most recent graded decisions so the reader can audit
+    the agent's track record. Pulls from state/decision_log.jsonl —
+    grading itself runs in `build_and_render_evolution` before render.
+    """
+    p = _decision_log_path()
+    if not p.exists():
+        return ""
+    records: list[dict] = []
+    for line in p.read_text().splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            records.append(json.loads(line))
+        except Exception:
+            continue
+    graded = [r for r in records if r.get("grade")]
+    if not graded:
+        return ""
+    # Show the most recently graded first, up to 12 rows
+    graded.sort(key=lambda r: r.get("graded_at") or "", reverse=True)
+    rows = graded[:12]
+
+    n_good = sum(1 for r in rows if (r.get("grade") or {}).get("verdict") == "GOOD")
+    n_bad = sum(1 for r in rows if (r.get("grade") or {}).get("verdict") == "BAD")
+    n_mixed = sum(1 for r in rows if (r.get("grade") or {}).get("verdict") == "MIXED")
+
+    out = [
+        '<div class="section-label evo">'
+        '  <span>How past calls aged</span>'
+        f'  <span class="ord">{n_good} good · {n_mixed} mixed · {n_bad} bad · last {len(rows)} graded</span>'
+        '</div>',
+        '<p style="font-style: italic; color: var(--ink-muted); '
+        'margin: 0 0 1.2rem 0; line-height: 1.5;">'
+        'Each row is a decision the agent made 4+ weeks ago, graded against '
+        'how the strategy actually performed in the weeks after. Good = the '
+        'outcome supported the call; Bad = the outcome contradicted it.</p>',
+        '<div class="sectors-table"><table><tbody>',
+    ]
+    for r in rows:
+        g = r.get("grade") or {}
+        verdict = g.get("verdict", "MIXED")
+        color = {
+            "GOOD": "var(--c-action-promote)",
+            "BAD":  "var(--c-action-demote)",
+            "MIXED": "var(--ink-soft)",
+        }.get(verdict, "var(--ink-soft)")
+        sid = r.get("strategy_id") or ""
+        region = r.get("region") or "all"
+        action = r.get("action") or ""
+        decided = r.get("decided_at") or ""
+        delta_ic = g.get("delta_ic") or 0.0
+        delta_pnl = g.get("delta_pnl") or 0.0
+        note = g.get("note") or ""
+        out.append(
+            f'<tr>'
+            f'<td class="sector" style="color: {color}; font-weight: 700;">{html.escape(verdict)}</td>'
+            f'<td class="lean">{html.escape(decided)} · {html.escape(action)} '
+            f'{html.escape(sid)}@{html.escape(region)}</td>'
+            f'<td class="driver">'
+            f'ΔIC {delta_ic:+.2f} · ΔP&amp;L £{delta_pnl:+,.0f} · '
+            f'<em style="color: var(--ink-muted);">{html.escape(note)}</em>'
+            f'</td>'
+            f'</tr>'
+        )
+    out.append('</tbody></table></div>')
     return "\n".join(out)
 
 
