@@ -80,13 +80,26 @@ class StrategyConfig:
     # ranking (control-rule-based).
     #
     #   "llm"    — Sonnet pre-filter using strategies/<id>/prompts/prefilter.md
-    #   "python" — legacy behaviour, fetch all universe technicals, then sort by |5d return|
+    #   "python" — fetch all universe technicals, then sort by `prefilter_sort_key`
     #   "off"    — no pre-filter, the full universe goes downstream
     #
     # `prefilter_top_n` caps the size of the filtered shortlist.
     # Tunable by the evolution agent within (20, 300).
     prefilter_mode: str = "python"
     prefilter_top_n: int = 100
+
+    # When `prefilter_mode == "python"`, this selects the ranker used to
+    # narrow the universe. Defaults to the legacy biggest-movers sort,
+    # which is right for momentum strategies but wrong for macro /
+    # sector / mean-reversion lenses. Tunable by the evolution agent.
+    #
+    #   "abs_return_5d"        — |return_5d_pct| desc (legacy default)
+    #   "abs_return_20d"       — |return_20d_pct| desc (slower momentum)
+    #   "rsi_14_asc"           — rsi_14 asc (oversold first)
+    #   "volume_ratio_desc"    — volume_ratio desc (catalyst flow)
+    #   "dollar_volume_desc"   — sma_20 × avg_volume_20 desc (liquidity
+    #                            rank — biases toward ETFs / large-caps)
+    prefilter_sort_key: str = "abs_return_5d"
 
 
 class Strategy(ABC):

@@ -114,10 +114,26 @@ TUNABLE_STRING_FIELDS = {
     # expensive yfinance technicals fetch.
     #   "llm":    per-strategy Sonnet call with strategies/<id>/prompts/prefilter.md
     #             — strategy-aware, but ~60-90s per call
-    #   "python": legacy heuristic — fetch all universe technicals, sort by |5d return|
+    #   "python": fetch all universe technicals, sort by `prefilter_sort_key`
     #   "off":    no pre-filter (universe goes straight to Stage-1; only
     #             safe for small universes or rule-based strategies)
     "prefilter_mode": {"llm", "python", "off"},
+    # prefilter_sort_key — when prefilter_mode=python, picks the ranker.
+    # Different lenses need different rankers; the legacy default biases
+    # every strategy toward biggest movers, which is right for momentum
+    # but wrong for macro / sector / mean-reversion strategies.
+    #   "abs_return_5d"        — |return_5d_pct| desc (legacy default)
+    #   "abs_return_20d"       — |return_20d_pct| desc
+    #   "rsi_14_asc"           — rsi_14 asc (oversold first; mean-reverter)
+    #   "volume_ratio_desc"    — volume_ratio desc (catalyst flow; news-reactive)
+    #   "dollar_volume_desc"   — sma_20 × avg_volume_20 desc (liquidity
+    #                            rank — biases toward ETFs/large-caps;
+    #                            for macro-aligned, sector-rotator,
+    #                            bond-cycle, commodity-momentum)
+    "prefilter_sort_key": {
+        "abs_return_5d", "abs_return_20d", "rsi_14_asc",
+        "volume_ratio_desc", "dollar_volume_desc",
+    },
 }
 
 
@@ -274,6 +290,7 @@ def _build_snapshot(
                 "cost_gate_multiplier": cfg.get("cost_gate_multiplier"),
                 "prefilter_mode": cfg.get("prefilter_mode"),
                 "prefilter_top_n": cfg.get("prefilter_top_n"),
+                "prefilter_sort_key": cfg.get("prefilter_sort_key"),
                 # Tier 2 candidate state — set by a prior evolution run
                 # as a self-prediction. Surfacing it here lets the agent
                 # grade its own past judgement: did the realised metrics
@@ -447,13 +464,31 @@ Enum-style tunable fields (value must be one of the allowed strings):
     strategies/<id>/prompts/prefilter.md. Strategy-aware (mean-reverter
     sees different names than momentum-trader from the same universe),
     but ~60-90s per call. Recommended default for LLM-driven strategies.
-  - "python" is the legacy heuristic (sort by |5d return|, take top-N).
-    Strategy-AGNOSTIC — biases every strategy toward big movers, which
-    is wrong for mean-reversion and macro lenses. Reserved as a fallback.
+  - "python" fetches all universe technicals and ranks via
+    `prefilter_sort_key` (see below). Strategy-aware ONLY IF the
+    sort_key matches the strategy's edge.
   - "off" disables the pre-filter entirely. Only safe for rule-based
     strategies (control-rule-based) whose own logic IS the filter.
-If you see a strategy with positive Stage-1+ IC but the pre-filter
-mode = "python", a flip to "llm" is a reasonable tune to propose.
+
+`prefilter_sort_key` selects which Python ranker runs when
+prefilter_mode=python. Picking the wrong key is the second-order
+version of the LLM-vs-Python choice — a momentum strategy with
+sort_key=rsi_14_asc will get fed oversold names, which is wrong for
+its edge. Match the key to the strategy archetype:
+  - "abs_return_5d" — biggest absolute 5d movers; momentum-trader,
+    control-rule-based (legacy default).
+  - "abs_return_20d" — slower momentum; trend strategies.
+  - "rsi_14_asc" — most oversold first; mean-reverter.
+  - "volume_ratio_desc" — highest volume vs 20d avg; news-reactive
+    (catalyst flow).
+  - "dollar_volume_desc" — sma_20 × avg_volume_20; biases toward
+    ETFs and large-caps; macro-aligned, sector-rotator, bond-cycle,
+    commodity-momentum (strategies whose natural vehicles are sector
+    ETFs and liquid index names, not microcap discoveries).
+If a strategy's picks consistently include microcap noise when the
+edge thesis is sector-driven, sort_key=dollar_volume_desc is the
+tune. If picks are biased toward big-movers when the edge is mean-
+reversion, sort_key=rsi_14_asc is the tune.
 
 Other constraints:
 - Free Alpaca slots available: {free_slots}

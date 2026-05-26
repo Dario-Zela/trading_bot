@@ -50,6 +50,47 @@ log = logging.getLogger(__name__)
 _PREFILTER_TOP_N = 100  # candidates handed to the LLM for multi-class scoring
 
 
+# Python-prefilter sort keys. Each rank function returns a comparable
+# value; sentinels are used so missing technicals always sort to the
+# bottom regardless of direction (with `reverse=True`, -inf sinks; with
+# `reverse=False`, +inf sinks).
+def _prefilter_rank_fn(key: str):
+    import math
+    if key == "abs_return_5d":
+        return lambda t: abs(t.return_5d_pct) if t.return_5d_pct is not None else -math.inf
+    if key == "abs_return_20d":
+        return lambda t: abs(t.return_20d_pct) if t.return_20d_pct is not None else -math.inf
+    if key == "rsi_14_asc":
+        # Ascending sort; None pushed to the back via +inf.
+        return lambda t: t.rsi_14 if t.rsi_14 is not None else math.inf
+    if key == "volume_ratio_desc":
+        return lambda t: t.volume_ratio if t.volume_ratio is not None else -math.inf
+    if key == "dollar_volume_desc":
+        # sma_20 × avg_volume_20 ≈ 20-day average dollar volume. Large-
+        # caps and ETFs dwarf microcaps on this metric, which is the
+        # point — strategies that should be playing sector vehicles
+        # (macro-aligned, bond-cycle) get those vehicles up top instead
+        # of whatever microcap had the biggest recent move.
+        def _dv(t):
+            if t.sma_20 is None or t.avg_volume_20 is None:
+                return -math.inf
+            return t.sma_20 * t.avg_volume_20
+        return _dv
+    # Unknown key → fall back to the legacy default rather than crashing.
+    return lambda t: abs(t.return_5d_pct) if t.return_5d_pct is not None else -math.inf
+
+
+# Sort direction per key. True = descending (largest first). The
+# ascending case is `rsi_14_asc` (most oversold first).
+_PREFILTER_DESC = {
+    "abs_return_5d":      True,
+    "abs_return_20d":     True,
+    "rsi_14_asc":         False,
+    "volume_ratio_desc":  True,
+    "dollar_volume_desc": True,
+}
+
+
 def _safe_float(val, *, default: float) -> float:
     try:
         f = float(val)
@@ -485,24 +526,26 @@ class LLMStrategy(Strategy):
         return out
 
     def _prefilter(self, techs: dict) -> list:
-        """Minimal pre-filter that preserves directional diversity.
+        """Python pre-filter. Ranker selected by cfg.prefilter_sort_key.
 
-        Keeps any ticker with usable technicals (rsi_14 + return_5d_pct
-        both computable). Ranks by ABS(5-day return) so the LLM sees the
-        biggest movers up AND down, letting it score across rising,
-        falling, and flat regimes rather than only winners. Liquidity is
-        enforced via universe selection upstream, not here — a today-vs-
-        avg volume ratio is unreliable mid-session when today's bar only
-        carries partial volume.
+        Keeps any ticker with the minimum usable technicals (`rsi_14` +
+        `return_5d_pct` both computable), then ranks by the configured
+        sort key. The legacy default is `abs_return_5d`, which biases
+        every strategy toward the biggest movers — fine for momentum,
+        wrong for macro / sector / mean-reversion lenses. The evolution
+        agent can tune this per-strategy via the `tune` action.
+
+        Liquidity is enforced via universe selection upstream, not here
+        — a today-vs-avg volume ratio is unreliable mid-session when
+        today's bar only carries partial volume.
         """
         keep = []
         for ticker, t in techs.items():
             if t.rsi_14 is None or t.return_5d_pct is None:
                 continue
             keep.append(t)
-        # Sort by absolute magnitude of recent move — picks up both up- and
-        # down-movers symmetrically.
-        keep.sort(key=lambda x: abs(x.return_5d_pct), reverse=True)
+        sort_key = (getattr(self.config, "prefilter_sort_key", None) or "abs_return_5d").lower().strip()
+        keep.sort(key=_prefilter_rank_fn(sort_key), reverse=_PREFILTER_DESC.get(sort_key, True))
         return keep[:_PREFILTER_TOP_N]
 
     def _build_prompt(
