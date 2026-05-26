@@ -31,7 +31,14 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    # 14k+ ticker universe × 0.6s Stooq spacing = ~140 min worst-case
+    # full fetch. Warm steady-state is ~30 min, but when the cache has
+    # been stale for several days the catch-up backfill compounds:
+    # 2026-05-23 → 2026-05-26 all cancelled at the prior 45-min wall,
+    # each cancellation deepening the gap the next run had to close.
+    # 120 minutes gives headroom for catch-up after a multi-day drift
+    # without letting a runaway run burn an entire 6-hour Actions slot.
+    timeout-minutes: 120
     env:
       STOOQ_API_KEY: ${{ secrets.STOOQ_API_KEY }}
       # Serial is the only reliable Stooq concurrency on CI IPs
