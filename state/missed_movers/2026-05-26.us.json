@@ -1,0 +1,122 @@
+{
+  "date": "2026-05-26",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 MU +21%, ON +10%, SNDK +9%, TER +8%, AMD +8%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (AZO -11%, TSCO -6%, INTU -5%, LITE -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: MU (+21.48%) \u2014 UBS hiked MU price target 204% to $1,625 (new Street-high) citing AI-driven HBM demand, long-term supply agreements, and a Q2 EPS beat of $12.20 vs $8.60 est; stock crossed $1T market cap for the first time. Why we passed: Outside any active strategy's universe \u2014 MU is a mega-cap semiconductor ($1T market cap post-move). The catalyst was a pre-market analyst price-target revision, not a technical setup; reactive filters cannot position before the open gap materialises.",
+  "top_movers": [
+    {
+      "ticker": "MU",
+      "move_pct": 21.475,
+      "close": 912.2741,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "UBS hiked MU price target 204% to $1,625 (new Street-high) citing AI-driven HBM demand, long-term supply agreements, and a Q2 EPS beat of $12.20 vs $8.60 est; stock crossed $1T market cap for the first time.",
+      "miss_reason": "Outside any active strategy's universe \u2014 MU is a mega-cap semiconductor ($1T market cap post-move). The catalyst was a pre-market analyst price-target revision, not a technical setup; reactive filters cannot position before the open gap materialises.",
+      "suggestion": "Add an analyst-revision gate: when a sell-side firm sets a new Street-high target \u2265100% above prior consensus on a SOX component, flag for market-on-open long entry sized \u22640.5% NAV, exiting end-of-day to avoid overnight earnings risk.",
+      "failed": false
+    },
+    {
+      "ticker": "ON",
+      "move_pct": 9.948,
+      "close": 127.76,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Bank of America raised ON's price target to $138 (reiterating Buy), citing 'underappreciated multi-year content gains' in industrial/auto and AI data center demand; a broad semiconductor sector rally amplified the move.",
+      "miss_reason": "Outside any active strategy's universe. ON is a large-cap NASDAQ semiconductor (~$30B mkt cap); no momentum or news-reactive strategy had the name on its watchlist to act on the sell-side analyst re-rating event.",
+      "suggestion": "Add a large-cap semiconductor basket to the news-reactive strategy's universe, gated on same-day sell-side price-target raises \u226515% above prior close, to capture analyst re-rating gap-ups like this BofA lift.",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": 9.199,
+      "close": 1614.7101,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Mizuho reiterated Micron outperform, forecasting memory market 30\u201350% undersupplied in 2026\u201327 and HBM prices +70\u2013100% next year; sector sympathy lifted SNDK alongside Micron.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SNDK (~$1,600, +550% YTD) likely excluded by price or valuation screens. Move was sector sympathy off a Micron analyst note, not a direct SNDK catalyst, making pre-market positioning impossible.",
+      "suggestion": "Add a semiconductor sector-sympathy rule: when a tier-1 analyst issues a memory-supply thesis on a peer (e.g., MU upgrade), auto-admit correlated NAND names meeting liquidity minimums into the universe for that session.",
+      "failed": false
+    },
+    {
+      "ticker": "TER",
+      "move_pct": 8.105,
+      "close": 387.49,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Nvidia Q1 FY2027 blowout ($81.6B rev +85% YoY; Q2 guide $91B vs $86.8B est. on May 20) confirmed surging AI chip demand; post-Memorial Day re-rating lifted TER as primary AI semiconductor test beneficiary (~70% AI revenue).",
+      "miss_reason": "Outside any active strategy's universe. TER (~$56B cap) is semiconductor test equipment with 70% AI revenue; likely excluded by sector filters targeting fabless/foundry names, and its +78% YTD run before today may have tripped a valuation-extended exclusion screen.",
+      "suggestion": "Add a 'semiconductor equipment / AI supply chain' universe tier (TER, AMAT, LRCX, KLAC) released when Nvidia or hyperscaler quarterly guidance beats consensus by \u22655%, funnelling these names into the existing momentum entry filter.",
+      "failed": false
+    },
+    {
+      "ticker": "AMD",
+      "move_pct": 7.75,
+      "close": 503.74,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Nvidia CEO Jensen Huang declared 'Agentic AI has arrived' on NVDA's earnings call, citing a $200B CPU TAM that directly benefits AMD's EPYC server line; AMD also began ramping EPYC 'Venice' on TSMC 2nm.",
+      "miss_reason": "AMD is outside any active strategy's universe, likely excluded by sector or cap-tier filters. The +7.75% move was a cross-ticker NVDA earnings spillover \u2014 not detectable by momentum signals without pre-open event-reactive logic tied to peer earnings.",
+      "suggestion": "Add a peer-earnings spillover rule: when NVDA reports with AI-infrastructure sentiment above a defined threshold, gate AMD into the news-reactive strategy's universe for the next session with RSI ceiling raised by 10 pts.",
+      "failed": false
+    },
+    {
+      "ticker": "WDC",
+      "move_pct": 7.52,
+      "close": 520.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Evercore ISI raised WDC price target to $575 from $410 (Outperform), arguing market undervalues its AI data-center HDD contribution; built on Q3 FY2026 beat ($3.34B rev) and 20% dividend hike.",
+      "miss_reason": "Outside any active strategy's universe. WDC is a large-cap storage name up ~115% YTD in 2026 before today; its elevated price and extreme momentum likely pushed it past any RSI or valuation ceiling used to gate the tradable universe, and analyst-upgrade moves require pre-open positioning the bot cannot achieve post-sig",
+      "suggestion": "Add an analyst-upgrade trigger: if a tier-1 bank raises price target \u226525% with a Buy/Outperform rating pre-market, gate the name into the news-reactive universe and allow entry within the first 20 minutes of open if price confirms \u2265+2% vs prior close.",
+      "failed": false
+    },
+    {
+      "ticker": "AZO",
+      "move_pct": -10.636,
+      "close": 3044.1851,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "AZO Q3 2026 earnings (reported May 26): EPS beat ($38.07 vs $36.13 est) but revenue missed ($4.84B vs $4.87B est) on international weakness in Mexico/Brazil, triggering an ~11% sell-off.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AZO trades at ~$3,044/share and is almost certainly excluded by a per-share price cap or notional-per-lot filter. Even if added, this was an earnings-morning gap requiring pre-event positioning; post-open signals arrive too late to capture the bulk of the move.",
+      "suggestion": "Add an earnings-day catalyst list: names reporting pre-market with revenue miss \u22650.5% vs consensus should be eligible for a gap-fade short entry within the first 15 min of open, gated on gap magnitude \u22655% \u2014 this would have flagged AZO at the open without requiring it to clear the normal universe filters.",
+      "failed": false
+    },
+    {
+      "ticker": "TSCO",
+      "move_pct": -5.787,
+      "close": 29.79,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sustained post-Q1 institutional selling accelerated: net income fell 8.3% YoY, Piper Sandler downgraded to Neutral (PT $36 from $51) citing structural pet-adoption headwinds; stock continued its ~40% YTD decline into the May 27 ex-div date.",
+      "miss_reason": "Outside any active strategy's universe. TSCO is a large-cap NASDAQ specialty retailer (consumer staples/discretionary hybrid); the move is a multi-week fundamental deterioration story, not an intraday momentum or mean-reversion signal \u2014 no filter would have flagged it even if it were in scope.",
+      "suggestion": "No actionable change \u2014 adding TSCO would require a fundamental-deterioration short strategy; the bot has no short capability and the signal (earnings miss + analyst cascade) resolves over weeks, not intraday.",
+      "failed": false
+    },
+    {
+      "ticker": "INTU",
+      "move_pct": -4.893,
+      "close": 304.285,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Secondary selloff after May 20 Q3 earnings crash (-20%): on May 26 securities fraud investigations were announced citing TurboTax pricing failures ('we lost on price') and misleading pre-season guidance to investors.",
+      "miss_reason": "Outside any active strategy's universe \u2014 INTU was almost certainly removed by an earnings-gate or large-gap filter after its ~20% single-day collapse on 2026-05-20. Today's -4.89% is a follow-through move six sessions later, well inside a typical post-earnings blackout window.",
+      "suggestion": "Add a post-earnings re-queue rule: names gapped \u226515% on earnings are eligible for momentum-short re-entry after 4 sessions if a secondary catalyst (litigation filing, analyst downgrade) lands, with position size capped at 50% of normal.",
+      "failed": false
+    },
+    {
+      "ticker": "LITE",
+      "move_pct": -4.073,
+      "close": 908.3299,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "AI/tech profit-taking amid rising Treasury yields cooled LITE's post-Q3-earnings momentum; newly launched 2x leveraged ETF (LITU, May 21) amplified selling pressure; no new company-specific catalyst.",
+      "miss_reason": "Outside any active strategy's universe: LITE (~$900/share, AI-photonics) likely exceeds the per-share price ceiling. The -4% decline was post-earnings momentum cooling, capturable only short-side \u2014 unavailable to long-only strategies.",
+      "suggestion": "(no actionable change \u2014 capturing this downside requires both raising the per-share price ceiling above ~$500 and short capability; neither fits current risk tolerance)",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-05-26T19:36:18.126898+00:00"
+}
