@@ -1,38 +1,30 @@
-"""Midday take-profit pass — close positions that have hit their
-strategy's take-profit target by midday, before the EOD drift gives it
-back.
-
-Empirical observation (2026-05-26 onward): positions opened in the
-morning often peak at midday and drift back to flat by the close. The
-existing midday-trail walks the broker stop UP on positions in profit
-but only fires if the price subsequently falls; it doesn't realise the
-gain at the peak. This pass does — for any open position whose
-midday pct_up >= strategy.take_profit_pct × strategy.midday_tp_factor,
-it market-closes immediately.
+"""Midday take-profit pass — close positions whose midday pct_up has
+reached `strategy.take_profit_pct × strategy.midday_tp_factor`, before
+the EOD drift gives the gain back. Captures the midday-peak-then-
+crumble pattern that the trail-stop can't, because the trail only
+fires after a fall, never at the peak.
 
 Three tiers handled:
 
-- **Alpaca-paper**: list positions, find each one's bracket children
-  (TP + stop), cancel the children, then DELETE /v2/positions/{ticker}
-  to market-close. Cancelling first avoids an orphan TP firing
-  against a future re-entry on the same symbol.
+- **Alpaca-paper**: list positions, cancel any bracket children (TP +
+  stop), then DELETE /v2/positions/{ticker}. Cancelling first stops
+  an orphan TP firing against a future re-entry on the same symbol.
 
-- **T212 (trading212-paper)**: list portfolio positions, find any
-  open STOP / STOP_LIMIT for that symbol and delete (same anti-orphan
-  logic), then submit a market SELL of the position quantity.
+- **T212 (trading212-paper)**: list portfolio positions, cancel any
+  open STOP / STOP_LIMIT for that symbol (same anti-orphan logic),
+  then submit a market SELL of the position quantity.
 
 - **Shadow**: walk open ledger trades at tier='shadow', fetch the
   current intraday price via yfinance, compute pct_up against
-  entry_price, and write the exit to the ledger if the threshold is
-  hit. No broker calls — shadow trades exist only in the ledger.
+  entry_price, write the exit to the ledger if the threshold is hit.
+  No broker calls — shadow trades exist only in the ledger.
 
-Runs BEFORE the trailing-stop pass in `scripts/midday_trail.py` —
-closed positions don't need trailing.
+Runs BEFORE the trail pass in `scripts/midday_trail.py` so closed
+positions don't get a trail-stop placed against them on the way out.
 
-The threshold is per-strategy via `midday_tp_factor` (default 0.7).
-Tunable by the evolution agent within (0.3, 1.5). The CLI flag
-`--default-tp-factor` provides an ops-time override for strategies
-whose config hasn't been written yet.
+`midday_tp_factor` is per-strategy, default 0.7, tunable by the
+evolution agent within (0.3, 1.5). The CLI `--default-tp-factor` is
+an ops-time override for strategies missing the config field.
 """
 from __future__ import annotations
 
@@ -468,12 +460,10 @@ def _take_profit_one_t212_slot(
 
 
 # ---------------------------------------------------------------------------
-# Shadow side — non-broker trades (ledger-only). The user observed that
-# the broker-only passes above leave shadow positions stranded — those
-# trades have no broker portfolio to walk, but they're real ledger
-# entries graded against actual prices. Many 1-day shadow trades peak
-# intraday and drift back to ~0% by EOD; the midday-tp pass needs to
-# capture those gains too.
+# Shadow side — trades that live only in the ledger (no broker
+# portfolio to walk). Same threshold check as the broker paths but the
+# current price comes from yfinance and the close is a ledger update,
+# not an order submission.
 # ---------------------------------------------------------------------------
 
 def take_profit_shadow_strategies(

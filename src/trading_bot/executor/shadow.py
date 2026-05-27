@@ -58,14 +58,10 @@ class ShadowExecutor(Executor):
                 # No price data available; skip this intent. Wave 1 doesn't have
                 # a richer fallback — we just don't record the trade.
                 continue
-            # Use the OPEN of today's bar as the entry price when today's
-            # bar is available (simulates market-on-open execution). If
-            # only yesterday's bar is available (entry runs pre-market
-            # for today), fall back to yesterday's close as the proxy.
-            # Old behaviour used .close unconditionally, which on 1-day
-            # round-trip holds collapsed entry_price == exit_price ==
-            # today's close → pnl=0 regardless of actual move
-            # (observed on 2026-05-26 across every shadow same-day exit).
+            # Use today's open when today's bar is available — exit will
+            # use today's close, so a same-day round-trip captures the
+            # day's actual move. Without this, both legs read .close of
+            # the same bar and pnl collapses to 0.
             entry_bar = bars[-1]
             if entry_bar.bar_date == on_date:
                 entry_price = entry_bar.open

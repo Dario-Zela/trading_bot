@@ -101,10 +101,6 @@ def main(argv: list[str] | None = None) -> int:
             if n_failed > 0:
                 exit_code = 1
 
-        # Shadow tier — non-broker trades exist only in the ledger.
-        # The user observed that broker-only passes leave non-multi-day
-        # shadow trades stranded; this scan catches them so shadow IC /
-        # hit-rate reflect the same midday-locking the brokers do.
         if args.shadow_region:
             s_tp = take_profit_shadow_strategies(
                 region=args.shadow_region,
