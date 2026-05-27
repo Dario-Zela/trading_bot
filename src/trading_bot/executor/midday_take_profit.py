@@ -10,16 +10,21 @@ gain at the peak. This pass does — for any open position whose
 midday pct_up >= strategy.take_profit_pct × strategy.midday_tp_factor,
 it market-closes immediately.
 
-Two brokers handled:
+Three tiers handled:
 
-- **Alpaca**: list positions, find each one's bracket children (TP +
-  stop), cancel the children, then DELETE /v2/positions/{ticker} to
-  market-close. Cancelling first avoids an orphan TP firing against
-  a future re-entry on the same symbol.
+- **Alpaca-paper**: list positions, find each one's bracket children
+  (TP + stop), cancel the children, then DELETE /v2/positions/{ticker}
+  to market-close. Cancelling first avoids an orphan TP firing
+  against a future re-entry on the same symbol.
 
-- **T212**: list portfolio positions, find any open STOP / STOP_LIMIT
-  for that symbol and delete (same anti-orphan logic), then submit a
-  market SELL of the position quantity.
+- **T212 (trading212-paper)**: list portfolio positions, find any
+  open STOP / STOP_LIMIT for that symbol and delete (same anti-orphan
+  logic), then submit a market SELL of the position quantity.
+
+- **Shadow**: walk open ledger trades at tier='shadow', fetch the
+  current intraday price via yfinance, compute pct_up against
+  entry_price, and write the exit to the ledger if the threshold is
+  hit. No broker calls — shadow trades exist only in the ledger.
 
 Runs BEFORE the trailing-stop pass in `scripts/midday_trail.py` —
 closed positions don't need trailing.
@@ -460,6 +465,114 @@ def _take_profit_one_t212_slot(
         time.sleep(0.3)
 
     return actions
+
+
+# ---------------------------------------------------------------------------
+# Shadow side — non-broker trades (ledger-only). The user observed that
+# the broker-only passes above leave shadow positions stranded — those
+# trades have no broker portfolio to walk, but they're real ledger
+# entries graded against actual prices. Many 1-day shadow trades peak
+# intraday and drift back to ~0% by EOD; the midday-tp pass needs to
+# capture those gains too.
+# ---------------------------------------------------------------------------
+
+def take_profit_shadow_strategies(
+    region: str | None = None,
+    *,
+    default_tp_factor: float = DEFAULT_TP_FACTOR,
+) -> list[TakeProfitAction]:
+    """Walk open shadow-tier ledger trades, fetch intraday prices, close
+    any that have hit `take_profit_pct × midday_tp_factor`.
+
+    `region` filters to one region (e.g. 'us' / 'uk-eu') so the US
+    midday cron only touches US shadow trades and the UK-EU cron only
+    touches UK-EU shadow trades — keeps the price fetch sized to the
+    market that's actually mid-session.
+    """
+    open_trades = read_open_trades(tier="shadow", region=region)
+    if not open_trades:
+        return []
+
+    # Bulk-fetch current prices once. yfinance Ticker.fast_info is fast
+    # but unreliable for thin tickers; fall back to a 1-day download
+    # for any ticker fast_info doesn't return.
+    tickers = sorted({(t.get("ticker") or "").strip() for t in open_trades if t.get("ticker")})
+    current_prices = _current_prices_yf(tickers)
+
+    actions: list[TakeProfitAction] = []
+    for trade in open_trades:
+        ticker = (trade.get("ticker") or "").strip()
+        if not ticker:
+            continue
+        current = current_prices.get(ticker)
+        if current is None or current <= 0:
+            continue
+        try:
+            entry = float(trade.get("entry_price") or 0)
+        except (TypeError, ValueError):
+            continue
+        if entry <= 0:
+            continue
+        pct_up = (current / entry - 1.0) * 100.0
+
+        sid = trade.get("strategy_id") or ""
+        tp_pct, factor, threshold = _strategy_thresholds(sid, default_tp_factor)
+        if tp_pct is None:
+            continue
+        if pct_up < threshold:
+            continue
+
+        # For shadow, exit_price is the current intraday price.
+        # Currency conversion is handled by the existing shadow exit
+        # path; here we just record the raw exit_price and let the
+        # ledger summation logic deal with the FX (same shape as
+        # mark_trade_exited usage elsewhere — exit_price is in the
+        # instrument's native unit, downstream code converts).
+        _mark_exit(
+            ledger_row=trade, exit_price=current,
+            reason="midday_take_profit",
+        )
+        actions.append(TakeProfitAction(
+            ticker=ticker, slot=0, broker="shadow",
+            strategy_id=sid, entry_price=entry,
+            current_price=current, pct_up=pct_up,
+            threshold_pct=threshold, take_profit_pct=tp_pct, tp_factor=factor,
+            status="closed",
+            reason=f"shadow midday exit @ intraday {current:.4f}",
+        ))
+    return actions
+
+
+def _current_prices_yf(tickers: list[str]) -> dict[str, float]:
+    """Pull the latest intraday price for each ticker from yfinance.
+
+    fast_info.last_price is the cheap path (one HTTP call per ticker,
+    no DataFrame parsing); for tickers it doesn't carry we fall back
+    to the last close from a 1-day history fetch. Anything still
+    missing is omitted — the caller treats absence as "skip".
+    """
+    if not tickers:
+        return {}
+    try:
+        import yfinance as yf
+    except Exception as e:
+        log.warning("midday-tp: yfinance unavailable: %s", e)
+        return {}
+    out: dict[str, float] = {}
+    for t in tickers:
+        try:
+            yt = yf.Ticker(t)
+            last = getattr(yt.fast_info, "last_price", None)
+            if last is None:
+                # fast_info missed — try a 1-day history pull
+                hist = yt.history(period="1d", interval="5m", auto_adjust=False)
+                if hist is not None and not hist.empty:
+                    last = float(hist["Close"].iloc[-1])
+            if last is not None and last > 0:
+                out[t] = float(last)
+        except Exception as e:
+            log.debug("midday-tp: price lookup failed for %s: %s", t, e)
+    return out
 
 
 # ---------------------------------------------------------------------------

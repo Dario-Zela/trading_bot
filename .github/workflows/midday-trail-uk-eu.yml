@@ -47,4 +47,4 @@ jobs:
           T212_API_SECRET__2: ${{ secrets.T212_API_SECRET__2 }}
           T212_API_KEY__3: ${{ secrets.T212_API_KEY__3 }}
           T212_API_SECRET__3: ${{ secrets.T212_API_SECRET__3 }}
-        run: python scripts/midday_trail.py --brokers t212
+        run: python scripts/midday_trail.py --brokers t212 --shadow-region uk-eu

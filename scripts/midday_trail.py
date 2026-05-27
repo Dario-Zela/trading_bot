@@ -34,7 +34,8 @@ from trading_bot.executor.t212_trail import (
 from trading_bot.executor.midday_take_profit import (
     DEFAULT_TP_FACTOR,
     format_log as tp_log,
-    take_profit_alpaca_slots, take_profit_t212_slots,
+    take_profit_alpaca_slots, take_profit_shadow_strategies,
+    take_profit_t212_slots,
 )
 
 
@@ -57,6 +58,13 @@ def main(argv: list[str] | None = None) -> int:
                         ))
     parser.add_argument("--skip-take-profits", action="store_true",
                         help="Skip the midday take-profit pass; only run the trail.")
+    parser.add_argument("--shadow-region", default=None, choices=["us", "uk-eu"],
+                        help=(
+                            "Region for the shadow-tier take-profit scan. "
+                            "Set this to whichever market is mid-session "
+                            "(US-cron → 'us', UK-EU cron → 'uk-eu'). Omit to "
+                            "skip the shadow scan."
+                        ))
     args = parser.parse_args(argv)
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)-7s %(message)s")
@@ -92,6 +100,21 @@ def main(argv: list[str] | None = None) -> int:
             print(f"t212 tp: {n_closed} closed, {n_failed} failed")
             if n_failed > 0:
                 exit_code = 1
+
+        # Shadow tier — non-broker trades exist only in the ledger.
+        # The user observed that broker-only passes leave non-multi-day
+        # shadow trades stranded; this scan catches them so shadow IC /
+        # hit-rate reflect the same midday-locking the brokers do.
+        if args.shadow_region:
+            s_tp = take_profit_shadow_strategies(
+                region=args.shadow_region,
+                default_tp_factor=args.default_tp_factor,
+            )
+            print(f"\nMidday take-profit pass — shadow ({args.shadow_region})")
+            print("=" * 60)
+            print(tp_log(s_tp))
+            n_closed = sum(1 for a in s_tp if a.status == "closed")
+            print(f"shadow tp: {n_closed} closed")
 
     if "alpaca" in args.brokers:
         ap_actions = trail_alpaca_slots(

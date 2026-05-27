@@ -47,4 +47,4 @@ jobs:
           ALPACA_API_SECRET__2: ${{ secrets.ALPACA_API_SECRET__2 }}
           ALPACA_API_KEY__3: ${{ secrets.ALPACA_API_KEY__3 }}
           ALPACA_API_SECRET__3: ${{ secrets.ALPACA_API_SECRET__3 }}
-        run: python scripts/midday_trail.py --brokers alpaca
+        run: python scripts/midday_trail.py --brokers alpaca --shadow-region us

@@ -102,3 +102,93 @@ def test_strategy_config_carries_midday_tp_factor_default():
         use_stops=True, use_take_profits=True,
     )
     assert cfg.midday_tp_factor == 0.7
+
+
+# -----------------------------------------------------------------------------
+# Shadow-tier path: walks ledger trades, fetches intraday prices, closes
+# at threshold. The user observed that broker-only passes leave non-multi-
+# day shadow trades stranded — this test locks down that the lookup wires
+# correctly through the cache and the threshold check.
+# -----------------------------------------------------------------------------
+
+def test_shadow_take_profit_closes_when_intraday_price_crosses_threshold(monkeypatch, tmp_path):
+    """End-to-end test of the shadow path without yfinance or the
+    real ledger. Stubs:
+      - read_open_trades returns one ledger row for a known strategy
+      - _current_prices_yf returns a price that crosses the threshold
+      - mark_trade_exited records the call
+    """
+    from trading_bot.executor import midday_take_profit as mt
+
+    # Strategy: 5% TP, 0.7 factor → threshold = 3.5%
+    _install("test-strat", _FakeCfg(take_profit_pct=5.0, midday_tp_factor=0.7))
+
+    fake_trade = {
+        "trade_id": "tx-1",
+        "strategy_id": "test-strat",
+        "region": "us",
+        "tier": "shadow",
+        "ticker": "FAKE",
+        "entry_price": 100.0,
+        "quantity": 1.0,
+        "entry_date": "2026-05-27",
+    }
+    monkeypatch.setattr(mt, "read_open_trades", lambda **kw: [fake_trade])
+    # Price moved +4% — above the 3.5% threshold
+    monkeypatch.setattr(mt, "_current_prices_yf", lambda tickers: {"FAKE": 104.0})
+    exits_called: list[dict] = []
+    monkeypatch.setattr(mt, "_mark_exit",
+                        lambda **kw: exits_called.append(kw))
+
+    actions = mt.take_profit_shadow_strategies(region="us")
+    assert len(actions) == 1
+    assert actions[0].status == "closed"
+    assert abs(actions[0].pct_up - 4.0) < 1e-9
+    assert exits_called[0]["reason"] == "midday_take_profit"
+    assert exits_called[0]["exit_price"] == 104.0
+
+
+def test_shadow_take_profit_skips_when_below_threshold(monkeypatch):
+    """A position that's up but below the threshold MUST stay open —
+    this guards against a premature exit on a small midday wiggle."""
+    from trading_bot.executor import midday_take_profit as mt
+
+    _install("test-strat", _FakeCfg(take_profit_pct=5.0, midday_tp_factor=0.7))
+    fake_trade = {
+        "trade_id": "tx-2", "strategy_id": "test-strat", "region": "us",
+        "tier": "shadow", "ticker": "FAKE",
+        "entry_price": 100.0, "quantity": 1.0, "entry_date": "2026-05-27",
+    }
+    monkeypatch.setattr(mt, "read_open_trades", lambda **kw: [fake_trade])
+    # Up 2% — below 3.5% threshold
+    monkeypatch.setattr(mt, "_current_prices_yf", lambda tickers: {"FAKE": 102.0})
+    exits_called: list[dict] = []
+    monkeypatch.setattr(mt, "_mark_exit",
+                        lambda **kw: exits_called.append(kw))
+
+    actions = mt.take_profit_shadow_strategies(region="us")
+    assert actions == []
+    assert exits_called == []
+
+
+def test_shadow_take_profit_skips_when_price_lookup_fails(monkeypatch):
+    """If yfinance returns nothing for a ticker, we must NOT close.
+    Silent failure mode here means the trade stays open and exits via
+    the EOD scheduled-exit path as before."""
+    from trading_bot.executor import midday_take_profit as mt
+
+    _install("test-strat", _FakeCfg(take_profit_pct=5.0, midday_tp_factor=0.7))
+    fake_trade = {
+        "trade_id": "tx-3", "strategy_id": "test-strat", "region": "us",
+        "tier": "shadow", "ticker": "FAKE",
+        "entry_price": 100.0, "quantity": 1.0, "entry_date": "2026-05-27",
+    }
+    monkeypatch.setattr(mt, "read_open_trades", lambda **kw: [fake_trade])
+    monkeypatch.setattr(mt, "_current_prices_yf", lambda tickers: {})
+    exits_called: list[dict] = []
+    monkeypatch.setattr(mt, "_mark_exit",
+                        lambda **kw: exits_called.append(kw))
+
+    actions = mt.take_profit_shadow_strategies(region="us")
+    assert actions == []
+    assert exits_called == []
