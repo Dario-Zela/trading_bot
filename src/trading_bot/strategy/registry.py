@@ -56,6 +56,7 @@ def _to_config(raw: dict) -> StrategyConfig:
         prefilter_mode=str(raw.get("prefilter_mode") or "python").lower().strip(),
         prefilter_top_n=int(raw.get("prefilter_top_n", 100)),
         prefilter_sort_key=str(raw.get("prefilter_sort_key") or "abs_return_5d").lower().strip(),
+        midday_tp_factor=float(raw.get("midday_tp_factor", 0.7)),
     )
 
 

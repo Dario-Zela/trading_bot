@@ -101,6 +101,16 @@ class StrategyConfig:
     #                            rank — biases toward ETFs / large-caps)
     prefilter_sort_key: str = "abs_return_5d"
 
+    # Midday take-profit factor — at the midday-trail cron, if an open
+    # position is up by at least `take_profit_pct × midday_tp_factor`,
+    # market-close it rather than waiting for EOD. Captures the empirical
+    # "peak at midday then crumble" pattern observed on T212-paper
+    # positions. 1.0 = close only when full TP is reached (matches the
+    # broker-side TP order's behaviour); 0.7 = close at 70% of TP, which
+    # is the empirically-tuned default. Tunable by the evolution agent
+    # within (0.3, 1.5).
+    midday_tp_factor: float = 0.7
+
 
 class Strategy(ABC):
     """Base class for any tradeable strategy. Rule-based subclass overrides

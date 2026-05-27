@@ -31,24 +31,67 @@ from trading_bot.executor.alpaca_trail import (
 from trading_bot.executor.t212_trail import (
     format_log as t212_log, trail_t212_slots,
 )
+from trading_bot.executor.midday_take_profit import (
+    DEFAULT_TP_FACTOR,
+    format_log as tp_log,
+    take_profit_alpaca_slots, take_profit_t212_slots,
+)
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Walk broker stops up on positions in profit.")
     parser.add_argument("--activation", type=float, default=DEFAULT_ACTIVATION_PCT,
-                        help=f"Profit % required before we start trailing (default {DEFAULT_ACTIVATION_PCT}%)")
+                        help=f"Profit %% required before we start trailing (default {DEFAULT_ACTIVATION_PCT}%%)")
     parser.add_argument("--trail", type=float, default=DEFAULT_TRAIL_PCT,
-                        help=f"Distance below current price to set the new stop (default {DEFAULT_TRAIL_PCT}%)")
+                        help=f"Distance below current price to set the new stop (default {DEFAULT_TRAIL_PCT}%%)")
     parser.add_argument("--slots", nargs="*", type=int,
                         help="Specific slot numbers to check; defaults to 1-3 for each broker.")
     parser.add_argument("--brokers", nargs="*", choices=["alpaca", "t212"],
                         default=["alpaca", "t212"],
                         help="Which brokers to scan (default: both).")
+    parser.add_argument("--default-tp-factor", type=float, default=DEFAULT_TP_FACTOR,
+                        help=(
+                            f"Fallback midday TP factor for strategies without "
+                            f"`midday_tp_factor` in config (default {DEFAULT_TP_FACTOR}). "
+                            f"Per-strategy values in config.yaml override this."
+                        ))
+    parser.add_argument("--skip-take-profits", action="store_true",
+                        help="Skip the midday take-profit pass; only run the trail.")
     args = parser.parse_args(argv)
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)-7s %(message)s")
 
     exit_code = 0
+
+    # Phase 12E — midday take-profit pass. Runs BEFORE the trail pass so
+    # any position closed here doesn't get an orphan trail-stop placed
+    # against it on the way out.
+    if not args.skip_take_profits:
+        if "alpaca" in args.brokers:
+            ap_tp = take_profit_alpaca_slots(
+                slots=args.slots, default_tp_factor=args.default_tp_factor,
+            )
+            print("\nMidday take-profit pass — Alpaca paper")
+            print("=" * 60)
+            print(tp_log(ap_tp))
+            n_closed = sum(1 for a in ap_tp if a.status == "closed")
+            n_failed = sum(1 for a in ap_tp if a.status == "failed")
+            print(f"alpaca tp: {n_closed} closed, {n_failed} failed")
+            if n_failed > 0:
+                exit_code = 1
+
+        if "t212" in args.brokers:
+            t_tp = take_profit_t212_slots(
+                slots=args.slots, default_tp_factor=args.default_tp_factor,
+            )
+            print("\nMidday take-profit pass — Trading 212 demo")
+            print("=" * 60)
+            print(tp_log(t_tp))
+            n_closed = sum(1 for a in t_tp if a.status == "closed")
+            n_failed = sum(1 for a in t_tp if a.status == "failed")
+            print(f"t212 tp: {n_closed} closed, {n_failed} failed")
+            if n_failed > 0:
+                exit_code = 1
 
     if "alpaca" in args.brokers:
         ap_actions = trail_alpaca_slots(

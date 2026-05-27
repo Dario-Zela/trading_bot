@@ -105,6 +105,16 @@ TUNABLE_FIELDS = {
     # scoring stages. Stage-1 Haiku also caps in its own prompt, so this
     # is the absolute upper bound on what Stage-1 sees.
     "prefilter_top_n": (20, 300),
+    # midday_tp_factor — at the midday-trail cron, close positions whose
+    # pct_up >= take_profit_pct × midday_tp_factor. 1.0 = wait for the
+    # full TP (matches the broker's bracket order); 0.7 = early-take at
+    # 70% of TP, captures the "midday peak then crumble" pattern. Lower
+    # = more aggressive locking, more upside left on the table. The
+    # evolution agent should consider lowering this on strategies whose
+    # post-mortems consistently show "exited at 0% after touching +3%
+    # intraday"; raising it on strategies whose realised returns
+    # consistently exceed TP.
+    "midday_tp_factor": (0.3, 1.5),
 }
 
 # Enum-style tunable fields. Same `tune` action verb; clamping rule is
@@ -291,6 +301,7 @@ def _build_snapshot(
                 "prefilter_mode": cfg.get("prefilter_mode"),
                 "prefilter_top_n": cfg.get("prefilter_top_n"),
                 "prefilter_sort_key": cfg.get("prefilter_sort_key"),
+                "midday_tp_factor": cfg.get("midday_tp_factor"),
                 # Tier 2 candidate state — set by a prior evolution run
                 # as a self-prediction. Surfacing it here lets the agent
                 # grade its own past judgement: did the realised metrics
