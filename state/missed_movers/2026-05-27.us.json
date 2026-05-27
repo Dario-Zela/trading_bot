@@ -1,0 +1,124 @@
+{
+  "date": "2026-05-27",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 1 of today's 10 biggest US movers.\n\n\u2022 5 upside misses \u2014 ON +10%, SNDK +9%, TER +8%, AMD +8%, WDC +8%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (AZO -11%, TSCO -6%, INTU -5%, LITE -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: AZO (-10.64%) \u2014 Q3 FY2026 revenue missed by ~$36M ($4.8B vs $4.88B est.) and gross margin fell 77bps to 52.2% on LIFO headwinds, overshadowing a $1.42 EPS beat; stock gapped down ~10% at open May 27. Why we passed: Outside any active strategy's universe \u2014 AZO's ~$3,044 share price and specialty-retail sector likely exclude it from universe filters. Earnings gap was known pre-open; reactive intraday signals arrived too late to capture the full move.",
+  "top_movers": [
+    {
+      "ticker": "MU",
+      "move_pct": 21.475,
+      "close": 912.2741,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned"
+      ],
+      "catalyst": "UBS raised MU price target from $535 to $1,625 (Street-high) on May 26, citing AI-driven structural re-rating of memory chips; Citi and Melius Research had also lifted targets; stock crossed $1T market cap on AI/HBM demand narrative.",
+      "miss_reason": "Outside any active strategy's universe \u2014 large-cap AI-memory semiconductor dropped from macro-aligned's watchlist. The move accrued across two sessions triggered by an after-hours broker note, requiring news-reactive pre-market positioning to capture, not intraday signals.",
+      "suggestion": "Re-add MU to macro-aligned's semiconductor universe and add a broker-upgrade gate: enter within 30 min of open when a name receives a \u226540% PT raise and pre-market gap is \u2265+10% on \u22651.5\u00d7 avg volume.",
+      "failed": false
+    },
+    {
+      "ticker": "ON",
+      "move_pct": 9.948,
+      "close": 127.76,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Broad semiconductor sector surge on US-China trade optimism: Nvidia CEO Jensen Huang joined Trump's Beijing delegation for Xi summit, signaling constructive policy on chip export rules; ON amplified the move on its strong Q1 beat ($0.64 EPS vs $0.61 est) and 30%+ sequential AI da",
+      "miss_reason": "Outside any active strategy's universe. ON is a large-cap ($~15B) semiconductor name that had already rallied ~96% YTD and hit a 52-week high today; momentum filters would flag extreme RSI/extension, and the day's catalyst was a macro geopolitical headline (US-China summit optics) with no pre-market signal the bot's ne",
+      "suggestion": "Introduce a sector-shock rule: when a designated semiconductor ETF (e.g. SOXX) gaps \u22653% at open on a geopolitical/trade catalyst, release the top-5 highest-beta universe-adjacent names from extension filters for a single-session long entry sized at 0.5\u00d7 normal, with a same-day hard exit.",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": 9.199,
+      "close": 1614.7101,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FTSE Russell preliminary list (~May 27) flagged SNDK for Russell 1000 Growth Index addition ahead of the June 2026 rebalance, triggering anticipatory passive-fund buying on top of persistent Q3 FY2026 earnings momentum (+251% YoY rev, $42B backlog).",
+      "miss_reason": "Outside any active strategy's universe \u2014 SNDK (Western Digital NAND spin-off, recently relisted) likely excluded by minimum trading-history filters. Index-addition moves front-run the effective date, invisible to momentum signals until the bulk of the gain is already done.",
+      "suggestion": "Add an index-reconstitution gate: on FTSE Russell preliminary-additions release, auto-enqueue flagged names into the momentum strategy's candidate set for the announcement-to-effective-date window, bypassing minimum trading-history requirements.",
+      "failed": false
+    },
+    {
+      "ticker": "TER",
+      "move_pct": 8.105,
+      "close": 387.49,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continuation of a 5-day, +21% AI-chip-testing momentum run ignited by JPMorgan's Apr-30 upgrade to Overweight ($400 PT) and record Q1 2026 revenue of $1.28B (+87% YoY, ~70% AI-driven); no discrete single-day catalyst identified for May 27.",
+      "miss_reason": "Outside any active strategy's universe \u2014 TER (~$61B semiconductor test equipment) had run >84% YTD before this week; the May-27 print was trend continuation inside a multi-week AI rally, not a fresh breakout signal any gap or RSI filter would catch.",
+      "suggestion": "Add a semiconductor-test-equipment bucket to the momentum strategy's universe; gate entries at \u22653% 1-day gap on \u22651.5\u00d7 avg volume so AI-capex continuation days at pause-reaccelerate inflection points are capturable.",
+      "failed": false
+    },
+    {
+      "ticker": "AMD",
+      "move_pct": 7.75,
+      "close": 503.74,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Nvidia CEO Jensen Huang declared 'Agentic AI has arrived' on May 26, flagging AMD's EPYC CPUs as key infrastructure for a $200B agentic compute market, sparking a cross-session re-rating into May 27 close.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AMD (~$820B mkt cap) is likely excluded by sector/cap filters. The move was a cross-session sentiment re-rating ignited May 26 by Nvidia CEO commentary; any May 27 signal faced a fully-embedded gap.",
+      "suggestion": "Add large-cap semiconductor sympathy rule: if NVDA closes \u2265+3% on day T, flag AMD/AVGO/QCOM for momentum entry on T+1 open with volume confirmation \u22651.2\u00d7 20-day avg, capped at 2% NAV per name.",
+      "failed": false
+    },
+    {
+      "ticker": "WDC",
+      "move_pct": 7.52,
+      "close": 520.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Barclays raised PT to $620 from $450 (Overweight) and Evercore ISI raised to $575 from $500, both citing AI-driven HDD demand; underpinned by Q3 FY2026 revenue beat and a 20% quarterly dividend increase.",
+      "miss_reason": "Outside any active strategy's universe \u2014 WDC is a large-cap NASDAQ storage/hardware name (~$200B mkt cap at close), almost certainly above the bot's mid-cap universe ceiling. The +7.5% move was analyst-upgrade-driven with no pre-market momentum signal available to trigger same-day entry.",
+      "suggestion": "Add a satellite 'analyst-upgrade' screener: admit universe-excluded names when \u22652 sell-side PTs are raised \u226515% on the same session; cap position at 0.25% portfolio weight with mandatory intraday exit to avoid overnight exposure.",
+      "failed": false
+    },
+    {
+      "ticker": "AZO",
+      "move_pct": -10.636,
+      "close": 3044.1851,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 FY2026 revenue missed by ~$36M ($4.8B vs $4.88B est.) and gross margin fell 77bps to 52.2% on LIFO headwinds, overshadowing a $1.42 EPS beat; stock gapped down ~10% at open May 27.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AZO's ~$3,044 share price and specialty-retail sector likely exclude it from universe filters. Earnings gap was known pre-open; reactive intraday signals arrived too late to capture the full move.",
+      "suggestion": "Add a post-earnings gap-down rule: admit S&P 500 names into universe when share price >$500, revenue miss \u22650.5%, and open gap \u2264-8%; current filters exclude mega-cap retail even during material earnings dislocations.",
+      "failed": false
+    },
+    {
+      "ticker": "TSCO",
+      "move_pct": -5.787,
+      "close": 29.79,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-earnings continuation sell-off: Q1 2026 EPS missed ($0.31 vs $0.34 est), comp sales +0.5% vs ~2% expected; analyst downgrades and price-target cuts on pet-segment weakness and tariff margin pressure drove renewed selling.",
+      "miss_reason": "Outside any active strategy's universe. TSCO is a large-cap US specialty retailer in a fundamental multi-week downtrend since the April 21 earnings miss; today's drop is post-earnings drift with no fresh intraday catalyst, making it undetectable by momentum or news-reactive intraday filters.",
+      "suggestion": "Add a post-earnings drift scanner for S&P 500 retail names \u226515% below pre-earnings price after \u22654 weeks of decline with RSI < 35 and \u22651.5\u00d7 avg volume; flag as mean-reversion short candidates to capture late-stage selling exhaustion.",
+      "failed": false
+    },
+    {
+      "ticker": "INTU",
+      "move_pct": -4.893,
+      "close": 304.285,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-earnings continuation slide: Intuit's May 20 Q3 report beat EPS ($12.80 vs $12.28 est) but announced 17% workforce cut (~3,000 jobs) and posted slowest revenue growth (10% YoY) since 2024, with AI disruption fears amplifying the multi-day selloff.",
+      "miss_reason": "Outside any active strategy's universe \u2014 INTU is a large-cap software/fintech (~$85B mkt cap). The primary catalyst struck after-hours May 20; the May 27 move is a post-earnings drift continuation requiring short exposure held across an earnings boundary, a pattern no current strategy is structured to exploit.",
+      "suggestion": "Add a post-earnings short-continuation signal: large-cap names with a single-session gap \u2264-8% on earnings day and RSI still >50 at next-day open qualify for a short entry within 5 trading sessions, position-capped at 0.5\u00d7 normal size.",
+      "failed": false
+    },
+    {
+      "ticker": "LITE",
+      "move_pct": -4.073,
+      "close": 908.3299,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Broad AI/tech sector rotation hit high-multiple winners; compounded by dilution overhang from Lumentum's note-for-equity exchange (~5.7M new shares issued to retire ~$475M convertible notes announced ~May 26).",
+      "miss_reason": "Outside any active strategy's universe \u2014 LITE's parabolic +135% YTD run and ~$908/share price likely place it beyond the bot's momentum-entry or price-range filters, and the convertible-note dilution event is not a signal type the screener monitors.",
+      "suggestion": "Add a convertible-note-exchange alert to the catalyst screener: flag names announcing share-for-debt swaps; arb desk hedge unwinds typically produce a -3% to -8% drift over 1-3 sessions and are actionable as a short-side event-driven signal.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-05-27T19:33:18.711734+00:00"
+}
