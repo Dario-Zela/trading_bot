@@ -1,0 +1,122 @@
+{
+  "date": "2026-05-27",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 MTX.DE +6%, SAF.PA +6%, KGF.L +6%, EDV.L +5%, MTLN.L +5%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (MRO.L -7%, VOD.L -3%, NN.AS -2%, CPG.L -2%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: MRO.L (-6.97%) \u2014 GKN Aerospace (Melrose subsidiary) Garden Grove CA plant: overheating methyl methacrylate tank triggered mandatory 50,000-person evacuation and a class-action lawsuit, threatening Airframes production. Why we passed: Outside any active strategy's universe \u2014 Melrose (~\u00a36B cap, UK Aerospace & Defence) is not covered. Move was driven by an unscheduled safety incident requiring real-time RNS/emergency-news monitoring, not technical or earnings signals the bot uses.",
+  "top_movers": [
+    {
+      "ticker": "MTX.DE",
+      "move_pct": 6.115,
+      "close": 314.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Kepler Cheuvreux upgraded MTX.DE to Buy (\u20ac365 target, ~17% upside) intraday, stacking on top of an EVA Air long-term CFM56-5B MRO contract win (announced 26 May) and strong Q1 results (rev +7%, military rev +25%).",
+      "miss_reason": "Outside any active strategy's universe \u2014 MTX.DE is a DAX large-cap aerospace/MRO industrial. The decisive catalyst was an intraday broker upgrade (Kepler Cheuvreux to Buy) that landed post-open, bypassing all overnight momentum signals and pre-market gap filters entirely.",
+      "suggestion": "Add a DAX/STOXX 600 industrials watch bucket with an intraday analyst-upgrade scanner: when a name receives a Buy initiation with \u226515% implied upside and volume reaches \u22651.2\u00d7 its 20-day average within 45 min of open, trigger a catalyst-entry signal.",
+      "failed": false
+    },
+    {
+      "ticker": "SAF.PA",
+      "move_pct": 5.789,
+      "close": 301.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "US-Iran ceasefire framework crystallised ~May 27, reopening the Strait of Hormuz; oil-price drop and aviation-demand surge directly benefit Safran's civil LEAP-engine aftermarket franchise, driving outsized outperformance vs the CAC 40.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Safran is a CAC 40 large-cap (~\u20ac41B) on Euronext Paris; uk-eu universe likely covers UK-listed names but excludes EUR-denominated French blue-chips, missing sector rallies alongside BAE Systems/Rolls-Royce.",
+      "suggestion": "Expand uk-eu universe to include CAC 40 top-20 by free-float market cap on Euronext Paris; add a `min_mktcap_eur=5B` floor to gate quality, which admits Safran, Airbus, and Thales without materially widening the strategy's risk exposure.",
+      "failed": false
+    },
+    {
+      "ticker": "KGF.L",
+      "move_pct": 5.547,
+      "close": 3.0841,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q1 trading update (pre-open RNS): group LFL sales -0.7% but FY profit guidance reaffirmed (\u00a3565\u2013625m adj. PBT); trade sales +17% ex-Screwfix, e-commerce +14%; \u00a3300m buyback continued.",
+      "miss_reason": "Outside any active strategy's universe \u2014 KGF.L is a FTSE 100 large-cap consumer discretionary name not currently covered. Move was pre-open RNS-driven; reactive intraday signals arrive only after the gap is fully priced, making profitable entry structurally late.",
+      "suggestion": "Add FTSE 100 consumer discretionary names to a news-reactive universe with an earnings-gate: allow long entry at open when a scheduled pre-open RNS produces a gap \u2265+3% on volume \u22651.5\u00d7 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "EDV.L",
+      "move_pct": 5.369,
+      "close": 45.1824,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "US-Iran military escalation (strikes Mon May 25) sustained gold safe-haven bid; at ~$4,500/oz Endeavour's record FCF margins ($613m in Q1) drove sector re-rating of gold miners \u2014 no company-specific RNS on the day.",
+      "miss_reason": "Outside any active strategy's universe \u2014 EDV.L is a FTSE 250 West African gold miner; bot carries no gold/materials sector strategy. The move required pre-session commodity exposure to geopolitical macro, not a post-open momentum signal.",
+      "suggestion": "Add a gold-proxy momentum bucket activated when XAU/USD is up >0.8% at London open, seeded with top-5 LSE gold miners by market cap; captures safe-haven rotations into miners without requiring a full commodities strategy.",
+      "failed": false
+    },
+    {
+      "ticker": "MTLN.L",
+      "move_pct": 5.131,
+      "close": 40.98,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q1 2026 revenue \u20ac2.05B (+37% YoY) reported May 7; company backed medium-term \u20ac2B EBITDA target and flagged record 2026 turnover \u2014 sustained post-results momentum drifted through late May.",
+      "miss_reason": "Outside any active strategy's universe: MTLN.L is a Greek industrial conglomerate (energy/metals/infrastructure) with primary Athens listing and thin LSE secondary liquidity. The move was multi-week momentum drift after the May 7 Q1 beat, not a same-day reactive signal.",
+      "suggestion": "Add a post-earnings momentum scanner for dual-listed EU industrials: if a name sustains \u2265+8% drift over 15 sessions post-results with London ADV \u2265\u00a31M, admit it to the momentum strategy universe with a trailing-stop entry rule.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": 4.508,
+      "close": 76.73,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-Q2 momentum peak: FY2026 guidance raised to >\u20ac16B (~20% margin), Citi PT lifted to \u20ac80 (most bullish on Street), and ITC GaN patent ruling blocking Chinese rival Innoscience drove IFX to 52-week high.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IFX.DE is a DAX 40 large-cap (~\u20ac100B mkt cap) not in the bot's tracked indices. Move was a multi-week re-rating (earnings + patent win + analyst upgrades) requiring pre-positioning, not a post-signal entry.",
+      "suggestion": "Extend uk-eu universe to DAX 40 large-caps; add an earnings-catalyst admission gate that unlocks names with raised FY guidance + \u22652 analyst PT upgrades within 10 sessions if they break a 52-week high on \u22651.3\u00d7 avg volume.",
+      "failed": false
+    },
+    {
+      "ticker": "MRO.L",
+      "move_pct": -6.966,
+      "close": 4.741,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "GKN Aerospace (Melrose subsidiary) Garden Grove CA plant: overheating methyl methacrylate tank triggered mandatory 50,000-person evacuation and a class-action lawsuit, threatening Airframes production.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Melrose (~\u00a36B cap, UK Aerospace & Defence) is not covered. Move was driven by an unscheduled safety incident requiring real-time RNS/emergency-news monitoring, not technical or earnings signals the bot uses.",
+      "suggestion": "Add FTSE 350 Aerospace & Defence names to the news-reactive universe; trigger a short signal on RNS 'operational incident' filings where open gap \u2264 \u22123% and volume \u2265 1.5\u00d7 20-day avg \u2014 requires short-selling capability on LSE names.",
+      "failed": false
+    },
+    {
+      "ticker": "VOD.L",
+      "move_pct": -2.875,
+      "close": 1.0815,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "BofA Securities downgraded VOD to Underperform (from Neutral), cutting price target GBP 1.15\u21920.98, flagging ~55% EM cash-flow exposure by FY2028, ~8% FX headwinds, and continued German EBITDAaL declines.",
+      "miss_reason": "Outside any active strategy's universe. VOD.L is a mega-cap FTSE 100 telecom with structurally low daily beta; catalyst was an analyst-downgrade note (not earnings or M&A), which requires a live broker-note feed to act on pre-open \u2014 a signal the bot's current news-reactive gate does not ingest.",
+      "suggestion": "Add a broker-downgrade trigger to the news-reactive strategy: flag FTSE 100 names receiving a top-5 broker cut to Sell/Underperform with implied downside \u226510% from prior close, and open a short entry within the first 30 minutes of LSE session.",
+      "failed": false
+    },
+    {
+      "ticker": "NN.AS",
+      "move_pct": -1.714,
+      "close": 74.54,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific catalyst found on 2026-05-27; likely profit-taking from near 52-week highs (76.46 EUR) following strong FY2025 results and recent analyst upgrades \u2014 no obvious news catalyst, technical move.",
+      "miss_reason": "Outside any active strategy's universe. NN Group is a large-cap Dutch insurer (Euronext Amsterdam) with semi-annual reporting cadence; its low daily volatility and insurance-sector classification likely exclude it from both momentum and news-reactive strategy scans.",
+      "suggestion": "If adding short capability to uk-eu equities, include AEX large-caps in a momentum-exhaustion screen (RSI > 68 + within 3% of 52-week high + analyst upgrade within 10 sessions); otherwise no actionable change \u2014 move too small to justify new sector coverage.",
+      "failed": false
+    },
+    {
+      "ticker": "CPG.L",
+      "move_pct": -1.638,
+      "close": 30.62,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-H1 results (May 11) sentiment drift persists; AI-risk-to-office-contract narrative (~20% revenue) unresolved, compounded by a minor analyst fair-value trim published May 23 (FV cut $38.50\u2192$38.28).",
+      "miss_reason": "Outside any active strategy's universe \u2014 CPG.L is a \u00a355B FTSE 100 defensive (food services). The -1.64% is slow multi-day post-earnings sentiment drift, not a sharp catalyst gap, so momentum and news-reactive filters would find no clean entry signal.",
+      "suggestion": "Introduce a post-earnings drift screen for FTSE 100 large-caps where analyst consensus EPS revisions are \u2265-1% within 15 days of results; CPG.L's lingering AI-office-overhang fade would qualify and capture this class of miss.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-05-27T15:12:02.566244+00:00"
+}
