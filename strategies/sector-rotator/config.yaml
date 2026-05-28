@@ -35,9 +35,10 @@ model_assignment:
   final_select: sonnet
 
 runs_in:
-  - region: us
-    tier: shadow
-    universe: us_etfs_sector
+  # US sleeve deprecated: the native US SPDR sector ETFs (XLE, XLK, ...)
+  # aren't available on T212 (NYSE-listed, no PRIIPs KID for UK retail),
+  # so a US sector sleeve could never go live on the ISA. UK-EU only —
+  # the GBP MSCI Europe sector ETFs are ISA-eligible and FX-free.
   - region: uk-eu
     tier: trading212-paper
     t212_slot: 1
