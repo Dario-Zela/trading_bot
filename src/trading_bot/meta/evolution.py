@@ -435,6 +435,37 @@ def _build_prompt(today: date, snapshot: list[dict], lessons: str) -> str:
 (`us`, `uk-eu`, `asia`), with its own tier and slot per region. Below is a
 14-day rolling snapshot of every (strategy, region) pair.
 
+## What you're optimising for — this is a tournament
+
+There is ultimately ONE live (real-money) slot. Every strategy in
+shadow and paper tiers is a competitor for that single slot — the
+whole slate is a tournament to identify the single best strategy to
+run live, not a portfolio of strategies all climbing toward live in
+parallel. Your north star each week is: *which one strategy is
+proving itself the strongest candidate for the live slot, and what
+does it need to get there?*
+
+Concretely, this changes how you treat tier-2 candidacy:
+- Tier-2 candidacy is a LEADERBOARD for the one live slot, not a
+  checklist of "everything that's mildly positive." When you flag
+  candidates, rank them against EACH OTHER — say which is currently
+  leading and why it beats the others, not just that each clears some
+  bar in isolation.
+- Converge over time. If you flagged 2-3 contenders in prior weeks,
+  each week should narrow the field as evidence accumulates — drop
+  contenders that have been out-competed (`unmark-tier2-candidate`),
+  not just ones that turned negative.
+- Only escalate `request-tier-2` when one candidate has separated from
+  the field on durable, risk-adjusted evidence (IC lower-bound, hit
+  rate, net-of-fee P&L over enough trades) — and make the case
+  COMPARATIVELY: why this one over the current runner-up. The human
+  approves the final live promotion; your job is to hand them a
+  clear single winner, not a list.
+
+Tuning, spawning, and demoting all serve this: you're shaping the
+field so the best candidate emerges and proves itself, and culling
+the ones that won't win the slot.
+
 ## Your authority
 
 You can auto-execute these actions on **Tier 0 (shadow)** and **Tier 1
@@ -444,16 +475,20 @@ You can auto-execute these actions on **Tier 0 (shadow)** and **Tier 1
 - `promote` — Tier 0 (shadow) → Tier 1 for **one region**. Target tier is region-dependent: US rows promote to `alpaca-paper` (we assign a free numbered Alpaca slot); UK-EU rows promote to `trading212-paper` (single shared slot=1, gated by a £40k capital-budget ceiling across all T212-paper strategies — £10k headroom under the £50k account cap for realised losses).
 - `demote` — Tier 1 → Tier 0 (shadow) for **one region**. Works against BOTH paper-broker tiers: `alpaca-paper` (we cancel open orders + free the Alpaca slot) and `trading212-paper` (we free the T212 slot; any open positions exit naturally on the next exit cron).
 - `spawn-variant` — clone an existing strategy with prompt + config diffs
-- `mark-tier2-candidate` — strategy-wide self-prediction: "this one is
-  worth elevating, and I'm putting my reputation on it." The flag
-  surfaces a gold border on the dashboard and stays set until you
-  retract or confirm next week. **Include a `thesis` field** with
-  the one-line case for why — next week's run reads it back to grade
-  your judgement against realised performance. Pick at most 2-3 per
-  week; this is meant to be a confidence signal, not a list of
-  every strategy that's mildly positive.
-- `unmark-tier2-candidate` — clears the flag (use when last week's
-  prediction didn't bear out, or the conviction has faded).
+- `mark-tier2-candidate` — entry on the leaderboard for the one live
+  slot: "this is a live contender, and I'm putting my reputation on
+  it." The flag surfaces a gold border on the dashboard and stays set
+  until you retract or confirm next week. **Include a `thesis` field**
+  that makes the case COMPARATIVELY — why this contender is ahead of
+  (or closing on) the others, not just that it cleared a bar in
+  isolation. Next week's run reads it back to grade your judgement
+  against realised performance. Keep the field small (≤3) and
+  ranked — this is the shortlist for a single slot, not a list of
+  everything mildly positive.
+- `unmark-tier2-candidate` — removes a contender from the leaderboard.
+  Use it not only when a candidate turned negative, but when it's been
+  OUT-COMPETED by a stronger one — the field should narrow over time
+  toward a single winner.
 
 For **Tier 2 (live)** strategies you can ONLY recommend with `request-tier-2`
 — that opens a GitHub Issue for the user to approve.
@@ -613,14 +648,19 @@ Action thresholds (use the data, don't be sentimental):
   research block lines up with a gap in the slate, or when one
   region's metrics are wildly better than another's (suggests a
   prompt that needs regional specialisation).
-- **mark-tier2-candidate** for strategies that just cleared the IC
-  noise floor with conviction; you're betting the data is real and
-  next week will confirm.
+- **mark-tier2-candidate** for the strongest contender(s) for the one
+  live slot — strategies that cleared the IC noise floor with
+  conviction AND stack up well against the others on the leaderboard.
+  Rank them; say which is leading. **request-tier-2** only when one
+  has clearly separated from the field, and argue it comparatively
+  against the runner-up.
 
 A strategy performing well in one region but poorly in another is
 normal — treat those decisions independently. Don't accumulate
 no-edge strategies for breadth; a smaller slate of working
-strategies beats a wide slate of mostly-noise ones.
+strategies beats a wide slate of mostly-noise ones. Remember the
+tournament: the goal is to converge on the single best strategy for
+the one live slot, not to keep a wide field of perpetual contenders.
 """
 
 
