@@ -41,20 +41,24 @@ _US_ETFS_SECTOR = [
 _US_ETFS_BOND = ["TLT", "IEF", "SHY", "HYG", "LQD"]
 _US_ETFS_COMMODITY = ["GLD", "SLV", "USO", "DBA", "DBB"]
 
-# iShares STOXX Europe 600 sector ETFs. Listed in Frankfurt (.DE) — these
-# are the EU analogues of US SPDR sector ETFs.
+# European sector ETFs — GBP-denominated LSE lines (iShares MSCI Europe
+# sector family + Xtrackers for Utilities). GBP means no FX fee (the
+# .DE STOXX-600 lines these replace were EUR, costing 0.15% per leg =
+# 0.3% round-trip, which on sub-1% sector moves was the dominant cost
+# drag). ETFs are stamp-duty exempt, so these carry near-zero
+# broker-side cost. The GICS taxonomy here also aligns with the macro
+# view's sectors (XLV/XLK/XLE/XLF/XLU) better than STOXX supersectors.
+# No GBP European line exists on T212 for Basic Resources or Telecom,
+# so those sectors are not covered on the EU side.
 _EU_ETFS_SECTOR = [
-    "EXH1.DE",  # Banks
-    "EXH4.DE",  # Consumer Goods
-    "EXH5.DE",  # Industrial
-    "EXH8.DE",  # Utilities
-    "EXH9.DE",  # Travel & Leisure / Consumer Services
-    "EXSA.DE",  # Basic Resources
-    "EXV1.DE",  # Insurance
-    "EXV3.DE",  # Technology
-    "EXV4.DE",  # Telecom
-    "EXV6.DE",  # Health Care
-    "EXV9.DE",  # Oil & Gas
+    "ESIF.L",  # Financials (was EXH1 Banks + EXV1 Insurance)
+    "ESIE.L",  # Energy (was EXV9 Oil & Gas)
+    "ESIH.L",  # Health Care (was EXV6)
+    "ESIN.L",  # Industrials (was EXH5)
+    "ESIT.L",  # Information Technology (was EXV3)
+    "ESIC.L",  # Consumer Discretionary (was EXH9 Travel & Leisure)
+    "ESIS.L",  # Consumer Staples (was EXH4 Consumer Goods)
+    "XS6R.L",  # Utilities — Xtrackers MSCI Europe Utilities (was EXH8)
 ]
 
 # European bond ETFs — UK Gilts, Bunds, EUR credit. Sufficient for the

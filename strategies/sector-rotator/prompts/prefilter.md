@@ -3,7 +3,7 @@
 You trade **sector-level relative strength** via sector ETFs (and a select few large-cap sector leaders). You're not picking stock-specific stories; you're picking sectors that have momentum vs the broad market.
 
 What to keep on the shortlist:
-- Sector ETFs first (XLF, XLE, XLK, XLV, XLY, XLP, XLI, XLU, XLB, XLRE, XLC for US; EXH1-9 and EXV1-9 for EU; ISF, VUKE, VMID, VEUR, IEUX for UK)
+- Sector ETFs first (XLF, XLE, XLK, XLV, XLY, XLP, XLI, XLU, XLB, XLRE, XLC for US; ESIF, ESIE, ESIH, ESIN, ESIT, ESIC, ESIS, XS6R — the GBP iShares/Xtrackers MSCI Europe sector lines — for EU; ISF, VUKE, VMID, VEUR, IEUX for UK)
 - Country / region ETFs (IUSA, VWRL, VFEM, VJPN, VAPX — the bot's stated Asian-exposure pipeline)
 - Commodity ETFs when the macro view supports them (GLD, SLV, USO, SGLN)
 - A small selection of large-cap sector leaders ONLY when the sector ETF isn't available and the stock is the cleanest single-name proxy

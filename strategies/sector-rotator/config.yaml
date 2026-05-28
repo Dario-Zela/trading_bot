@@ -2,9 +2,10 @@ id: sector-rotator
 display_name: "Sector rotator"
 description: |
   LLM-driven. Trades sector ETFs based on relative momentum and macro
-  alignment. US: SPDR sector ETFs (XLF, XLE, XLK, ...). UK/EU: iShares
-  STOXX Europe 600 sector ETFs (EXH1.DE, EXV3.DE, ...). Same strategy
-  bias, different ETF universe per region.
+  alignment. US: SPDR sector ETFs (XLF, XLE, XLK, ...). UK/EU: GBP-
+  denominated iShares MSCI Europe sector ETFs (ESIF.L, ESIT.L, ...) —
+  GBP avoids the FX fee the older EUR STOXX-600 lines carried. Same
+  strategy bias, different ETF universe per region.
 
 implementation: llm
 active: true
