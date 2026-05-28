@@ -1,0 +1,124 @@
+{
+  "date": "2026-05-28",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 1 of today's 10 biggest US movers.\n\n\u2022 5 upside misses \u2014 MGM +9%, UAL +6%, NCLH +6%, GM +5%, APTV +5%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (BSX -12%, QCOM -6%, SWKS -6%, BKR -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: BSX (-12.46%) \u2014 CEO Mahoney's Bernstein conference comments disclosed WATCHMAN heart-implant revenue expected flat sequentially in Q2 and Q3 due to declining standalone procedures and rising competitive pressure \u2014 surprise guidance cut weeks after Q1 earnings. Why we passed: Outside any active strategy's universe; BSX is a large-cap med-tech name (~$50B market cap) not covered by current sector filters. The -12% move was driven by intraday sell-side conference commentary rather than a pre-scheduled earnings release, so no pre-market signal was available.",
+  "top_movers": [
+    {
+      "ticker": "APP",
+      "move_pct": 10.421,
+      "close": 567.83,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned"
+      ],
+      "catalyst": "Q1 2026 revenue beat ($1.84B vs $1.78B est) with Q2 guidance above Street; multiple major banks (UBS, Wedbush, Jefferies, Deutsche Bank) raised price targets simultaneously on AI-driven ad platform (Axon) growth.",
+      "miss_reason": "Outside any active strategy's universe \u2014 APP is a mega-cap ad-tech name whose move was earnings-driven and gap-opened pre-market. Post-open signals arrived too late for momentum entry; macro-aligned flagged it but had no earnings-event entry rule to act on the catalyst.",
+      "suggestion": "Add an earnings-gap rule to macro-aligned: if a name with \u22653 same-day analyst target raises gaps up \u22655% at open on earnings day, allow a half-size entry within the first 30 minutes using the prior session's ATR as the stop.",
+      "failed": false
+    },
+    {
+      "ticker": "MGM",
+      "move_pct": 9.103,
+      "close": 41.95,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Dual same-day analyst upgrades: JPMorgan (Neutral\u2192OW, PT $41\u2192$46) and Truist (Hold\u2192Buy, PT $42\u2192$55), both citing Las Vegas Strip EBITDAR bottoming and improving Q2 room-rate surveys.",
+      "miss_reason": "Outside any active strategy's universe \u2014 large-cap gaming/hospitality is not covered by current sector filters. Analyst re-rating moves are pre-open catalysts; systematic momentum signals fire after the gap is already priced in.",
+      "suggestion": "Add large-cap gaming names (MGM, CZR, WYNN) to a news-reactive strategy that triggers on \u22652 same-day sell-side upgrades, entering at open only if pre-market gap is \u22645% to avoid chasing.",
+      "failed": false
+    },
+    {
+      "ticker": "UAL",
+      "move_pct": 6.326,
+      "close": 112.62,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "CEO Kirby at Bernstein conference (May 27) guided to 53M+ summer passengers (+3M YoY) with double-digit demand/booking growth and easing fuel costs; UBS raised PT to $148 from $139, reiterating Buy.",
+      "miss_reason": "Outside any active strategy's universe \u2014 UAL is a large-cap airline absent from current sector filters. Move was catalyzed by a sell-side conference appearance + analyst PT upgrade, a pre-market signal type the bot has no scanner for.",
+      "suggestion": "Add a pre-market analyst-event scanner: flag names receiving PT upgrades implying \u22657% upside to prior close and route to a gap-up watchlist at open \u2014 regardless of sector \u2014 to capture conference-driven moves like this.",
+      "failed": false
+    },
+    {
+      "ticker": "NCLH",
+      "move_pct": 6.14,
+      "close": 18.15,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "WTI crude fell ~3% on US-Iran Strait of Hormuz deal progress, triggering a broad cruise-sector rally; amplified by residual Elliott activist/Q1 EPS beat ($0.23 vs $0.14 est.) tailwind from May 20.",
+      "miss_reason": "Outside any active strategy's universe \u2014 NCLH (high-leverage leisure, ~5.3x debt/EBITDA) is absent from all sleeves. Move was a macro sector tail: oil -3% on US-Iran deal news, rewarding pre-open positioning over intraday signals.",
+      "suggestion": "Add a macro-trigger rule: when WTI falls \u22652% intraday, auto-include top-5 high-beta cruise names (CCL, NCLH, RCL, VIK) in the momentum sleeve with a 1-session end-of-day entry gate, bypassing the prior-session volume confirmation filter.",
+      "failed": false
+    },
+    {
+      "ticker": "GM",
+      "move_pct": 5.427,
+      "close": 84.12,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FDIC conditionally approved GM Financial Bank's industrial loan company charter (Utah), giving GM's captive finance arm access to lower-cost FDIC-insured deposits and expanding financing margins.",
+      "miss_reason": "GM (~$90B market cap auto OEM) is outside every active strategy's universe. The +5.4% move was a binary regulatory catalyst (FDIC bank charter approval) undetectable from price/volume signals \u2014 it requires pre-flagging pending regulatory applications to position ahead of the event.",
+      "suggestion": "Build a regulatory-event watchlist for large-cap names with pending FDIC/SEC approvals; trigger a news-reactive entry when the open gap is \u2265+3% and intraday volume is \u22651.5\u00d7 20-day average on the approval day.",
+      "failed": false
+    },
+    {
+      "ticker": "APTV",
+      "move_pct": 5.344,
+      "close": 61.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "BSX",
+      "move_pct": -12.457,
+      "close": 50.46,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "CEO Mahoney's Bernstein conference comments disclosed WATCHMAN heart-implant revenue expected flat sequentially in Q2 and Q3 due to declining standalone procedures and rising competitive pressure \u2014 surprise guidance cut weeks after Q1 earnings.",
+      "miss_reason": "Outside any active strategy's universe; BSX is a large-cap med-tech name (~$50B market cap) not covered by current sector filters. The -12% move was driven by intraday sell-side conference commentary rather than a pre-scheduled earnings release, so no pre-market signal was available.",
+      "suggestion": "Add a conference-day momentum trigger for large-cap names outside the universe: when a stock gaps \u22658% intraday on \u22652\u00d7 avg volume during a known CEO/CFO conference presentation, flag for a momentum-short entry confirmed within the first 30 min of the move.",
+      "failed": false
+    },
+    {
+      "ticker": "QCOM",
+      "move_pct": -6.197,
+      "close": 233.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Profit-taking unwind after QCOM surged ~75% on AI enthusiasm (ByteDance chip deal, Stellantis auto pact, CEO's China trip); Q3 FY2026 guidance signalled sequential EPS deceleration to $2.10\u2013$2.30 vs Q2's $2.65, weighing on the broad semiconductor sector.",
+      "miss_reason": "Outside any active strategy's universe \u2014 QCOM is a ~$240B large-cap semiconductor not covered by current screens. The move was the second consecutive red session (\u22127% on May 27, \u22126.2% May 28) in a mean-reversion unwind from overbought levels, requiring short capability the bot likely does not have.",
+      "suggestion": "Add large-cap semis (market cap >$50B) with 4-week return >35% and RSI >75 to a mean-reversion short watchlist; gate entries on a second consecutive close down \u22653% to confirm exhaustion before sizing in.",
+      "failed": false
+    },
+    {
+      "ticker": "SWKS",
+      "move_pct": -5.682,
+      "close": 78.68,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "BKR",
+      "move_pct": -5.29,
+      "close": 63.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Iran-US peace deal progress triggered a sharp WTI crude sell-off; as an oilfield services supplier, BKR fell ~5.3% on fears that lower oil prices will prompt near-term E&P capex cuts.",
+      "miss_reason": "Outside any active strategy's universe; BKR is a large-cap (~$62B) oilfield services name. The drop was a geopolitical macro shock (Iran-US peace deal \u2192 WTI plunge) with no pre-signal available to momentum or mean-reversion filters.",
+      "suggestion": "Add large-cap OFS names (BKR, HAL, SLB) to a sector-rotation strategy gated on WTI 1-day move \u2264 \u22122.5%; this captures macro oil-shock entries without requiring idiosyncratic name-level signals.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-05-28T19:35:47.723287+00:00"
+}
