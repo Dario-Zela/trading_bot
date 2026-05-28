@@ -36,9 +36,11 @@ model_assignment:
   final_select: sonnet
 
 runs_in:
-  - region: us
-    tier: shadow
-    universe: us_etfs_commodity
+  # US sleeve deprecated: us_etfs_commodity (GLD, USO, ...) is US-listed
+  # and absent from T212. The UK-EU sleeve now uses eu_etfs_commodity —
+  # the comprehensive GBP/GBX LSE commodity ETC set (physical metals,
+  # energy, agriculture, industrial metals, broad baskets), all
+  # ISA-eligible and trading in London hours.
   - region: uk-eu
     tier: shadow
-    universe: us_etfs_commodity
+    universe: eu_etfs_commodity

@@ -498,6 +498,22 @@ edge thesis is sector-driven, sort_key=dollar_volume_desc is the
 tune. If picks are biased toward big-movers when the edge is mean-
 reversion, sort_key=rsi_14_asc is the tune.
 
+Universe / broker reality (do not propose actions that contradict this):
+- Everything lives on Trading 212 (the ISA account). US-LISTED ETFs
+  (XLE/XLK SPDRs, TLT/IEF, GLD/USO, etc.) are NOT available on T212 —
+  no PRIIPs KID for UK retail. The us_etfs_* universes are therefore
+  dead for live trading; the sector-rotator / bond-cycle /
+  commodity-momentum US sleeves have been deprecated for this reason.
+  Do NOT propose re-adding a US-region sleeve for an ETF strategy.
+- US/global exposure is still reachable on the UK-EU side via the
+  GBP/GBX LSE-listed ETF universes (eu_etfs_sector / eu_etfs_bond /
+  eu_etfs_commodity), which now include US-tracking GBP lines (S&P US
+  Select Sector, USD-Treasury-in-GBP, etc.). These trade in London
+  hours, are stamp-duty exempt, and carry no FX fee. So "we lack US
+  exposure" is NOT a valid reason to spawn or re-add anything.
+- Individual US/EU stocks ARE tradeable on T212 (the t212_isa_*
+  universes), so stock-picking strategies' US sleeves are fine.
+
 Other constraints:
 - Free Alpaca slots available: {free_slots}
 - Currently active strategies: {n_active} of max {MAX_TOTAL_STRATEGIES}

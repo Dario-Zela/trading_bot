@@ -41,37 +41,23 @@ _US_ETFS_SECTOR = [
 _US_ETFS_BOND = ["TLT", "IEF", "SHY", "HYG", "LQD"]
 _US_ETFS_COMMODITY = ["GLD", "SLV", "USO", "DBA", "DBB"]
 
-# European sector ETFs — GBP-denominated LSE lines (iShares MSCI Europe
-# sector family + Xtrackers for Utilities). GBP means no FX fee (the
-# .DE STOXX-600 lines these replace were EUR, costing 0.15% per leg =
-# 0.3% round-trip, which on sub-1% sector moves was the dominant cost
-# drag). ETFs are stamp-duty exempt, so these carry near-zero
-# broker-side cost. The GICS taxonomy here also aligns with the macro
-# view's sectors (XLV/XLK/XLE/XLF/XLU) better than STOXX supersectors.
-# No GBP European line exists on T212 for Basic Resources or Telecom,
-# so those sectors are not covered on the EU side.
-_EU_ETFS_SECTOR = [
-    "ESIF.L",  # Financials (was EXH1 Banks + EXV1 Insurance)
-    "ESIE.L",  # Energy (was EXV9 Oil & Gas)
-    "ESIH.L",  # Health Care (was EXV6)
-    "ESIN.L",  # Industrials (was EXH5)
-    "ESIT.L",  # Information Technology (was EXV3)
-    "ESIC.L",  # Consumer Discretionary (was EXH9 Travel & Leisure)
-    "ESIS.L",  # Consumer Staples (was EXH4 Consumer Goods)
-    "XS6R.L",  # Utilities — Xtrackers MSCI Europe Utilities (was EXH8)
-]
+# The EU-tradeable ETF universes (sector / bond / commodity) are large
+# comprehensive sets — every GBP/GBX LSE-listed ETF/ETC in each class
+# that T212 carries and yfinance can price. They live in the committed
+# data file `etf_universes.json` rather than inline here: ~400 tickers
+# is unwieldy as Python literals, and a committed JSON keeps the set
+# static (no dependency on the regenerable T212 instrument cache at
+# runtime). GBP/GBX lines avoid the FX fee that the old EUR .DE / USD
+# US-listed sets carried, and all trade in London hours so they fit the
+# UK-EU pipeline window. Includes leveraged/inverse products by design
+# — the strategies self-moderate via sizing, we don't restrict the set.
+_ETF_UNIVERSES_PATH = Path(__file__).with_name("etf_universes.json")
 
-# European bond ETFs — UK Gilts, Bunds, EUR credit. Sufficient for the
-# bond-cycle strategy's duration + credit decisions in the EU regime.
-_EU_ETFS_BOND = [
-    "IGLT.L",   # UK Gilts (all maturities)
-    "IGLS.L",   # UK Gilts (short)
-    "IGLO.L",   # UK Gilts (long)
-    "EUNH.DE",  # EUR govt 1-3Y
-    "IBGM.L",   # EUR govt 7-10Y
-    "IEAC.L",   # EUR investment-grade corp
-    "IHYG.L",   # EUR high yield
-]
+
+@lru_cache(maxsize=1)
+def _load_etf_universes() -> dict[str, list[str]]:
+    data = json.loads(_ETF_UNIVERSES_PATH.read_text())
+    return {k: v for k, v in data.items() if not k.startswith("_")}
 
 # LSE-listed UCITS ETFs — all stamp-duty exempt (ETFs aren't subject to
 # SDRT in the UK), so they carry only the FX fee for non-GBP-denominated
@@ -356,6 +342,11 @@ def get_universe(universe_id: str) -> list[str]:
     Supported:
     - US equities: 'sp500', 'sp400', 'sp600', 'sp1500' (500+400+600 combined)
     - US ETFs: 'us_etfs_sector', 'us_etfs_bond', 'us_etfs_commodity'
+      (US-listed — NOT on T212; retained only for reference/backtests)
+    - EU-tradeable ETFs (GBP/GBX LSE, comprehensive, from etf_universes.json):
+        'eu_etfs_sector'    — ~77 EU/US/World sector ETFs
+        'eu_etfs_bond'      — ~196 gilt/EUR/US-treasury/credit ETFs
+        'eu_etfs_commodity' — ~126 metal/energy/ag/broad commodity ETCs
     - UK equities: 'ftse100', 'ftse250', 'ftse350' (100+250 combined)
     - UK ETFs: 'uk_ucits_etfs' (~20 LSE-listed UCITS, SDRT-exempt)
     - EU equities: 'dax40', 'cac40', 'aex25', 'eu_blue_chips' (DAX+CAC+AEX)
@@ -435,10 +426,8 @@ def get_universe(universe_id: str) -> list[str]:
         return list(_US_ETFS_BOND)
     if universe_id == "us_etfs_commodity":
         return list(_US_ETFS_COMMODITY)
-    if universe_id == "eu_etfs_sector":
-        return list(_EU_ETFS_SECTOR)
-    if universe_id == "eu_etfs_bond":
-        return list(_EU_ETFS_BOND)
+    if universe_id in ("eu_etfs_sector", "eu_etfs_bond", "eu_etfs_commodity"):
+        return list(_load_etf_universes()[universe_id])
     raise ValueError(f"Unknown universe: {universe_id}")
 
 

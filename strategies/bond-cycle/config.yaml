@@ -35,9 +35,11 @@ model_assignment:
   final_select: sonnet
 
 runs_in:
-  - region: us
-    tier: shadow
-    universe: us_etfs_bond
+  # US sleeve deprecated: us_etfs_bond (TLT, IEF, ...) is US-listed and
+  # absent from T212, so it could never go live on the ISA. The UK-EU
+  # sleeve's eu_etfs_bond universe now includes GBP US-Treasury + credit
+  # lines (LSE-listed, ISA-eligible, FX-free), so US duration/credit
+  # exposure is still reachable here.
   - region: uk-eu
     tier: shadow
     universe: eu_etfs_bond
