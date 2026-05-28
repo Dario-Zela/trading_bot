@@ -1,0 +1,126 @@
+{
+  "date": "2026-05-28",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 2 of today's 10 biggest UK/EU movers.\n\n\u2022 4 upside misses \u2014 AKZA.AS +20%, CON.DE +4%, DTG.DE +3%, BRBY.L +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (KGF.L -4%, CAP.PA -4%, TEP.PA -3%, UMG.AS -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: AKZA.AS (+19.54%) \u2014 Nippon Paint & Sherwin-Williams disclosed a joint \u20ac73/share cash bid (~39% premium); AkzoNobel rejected it for its $25B all-stock Axalta merger, but the competing offer set a hard valuation floor. Why we passed: Outside any active strategy's universe \u2014 AKZA.AS is a large-cap Amsterdam coatings name. The +19.5% gap was M&A-driven (competing \u20ac73/share cash bid disclosed after hours); momentum signals cannot fire on a pre-open disclosure.",
+  "top_movers": [
+    {
+      "ticker": "AKZA.AS",
+      "move_pct": 19.535,
+      "close": 62.78,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Nippon Paint & Sherwin-Williams disclosed a joint \u20ac73/share cash bid (~39% premium); AkzoNobel rejected it for its $25B all-stock Axalta merger, but the competing offer set a hard valuation floor.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AKZA.AS is a large-cap Amsterdam coatings name. The +19.5% gap was M&A-driven (competing \u20ac73/share cash bid disclosed after hours); momentum signals cannot fire on a pre-open disclosure.",
+      "suggestion": "Add a pre-market M&A news scanner that ingests regulatory disclosures (AFM/SEC) and flags names with a disclosed cash bid price >5% above prior close; route them into an event-driven catalyst basket for opening-range entry.",
+      "failed": false
+    },
+    {
+      "ticker": "ADS.DE",
+      "move_pct": 5.375,
+      "close": 165.65,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned"
+      ],
+      "catalyst": "Continued re-rating on EU-US tariff deal (May 20, 15% cap) plus CEO's \u20ac300M refund disclosure; World Cup kit-sales tailwind and consensus price-target upgrade to ~\u20ac196 adding momentum.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ADS.DE is a large-cap DAX consumer-discretionary name, not a typical momentum/mean-reversion candidate. The +5% move was the tail end of a multi-week macro re-rating (tariff relief), not a single-session gap that news-reactive filters would catch intraday.",
+      "suggestion": "Add a 'tariff-overhang-lift' watchlist for EU exporters with high disclosed US-tariff exposure (\u2265\u20ac200M); trigger macro-aligned entry when an EU-US trade accord is ratified and the name is within 15% of its 52-week low.",
+      "failed": false
+    },
+    {
+      "ticker": "CON.DE",
+      "move_pct": 3.999,
+      "close": 71.78,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single news catalyst \u2014 macro/sector re-rating of European auto cyclicals, likely amplified by Continental's ContiTech auction (Apollo/Bain final bids) nearing a buyer announcement at ~\u20ac4\u20135B, adding shareholder-return optionality.",
+      "miss_reason": "Outside any active strategy's universe. CON.DE (DAX large-cap, ~\u20ac14B) had its price history reset by the Sep-2025 Aumovio spin-off, likely disqualifying it from momentum/mean-reversion strategies that require an uninterrupted adjusted-close time series.",
+      "suggestion": "Add a post-spin-off re-admission rule: re-qualify spin-adjusted tickers 180 days after ex-date once the adjusted-close series spans \u2265252 trading days, so CON.DE-type names re-enter the universe with clean momentum signals.",
+      "failed": false
+    },
+    {
+      "ticker": "DTG.DE",
+      "move_pct": 3.287,
+      "close": 43.05,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "EU Parliament/Council ratified Turnberry Agreement (~May 20) capping EU auto/truck tariffs at 15% vs threatened 25%, driving sector-wide relief rally (Stoxx Autos +2.6%); DTNA Q2 orders up 86% YoY adds recovery tailwind.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DTG.DE is a ~\u20ac32B German commercial-vehicle large-cap. Move is macro/trade-policy driven (EU ratification removing 25% tariff threat); momentum/mean-reversion signals cannot anticipate event-driven tariff-relief gaps.",
+      "suggestion": "Add a trade-policy event layer: when EU-US deal ratification votes pass, screen EU auto/industrial names with US revenue exposure \u226530% for improving order data and admit them to a short-duration event-driven sleeve capped at 1% NAV.",
+      "failed": false
+    },
+    {
+      "ticker": "BRBY.L",
+      "move_pct": 3.114,
+      "close": 11.92,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Morgan Stanley upgraded BRBY to Overweight (PT GBP 13.50) post-FY26 results, citing adj. operating profit tripling to \u00a3160M and improving full-price sales mix as evidence of sustained turnaround execution.",
+      "miss_reason": "Outside any active strategy's universe. BRBY.L is a FTSE 100 luxury consumer-discretionary name. The +3.1% move was a sell-side re-rating event (Equal Weight\u2192Overweight) arriving ~10 trading days after earnings, which pre-market momentum and mean-reversion signals cannot anticipate.",
+      "suggestion": "Extend the UK-EU universe to FTSE 100 consumer-discretionary names and add a broker-upgrade gate: if a tier-1 bank upgrades to Overweight within 10 sessions of an earnings release, allow a long entry at next open with a 1\u00d7 ATR stop.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": 2.984,
+      "close": 79.02,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned"
+      ],
+      "catalyst": "Goldman Sachs 3% voting-rights stake disclosure (filing dated ~May 25\u201327) plus Citigroup price-target raise to \u20ac80; continuation of post-Q2 guidance-raise rally with AI/power-electronics demand tailwind.",
+      "miss_reason": "Outside any active strategy's universe. IFX.DE is a \u20ac100B+ DAX large-cap up ~105% YTD and +18.7% on the week; macro-aligned was the designated strategy but likely passed due to extreme near-term extension (RSI overextension, gap-filter breach) rather than a fundamental screen failure.",
+      "suggestion": "Add a voting-rights / 13D disclosure trigger to macro-aligned: release the extension gate for names with a \u22653% institutional stake filing within the prior 3 sessions, capped at 0.5\u00d7 normal position size to control overextension risk.",
+      "failed": false
+    },
+    {
+      "ticker": "KGF.L",
+      "move_pct": -3.631,
+      "close": 2.866,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Ex-dividend date today (8.6p final dividend, ~3.0% of close) strips most of the decline mechanically; residual ~0.6% likely reflects cautious Q1 FY26/27 guidance ('tricky times ahead') from May 26 results.",
+      "miss_reason": "Outside any active strategy's universe. KGF.L is a UK mid-cap home improvement retailer (LSE ~\u00a34B); the primary -3.0% move is mechanical ex-dividend stripping \u2014 a calendar-driven event no momentum or mean-reversion filter should treat as a tradeable signal.",
+      "suggestion": "Add ex-dividend flag to the daily mover screener: suppress names where |price decline| \u2264 declared dividend amount, so mechanical strips don't surface as false-positive trade misses in post-trade review.",
+      "failed": false
+    },
+    {
+      "ticker": "CAP.PA",
+      "move_pct": -3.5,
+      "close": 100.65,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Capgemini's May 27 Capital Markets Day set 2025-28 revenue CAGR of +5.5-7.5% (incl. ~2pts M&A), below AI-acceleration expectations; shares gapped down ~4% on May 28 as worst CAC 40 performer.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CAP.PA is a CAC 40 large-cap French IT-services name. Move was triggered by an after-hours CMD event (May 27), requiring pre-open positioning; post-open momentum or mean-reversion signals would miss the initial gap entirely.",
+      "suggestion": "Expand the news-reactive strategy's EU universe to include CAC 40 IT-services names and add a scheduled-event calendar gate: flag CMD/analyst-day names with gap-down \u22652% at open vs. prior close as eligible short entries.",
+      "failed": false
+    },
+    {
+      "ticker": "TEP.PA",
+      "move_pct": -3.283,
+      "close": 58.92,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q1 2026 revenue fell 6.9% reported (\u20132.2% LFL) on EUR/USD headwinds and contract delays; Morgan Stanley cut target to \u20ac53 from \u20ac112 and Deutsche Bank to \u20ac70 from \u20ac105, continuing a post-earnings analyst downgrade cascade.",
+      "miss_reason": "Outside any active strategy's universe \u2014 TEP.PA is a mid-large-cap Euronext Paris BPO name in structural AI-disruption decline; today's \u20133.28% is a multi-day drift continuation from Q1 results and analyst re-ratings, not a single-session signal that momentum or gap filters would surface.",
+      "suggestion": "Add SBF 120 members to the tradable universe with ADV \u2265 \u20ac15M and flag names where sell-side consensus PT has dropped \u226520% in 5 sessions as fade candidates; TEP.PA's downgrade cluster was visible two sessions before today's continuation leg.",
+      "failed": false
+    },
+    {
+      "ticker": "UMG.AS",
+      "move_pct": -3.026,
+      "close": 19.07,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Wells Fargo downgrade to Equal Weight and Wolfe Research PT cut \u20ac30\u2192\u20ac27, amplified by Spotify's -44%-from-peak decline compressing value of UMG's pending ~\u20ac1.2B SPOT stake divestiture.",
+      "miss_reason": "Outside any active strategy's universe \u2014 UMG is a \u20ac34B Amsterdam media/entertainment large-cap. The move reflects analyst downgrades and Spotify peer-contagion, not a technical setup momentum or mean-reversion filters would surface.",
+      "suggestion": "(no actionable change \u2014 move is downside and bot is long-only; to catch analogues, a short-capable news-reactive layer could screen for \u22652 analyst cuts in 30 days on AEX large-caps, but requires short infrastructure not currently in scope)",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-05-28T15:07:00.517771+00:00"
+}
