@@ -1,0 +1,122 @@
+{
+  "date": "2026-05-29",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 TEP.PA +2%, EDV.L +2%, GLE.PA +2%, AIR.PA +2%, SAF.PA +2%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (DBK.DE -2%, ENR.DE -2%, CPG.L -2%, BATS.L -2%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: TEP.PA (+2.47%) \u2014 Positive media sentiment shift: 'TP's Comeback Story is Starting to Look More Credible' piece (ABC Money, ~May 29) suggested the AI-disruption narrative is turning \u2014 no hard fundamental event on the day. Why we passed: Outside any active strategy's universe. TEP.PA is a large-cap French BPO/IT-services name (Euronext Paris) down ~24% YTD, likely below any momentum-entry threshold; the move was soft-catalyst (media narrative reversal) with no earnings or M&A trigger to flag pre-market.",
+  "top_movers": [
+    {
+      "ticker": "TEP.PA",
+      "move_pct": 2.466,
+      "close": 61.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Positive media sentiment shift: 'TP's Comeback Story is Starting to Look More Credible' piece (ABC Money, ~May 29) suggested the AI-disruption narrative is turning \u2014 no hard fundamental event on the day.",
+      "miss_reason": "Outside any active strategy's universe. TEP.PA is a large-cap French BPO/IT-services name (Euronext Paris) down ~24% YTD, likely below any momentum-entry threshold; the move was soft-catalyst (media narrative reversal) with no earnings or M&A trigger to flag pre-market.",
+      "suggestion": "Add a 'depressed-large-cap sentiment reversal' scan: names with 52-week rank <20% that appear in \u22652 positive media mentions within 24h trigger a watchlist alert \u2014 catches narrative-flip bounces without requiring a hard catalyst or changing universe membership.",
+      "failed": false
+    },
+    {
+      "ticker": "EDV.L",
+      "move_pct": 2.358,
+      "close": 45.14,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Gold spot rose ~1% to ~$4,501/oz on May 28-29 amid inflation and Middle East risk sentiment; Endeavour Mining's ~2\u00d7 gold-price beta amplified the move with no company-specific news on the day.",
+      "miss_reason": "Outside any active strategy's universe \u2014 EDV.L is an LSE-listed mid-cap gold miner likely excluded by sector or index-membership filters. Commodity-beta moves require pre-open positioning; intraday reactive signals arrive too late to capture the gap.",
+      "suggestion": "Add an LSE gold-miners sub-universe (gold-spot correlation \u2265 0.70, mkt-cap \u2265 \u00a31B) to the momentum strategy, armed on days when gold spot prior-session return exceeds +0.75%, to capture systematic precious-metals beta without broad sector expansion.",
+      "failed": false
+    },
+    {
+      "ticker": "GLE.PA",
+      "move_pct": 1.77,
+      "close": 71.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "EUR 1.00 final dividend goes ex 2026-06-01 (T+3), driving pre-ex-date capture buying; May 27 AGM formally confirmed new Chairman William Connelly, removing a residual governance overhang.",
+      "miss_reason": "Outside any active strategy's universe \u2014 large-cap Euronext bank not in current sector scope. Move is classic dividend-capture positioning 3 days pre-ex-date; momentum signals only fire after the buying window has already opened.",
+      "suggestion": "Add a pre-ex-dividend scanner for Euronext large-cap financials: flag names within 3 sessions of ex-date on above-average volume as a temporary universe expansion, so capture setups are visible before the window closes.",
+      "failed": false
+    },
+    {
+      "ticker": "AIR.PA",
+      "move_pct": 1.632,
+      "close": 180.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Airbus announced a strategic AI partnership with Mistral AI on May 28 (post-close), granting full product-suite licences for commercial, defence and space applications; market continued reacting into the May 29 session.",
+      "miss_reason": "Outside any active strategy's universe. AIR.PA is a CAC 40 mega-cap (~\u20ac140B) aerospace/defence name; catalyst was a soft partnership announcement with no hard revenue figure, making pre-move signals weak and the name ineligible for any standard momentum or mean-reversion screen.",
+      "suggestion": "Add an AI-partnership event trigger to the news-reactive universe: if headline contains 'AI partnership' AND name is CAC 40 / AEX constituent, admit to the catalyst strategy for the following session with a capped \u22640.5% position size.",
+      "failed": false
+    },
+    {
+      "ticker": "SAF.PA",
+      "move_pct": 1.584,
+      "close": 307.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news on 2026-05-29; sector-driven lift \u2014 European defense re-armament tailwinds continued to carry CAC 40 aerospace names, with Safran recovering from a 17% 3-month drawdown toward analyst consensus of ~347 EUR.",
+      "miss_reason": "Outside any active strategy's universe. Safran is a CAC 40 mega-cap (~\u20ac133B) in French aerospace/defense, likely too large and low-beta for the bot's universe; the +1.58% reflected broad sector drift rather than a priceable stock-specific catalyst.",
+      "suggestion": "Add a STOXX Europe Aerospace & Defense sector-momentum sleeve for large-caps (SAF, HO, AIR) triggered when the sector 5-day z-score \u22651.0 to capture steady defense-spending drift moves without requiring a stock-level event.",
+      "failed": false
+    },
+    {
+      "ticker": "RR.L",
+      "move_pct": 1.491,
+      "close": 13.342,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Week-long rebound from May low (~1,053p) persists, sustained by CEO Erginbilgi\u00e7's May 25 Bloomberg interview on turnaround milestones and UBS raising Power Systems growth target from 20% to 26%; no single fresh intraday driver on May 29.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RR.L is a FTSE 100 mega-cap aerospace/defence/industrial conglomerate. The move was a multi-day CEO-interview continuation, not an intraday gap-up, providing no news-reactive or momentum entry signal.",
+      "suggestion": "Add FTSE 100 aerospace/defence names to universe with a 'media-catalyst rebound' filter: enter if stock closes \u22653 consecutive up days off a 20-day low within 5 sessions of a CEO major-media event.",
+      "failed": false
+    },
+    {
+      "ticker": "DBK.DE",
+      "move_pct": -2.077,
+      "close": 27.81,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Stock went ex-dividend for \u20ac1.00 annual dividend on 2026-05-29 (~3.5% mechanical adjustment); actual -2.08% close-to-close reflects partial recovery from underlying buying on AGM day.",
+      "miss_reason": "Outside any active strategy's universe. DBK.DE is a large-cap European financials name (Deutsche Bank, Europe's 8th-largest bank by assets); the move is a mechanical ex-dividend drop, not a tradeable momentum or mean-reversion signal.",
+      "suggestion": "Add an ex-dividend calendar screen to the daily 'biggest losers' watchlist scan so mechanical ex-div drops are flagged and auto-excluded from analyst review queues, reducing false-positive noise.",
+      "failed": false
+    },
+    {
+      "ticker": "ENR.DE",
+      "move_pct": -1.991,
+      "close": 163.44,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh news today \u2014 continuation of multi-day technical correction; 50-day MA (\u20ac167) breached May 28 after Q2 EPS matched but revenue missed by 1.9%, with trailing P/E at 67x vs 38x sector avg driving sustained profit-taking.",
+      "miss_reason": "Outside any active strategy's universe. ENR.DE is a DAX large-cap industrial/energy-transition name; today's move is a multi-session fade with no intraday trigger, offering no actionable entry signal for momentum or news-reactive systems lacking this ticker in their defined universe.",
+      "suggestion": "Add a 'valuation-extended DAX large-cap' sub-universe: names with YTD gain >30% and trailing P/E >55x; enable mean-reversion short entry when price closes below 50-day MA on \u22651.3\u00d7 avg volume \u2014 this setup was present at the May 28 open.",
+      "failed": false
+    },
+    {
+      "ticker": "CPG.L",
+      "move_pct": -1.638,
+      "close": 30.62,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No identifiable catalyst; stock reversed prior session's +1.68% gain in profit-taking after the May 11 H1 earnings rally; AI-impact-on-office-catering overhang continues to cap sentiment.",
+      "miss_reason": "Outside any active strategy's universe \u2014 FTSE 100 mega-cap (~\u00a355bn) food-services name. Drift without a hard catalyst won't trigger momentum or news-reactive signals, and mean-reversion edge is minimal on this large-float, low-velocity name.",
+      "suggestion": "(No actionable change \u2014 CPG.L's mega-cap scale and food-services sector fall outside current risk tolerance; capturing this drift would require a new large-cap FTSE 100 mean-reversion universe layer, not a parameter tweak.)",
+      "failed": false
+    },
+    {
+      "ticker": "BATS.L",
+      "move_pct": -1.636,
+      "close": 46.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-Q1 earnings miss residual sell-off (EPS $1.27 vs $1.38 est; rev $4.52B vs $4.68B est, reported May 15) augmented by UK Tobacco and Vapes Act 2026 regulatory overhang; no new catalyst today.",
+      "miss_reason": "Outside any active strategy's universe \u2014 a mega-cap FTSE 100 tobacco name (beta 0.46, ~\u00a3100B mkt cap). The triggering Q1 miss fired two weeks ago; today's drift is slow-burn post-earnings repositioning with no fresh entry signal for momentum or news-reactive strategies.",
+      "suggestion": "Add a post-earnings residual-drift gate: FTSE 100 names with EPS miss \u22655% and no rebound within 8 sessions stay eligible for a short tilt, sized at beta \u00d7 base_size to cap exposure on low-volatility defensives.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-05-29T15:05:49.429585+00:00"
+}
