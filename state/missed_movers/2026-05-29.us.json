@@ -1,0 +1,122 @@
+{
+  "date": "2026-05-29",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 DLTR +18%, A +17%, BBY +16%, HRL +13%, AXON +12%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (SNPS -9%, TSN -6%, NSC -5%, TTD -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: DLTR (+17.87%) \u2014 Q1 FY2026 earnings beat reported pre-market May 28: adj. EPS $1.74 (+19.7% YoY), comp sales +3.5%; raised FY adj. EPS guidance to $6.70\u2013$7.10 and net sales to $20.5\u2013$20.7B with ~400 new store openings. Why we passed: Outside any active strategy's universe. DLTR is a large-cap discount retailer; the +18% move was entirely earnings-driven (pre-market May 28), requiring pre-event positioning that post-open momentum and mean-reversion signals cannot capture.",
+  "top_movers": [
+    {
+      "ticker": "DLTR",
+      "move_pct": 17.868,
+      "close": 113.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q1 FY2026 earnings beat reported pre-market May 28: adj. EPS $1.74 (+19.7% YoY), comp sales +3.5%; raised FY adj. EPS guidance to $6.70\u2013$7.10 and net sales to $20.5\u2013$20.7B with ~400 new store openings.",
+      "miss_reason": "Outside any active strategy's universe. DLTR is a large-cap discount retailer; the +18% move was entirely earnings-driven (pre-market May 28), requiring pre-event positioning that post-open momentum and mean-reversion signals cannot capture.",
+      "suggestion": "Add an earnings-catalyst scanner that gates entry on names with pre-market results showing gap-up \u226512% within 30 min of open and volume \u22652\u00d7 20-day avg; would catch DLTR-style post-results momentum without requiring overnight positioning.",
+      "failed": false
+    },
+    {
+      "ticker": "A",
+      "move_pct": 16.868,
+      "close": 135.38,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 FY2026 earnings beat: $1.83B revenue (est. $1.8B, +10% YoY) and $1.49 non-GAAP EPS (est. $1.41); management raised full-year EPS guidance to $6.00\u2013$6.10 from $5.90\u2013$6.04.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Agilent is a ~$38B large-cap scientific-instruments name not included in the tradable universe. The move was purely earnings-driven (report released after close May 27), requiring pre-market gap positioning; post-open momentum signals arrive too late to capture the initial surge",
+      "suggestion": "Add an earnings-gap universe expansion rule: any large-cap name (mkt cap >$5B) not currently in universe that gaps \u2265+8% pre-market on earnings day should be admitted to the momentum strategy for the session open, gated on pre-market volume >1.5\u00d7 its 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "BBY",
+      "move_pct": 15.804,
+      "close": 74.74,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q1 FY27 EPS $1.28 beat $1.22 est; revenue $8.94B beat $8.82B est; comp sales +2% (best in 4 years); FY guidance reaffirmed; 9% short interest (~5-day cover) amplified move via short squeeze.",
+      "miss_reason": "Outside any active strategy's universe (large-cap consumer electronics discretionary). Earnings were released after close on 5/28, producing a ~15% pre-market gap \u2014 any intraday momentum or mean-reversion strategy would see the move already priced in at open and blocked by gap-filter thresholds.",
+      "suggestion": "Add an earnings-gap momentum gate: for names with EPS beat \u22654% and pre-market gap \u22658%, allow a universe-agnostic entry within 30 min of open with a 2% trailing stop, capped at 0.5% NAV, to harvest post-earnings continuation without requiring the name in a standing universe.",
+      "failed": false
+    },
+    {
+      "ticker": "HRL",
+      "move_pct": 12.548,
+      "close": 23.59,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 FY2026 earnings beat reported 2026-05-28: adj. EPS $0.40, revenue $2.97B; organic sales +3%, adj. net income +14% YoY; FY2026 guidance raised to $1.43\u2013$1.51 adj. EPS.",
+      "miss_reason": "Outside any active strategy's universe \u2014 HRL is a mid-cap consumer staples / packaged-food name (~$3B market cap) in a multi-year downtrend that screens below typical momentum universes. The gap was fully priced pre-open from an after-hours earnings release; no actionable post-open momentum signal existed.",
+      "suggestion": "Add a consumer-staples earnings-gap scanner: universe-excluded names with market cap $3B\u2013$20B that gap \u2265+8% on earnings day should be admitted to a short-hold momentum slot within 30 min of open, gated on volume \u22652\u00d7 the 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "AXON",
+      "move_pct": 12.266,
+      "close": 439.32,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "TD Cowen TMT conference (May 27) management reiterated 700%+ AI product and 300%+ Dedrone counter-drone revenue growth, triggering a relief rally from AXON's ~30% YTD drawdown ahead of its May 28 annual shareholder meeting.",
+      "miss_reason": "Outside any active strategy's universe; AXON is a ~$29B large-cap tech/public-safety name in a steep YTD downtrend. Conference-driven catalysts require pre-event positioning \u2014 any post-conference signal entry misses the opening gap.",
+      "suggestion": "Add conference-event pre-positioning: flag names with mkt cap >$10B, prior-Q revenue beat, and >20% drawdown from 52-week high presenting at tier-1 investor conferences into momentum-trader's universe 1 session before the appearance.",
+      "failed": false
+    },
+    {
+      "ticker": "HOOD",
+      "move_pct": 11.295,
+      "close": 84.84,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Robinhood launched AI-agent trading via a Trading MCP (letting third-party AI automate portfolio building and rebalancing) and an Agentic Credit Card, reframing HOOD as an AI-fintech platform rather than a crypto-volume play.",
+      "miss_reason": "Outside any active strategy's universe (mid-cap fintech/brokerage). The move was a same-day product-launch catalyst with no pre-market signal; momentum and mean-reversion filters had no prior technical setup to act on before the gap materialized at open.",
+      "suggestion": "Add a catalyst-reactive scanner that admits names outside the current universe when a same-day product/AI announcement coincides with gap \u2265+5% and volume \u22651.5\u00d7 20-day avg within the first 30 min of open.",
+      "failed": false
+    },
+    {
+      "ticker": "SNPS",
+      "move_pct": -8.61,
+      "close": 480.64,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 FY2026 earnings (May 27) beat headline revenue ($2.28B) and EPS, but Design IP revenue fell 6% YoY; Ansys integration complexity concerns triggered institutional selling; shares gapped down ~9% May 28 with continuation May 29.",
+      "miss_reason": "Outside any active strategy's universe. SNPS is a large-cap (~$75B) EDA software name at ~75x P/E; the selloff was a post-earnings gap driven by IP-segment weakness \u2014 capturing it requires pre-announcement positioning or short capability the bot lacks.",
+      "suggestion": "Add a post-earnings short-bias screener: large-cap software names (mkt cap >$20B) with headline EPS beat but segment-level miss and \u22657% gap-down on volume \u22651.5\u00d7 avg qualify for day-2 short entry, capped at 0.5% NAV, if short strategies are enabled.",
+      "failed": false
+    },
+    {
+      "ticker": "TSN",
+      "move_pct": -6.089,
+      "close": 62.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 FY2026 adjusted EPS fell 5% YoY to $0.87 and adjusted operating income declined 3% to $497M despite GAAP beat; Beef segment guided to $(350)M\u2013$(500)M operating loss for full year.",
+      "miss_reason": "Outside any active strategy's universe \u2014 TSN is a large-cap consumer-staples protein name. The drop was entirely earnings-catalyzed (Q2 report), requiring pre-market positioning that post-open momentum or mean-reversion signals cannot capture.",
+      "suggestion": "Add a post-earnings short-gap scanner: names with adjusted EPS declining \u22653% YoY and gap-down \u22654% at open enter a watchlist for short-side entry within 30 min on volume \u22651.5\u00d7 avg \u2014 gated on enabling short capability for large-cap staples.",
+      "failed": false
+    },
+    {
+      "ticker": "NSC",
+      "move_pct": -5.465,
+      "close": 307.88,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "STB paused its formal review of UNP's $85B acquisition of NSC, holding proceedings in abeyance while requesting supplemental filings due July 27, 2026; deal spread widened ~10%, raising approval-timeline uncertainty.",
+      "miss_reason": "Outside any active strategy's universe \u2014 large-cap S&P 500 railroad trading as a pending-merger target. Drop was purely event-driven (regulatory review pause); standard momentum/mean-reversion filters cannot front-run STB timing risk without a dedicated M&A-arb layer.",
+      "suggestion": "Introduce a merger-watchlist gate: track names with active STB/DOJ filings; flag deal-spread dislocation \u22655% intraday as a short signal \u2014 absent short capability, mark active merger-arb targets as untradeable to avoid false long-side setups during review windows.",
+      "failed": false
+    },
+    {
+      "ticker": "TTD",
+      "move_pct": -5.114,
+      "close": 21.15,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Rothschild & Co Redburn analyst Bianca Dallal initiated TTD at Sell with $11 PT (~50% downside), citing AI-powered media-buying tools from big tech eroding TTD's ~20% take rate.",
+      "miss_reason": "Outside any active strategy's universe \u2014 TTD is a declining ad-tech mid-cap down ~70% from its 52-week high. The drop was driven by an intraday sell-side initiation with no pre-market gap, leaving standard signal-based entry filters nothing to detect.",
+      "suggestion": "Add an analyst-initiation trigger to the news-reactive strategy: on Sell/Underperform initiations with \u226530% implied downside from a tracked broker list, open a short (or block long) within 15 min of the call hitting the wire.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-05-29T19:33:08.911027+00:00"
+}
