@@ -183,6 +183,25 @@ Aim for breadth and a mix of importance levels — not everything is a 10/10.
   macro data, M&A, earnings, regulatory, major deals
 - **World affairs / Politics / Geopolitics** — UK and European politics
   first, then US, then global; elections, diplomacy, conflicts
+
+  **UK political coverage is required, not optional.** Across the last
+  fortnight this newspaper produced zero UK-politics candidates — that
+  is a structural failure of discovery, not a quiet political week.
+  Each day's candidate set MUST include UK political signal where any
+  exists. Search explicitly for:
+  - UK by-elections (Burnham/Makerfield, any seat in motion or
+    upcoming ballot)
+  - Labour leadership pressure / Starmer's standing in polling
+  - Reform UK polling trends and seat threats
+  - UK fiscal policy, OBR commentary, Treasury announcements
+  - Gilt-market signals (auctions, yields, BoE QT path)
+  - BoE speaker calendar, MPC vote splits, dissents
+  - Westminster select-committee actions touching banks, energy,
+    pharma, telecoms (anything that touches FTSE 100/250 constituents)
+  If you genuinely can't find UK political news on a given day, say so
+  in the `notes` field — but a UK-focused publication going 14 days
+  in a row without UK politics is the failure mode this rule exists
+  to prevent.
 - **Tech & science** — AI, biotech, frontier research, major product
   launches, regulatory developments (UK/EU AI rules included)
 - **Climate / Environment** — significant climate events, policy

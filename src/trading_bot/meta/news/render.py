@@ -35,23 +35,27 @@ log = logging.getLogger(__name__)
 # Section → CSS modifier class. Used on .section-label, .meta, .brief
 # and .read-more. Must match what's defined in docs/assets/style.css.
 _SECTION_CLASS: dict[str, str] = {
-    "Front":           "front",
-    "Markets":         "markets",
-    "World":           "world",
-    "Tech & science":  "tech",
-    "Climate":         "world",     # reuse navy — no dedicated palette yet
-    "Health":          "tech",      # reuse emerald
-    "Sport":           "beyond",
-    "Culture":         "beyond",
-    "Beyond the tape": "beyond",
+    "Front":            "front",
+    "Standing watches": "world",    # reuse navy until a dedicated palette lands
+    "Markets":          "markets",
+    "World":            "world",
+    "Tech & science":   "tech",
+    "Climate":          "world",     # reuse navy — no dedicated palette yet
+    "Health":           "tech",      # reuse emerald
+    "Sport":            "beyond",
+    "Culture":          "beyond",
+    "Beyond the tape":  "beyond",
     # Synthetic sections (we add these in assembly, not in the plan)
-    "Trading floor":   "desk",
-    "Desk's calls":    "calls",
+    "Trading floor":    "desk",
+    "Desk's calls":     "calls",
 }
 
-# Section render order for the front page. Synthetic sections come last.
+# Section render order for the front page. Standing watches sits right
+# below Front so the reader sees "what's NEW" (Front) then "what's
+# STILL HAPPENING" (Standing watches) before drilling into Markets etc.
 _SECTION_ORDER = [
     "Front",
+    "Standing watches",
     "Markets",
     "World",
     "Tech & science",

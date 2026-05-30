@@ -60,8 +60,12 @@ BYLINES: dict[str, str] = {
 
 # Valid sections the publisher can use. Trading floor + Desk's calls
 # are appended by separate stages — publisher must not include them.
+# "Standing watches" carries ongoing situations (Iran/Hormuz, US-China
+# trade, UK fiscal) as 2-line state-of-play instead of letting them
+# crowd Front every day.
 _LLM_SECTIONS = {
     "Front",
+    "Standing watches",
     "Markets",
     "World",
     "Tech & science",
@@ -71,6 +75,21 @@ _LLM_SECTIONS = {
     "Culture",
     "Beyond the tape",
 }
+
+# Coarse region tags. The publisher tags each piece with one of these so
+# the geographic-floor check can enforce non-US presence on Front.
+_REGIONS = {"us", "uk", "eu", "asia", "global"}
+_NON_US_REGIONS = {"uk", "eu", "asia", "global"}
+
+# Allowed `kind` values. "new" = genuinely new event today;
+# "rolling-update" = ongoing situation with marginal development.
+# Standing watches usually carries rolling-updates of fatigued themes.
+_KINDS = {"new", "rolling-update"}
+
+# Theme-fatigue threshold: a theme that's been Front this many times
+# in the trailing 7 days is fatigued and should NOT lead again unless
+# the piece is flagged `kind: "new"` (genuine escalation/resolution).
+_FATIGUE_LIMIT = 3
 
 
 @dataclass
@@ -93,6 +112,10 @@ class PlannedPiece:
     tier: str                           # "lead" | "feature" | "brief"
     triage_index: int                   # primary source — back-reference into triage list
     triage_indices: list = field(default_factory=list)  # all merged sources
+    theme: str = ""                     # coarse theme tag (kebab-case, e.g. "iran-hormuz",
+                                        # "fed-rates", "uk-fiscal"). Powers the fatigue gate.
+    region: str = "global"              # one of _REGIONS — for the geographic floor
+    kind: str = "new"                   # one of _KINDS — "new" or "rolling-update"
 
 
 @dataclass
@@ -139,7 +162,51 @@ def plan_edition(
     if not plan.pieces:
         log.warning("Publisher returned no pieces — using heuristic plan")
         return _heuristic_plan(triaged, today)
+    _enforce_geographic_floor(plan)
     return plan
+
+
+def _enforce_geographic_floor(plan: NewsPlan) -> None:
+    """Guarantee at least 1 non-US piece in the top 3 (lead + first two
+    features), regardless of what the LLM did. If the top 3 are all
+    `region: "us"`, swap in the highest-tier non-US piece from later
+    in the order. Mutates `plan.pieces` in place.
+
+    No-op when there are <3 pieces or when there's already a non-US
+    piece in the top 3.
+    """
+    if len(plan.pieces) < 3:
+        return
+    top = plan.pieces[:3]
+    if any(p.region in _NON_US_REGIONS for p in top):
+        return
+    # Find the earliest non-US piece outside the top 3. Prefer
+    # features over briefs so we don't promote a low-quality piece.
+    swap_idx = -1
+    for i in range(3, len(plan.pieces)):
+        p = plan.pieces[i]
+        if p.region in _NON_US_REGIONS and p.tier != "brief":
+            swap_idx = i
+            break
+    if swap_idx < 0:
+        for i in range(3, len(plan.pieces)):
+            if plan.pieces[i].region in _NON_US_REGIONS:
+                swap_idx = i
+                break
+    if swap_idx < 0:
+        log.info("Geographic floor: no non-US piece available to swap in")
+        return
+    # Demote the weakest of the top 3 (the third one); promote the
+    # non-US piece into position 2 (first feature slot) so the lead
+    # stays as-is.
+    promoted = plan.pieces.pop(swap_idx)
+    demoted = plan.pieces.pop(2)
+    plan.pieces.insert(2, promoted)
+    plan.pieces.append(demoted)
+    log.info(
+        "Geographic floor enforced: promoted '%s' (region=%s) into top 3",
+        promoted.slug, promoted.region,
+    )
 
 
 def _build_prompt(triaged: list[TriagedCandidate], today: date) -> str:
@@ -157,10 +224,10 @@ def _build_prompt(triaged: list[TriagedCandidate], today: date) -> str:
         f"  - {name}: {blurb}" for name, blurb in BYLINES.items()
     )
 
-    # Phase 9C — recent-leads context. The publisher reads the trailing
-    # 5 days' front-page leads so it doesn't promote the same story
-    # arc 4 sessions running.
-    recent_leads_block = _recent_leads_context(today)
+    # Trailing 7-day context: per-theme Front counts (drives the
+    # fatigue gate) + per-region totals (drives the geographic floor)
+    # + recent lead headlines.
+    recent_leads_block = _recent_activity_context(today)
 
     return f"""You are the publisher of The Bot Tribune for {today.isoformat()}.
 The triage desk has scored every candidate. Your job: pick the lead,
@@ -201,6 +268,18 @@ masthead subtitle.
    Beyond the tape (drop if a section has zero pieces). Render
    Climate, Health, Sport, Culture only when you have ≥1 piece that
    genuinely fits — don't pad to fill them.
+
+   **Standing watches** is for ongoing situations (Iran/Hormuz,
+   US-China trade, UK fiscal squeeze, gilt-market stress) where the
+   theme has been live for many days and today's "update" is
+   marginal. Render these as `tier: "brief"` 2-line state-of-play
+   pieces, NOT as front-page leads. A theme belongs here if (a) it's
+   appeared on Front 3+ times in the last 7 days per the recent-
+   activity block AND (b) today's development is incremental (a new
+   speaker comment, a fresh skirmish, another deal-near rumour) rather
+   than a genuine inflection (signed agreement, escalation,
+   collapse). The reader wants to know the situation is still live
+   without re-reading yesterday's headline.
 4. **Do NOT include** "Trading floor" or "Desk's calls" sections — those
    are added by separate stages after you.
 5. **Tier** — each piece is "lead" (front only), "feature" (mid-size,
@@ -250,13 +329,54 @@ principle and rooted in today's lead. Examples:
 
 Dry. No "we wonder" / "could it be that..." padding.
 
-## Don't lead with the same story 4 days running
+## Per-piece tagging (required)
 
-If the recent-leads block above shows you've already led with this
-story arc for several days, relegate it. The reader has read it.
-Pick a different lead even if it's score-wise the second-best — a
-fresh angle is worth one rank point of triage score. The
-already-led story can stay as a section feature; just don't re-front it.
+Every piece you emit MUST carry three tags so the fatigue gate, the
+geographic floor, and tomorrow's run can do their jobs:
+
+- **`theme`** — a coarse kebab-case tag for the story arc. Same
+  story across days = same theme. Examples: `iran-hormuz`,
+  `fed-rates`, `us-china-trade`, `uk-fiscal`, `uk-politics`,
+  `boe-rates`, `ai-capex`, `oil`, `gilts`, `nvidia-earnings`,
+  `bp-governance`, `spacex-ipo`. Pick the tightest tag that
+  groups multiple days' coverage of the SAME underlying arc.
+  *Don't invent a new theme tag just because today's angle is
+  slightly different.* "Iran nuclear talks" yesterday and
+  "Hormuz ceasefire" today share the theme `iran-hormuz`.
+- **`region`** — one of `us`, `uk`, `eu`, `asia`, `global`.
+  Use `global` for cross-cutting or geopolitical stories that
+  aren't anchored to one capital (oil, multilateral diplomacy,
+  cross-asset macro).
+- **`kind`** — `"new"` or `"rolling-update"`. `"new"` = a
+  genuine first-day event or a material inflection in an ongoing
+  story (signing, escalation, resignation, surprise data
+  print). `"rolling-update"` = incremental update of an
+  ongoing situation (another speaker comment, another "deal
+  near" leak, marginal market move).
+
+## Theme fatigue (don't crowd Front with the same situation)
+
+The recent-activity block above shows which themes have been on
+Front in the last 7 days. **A theme that's already led Front 3+
+times in 7 days is FATIGUED.** Fatigued themes do NOT belong on
+Front again unless the piece is genuinely `kind: "new"` (signed
+agreement, escalation, collapse, major surprise). Marginal
+updates on fatigued themes go to **Standing watches** as a
+2-line state-of-play brief.
+
+This is not "ban the topic" — the topic stays in the paper. It's
+"stop re-leading the same slow burn." The reader has been reading
+about Iran/Hormuz/Fed-speak/UK-fiscal for days; today's marginal
+turn doesn't deserve the masthead.
+
+## Geographic floor (Front cannot be all-US)
+
+This is a UK-focused publication. **At least 1 of the top 3 pieces
+(lead + first 2 features) MUST be tagged `region` other than `us`.**
+If the top-scored stories are all US, pick a high-scored UK / EU /
+Asia / global piece and promote it into the top 3. A fresh non-US
+angle is worth one rank point of triage score for breaking
+out of US-skew.
 
 ## Required output
 
@@ -269,13 +389,16 @@ Return JSON only:
   "pieces": [
     {{
       "triage_indices": [<int>, <int>, ...],  // primary first; one index for a solo story, many for a merged cluster
-      "section": "Front" | "Markets" | "World" | "Tech & science" | "Climate" | "Health" | "Sport" | "Culture" | "Beyond the tape",
+      "section": "Front" | "Standing watches" | "Markets" | "World" | "Tech & science" | "Climate" | "Health" | "Sport" | "Culture" | "Beyond the tape",
       "headline": "<rewritten or unchanged>",
       "kicker": "<SECTION · TOPIC or TOPIC>",
       "byline": "<one of the byline names above>",
       "one_line": "<single-sentence standfirst>",
       "tier": "lead" | "feature" | "brief",
-      "slug": "<short-hyphenated-slug>"
+      "slug": "<short-hyphenated-slug>",
+      "theme": "<kebab-case theme tag — match prior days' tags when same arc>",
+      "region": "us" | "uk" | "eu" | "asia" | "global",
+      "kind": "new" | "rolling-update"
     }}
   ],
   "notes": "<one-line internal note — what shape the day took, for debugging>"
@@ -283,9 +406,9 @@ Return JSON only:
 ```
 
 Render pieces in the order they should appear in the paper: Front first,
-then each section in roster order (Markets, World, Tech & science,
-then any variable sections, then Beyond the tape last). Within a
-section, features before briefs.
+then Standing watches, then each section in roster order (Markets, World,
+Tech & science, then any variable sections, then Beyond the tape last).
+Within a section, features before briefs.
 """
 
 
@@ -348,6 +471,19 @@ def _parse_plan(response: dict | list, triaged: list[TriagedCandidate], today: d
         slug = _unique_slug(slug, used_slugs)
         used_slugs.add(slug)
 
+        theme_raw = str(raw.get("theme") or "").strip().lower()
+        # Normalise to kebab-case: spaces/underscores → "-", strip non
+        # [a-z0-9-]. Empty theme is permitted (falls back to "").
+        theme = re.sub(r"[^a-z0-9]+", "-", theme_raw).strip("-")[:40]
+
+        region = str(raw.get("region") or "global").strip().lower()
+        if region not in _REGIONS:
+            region = "global"
+
+        kind = str(raw.get("kind") or "new").strip().lower()
+        if kind not in _KINDS:
+            kind = "new"
+
         piece = PlannedPiece(
             slug=slug,
             section=section if tier != "lead" else "Front",
@@ -358,6 +494,9 @@ def _parse_plan(response: dict | list, triaged: list[TriagedCandidate], today: d
             tier=tier,
             triage_index=idx,
             triage_indices=idx_list,
+            theme=theme,
+            region=region,
+            kind=kind,
         )
         pieces.append(piece)
         if tier == "lead" and not lead_slug:
@@ -455,18 +594,35 @@ def _heuristic_plan(triaged: list[TriagedCandidate], today: date) -> NewsPlan:
     )
 
 
-def _recent_leads_context(today: date) -> str:
-    """Phase 9C — pull the front-page lead headlines from the last 5
-    days of pipeline JSON dumps. Empty string when there's no
-    history (or when the directory's been archive-trimmed away)."""
+def _recent_activity_context(today: date) -> str:
+    """Pull the trailing 7 days of publisher plans and compute two
+    summaries the publisher LLM uses to avoid theme fatigue and US
+    skew:
+
+    1. A per-theme count of Front appearances (and total appearances).
+       Themes that have led Front 3+ times in 7 days are flagged
+       FATIGUED — those should drop to Standing watches unless
+       genuinely escalated.
+    2. A per-region count of total pieces. Lets the LLM see the
+       running geographic mix so it can rebalance proactively.
+    3. The list of recent front-page lead headlines (legacy
+       behaviour — kept so the LLM still sees the actual stories,
+       not just tags).
+    """
     import json as _json
+    from collections import Counter
     from datetime import timedelta
     from trading_bot.state.paths import STATE_ROOT
     state_dir = STATE_ROOT / "daily_news"
     if not state_dir.exists():
         return ""
-    items: list[tuple[str, str, str]] = []   # (date, headline, slug)
-    for offset in range(1, 6):
+
+    front_theme_days: Counter = Counter()
+    total_theme: Counter = Counter()
+    region_total: Counter = Counter()
+    recent_leads: list[tuple[str, str, str, str]] = []  # (date, headline, slug, theme)
+
+    for offset in range(1, 8):
         d = (today - timedelta(days=offset)).isoformat()
         p = state_dir / f"{d}.pipeline.json"
         if not p.exists():
@@ -478,16 +634,62 @@ def _recent_leads_context(today: date) -> str:
         plan = payload.get("stages", {}).get("publisher", {}) or {}
         lead_slug = plan.get("front_lead_slug", "")
         pieces = plan.get("pieces", []) or []
+        for pc in pieces:
+            theme = (pc.get("theme") or "").strip().lower()
+            region = (pc.get("region") or "global").strip().lower()
+            if theme:
+                total_theme[theme] += 1
+                if pc.get("section") == "Front":
+                    front_theme_days[theme] += 1
+            if region:
+                region_total[region] += 1
         lead = next((pc for pc in pieces if pc.get("slug") == lead_slug), None)
         if lead:
-            items.append((d, lead.get("headline", "(unknown)"), lead_slug))
-    if not items:
+            recent_leads.append((
+                d, lead.get("headline", "(unknown)"),
+                lead_slug, (lead.get("theme") or "").lower(),
+            ))
+
+    if not recent_leads and not front_theme_days:
         return ""
-    lines = ["", "## Recent front-page leads (last 5 days)", ""]
-    for d, headline, slug in items:
-        lines.append(f"- **{d}** — *{headline}*  (slug: `{slug}`)")
-    lines.append("")
+
+    lines = ["", "## Recent activity (last 7 days)", ""]
+
+    if front_theme_days:
+        lines.append("### Theme appearances on Front (out of last 7 editions)")
+        lines.append("")
+        lines.append("| theme | front-days | total-pieces | fatigued? |")
+        lines.append("|---|---:|---:|:---:|")
+        for theme, n_front in sorted(front_theme_days.items(), key=lambda x: -x[1]):
+            n_total = total_theme[theme]
+            fatigued = "**YES**" if n_front >= _FATIGUE_LIMIT else "no"
+            lines.append(f"| `{theme}` | {n_front} | {n_total} | {fatigued} |")
+        lines.append("")
+
+    if region_total:
+        lines.append("### Region mix (last 7 days, all sections)")
+        lines.append("")
+        total = sum(region_total.values()) or 1
+        for region in ("us", "uk", "eu", "asia", "global"):
+            n = region_total.get(region, 0)
+            pct = 100 * n / total
+            lines.append(f"- **{region}** — {n} pieces ({pct:.0f}%)")
+        lines.append("")
+
+    if recent_leads:
+        lines.append("### Recent front-page leads")
+        lines.append("")
+        for d, headline, slug, theme in recent_leads:
+            theme_tag = f" · `{theme}`" if theme else ""
+            lines.append(f"- **{d}** — *{headline}*  (slug: `{slug}`{theme_tag})")
+        lines.append("")
+
     return "\n".join(lines)
+
+
+# Legacy alias retained for any external caller; new code should use
+# _recent_activity_context.
+_recent_leads_context = _recent_activity_context
 
 
 _SLUG_RE = re.compile(r"[^a-z0-9]+")
@@ -531,6 +733,12 @@ def plan_from_json(data: dict) -> NewsPlan:
     for p in pieces_raw:
         if not isinstance(p, dict):
             continue
+        region = str(p.get("region", "global")).lower()
+        if region not in _REGIONS:
+            region = "global"
+        kind = str(p.get("kind", "new")).lower()
+        if kind not in _KINDS:
+            kind = "new"
         pieces.append(PlannedPiece(
             slug=str(p.get("slug", "")),
             section=str(p.get("section", "Beyond the tape")),
@@ -541,6 +749,9 @@ def plan_from_json(data: dict) -> NewsPlan:
             tier=str(p.get("tier", "brief")),
             triage_index=int(p.get("triage_index", -1)),
             triage_indices=[int(x) for x in (p.get("triage_indices") or [p.get("triage_index", -1)]) if isinstance(x, (int, float))],
+            theme=str(p.get("theme", "")).lower()[:40],
+            region=region,
+            kind=kind,
         ))
     return NewsPlan(
         edition_date=str(data.get("edition_date", "")),
