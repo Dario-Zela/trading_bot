@@ -84,6 +84,12 @@ jobs:
           STOOQ_API_KEY: ${{ secrets.STOOQ_API_KEY }}
           # gh CLI uses GH_TOKEN to authenticate against the GitHub API for issue creation
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Brevo transactional email — without these the weekly evolution
+          # summary email is silently skipped (notify.email logs a warning
+          # and the run still succeeds).
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          NOTIFY_EMAIL_TO: ${{ secrets.NOTIFY_EMAIL_TO }}
+          NOTIFY_EMAIL_FROM: ${{ secrets.NOTIFY_EMAIL_FROM }}
         run: python -m trading_bot.pipeline weekly-evolution
 
       - name: Rebuild dashboard (post-evolution)
@@ -117,7 +123,7 @@ jobs:
         run: |
           git config user.name "trading-bot[bot]"
           git config user.email "trading-bot@users.noreply.github.com"
-          git add state strategies || true
+          git add state strategies docs || true
           if git diff --cached --quiet; then
             echo "No changes to commit"
             exit 0
