@@ -972,8 +972,15 @@ def _render_page(edition: EvolutionEdition, *, shell_fn, depth: int = 0) -> str:
     )
 
 
+RICH_RENDER_MARKER = "<!-- evolution-v2 rich render -->"
+
+
 def _render_body(edition: EvolutionEdition, *, depth: int = 0) -> str:
     parts: list[str] = []
+    # Marker tells dashboard.pages.render_evolution_page to skip its
+    # simpler fallback render so the rich page persists across daily
+    # dashboard rebuilds (not just on weekly evolution Saturdays).
+    parts.append(RICH_RENDER_MARKER)
     parts.append('<main class="paper">')
 
     # Masthead
@@ -995,6 +1002,44 @@ def _render_body(edition: EvolutionEdition, *, depth: int = 0) -> str:
         f'  <span>{n_strategies} strateg{"ies" if n_strategies != 1 else "y"} reviewed</span>'
         f'  <span>{n_actions_applied} action{"s" if n_actions_applied != 1 else ""} applied</span>'
         f'  <span><a href="{archive_href}" style="color: var(--ink-muted);">Previous weeks →</a></span>'
+        '</div>'
+    )
+
+    # Tournament status — single-glance view of where the leaderboard sits.
+    # Surfaces the current T2 leader (if any), how many spawn-variants
+    # the agent proposed this week, and whether the slate moved at all.
+    t2_leaders = sorted({
+        r.get("id") for r in edition.snapshot_rows
+        if r.get("tier2_candidate")
+    } - {None, ""})
+    spawns_this_week = [
+        a for a in edition.action_log
+        if a.get("applied") and a.get("action") == "spawn-variant"
+    ]
+    demotes_this_week = [
+        a for a in edition.action_log
+        if a.get("applied") and a.get("action") == "demote"
+    ]
+    if t2_leaders:
+        leader_str = " · ".join(html.escape(s) for s in t2_leaders)
+    else:
+        leader_str = '<em style="color: var(--ink-muted);">none — slate has no T2 contender</em>'
+    spawn_str = (
+        f'{len(spawns_this_week)} spawn{"s" if len(spawns_this_week) != 1 else ""} '
+        f'this week' if spawns_this_week
+        else '<em style="color: var(--ink-muted);">no spawns this week</em>'
+    )
+    demote_str = (
+        f'{len(demotes_this_week)} demote{"s" if len(demotes_this_week) != 1 else ""}'
+        if demotes_this_week
+        else '<em style="color: var(--ink-muted);">no demotes</em>'
+    )
+    parts.append(
+        '<div class="masthead-strip" style="border-top: 1px dashed var(--ink-faint);">'
+        f'  <span><strong>Tournament</strong></span>'
+        f'  <span>T2 leader: {leader_str}</span>'
+        f'  <span>{spawn_str}</span>'
+        f'  <span>{demote_str}</span>'
         '</div>'
     )
 

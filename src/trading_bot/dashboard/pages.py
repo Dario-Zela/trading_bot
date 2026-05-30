@@ -620,6 +620,17 @@ def _evolution_md_path() -> Path:
 def render_evolution_page() -> bool:
     src = _evolution_md_path()
     out = docs_root() / "evolution.html"
+    # If the weekly evolution agent already wrote the rich page via
+    # evolution_v2, leave it alone. Otherwise the daily dashboard
+    # rebuild would clobber the editorial / per-strategy cards / archive
+    # nav with this fallback's bare bullet dump.
+    try:
+        from trading_bot.meta.evolution_v2 import RICH_RENDER_MARKER
+        if out.exists() and RICH_RENDER_MARKER in out.read_text():
+            log.info("evolution.html has rich render marker — preserving")
+            return True
+    except Exception:
+        pass
     if not src.exists():
         body = (
             '<main class="paper">'

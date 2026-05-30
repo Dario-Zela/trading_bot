@@ -654,20 +654,58 @@ Action thresholds (use the data, don't be sentimental):
   likely culprit; one tune action can adjust several fields.
 - **Spawn-variant** is how the tournament actually surfaces winners
   — use it actively, not as a last resort. Trigger any of:
-  (a) the current leader on the tier-2 leaderboard has IC < 0.15
-  OR hit-rate < 55% — meaning even the *best* strategy isn't
-  separating, so the slate needs fresh blood; (b) a paper from the
-  external research block lines up with a gap in the slate;
-  (c) one region's metrics are wildly better than the other's
-  (suggests a prompt that needs regional specialisation);
-  (d) a strategy you're demoting had a specific identifiable bleeder
-  (e.g. universe too narrow, tool inverting signal) — spawn a
-  variant that fixes it. **If you've gone 2+ consecutive weeks with
-  no spawn AND no clear tournament leader, that's a signal that the
-  slate is too narrow — propose at least one variant grounded in
-  the external research brief.** Anchor every variant's edge to a
-  specific cited finding or attribution-block insight; don't spawn
-  blind.
+  (a) the current leader on the tier-2 leaderboard has IC < 0.20
+  OR hit-rate < 60% on n ≥ 20 trades — even a "leader" that hasn't
+  separated decisively is not winning the tournament, and the slate
+  needs fresh contenders; (b) a paper from the external research
+  block lines up with a gap in the slate; (c) one region's metrics
+  are wildly better than the other's (suggests a prompt that needs
+  regional specialisation); (d) a strategy you're demoting had a
+  specific identifiable bleeder (e.g. universe too narrow, tool
+  inverting signal) — spawn a variant that fixes it; (e) the slate
+  has not gained a new variant in 2+ weeks (every standing run
+  without a spawn is a missed exploration cycle).
+
+  **An ambitious spawn breaks an axis.** The current slate shares
+  the same template: *LLM-driven + daily-rebalance + long-only +
+  cross-sectional stock/ETF picking + always-on capital deployment*.
+  A variant that shares all five axes with its parent is a TUNE
+  dressed as a spawn — it adds noise to the leaderboard, not new
+  exposure. A genuine spawn breaks at least ONE axis:
+
+  - **Trigger axis** — calendar/event-driven instead of periodic
+    rebalance. Examples: post-earnings announcement drift (PEAD —
+    entries cluster around earnings windows, then nothing for
+    weeks), index-rebalance front-running (FTSE/MSCI/S&P
+    quarterly), FOMC/CPI gates.
+  - **Exposure axis** — long-short pairs (long winning sector /
+    short losing sector via inverse ETFs), regime-gated defensive
+    (sit in cash 70%+ of the time, deploy aggressively only when
+    VIX / yield-curve / dollar-strength signal a specific
+    regime), market-neutral overlay.
+  - **Signal source axis** — alternative data the existing strategies
+    don't touch: insider/Form-4 cluster buying, short-interest
+    changes, analyst-revision momentum, options skew, ETF
+    creation/redemption flows, credit-spread divergence.
+  - **Time-slice axis** — weekly-only or monthly-only rebalance (cuts
+    fees + noise), or event-window-only (e.g. only trade in the
+    5 days around earnings).
+  - **Asset class / universe axis** — a universe none of the existing
+    strategies use: AIM small-caps, GDRs, gilts curve plays,
+    inverse ETFs as a primary class, single-country EM ETFs.
+
+  If your spawn shares the same trigger AND exposure AND signal
+  source AND time-slice AND universe as an existing strategy, you
+  haven't actually proposed a new contender — you've proposed a
+  tune. Reject your own draft and try again.
+
+  Anchor every variant's edge to (a) a specific cited finding from
+  the external research block, (b) an attribution-block insight,
+  OR (c) a structural axis-break with explicit reasoning for why
+  that exposure should produce uncorrelated return vs the existing
+  slate. Don't spawn blind, but don't spawn timid either — a
+  tournament without new contenders is a tournament that's already
+  decided.
 - **mark-tier2-candidate** for the strongest contender(s) for the one
   live slot — strategies that cleared the IC noise floor with
   conviction AND stack up well against the others on the leaderboard.
