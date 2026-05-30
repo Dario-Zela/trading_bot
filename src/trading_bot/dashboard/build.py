@@ -159,13 +159,15 @@ def build_dashboard_data() -> dict:
                 "universe": region_cfg.get("universe", "sp500"),
                 "capital_gbp": starting_capital,
                 # Tier 2 candidate flag — surfaced by the weekly evolution
-                # agent as its prediction of "this strategy is worth
-                # graduating". Dashboard renders a gold border on these
-                # cards so the user can see at a glance which strategies
-                # the agent is currently confident in.
-                "tier2_candidate": bool(raw_config.get("tier2_candidate", False)),
-                "tier2_marked_at": raw_config.get("tier2_marked_at"),
-                "tier2_thesis": str(raw_config.get("tier2_thesis") or ""),
+                # agent as its prediction of "this (strategy, region)
+                # sleeve is worth graduating". Per-region as of
+                # 2026-05-30. `region_cfg` already merges runs_in entry
+                # values over top-level values via _regions_for_config,
+                # so this read transparently supports both per-region
+                # (new) and legacy top-level flags.
+                "tier2_candidate": bool(region_cfg.get("tier2_candidate", False)),
+                "tier2_marked_at": region_cfg.get("tier2_marked_at"),
+                "tier2_thesis": str(region_cfg.get("tier2_thesis") or ""),
                 "summary": _summary_stats(trades, preds),
                 "equity_curve": _equity_curve(trades, starting_capital),
                 "executed": sorted(trades, key=lambda t: t.get("entry_date", ""), reverse=True),

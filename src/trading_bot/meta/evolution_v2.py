@@ -1013,22 +1013,31 @@ def _render_body(edition: EvolutionEdition, *, depth: int = 0) -> str:
     # tier2_candidate flags are stale. Walk the applied action log to
     # get the post-action leaderboard: start from the snapshot set,
     # add mark-tier2-candidate, remove unmark-tier2-candidate.
-    t2_set = {
-        r.get("id") for r in edition.snapshot_rows
-        if r.get("tier2_candidate")
-    } - {None, ""}
+    #
+    # Keyed on (strategy, region) as of 2026-05-30 because the same
+    # strategy's US and UK-EU sleeves are independent contenders —
+    # news-reactive@us (shadow IC=0.303) and news-reactive@uk-eu
+    # (T212-paper, +£144) shouldn't share a leaderboard slot.
+    t2_set: set[tuple[str, str]] = {
+        (r.get("id"), r.get("region")) for r in edition.snapshot_rows
+        if r.get("tier2_candidate") and r.get("id") and r.get("region")
+    }
     for a in edition.action_log:
         if not a.get("applied"):
             continue
         action = a.get("action")
         sid = a.get("strategy_id")
-        if not sid:
+        region = a.get("region")
+        if not sid or not region:
+            # Pre-2026-05-30 actions may be strategy-wide; legacy
+            # marks lit up both regions. Skip them — the snapshot
+            # set already reflects the inherited flag.
             continue
         if action == "mark-tier2-candidate":
-            t2_set.add(sid)
+            t2_set.add((sid, region))
         elif action == "unmark-tier2-candidate":
-            t2_set.discard(sid)
-    t2_leaders = sorted(t2_set)
+            t2_set.discard((sid, region))
+    t2_leaders = [f"{sid}@{region}" for sid, region in sorted(t2_set)]
     spawns_this_week = [
         a for a in edition.action_log
         if a.get("applied") and a.get("action") == "spawn-variant"

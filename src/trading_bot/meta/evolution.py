@@ -306,12 +306,15 @@ def _build_snapshot(
                 "prefilter_sort_key": cfg.get("prefilter_sort_key"),
                 "midday_tp_factor": cfg.get("midday_tp_factor"),
                 # Tier 2 candidate state — set by a prior evolution run
-                # as a self-prediction. Surfacing it here lets the agent
-                # grade its own past judgement: did the realised metrics
-                # support the prediction?
-                "tier2_candidate": bool(cfg.get("tier2_candidate", False)),
-                "tier2_marked_at": cfg.get("tier2_marked_at"),
-                "tier2_thesis": cfg.get("tier2_thesis"),
+                # as a self-prediction. Per-region as of 2026-05-30 so
+                # the leaderboard can distinguish (strategy, region)
+                # pairs; falls back to the legacy top-level flag during
+                # the migration window so older configs still surface.
+                "tier2_candidate": bool(
+                    entry.get("tier2_candidate", cfg.get("tier2_candidate", False))
+                ),
+                "tier2_marked_at": entry.get("tier2_marked_at", cfg.get("tier2_marked_at")),
+                "tier2_thesis": entry.get("tier2_thesis", cfg.get("tier2_thesis")),
                 "metrics": _metrics_to_dict(m) if m else None,
                 "meets_promotion_criteria": _meets_promotion(m, entry) if m else False,
                 "meets_demotion_criteria": _meets_demotion(m, entry) if m else False,
@@ -621,8 +624,19 @@ configuration learns over time.
 
 ## Required output
 
-A JSON object with one key `actions`, a list of action objects. Promote /
-demote MUST include `region`; tune / spawn-variant do not:
+A JSON object with one key `actions`, a list of action objects.
+Every action EXCEPT `tune` and `spawn-variant` requires a `region`:
+
+- `keep` / `promote` / `demote` / `request-tier-2` / `mark-tier2-candidate`
+  / `unmark-tier2-candidate` ALL take a region. Tier-2 candidacy is
+  per (strategy, region) sleeve — news-reactive@us and
+  news-reactive@uk-eu are tracked independently because they're
+  effectively different exposures (different tiers, different IC,
+  different P&L). Mark and unmark each side separately.
+- `tune` is strategy-wide (affects every region the strategy runs in),
+  so no region.
+- `spawn-variant` clones the parent strategy with both regions
+  inherited from the parent's `runs_in`, so no region.
 
 ```json
 {{
@@ -639,10 +653,10 @@ demote MUST include `region`; tune / spawn-variant do not:
        "deep_analysis_addendum": "Markdown text appended to the parent's deep_analysis.md to express the variant's bias",
        "reason": "1-2 sentences — why this variant has a meaningfully different edge from the parent" }},
     {{ "strategy_id": "<id>", "region": "<region>", "action": "request-tier-2", "reason": "Detailed case for live promotion" }},
-    {{ "strategy_id": "<id>", "action": "mark-tier2-candidate",
+    {{ "strategy_id": "<id>", "region": "<region>", "action": "mark-tier2-candidate",
        "thesis": "One-line prediction (≤300 chars) — what's the edge, what should we see by next week",
        "reason": "Why now (the data point that swung you)" }},
-    {{ "strategy_id": "<id>", "action": "unmark-tier2-candidate",
+    {{ "strategy_id": "<id>", "region": "<region>", "action": "unmark-tier2-candidate",
        "reason": "Why we're retracting (prediction missed, conviction faded, etc)" }}
   ]
 }}
@@ -772,12 +786,10 @@ def _apply_action(
     # tripping the "requires a region" rejection.
     if action == "tune":
         return _do_tune(sid, raw, cfg, reason)
-    if action == "mark-tier2-candidate":
-        return _do_mark_tier2(sid, cfg, reason, raw)
-    if action == "unmark-tier2-candidate":
-        return _do_unmark_tier2(sid, cfg, reason)
 
-    # All other actions need a region
+    # All other actions need a region (including mark/unmark-tier2
+    # as of 2026-05-30 so the leaderboard distinguishes per-region
+    # sleeves of the same strategy).
     if not region:
         return ActionLog(sid, None, action, False, f"Action '{action}' requires a region", {})
 
@@ -790,6 +802,11 @@ def _apply_action(
 
     if action == "keep":
         return ActionLog(sid, region, action, True, reason, {})
+
+    if action == "mark-tier2-candidate":
+        return _do_mark_tier2(sid, region, cfg, entry, reason, raw)
+    if action == "unmark-tier2-candidate":
+        return _do_unmark_tier2(sid, region, cfg, entry, reason)
 
     if action == "promote":
         return _do_promote(sid, region, cfg, entry, metrics.get((sid, region)), configs, reason)
@@ -846,38 +863,42 @@ def _do_tune(sid: str, raw: dict, cfg: dict, reason: str) -> ActionLog:
     return ActionLog(sid, None, "tune", True, reason, {"applied": clamped, "rejected": rejected})
 
 
-def _do_mark_tier2(sid: str, cfg: dict, reason: str, raw: dict) -> ActionLog:
-    """Flag a strategy as a Tier 2 candidate. The flag is the weekly
-    evolution agent's prediction that this strategy is worth elevating;
-    the next run scores realised performance against the analysis the
-    agent recorded here, so we can measure whether the agent's
-    judgement is actually predictive.
+def _do_mark_tier2(sid: str, region: str, cfg: dict, entry: dict, reason: str, raw: dict) -> ActionLog:
+    """Flag a (strategy, region) sleeve as a Tier 2 candidate. Per-
+    region as of 2026-05-30 — the leaderboard distinguishes
+    news-reactive@us from news-reactive@uk-eu because they're
+    effectively different exposures (different tiers, different IC,
+    different P&L).
 
-    `thesis` (≤300 chars) is the agent's one-line justification — used
-    by next week's run as the prediction being graded."""
+    `thesis` (≤300 chars) is the agent's one-line justification —
+    used by next week's run as the prediction being graded.
+
+    Legacy back-compat: if the top-level `tier2_candidate` flag is
+    set, leave it alone (older code paths may still read it). Going
+    forward, both reads and writes prefer the per-region entry."""
     from datetime import date as _date
     thesis = str(raw.get("thesis") or "").strip()[:300]
-    cfg["tier2_candidate"] = True
-    cfg["tier2_marked_at"] = _date.today().isoformat()
+    today_iso = _date.today().isoformat()
+    entry["tier2_candidate"] = True
+    entry["tier2_marked_at"] = today_iso
     if thesis:
-        cfg["tier2_thesis"] = thesis
+        entry["tier2_thesis"] = thesis
     _write_config(sid, cfg)
     return ActionLog(
-        sid, None, "mark-tier2-candidate", True, reason,
-        {"tier2_marked_at": cfg["tier2_marked_at"], "thesis_present": bool(thesis)},
+        sid, region, "mark-tier2-candidate", True, reason,
+        {"tier2_marked_at": today_iso, "thesis_present": bool(thesis)},
     )
 
 
-def _do_unmark_tier2(sid: str, cfg: dict, reason: str) -> ActionLog:
-    """Clear the Tier 2 candidate flag — the prior week's prediction
-    didn't bear out, so the agent retracts it. We keep the
-    `tier2_marked_at` + `tier2_thesis` fields nulled so the dashboard
-    border drops away cleanly on the next render."""
-    cfg["tier2_candidate"] = False
-    cfg["tier2_marked_at"] = None
-    cfg["tier2_thesis"] = ""
+def _do_unmark_tier2(sid: str, region: str, cfg: dict, entry: dict, reason: str) -> ActionLog:
+    """Clear the Tier 2 candidate flag for one (strategy, region)
+    sleeve. The other region's flag is preserved — they're tracked
+    independently from 2026-05-30 onward."""
+    entry["tier2_candidate"] = False
+    entry["tier2_marked_at"] = None
+    entry["tier2_thesis"] = ""
     _write_config(sid, cfg)
-    return ActionLog(sid, None, "unmark-tier2-candidate", True, reason, {})
+    return ActionLog(sid, region, "unmark-tier2-candidate", True, reason, {})
 
 
 def _do_promote(
