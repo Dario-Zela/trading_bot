@@ -20,9 +20,8 @@ runs_in:
 - region: uk-eu
   tier: shadow
   universe: t212_isa_uk_eu
-# Phase 8C — drop candidates with earnings inside the window. Technical
-# signal becomes unreliable across a binary print, so we avoid the day.
 skip_if_earnings_in_days: 1
-# Rule-based — does its own sorting (top previous-day gainers). No
-# pre-filter needed because the strategy's whole job IS the filter.
-prefilter_mode: "off"
+prefilter_mode: 'off'
+stop_loss_pct: -8.0
+take_profit_pct: 5.0
+last_tune_date: '2026-05-30'
