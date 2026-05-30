@@ -32,9 +32,11 @@ runs_in:
   t212_slot: 1
   universe: t212_isa_uk_eu
 skip_if_earnings_in_days: 1
-tier2_candidate: false
-tier2_marked_at: null
-tier2_thesis: ''
+tier2_candidate: true
+tier2_marked_at: '2026-05-21'
+tier2_thesis: "US n=10 hit 60% IC 0.19 (lower 0.12) shows real signal; UK side bleeding\
+  \ but cost-driven not signal-driven. Both regions on Tier 1 \u2014 strong T2 candidate\
+  \ once UK costs are tuned out."
 prefilter_mode: llm
 prefilter_top_n: 100
 cost_gate_multiplier: 1.5

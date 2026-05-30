@@ -18,7 +18,7 @@
     
     <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
   </nav>
-  <main class="paper"><header class="masthead">  <h1>The Bot Tribune<span class="sub">— Evolution log</span></h1></header><div class="masthead-strip">  <span><strong>Evolution</strong></span>  <span>Rendered 2026-05-30 10:06 UTC</span>  <span></span></div><article><h2>Weekly evolution — 2026-05-23</h2>
+  <main class="paper"><header class="masthead">  <h1>The Bot Tribune<span class="sub">— Evolution log</span></h1></header><div class="masthead-strip">  <span><strong>Evolution</strong></span>  <span>Rendered 2026-05-29 19:49 UTC</span>  <span></span></div><article><h2>Weekly evolution — 2026-05-23</h2>
 <ul>
 <li><strong>news-reactive@us</strong> · <code>demote</code> · ✅ applied — System confirms demotion criteria met: IC=0.02 (noise at n=899), hit_rate=31%, total_pnl=-£52; Li et al. 2026 (FINSABER) confirms LLM timing systematically underperforms passives across broad cross-sections — structural failure, not a slump.</li>
 <li>details: <code>{"from_tier": "alpaca-paper", "slot_cleared": true, "previous_slot": 3, "slot_kind": "alpaca"}</code></li>
@@ -44,31 +44,6 @@
 <li><strong>commodity-momentum@uk-eu</strong> · <code>keep</code> · ✅ applied — Shadow, IC=0.387 and decile_spread=3.274 are among the strongest early readings in the slate; 3 trades and 73 predictions are insufficient for a T2 candidate mark but this is the one to watch — target a mark at n≥200 predictions with IC holding above 0.25.</li>
 <li><strong>control-rule-based@us</strong> · <code>keep</code> · ✅ applied — Rule-based control benchmark; catastrophic performance (-£2027, hit_rate=12.9%, drawdown=-24.9%) serves as the negative baseline that validates why LLM-driven signal adds value.</li>
 <li><strong>control-rule-based@uk-eu</strong> · <code>keep</code> · ✅ applied — Rule-based control benchmark; keep as baseline comparison regardless of performance.</li>
-</ul>
-<h2>Weekly evolution — 2026-05-30</h2>
-<ul>
-<li><strong>mean-reverter</strong> · <code>unmark-tier2-candidate</code> · ✅ applied — US IC inverted from +0.19 to −0.281 this window across 294 graded predictions (4 trades); the original thesis — real directional signal masked by UK costs — has not materialised. UK IC is 0.064 / 297 predictions with only 3 trades, far below conviction threshold. Retracting from the leaderboard entirely; no region retains the evidence that justified the mark.</li>
-<li><strong>news-reactive</strong> · <code>mark-tier2-candidate</code> · ✅ applied — After mean-reverter's unmark the leaderboard is empty; news-reactive US holds the field's only conviction-level IC with a 299-prediction sample — clear leader; marking to track toward paper promotion and the live slot.</li>
-<li>details: <code>{"tier2_marked_at": "2026-05-30", "thesis_present": true}</code></li>
-<li><strong>bond-cycle</strong> · <code>tune</code> · ✅ applied — Attribution shows python IC +0.391 vs null/unknown IC −0.269 — a 0.66-point gap across a reasonable sample; currently running null (the inferior config) for the eu_etfs_bond universe; dollar_volume_desc is the correct sort key for a bond ETF strategy biased toward liquid duration names.</li>
-<li>details: <code>{"applied": {"prefilter_mode": "python", "prefilter_sort_key": "dollar_volume_desc"}, "rejected": {}}</code></li>
-<li><strong>momentum-trader</strong> · <code>tune</code> · ✅ applied — US has produced 0 trades across 297 graded predictions — making sort key explicit eliminates any null-default ambiguity in candidate ranking; cost_gate=1.5 guards against a recurrence of the UK side's single −14.1% trade (well past the −3% stop, suggesting a gap-down the stop did not catch).</li>
-<li>details: <code>{"applied": {"prefilter_sort_key": "abs_return_5d", "cost_gate_multiplier": 1.5}, "rejected": {}}</code></li>
-<li><strong>macro-aligned</strong> · <code>tune</code> · ✅ applied — All prefilter modes return negative IC (python −0.120, unknown −0.063, llm −0.243); dollar_volume_desc is documented for ETF universes but macro-aligned runs on individual-stock universes — switching to abs_return_20d surfaces 20-day regime-trending names more consistent with the macro-regime edge and the 2026 cross-asset regime findings (Pagliaro, Electronics 15(6) 1334).</li>
-<li>details: <code>{"applied": {"prefilter_sort_key": "abs_return_20d"}, "rejected": {}}</code></li>
-<li><strong>control-rule-based</strong> · <code>tune</code> · ✅ applied — US shadow shows −32.4% max drawdown and −2770 GBP paper P&amp;L with no stop loss set; adding stop_loss=−8% caps catastrophic single-position losses while TP=5% preserves room for winning trades — minimum intervention to make shadow metrics interpretable and prevent a single position from dominating the drawdown signal.</li>
-<li>details: <code>{"applied": {"stop_loss_pct": -8.0, "take_profit_pct": 5.0}, "rejected": {}}</code></li>
-<li><strong>commodity-momentum@uk-eu</strong> · <code>keep</code> · ✅ applied — Null/unknown prefilter already achieves IC +0.439 vs python +0.187 — switching to python would reduce prediction quality; with 5 trades the sample is too thin to tune further.</li>
-<li><strong>news-reactive@us</strong> · <code>keep</code> · ✅ applied — Newly marked T2 leader; shadow tier continues accumulating evidence — monitor meets_promotion_criteria to trigger alpaca-paper promotion.</li>
-<li><strong>news-reactive@uk-eu</strong> · <code>keep</code> · ✅ applied — Positive P&amp;L (+144 GBP) and 83% hit rate are encouraging but IC 0.047 / 294 predictions is near-random — high hit rate on n=6 trades is likely sampling noise; shadow monitoring continues.</li>
-<li><strong>sector-rotator@uk-eu</strong> · <code>keep</code> · ✅ applied — IC −0.08 is near-zero and cost_gate=3.0 is correctly limiting entries; Man Group 2026 regime model supports Energy/Materials overweight consistent with this strategy's thesis — hold through thin trade history before intervening.</li>
-<li><strong>mean-reverter@us</strong> · <code>keep</code> · ✅ applied — T2 candidate status retracted; 4 trades on alpaca-paper is below the n≥20 demotion threshold — continue accumulating trades and let IC stabilise before a demotion or re-mark decision.</li>
-<li><strong>mean-reverter@uk-eu</strong> · <code>keep</code> · ✅ applied — T2 candidate status retracted; 3 trades on T212-paper is far too few to assess; UK IC 0.064 / 297 predictions needs more trade volume before any action.</li>
-<li><strong>macro-aligned@us</strong> · <code>keep</code> · ✅ applied — Strategy-wide sort-key tune applied; shadow tier — monitor IC response over the next 14-day window before further intervention.</li>
-<li><strong>macro-aligned@uk-eu</strong> · <code>keep</code> · ✅ applied — Strategy-wide sort-key tune applied; IC 0.154 / 8 trades on T212-paper is borderline — watch for improvement before meeting demotion threshold at n≥20.</li>
-<li><strong>control-rule-based@us</strong> · <code>keep</code> · ✅ applied — Strategy-wide stop/TP bounds applied to cap the −32.4% drawdown; shadow tier — not a T2 contender in current form.</li>
-<li><strong>control-rule-based@uk-eu</strong> · <code>keep</code> · ✅ applied — Strategy-wide stop/TP bounds applied; shadow tier — not a T2 contender in current form.</li>
-<li><strong>bond-cycle@uk-eu</strong> · <code>keep</code> · ✅ applied — Strategy-wide prefilter tune applied; IC 0.195 / 3 trades in shadow is worth watching — too thin to promote yet but the python-prefilter fix should improve signal routing materially.</li>
 </ul></article><footer class="colophon">Auto-generated by the weekly-evolution agent.</footer></main>
   
 <script>
