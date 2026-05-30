@@ -487,6 +487,16 @@ You can auto-execute these actions on **Tier 0 (shadow)** and **Tier 1
 - `tune` — edit specific fields (strategy-wide, no region — affects every region the strategy runs in)
 - `promote` — Tier 0 (shadow) → Tier 1 for **one region**. Target tier is region-dependent: US rows promote to `alpaca-paper` (we assign a free numbered Alpaca slot); UK-EU rows promote to `trading212-paper` (single shared slot=1, gated by a £40k capital-budget ceiling across all T212-paper strategies — £10k headroom under the £50k account cap for realised losses).
 - `demote` — Tier 1 → Tier 0 (shadow) for **one region**. Works against BOTH paper-broker tiers: `alpaca-paper` (we cancel open orders + free the Alpaca slot) and `trading212-paper` (we free the T212 slot; any open positions exit naturally on the next exit cron).
+- `deactivate` — **archive a strategy entirely**, strategy-wide. Sets
+  `active: false` so the strategy stops generating predictions and
+  free its slot in the MAX_TOTAL_STRATEGIES cap. Use this when a
+  strategy has been proven structurally broken (signal inversion,
+  permanent dormancy, parent of a working variant that strictly
+  supersedes it). Distinct from `demote`, which keeps the strategy
+  alive on shadow tier — `deactivate` retires it. **Pair this with
+  `spawn-variant`**: when you spawn a fix for a parent's
+  identifiable defect, deactivate the parent unless there's a
+  reason to keep it as a control.
 - `spawn-variant` — clone an existing strategy with prompt + config diffs
 - `mark-tier2-candidate` — entry on the leaderboard for the one live
   slot: "this is a live contender, and I'm putting my reputation on
@@ -652,6 +662,8 @@ Every action EXCEPT `tune` and `spawn-variant` requires a `region`:
        "config_overrides": {{ "max_positions": 3, ... }},
        "deep_analysis_addendum": "Markdown text appended to the parent's deep_analysis.md to express the variant's bias",
        "reason": "1-2 sentences — why this variant has a meaningfully different edge from the parent" }},
+    {{ "strategy_id": "<id>", "action": "deactivate",
+       "reason": "1-2 sentences — why the strategy is irrecoverable (e.g. parent of a variant that supersedes it, permanent signal inversion, structurally dormant for 30+ days)" }},
     {{ "strategy_id": "<id>", "region": "<region>", "action": "request-tier-2", "reason": "Detailed case for live promotion" }},
     {{ "strategy_id": "<id>", "region": "<region>", "action": "mark-tier2-candidate",
        "thesis": "One-line prediction (≤300 chars) — what's the edge, what should we see by next week",
@@ -682,6 +694,18 @@ Action thresholds (use the data, don't be sentimental):
   specific bleeder — cost gate, earnings filter, sizing, or a
   tool the attribution block flags as negative. Target the most
   likely culprit; one tune action can adjust several fields.
+- **Deactivate** when a strategy is structurally irrecoverable:
+  (a) you've just spawned a variant that fixes its specific defect
+  and the parent is now redundant ("the parent of a fix is rarely
+  worth keeping as a control"), OR (b) the strategy has been on
+  shadow tier for ≥4 consecutive weeks with no IC improvement,
+  OR (c) signal has inverted across both regions on samples large
+  enough to rule out noise (n_predictions ≥ 200 per region, IC <
+  -0.20 sustained). Demote first if it's on paper; deactivate
+  retires it entirely. Don't accumulate zombie shadow strategies
+  — they consume MAX_TOTAL_STRATEGIES slots that could fund new
+  variants. **Pair `deactivate` with `spawn-variant`** so the
+  slate cycles instead of just growing.
 - **Spawn-variant** is how the tournament actually surfaces winners
   — use it actively, not as a last resort. Trigger any of:
   (a) the current leader on the tier-2 leaderboard has IC < 0.20
@@ -786,6 +810,8 @@ def _apply_action(
     # tripping the "requires a region" rejection.
     if action == "tune":
         return _do_tune(sid, raw, cfg, reason)
+    if action == "deactivate":
+        return _do_deactivate(sid, cfg, reason)
 
     # All other actions need a region (including mark/unmark-tier2
     # as of 2026-05-30 so the leaderboard distinguishes per-region
@@ -861,6 +887,30 @@ def _do_tune(sid: str, raw: dict, cfg: dict, reason: str) -> ActionLog:
     cfg["last_tune_date"] = _date.today().isoformat()
     _write_config(sid, cfg)
     return ActionLog(sid, None, "tune", True, reason, {"applied": clamped, "rejected": rejected})
+
+
+def _do_deactivate(sid: str, cfg: dict, reason: str) -> ActionLog:
+    """Archive a strategy entirely — sets `active: false` so it stops
+    generating predictions and frees its slot in the
+    MAX_TOTAL_STRATEGIES cap. Distinct from `demote`: demote keeps the
+    strategy running on shadow tier, deactivate retires it. Paired
+    with `spawn-variant` when the parent has been proven structurally
+    broken and the variant strictly supersedes it.
+
+    No-op if the strategy was already inactive — the action log
+    records `applied=False` with the reason `already inactive` so
+    next week's run can see the agent already considered this.
+    """
+    from datetime import date as _date
+    if not cfg.get("active", True):
+        return ActionLog(sid, None, "deactivate", False, "Strategy already inactive", {})
+    cfg["active"] = False
+    cfg["deactivated_at"] = _date.today().isoformat()
+    _write_config(sid, cfg)
+    return ActionLog(
+        sid, None, "deactivate", True, reason,
+        {"deactivated_at": cfg["deactivated_at"]},
+    )
 
 
 def _do_mark_tier2(sid: str, region: str, cfg: dict, entry: dict, reason: str, raw: dict) -> ActionLog:
