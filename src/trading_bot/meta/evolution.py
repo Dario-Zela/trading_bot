@@ -464,7 +464,11 @@ Concretely, this changes how you treat tier-2 candidacy:
 
 Tuning, spawning, and demoting all serve this: you're shaping the
 field so the best candidate emerges and proves itself, and culling
-the ones that won't win the slot.
+the ones that won't win the slot. **A tournament needs contenders —
+if no current strategy is separating from the pack, the answer is
+to introduce new variants (spawn-variant), not to wait passively
+for the existing slate to improve.** A stagnant slate is a losing
+slate.
 
 ## Your authority
 
@@ -635,19 +639,35 @@ Action thresholds (use the data, don't be sentimental):
 - **Demote** when a strategy on `alpaca-paper` OR `trading212-paper`
   has *any* of: IC noise-floor verdict = 'noise' AND n ≥ 30, OR
   trailing 14d P&L is negative for the second consecutive week, OR
-  trailing hit-rate is under 35% with n ≥ 20. Don't sit on losers
-  waiting for them to turn — the slot is more valuable than the
-  sunk-cost prompt iteration. Same threshold applies whether the
-  strategy is on Alpaca (US) or T212 (UK-EU); the action handler
-  picks the right slot to free.
+  trailing hit-rate is under 35% with n ≥ 20, OR the strategy has
+  been on its current tier ≥30 days and produced < 10 trades total
+  (a strategy that doesn't engage the market is not a contender —
+  either the prefilter is too tight or the universe is wrong, and
+  either way the slot is better used elsewhere). Don't sit on
+  losers OR on dormant strategies waiting for them to turn — the
+  slot is more valuable than the sunk-cost prompt iteration. Same
+  threshold applies whether the strategy is on Alpaca (US) or T212
+  (UK-EU); the action handler picks the right slot to free.
 - **Tune** when the live IC / hit-rate / P&L signal points at a
   specific bleeder — cost gate, earnings filter, sizing, or a
   tool the attribution block flags as negative. Target the most
   likely culprit; one tune action can adjust several fields.
-- **Spawn-variant** is rare — only when a paper from the external
-  research block lines up with a gap in the slate, or when one
-  region's metrics are wildly better than another's (suggests a
-  prompt that needs regional specialisation).
+- **Spawn-variant** is how the tournament actually surfaces winners
+  — use it actively, not as a last resort. Trigger any of:
+  (a) the current leader on the tier-2 leaderboard has IC < 0.15
+  OR hit-rate < 55% — meaning even the *best* strategy isn't
+  separating, so the slate needs fresh blood; (b) a paper from the
+  external research block lines up with a gap in the slate;
+  (c) one region's metrics are wildly better than the other's
+  (suggests a prompt that needs regional specialisation);
+  (d) a strategy you're demoting had a specific identifiable bleeder
+  (e.g. universe too narrow, tool inverting signal) — spawn a
+  variant that fixes it. **If you've gone 2+ consecutive weeks with
+  no spawn AND no clear tournament leader, that's a signal that the
+  slate is too narrow — propose at least one variant grounded in
+  the external research brief.** Anchor every variant's edge to a
+  specific cited finding or attribution-block insight; don't spawn
+  blind.
 - **mark-tier2-candidate** for the strongest contender(s) for the one
   live slot — strategies that cleared the IC noise floor with
   conviction AND stack up well against the others on the leaderboard.
@@ -656,11 +676,15 @@ Action thresholds (use the data, don't be sentimental):
   against the runner-up.
 
 A strategy performing well in one region but poorly in another is
-normal — treat those decisions independently. Don't accumulate
-no-edge strategies for breadth; a smaller slate of working
-strategies beats a wide slate of mostly-noise ones. Remember the
-tournament: the goal is to converge on the single best strategy for
-the one live slot, not to keep a wide field of perpetual contenders.
+normal — treat those decisions independently. The tournament has
+two complementary dynamics: **cull** strategies that have proven
+they won't win (don't accumulate no-edge strategies for breadth or
+sentimentality), AND **introduce** fresh variants when the existing
+field isn't producing a clear winner. The goal is to converge on
+the single best strategy for the one live slot — but you only
+converge if you're actually exploring. A slate that hasn't changed
+in 2-3 weeks while no contender is clearly winning is a slate
+that's failing the tournament; act on it.
 """
 
 
