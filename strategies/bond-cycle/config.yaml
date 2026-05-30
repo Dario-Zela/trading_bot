@@ -1,45 +1,41 @@
 id: bond-cycle
-display_name: "Bond cycle"
-description: |
-  LLM-driven. Trades bond ETFs based on yield-curve shape, central-bank
+display_name: Bond cycle
+description: 'LLM-driven. Trades bond ETFs based on yield-curve shape, central-bank
+
   stance, and credit spreads. US: TLT/IEF/SHY/HYG/LQD. UK/EU: Gilts +
+
   Bunds + EUR credit ETFs. Same strategy bias, different bond universe
+
   per region.
 
+  '
 implementation: llm
 active: true
-
 capital_gbp: 10000
 max_positions: 3
 max_position_pct: 50
 min_position_gbp: 100
-
 use_stops: true
 use_take_profits: true
 stop_loss_pct: -2.5
 take_profit_pct: 3.0
-last_tune_date: '2026-05-27'
-
+last_tune_date: '2026-05-30'
 tools:
-  - get_universe
-  - get_history
-  - get_yield_curve
-  - get_credit_spreads
-  - get_macro_view
-  - get_technicals
-  - get_recent_news
-
+- get_universe
+- get_history
+- get_yield_curve
+- get_credit_spreads
+- get_macro_view
+- get_technicals
+- get_recent_news
 model_assignment:
   wide_scoring: haiku
   deep_analysis: sonnet
   final_select: sonnet
-
 runs_in:
-  # US sleeve deprecated: us_etfs_bond (TLT, IEF, ...) is US-listed and
-  # absent from T212, so it could never go live on the ISA. The UK-EU
-  # sleeve's eu_etfs_bond universe now includes GBP US-Treasury + credit
-  # lines (LSE-listed, ISA-eligible, FX-free), so US duration/credit
-  # exposure is still reachable here.
-  - region: uk-eu
-    tier: shadow
-    universe: eu_etfs_bond
+- region: uk-eu
+  tier: shadow
+  universe: eu_etfs_bond
+prefilter_mode: python
+prefilter_sort_key: dollar_volume_desc
+prefilter_top_n: 100

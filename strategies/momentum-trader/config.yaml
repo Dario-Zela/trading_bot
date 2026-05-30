@@ -26,12 +26,12 @@ model_assignment:
   final_select: sonnet
 runs_in:
 - region: us
-  tier: alpaca-paper
-  alpaca_slot: 1
+  tier: shadow
+  alpaca_slot: null
   universe: t212_isa_us
 - region: uk-eu
-  tier: trading212-paper
-  t212_slot: 1
+  tier: shadow
+  t212_slot: null
   universe: t212_isa_uk_eu
 skip_if_earnings_in_days: 1
 prefilter_mode: python

@@ -1,0 +1,37 @@
+id: sector-rotator-factor-momentum
+display_name: Sector rotator (variant)
+description: 'Auto-spawned variant of sector-rotator on 2026-05-30 by the weekly evolution
+  agent. Reason: Breaks the signal-source axis: scores sector ETFs by momentum-of-momentum
+  (Tai et al. 2026, SSRN 6224058) rather than raw relative strength, with residual-reversal
+  smoothing (Gao et al. 2026, SSRN 6371558). Parent''s IC -0.08 is consistent with
+  buying crowded late-cycle sectors that meta-momentum correctly de-ranks.'
+implementation: llm
+active: true
+capital_gbp: 10000.0
+max_positions: 4
+max_position_pct: 40.0
+min_position_gbp: 100
+use_stops: true
+use_take_profits: true
+stop_loss_pct: -4.0
+take_profit_pct: 3.0
+cost_gate_multiplier: 3.0
+last_tune_date: '2026-05-28'
+tools:
+- get_universe
+- get_history
+- get_technicals
+- get_sector_strength
+- get_macro_view
+model_assignment:
+  wide_scoring: haiku
+  deep_analysis: sonnet
+  final_select: sonnet
+runs_in:
+- region: uk-eu
+  tier: shadow
+  t212_slot: 1
+  universe: eu_etfs_sector
+  alpaca_slot: null
+prefilter_mode: llm
+prefilter_top_n: 100

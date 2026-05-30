@@ -25,3 +25,31 @@
 - **commodity-momentum@uk-eu** · `keep` · ✅ applied — Shadow, IC=0.387 and decile_spread=3.274 are among the strongest early readings in the slate; 3 trades and 73 predictions are insufficient for a T2 candidate mark but this is the one to watch — target a mark at n≥200 predictions with IC holding above 0.25.
 - **control-rule-based@us** · `keep` · ✅ applied — Rule-based control benchmark; catastrophic performance (-£2027, hit_rate=12.9%, drawdown=-24.9%) serves as the negative baseline that validates why LLM-driven signal adds value.
 - **control-rule-based@uk-eu** · `keep` · ✅ applied — Rule-based control benchmark; keep as baseline comparison regardless of performance.
+
+## Weekly evolution — 2026-05-30
+
+- **momentum-trader@us** · `demote` · ✅ applied — 0 trades across 297 graded predictions — dormant execution threshold triggered (n_predictions ≥ 150, n_trades ≤ 5); missing prefilter_sort_key means wrong stocks surface and the entry pipeline never fires. Freeing Alpaca slot 1.
+  - details: `{"from_tier": "alpaca-paper", "slot_cleared": true, "previous_slot": 1, "slot_kind": "alpaca"}`
+- **momentum-trader@uk-eu** · `demote` · ✅ applied — 1 trade across 296 predictions with 0% hit rate and -162.7 GBP P&L — dormant execution, meets_demotion_criteria=true. Freeing T212 slot.
+  - details: `{"from_tier": "trading212-paper", "slot_cleared": false, "previous_slot": 1, "slot_kind": "t212"}`
+- **mean-reverter** · `unmark-tier2-candidate` · ✅ applied — T2 thesis (IC 0.19, 60% hit rate) has completely inverted: US arm IC collapsed to -0.281 at n=294 — actively anti-predictive (>4 SE below zero), not noise. The empirical basis for candidacy is gone.
+- **mean-reverter@us** · `demote` · ✅ applied — IC -0.281 at n=294 is strongly negative, meets_demotion_criteria=true. T2 thesis has failed; freeing Alpaca slot 2.
+  - details: `{"from_tier": "alpaca-paper", "slot_cleared": true, "previous_slot": 2, "slot_kind": "alpaca"}`
+- **mean-reverter@uk-eu** · `demote` · ✅ applied — T2 basis removed with US arm collapse; UK-EU IC 0.064 is noise at n=297; meets_demotion_criteria=true. Freeing T212 slot.
+  - details: `{"from_tier": "trading212-paper", "slot_cleared": false, "previous_slot": 1, "slot_kind": "t212"}`
+- **bond-cycle** · `tune` · ✅ applied — Attribution shows prefilter_mode=python at IC +0.391 vs current null/unknown at IC -0.269 — a 0.66 IC point swing, the single most actionable lever in this week's data. dollar_volume_desc is correct for eu_etfs_bond (liquid bond ETFs, not microcap discovery).
+  - details: `{"applied": {"prefilter_mode": "python", "prefilter_sort_key": "dollar_volume_desc", "prefilter_top_n": 100}, "rejected": {}}`
+- **news-reactive** · `tune` · ✅ applied — IC 0.303 confirms genuine signal but avg_pnl_pct is only -0.041% across 10 trades — cost bleed is eroding a strong prediction edge. A 2× cost gate filters marginal entries and should convert IC quality to net P&L without disrupting the underlying signal.
+  - details: `{"applied": {"cost_gate_multiplier": 2.0}, "rejected": {}}`
+- **news-reactive** · `mark-tier2-candidate` · ✅ applied — IC 0.303 at n=299 is the only strategy meeting shadow T2 eligibility (IC ≥ 0.25, n ≥ 200). All prior T2 candidates unmarked this week — the leaderboard needs a sole leader and this is the only evidence-grade signal in the slate.
+  - details: `{"tier2_marked_at": "2026-05-30", "thesis_present": true}`
+- **momentum-trader** · `spawn-variant` · ✅ applied — Parent was dormant (0 trades / 297 predictions) due to missing prefilter_sort_key; this variant fixes the entry pipeline with abs_return_5d and adds a VIX regime gate (Mozes 2026) that breaks the trigger axis — regime-conditional vs always-on capital deployment.
+  - details: `{"variant_id": "momentum-trader-vix-gated", "addendum_applied": true}`
+- **sector-rotator** · `spawn-variant` · ✅ applied — Breaks the signal-source axis: scores sector ETFs by momentum-of-momentum (Tai et al. 2026, SSRN 6224058) rather than raw relative strength, with residual-reversal smoothing (Gao et al. 2026, SSRN 6371558). Parent's IC -0.08 is consistent with buying crowded late-cycle sectors that meta-momentum correctly de-ranks.
+  - details: `{"variant_id": "sector-rotator-factor-momentum", "addendum_applied": true}`
+- **commodity-momentum@uk-eu** · `keep` · ✅ applied — IC 0.174 building at n=110; prefilter attribution samples are too small (≤6 days each) to act on. No lever identified yet.
+- **macro-aligned@us** · `keep` · ✅ applied — IC 0.213 approaching but below 0.25; all prefilter modes show negative IC in attribution (likely pooling artefact) — no clear tune lever identified.
+- **macro-aligned@uk-eu** · `keep` · ✅ applied — meets_demotion_criteria=false; IC 0.154 borderline, P&L -149.72 GBP but no confirmed second-consecutive-week trigger. Occupying T212 slot on a thin margin — on notice for next week.
+- **control-rule-based@us** · `keep` · ✅ applied — Control baseline; shadow tier, no slot to free. Held as benchmark despite 10% hit rate.
+- **control-rule-based@uk-eu** · `keep` · ✅ applied — Control baseline; shadow tier, no slot to free.
+- **sector-rotator@uk-eu** · `keep` · ✅ applied — n_predictions=88 < 150 dormant threshold; 1 trade (100% hit) is not actionable. Attribution confirms LLM prefilter is the right mode (IC +0.114 vs +0.068); current config is correct. Spawning factor-momentum variant in parallel.
