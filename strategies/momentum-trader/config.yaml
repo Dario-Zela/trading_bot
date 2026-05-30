@@ -5,7 +5,8 @@ description: "LLM-driven. Buys recent winners that are still trending. Region-ag
   UK + EU blue chips in the UK/EU pipeline. The LLM is told the universe is\nwhatever's\
   \ been pre-filtered for it and adapts to the regime.\n"
 implementation: llm
-active: true
+active: false
+deactivated_at: '2026-05-30'
 capital_gbp: 10000
 max_positions: 4
 max_position_pct: 30

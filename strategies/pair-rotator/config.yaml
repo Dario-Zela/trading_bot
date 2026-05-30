@@ -1,0 +1,50 @@
+id: pair-rotator
+display_name: Sector pair rotator
+description: |
+  Long-short sector pair strategy on GBP-denominated LSE-listed ETFs.
+  Picks one long sector ETF (the strongest cross-sectional momentum) +
+  one inverse / hedge ETF position to neutralise market beta. The
+  trade extracts the cross-sectional sector spread rather than market
+  direction, which means it should produce return that's structurally
+  uncorrelated with the rest of the slate (all of which are
+  long-only and fully market-exposed when deployed).
+
+  Axis broken: EXPOSURE. Everything else in the slate runs long-only
+  with +1.0 market beta when fully invested; this strategy targets
+  net market beta near zero. Even if its standalone Sharpe is modest,
+  its low correlation with the rest of the slate is what makes it
+  valuable to the tournament — distinguishability on the leaderboard.
+
+  Universe is eu_etfs_sector + selected inverse / hedge ETFs from
+  eu_etfs_bond and eu_etfs_commodity (gold, gilts) so the LLM can
+  pick a true hedge when no inverse-sector ETF matches the laggard
+  sector cleanly.
+implementation: llm
+active: true
+capital_gbp: 8000
+max_positions: 4
+max_position_pct: 30
+min_position_gbp: 100
+use_stops: true
+use_take_profits: true
+stop_loss_pct: -4.0
+take_profit_pct: 5.0
+last_tune_date: '2026-05-30'
+tools:
+  - get_universe
+  - get_history
+  - get_technicals
+  - get_sector_strength
+  - get_macro_view
+model_assignment:
+  wide_scoring: haiku
+  deep_analysis: sonnet
+  final_select: sonnet
+runs_in:
+  - region: uk-eu
+    tier: shadow
+    t212_slot: null
+    universe: eu_etfs_sector
+prefilter_mode: llm
+prefilter_top_n: 50
+cost_gate_multiplier: 2.5

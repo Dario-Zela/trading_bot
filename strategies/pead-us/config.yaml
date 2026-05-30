@@ -1,0 +1,45 @@
+id: pead-us
+display_name: Post-earnings drift (US)
+description: |
+  Calendar-triggered, axis-breaking variant. Trades stocks that have
+  just reported earnings, going long on confirmed beat-and-raise prints
+  and avoiding the rest. Post-earnings announcement drift (Bernard &
+  Thomas 1989; replicated for ~40 years) is the most-replicated cross-
+  sectional anomaly in equity markets: beats drift up for ~60 days,
+  misses drift down. This sleeve harvests the long side.
+
+  Distinct from the rest of the slate in TRIGGER (earnings calendar,
+  not periodic rebalance) and TIME-SLICE (entries cluster around
+  earnings windows, dormant between). Hold target 15-25 trading days
+  to capture the drift without overlapping the next quarter's
+  announcement.
+implementation: llm
+active: true
+capital_gbp: 10000
+max_positions: 5
+max_position_pct: 25
+min_position_gbp: 50
+use_stops: true
+use_take_profits: true
+stop_loss_pct: -5.0
+take_profit_pct: 8.0
+last_tune_date: '2026-05-30'
+tools:
+  - get_universe
+  - get_history
+  - get_recent_news
+  - get_earnings_info
+  - get_filing_summary
+  - get_technicals
+model_assignment:
+  wide_scoring: haiku
+  deep_analysis: sonnet
+  final_select: sonnet
+runs_in:
+  - region: us
+    tier: shadow
+    alpaca_slot: null
+    universe: t212_isa_us
+prefilter_mode: llm
+prefilter_top_n: 80
+cost_gate_multiplier: 2.0
