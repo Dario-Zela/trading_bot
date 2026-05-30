@@ -51,7 +51,13 @@ log = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 
 MAX_ALPACA_SLOTS = 3  # how many paper accounts we've provisioned
-MAX_TOTAL_STRATEGIES = 12  # ceiling on spawned variants
+MAX_TOTAL_STRATEGIES = 18  # ceiling on spawned variants. Bumped 12→18:
+                            # the 2026-05-30 weekly run explicitly flagged
+                            # the previous cap as blocking 2 queued
+                            # research-anchored spawns (quality-tilted
+                            # sector-rotator, reversal-hedged momentum).
+                            # A tournament needs contenders; the cap was
+                            # actively suppressing exploration.
 PROMOTION_MIN_TRADES = 10
 PROMOTION_MIN_HIT_RATE = 0.50
 # Phase 10C — tunable so we can promote net-positive-but-marginal
@@ -489,6 +495,15 @@ You can auto-execute these actions on **Tier 0 (shadow)** and **Tier 1
   against realised performance. Keep the field small (≤3) and
   ranked — this is the shortlist for a single slot, not a list of
   everything mildly positive.
+
+  **Shadow-tier strategies ARE eligible for tier-2 candidacy** when
+  they show evidence-grade prediction quality (IC ≥ 0.25 sustained
+  over n_predictions ≥ 200), even if no paper-tier slot is currently
+  available to promote them into. The leaderboard reflects total
+  signal strength across the slate — not just "what could go live
+  tomorrow." A strong shadow strategy stuck behind a full paper
+  bench is still a contender; surfacing it as T2 leader is what
+  motivates the demote of whatever's blocking the path.
 - `unmark-tier2-candidate` — removes a contender from the leaderboard.
   Use it not only when a candidate turned negative, but when it's been
   OUT-COMPETED by a stronger one — the field should narrow over time
@@ -639,11 +654,12 @@ Action thresholds (use the data, don't be sentimental):
 - **Demote** when a strategy on `alpaca-paper` OR `trading212-paper`
   has *any* of: IC noise-floor verdict = 'noise' AND n ≥ 30, OR
   trailing 14d P&L is negative for the second consecutive week, OR
-  trailing hit-rate is under 35% with n ≥ 20, OR the strategy has
-  been on its current tier ≥30 days and produced < 10 trades total
-  (a strategy that doesn't engage the market is not a contender —
-  either the prefilter is too tight or the universe is wrong, and
-  either way the slot is better used elsewhere). Don't sit on
+  trailing hit-rate is under 35% with n ≥ 20, OR
+  `n_predictions_graded ≥ 150 AND n_trades ≤ 5` — the dormant-
+  execution case where the strategy IS predicting daily but the
+  prefilter / entry rules are too tight to actually engage the
+  market. A slot held without being earned blocks promotions of
+  shadow strategies that would actually trade. Don't sit on
   losers OR on dormant strategies waiting for them to turn — the
   slot is more valuable than the sunk-cost prompt iteration. Same
   threshold applies whether the strategy is on Alpaca (US) or T212
@@ -1160,6 +1176,16 @@ def _meets_demotion(m: StrategyMetrics | None, entry: dict) -> bool:
     if m.max_drawdown_pct <= DEMOTION_MAX_DRAWDOWN_PCT:
         return True
     if m.n_trades >= PROMOTION_MIN_TRADES and m.hit_rate < DEMOTION_MIN_HIT_RATE:
+        return True
+    # Dormant-execution clause: the strategy IS predicting daily
+    # (n_predictions_graded ≥ 150 over the rolling window is ~15
+    # active days) but the prefilter / entry rules are too tight
+    # to actually engage the market (n_trades ≤ 5). That's a slot
+    # held without being earned — free it for a strategy that does
+    # trade. Surfaces the W22 case where mean-reverter@us produced
+    # 294 graded predictions but only 4 trades over 14 days, blocking
+    # the Alpaca slot that sector-rotator@us needs to promote into.
+    if m.n_predictions_graded >= 150 and m.n_trades <= 5:
         return True
     return False
 
