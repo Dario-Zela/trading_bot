@@ -1008,10 +1008,27 @@ def _render_body(edition: EvolutionEdition, *, depth: int = 0) -> str:
     # Tournament status — single-glance view of where the leaderboard sits.
     # Surfaces the current T2 leader (if any), how many spawn-variants
     # the agent proposed this week, and whether the slate moved at all.
-    t2_leaders = sorted({
+    #
+    # The snapshot is taken BEFORE this week's actions apply, so its
+    # tier2_candidate flags are stale. Walk the applied action log to
+    # get the post-action leaderboard: start from the snapshot set,
+    # add mark-tier2-candidate, remove unmark-tier2-candidate.
+    t2_set = {
         r.get("id") for r in edition.snapshot_rows
         if r.get("tier2_candidate")
-    } - {None, ""})
+    } - {None, ""}
+    for a in edition.action_log:
+        if not a.get("applied"):
+            continue
+        action = a.get("action")
+        sid = a.get("strategy_id")
+        if not sid:
+            continue
+        if action == "mark-tier2-candidate":
+            t2_set.add(sid)
+        elif action == "unmark-tier2-candidate":
+            t2_set.discard(sid)
+    t2_leaders = sorted(t2_set)
     spawns_this_week = [
         a for a in edition.action_log
         if a.get("applied") and a.get("action") == "spawn-variant"
