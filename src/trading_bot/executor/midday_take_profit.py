@@ -540,6 +540,13 @@ def _current_prices_yf(tickers: list[str]) -> dict[str, float]:
     no DataFrame parsing); for tickers it doesn't carry we fall back
     to the last close from a 1-day history fetch. Anything still
     missing is omitted — the caller treats absence as "skip".
+
+    Applies the same GBp→GBP conversion `tools/history.py` uses for
+    LSE pence-quoted tickers. Without this, fast_info returns raw
+    pence (e.g. RAYS.L last_price = 2866.5p) while the ledger's
+    entry_price was already divided by 100 (e.g. 28.62 GBP), and
+    the comparison reports a spurious ~100× gain — the canonical
+    GBX/GBP units bug.
     """
     if not tickers:
         return {}
@@ -548,6 +555,7 @@ def _current_prices_yf(tickers: list[str]) -> dict[str, float]:
     except Exception as e:
         log.warning("midday-tp: yfinance unavailable: %s", e)
         return {}
+    from trading_bot.tools.history import _lse_quote_is_pence
     out: dict[str, float] = {}
     for t in tickers:
         try:
@@ -559,7 +567,10 @@ def _current_prices_yf(tickers: list[str]) -> dict[str, float]:
                 if hist is not None and not hist.empty:
                     last = float(hist["Close"].iloc[-1])
             if last is not None and last > 0:
-                out[t] = float(last)
+                price = float(last)
+                if t.upper().endswith(".L") and _lse_quote_is_pence(t):
+                    price /= 100.0
+                out[t] = price
         except Exception as e:
             log.debug("midday-tp: price lookup failed for %s: %s", t, e)
     return out
