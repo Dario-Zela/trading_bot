@@ -117,8 +117,15 @@ def _check_workflow_failures(repo: str) -> list[HealthFinding]:
     runs = body.get("workflow_runs") or []
     bad = [run for run in runs if run.get("conclusion") in ("failure", "cancelled", "timed_out")]
     # Don't flag pages-build-deployment churn or our own midday-trail
-    # cancellation patterns
-    bad = [run for run in bad if "pages-build" not in (run.get("name") or "")]
+    # cancellation patterns. Also exclude the health-check workflow
+    # itself: it exits 1 when it finds errors, which then gets counted
+    # as a failure by the next run — a self-perpetuating loop where
+    # one bad day pins the bot as "unhealthy" indefinitely.
+    bad = [
+        run for run in bad
+        if "pages-build" not in (run.get("name") or "")
+        and (run.get("name") or "").strip().lower() != "health check"
+    ]
     if bad:
         names = ", ".join(sorted({run.get("name", "?") for run in bad}))
         out.append(HealthFinding(
