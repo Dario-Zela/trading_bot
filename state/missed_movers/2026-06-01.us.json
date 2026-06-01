@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-01",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 DELL +33%, NTAP +22%, NOW +14%, IBM +13%, HPE +13%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (CLX -6%, RMD -6%, INTC -5%, TPR -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: DELL (+32.76%) \u2014 Q1 FY27 earnings beat: revenue $43.8B (+88% YoY), AI server revenue $16.1B (+757%), $24.4B new AI orders booked, FY27 guidance raised to $167B midpoint; Susquehanna upgraded to Positive, PT $138\u2192$700. Why we passed: Outside any active strategy's universe \u2014 DELL is a mega-cap AI infrastructure hardware name with no current coverage. The +32% move gapped in on the first trading day after earnings released May 28\u201329 after hours, requiring pre-market or open-print positioning to achieve a meaningful fill.",
+  "top_movers": [
+    {
+      "ticker": "DELL",
+      "move_pct": 32.758,
+      "close": 420.91,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q1 FY27 earnings beat: revenue $43.8B (+88% YoY), AI server revenue $16.1B (+757%), $24.4B new AI orders booked, FY27 guidance raised to $167B midpoint; Susquehanna upgraded to Positive, PT $138\u2192$700.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DELL is a mega-cap AI infrastructure hardware name with no current coverage. The +32% move gapped in on the first trading day after earnings released May 28\u201329 after hours, requiring pre-market or open-print positioning to achieve a meaningful fill.",
+      "suggestion": "Introduce an earnings-watchlist overlay for mega-cap AI hardware names (DELL, HPE, SMCI, etc.): on a post-results gap \u226520% at open, take a scaled long if first-15-min volume \u22652\u00d7 20-day average, with a hard 5% stop and same-day exit rule.",
+      "failed": false
+    },
+    {
+      "ticker": "NTAP",
+      "move_pct": 22.395,
+      "close": 174.29,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "NetApp Q4 FY2026 beat (EPS $2.43 vs $2.27 est., rev $1.95B vs $1.87B); record FY26 revenue $6.93B, bullish FY27 guidance, and analyst PT raises to $199\u2013$200 (Argus, Barclays) drove continued post-earnings re-rating.",
+      "miss_reason": "Outside any active strategy's universe (~$38B large-cap infrastructure/storage). The primary gap occurred at the May 30 open (earnings reported May 29 after close); by June 1 the initial gap-reaction window had closed and RSI was severely extended after a multi-session surge.",
+      "suggestion": "Add a post-earnings drift sleeve: re-enter names with Day-1 earnings gap \u226515% if Day-2/3 volume confirms at \u22651.2\u00d7 20-day average, capping position at 0.5\u00d7 normal size; this catches multi-day re-rating without requiring pre-earnings positioning.",
+      "failed": false
+    },
+    {
+      "ticker": "NOW",
+      "move_pct": 14.384,
+      "close": 124.37,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "ServiceNow's Knowledge 2026 conference unveiled new gen-AI tools (Otto assistant) and partnerships; a $4.2B buyback was approved; BofA reinstated with Buy; and Snowflake's blowout Q1 sparked a broad enterprise-AI sector rally.",
+      "miss_reason": "Outside any active strategy's universe. NOW is a large-cap enterprise SaaS name excluded by the bot's probable small/mid-cap universe cap. The move was also multi-driver (conference catalyst + buyback + sector contagion from Snowflake), requiring pre-event positioning rather than reactive signal.",
+      "suggestion": "Add a large-cap news-reactive tier gated on \u2265+5% pre-market gap with \u22651.5\u00d7 avg volume; seed it with enterprise-software names around their annual user-conference dates (Knowledge, Dreamforce) so multi-driver gap-ups like this are eligible for a same-day momentum entry.",
+      "failed": false
+    },
+    {
+      "ticker": "IBM",
+      "move_pct": 12.709,
+      "close": 297.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Barclays initiated IBM at Overweight ($350 PT) and a resurfaced Trump video praising CEO Arvind Krishna went viral simultaneously, triggering a premarket spike of up to 15% on top of IBM's +30% May rally.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IBM is a Dow-30 mega-cap (~$270B) beyond typical cap filters. The dual catalyst (analyst initiation + viral social-media clip) was a pure intraday event with no prior-session momentum signal to pre-position from.",
+      "suggestion": "Add an analyst-initiation scanner: flag Dow-30/S&P-100 names with fresh Overweight initiations at open; enter on confirmed \u22651.5\u00d7 ADV volume in the first 30 min with gap \u22655%, capping size at 0.5\u00d7 normal given social-media noise risk.",
+      "failed": false
+    },
+    {
+      "ticker": "HPE",
+      "move_pct": 12.641,
+      "close": 43.04,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Dell's May-29 AI-server blowout (AI revenue +757% YoY, orders $24B) sparked sector sympathy; HPE's own $5B AI backlog and Juniper networking synergies fueled a pre-earnings short squeeze ahead of its after-close Q2 report.",
+      "miss_reason": "Outside any active strategy's universe \u2014 HPE is a large-cap S&P 500 enterprise-tech name likely beyond the bot's sector or cap filters. The move was also a pre-earnings gap triggered by a peer's overnight result, requiring pre-open positioning before any intraday signal could form.",
+      "suggestion": "Add a sector-sympathy gate: when an AI-infrastructure peer (Dell, Cisco, Arista) beats quarterly revenue by >10%, flag sector-adjacent large-caps with AI-server exposure for next-session momentum entry in the first 30 minutes of open.",
+      "failed": false
+    },
+    {
+      "ticker": "WDAY",
+      "move_pct": 12.445,
+      "close": 146.19,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q1 FY2027 beat-and-raise: EPS $2.66 vs $2.52 est, revenue +13.5% YoY, AI product ACV +200% YoY, non-GAAP operating margin guidance raised to ~30.5%, plus $1B buyback reaffirmed.",
+      "miss_reason": "Outside any active strategy's universe \u2014 WDAY is a $30B+ large-cap enterprise-software name unlikely to appear on momentum or mean-reversion screens. The +12% move was a post-earnings gap-up priced in at Friday's close; no intraday signal could have anticipated it without pre-earnings positioning.",
+      "suggestion": "Add an earnings-gap capture rule: for large-cap software names (mkt cap >$10B) reporting a beat-and-raise with EPS surprise \u22653%, enter long on Monday open if close-to-close gap is +8\u201320% and volume is \u22652\u00d7 20-day avg, with a tight 4% stop to limit chasing risk.",
+      "failed": false
+    },
+    {
+      "ticker": "CLX",
+      "move_pct": -6.424,
+      "close": 90.02,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "CEO Linda Rendle announced May 28 she is stepping down for health reasons, triggering a ~6.4% sell-off on June 1; move compounded by a pre-existing lowered FY2026 outlook (\u22126% net sales, \u221224\u201327% EPS) and analyst price-target cuts from Goldman, Morgan Stanley, and JPMorgan.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CLX is a large-cap (~$11B) consumer staples name not covered by momentum or mean-reversion screens. The catalytic 8-K was filed after the May 28 close, so the gap opened before any intraday signal could fire; catching it required pre-market event scanning, not a post-open techni",
+      "suggestion": "Add a pre-market 8-K event scanner that flags S&P 500 names with CEO-departure or material-guidance-cut filings overnight and places a momentum-short entry at open if the implied gap exceeds \u22124%, capped at 0.5\u00d7 normal position size for defensive-sector names.",
+      "failed": false
+    },
+    {
+      "ticker": "RMD",
+      "move_pct": -6.317,
+      "close": 190.57,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Noctrix Health ($340M) acquisition closed ~June 1, adding M&A dilution overhang on top of post-Q3 revenue-miss selling (Q3 rev ~$1.43B, below est.) and CFO retirement; stock breached 52-week low, triggering technical stop-outs.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RMD is a large-cap (~$28B) medical-device name not covered by current sector filters. The -6% move was a slow-burn continuation from a late-April earnings event, not a sharp same-session catalyst; news-reactive and momentum strategies targeting intraday gap signals would find no",
+      "suggestion": "Add a post-earnings-drift screen: flag large-cap healthcare names with revenue miss + net-insider-selling + price within 5% of 52-week low within 30 days of earnings, and route them into the short-side watchlist if short capability exists \u2014 else mark as 'avoid-long' to prevent counter-trend longs.",
+      "failed": false
+    },
+    {
+      "ticker": "INTC",
+      "move_pct": -5.137,
+      "close": 114.68,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Nvidia unveiled RTX Spark at Computex \u2014 an Arm/Blackwell SoC for Windows laptops co-developed with Microsoft \u2014 directly threatening Intel's PC CPU core business and sending INTC down ~6% at open.",
+      "miss_reason": "Outside any active strategy's universe. The -5.14% drop was a sudden competitive-threat catalyst (Nvidia Computex reveal) requiring a pre-market short entry; the bot's likely long-only constraints make this structurally untradeable.",
+      "suggestion": "No actionable change \u2014 catching this requires short capability; if shorts are enabled, add a semiconductor news gate that triggers on major competitor product reveals (Computex/CES) and opens a short within 30 min of market open.",
+      "failed": false
+    },
+    {
+      "ticker": "TPR",
+      "move_pct": -4.603,
+      "close": 138.765,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-Q3 profit-taking momentum continues: stock had already fallen ~10% on May 7 earnings day (sell-the-news despite a large beat), and CEO Todd Kahn's $2.74M insider sale disclosed May 30 amplified bearish sentiment into June.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Tapestry (~$29B market cap, consumer discretionary luxury) is not covered. The move is a post-earnings drift pattern (second leg of the May 7 sell-the-news drop), a dynamic requiring earnings-event decay tracking rather than intraday signal generation.",
+      "suggestion": "Add a post-earnings drift watchlist: flag large-cap consumer discretionary names that gap down >8% on earnings day and are still in negative momentum after 15+ sessions; route to a short-side or underweight signal if insider selling corroborates within the window.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-01T19:34:48.233144+00:00"
+}
