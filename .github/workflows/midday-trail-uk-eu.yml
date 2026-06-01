@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   trail:
@@ -48,3 +48,31 @@ jobs:
           T212_API_KEY__3: ${{ secrets.T212_API_KEY__3 }}
           T212_API_SECRET__3: ${{ secrets.T212_API_SECRET__3 }}
         run: python scripts/midday_trail.py --brokers t212 --shadow-region uk-eu
+
+      - name: Commit ledger changes back
+        # Shadow midday TP and broker-side trail mutations touch
+        # state/ledger.jsonl + state/trail_exits.jsonl on the runner.
+        # Without this step those mutations vanish when the runner
+        # terminates, so shadow midday exits effectively never persist.
+        run: |
+          git config user.name "trading-bot[bot]"
+          git config user.email "trading-bot@users.noreply.github.com"
+          git add state/ledger.jsonl state/trail_exits.jsonl || true
+          if git diff --cached --quiet; then
+            echo "No ledger mutations; skipping commit"
+            exit 0
+          fi
+          git commit -m "midday trail (uk-eu) — $(date -u +%Y-%m-%dT%H:%MZ)"
+          for i in 1 2 3; do
+            strategy=""
+            if [ "$i" -gt 1 ]; then
+              strategy="-X theirs"
+            fi
+            if git pull --rebase --autostash $strategy origin main && git push; then
+              exit 0
+            fi
+            echo "Push attempt $i failed, retrying..."
+            sleep 2
+          done
+          echo "Could not push after 3 attempts"
+          exit 1
