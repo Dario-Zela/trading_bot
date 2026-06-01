@@ -626,11 +626,17 @@ class AlpacaPaperExecutor(Executor):
         except Exception:
             return None
 
-    def _wait_for_fill(self, order_id: str | None, *, timeout_s: float = 10.0) -> dict[str, Any] | None:
+    def _wait_for_fill(self, order_id: str | None, *, timeout_s: float = 60.0) -> dict[str, Any] | None:
         """Poll the order endpoint until the order reaches a terminal
         state. Returns the terminal order record (filled or not) so the
         caller can read `status` and `filled_avg_price`. Returns None only
-        if we can't reach the order at all."""
+        if we can't reach the order at all.
+
+        Bumped 10s→60s 2026-06-01 after 3/3 news-reactive@us alpaca-paper
+        orders (CRM, MP, LLY) timed out in status=new at the first-minute-
+        after-open submission window. Alpaca paper's matching engine
+        regularly takes 10-30s to fill bracket orders right at the bell;
+        60s is the comfortable buffer."""
         if not order_id:
             return None
         deadline = time.time() + timeout_s
