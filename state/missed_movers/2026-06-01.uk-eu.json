@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-01",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 TEP.PA +5%, EDV.L +4%, G24.DE +4%, AUTO.L +3%, SAP.DE +2%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (BEI.DE -4%, BAYN.DE -3%, SSE.L -3%, DGE.L -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: TEP.PA (+5.03%)",
+  "top_movers": [
+    {
+      "ticker": "TEP.PA",
+      "move_pct": 5.032,
+      "close": 63.04,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "EDV.L",
+      "move_pct": 4.172,
+      "close": 45.94,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Gold spot at ~$4,520/oz lifting all senior producers; RBC reiterated FCF-inflection buy note citing 11% FY26 FCF yield at spot, with continued market digestion of the April 23 Assafou DFS ($2.1B NPV, 320koz/yr, 16-yr mine life).",
+      "miss_reason": "Outside any active strategy's universe. EDV.L is a ~$10B LSE-listed West African gold miner; the bot holds no gold-sector sleeve. The move is macro-driven (XAU near all-time highs) compounded by a slow-burn post-DFS re-rating \u2014 neither momentum nor mean-reversion signals apply without the name in universe.",
+      "suggestion": "Add a gold-miners micro-universe (EDV.L + 4\u20135 comparable LSE/TSX seniors) to the momentum strategy, gated on XAU/USD trading above its 20-day rolling high \u2014 this activates only in a gold bull-regime and would have surfaced EDV.L throughout the current rally without polluting the universe in range-bound conditions.",
+      "failed": false
+    },
+    {
+      "ticker": "G24.DE",
+      "move_pct": 3.659,
+      "close": 72.25,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Scout24 confirmed via EQS regulatory filing (May 31, Sunday) that its \u20ac250m second buyback tranche would commence June 1, 2026; mechanical buyback demand at Monday open drove shares from \u20ac69.70 to \u20ac72.25.",
+      "miss_reason": "Outside any active strategy's universe. G24.DE is a ~\u20ac5bn German MDAX digital-classifieds stock; the catalyst was a corporate-action event (buyback tranche start disclosed in a weekend regulatory filing), invisible to intraday momentum or technical filters.",
+      "suggestion": "Add an EQS/regulatory event scanner for MDAX/DAX buyback-commencement filings with tranche size \u2265\u20ac100m; trigger a long entry at next-open when the filing lands after market close with no AGM blackout in the following session.",
+      "failed": false
+    },
+    {
+      "ticker": "AUTO.L",
+      "move_pct": 3.347,
+      "close": 4.415,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "\u00a3500m accelerated buyback execution (Jun 1 Transaction in Own Shares RNS) sparked technical rebound; stock ~27% off recent highs at 441p vs ~605p analyst consensus after May 21 FY26 results miss.",
+      "miss_reason": "Outside any active strategy's universe. AUTO.L is a FTSE 100 large-cap digital classifieds stock. The +3.35% was buyback/oversold bounce driven \u2014 requiring pre-knowledge of the \u00a3500m accelerated buyback announced alongside May 21 results.",
+      "suggestion": "Add FTSE 100 names with disclosed accelerated buyback programmes (>\u00a3200m) to a mean-reversion watchlist; trigger entry when >20% below 90-day high and RSI <35 to capture buyback-floor recoveries like this one.",
+      "failed": false
+    },
+    {
+      "ticker": "SAP.DE",
+      "move_pct": 2.414,
+      "close": 155.26,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Joule Studio 2.0 began first-customer rollout in June 2026 and multiple Joule HR Assistants hit GA, converting SAP's Sapphire 'Autonomous Enterprise' AI narrative into live delivery; continuation of post-Sapphire re-rating.",
+      "miss_reason": "Outside any active strategy's universe. SAP.DE is a DAX mega-cap (~\u20ac180B) still recovering from a 45% drawdown; quant universe screens likely cap out below this size or filter it out with RSI near 78 flagging overbought conditions.",
+      "suggestion": "Add a product-GA event gate for DAX large-cap EU tech: when an earnings call or conference flags a specific GA month, unlock the name for momentum entry in the 5 trading days around that date with a relaxed RSI ceiling (\u226485).",
+      "failed": false
+    },
+    {
+      "ticker": "AAF.L",
+      "move_pct": 2.381,
+      "close": 3.526,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Ongoing $110m share buyback (commenced 22 May, Barclays executing daily on-market purchases) providing steady technical bid; no fresh RNS on 2026-06-01. Underpinned by FY2026 earnings beat: profit +147%, revenue +29.5%, EBITDA margin 49.3%.",
+      "miss_reason": "Outside any active strategy's universe. AAF.L is a FTSE 250 EM-exposed telecom; most UK/EU momentum universes filter to domestically-driven or purely-European names, excluding Africa-operations telcos. Buyback-driven drift also lacks the sharp volume/gap signature that news-reactive triggers require.",
+      "suggestion": "Add a buyback-momentum sleeve: when an RNS announces a programmatic buyback \u2265$50m with a named broker (non-discretionary), include the name in the momentum universe for the programme duration, bypassing the normal prior-session volume floor.",
+      "failed": false
+    },
+    {
+      "ticker": "BEI.DE",
+      "move_pct": -3.542,
+      "close": 69.18,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continuation of May 29 JPMorgan CEO-call sell-off (no formal guidance cut but negative tone on Nivea recovery); stock slid to 11-year lows as year-long analyst-downgrade cycle (JPM, MS, RBC, DB) compounded sentiment.",
+      "miss_reason": "Outside any active strategy's universe. BEI.DE is a large-cap XETRA consumer staples name in a structural downtrend (~40% from 2025 peak); the move is a short-side opportunity \u2014 capturing it requires short exposure absent from current long-only strategies.",
+      "suggestion": "(No actionable change \u2014 outside risk tolerance / requires short capability we don't have); if a short leg is later added, flag EU large-caps with >30% 12M drawdown plus negative analyst-call sentiment score as short-universe candidates.",
+      "failed": false
+    },
+    {
+      "ticker": "BAYN.DE",
+      "move_pct": -3.462,
+      "close": 36.53,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "US Supreme Court Roundup hearing (Monsanto v. Durnell) yielded no decisive verdict signal; anxiety amplified by the June 4 opt-out deadline for Bayer's proposed $7.25B glyphosate class settlement.",
+      "miss_reason": "Outside any active strategy's universe. BAYN.DE is a ~\u20ac34B large-cap EU pharma/agrochemical name; the move was driven by idiosyncratic litigation-event risk requiring pre-ruling positioning, not reactive momentum or mean-reversion signals.",
+      "suggestion": "Add a litigation-event calendar gate: flag large-cap EU pharma tickers where a high-court ruling or class-settlement opt-out deadline falls within 5 trading days, and surface them for pre-event volatility review.",
+      "failed": false
+    },
+    {
+      "ticker": "SSE.L",
+      "move_pct": -3.077,
+      "close": 23.31,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FY2026 annual results released 28 May showed adjusted EPS down 5% YoY to 153.5p with \u00a377.9m impairments on wind projects hit by grid-connection delays; post-results selling extended into June 1, amplified by gilt-yield pressure on UK utilities.",
+      "miss_reason": "Outside any active strategy's universe. SSE (~\u00a318B mkt cap) is a FTSE 100 regulated utility whose low-beta, dividend-yield profile sits outside momentum and mean-reversion filters; capturing the -3.08% move required pre-results positioning 4 days before June 1.",
+      "suggestion": "Add FTSE 100 regulated utilities (SSE.L, NG.L, UU.L) to a UK strategy universe gated by a post-results drift rule: allow short-side entry T+1 to T+5 after annual results when adjusted EPS declines \u22655% YoY, to capture post-earnings drift without pre-market positioning.",
+      "failed": false
+    },
+    {
+      "ticker": "DGE.L",
+      "move_pct": -2.939,
+      "close": 15.355,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Pre-FY2026 results repositioning (full-year report due 8 Jun) amplifying existing bearish sentiment; US tariff drag ($200M p.a.) and North American organic spirits sales -9.3% H1 FY26 compound an already depressed multiple.",
+      "miss_reason": "Outside any active strategy's universe. DGE is a FTSE 100 mega-cap defensive; bot universes exclude large-cap UK consumer staples, and expressing the downside requires short-selling capability absent from current strategies.",
+      "suggestion": "Add FTSE 100 consumer staples to an event-driven universe gated by \u22655% 30-day underperformance AND results within 10 days; enable pre-results short entry once short-sell infrastructure is confirmed available.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-01T15:06:53.159657+00:00"
+}
