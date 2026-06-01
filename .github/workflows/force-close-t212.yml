@@ -1,0 +1,74 @@
+name: Force-close T212 paper
+
+# One-shot manual close-all for the T212 paper portfolio. Reuses the
+# normal exit_scheduled machinery so real fill prices and P&L are
+# recorded in the ledger — unlike clear_slot() which marks everything
+# cancelled with P&L=0.
+#
+# Use this before hitting the T212 platform-level "reset account"
+# button so the ledger reflects accurate exits, not zeros.
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: force-close-t212
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  close:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Force-close all T212 paper positions
+        env:
+          T212_API_KEY__1: ${{ secrets.T212_API_KEY__1 }}
+          T212_API_SECRET__1: ${{ secrets.T212_API_SECRET__1 }}
+          T212_API_KEY__2: ${{ secrets.T212_API_KEY__2 }}
+          T212_API_SECRET__2: ${{ secrets.T212_API_SECRET__2 }}
+          T212_API_KEY__3: ${{ secrets.T212_API_KEY__3 }}
+          T212_API_SECRET__3: ${{ secrets.T212_API_SECRET__3 }}
+        run: python scripts/force_close_t212_paper.py
+
+      - name: Commit ledger changes back
+        run: |
+          git config user.name "trading-bot[bot]"
+          git config user.email "trading-bot@users.noreply.github.com"
+          git add state/ledger.jsonl || true
+          if git diff --cached --quiet; then
+            echo "No ledger mutations; skipping commit"
+            exit 0
+          fi
+          git commit -m "force-close T212 paper — $(date -u +%Y-%m-%dT%H:%MZ)"
+          for i in 1 2 3; do
+            strategy=""
+            if [ "$i" -gt 1 ]; then
+              strategy="-X theirs"
+            fi
+            if git pull --rebase --autostash $strategy origin main && git push; then
+              exit 0
+            fi
+            echo "Push attempt $i failed, retrying..."
+            sleep 2
+          done
+          echo "Could not push after 3 attempts"
+          exit 1
