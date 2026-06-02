@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-02",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 MGM +16%, CDW +12%, DDOG +12%, IT +11%, DELL +11%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (CBOE -10%, QCOM -9%, CEG -8%, TPL -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: MGM (+16.07%) \u2014 Barry Diller's People Inc. (IAC) announced a $48.30/share all-cash bid for the 73.9% of MGM it doesn't own; shares traded through the offer price as investors priced in a higher counter-bid. Why we passed: Outside any active strategy's universe \u2014 MGM is a large-cap gaming/hospitality name not screened by current sector filters. Even if it were, the move originated from a pre-market M&A announcement, requiring pre-open positioning before the gap; post-open momentum or news-reactive entry would capture only the secondary d",
+  "top_movers": [
+    {
+      "ticker": "MGM",
+      "move_pct": 16.075,
+      "close": 50.69,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Barry Diller's People Inc. (IAC) announced a $48.30/share all-cash bid for the 73.9% of MGM it doesn't own; shares traded through the offer price as investors priced in a higher counter-bid.",
+      "miss_reason": "Outside any active strategy's universe \u2014 MGM is a large-cap gaming/hospitality name not screened by current sector filters. Even if it were, the move originated from a pre-market M&A announcement, requiring pre-open positioning before the gap; post-open momentum or news-reactive entry would capture only the secondary d",
+      "suggestion": "Add a takeover-bid gate: when a credible all-cash acquisition announcement is detected pre-market for universe-adjacent large-caps (consumer discretionary, \u2265$5B market cap), auto-promote the name into the news-reactive strategy's watchlist if gap-open is \u226425% and price is still within 5% of bid price at the open.",
+      "failed": false
+    },
+    {
+      "ticker": "CDW",
+      "move_pct": 12.379,
+      "close": 140.98,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "NVIDIA unveiled RTX Spark AI-PC chip on June 2, layered on a JPMorgan Overweight upgrade (May 27), $1B buyback expansion, and ~$2M in director/CEO insider buys, driving a broad AI-reseller re-rating.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CDW (~$19B B2B IT reseller) sits outside sector filters. Move was a derivative on NVIDIA's RTX Spark AI-PC chip drop; no vendor-beneficiary linkage exists to surface CDW when upstream news hits.",
+      "suggestion": "Add a vendor-beneficiary rule: when NVIDIA/AMD/Intel announce a new product platform, flag top IT resellers (CDW, Insight) as universe candidates if pre-market volume \u22651.5\u00d7 20d average, with gap-up entry within 30 min of open.",
+      "failed": false
+    },
+    {
+      "ticker": "DDOG",
+      "move_pct": 12.185,
+      "close": 277.49,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued AI software sector rally: Dell's May 28 blowout Q1 FY2027 earnings ($43.8B revenue +88% YoY, $16B AI server revenue) sustained a cloud-observability readthrough, lifting DDOG further alongside analyst upgrades from Goldman Sachs and Mizuho.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DDOG is a ~$80B large-cap SaaS/infra name. The move is a sector-momentum continuation: DDOG had already gapped +31% on its own May 7 earnings and +6% on the Dell/Snowflake wave May 29, leaving it technically extended well beyond any gap-fade or momentum-entry filter.",
+      "suggestion": "Add an AI-infra readthrough rule: when a tier-1 hardware or cloud peer (DELL, SNOW) gaps >20% on earnings, flag top-5 observability/cloud-management names for a 3-day momentum window entry \u2014 this captures the predictable sector sympathy move without requiring pre-earnings positioning.",
+      "failed": false
+    },
+    {
+      "ticker": "IT",
+      "move_pct": 10.721,
+      "close": 179.59,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q1 2026 EPS beat ($3.32 vs $2.99 est, +14% surprise) with raised FY adjusted EPS and FCF guidance; CFO's William Blair conference remarks on Jun 2 amplified post-earnings momentum.",
+      "miss_reason": "Outside any active strategy's universe. Gartner is a mid/large-cap research-advisory firm not typically screened by momentum or mean-reversion filters; the +10.7% move was post-earnings drift (Q1 reported ~May 20), requiring pre-positioned earnings-event coverage to capture.",
+      "suggestion": "Add a post-earnings drift gate that surfaces names with EPS surprise \u226510% and positive FY guidance revision, permitting momentum entry up to 10 sessions after the report date if price holds above the earnings-day close.",
+      "failed": false
+    },
+    {
+      "ticker": "DELL",
+      "move_pct": 10.703,
+      "close": 465.96,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q1 FY2027 earnings reported May 28: revenue $43.8B (+88% YoY), EPS $4.86 vs $2.92 est (60% beat), AI server backlog $51.3B; June 2 gain is post-earnings drift amplified by HPE AI-server results confirming sector demand.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DELL is a large-cap AI-infrastructure name (~$300B+ market cap) likely excluded by a cap-size or sector filter. Even if universe-eligible, the primary move came from a May 28 earnings gap; by June 2 the stock had already run ~32%, tripping any RSI or gap-size exclusion.",
+      "suggestion": "Add a post-earnings drift rule: for large-cap names with EPS beat \u226540% and Day+1 gap \u226515%, allow re-entry on Day+3\u20135 if price holds above the gap-fill level, sized at half the normal allocation to account for elevated volatility.",
+      "failed": false
+    },
+    {
+      "ticker": "CDNS",
+      "move_pct": 10.463,
+      "close": 414.16,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Cadence unveiled the industry's first fully autonomous AI virtual engineer for chip design (powered by NVIDIA), promising 40\u00d7 faster RTL verification; announcement hit wires pre-market on May 31.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CDNS is a large-cap EDA software name (~$110B mkt cap) not covered by existing momentum/mean-reversion screens. The gap was set by a weekend product announcement, requiring pre-open positioning no reactive signal could supply.",
+      "suggestion": "Add a pre-market news-gap scanner for large-cap tech/EDA names: gate entry for tickers with \u22655% pre-market gap tied to a product or partnership headline, allowing a one-session momentum trade sized at \u226450% of normal notional within 30 min of open.",
+      "failed": false
+    },
+    {
+      "ticker": "CBOE",
+      "move_pct": -9.764,
+      "close": 300.99,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "CFTC-regulated perpetual futures launched by Coinbase and Kalshi on 2026-06-02 triggered sector-wide sell-off of exchange operators; investors fear derivatives volume migration away from CBOE/CME/ICE to crypto-native venues.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CBOE is a financial-exchange operator, a niche sub-sector rarely included in momentum/mean-reversion universes. The move was a thematic regulatory-shock catalyst (competitor product launch), not a technical signal detectable pre-open.",
+      "suggestion": "Add a 'market-infrastructure' sub-universe (CBOE, CME, ICE, NDAQ) to the news-reactive strategy, gated by a CFTC/SEC regulatory-action keyword trigger, with a short-side entry allowed on \u22654% intraday gap-down confirmed within 30 min of open.",
+      "failed": false
+    },
+    {
+      "ticker": "QCOM",
+      "move_pct": -8.776,
+      "close": 228.99,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Nvidia CEO Jensen Huang unveiled the RTX Spark superchip (Windows-on-ARM, co-developed with Microsoft) at Computex 2026 on June 1, directly threatening Qualcomm's Snapdragon X Elite AI PC franchise and triggering an ~9% decline.",
+      "miss_reason": "Outside any active strategy's universe. QCOM is a large-cap Nasdaq-100 semiconductor (~$250B market cap) that sits above the typical universe cap tier. The drop was also a pure conference-catalyst event (Computex announcement); no pre-close technical signal would have flagged it for a news-reactive entry.",
+      "suggestion": "Create a 'tech-event watchlist' of top-5 AI-PC semiconductor peers (QCOM, AMD, INTC, NVDA, ARM); on Computex/CES calendar dates, allow the news-reactive strategy to take a short entry on any name gapping down \u22656% within 15 minutes of open.",
+      "failed": false
+    },
+    {
+      "ticker": "CEG",
+      "move_pct": -7.663,
+      "close": 265.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Constellation Energy priced an 11M-share secondary offering by selling shareholders at $281/share (~$3.09B total), creating dilution overhang that drove the ~7.7% decline on 3\u00d7 normal volume.",
+      "miss_reason": "Outside any active strategy's universe \u2014 large-cap nuclear/utility excluded by sector filters. Catalyst was a pre-market secondary offering announcement; capturing it requires a short-entry signal triggered by dilution events before open, a pathway the bot does not currently have.",
+      "suggestion": "Add a secondary-offering dilution trigger: flag names with mkt cap >$10B announcing a shareholder secondary \u2265$1B pre-market for short entry at open if offering price is \u22653% below prior close, scoped initially to utilities/energy to limit universe expansion.",
+      "failed": false
+    },
+    {
+      "ticker": "TPL",
+      "move_pct": -6.303,
+      "close": 368.23,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "OPEC+ added 188k bpd new supply effective June 2026, pressuring crude and royalty revenue expectations; governance uncertainty from Horizon Kinetics CEO Murray Stahl's April 2026 death compounded the selloff.",
+      "miss_reason": "Outside any active strategy's universe. TPL is a large-cap Permian Basin land-royalty name; the drop was OPEC+ macro-driven and compounded by a concentrated-shareholder governance overhang \u2014 both require pre-event positioning or short capability the bot's strategies lack.",
+      "suggestion": "(no actionable change \u2014 TPL's OPEC+-driven royalty compression and governance overhang require short capability; flag for inclusion only if a short-side energy-royalty sleeve is added to the universe)",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-02T19:33:30.697760+00:00"
+}
