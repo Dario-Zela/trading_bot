@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-02",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 SAP.DE +8%, SGE.L +8%, DSY.PA +8%, CAP.PA +7%, ENT.L +5%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (RHM.DE -7%, PSN.L -5%, BA.L -5%, RR.L -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: SAP.DE (+8.14%) \u2014 SAP Sapphire 2026 conference (Jun 1-2) unveiled 'Autonomous Enterprise' with 50+ Joule AI Assistants, 200+ agents, and a strategic Anthropic/Claude partnership; full-year cloud guidance reaffirmed, triggering a broad AI/ERP re-rating. Why we passed: Outside any active strategy's universe \u2014 SAP.DE is a mega-cap (\u20ac200B+) German enterprise software name. Move was conference-catalysed (Sapphire, Jun 1-2); pre-event positioning is required to capture it before any post-open momentum signal fires.",
+  "top_movers": [
+    {
+      "ticker": "SAP.DE",
+      "move_pct": 8.141,
+      "close": 167.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "SAP Sapphire 2026 conference (Jun 1-2) unveiled 'Autonomous Enterprise' with 50+ Joule AI Assistants, 200+ agents, and a strategic Anthropic/Claude partnership; full-year cloud guidance reaffirmed, triggering a broad AI/ERP re-rating.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SAP.DE is a mega-cap (\u20ac200B+) German enterprise software name. Move was conference-catalysed (Sapphire, Jun 1-2); pre-event positioning is required to capture it before any post-open momentum signal fires.",
+      "suggestion": "Add a conference-catalyst watchlist: on days of known major product events (Sapphire, Dreamforce, Build), promote eligible large-cap tech names into a breakout sub-strategy with gap filter \u2264+8% and half-size entry at the prior session close.",
+      "failed": false
+    },
+    {
+      "ticker": "SGE.L",
+      "move_pct": 7.74,
+      "close": 9.076,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Global enterprise software sector rally (MongoDB +20%, ServiceNow +10%, Okta +30%) lifted UK SaaS names; Sage's own H1 FY26 beat (11% organic growth, guidance raised to >9%) also belatedly repriced.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SGE is a FTSE 100 large-cap UK SaaS stock (~\u00a310B mkt cap). Move was US SaaS earnings contagion arriving pre-UK-open; capturing it requires cross-market sector correlation triggers the strategies lack.",
+      "suggestion": "Add a sector-contagion trigger: when a US SaaS basket (MongoDB/Snowflake/ServiceNow) gains \u22658% overnight, open momentum longs in correlated FTSE software names at UK open with a 2-session hold window.",
+      "failed": false
+    },
+    {
+      "ticker": "DSY.PA",
+      "move_pct": 7.737,
+      "close": 20.26,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector re-rating as Nvidia CEO quelled AI-disruption fears; UBS EU software basket +~5%, SAP +8.8% on June 1\u20132 lifted beaten-down DSY alongside peers recovering from a ~38% 12-month selloff.",
+      "miss_reason": "Outside any active strategy's universe. DSY.PA's ~38% 12-month drawdown placed it in negative-momentum territory, failing any momentum-floor filter; this recovery was macro-sentiment-driven, so news-reactive and momentum strategies had no entry signal.",
+      "suggestion": "Add an EU-software-sector-recovery rule: when the EU software basket rallies \u2265+3% from a \u226525% drawdown, admit top constituents with positive recent earnings for a mean-reversion long (\u22642-session hold, 5% stop).",
+      "failed": false
+    },
+    {
+      "ticker": "CAP.PA",
+      "move_pct": 7.013,
+      "close": 109.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-Capital-Markets-Day re-rating: Capgemini's May 27 CMD unveiled 2028 agentic-AI targets (revenue CAGR +5.5\u20137.5%, margin to 12.3%) above consensus; analyst upgrades and price-target raises cleared settlement lag by June 2.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CAP.PA is a large-cap Euronext Paris IT-services name not screened by the bot's momentum/mean-reversion filters. The move was also CMD-driven with a 6-day delay: pre-market signals on June 2 gave no intraday gap to trigger a news-reactive entry.",
+      "suggestion": "Add a post-CMD watchlist gate: if a name in the EU large-cap IT sector holds a Capital Markets Day and implied analyst target revision exceeds +10%, flag it for momentum-universe inclusion for the following 5 trading days.",
+      "failed": false
+    },
+    {
+      "ticker": "ENT.L",
+      "move_pct": 5.433,
+      "close": 5.628,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "People Inc. launched ~$18bn takeover bid for MGM Resorts; as Entain holds 50% of BetMGM, investors bought ENT.L on speculation any new MGM owner would seek to consolidate the JV.",
+      "miss_reason": "Outside any active strategy's universe. Entain is a FTSE 250 UK gambling operator (~\u00a33.4bn mcap); the move was driven by third-party M&A on JV partner MGM \u2014 no price/volume signal was actionable pre-market, making systematic entry structurally impossible.",
+      "suggestion": "Build a JV-partner M&A watchlist: if a named partner (e.g. MGM) receives a bid carrying >5% premium, auto-enrol the counterpart (e.g. ENT.L) into the event-driven universe for that session with a capped position size.",
+      "failed": false
+    },
+    {
+      "ticker": "WKL.AS",
+      "move_pct": 4.949,
+      "close": 64.04,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Bernstein reaffirmed Outperform on June 1 (EUR 102 target vs ~EUR 61 prior close, ~67% upside), triggering delayed institutional buying on June 2 against a supportive AEX tech/AI session (+0.71% index).",
+      "miss_reason": "Outside any active strategy's universe \u2014 WKL.AS is an AEX large-cap professional information/software services name (Tax, Legal, Health verticals). Move was analyst-note-driven with no technical momentum setup; pre-market positioning is required to capture these single-day re-ratings.",
+      "suggestion": "Add a watchlist screen for AEX/Euronext large-caps where consensus price target exceeds spot by \u226550% and a fresh Outperform/Buy note arrives; if sector ETF closes green, open a small next-session limit order \u2014 size-capped to avoid over-concentration in low-vol names.",
+      "failed": false
+    },
+    {
+      "ticker": "RHM.DE",
+      "move_pct": -6.68,
+      "close": 1207.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "EU June 18-19 summit draft (published 2 Jun) formally proposed the bloc 'step up' in Ukraine-Russia peace talks, reigniting ceasefire-rotation selloff across European defense; Stoxx A&D index fell ~5-7% sector-wide.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RHM.DE is a ~\u20ac56B Xetra large-cap defense conglomerate, likely excluded by sector or ESG filter. The move was a macro headline rotation on peace-talk newsflow, not a technical or earnings signal detectable pre-market.",
+      "suggestion": "Add a European defense-sector ETF (e.g. EXV6.DE) to the uk-eu universe with a Ukraine-ceasefire sentiment gate; a confirmed de-escalation signal could trigger short-sector exposure without requiring individual defense-name short capability.",
+      "failed": false
+    },
+    {
+      "ticker": "PSN.L",
+      "move_pct": -5.388,
+      "close": 10.535,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "BA.L",
+      "move_pct": -5.042,
+      "close": 19.21,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Renewed optimism around Russia-Ukraine and US-Iran peace negotiations triggered a broad defence-sector rotation out of BAE Systems; stock is now -19% from its 2026 peak despite maintained FY guidance.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BA.L is a FTSE 100 large-cap defence/aerospace name whose moves are macro-geopolitical in nature (war-premium unwind) rather than earnings or technical setups. No momentum or mean-reversion filter fires cleanly on a sector-wide peace-deal re-rating.",
+      "suggestion": "Add a geopolitical-risk-proxy rule: when a tracked peace-talk headline score flips negative for the defence sector, flag BA.L and peers (RR.L, SAAB) as short candidates if the strategy has short capability, else log as a universe-gap alert for manual review.",
+      "failed": false
+    },
+    {
+      "ticker": "RR.L",
+      "move_pct": -4.83,
+      "close": 12.728,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Iran walked away from US ceasefire talks on 2 Jun, sparking a broad FTSE defence/aerospace sell-off; RR.L dropped ~5% alongside BAE and Babcock as prolonged Middle East disruption threatens its per-flying-hour revenue.",
+      "miss_reason": "Outside any active strategy's universe. Move was a geopolitical sector shock (Iran ceasefire collapse) sweeping all FTSE defence stocks simultaneously \u2014 no technical setup preceded it; RSI/volume filters miss this without a macro-headline trigger.",
+      "suggestion": "Add RR.L and FTSE defence peers to the news-reactive strategy's universe with a geopolitical-shock trigger: when Iran/ceasefire risk headlines flag, permit a short entry on the sector basket with a 1-session hold.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-02T15:07:29.804661+00:00"
+}
