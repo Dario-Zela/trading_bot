@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-03",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 STMPA.PA +15%, IFX.DE +10%, PRX.AS +9%, ANTO.L +6%, ASML.AS +5%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (CAP.PA -8%, AAF.L -5%, DSY.PA -4%, SGE.L -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: STMPA.PA (+15.14%) \u2014 ST raised 2026 data-centre revenue target to ~$1B (from 'nicely above $500M') and 2027 to ~$2B, citing surging AI infrastructure demand \u2014 announced June 2 after close. Why we passed: Outside any active strategy's universe \u2014 STMPA.PA is a large-cap Paris-listed semiconductor not currently in scope. Even if added, the guidance-raise PR dropped after the prior close; the gap was fully priced in at open, leaving no clean intraday entry signal.",
+  "top_movers": [
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": 15.143,
+      "close": 68.28,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "ST raised 2026 data-centre revenue target to ~$1B (from 'nicely above $500M') and 2027 to ~$2B, citing surging AI infrastructure demand \u2014 announced June 2 after close.",
+      "miss_reason": "Outside any active strategy's universe \u2014 STMPA.PA is a large-cap Paris-listed semiconductor not currently in scope. Even if added, the guidance-raise PR dropped after the prior close; the gap was fully priced in at open, leaving no clean intraday entry signal.",
+      "suggestion": "Add a guidance-raise event scanner for Euronext large-caps: when a company PR lifts a key revenue metric \u226540%, whitelist the ticker for a momentum entry within 30 min of open if same-session volume \u22652\u00d7 its 30-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": 9.521,
+      "close": 88.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Infineon announced its OPTIGA TPM SLB 9672 certified for NVIDIA Jetson Thor, providing quantum-resilient hardware root-of-trust for Physical AI robotics \u2014 high-profile NVIDIA co-branding triggered the re-rating.",
+      "miss_reason": "Outside any active strategy's universe; IFX.DE is a XETRA large-cap semiconductor. Move was news-driven (NVIDIA co-brand press release at open) \u2014 momentum signals would only confirm after most of the gap had already printed.",
+      "suggestion": "Add a news-reactive watchlist covering major XETRA/Euronext semis (IFX.DE, STM, ASML) that triggers an entry when a verified NVIDIA/AI-partner press release precedes a \u22655% open gap, with a 30-minute entry window post-open.",
+      "failed": false
+    },
+    {
+      "ticker": "PRX.AS",
+      "move_pct": 9.372,
+      "close": 42.595,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "EU Commission granted Prosus a waiver extending its Delivery Hero stake reduction deadline past August, letting it potentially block or negotiate Uber's ~25% takeover bid for Delivery Hero.",
+      "miss_reason": "Outside any active strategy's universe. PRX is a large-cap Euronext Amsterdam holding co; +9.4% gap triggered by an intraday EU regulatory waiver with no pre-market signal \u2014 impossible to pre-position for news-reactive or momentum strategies.",
+      "suggestion": "Add large-cap Euronext names (mkt-cap > \u20ac10B) to the news-reactive strategy's universe and implement an EU regulatory announcement scanner that triggers intraday entries within 15 min of an EC press release matching held-position tickers.",
+      "failed": false
+    },
+    {
+      "ticker": "ANTO.L",
+      "move_pct": 6.473,
+      "close": 44.08,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Trump's Jun 1 Section 232 proclamation adjusted copper tariff structure (eff. Jun 8); Chile's cathode copper largely exempt, amplifying ANTO.L's pure-play copper beta as LME copper held 2-week highs.",
+      "miss_reason": "Outside any active strategy's universe. ANTO.L is a pure-play Chilean copper miner (~98% copper revenue); its price action tracks LME copper multiples ahead of diversified peers, making it orthogonal to equity-technical momentum filters.",
+      "suggestion": "Add ANTO.L to a commodity-linked tier: include it when LME copper 20-day return exceeds +8%, flag for momentum entry with the equity-volume pre-filter waived on Section 232 / policy-event days.",
+      "failed": false
+    },
+    {
+      "ticker": "ASML.AS",
+      "move_pct": 4.864,
+      "close": 1461.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "ASML crossed Europe's all-time market-cap record (~$674B) on AI-infrastructure EUV demand; Q1 2026 beat consensus and FY guidance was raised, sustaining a 60% YTD advance.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ASML is a mega-cap Euronext name (~\u20ac670B mkt cap, ~\u20ac1,460/share) whose sustained 60% YTD rally and high absolute price likely place it outside the bot's cap-tier definitions and per-share position-sizing constraints.",
+      "suggestion": "Add a large-cap EU semiconductor equipment basket (ASML, BESI, ASMI) to the momentum strategy's universe with a hard \u22641% NAV position cap, triggered only when the name is within 5% of its 52-week high on >1.2\u00d7 average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "GLEN.L",
+      "move_pct": 4.574,
+      "close": 6.15,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Copper prices held near record LME highs (~$13,800/t) on supply fears from Chile's weakest April output in 23 years; Glencore's Q1 copper production +19% YoY and marketing EBIT set to beat guidance top-end (>$3.5B) amplified the re-rating.",
+      "miss_reason": "Outside any active strategy's universe \u2014 GLEN.L is a FTSE 100 mega-cap diversified miner (~\u00a340B+ market cap) whose +4.57% move was a diffuse commodity-beta event, not a discrete newsflow trigger; no single pre-market catalyst makes it actionable for news-reactive or gap-up filters.",
+      "suggestion": "Introduce a commodity-beta satellite universe: flag FTSE 100 miners (SIC 1000-1499) for entry when LME copper spot rises \u2265+1.5% on the prior session close, gated by average daily volume \u226510M shares to avoid illiquid names.",
+      "failed": false
+    },
+    {
+      "ticker": "CAP.PA",
+      "move_pct": -7.608,
+      "close": 100.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Jefferies cut price target EUR 145\u2192115 and Berenberg cut EUR 143\u2192117 (both Hold), representing ~20% target reductions, landing the day after the EUR 3.40 ex-dividend date (June 2).",
+      "miss_reason": "Outside any active strategy's universe \u2014 CAP.PA is a large-cap French IT-services name (~\u20ac30B market cap). Analyst-coordinated repricing events have no pre-market technical footprint; without the name already in a universe, no filter could have triggered.",
+      "suggestion": "Extend a news-reactive strategy's universe to include CAC 40 IT-services names; add an 'analyst consensus target cut \u226515% same-day' signal to gate entries, which would have flagged CAP.PA at open without requiring prior position.",
+      "failed": false
+    },
+    {
+      "ticker": "AAF.L",
+      "move_pct": -5.212,
+      "close": 3.346,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "DSY.PA",
+      "move_pct": -4.097,
+      "close": 19.43,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh company catalyst on 2026-06-03; continuation of sector de-rating \u2014 enterprise software rotation on AI disruption fears, stock testing Citi's EUR 19 floor following May 22 Zacks Strong-Sell and a fresh broker Hold downgrade citing uncertain growth re-acceleration.",
+      "miss_reason": "Outside any active strategy's universe. DSY.PA is a CAC 40 large-cap industrial software name (Euronext Paris); the bot's strategies likely cover different sector profiles. Even if screened, the persistent 22%+ YTD downtrend and extreme Feb gap-down (-21%) would flag it as a broken-trend name excluded by momentum filte",
+      "suggestion": "Add a 'sector-rotation short proxy' rule: when \u22653 analyst downgrades hit a CAC 40 software name within 90 days, allow a mean-reversion short entry in a news-reactive strategy, gated on 20-day realised vol < 40% to avoid post-crash gap names.",
+      "failed": false
+    },
+    {
+      "ticker": "SGE.L",
+      "move_pct": -4.055,
+      "close": 8.708,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide software pullback 2026-06-03: algorithmic profit-taking reversed prior-day AI-optimism rally sparked by Nvidia CEO Jensen Huang; global software ETF -2.8%, SGE.L retraced its prior-session +6.7% bounce.",
+      "miss_reason": "Outside any active strategy's universe. SGE.L is a FTSE 100 UK accounting-SaaS name deep in the 2026 AI-disruption sell-off (-37% since Jan 2025); June 3's drop was a sector-bounce reversal with no stock-specific catalyst \u2014 unreachable by standard pre-trade filters.",
+      "suggestion": "If short capability exists, add FTSE 100 software names to a sector-fade universe and trigger entries on constituents with 20-day return below -15% when the global software ETF reverses >1% intraday after a prior-day gain \u22654%.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-03T15:06:31.029979+00:00"
+}
