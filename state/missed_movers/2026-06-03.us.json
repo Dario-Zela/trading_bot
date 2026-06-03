@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-03",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 HPE +19%, COHR +18%, LITE +14%, GLW +13%, CIEN +10%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (TTD -9%, INTU -9%, CBOE -8%, CVNA -8%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: HPE (+19.47%) \u2014 Q2 2026 earnings blowout \u2014 revenue $10.7B (+40% YoY), non-GAAP EPS $0.79 (+108%), FY EPS guide raised to $3.35\u2013$3.45 from $2.30\u2013$2.50; $1.8B in new AI server orders and Juniper synergies ahead of plan. Why we passed: Outside any active strategy's universe \u2014 HPE is a large-cap S&P 500 AI-infrastructure name (~$50B+ market cap) excluded by sector/cap filters. Earnings were reported after hours Jun 1\u20132, so capturing the peak gap required pre-open positioning before any intraday signal fired.",
+  "top_movers": [
+    {
+      "ticker": "HPE",
+      "move_pct": 19.468,
+      "close": 56.15,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 earnings blowout \u2014 revenue $10.7B (+40% YoY), non-GAAP EPS $0.79 (+108%), FY EPS guide raised to $3.35\u2013$3.45 from $2.30\u2013$2.50; $1.8B in new AI server orders and Juniper synergies ahead of plan.",
+      "miss_reason": "Outside any active strategy's universe \u2014 HPE is a large-cap S&P 500 AI-infrastructure name (~$50B+ market cap) excluded by sector/cap filters. Earnings were reported after hours Jun 1\u20132, so capturing the peak gap required pre-open positioning before any intraday signal fired.",
+      "suggestion": "Add a post-earnings gap-capture module: large-caps (\u2265$5B market cap) with a post-results open gap \u226515% enter a single-session momentum long, bypassing standard universe exclusions for that day only.",
+      "failed": false
+    },
+    {
+      "ticker": "COHR",
+      "move_pct": 17.633,
+      "close": 426.89,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 FY2026 EPS of $1.41 beat consensus on revenue +27% YoY; Nvidia simultaneously disclosed a $2B equity stake and multiyear AI-optics supply agreement, triggering analyst target hikes across 8 firms.",
+      "miss_reason": "Outside any active strategy's universe. COHR is a large-cap AI-optics name not covered by any strategy; the +17% gap combined an earnings beat with Nvidia's $2B equity stake deal \u2014 requiring pre-market positioning the bot cannot take.",
+      "suggestion": "Add a post-earnings gap-up scanner that flags non-universe names with ADV \u2265$200M gapping \u2265+10% on earnings day; allow momentum entry within 30 min of open if volume confirms \u22651.5\u00d7 the 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "LITE",
+      "move_pct": 13.718,
+      "close": 1029.15,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Nvidia CEO Jensen Huang publicly endorsed optical interconnects ('use optics where you must') at a major event, sparking a sector re-rate for optical suppliers; LITE had also posted a beat-and-raise Q3 on May 5 (revenue +90% YoY, EPS $2.37 vs $2.17 est).",
+      "miss_reason": "Outside any active strategy's universe \u2014 LITE is a large-cap optical-networking stock (~$1,029/share, ~$35B market cap). The move was Nvidia CEO-comment-driven, requiring pre-market sector monitoring; no intraday momentum filter triggers before a gap of this size has fully run.",
+      "suggestion": "Add an optical/photonics sector basket (LITE, COHR, GLW) to the news-reactive strategy's universe with a hyperscaler-CEO-endorsement trigger: release names gapping \u22658% within 15 minutes of open on AI-infrastructure headline events.",
+      "failed": false
+    },
+    {
+      "ticker": "GLW",
+      "move_pct": 13.413,
+      "close": 200.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Nvidia CEO Jensen Huang's Computex commentary on AI-datacenter optical interconnects, plus Corning's own investor-day guidance raise to $30B annualized revenue exiting 2028 (19% CAGR), drove a >13% single-day gap.",
+      "miss_reason": "Outside any active strategy's universe. GLW is a large-cap AI-infrastructure materials name (fiber/optical glass); the move was jointly triggered by a third-party keynote and a pre-announced investor day \u2014 both pre-event signals that post-open momentum or mean-reversion filters cannot capture after the gap is printed.",
+      "suggestion": "Extend the momentum strategy's universe to include large-cap AI-infrastructure materials names (e.g., fiber/optical-component SIC screen); a gap-up filter of \u22658% at open with \u22651.5\u00d7 avg volume would have flagged GLW for a disciplined partial entry today.",
+      "failed": false
+    },
+    {
+      "ticker": "CIEN",
+      "move_pct": 10.075,
+      "close": 627.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "B. Riley doubled price target ($283\u2192$531), new cloud/subsea contracts signed with Cirion and Biznet announced, and pre-earnings positioning ahead of Q2 report due June 4 (consensus: $1.46 EPS, +248% YoY).",
+      "miss_reason": "Outside any active strategy's universe; CIEN is a large-cap optical networking name (~$627, P/E ~400\u00d7) likely excluded by valuation screens. Move was earnings-eve pre-positioning requiring pre-market catalyst detection to capture.",
+      "suggestion": "Add a pre-earnings catalyst scanner: flag names with analyst PT upgrades \u226540% or new contract filings within 72h of scheduled earnings; release for momentum entry if pre-market gap \u22655% on volume \u22651.5\u00d7 avg.",
+      "failed": false
+    },
+    {
+      "ticker": "ARE",
+      "move_pct": 8.452,
+      "close": 52.74,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Deeply oversold life-science REIT continued a ~27%-over-one-month mean-reversion rally on broad REIT sector tailwind from rate-cut expectations; no discrete company-specific news on June 3.",
+      "miss_reason": "Outside any active strategy's universe. ARE is an S&P 500 life-science REIT in a structural downtrend (45% dividend cut, ongoing $1.8B asset sales); persistent negative price trend excludes it from both momentum and news-reactive filters.",
+      "suggestion": "Add a distressed-large-cap mean-reversion screen: S&P 500 members >35% below 52-week high with \u2265+5% 1-month relative strength vs. their sector ETF, gate-opened after \u22652 consecutive up weeks.",
+      "failed": false
+    },
+    {
+      "ticker": "TTD",
+      "move_pct": -9.13,
+      "close": 21.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Ongoing Publicis fallout: a leaked client email revealed TTD failed a third-party fee audit ('violated multiple clauses'), with Dentsu and WPP also retreating from OpenPath; broader adtech sector weakness amplified the sell-off.",
+      "miss_reason": "TTD is outside any active strategy's universe. Down 43% YTD on Publicis dispute (>10% gross billings at risk) and Chrome cookie-deprecation headwinds \u2014 it sits below momentum entry thresholds and is too open-ended a falling-knife for mean-reversion long filters.",
+      "suggestion": "No actionable long-side change; if short capability is added later, a structural-deterioration filter (\u22652 major agency relationship breaks AND analyst revenue-cut within 60 days) would have flagged TTD as a short candidate well before this leg down.",
+      "failed": false
+    },
+    {
+      "ticker": "INTU",
+      "move_pct": -8.938,
+      "close": 322.14,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Goldman Sachs downgraded INTU to Sell from Hold on June 2, citing intensifying AI-driven competition in consumer tax filing, triggering a ~9% two-day selloff into June 3's close.",
+      "miss_reason": "Outside any active strategy's universe \u2014 INTU is a large-cap (~$85B) software/fintech name likely excluded by sector or cap-tier filters. The move was a broker-downgrade catalyst that requires a sell-side signal feed and short capability to trade; post-open momentum entry would chase a gap already >5% wide.",
+      "suggestion": "Add a bulge-bracket-downgrade scanner to the news-reactive strategy: if a major broker cuts to Sell with a price-target drop \u226510% on a large-cap software name, gate it for short consideration within the first 30 min of open \u2014 requires enabling short capability for this ticker class.",
+      "failed": false
+    },
+    {
+      "ticker": "CBOE",
+      "move_pct": -8.439,
+      "close": 275.59,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "CFTC approved Kalshi's Bitcoin perpetual futures, triggering sector-wide selloff in exchange operators (CBOE, CME, ICE) on fears that perpetual futures could expand to other asset classes and erode derivatives market share.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CBOE is a large-cap financial-exchange operator not covered by typical equity momentum/mean-reversion universes. The driver was a regulatory sector shock (competition threat), not a company-specific earnings or M&A event, making pre-market positioning via standard signals imposs",
+      "suggestion": "Add large-cap exchange operators (CBOE, CME, ICE) to a news-reactive short-side watchlist; gate entries on regulatory/competition headlines scored by a news-sentiment filter, releasing a short signal only when sector-wide volume confirms the catalyst within 30 min of open.",
+      "failed": false
+    },
+    {
+      "ticker": "CVNA",
+      "move_pct": -7.606,
+      "close": 65.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "CFO Mark Jenkins and BHJC Trust filed Form 144 SEC disclosures on June 1 proposing 113K+ share sales; combined with lingering Q1 EBITDA margin-contraction fears and a broker downgrade to neutral, this broke post-earnings support.",
+      "miss_reason": "Outside any active strategy's universe. CVNA is high-beta used-car retail already -27% YTD; the trigger was Form 144 insider-intent-to-sell SEC filings \u2014 a regulatory signal that standard price/volume momentum filters cannot detect before the move.",
+      "suggestion": "Add a Form 144 filing monitor: flag S&P 1500 names with >50K insider-proposed shares in a rolling 5-day window as a short-side catalyst gate, bypassing universe filters for a 1-day event trade (requires short capability to act on).",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-03T19:32:31.796721+00:00"
+}
