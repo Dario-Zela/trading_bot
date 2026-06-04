@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-04",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 BNZL.L +5%, RWE.DE +4%, SSE.L +4%, HWDN.L +3%, TSCO.L +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (AKZA.AS -17%, PRX.AS -6%, G24.DE -5%, ADYEN.AS -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: AKZA.AS (-17.22%) \u2014 Nippon Paint/Sherwin-Williams formally withdrew their \u20ac73/share (\u20ac12.5B) cash takeover bid on Jun 4 after Akzo Nobel's board rejected it as undervaluing the company; collapse of the bid premium drove the ~17% drop. Why we passed: Outside any active strategy's universe. AKZA.AS was in a live merger-arb situation (competing \u20ac73 cash bid vs. Axalta all-stock deal); its price was dominated by takeover-premium dynamics, not momentum or mean-reversion signals. The gap was a discrete pre-market event unreachable by any technical filter.",
+  "top_movers": [
+    {
+      "ticker": "BNZL.L",
+      "move_pct": 4.733,
+      "close": 23.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "RWE.DE",
+      "move_pct": 3.665,
+      "close": 57.14,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "RWE formally announced completion of its full \u20ac1.5B share buyback program (9.5M shares retired) on June 3 after close, removing supply overhang and reinforcing capital discipline alongside confirmed FY2026 adjusted EPS guidance of \u20ac2.20\u20132.90.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RWE is a DAX-listed large-cap European utility (~\u20ac35B mkt cap) typically screened out by bots scoped to UK-only or mid-cap names. The trigger was a capital-allocation event (buyback completion press release) where pre-announcement positioning beats any post-open technical signal",
+      "suggestion": "Add a corporate-action news filter for DAX/EURO STOXX utilities: when a buyback-completion RNS/ad-hoc is filed and the name sits within 8% of its 4-week low, release it into the news-reactive strategy's eligible universe within the first 30 minutes of Xetra open.",
+      "failed": false
+    },
+    {
+      "ticker": "SSE.L",
+      "move_pct": 3.546,
+      "close": 23.36,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FY26 preliminary results (28 May) showed EPS 153.5p at guidance upper end with +7% dividend hike to 68.7p; confirmed by \u20ac1.3bn hybrid capital raise (2 Jun) priced 8\u00d7 oversubscribed, validating the fully-funded \u00a333bn five-year capex plan.",
+      "miss_reason": "Outside any active strategy's universe; SSE.L is a FTSE 100 large-cap regulated utility (~\u00a328bn mkt cap) likely excluded by sector and size filters. The move was a multi-day post-results drift \u2014 too slow and event-driven for momentum or mean-reversion intraday signals to trigger entry.",
+      "suggestion": "Add a post-results news-reactive gate for FTSE 100 regulated utilities: enter within 3 sessions of preliminary results where dividend growth \u22655% and EPS meets/beats guidance upper bound, gated by a \u22651% day-1 gap-up confirmation to avoid false positives.",
+      "failed": false
+    },
+    {
+      "ticker": "HWDN.L",
+      "move_pct": 3.179,
+      "close": 7.79,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Howden Joinery announced acquisition of online kitchen retailer DIY Kitchens for \u00a3390m (announced after close 3 Jun); market digested the bolt-on M&A \u2014 17% pa revenue growth, 27% EBIT margins \u2014 on 4 Jun open.",
+      "miss_reason": "Outside any active strategy's universe \u2014 HWDN.L is a FTSE 100 home-improvement supplier not covered by current sector/cap filters. Move was M&A-driven from a prior-close announcement; capturing it required overnight positioning before the gap printed at open.",
+      "suggestion": "Add an M&A-release gate: if a FTSE 100/250 name announces a strategic acquisition after close and gaps \u2265+2% at open, inject it into the news-reactive strategy's candidate list within 15 min of open for follow-through momentum entry.",
+      "failed": false
+    },
+    {
+      "ticker": "TSCO.L",
+      "move_pct": 3.043,
+      "close": 4.436,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Ongoing \u00a3750m share buyback (\u00a3231m completed since 22 Apr) provided steady price floor; a UK retail-sales beat and analyst Buy / \u00a35.15 target reiteration likely triggered a 3% technical snap-back from a 12% YTD drawdown.",
+      "miss_reason": "Outside any active strategy's universe. TSCO.L is a ~\u00a328B large-cap defensive grocer; its move was mean-reversion off a multi-month drawdown rather than a momentum break-out, and with shares below the 20/50/200-day MAs pre-move most momentum and gap-up filters would have scored it neutral or negative.",
+      "suggestion": "Add a 'buyback-accelerator' scan to the UK large-cap universe: names with an active buyback consuming \u22650.5% of float per month AND price \u22655% below the 52-week high qualify for a mean-reversion entry \u2014 this would have surfaced TSCO.L before the snap-back.",
+      "failed": false
+    },
+    {
+      "ticker": "SBRY.L",
+      "move_pct": 2.801,
+      "close": 3.046,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "SBRY traded ex-dividend 4 Jun 2026 for a 9.6p final dividend (~3.2% yield); the reported +2.80% close-to-close gain is a total-return (dividend-adjusted) artefact \u2014 raw shares were flagged among FTSE 100 index-drag leaders on the day.",
+      "miss_reason": "Outside any active strategy's universe. SBRY is a FTSE 100 large-cap UK consumer staples stock (~\u00a37bn mkt cap); the apparent 'gain' is an ex-dividend total-return artefact, not a price-momentum or mean-reversion signal any technical strategy would target.",
+      "suggestion": "Add a pre/on-ex-div suppression flag: exclude names from the daily top-gainers watchlist on ex-dividend date \u00b11 session when dividend yield \u22651.5%, preventing total-return dividend adjustments from inflating the signal list with non-actionable entries.",
+      "failed": false
+    },
+    {
+      "ticker": "AKZA.AS",
+      "move_pct": -17.219,
+      "close": 55.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Nippon Paint/Sherwin-Williams formally withdrew their \u20ac73/share (\u20ac12.5B) cash takeover bid on Jun 4 after Akzo Nobel's board rejected it as undervaluing the company; collapse of the bid premium drove the ~17% drop.",
+      "miss_reason": "Outside any active strategy's universe. AKZA.AS was in a live merger-arb situation (competing \u20ac73 cash bid vs. Axalta all-stock deal); its price was dominated by takeover-premium dynamics, not momentum or mean-reversion signals. The gap was a discrete pre-market event unreachable by any technical filter.",
+      "suggestion": "Add a merger-arb quarantine flag: names with an announced acquisition bid should be excluded from momentum/mean-reversion universes until the deal closes or fully lapses \u2014 the bid-premium component makes all technical entries unreliable.",
+      "failed": false
+    },
+    {
+      "ticker": "PRX.AS",
+      "move_pct": -5.505,
+      "close": 40.25,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Prosus sold 5% Delivery Hero stake to Aspex Management for \u20ac335M (\u20ac22/share), second disposal in weeks; investors read accelerating portfolio liquidation as structural NAV negative.",
+      "miss_reason": "Outside any active strategy's universe. PRX.AS is a ~\u20ac40B Amsterdam tech-holding co. whose price is driven by portfolio corporate actions; no momentum or mean-reversion signal precedes a surprise stake-disposal RNS.",
+      "suggestion": "Add Amsterdam large-cap holding companies (mkt cap \u2265\u20ac10B) to a news-reactive universe; gate entry on RNS stake-disposal filings \u2265\u20ac200M, triggering directional position within 30 min of publish.",
+      "failed": false
+    },
+    {
+      "ticker": "G24.DE",
+      "move_pct": -5.339,
+      "close": 71.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Scout24 pre-filed AGM buyback blackout (no repurchases Jun 5\u201317), removing the \u20ac250M programme's mechanical bid the day before suspension began; market sold off as the price-support floor was pulled.",
+      "miss_reason": "Outside any active strategy's universe (MDAX German PropTech portal). Catalyst was a pre-filed corporate-action disclosure (AGM buyback blackout), not earnings or momentum, so news-reactive and technical filters had no pre-move signal to act on.",
+      "suggestion": "Add buyback-blackout events to the corporate-calendar feed: flag names entering a disclosed MAR suspension window (\u2265\u20ac50M) within 2 trading days as short candidates \u2014 this would have caught the Jun 4 pre-AGM selloff.",
+      "failed": false
+    },
+    {
+      "ticker": "ADYEN.AS",
+      "move_pct": -4.697,
+      "close": 848.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "CFO Ethan Tandowsky announced surprise departure effective August 2026, unsettling investors already digesting a Q1 EPS miss (\u20ac17.66 vs \u20ac17.94 est) and a guidance range reset to 20-22% growth.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ADYEN.AS is a large-cap Euronext Amsterdam fintech (~\u20ac26.75B mkt cap) not covered by current strategy universes. Even if added, the move was triggered by a surprise executive departure with no pre-market technical footprint, making it uncatchable by momentum or mean-reversion si",
+      "suggestion": "Add top-20 AEX large-caps (including ADYEN.AS) to a news-reactive strategy universe; gate entries on RNS/press-release C-suite departure events where stock gaps >3% from prior close within 45 minutes of open.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-04T15:05:58.904073+00:00"
+}
