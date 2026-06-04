@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-04",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 TPL +10%, MRNA +7%, SNDK +7%, FDXF +6%, INCY +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (LITE -9%, GPN -8%, CHTR -8%, NOW -8%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: TPL (+9.69%)",
+  "top_movers": [
+    {
+      "ticker": "TPL",
+      "move_pct": 9.692,
+      "close": 406.76,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "MRNA",
+      "move_pct": 7.493,
+      "close": 49.06,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "5-year KEYNOTE-942 follow-up data presented at ASCO 2026 showed mRNA-4157/V940 + KEYTRUDA reduced melanoma recurrence/death by 49% (HR 0.51), sustaining and extending prior efficacy readouts.",
+      "miss_reason": "Outside any active strategy's universe. MRNA is a high-beta biotech whose moves are driven by binary clinical-data events (ASCO presentations, FDA decisions); quant universes typically exclude it via biotech carve-outs, volatility caps, or gap-risk filters given its history of >50% single-day swings on trial data.",
+      "suggestion": "Add a clinical-conference catalyst gate: monitor ASCO/ESMO abstract release dates and, on confirmed positive oncology data prints, allow a 1-session momentum entry for names with gap \u2265+5% and volume \u22652\u00d7 30-day avg, gated by a market-cap floor (e.g. \u2265$10B) to control binary risk.",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": 6.708,
+      "close": 1831.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Morgan Stanley raised SNDK price target 59% to $1,750 (Overweight) and Barclays upgraded to Overweight on the same day; CounterPoint Research published AI-driven NAND demand analysis amplifying the move.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SNDK is a large-cap NAND memory name (~$280B implied cap) not yet added to any screener. The +6.7% move was analyst-upgrade-driven and intraday: dual PT raise/upgrade catalyst is not capturable by post-open momentum or mean-reversion signals.",
+      "suggestion": "Add a news-catalyst universe gate: names receiving \u22652 major-bank upgrades or PT raises \u226530% on the same day should be auto-enrolled in the momentum strategy for that session, with a first entry permitted within 20 min of open and an intraday stop at \u20132%.",
+      "failed": false
+    },
+    {
+      "ticker": "FDXF",
+      "move_pct": 6.257,
+      "close": 161.51,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FedEx Freight completed its spinoff from FDX on 2026-06-01 and began NYSE trading; a wave of analyst initiations on/around June 4 (Wolfe Research $180, BofA $185, Evercore $168 \u2014 all Outperform/Buy) drove the post-spinoff re-rating.",
+      "miss_reason": "Outside any active strategy's universe \u2014 FDXF has only 3 days of price history (listed 2026-06-01), so it cannot satisfy any minimum-history requirement for momentum or mean-reversion signals and was never seeded into any strategy's tradable universe.",
+      "suggestion": "Create a spinoff-watch list that auto-enrolls freshly listed spinoffs in the news-reactive strategy on day 1, waiving the minimum-history filter but capping position size at 50% of normal until 20 sessions of history accumulate.",
+      "failed": false
+    },
+    {
+      "ticker": "INCY",
+      "move_pct": 6.223,
+      "close": 97.98,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Phase 3 frontMIND ASCO data (tafasitamab + R-CHOP cut first-line DLBCL progression/death risk 25%) presented May 30; BofA and Stifel raised PTs to $124/$123 on Jun 3\u20134, sparking a post-conference analyst repricing rally.",
+      "miss_reason": "Outside any active strategy's universe. INCY is a large-cap biopharma (~$20B market cap) whose move was ASCO-readout driven with analyst PT hikes landing 2 sessions post-conference \u2014 quant entry signals structurally lag such catalyst-driven biotech repricing by design.",
+      "suggestion": "Add a clinical-catalyst overlay: auto-include S&P 500 biopharma names with confirmed ASCO/EHA plenary slots; enable a news-reactive entry gate within 2 sessions of a \u2265$3 analyst PT upgrade post-readout, provided intraday gap at trigger is \u2264+8%.",
+      "failed": false
+    },
+    {
+      "ticker": "URI",
+      "move_pct": 6.208,
+      "close": 1056.58,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "UBS raised URI price target to $1,145 from $1,025 (maintaining Buy), citing H2 2026 construction recovery in manufacturing, data centers, and power; easing 10-year yield to 4.46% amplified the move.",
+      "miss_reason": "Outside any active strategy's universe \u2014 URI is a large-cap US equipment rental name (~$1,057/share). The +6% move was analyst-upgrade-driven; without pre-market broker research ingestion, no signal existed before price action materialized.",
+      "suggestion": "Add a sell-side upgrade scanner: flag names with a tier-1 broker price-target raise \u2265+10% confirmed by pre-market volume \u22651.3\u00d7 30-day avg, then gate entry at the first 15-min candle close above the gap-up open.",
+      "failed": false
+    },
+    {
+      "ticker": "LITE",
+      "move_pct": -8.857,
+      "close": 938.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Profit-taking selloff after LITE surged ~14% the prior session on Nvidia CEO Jensen Huang's Computex commentary highlighting AI optical-networking demand; no new company-specific negative news.",
+      "miss_reason": "Outside any active strategy's universe. LITE ($938, +140% YTD) is a high-cap AI-photonics name; the -8.86% was a pure mean-reversion after a +14% prior-day sector-sentiment surge, requiring pre-existing long exposure or short capability to trade.",
+      "suggestion": "Add a prior-day momentum fade rule: names with D-1 gain \u2265+10% on sector sentiment (not earnings), RSI \u226580, and ADV \u2265$300M qualify for a next-session short-fade signal \u2014 requires enabling the short-selling module first.",
+      "failed": false
+    },
+    {
+      "ticker": "GPN",
+      "move_pct": -8.348,
+      "close": 67.85,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Susquehanna cut GPN price target $119\u2192$111 on June 3, flagging a more cautious travel-revenue exposure view and trimming FY2026 growth est. to 4%; stock extended losses ~8% into June 4.",
+      "miss_reason": "Outside any active strategy's universe. GPN is a large-cap payments-tech name (GICS 45203020) in a year-long downtrend; the universe gap itself is the miss \u2014 no filter ever evaluated it, so no entry or short signal was generated.",
+      "suggestion": "No actionable change for current long-only strategies; if short capability is added, implement a sell-side trigger: \u22651 PT cut \u22655% on a large-cap fintech name (GICS 4520) opens a short within 30 min of the next market open.",
+      "failed": false
+    },
+    {
+      "ticker": "CHTR",
+      "move_pct": -8.027,
+      "close": 129.01,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh catalyst; continued post-Q1-2026 earnings selldown (Apr 25: 120k broadband subs lost, EPS miss, capex +19%) as fiber and FWA competition accelerates; CHTR has fallen ~64% YoY.",
+      "miss_reason": "Outside any active strategy's universe. CHTR is a large-cap telecom in prolonged fundamental decline. The drop continues a post-Q1 trend with no fresh catalyst or gap setup; capturing it requires short capability the bot likely lacks.",
+      "suggestion": "(No actionable change \u2014 CHTR is outside risk tolerance; the move is a continuation short requiring short capability not currently modeled, and adding large-cap telecom to any existing strategy's universe would break its sector/factor scope.)",
+      "failed": false
+    },
+    {
+      "ticker": "NOW",
+      "move_pct": -7.638,
+      "close": 117.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "UBS 'Sell' downgrade (cut 2026 cRPO growth est. from 20%\u219216%, citing Armis integration margin compression + Middle East on-prem deal delays) accelerated a 3-day profit-taking slide after NOW's ~24% post-Q1-earnings surge.",
+      "miss_reason": "Outside any active strategy's universe. Even if added, the trade is a multi-session short of an overextended post-earnings gap \u2014 requiring short capability the bot does not have; the long-side entry was pre-earnings and outside rule-based signal scope.",
+      "suggestion": "No actionable change \u2014 catching the fade requires shorting a post-earnings overextension; wire a 'faded gap \u226515% + Day 2 close down \u22655% on rising volume' trigger only after short capability is enabled for the enterprise-software universe.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-04T19:34:58.517129+00:00"
+}
