@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-05",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 TPL +10%, MRNA +7%, SNDK +7%, FDXF +6%, INCY +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (LITE -9%, GPN -8%, CHTR -8%, NOW -8%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: TPL (+9.69%)",
+  "top_movers": [
+    {
+      "ticker": "TPL",
+      "move_pct": 9.692,
+      "close": 406.76,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "MRNA",
+      "move_pct": 7.493,
+      "close": 49.06,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "5-year KEYNOTE-942 Phase 2b data at ASCO (June 1) showed Moderna/Merck mRNA melanoma vaccine + Keytruda cut recurrence/death risk 49% and distant-metastasis risk 59% vs Keytruda alone, triggering pipeline re-rating.",
+      "miss_reason": "Outside any active strategy's universe. MRNA is a high-volatility biotech (43 moves >5% in the past year) and the move was seeded by an ASCO abstract published June 1 \u2014 a pre-market, event-calendar signal that front-ran any close-to-close technical or momentum trigger by 2\u20133 sessions.",
+      "suggestion": "Add a medical-conference event-gate: scan ASCO/ESMO abstract releases weekly, flag biotech names with data readouts in the next 5 days that clear a $5M ADTV floor, and allow the news-reactive strategy to enter at open on readout day if the intraday gap is \u226410%.",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": 6.708,
+      "close": 1831.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector bounce following June 4 semiconductor selloff; Barclays' June 3 Overweight upgrade ($2,300 target) and Q3 FY26 beat ($5.95B revenue, 251% YoY) sustained the AI NAND demand thesis, drawing buyers back.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SNDK is a Feb 2025 WDC spinoff with limited standalone history, ~$1,831 share price, and RSI ~74 at session start, all of which trigger standard min-history, share-price-cap, and overbought exclusion filters.",
+      "suggestion": "Add a post-spinoff sub-universe admitting WDC-class spinoffs after \u2265180 days of trading with min ADV $250M; relax RSI cap to 80 for names with a trailing-quarter earnings beat \u226520% above guidance top-end to capture NAND continuation moves.",
+      "failed": false
+    },
+    {
+      "ticker": "FDXF",
+      "move_pct": 6.257,
+      "close": 161.51,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FedEx completed spin-off of FedEx Freight (FDXF) on June 1; newly independent S&P 500 member saw post-spin price discovery and index-fund accumulation buying in its first week of independent trading.",
+      "miss_reason": "Outside any active strategy's universe \u2014 FDXF began trading June 1 (only 4 sessions old), too short for any momentum or mean-reversion lookback window. Spin-offs with no prior history are structurally invisible until sufficient data accrues.",
+      "suggestion": "Add a spin-off watchlist that auto-enrolls newly-listed S&P 500 spin-offs once they have \u226510 sessions of price history, bypassing the standard 20-day lookback gate for that initial eligibility window.",
+      "failed": false
+    },
+    {
+      "ticker": "INCY",
+      "move_pct": 6.223,
+      "close": 97.98,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Zilurgisertib Phase 2 FOP data accepted as ENDO 2026 late-breaking (announced Jun 4 after-close); reaffirms Sept 26 FDA PDUFA date and raised near-term approval probability.",
+      "miss_reason": "Outside any active strategy's universe \u2014 large-cap biotech (~$21B) likely excluded by sector or tier filter. Move was an after-close catalyst on June 4, requiring pre-market positioning that post-open signal strategies cannot capture.",
+      "suggestion": "Add catalyst-calendar coverage: flag biotech names holding FDA Priority Review PDUFA dates when a late-breaking Phase 2/3 abstract is accepted at a major conference (ENDO, EHA, ASCO), entering within 1\u20133 sessions of the announcement.",
+      "failed": false
+    },
+    {
+      "ticker": "URI",
+      "move_pct": 6.208,
+      "close": 1056.58,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "UBS raised URI price target to $1,145 from $1,025 (Buy maintained), citing increased conviction in a U.S. non-residential construction rebound in H2 2026\u20132027 driven by data centers, power, and manufacturing.",
+      "miss_reason": "Outside any active strategy's universe \u2014 URI is a large-cap industrial (~$30B+ market cap, ~$1,057/share) likely above the price-per-share or market-cap ceiling of configured universes. Move was analyst-upgrade-driven, requiring pre-note positioning not captured by post-signal technical filters.",
+      "suggestion": "Add a news-reactive rule that ingests analyst PT raises \u226510% with maintained Buy on large-cap industrials and opens a position within the first 30 minutes of the session, gated on day-of price gap \u22643% at open to avoid chasing.",
+      "failed": false
+    },
+    {
+      "ticker": "LITE",
+      "move_pct": -8.857,
+      "close": 938.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Lululemon's Q1 2026 guidance cut (revenue to $11.0\u201311.15B vs prior $11.35\u201311.5B) triggered a broad Nasdaq-100 selloff; LITE, up ~140% YTD and freshly added to the index, was sold as a high-beta AI/photonics proxy in the risk-off flush.",
+      "miss_reason": "Outside any active strategy's universe. At ~$938/share with 140%+ YTD momentum and Nasdaq-100 inclusion only since May, LITE likely breaches both price-per-share and position-size thresholds; the move was sector contagion from LULU earnings, not a LITE-specific pre-open signal \u2014 reactive entry would have required overn",
+      "suggestion": "Add a Nasdaq-100 earnings-contagion rule: when a Nasdaq-100 name misses revenue guidance by \u22655% after-hours, flag high-beta AI names (beta \u22651.5, RSI \u226570 prior day) for mean-reversion short entry \u226530 min after open, subject to existing dollar-volume floor.",
+      "failed": false
+    },
+    {
+      "ticker": "GPN",
+      "move_pct": -8.348,
+      "close": 67.85,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Susquehanna cut GPN's Q2 revenue-growth estimate to 3.2% (from ~5%), flagging cautious travel-related payment volume exposure; selling that began ~10% on June 3 continued into June 5 amid broader Nasdaq tech weakness (-3%).",
+      "miss_reason": "GPN is outside any active strategy's universe \u2014 it is a large-cap S&P 500 payment processor not covered by sector filters. The move also unfolded as a multi-day analyst-estimate-revision selloff starting June 3, not a clean intraday gap a news-reactive system could catch pre-open.",
+      "suggestion": "Expand universe to include large-cap fintech S&P 500 constituents and add a sell-side estimate-cut trigger: if \u22651 analyst cuts revenue growth estimate >1% on a covered name, flag for short-entry within 2 sessions for strategies with short capability.",
+      "failed": false
+    },
+    {
+      "ticker": "CHTR",
+      "move_pct": -8.027,
+      "close": 129.01,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "California CPUC delay risk on $34.5B Cox merger (Sept 15 federal refiling deadline) plus ongoing broadband subscriber erosion and analyst consensus cut to 'Reduce'; no single discrete June-5 catalyst confirmed.",
+      "miss_reason": "Outside any active strategy's universe. CHTR is a leveraged large-cap cable name in structural broadband decline (-120K subscribers Q1) carrying a $34.5B M&A binary event \u2014 profile excluded by filters screening deteriorating fundamentals and deal-close overhang.",
+      "suggestion": "(no actionable change \u2014 capturing this decline requires short capability the bot lacks; CHTR was correctly excluded long-side given structural broadband erosion, heavy leverage, and unresolved merger risk)",
+      "failed": false
+    },
+    {
+      "ticker": "NOW",
+      "move_pct": -7.638,
+      "close": 117.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "May NFP print of 172k vs. 85k est. sharply reduced rate-cut expectations, triggering a broad sell-off in high-multiple growth tech; no company-specific news on ServiceNow.",
+      "miss_reason": "Outside any active strategy's universe \u2014 NOW is a large-cap enterprise SaaS name not covered by current filters. The decline was macro-driven (rates repricing on a jobs beat), making single-stock pre-positioning via technical or news signals essentially impossible.",
+      "suggestion": "(no actionable change for long-only strategies) \u2014 if short capability exists, add a macro-event gate: on NFP surprise > 50k, allow short entries in high-P/E tech names (forward P/E > 40) within 15 min of the data release.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-05T19:34:52.446623+00:00"
+}
