@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-05",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 BNZL.L +5%, RWE.DE +4%, SSE.L +4%, HWDN.L +3%, TSCO.L +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (AKZA.AS -17%, PRX.AS -6%, G24.DE -5%, ADYEN.AS -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: AKZA.AS (-17.22%) \u2014 Nippon Paint and Sherwin-Williams formally withdrew their joint \u20ac73/share all-cash takeover bid on 3 June after AkzoNobel's board rejected both offers; shares continued unwinding the acquisition premium through 5 June close. Why we passed: Outside any active strategy's universe. AKZA.AS is a large-cap STOXX 600 Dutch industrials name trading at an M&A-inflated price; the -17% move is a pure contested-takeover-premium collapse, structurally unreadable from price action, volume, or momentum signals in advance.",
+  "top_movers": [
+    {
+      "ticker": "BNZL.L",
+      "move_pct": 4.733,
+      "close": 23.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Macro defensive rotation into FTSE 100 distributors; no company RNS on Jun 5. Extended Jun 3 +3% move; last catalyst Apr 22 Q1 statement reaffirming FY26 guidance (+2% underlying revenue growth).",
+      "miss_reason": "Outside any active strategy's universe. BNZL.L is a \u00a37.6B FTSE 100 support-services large-cap; Jun 5 move followed a Jun 3 +3% session, so RSI ceiling and gap-extension filters would likely have flagged it as over-extended at open.",
+      "suggestion": "Expand the large-cap UK strategy's universe to include FTSE 100 Support Services names (e.g. BNZL.L); then apply a defensive-rotation entry filter: day-2 continuation allowed if prior session gain \u2265 2% and RSI < 72.",
+      "failed": false
+    },
+    {
+      "ticker": "RWE.DE",
+      "move_pct": 3.665,
+      "close": 57.14,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Jefferies raised RWE price target \u20ac61\u2192\u20ac63 (Buy maintained) on Jun 5, calling the ~10% April-peak pullback a buying opportunity; triggered two days after the \u20ac1.5B share buyback programme completed.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RWE is a DAX large-cap integrated utility (~\u20ac30B mkt cap). Analyst-upgrade moves require pre-event positioning or sub-minute reactive signals unavailable for names outside the scanning universe.",
+      "suggestion": "Add a DAX/STOXX utility watchlist tier that fires on analyst price-target upgrades \u22655% coinciding with \u22658% prior-30-day drawdown; size at \u00bc normal notional to contain sector-concentration risk.",
+      "failed": false
+    },
+    {
+      "ticker": "SSE.L",
+      "move_pct": 3.546,
+      "close": 23.36,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "SSE FY2026 EPS of 153.5p beat 147\u2013152p guidance; Board lifted dividend 7%; JPMorgan raised PT to 2600p and RBC to 2475p post-results, sustaining buying into early June.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SSE.L is a FTSE 100 regulated utility (~\u00a322B cap) too low-volatility for momentum/mean-reversion screens. The gain also lagged the May 28 earnings release by 5 sessions as analyst upgrades trickled in, defeating post-close signal entry.",
+      "suggestion": "Add a post-results analyst-sweep rule: admit large-cap names with EPS beat \u22653% and \u22652 sell-side PT upgrades within 5 sessions of results; enter next open only if RSI < 65 and price < 1.05\u00d7 results-day close.",
+      "failed": false
+    },
+    {
+      "ticker": "HWDN.L",
+      "move_pct": 3.179,
+      "close": 7.79,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Howden Joinery announced acquisition of online kitchen retailer DIY Kitchens for \u00a3390m (\u00a3292.5m cash + \u00a397.5m shares), expected immediately EPS-accretive; concurrent \u00a350m share buyback commenced 3 Jun 2026.",
+      "miss_reason": "Outside any active strategy's universe \u2014 HWDN.L is a FTSE 100 large-cap (~\u00a34-5bn) UK kitchen-fittings retailer not covered by current strategy universes. Move was M&A-driven via an RNS filing; pre-market positioning is structurally impossible for post-signal strategies.",
+      "suggestion": "Integrate an LSE RNS feed monitor: when a universe-adjacent name (FTSE 100/250, UK consumer/building materials sector) files a material acquisition or buyback RNS, auto-add to news-reactive strategy's watchlist and allow same-session entry within 30 minutes of filing.",
+      "failed": false
+    },
+    {
+      "ticker": "TSCO.L",
+      "move_pct": 3.043,
+      "close": 4.436,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Ongoing \u00a3750m share buyback (~2M shares repurchased daily at escalating prices: 433p on 2 Jun \u2192 446p on 4 Jun) provided consistent mechanical buy pressure, ratcheting the price up through the week.",
+      "miss_reason": "Outside any active strategy's universe. TSCO.L is a FTSE 100 large-cap defensive grocer; the move was buyback-driven and gradual rather than a sharp gap or momentum breakout, offering no high-conviction signal for short-horizon momentum or news-reactive strategies.",
+      "suggestion": "Add an RNS buyback-flow filter: names executing \u22650.03% of float/day via 'Transaction in Own Shares' disclosures qualify for a low-volatility trend overlay, capturing steady buyback-supported climbs without requiring a gap signal.",
+      "failed": false
+    },
+    {
+      "ticker": "SBRY.L",
+      "move_pct": 2.801,
+      "close": 3.046,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Weekly 'Transaction in Own Shares' RNS (07:00 BST) confirmed 6.08M shares repurchased at 297\u2013302p in the prior week, providing visible price support one day after the 9.6p final dividend ex-date (4 June) reset the stock lower.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SBRY is a FTSE 100 large-cap UK grocery staple (~\u00a36bn mkt cap) with muted day-to-day volatility; the +2.80% move was mechanical (buyback floor meeting post-ex-div reset), not a clean momentum breakout or pre-announced catalyst that a news-reactive or gap-and-go filter would surf",
+      "suggestion": "Add a 'buyback-support' scan: when a LSE name's weekly Transaction in Own Shares RNS discloses \u22655M shares bought at a VWAP within 2% of the prior session close, flag it for the momentum strategy's universe that day with a half-size position cap.",
+      "failed": false
+    },
+    {
+      "ticker": "AKZA.AS",
+      "move_pct": -17.219,
+      "close": 55.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Nippon Paint and Sherwin-Williams formally withdrew their joint \u20ac73/share all-cash takeover bid on 3 June after AkzoNobel's board rejected both offers; shares continued unwinding the acquisition premium through 5 June close.",
+      "miss_reason": "Outside any active strategy's universe. AKZA.AS is a large-cap STOXX 600 Dutch industrials name trading at an M&A-inflated price; the -17% move is a pure contested-takeover-premium collapse, structurally unreadable from price action, volume, or momentum signals in advance.",
+      "suggestion": "Maintain a live contested-takeover watchlist; when \u22652 competing bids exist, flag the name as news-reactive-only and trigger a short entry within 5 min of a bid-withdrawal headline if the pre-open indicated gap exceeds -10%, capped at a 2-session holding window.",
+      "failed": false
+    },
+    {
+      "ticker": "PRX.AS",
+      "move_pct": -5.505,
+      "close": 40.25,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Tencent (0700.HK) extended its Q1 selloff to multi-month lows (430 HKD, Jun 2) on a revenue miss (\u00a5196.5B vs \u00a5199B est.) and AI competition from ByteDance; dragged PRX as Tencent represents ~85% of Prosus NAV.",
+      "miss_reason": "Outside any active strategy's universe. Prosus is a Dutch holding company whose value tracks Tencent HK (~85% NAV). EU strategies typically filter NAV proxies for non-European underlyings; the alpha is captured at HK open, not EU close.",
+      "suggestion": "Add a `china_tech_proxy` screen: if 0700.HK closes \u22652% lower overnight, flag PRX.AS for pre-open universe inclusion \u2014 wiring the HK signal into the EU universe gate would have caught today's 5.5% gap.",
+      "failed": false
+    },
+    {
+      "ticker": "G24.DE",
+      "move_pct": -5.339,
+      "close": 71.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "AGM pre-meeting buyback blackout began June 5\u201317, suspending Scout24's active \u20ac250M second-tranche share repurchase programme and removing its mechanical daily demand floor; no new fundamental news on the day.",
+      "miss_reason": "Outside any active strategy's universe \u2014 G24.DE is a mid-cap MDAX classifieds/proptech name (~\u20ac5B mktcap) likely below the bot's sector-coverage or liquidity threshold. The drop was a mechanical supply/demand event (buyback pause), not a momentum or news signal the bot's filters monitor.",
+      "suggestion": "Add a 'buyback blackout' pre-signal: flag MDAX/SDAX names with an active \u2265\u20ac100M repurchase tranche whose AGM suspension window starts within 2 sessions, and route them to the short watchlist for that day \u2014 buyback-pause selloffs are dateable and repeatable.",
+      "failed": false
+    },
+    {
+      "ticker": "ADYEN.AS",
+      "move_pct": -4.697,
+      "close": 848.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued bleed from May 27 CFO Tandowsky surprise departure (stock fell 3% on day-of); compounded by Q1 2026 net revenue miss (\u20ac620.8M vs \u20ac621.3M est) and ongoing sell-side price-target cuts averaging -19% over 3 months.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ADYEN.AS is a ~\u20ac28B large-cap Euronext Amsterdam payments processor likely above the bot's market-cap band or outside its sector filters. The June 5 leg is a multi-day continuation drift, not a sharp same-session catalyst gap that news-reactive entry signals target.",
+      "suggestion": "Add a 'leadership-exit trailing window' rule: flag names with a CFO/CEO surprise departure in the prior 5\u201310 sessions and unresolved downward price drift >3%; a short-side mean-reversion entry on day 5\u20137 post-announcement captures the delayed institutional unwind.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-05T15:05:26.018422+00:00"
+}
