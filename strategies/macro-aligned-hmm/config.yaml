@@ -1,0 +1,47 @@
+id: macro-aligned-hmm
+display_name: Macro aligned (variant)
+description: "Auto-spawned variant of macro-aligned on 2026-06-07 by the weekly evolution\
+  \ agent. Reason: Anchored in arxiv 2605.27848; breaks the signal-source axis by\
+  \ replacing the hand-coded single macro trigger with probabilistic multi-factor\
+  \ regime state estimation (VIX + SPY + TLT). The parent is the strongest executor\
+  \ in the slate (+699 GBP, 25 trades, 1.497% avg PnL) but its all-weather deployment\
+  \ leaves regime-risk on the table \u2014 the HMM variant addresses exactly this\
+  \ structural gap."
+implementation: llm
+active: true
+capital_gbp: 10000
+max_positions: 3
+max_position_pct: 30
+min_position_gbp: 50
+use_stops: true
+use_take_profits: true
+stop_loss_pct: -3.5
+take_profit_pct: 3.0
+tools:
+- get_universe
+- get_history
+- get_technicals
+- get_recent_news
+- get_sector_strength
+- get_macro_view
+- get_daily_news_brief
+model_assignment:
+  wide_scoring: haiku
+  deep_analysis: sonnet
+  final_select: sonnet
+runs_in:
+- region: us
+  tier: shadow
+  universe: t212_isa_us
+  alpaca_slot: null
+- region: uk-eu
+  tier: shadow
+  t212_slot: null
+  universe: t212_isa_uk_eu
+  alpaca_slot: null
+skip_if_earnings_in_days: 1
+prefilter_mode: python
+prefilter_top_n: 100
+prefilter_sort_key: dollar_volume_desc
+last_tune_date: '2026-05-27'
+cost_gate_multiplier: 2.0

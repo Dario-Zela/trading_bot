@@ -31,12 +31,9 @@ runs_in:
   tier: alpaca-paper
   alpaca_slot: 1
   universe: t212_isa_us
-  tier2_candidate: true
-  tier2_marked_at: '2026-05-30'
-  tier2_thesis: IC 0.303 / n=299 is the only sleeve above the shadow T2 evidence
-    floor (IC ≥ 0.25, n ≥ 200); promoted into the Alpaca slot freed by
-    momentum-trader@us demote so we can stress-test fee-net P&L against the
-    new 2.0x cost gate.
+  tier2_candidate: false
+  tier2_marked_at: null
+  tier2_thesis: ''
 - region: uk-eu
   tier: shadow
   t212_slot: null

@@ -6,7 +6,7 @@ description: "Deterministic baseline. Buys top-N highest previous-day % gainers 
   \ + EU blue chips in the UK/EU pipeline. The yardstick every\nother strategy must\
   \ beat in each region.\n"
 implementation: rule_based
-active: true
+active: false
 capital_gbp: 10000
 max_positions: 5
 max_position_pct: 30
@@ -20,9 +20,6 @@ runs_in:
 - region: uk-eu
   tier: shadow
   universe: t212_isa_uk_eu
-# Phase 8C — drop candidates with earnings inside the window. Technical
-# signal becomes unreliable across a binary print, so we avoid the day.
 skip_if_earnings_in_days: 1
-# Rule-based — does its own sorting (top previous-day gainers). No
-# pre-filter needed because the strategy's whole job IS the filter.
-prefilter_mode: "off"
+prefilter_mode: 'off'
+deactivated_at: '2026-06-07'

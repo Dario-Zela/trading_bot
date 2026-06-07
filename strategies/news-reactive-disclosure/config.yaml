@@ -1,0 +1,48 @@
+id: news-reactive-disclosure
+display_name: News reactive (variant)
+description: "Auto-spawned variant of news-reactive on 2026-06-07 by the weekly evolution\
+  \ agent. Reason: Anchored in arxiv 2605.05211; breaks the signal-source axis (structured\
+  \ disclosure + insider cluster as primary signal, sentiment demoted to confirmation-only)\
+  \ and the trigger axis (entries cluster around structured disclosure windows rather\
+  \ than daily continuous rebalancing). The parent's IC collapse is the empirical\
+  \ trigger \u2014 this variant treats regime-specific sentiment as the structural\
+  \ flaw to fix."
+implementation: llm
+active: true
+capital_gbp: 10000
+max_positions: 3
+max_position_pct: 30
+min_position_gbp: 50
+use_stops: true
+use_take_profits: true
+stop_loss_pct: -3.0
+take_profit_pct: 3.0
+last_tune_date: '2026-05-30'
+tools:
+- get_universe
+- get_history
+- get_recent_news
+- get_earnings_info
+- get_filing_summary
+- get_insider_trades
+- get_daily_news_brief
+model_assignment:
+  wide_scoring: haiku
+  deep_analysis: sonnet
+  final_select: sonnet
+runs_in:
+- region: us
+  tier: shadow
+  alpaca_slot: null
+  universe: t212_isa_us
+  tier2_candidate: false
+  tier2_marked_at: null
+  tier2_thesis: ''
+- region: uk-eu
+  tier: shadow
+  t212_slot: null
+  universe: t212_isa_uk_eu
+  alpaca_slot: null
+prefilter_mode: llm
+prefilter_top_n: 50
+cost_gate_multiplier: 3.0

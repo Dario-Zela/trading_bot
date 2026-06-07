@@ -1,51 +1,36 @@
 id: sector-rotator
-display_name: "Sector rotator"
-description: |
-  LLM-driven. Trades sector ETFs based on relative momentum and macro
-  alignment. US: SPDR sector ETFs (XLF, XLE, XLK, ...). UK/EU: GBP-
-  denominated iShares MSCI Europe sector ETFs (ESIF.L, ESIT.L, ...) —
-  GBP avoids the FX fee the older EUR STOXX-600 lines carried. Same
-  strategy bias, different ETF universe per region.
-
+display_name: Sector rotator
+description: "LLM-driven. Trades sector ETFs based on relative momentum and macro\n\
+  alignment. US: SPDR sector ETFs (XLF, XLE, XLK, ...). UK/EU: GBP-\ndenominated iShares\
+  \ MSCI Europe sector ETFs (ESIF.L, ESIT.L, ...) \u2014\nGBP avoids the FX fee the\
+  \ older EUR STOXX-600 lines carried. Same\nstrategy bias, different ETF universe\
+  \ per region.\n"
 implementation: llm
 active: true
-
 capital_gbp: 10000
 max_positions: 4
 max_position_pct: 40
 min_position_gbp: 100
-
 use_stops: true
 use_take_profits: true
 stop_loss_pct: -4.0
 take_profit_pct: 3.0
 cost_gate_multiplier: 3.0
 last_tune_date: '2026-05-28'
-
 tools:
-  - get_universe
-  - get_history
-  - get_technicals
-  - get_sector_strength
-  - get_macro_view
-
+- get_universe
+- get_history
+- get_technicals
+- get_sector_strength
+- get_macro_view
 model_assignment:
   wide_scoring: haiku
   deep_analysis: sonnet
   final_select: sonnet
-
 runs_in:
-  # US sleeve deprecated: the native US SPDR sector ETFs (XLE, XLK, ...)
-  # aren't available on T212 (NYSE-listed, no PRIIPs KID for UK retail),
-  # so a US sector sleeve could never go live on the ISA. UK-EU only —
-  # the GBP MSCI Europe sector ETFs are ISA-eligible and FX-free.
-  - region: uk-eu
-    tier: trading212-paper
-    t212_slot: 1
-    universe: eu_etfs_sector
-# LLM strategies use the Sonnet-driven per-strategy pre-filter so the
-# universe is narrowed with the strategy's lens before the expensive
-# technicals fetch + Stage-1 Haiku scoring. See prompts/prefilter.md
-# for this strategy's filter prompt. Tunable by evolution agent.
+- region: uk-eu
+  tier: shadow
+  t212_slot: null
+  universe: eu_etfs_sector
 prefilter_mode: llm
 prefilter_top_n: 100
