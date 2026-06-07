@@ -49,6 +49,14 @@ jobs:
           ALPACA_API_SECRET__3: ${{ secrets.ALPACA_API_SECRET__3 }}
         run: python scripts/midday_trail.py --brokers alpaca --shadow-region us
 
+      - name: Rebuild dashboard
+        # The midday-trail step can close shadow/broker positions and
+        # add their P&L to the ledger. Without this rebuild, docs/data.json
+        # stays frozen at whatever snapshot the last pipeline run wrote,
+        # so today_pnl_gbp for the US region reads 0 even when the
+        # midday TPs (often the day's biggest winners) actually fired.
+        run: python -m trading_bot.dashboard.build || echo "dashboard build failed (non-fatal)"
+
       - name: Commit ledger changes back
         # Shadow midday TP and broker-side trail mutations touch
         # state/ledger.jsonl + state/trail_exits.jsonl on the runner.
@@ -57,7 +65,7 @@ jobs:
         run: |
           git config user.name "trading-bot[bot]"
           git config user.email "trading-bot@users.noreply.github.com"
-          git add state/ledger.jsonl state/trail_exits.jsonl || true
+          git add state/ledger.jsonl state/trail_exits.jsonl docs/data.json || true
           if git diff --cached --quiet; then
             echo "No ledger mutations; skipping commit"
             exit 0
