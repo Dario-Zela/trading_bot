@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-08",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 COO +9%, FDXF +6%, CLX +5%, KVUE +5%, KMB +5%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (MU -13%, TER -12%, FSLR -11%, SNDK -11%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: MU (-13.25%) \u2014 Broadcom Q2 earnings failed to raise full-year AI revenue target; reports emerged Nvidia may halve memory per Rubin NVL72 rack, directly threatening HBM demand; NASDAQ fell 4.2% \u2014 worst semiconductor index day in 6 years. Why we passed: Outside any active strategy's universe. MU is a large-cap NASDAQ semiconductor (~$860); the -13% flush was driven by Broadcom peer-earnings + an Nvidia supply-chain report \u2014 both require pre-market positioning before intraday signals fire.",
+  "top_movers": [
+    {
+      "ticker": "COO",
+      "move_pct": 8.578,
+      "close": 67.34,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 FY2026 earnings beat: Non-GAAP EPS $1.21 vs $1.10 est (10th consecutive beat), revenue $1.08B +8% YoY; CooperSurgical strategic-sale process drawing 'robust interest' clears 2023 recall overhang.",
+      "miss_reason": "Outside any active strategy's universe. COO had been down ~24% YTD and trading near its 52-week low pre-earnings \u2014 chronic downtrend disqualifies it from momentum screens; the +8.58% move is a pure post-earnings gap driven by event risk that resolved bullishly, invisible to pre-market technical filters.",
+      "suggestion": "Add a post-earnings gap gate: names with \u22658/10 prior beat history that gap \u2265+5% on \u22651.5\u00d7 avg volume at open within 3 sessions of a scheduled earnings date enter the universe temporarily for a momentum-chase entry with a hard 5-session hold limit.",
+      "failed": false
+    },
+    {
+      "ticker": "FDXF",
+      "move_pct": 6.22,
+      "close": 178.28,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Ongoing post-spin price discovery and index rebalancing demand as transport indices absorb new S&P 500 member FDXF (FedEx Freight, spun off June 1); no single fresh news catalyst identified for June 8.",
+      "miss_reason": "Outside any active strategy's universe \u2014 FDXF debuted June 1 (8 days of history), lacking the minimum OHLCV lookback for momentum/mean-reversion signal construction; spin-off newness also means no established ATR or volume baseline for filter comparison.",
+      "suggestion": "Create a spin-off watchlist that auto-enrolls names with \u22655 sessions of post-debut history into a dedicated new-issue momentum sleeve using a short-window ATR (5-day) in place of the standard lookback, with position size capped at \u22640.5\u00d7 normal.",
+      "failed": false
+    },
+    {
+      "ticker": "CLX",
+      "move_pct": 5.032,
+      "close": 94.14,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Improved gross-margin guidance (ERP stabilization tracking faster than the Q3 miss implied) relieved a ~23% YTD drawdown; new Clorox Healthcare disinfecting wipes launch added secondary product-momentum.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CLX is a ~$11B large-cap consumer staples name not covered by current sector filters. The move was guidance-relief-driven, requiring pre-event positioning that post-signal momentum strategies cannot capture.",
+      "suggestion": "Add a beaten-down large-cap watchlist: consumer staples with mktcap >$5B and price down >15% YTD; trigger a mean-reversion long at open when a guidance/earnings event produces a pre-market gap \u2265+3%, with 2-day max hold and 2% hard stop.",
+      "failed": false
+    },
+    {
+      "ticker": "KVUE",
+      "move_pct": 4.917,
+      "close": 17.71,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "India's Competition Commission cleared the Kimberly-Clark acquisition of Kenvue, removing a key international regulatory hurdle and compressing the deal-spread as H2 2026 close probability rose.",
+      "miss_reason": "Outside any active strategy's universe. KVUE is a pending-M&A special situation (KMB cash-and-stock deal, shareholders approved 96-99% in Jan 2026); the stock was range-bound for months with suppressed momentum signals until the binary regulatory event fired \u2014 invisible to RSI/mean-reversion and volume-breakout filters",
+      "suggestion": "Add a merger-arb watchlist seeded from SEC 8-K deal announcements; when a foreign regulatory clearance press release is detected for a watchlist name, route it to the news-reactive strategy with a capped 0.5% NAV position and 5-day holding limit.",
+      "failed": false
+    },
+    {
+      "ticker": "KMB",
+      "move_pct": 4.838,
+      "close": 99.04,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "EC cleared KMB's IFP international portfolio sale (Suzano), removing a key overhang; CEO/CFO added upbeat guidance commentary at Deutsche Bank consumer conference the same day.",
+      "miss_reason": "Outside any active strategy's universe. KMB (large-cap consumer staples, -22% prior-year) sits outside momentum screens. The move was EU regulatory clearance for IFP divestiture \u2014 event-driven pre-positioning play, not post-signal reactive.",
+      "suggestion": "Build a corporate-event watch list for pending regulatory decisions on large-cap divestitures; allow catalyst-reactive entry within 30 min of clearance announcement if intraday gap \u2265 +3% on \u22651.5\u00d7 avg volume.",
+      "failed": false
+    },
+    {
+      "ticker": "ALL",
+      "move_pct": 4.824,
+      "close": 221.01,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Keefe Bruyette raised PT $260\u2192$266 (Outperform) and BMO raised PT $249\u2192$250, continuing a post-Q1 re-rating wave after Allstate reported $10.65 adj. EPS and $16.9B revenue with a $4B buyback.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ALL is a large-cap P&C insurer (~$55B market cap) likely excluded by sector/cap filters. Catalyst was a lagged analyst re-rating 40+ days post-earnings, not an intraday signal momentum strategies can front-run.",
+      "suggestion": "Add a post-earnings analyst-upgrade scanner: flag large-cap names receiving \u22652 PT raises within 45 days of earnings; enter on the day of the second upgrade with a 2% intraday gap-up confirmation filter.",
+      "failed": false
+    },
+    {
+      "ticker": "MU",
+      "move_pct": -13.252,
+      "close": 864.01,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Broadcom Q2 earnings failed to raise full-year AI revenue target; reports emerged Nvidia may halve memory per Rubin NVL72 rack, directly threatening HBM demand; NASDAQ fell 4.2% \u2014 worst semiconductor index day in 6 years.",
+      "miss_reason": "Outside any active strategy's universe. MU is a large-cap NASDAQ semiconductor (~$860); the -13% flush was driven by Broadcom peer-earnings + an Nvidia supply-chain report \u2014 both require pre-market positioning before intraday signals fire.",
+      "suggestion": "Add a peer-earnings contagion gate: when a mega-cap semi (AVGO, NVDA) fails to raise AI guidance, scan for HBM-exposed names with >5% gap-down pre-market and route them into the news-reactive strategy's universe for that session only.",
+      "failed": false
+    },
+    {
+      "ticker": "TER",
+      "move_pct": -12.026,
+      "close": 357.93,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "FSLR",
+      "move_pct": -11.411,
+      "close": 279.01,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Seeking Alpha analyst rating downgrade citing Section 45X tax-credit margin sustainability risk, combined with S&P 500 -2.65% broad selloff and ongoing ITC Section 337 TOPCon investigation uncertainty, reversing a ~47% one-month rally.",
+      "miss_reason": "Outside any active strategy's universe. FSLR's ~47% prior-month surge likely placed RSI in extreme overbought territory; the triggering catalyst was a sentiment/analyst-downgrade event on policy-dependent earnings, requiring pre-event intelligence unavailable to purely technical signal-driven strategies.",
+      "suggestion": "Add large-cap clean-energy names (FSLR, ENPH, RUN) to a gap-fade/mean-reversion universe gated by prior-month gain \u226530% AND RSI >72; an analyst-downgrade news filter at open would have flagged this reversal entry on June 5.",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": -11.386,
+      "close": 1559.3199,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Stronger-than-expected US jobs report (June 8) reignited Fed rate-hike fears, sparking a broad semiconductor sell-off; Broadcom's below-consensus guidance also cascaded into memory-sector peers including SNDK.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SNDK is a large-cap (~$1,500+/share) AI-memory name likely above price or market-cap universe filters. The -11% drop was macro/sector-driven (rates shock + Broadcom contagion), with no single-stock catalyst for a news-reactive entry.",
+      "suggestion": "Extend the momentum universe to cover large-cap NAND/flash names (SNDK, MU) and add a semis-bellwether trigger: when AVGO or a peer misses guidance by \u22655%, pre-qualify the memory group for same-session momentum-short signals if short capability exists.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-08T19:35:47.008966+00:00"
+}
