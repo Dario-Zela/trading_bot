@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-08T15:44:42.223795+00:00",
+  "generated_at": "2026-06-08T16:30:40.742052+00:00",
   "as_of_iso": "2026-06-08",
   "regions": [
     "uk-eu",
@@ -29,12 +29,12 @@
       "tiers": [
         "shadow"
       ],
-      "today_pnl_gbp": -185.03,
-      "today_n_trades": 19,
-      "alltime_pnl_gbp": -12005.55,
-      "alltime_n_trades": 491,
-      "alltime_n_wins": 108,
-      "alltime_hit_rate": 0.22,
+      "today_pnl_gbp": 603.53,
+      "today_n_trades": 26,
+      "alltime_pnl_gbp": -11216.99,
+      "alltime_n_trades": 498,
+      "alltime_n_wins": 115,
+      "alltime_hit_rate": 0.231,
       "regions": {
         "uk-eu": {
           "today_pnl_gbp": -185.03,
@@ -43,104 +43,15 @@
           "alltime_n_trades": 286
         },
         "us": {
-          "today_pnl_gbp": 0.0,
-          "today_n_trades": 0,
-          "alltime_pnl_gbp": -7926.36,
-          "alltime_n_trades": 205
+          "today_pnl_gbp": 788.56,
+          "today_n_trades": 7,
+          "alltime_pnl_gbp": -7137.8,
+          "alltime_n_trades": 212
         }
       }
     }
   },
   "sector_exposure": {
-    "us": {
-      "by_sector": [
-        {
-          "sector": "Technology",
-          "gbp": 77997.75,
-          "pct": 44.2,
-          "pct_1d": 44.9,
-          "pct_1w": 39.4,
-          "delta_1d_pct": -0.7,
-          "delta_1w_pct": 4.8
-        },
-        {
-          "sector": "Energy",
-          "gbp": 22801.3,
-          "pct": 12.9,
-          "pct_1d": 11.5,
-          "pct_1w": 11.8,
-          "delta_1d_pct": 1.4,
-          "delta_1w_pct": 1.1
-        },
-        {
-          "sector": "Healthcare",
-          "gbp": 21813.06,
-          "pct": 12.4,
-          "pct_1d": 12.6,
-          "pct_1w": 14.9,
-          "delta_1d_pct": -0.2,
-          "delta_1w_pct": -2.5
-        },
-        {
-          "sector": "Industrials",
-          "gbp": 19637.45,
-          "pct": 11.1,
-          "pct_1d": 11.3,
-          "pct_1w": 10.7,
-          "delta_1d_pct": -0.2,
-          "delta_1w_pct": 0.4
-        },
-        {
-          "sector": "Financial Services",
-          "gbp": 11049.41,
-          "pct": 6.3,
-          "pct_1d": 6.4,
-          "pct_1w": 7.5,
-          "delta_1d_pct": -0.1,
-          "delta_1w_pct": -1.2
-        },
-        {
-          "sector": "Consumer Defensive",
-          "gbp": 10135.61,
-          "pct": 5.7,
-          "pct_1d": 5.8,
-          "pct_1w": 6.9,
-          "delta_1d_pct": -0.1,
-          "delta_1w_pct": -1.2
-        },
-        {
-          "sector": "Consumer Cyclical",
-          "gbp": 8501.78,
-          "pct": 4.8,
-          "pct_1d": 4.9,
-          "pct_1w": 5.8,
-          "delta_1d_pct": -0.1,
-          "delta_1w_pct": -1.0
-        },
-        {
-          "sector": "Utilities",
-          "gbp": 2695.22,
-          "pct": 1.5,
-          "pct_1d": 1.6,
-          "pct_1w": 1.8,
-          "delta_1d_pct": -0.1,
-          "delta_1w_pct": -0.3
-        },
-        {
-          "sector": "Real Estate",
-          "gbp": 1765.44,
-          "pct": 1.0,
-          "pct_1d": 1.0,
-          "pct_1w": 1.2,
-          "delta_1d_pct": 0.0,
-          "delta_1w_pct": -0.2
-        }
-      ],
-      "total_gbp": 176397.02,
-      "n_trades": 68,
-      "n_open": 2,
-      "n_closed": 66
-    },
     "uk-eu": {
       "by_sector": [
         {
@@ -256,6 +167,95 @@
       "n_trades": 56,
       "n_open": 0,
       "n_closed": 56
+    },
+    "us": {
+      "by_sector": [
+        {
+          "sector": "Technology",
+          "gbp": 77997.75,
+          "pct": 44.2,
+          "pct_1d": 44.9,
+          "pct_1w": 39.4,
+          "delta_1d_pct": -0.7,
+          "delta_1w_pct": 4.8
+        },
+        {
+          "sector": "Energy",
+          "gbp": 22801.3,
+          "pct": 12.9,
+          "pct_1d": 11.5,
+          "pct_1w": 11.8,
+          "delta_1d_pct": 1.4,
+          "delta_1w_pct": 1.1
+        },
+        {
+          "sector": "Healthcare",
+          "gbp": 21813.06,
+          "pct": 12.4,
+          "pct_1d": 12.6,
+          "pct_1w": 14.9,
+          "delta_1d_pct": -0.2,
+          "delta_1w_pct": -2.5
+        },
+        {
+          "sector": "Industrials",
+          "gbp": 19637.45,
+          "pct": 11.1,
+          "pct_1d": 11.3,
+          "pct_1w": 10.7,
+          "delta_1d_pct": -0.2,
+          "delta_1w_pct": 0.4
+        },
+        {
+          "sector": "Financial Services",
+          "gbp": 11049.41,
+          "pct": 6.3,
+          "pct_1d": 6.4,
+          "pct_1w": 7.5,
+          "delta_1d_pct": -0.1,
+          "delta_1w_pct": -1.2
+        },
+        {
+          "sector": "Consumer Defensive",
+          "gbp": 10135.61,
+          "pct": 5.7,
+          "pct_1d": 5.8,
+          "pct_1w": 6.9,
+          "delta_1d_pct": -0.1,
+          "delta_1w_pct": -1.2
+        },
+        {
+          "sector": "Consumer Cyclical",
+          "gbp": 8501.78,
+          "pct": 4.8,
+          "pct_1d": 4.9,
+          "pct_1w": 5.8,
+          "delta_1d_pct": -0.1,
+          "delta_1w_pct": -1.0
+        },
+        {
+          "sector": "Utilities",
+          "gbp": 2695.22,
+          "pct": 1.5,
+          "pct_1d": 1.6,
+          "pct_1w": 1.8,
+          "delta_1d_pct": -0.1,
+          "delta_1w_pct": -0.3
+        },
+        {
+          "sector": "Real Estate",
+          "gbp": 1765.44,
+          "pct": 1.0,
+          "pct_1d": 1.0,
+          "pct_1w": 1.2,
+          "delta_1d_pct": 0.0,
+          "delta_1w_pct": -0.2
+        }
+      ],
+      "total_gbp": 176397.02,
+      "n_trades": 68,
+      "n_open": 2,
+      "n_closed": 66
     },
     "all": {
       "by_sector": [
@@ -38531,12 +38531,12 @@
       "tier2_marked_at": null,
       "tier2_thesis": "",
       "summary": {
-        "n_closed": 38,
-        "n_open": 3,
-        "n_open_multi_day": 3,
-        "total_pnl_gbp": 429.43,
-        "avg_pnl_pct": 0.55,
-        "hit_rate": 0.289,
+        "n_closed": 40,
+        "n_open": 1,
+        "n_open_multi_day": 1,
+        "total_pnl_gbp": 656.41,
+        "avg_pnl_pct": 0.92,
+        "hit_rate": 0.325,
         "n_predictions": 1736
       },
       "equity_curve": [
@@ -38695,6 +38695,14 @@
         {
           "date": "2026-06-05",
           "equity": 10429.43
+        },
+        {
+          "date": "2026-06-08",
+          "equity": 10502.15
+        },
+        {
+          "date": "2026-06-08",
+          "equity": 10656.41
         }
       ],
       "executed": [
@@ -38712,11 +38720,11 @@
           "stop_loss_pct": -3.0,
           "take_profit_pct": 5.0,
           "thesis": "Health Care is the macro's highest-conviction bullish sector (XLV +5.73% 20d, top-ranked both timeframes) and today's news lens reinforces it; Lilly's Phase 3 TRIUMPH-1 data for retatrutide (28.3% weight loss over 80 weeks, reported over the weekend) is a direct institutional-buying catalyst that the market is digesting this morning, with RSI 68.8 and price well above SMA20/50 confirming the underlying trend.",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
+          "exit_date": "2026-06-08",
+          "exit_price": 1158.844970703125,
+          "pnl_gbp": 72.71815689824767,
+          "pnl_pct": 2.423938563274919,
+          "exit_reason": "midday_take_profit",
           "outcome_notes": null,
           "risks_observed": null,
           "broker_order_id": null,
@@ -38729,7 +38737,7 @@
           "target_exit_date": "2026-06-09",
           "hold_days": 2,
           "created_at": "2026-06-08T13:35:00.051215+00:00",
-          "updated_at": "2026-06-08T13:35:00.051222+00:00"
+          "updated_at": "2026-06-08T16:30:39.504057+00:00"
         },
         {
           "trade_id": "a08347c0-0d1c-4759-a20a-b125abee3680",
@@ -38778,11 +38786,11 @@
           "stop_loss_pct": -5.0,
           "take_profit_pct": 10.0,
           "thesis": "S&P 500 inclusion creates a mechanical, non-discretionary buying mandate for passive index funds over the days between announcement and effective date \u2014 this is independent of the AI-crowding headwinds affecting active investors; the stock's pre-announcement trend was already exceptional (RSI 65, +64.66% 20d, above SMA20/SMA50) meaning index funds are buying into genuine strength, not a distressed rebalancing.",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
+          "exit_date": "2026-06-08",
+          "exit_price": 299.05999755859375,
+          "pnl_gbp": 154.26339101059435,
+          "pnl_pct": 13.508177846812108,
+          "exit_reason": "midday_take_profit",
           "outcome_notes": null,
           "risks_observed": null,
           "broker_order_id": null,
@@ -38795,7 +38803,7 @@
           "target_exit_date": "2026-06-09",
           "hold_days": 2,
           "created_at": "2026-06-08T13:35:00.056308+00:00",
-          "updated_at": "2026-06-08T13:35:00.056314+00:00"
+          "updated_at": "2026-06-08T16:30:39.519086+00:00"
         },
         {
           "trade_id": "175a961f-5150-4f77-bf40-ddfe2dee18d3",
@@ -125906,18 +125914,26 @@
       "tier2_marked_at": null,
       "tier2_thesis": "",
       "summary": {
-        "n_closed": 0,
-        "n_open": 2,
-        "n_open_multi_day": 1,
-        "total_pnl_gbp": 0.0,
-        "avg_pnl_pct": 0.0,
-        "hit_rate": 0.0,
+        "n_closed": 2,
+        "n_open": 0,
+        "n_open_multi_day": 0,
+        "total_pnl_gbp": 323.26,
+        "avg_pnl_pct": 10.3,
+        "hit_rate": 1.0,
         "n_predictions": 98
       },
       "equity_curve": [
         {
           "date": null,
           "equity": 10000.0
+        },
+        {
+          "date": "2026-06-08",
+          "equity": 10154.26
+        },
+        {
+          "date": "2026-06-08",
+          "equity": 10323.26
         }
       ],
       "executed": [
@@ -125935,11 +125951,11 @@
           "stop_loss_pct": -5.0,
           "take_profit_pct": 10.0,
           "thesis": "S&P 500 inclusion announcement this morning creates mandatory, non-discretionary buying from trillions in passive index AUM \u2014 this is a mechanical catalyst that bypasses the broader AI crowding headwind. Technology sector is Mildly Bullish in the weekly macro view and MRVL's technical structure (above both SMAs, MACD hist +9.1) confirms this is a momentum continuation, not a dead-cat bounce.",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
+          "exit_date": "2026-06-08",
+          "exit_price": 299.05999755859375,
+          "pnl_gbp": 154.26339101059435,
+          "pnl_pct": 13.508177846812108,
+          "exit_reason": "midday_take_profit",
           "outcome_notes": null,
           "risks_observed": null,
           "broker_order_id": null,
@@ -125952,7 +125968,7 @@
           "target_exit_date": "2026-06-08",
           "hold_days": 1,
           "created_at": "2026-06-08T13:35:00.024382+00:00",
-          "updated_at": "2026-06-08T13:35:00.024394+00:00"
+          "updated_at": "2026-06-08T16:30:39.471381+00:00"
         },
         {
           "trade_id": "e10de002-76ce-426f-89c8-7aac9bfe8867",
@@ -125968,11 +125984,11 @@
           "stop_loss_pct": -4.0,
           "take_profit_pct": 4.5,
           "thesis": "ASML is the lone tech name with positive 5d returns (+1.80%) while XLK fell -5.61%, confirming macro-aligned sector leadership in the weekly view's Mildly Bullish Technology call; its EUV lithography monopoly insulates it from the Barclays AI-crowding unwind that hits pure-play chip designers, and today's watchlist inclusion plus Musk endorsement provide incremental sentiment support for a 2-session hold.",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
+          "exit_date": "2026-06-08",
+          "exit_price": 1758.219970703125,
+          "pnl_gbp": 169.00076451019078,
+          "pnl_pct": 7.094910348874506,
+          "exit_reason": "midday_take_profit",
           "outcome_notes": null,
           "risks_observed": null,
           "broker_order_id": null,
@@ -125985,7 +126001,7 @@
           "target_exit_date": "2026-06-09",
           "hold_days": 2,
           "created_at": "2026-06-08T13:35:00.042471+00:00",
-          "updated_at": "2026-06-08T13:35:00.042478+00:00"
+          "updated_at": "2026-06-08T16:30:39.486953+00:00"
         }
       ],
       "uncommitted": [
@@ -131001,12 +131017,12 @@
       "tier2_marked_at": null,
       "tier2_thesis": "",
       "summary": {
-        "n_closed": 29,
-        "n_open": 2,
+        "n_closed": 30,
+        "n_open": 1,
         "n_open_multi_day": 0,
-        "total_pnl_gbp": 718.49,
-        "avg_pnl_pct": 1.55,
-        "hit_rate": 0.586,
+        "total_pnl_gbp": 729.82,
+        "avg_pnl_pct": 1.61,
+        "hit_rate": 0.6,
         "n_predictions": 1834
       },
       "equity_curve": [
@@ -131129,6 +131145,10 @@
         {
           "date": "2026-06-05",
           "equity": 10718.49
+        },
+        {
+          "date": "2026-06-08",
+          "equity": 10729.82
         }
       ],
       "executed": [
@@ -131146,11 +131166,11 @@
           "stop_loss_pct": -10.0,
           "take_profit_pct": 8.0,
           "thesis": "RSI 15.2 with only a -1.75% 20-day loss means the recent -14% 5-day decline is a sharp technical dislocation, not fundamental deterioration; today's $500K+ contract announcement provides the asymmetric catalyst needed to snap the stock back toward the $0.60 SMA20 (+7%).",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
+          "exit_date": "2026-06-08",
+          "exit_price": 0.5789999961853027,
+          "pnl_gbp": 11.332139111705596,
+          "pnl_pct": 3.3928560214687487,
+          "exit_reason": "midday_take_profit",
           "outcome_notes": null,
           "risks_observed": null,
           "broker_order_id": null,
@@ -131163,7 +131183,7 @@
           "target_exit_date": "2026-06-08",
           "hold_days": 1,
           "created_at": "2026-06-08T13:38:27.622212+00:00",
-          "updated_at": "2026-06-08T13:38:27.622225+00:00"
+          "updated_at": "2026-06-08T16:30:39.569691+00:00"
         },
         {
           "trade_id": "108997d9-d6b3-482e-8b7a-a2250a4ffff0",
@@ -331007,18 +331027,26 @@
       "tier2_marked_at": null,
       "tier2_thesis": "",
       "summary": {
-        "n_closed": 0,
-        "n_open": 2,
-        "n_open_multi_day": 2,
-        "total_pnl_gbp": 0.0,
-        "avg_pnl_pct": 0.0,
-        "hit_rate": 0.0,
+        "n_closed": 2,
+        "n_open": 0,
+        "n_open_multi_day": 0,
+        "total_pnl_gbp": 226.98,
+        "avg_pnl_pct": 7.97,
+        "hit_rate": 1.0,
         "n_predictions": 47
       },
       "equity_curve": [
         {
           "date": null,
           "equity": 10000.0
+        },
+        {
+          "date": "2026-06-08",
+          "equity": 10072.72
+        },
+        {
+          "date": "2026-06-08",
+          "equity": 10226.98
         }
       ],
       "executed": [
@@ -331036,11 +331064,11 @@
           "stop_loss_pct": -4.5,
           "take_profit_pct": 7.0,
           "thesis": "Phase 3 TRIUMPH-1 trial confirms retatrutide achieves 28.3% weight loss at 80 weeks \u2014 materially superior to tirzepatide (~22%) and semaglutide (~15%) \u2014 disclosed June 7-8 weekend with a muted +2.39% 5-day price response suggesting institutional upgrading cycle is still early. Regime: VIX estimated transitional (18\u201328) based on risk-off tone and Nasdaq's worst session since April 2025; base conviction allocation reduced 20% accordingly.",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
+          "exit_date": "2026-06-08",
+          "exit_price": 1158.844970703125,
+          "pnl_gbp": 72.71815689824767,
+          "pnl_pct": 2.423938563274919,
+          "exit_reason": "midday_take_profit",
           "outcome_notes": null,
           "risks_observed": null,
           "broker_order_id": null,
@@ -331053,7 +331081,7 @@
           "target_exit_date": "2026-06-09",
           "hold_days": 2,
           "created_at": "2026-06-08T13:38:27.596808+00:00",
-          "updated_at": "2026-06-08T13:38:27.596816+00:00"
+          "updated_at": "2026-06-08T16:30:39.537571+00:00"
         },
         {
           "trade_id": "a461f20a-6fe2-4d39-9571-5ad07c8fae6c",
@@ -331069,11 +331097,11 @@
           "stop_loss_pct": -7.0,
           "take_profit_pct": 12.0,
           "thesis": "S&P 500 index inclusion announced June 8 creates mechanistic forced buying from passive AUM through the effective date (~June 20); anchored by May 27 earnings 8-K (items 2.02/9.01). Entering after the 9% gap-open with expectation of continued index-rebalancing inflows over the 3-day hold; stop set below the gap-fill level to protect against thesis failure if the inclusion is delayed or contested. Regime: transitional; allocation reduced from base 20%.",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
+          "exit_date": "2026-06-08",
+          "exit_price": 299.05999755859375,
+          "pnl_gbp": 154.26339101059435,
+          "pnl_pct": 13.508177846812108,
+          "exit_reason": "midday_take_profit",
           "outcome_notes": null,
           "risks_observed": null,
           "broker_order_id": null,
@@ -331086,7 +331114,7 @@
           "target_exit_date": "2026-06-10",
           "hold_days": 3,
           "created_at": "2026-06-08T13:38:27.616244+00:00",
-          "updated_at": "2026-06-08T13:38:27.616252+00:00"
+          "updated_at": "2026-06-08T16:30:39.552524+00:00"
         }
       ],
       "uncommitted": [
