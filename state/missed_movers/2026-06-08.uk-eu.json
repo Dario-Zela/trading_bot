@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-08",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 ZAL.DE +4%, BEI.DE +4%, UNA.AS +3%, IMB.L +3%, ULVR.L +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (IFX.DE -9%, ADYEN.AS -9%, FRES.L -6%, EDV.L -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: IFX.DE (-9.11%) \u2014 Broadcom Q3 AI chip guidance (~$16B vs ~$17.2B expected) missed consensus, triggering a global semiconductor rout (Philadelphia Semiconductor Index \u221210.3%) that spread to Europe and dragged IFX.DE as the DAX's leading chipmaker. Why we passed: Outside any active strategy's universe \u2014 IFX.DE is a Xetra-only DAX-40 large-cap likely excluded by a US-listed/ADR universe constraint. The move was post-close Broadcom earnings contagion; no actionable pre-market signal existed before the EU open.",
+  "top_movers": [
+    {
+      "ticker": "ZAL.DE",
+      "move_pct": 3.66,
+      "close": 24.64,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "STOXX June 3 DAX quarterly review confirmed Zalando stays in the DAX 40 \u2014 Lufthansa missed the Fast Entry threshold, eliminating a 3-week removal overhang and triggering short-cover/passive-flow relief.",
+      "miss_reason": "Outside any active strategy's universe (Xetra-listed German consumer discretionary). Move was an index-calendar relief rally requiring event-driven DAX-watch signals; the preceding multi-week downtrend from removal fears would also have blocked any long momentum filter.",
+      "suggestion": "Add DAX-40 constituents to at least one strategy's universe with an index-review gate: enable long entries on names confirmed DAX-retained after appearing on the STOXX Fast Exit watch list, entering at next open after the quarterly announcement date.",
+      "failed": false
+    },
+    {
+      "ticker": "BEI.DE",
+      "move_pct": 3.612,
+      "close": 70.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Beiersdorf raised FY 2026 guidance citing strong Nivea volume growth and margin expansion; June 8 move appears to be continued analyst re-rating of the ~May 28 guidance upgrade, with consumer staples sector tailwinds amplifying the lift.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BEI.DE is a DAX large-cap (~\u20ac17B) consumer staples name with low day-to-day volatility; bot universes likely filter it out via sector exclusion or a minimum realised-vol floor, and the catalyst (guidance upgrade) required pre-positioning before the multi-session drift materialis",
+      "suggestion": "Add a post-guidance-upgrade drift rule: for DAX/STOXX50 consumer names with a confirmed FY guidance raise, allow a trend-entry signal within a 10-session window on volume \u22651.2\u00d7 20-day avg, capped at 0.5% notional, to capture delayed institutional re-rating without chasing the initial gap.",
+      "failed": false
+    },
+    {
+      "ticker": "UNA.AS",
+      "move_pct": 3.086,
+      "close": 48.61,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "IMB.L",
+      "move_pct": 2.792,
+      "close": 27.61,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FTSE 100 risk-off session: tech/cyclicals led lower, capital rotated into tobacco, oil, and defence; IMB.L lifted +2.8% on the sector-wide defensive bid \u2014 no stock-specific news catalyst found.",
+      "miss_reason": "Outside any active strategy's universe. IMB.L is a FTSE 100 tobacco stock likely excluded by ESG or sector-restriction filters; the move was a broad macro defensive rotation, not a stock-specific signal, so name-level screeners had no trigger.",
+      "suggestion": "Add a defensive-rotation sleeve: when FTSE 100 open gap \u2264 \u22120.5% and tobacco-sector bid >+0.5% by 09:45 BST, allow longs in high-yield (>5%) FTSE 100 names outside the standard universe, capped at 1% notional.",
+      "failed": false
+    },
+    {
+      "ticker": "ULVR.L",
+      "move_pct": 2.71,
+      "close": 41.885,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Unilever announced on 5 Jun 2026 the early completion of its \u20ac1.5B share buyback (30.7M shares repurchased vs. original Jul 6 deadline), signalling capital discipline and removing residual supply overhang heading into the weekend.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ULVR.L is a \u00a340B+ FTSE 100 consumer staples giant whose low ADR and beta sit below typical momentum/mean-reversion volatility floors. The driver was a scheduled RNS corporate event (buyback completion), not the earnings or M&A shock that news-reactive scanners are calibrated to ",
+      "suggestion": "Add a FTSE 100 corporate-event gate: when an RNS buyback-completion filing appears \u226510 trading days before the scheduled end date for a programme \u2265\u20ac1B, flag the name and allow entry at next open if overnight gap \u2265+0.3% with volume \u22651.2\u00d7 20-day avg.",
+      "failed": false
+    },
+    {
+      "ticker": "HEN3.DE",
+      "move_pct": 2.662,
+      "close": 67.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Brilliant Matters OPV silver-ink partnership (minor Adhesives press release, June 8) combined with multi-session defensive rotation into European consumer names; no earnings or M&A event confirmed.",
+      "miss_reason": "Outside any active strategy's universe. HEN3 is a KGaA preference share often excluded by ordinary-share universe filters. The move was a gradual defensive rotation, not a sharp gap event, so momentum triggers didn't activate in time.",
+      "suggestion": "Add a STOXX Europe 600 Consumer Staples sector-breadth trigger: when \u22653 constituents clear +1.5% intraday, flag DAX consumer names (incl. KGaA preferred) for next-session momentum entry with a \u22640.5% gap filter.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": -9.112,
+      "close": 77.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Broadcom Q3 AI chip guidance (~$16B vs ~$17.2B expected) missed consensus, triggering a global semiconductor rout (Philadelphia Semiconductor Index \u221210.3%) that spread to Europe and dragged IFX.DE as the DAX's leading chipmaker.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IFX.DE is a Xetra-only DAX-40 large-cap likely excluded by a US-listed/ADR universe constraint. The move was post-close Broadcom earnings contagion; no actionable pre-market signal existed before the EU open.",
+      "suggestion": "Add a cross-asset sector-contagion gate: when PHLX/SOXX closes \u2265\u22125% in the prior US session, flag European semiconductor ETF proxies as short-eligible at EU open, or mark as forced-avoid-long if short capability is absent.",
+      "failed": false
+    },
+    {
+      "ticker": "ADYEN.AS",
+      "move_pct": -8.874,
+      "close": 817.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Cleveland Research published a negative note warning of broader payment-services sector headwinds on 5-Jun; no company-specific news; shares gapped down ~9% with intraday losses exceeding 10%.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Adyen is a high-priced (\u20ac800+) large-cap Euronext Amsterdam payments name. The move was analyst-note-driven with no earnings or M&A catalyst, leaving no pre-open signal for news-reactive or momentum filters to act on.",
+      "suggestion": "(no actionable change) \u2014 capturing the downside requires short capability not currently in the strategy set; if short-selling is added, gate on analyst-only gap \u22656% within 30 min of open for large-cap Euronext fintech names.",
+      "failed": false
+    },
+    {
+      "ticker": "FRES.L",
+      "move_pct": -6.219,
+      "close": 29.86,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Blowout May US NFP print (172k jobs vs ~86k consensus) sent gold -3.3% and silver sharply lower; FRES.L, world's largest primary silver producer, repriced instantly on direct commodity spot beta.",
+      "miss_reason": "Outside any active strategy's universe \u2014 FRES.L is a FTSE 100 precious-metals miner priced primarily off XAU/XAG spot. The selloff arrived as a hard macro gap at open on NFP release, before any post-open momentum or mean-reversion signal could engage.",
+      "suggestion": "Add a commodity-shock trigger: when XAU/XAG spot falls >2.5% on a macro data day (NFP, CPI), surface FRES.L-class miners as short candidates in a dedicated commodity-beta sleeve \u2014 requires enabling short capability first.",
+      "failed": false
+    },
+    {
+      "ticker": "EDV.L",
+      "move_pct": -5.895,
+      "close": 39.75,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "RBC cut EDV target 6,000p\u21925,100p on 17-19% gold forecast downgrades; spot gold fell ~3% on a strong US jobs print that lifted yields and the dollar, compressing the non-yielding metal and its miners.",
+      "miss_reason": "Outside any active strategy's universe \u2014 EDV.L is a West African gold miner (sector-excluded). The move was pure XAU beta: the entry signal lived in XAU futures and USD strength at the US open, not in EDV.L's own price-action or volume filters.",
+      "suggestion": "Add a precious-metals-miner sub-universe (EDV.L, FRES.L) with a short-enabled mean-reversion leg gated on XAU 1d \u2264 \u22122% at London open; this captures XAU-beta dislocations without widening the core long-only universe.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-08T15:06:31.103060+00:00"
+}
