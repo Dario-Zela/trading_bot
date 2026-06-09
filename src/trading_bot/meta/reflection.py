@@ -51,12 +51,28 @@ def grade_predictions(on_date: date, region: str | None = None) -> int:
     if not tickers_to_fetch:
         return 0
 
-    bars = get_history(list(tickers_to_fetch), lookback_days=1, end_date=on_date)
+    # max_grace_days=0 forces a yfinance refresh when the local OHLCV cache
+    # doesn't have a bar dated exactly `on_date`. Without this, the cron
+    # ordering (grade-predictions 05:00Z, ohlcv-daily-update 06:10Z) caused
+    # the grader to serve stale bars under the 3-day default grace — every
+    # Monday's predictions were graded against Friday's open→close return,
+    # which is *correlated* with momentum predictions (today's pick is
+    # often a continuation of yesterday's move), inflating UK-EU IC scores
+    # to absurd values (momentum-trader-vix-gated@uk-eu read IC=+0.464).
+    bars = get_history(
+        list(tickers_to_fetch), lookback_days=1, end_date=on_date, max_grace_days=0,
+    )
     actuals: dict[str, float | None] = {}
     for ticker, bar_list in bars.items():
         if not bar_list:
             continue
         b = bar_list[-1]
+        # Belt + braces: even with max_grace_days=0, yfinance can return a
+        # prior-trading-day bar if the requested date wasn't yet available
+        # at fetch time (intraday, exchange holiday, etc.). Skip rather
+        # than write the wrong day's return into actual_return_pct.
+        if b.bar_date != on_date:
+            continue
         if b.open and b.open > 0:
             actuals[ticker] = (b.close / b.open - 1.0) * 100.0
 
