@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-09T15:48:41.484624+00:00",
+  "generated_at": "2026-06-09T16:30:41.592604+00:00",
   "as_of_iso": "2026-06-09",
   "regions": [
     "uk-eu",
@@ -29,12 +29,12 @@
       "tiers": [
         "shadow"
       ],
-      "today_pnl_gbp": 330544.64,
-      "today_n_trades": 25,
-      "alltime_pnl_gbp": 319322.88,
-      "alltime_n_trades": 524,
-      "alltime_n_wins": 121,
-      "alltime_hit_rate": 0.231,
+      "today_pnl_gbp": 330687.81,
+      "today_n_trades": 27,
+      "alltime_pnl_gbp": 319466.05,
+      "alltime_n_trades": 526,
+      "alltime_n_wins": 123,
+      "alltime_hit_rate": 0.234,
       "regions": {
         "uk-eu": {
           "today_pnl_gbp": 330544.64,
@@ -43,15 +43,104 @@
           "alltime_n_trades": 311
         },
         "us": {
-          "today_pnl_gbp": 0.0,
-          "today_n_trades": 0,
-          "alltime_pnl_gbp": -7142.57,
-          "alltime_n_trades": 213
+          "today_pnl_gbp": 143.17,
+          "today_n_trades": 2,
+          "alltime_pnl_gbp": -6999.4,
+          "alltime_n_trades": 215
         }
       }
     }
   },
   "sector_exposure": {
+    "us": {
+      "by_sector": [
+        {
+          "sector": "Technology",
+          "gbp": 80944.94,
+          "pct": 40.8,
+          "pct_1d": 44.3,
+          "pct_1w": 43.3,
+          "delta_1d_pct": -3.5,
+          "delta_1w_pct": -2.5
+        },
+        {
+          "sector": "Healthcare",
+          "gbp": 41062.74,
+          "pct": 20.7,
+          "pct_1d": 13.8,
+          "pct_1w": 13.9,
+          "delta_1d_pct": 6.9,
+          "delta_1w_pct": 6.8
+        },
+        {
+          "sector": "Energy",
+          "gbp": 22801.3,
+          "pct": 11.5,
+          "pct_1d": 12.5,
+          "pct_1w": 11.1,
+          "delta_1d_pct": -1.0,
+          "delta_1w_pct": 0.4
+        },
+        {
+          "sector": "Industrials",
+          "gbp": 19637.45,
+          "pct": 9.9,
+          "pct_1d": 10.7,
+          "pct_1w": 10.0,
+          "delta_1d_pct": -0.8,
+          "delta_1w_pct": -0.1
+        },
+        {
+          "sector": "Financial Services",
+          "gbp": 11049.41,
+          "pct": 5.6,
+          "pct_1d": 6.0,
+          "pct_1w": 7.0,
+          "delta_1d_pct": -0.4,
+          "delta_1w_pct": -1.4
+        },
+        {
+          "sector": "Consumer Defensive",
+          "gbp": 10135.61,
+          "pct": 5.1,
+          "pct_1d": 5.5,
+          "pct_1w": 6.5,
+          "delta_1d_pct": -0.4,
+          "delta_1w_pct": -1.4
+        },
+        {
+          "sector": "Consumer Cyclical",
+          "gbp": 8501.78,
+          "pct": 4.3,
+          "pct_1d": 4.7,
+          "pct_1w": 5.4,
+          "delta_1d_pct": -0.4,
+          "delta_1w_pct": -1.1
+        },
+        {
+          "sector": "Utilities",
+          "gbp": 2695.22,
+          "pct": 1.4,
+          "pct_1d": 1.5,
+          "pct_1w": 1.7,
+          "delta_1d_pct": -0.1,
+          "delta_1w_pct": -0.3
+        },
+        {
+          "sector": "Real Estate",
+          "gbp": 1765.44,
+          "pct": 0.9,
+          "pct_1d": 1.0,
+          "pct_1w": 1.1,
+          "delta_1d_pct": -0.1,
+          "delta_1w_pct": -0.2
+        }
+      ],
+      "total_gbp": 198593.89,
+      "n_trades": 75,
+      "n_open": 5,
+      "n_closed": 70
+    },
     "uk-eu": {
       "by_sector": [
         {
@@ -167,95 +256,6 @@
       "n_trades": 56,
       "n_open": 0,
       "n_closed": 56
-    },
-    "us": {
-      "by_sector": [
-        {
-          "sector": "Technology",
-          "gbp": 80944.94,
-          "pct": 40.8,
-          "pct_1d": 44.3,
-          "pct_1w": 43.3,
-          "delta_1d_pct": -3.5,
-          "delta_1w_pct": -2.5
-        },
-        {
-          "sector": "Healthcare",
-          "gbp": 41062.74,
-          "pct": 20.7,
-          "pct_1d": 13.8,
-          "pct_1w": 13.9,
-          "delta_1d_pct": 6.9,
-          "delta_1w_pct": 6.8
-        },
-        {
-          "sector": "Energy",
-          "gbp": 22801.3,
-          "pct": 11.5,
-          "pct_1d": 12.5,
-          "pct_1w": 11.1,
-          "delta_1d_pct": -1.0,
-          "delta_1w_pct": 0.4
-        },
-        {
-          "sector": "Industrials",
-          "gbp": 19637.45,
-          "pct": 9.9,
-          "pct_1d": 10.7,
-          "pct_1w": 10.0,
-          "delta_1d_pct": -0.8,
-          "delta_1w_pct": -0.1
-        },
-        {
-          "sector": "Financial Services",
-          "gbp": 11049.41,
-          "pct": 5.6,
-          "pct_1d": 6.0,
-          "pct_1w": 7.0,
-          "delta_1d_pct": -0.4,
-          "delta_1w_pct": -1.4
-        },
-        {
-          "sector": "Consumer Defensive",
-          "gbp": 10135.61,
-          "pct": 5.1,
-          "pct_1d": 5.5,
-          "pct_1w": 6.5,
-          "delta_1d_pct": -0.4,
-          "delta_1w_pct": -1.4
-        },
-        {
-          "sector": "Consumer Cyclical",
-          "gbp": 8501.78,
-          "pct": 4.3,
-          "pct_1d": 4.7,
-          "pct_1w": 5.4,
-          "delta_1d_pct": -0.4,
-          "delta_1w_pct": -1.1
-        },
-        {
-          "sector": "Utilities",
-          "gbp": 2695.22,
-          "pct": 1.4,
-          "pct_1d": 1.5,
-          "pct_1w": 1.7,
-          "delta_1d_pct": -0.1,
-          "delta_1w_pct": -0.3
-        },
-        {
-          "sector": "Real Estate",
-          "gbp": 1765.44,
-          "pct": 0.9,
-          "pct_1d": 1.0,
-          "pct_1w": 1.1,
-          "delta_1d_pct": -0.1,
-          "delta_1w_pct": -0.2
-        }
-      ],
-      "total_gbp": 198593.89,
-      "n_trades": 75,
-      "n_open": 5,
-      "n_closed": 70
     },
     "all": {
       "by_sector": [
@@ -43655,12 +43655,12 @@
       "tier2_marked_at": null,
       "tier2_thesis": "",
       "summary": {
-        "n_closed": 40,
-        "n_open": 5,
-        "n_open_multi_day": 1,
-        "total_pnl_gbp": 656.41,
-        "avg_pnl_pct": 0.92,
-        "hit_rate": 0.325,
+        "n_closed": 41,
+        "n_open": 4,
+        "n_open_multi_day": 0,
+        "total_pnl_gbp": 736.09,
+        "avg_pnl_pct": 0.96,
+        "hit_rate": 0.341,
         "n_predictions": 1831
       },
       "equity_curve": [
@@ -43827,6 +43827,10 @@
         {
           "date": "2026-06-08",
           "equity": 10656.41
+        },
+        {
+          "date": "2026-06-09",
+          "equity": 10736.09
         }
       ],
       "executed": [
@@ -44009,11 +44013,11 @@
           "stop_loss_pct": -2.5,
           "take_profit_pct": 4.0,
           "thesis": "Second pure-play on the macro's top-rated sector with a distinct stock-level catalyst: Morgan Stanley named UnitedHealth top managed care pick today citing AI-driven efficiency gains, BofA's highest-conviction Centene call validates the broader managed-care consensus building, and 1.51x volume confirms institutional accumulation into a stock with consistent positive 5d (+5.04%) and 20d (+8.04%) returns.",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
+          "exit_date": "2026-06-09",
+          "exit_price": 410.0799865722656,
+          "pnl_gbp": 79.68046651168125,
+          "pnl_pct": 2.656015550389368,
+          "exit_reason": "midday_take_profit",
           "outcome_notes": null,
           "risks_observed": null,
           "broker_order_id": null,
@@ -44026,7 +44030,7 @@
           "target_exit_date": "2026-06-09",
           "hold_days": 2,
           "created_at": "2026-06-08T13:35:00.053772+00:00",
-          "updated_at": "2026-06-08T13:35:00.053778+00:00"
+          "updated_at": "2026-06-09T16:30:40.424614+00:00"
         },
         {
           "trade_id": "0a3184b6-69e5-4464-a3fc-2b573f44b2b1",
@@ -360533,11 +360537,11 @@
       "tier2_marked_at": null,
       "tier2_thesis": "",
       "summary": {
-        "n_closed": 2,
-        "n_open": 3,
-        "n_open_multi_day": 1,
-        "total_pnl_gbp": 226.98,
-        "avg_pnl_pct": 7.97,
+        "n_closed": 3,
+        "n_open": 2,
+        "n_open_multi_day": 0,
+        "total_pnl_gbp": 290.48,
+        "avg_pnl_pct": 6.02,
         "hit_rate": 1.0,
         "n_predictions": 94
       },
@@ -360553,6 +360557,10 @@
         {
           "date": "2026-06-08",
           "equity": 10226.98
+        },
+        {
+          "date": "2026-06-09",
+          "equity": 10290.48
         }
       ],
       "executed": [
@@ -360570,11 +360578,11 @@
           "stop_loss_pct": -3.3,
           "take_profit_pct": 3.5,
           "thesis": "June 8 8-K confirms definitive $1.25B acquisition of Vega Therapeutics \u2014 a primary-grade M&A disclosure received positively by the market (elevated 1.84\u00d7 volume, trend intact above both SMAs). M&A re-rating of the acquirer in biotech pipeline acquisitions typically plays out over 2\u20133 sessions as strategic value is digested; MACD histogram expanding confirms momentum is with the position.",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
+          "exit_date": "2026-06-09",
+          "exit_price": 102.7699966430664,
+          "pnl_gbp": 63.49355921112181,
+          "pnl_pct": 2.11645197370407,
+          "exit_reason": "midday_take_profit",
           "outcome_notes": null,
           "risks_observed": null,
           "broker_order_id": null,
@@ -360587,7 +360595,7 @@
           "target_exit_date": "2026-06-10",
           "hold_days": 2,
           "created_at": "2026-06-09T13:35:00.050414+00:00",
-          "updated_at": "2026-06-09T13:35:00.050425+00:00"
+          "updated_at": "2026-06-09T16:30:40.444832+00:00"
         },
         {
           "trade_id": "45f17c3d-057f-4438-8b84-a3b91a7d4110",
