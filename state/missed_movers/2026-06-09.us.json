@@ -1,0 +1,127 @@
+{
+  "date": "2026-06-09",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 2 of today's 10 biggest US movers.\n\n\u2022 4 upside misses \u2014 INTC +11%, AMAT +9%, LRCX +7%, COHR +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (AKAM -5%, HSY -5%, CIEN -4%, GDDY -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: INTC (+11.19%) \u2014 Google placed a firm order for 3M+ TPUs manufactured by Intel's foundry for 2028 delivery, validating its 18A process; Wells Fargo and Barclays also raised price targets on the news. Why we passed: Outside any active strategy's universe \u2014 INTC is a mega-cap semiconductor not covered by current filters. The move was catalyst-driven (surprise foundry deal disclosed at market open); purely technical overnight signals would show no pre-trade setup.",
+  "top_movers": [
+    {
+      "ticker": "INTC",
+      "move_pct": 11.193,
+      "close": 110.27,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Google placed a firm order for 3M+ TPUs manufactured by Intel's foundry for 2028 delivery, validating its 18A process; Wells Fargo and Barclays also raised price targets on the news.",
+      "miss_reason": "Outside any active strategy's universe \u2014 INTC is a mega-cap semiconductor not covered by current filters. The move was catalyst-driven (surprise foundry deal disclosed at market open); purely technical overnight signals would show no pre-trade setup.",
+      "suggestion": "Add top-20 semiconductor names by market cap to the universe with a catalyst-gap trigger: release any name printing \u2265+5% gap at open on \u22652\u00d7 avg volume into a short-duration momentum slot on the announcement day.",
+      "failed": false
+    },
+    {
+      "ticker": "MU",
+      "move_pct": 9.869,
+      "close": 949.28,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned"
+      ],
+      "catalyst": "Micron confirmed as certified HBM4 supplier for Nvidia's Vera Rubin platform; Wells Fargo reset price target to $1,220 alongside a cluster of analyst upgrades, validating the AI memory supply narrative ahead of June 24 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 MU is a mega-cap semiconductor not included in momentum, mean-reversion, or sector-specific universes. The catalyst (HBM4 certification + analyst target raises of 30-100%+) emerged pre-open, requiring pre-market positioning before the gap was visible in intraday signals.",
+      "suggestion": "Add top AI-memory names (MU, MRVL) to macro-aligned's universe with an analyst-upgrade trigger: price-target raise \u226525% on a semi covered by \u22652 desks in the same session fires a pre-open limit order capped at 0.5\u00d7 normal size.",
+      "failed": false
+    },
+    {
+      "ticker": "KLAC",
+      "move_pct": 9.271,
+      "close": 2108.0601,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned-hmm",
+        "macro-aligned"
+      ],
+      "catalyst": "Pre-split retail run-up: KLA's 10-for-1 stock split takes effect after June 11 close (announced May 7 alongside Q3 beat of $3.42B vs guidance + 21% dividend hike); June 9 is T-2 before split-adjusted trading begins.",
+      "miss_reason": "Outside any active strategy's universe \u2014 KLAC trades ~$2,100/share pre-split, almost certainly above nominal price caps in universe construction filters. The move is a corporate-action calendar pattern (split run-up) invisible to momentum/mean-reversion signal logic without an event overlay.",
+      "suggestion": "Add a corporate-action calendar filter that inserts stocks within 5 trading days of a confirmed large-ratio split (\u22655:1) into a dedicated catalyst sub-universe, bypassing standard per-share price and ADV floor filters used in universe construction.",
+      "failed": false
+    },
+    {
+      "ticker": "AMAT",
+      "move_pct": 8.644,
+      "close": 492.17,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 FY2026 earnings beat: revenue $7.9B (vs ~$7.4B est), EPS $3.51 vs $2.63 YoY; Q3 guidance raised to ~$8.95B; dividend increase; AI-driven wafer-fab equipment demand cited.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AMAT is a mega-cap semiconductor equipment name not in any current watchlist. The 8.64% move was an earnings gap-up requiring either pre-results positioning or a same-session earnings-reactive entry the bot currently lacks.",
+      "suggestion": "Add an earnings-release rule that makes large-cap semis-equipment names (AMAT, LRCX, KLAC) eligible for a momentum entry when post-results intraday gap \u2265+5% and volume \u22652\u00d7 30-day avg within the first 30 minutes of open.",
+      "failed": false
+    },
+    {
+      "ticker": "LRCX",
+      "move_pct": 6.98,
+      "close": 324.45,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "UBS raised LRCX price target to $375 from $310 (Buy reiterated) on AI-driven wafer fab equipment demand; amplified by Nvidia Computex AI chip cycle tailwinds and a strong fiscal Q3 2026 earnings beat.",
+      "miss_reason": "Outside any active strategy's universe \u2014 LRCX is a large-cap semi equipment name (~$45B cap). Catalyst was a sell-side PT upgrade announced pre-market; the \u22127.5% drop on Jun 5 would also have tripped short-term volatility-exclusion filters.",
+      "suggestion": "Add a sell-side upgrade scanner: when a Tier-1 bank raises PT \u226515% on a semi equipment name and shares open gap-up \u22653%, allow momentum entry in the first 30 min regardless of prior-session drawdown recency.",
+      "failed": false
+    },
+    {
+      "ticker": "COHR",
+      "move_pct": 6.616,
+      "close": 401.93,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Nvidia's $2B equity investment + multibillion-dollar AI optics purchase commitment (announced ~May 26) drove a structural re-rating; Jun 9 +6.62% is a secondary bounce off post-ATH pullback ($440 Jun 3 \u2192 $377 \u2192 $402) as AI datacenter demand narrative holds.",
+      "miss_reason": "Outside any active strategy's universe. COHR ($73B market cap, AI photonics) made its +30% primary move on the Nvidia $2B deal by Jun 3; Jun 9 is a secondary bounce leg that post-gap momentum filters likely excluded due to extended RSI and prior-session ATH overhang.",
+      "suggestion": "Add large-cap AI-infrastructure names (e.g. COHR) to a post-catalyst continuation universe gated by: gap \u2265+20% in prior 5 sessions AND RSI < 70 on entry day, to capture secondary bounces without chasing the initial spike.",
+      "failed": false
+    },
+    {
+      "ticker": "AKAM",
+      "move_pct": -4.989,
+      "close": 141.87,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Profit-taking and valuation reset after a +62% YTD AI-infrastructure rally; compounded by Zacks 'Strong Sell' downgrade (May 21) and Q2 EPS estimate cuts \u2014 no discrete new catalyst on the day.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AKAM is a large-cap NASDAQ infra name (~$9B). The decline was slow-building valuation compression (P/E 47.8x vs 5yr median 27.9x), not a tradable gap or volume spike detectable intraday.",
+      "suggestion": "(no actionable change \u2014 catching overvalued large-cap mean-reversion pullbacks requires short capability not currently deployed; no single-day news hook existed to gate a news-reactive entry on)",
+      "failed": false
+    },
+    {
+      "ticker": "HSY",
+      "move_pct": -4.703,
+      "close": 175.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Multiple banks cut HSY price targets on June 9 (Mizuho to $185, UBS to $200, JPMorgan to $204, BofA to $220) on top of ~50k Hershey Trust insider shares sold June 1\u20135, intensifying margin-pressure concerns from elevated cocoa costs.",
+      "miss_reason": "Outside any active strategy's universe \u2014 HSY is a large-cap defensive consumer staples name (~$24B mkt cap). The decline was analyst-downgrade- and insider-flow-driven with no pre-market gap or volume spike that a momentum or news-reactive screener would flag.",
+      "suggestion": "Add an analyst-action scanner: flag names where \u22652 banks cut price targets on the same session day and Form-4 insider sales appear within the prior 5 sessions; route flagged names to a short-bias news-reactive sub-strategy with a 1-day holding period.",
+      "failed": false
+    },
+    {
+      "ticker": "CIEN",
+      "move_pct": -4.412,
+      "close": 466.67,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Ciena priced a $2.5B (upsized from $2B) 0%-coupon convertible senior notes due 2031 on June 8-9; the dilutive capital raise \u2014 announced days after a strong Q2 earnings beat \u2014 triggered the ~4.4% sell-off.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CIEN is a large-cap optical networking equipment name (~$466/share). The trigger was a same-day capital-markets event (convertible offering via 8-K filing); no pre-market momentum or mean-reversion signal existed to flag it.",
+      "suggestion": "Add a real-time SEC 8-K monitor for convertible-note and secondary-offering filings across large-cap tech-adjacent names; auto-flag intraday short exposure when the dilutive issuance principal exceeds ~5% of the issuer's market cap.",
+      "failed": false
+    },
+    {
+      "ticker": "GDDY",
+      "move_pct": -4.361,
+      "close": 80.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Ongoing securities law investigation (Kaplan Fox probe) into GoDaddy's disclosures around a dotcom promotional pricing misstep that reduced near-term bookings, compounded by FY2026 revenue guidance ($5.20\u20135.28B) falling just below the $5.29B consensus.",
+      "miss_reason": "Outside any active strategy's universe. GDDY is a large-cap internet-services/domain-registrar name in a sustained 52-week downtrend (\u201353%), near multi-year lows. The move was a slow-burn disclosure/legal overhang rather than a sharp single-day catalyst, making it invisible to news-reactive entry signals that require a",
+      "suggestion": "Add a securities-investigation watchlist filter: when a held or near-universe name has an active class-action or regulatory probe and breaches a rolling 20-day low on above-average volume, treat it as a short-eligible catalyst event rather than waiting for a single-day news spike.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-09T19:33:49.319181+00:00"
+}
