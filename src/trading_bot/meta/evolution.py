@@ -214,6 +214,25 @@ def run_weekly_evolution(today: date) -> dict:
             pending_tier_2.append(log_entry)
         applied.append(log_entry)
 
+    # Backstop: force-fill any paper slot the agent left empty. See the
+    # "Slot-filling rule" in _build_prompt. An empty paper slot is a
+    # missed live-test cycle, so we promote the highest-IC shadow
+    # candidate in the region rather than wait another week. Runs
+    # AFTER the agent's actions so genuine promote+demote pairs land
+    # first; backstop only fires on the residual empties.
+    try:
+        backstop = _force_fill_empty_paper_slots(metrics, configs)
+        if backstop:
+            n_filled = sum(1 for a in backstop if a.applied)
+            log.info(
+                "evolution: backstop force-filled %d empty paper slot(s); "
+                "%d remained empty (no shadow candidate available)",
+                n_filled, len(backstop) - n_filled,
+            )
+        applied.extend(backstop)
+    except Exception as e:
+        log.warning("force-fill backstop failed (non-fatal): %s", e)
+
     _append_evolution_log(today, applied)
     issue_url = _maybe_file_issue(today, applied, pending_tier_2)
 
@@ -424,6 +443,14 @@ def _read_external_research() -> str:
 def _build_prompt(today: date, snapshot: list[dict], lessons: str) -> str:
     free_slots = _free_alpaca_slots(snapshot)
     n_active = sum(1 for s in snapshot if s.get("active"))
+    # Paper-tier occupancy — used by the "Slot-filling rule" below. An
+    # empty paper slot is a missed live-test cycle, so we surface both
+    # the count of free Alpaca slots and whether the T212 UK-EU sleeve
+    # currently has any strategy bound.
+    n_t212_uk_eu = sum(
+        1 for s in snapshot
+        if s.get("tier") == "trading212-paper" and s.get("region") == "uk-eu"
+    )
 
     snapshot_json = json.dumps(snapshot, indent=2)
 
@@ -581,12 +608,39 @@ Universe / broker reality (do not propose actions that contradict this):
 - Individual US/EU stocks ARE tradeable on T212 (the t212_isa_*
   universes), so stock-picking strategies' US sleeves are fine.
 
+Paper-tier slot occupancy (the live-test bench — these MUST stay full):
+- Alpaca (US): {MAX_ALPACA_SLOTS - len(free_slots)}/{MAX_ALPACA_SLOTS} slots bound — free: {free_slots}
+- Trading212 (UK-EU): {n_t212_uk_eu} strategy/strategies on `trading212-paper` (single shared slot=1; £{int(T212_PROMOTE_BUDGET_HEADROOM_GBP):,} budget headroom across them all)
+
+### Slot-filling rule (HARD CONSTRAINT)
+
+Empty paper slots are forbidden. Every free Alpaca slot, and the
+T212 UK-EU sleeve when it has zero `trading212-paper` strategies,
+MUST be filled by a promotion in this run. **An empty paper slot
+is a missed live-test cycle that we cannot recover** — even a weak
+contender produces fee-net broker data that shadow tier doesn't.
+
+Selection when no shadow candidate clears the strict promotion bar
+(IC ≥ 0.25 / n ≥ 200 etc.): pick the shadow strategy with the
+**highest IC in the target region** as your fallback. Tag the
+action's `reason` with `"empty-slot backstop"` so it's clear this is
+the forced-fill path, not a meets-criteria promotion. The runtime
+weakens the meets_promotion_criteria gate when a slot would
+otherwise be left empty.
+
+If you propose a `demote` that empties a slot, **pair it with a
+`promote` that refills the slot from the same region's shadow
+bench in the same run**. Don't demote without a replacement —
+the next 7 days of empty-slot data are lost forever otherwise.
+
+The runtime backstops any unfilled slot automatically by promoting
+the region's highest-IC shadow strategy, so it's better to make
+the choice deliberately than have the backstop pick for you.
+
 Other constraints:
-- Free Alpaca slots available: {free_slots}
 - Currently active strategies: {n_active} of max {MAX_TOTAL_STRATEGIES}
 - Don't spawn a variant if it'd push active total over the cap
 - Promote / demote actions require a `region` field naming which region to act on
-- Promotion requires `meets_promotion_criteria=true` AND a free slot (US/Alpaca) or budget headroom (UK-EU/T212)
 - Demotion requires `meets_demotion_criteria=true`
 - Spawned variants start on Tier 0 shadow, must have a different `id`
 - Trading212 demo (Tier 1.5, UK-EU only) caps total account balance at £{int(T212_PAPER_BUDGET_GBP):,}.
@@ -1304,6 +1358,130 @@ def _free_alpaca_slots(snapshot: list[dict]) -> list[int]:
         if s.get("tier") == "alpaca-paper" and s.get("alpaca_slot") is not None
     }
     return [s for s in range(1, MAX_ALPACA_SLOTS + 1) if s not in used]
+
+
+def _pick_highest_ic_shadow(
+    region: str,
+    metrics: dict[tuple[str, str], "StrategyMetrics"],
+    configs: dict[str, dict],
+) -> tuple[str, dict] | None:
+    """Highest-IC active shadow strategy in `region`. Returns (sid, cfg)
+    or None. Used by the empty-slot backstop. Ranking: IC desc, then
+    n_predictions_graded desc as tiebreaker. Strategies with IC=None
+    rank below any IC-populated row but still beat nothing — when no
+    shadow row has IC, we pick the one with the most graded predictions
+    on the theory that *some* live-test data is better than none.
+
+    The caller must use `_find_region_entry(cfg, region)` to get a
+    mutable entry — `_regions_for_config` returns copies, so we don't
+    cache an entry reference here."""
+    ranked: list[tuple[float, int, str, dict]] = []
+    for sid, cfg in configs.items():
+        if not cfg.get("active"):
+            continue
+        entry = _find_region_entry(cfg, region)
+        if entry is None or entry.get("tier") != "shadow":
+            continue
+        m = metrics.get((sid, region))
+        ic = m.ic if (m and m.ic is not None) else float("-inf")
+        n = m.n_predictions_graded if m else 0
+        ranked.append((ic, n, sid, cfg))
+    if not ranked:
+        return None
+    ranked.sort(key=lambda t: (t[0], t[1]), reverse=True)
+    _, _, sid, cfg = ranked[0]
+    return sid, cfg
+
+
+def _force_fill_empty_paper_slots(
+    metrics: dict[tuple[str, str], "StrategyMetrics"],
+    configs: dict[str, dict],
+) -> list[ActionLog]:
+    """Backstop the "Slot-filling rule" prompt directive. After the
+    agent's actions are applied, scan the resulting config state. For
+    every empty paper slot (Alpaca 1..MAX or the T212 UK-EU sleeve),
+    promote the highest-IC shadow candidate in that region.
+
+    Bypasses `_meets_promotion` — the whole point is to fill slots
+    even when no candidate clears the strict bar. The T212 budget
+    headroom IS still respected (we'd never blow the £40k ceiling)."""
+    out: list[ActionLog] = []
+
+    # ── Alpaca slots ──────────────────────────────────────────────────
+    used_alpaca: set[int] = set()
+    for cfg in configs.values():
+        for entry in _regions_for_config(cfg):
+            if entry.get("tier") == "alpaca-paper" and entry.get("alpaca_slot") is not None:
+                used_alpaca.add(int(entry["alpaca_slot"]))
+    for slot in range(1, MAX_ALPACA_SLOTS + 1):
+        if slot in used_alpaca:
+            continue
+        pick = _pick_highest_ic_shadow("us", metrics, configs)
+        if pick is None:
+            out.append(ActionLog(
+                "(none)", "us", "promote", False,
+                f"empty-slot backstop: no shadow US candidate available for Alpaca slot {slot}",
+                {"slot_kind": "alpaca", "alpaca_slot": slot, "enforcement": True},
+            ))
+            continue
+        sid, cfg = pick
+        entry = _find_region_entry(cfg, "us")
+        entry["tier"] = "alpaca-paper"
+        entry["alpaca_slot"] = slot
+        _write_config(sid, cfg)
+        used_alpaca.add(slot)
+        m = metrics.get((sid, "us"))
+        ic_str = f"{m.ic:+.3f}" if (m and m.ic is not None) else "n/a"
+        n_str = str(m.n_predictions_graded) if m else "0"
+        out.append(ActionLog(
+            sid, "us", "promote", True,
+            f"empty-slot backstop: highest-IC shadow US candidate (IC={ic_str}, n={n_str}) → Alpaca slot {slot}",
+            {"target_tier": "alpaca-paper", "alpaca_slot": slot,
+             "enforcement": True, "slot_kind": "alpaca"},
+        ))
+
+    # ── T212 UK-EU sleeve ─────────────────────────────────────────────
+    has_t212 = any(
+        entry.get("tier") == "trading212-paper" and entry.get("region") == "uk-eu"
+        for cfg in configs.values()
+        for entry in _regions_for_config(cfg)
+    )
+    if not has_t212:
+        pick = _pick_highest_ic_shadow("uk-eu", metrics, configs)
+        if pick is None:
+            out.append(ActionLog(
+                "(none)", "uk-eu", "promote", False,
+                "empty-slot backstop: no shadow UK-EU candidate available for T212 sleeve",
+                {"slot_kind": "trading212", "enforcement": True},
+            ))
+        else:
+            sid, cfg = pick
+            entry = _find_region_entry(cfg, "uk-eu")
+            committed = _t212_committed_capital(configs)
+            candidate_cap = float(cfg.get("capital_gbp") or 0.0)
+            if committed + candidate_cap > T212_PROMOTE_BUDGET_HEADROOM_GBP:
+                out.append(ActionLog(
+                    sid, "uk-eu", "promote", False,
+                    (f"empty-slot backstop: {sid} would breach T212 £{int(T212_PROMOTE_BUDGET_HEADROOM_GBP):,} "
+                     f"headroom (committed £{committed:,.0f} + this £{candidate_cap:,.0f})"),
+                    {"slot_kind": "trading212", "enforcement": True,
+                     "committed_gbp": committed, "candidate_gbp": candidate_cap},
+                ))
+            else:
+                entry["tier"] = "trading212-paper"
+                entry["t212_slot"] = 1
+                _write_config(sid, cfg)
+                m = metrics.get((sid, "uk-eu"))
+                ic_str = f"{m.ic:+.3f}" if (m and m.ic is not None) else "n/a"
+                n_str = str(m.n_predictions_graded) if m else "0"
+                out.append(ActionLog(
+                    sid, "uk-eu", "promote", True,
+                    f"empty-slot backstop: highest-IC shadow UK-EU candidate (IC={ic_str}, n={n_str}) → trading212-paper",
+                    {"target_tier": "trading212-paper", "t212_slot": 1,
+                     "enforcement": True, "slot_kind": "trading212"},
+                ))
+
+    return out
 
 
 def _try_clear_slot(slot: int) -> bool:
