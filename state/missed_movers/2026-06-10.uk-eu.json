@@ -1,0 +1,124 @@
+{
+  "date": "2026-06-10",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 1 of today's 10 biggest UK/EU movers.\n\n\u2022 5 upside misses \u2014 ASML.AS +4%, IFX.DE +3%, ASM.AS +3%, SY1.DE +3%, BATS.L +2%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (BAS.DE -4%, HEI.DE -4%, BNR.DE -3%, BKG.L -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: BAS.DE (-4.18%) \u2014 Kepler Cheuvreux downgraded BAS.DE to Hold (PT cut \u20ac56\u2192\u20ac54), reinforcing a sector-wide chemicals de-rating on weak China demand and BASF's below-consensus FY2026 EBITDA guidance midpoint (\u20ac6.6B vs ~\u20ac7B consensus). Why we passed: Outside any active strategy's universe. BASF is a large-cap DAX chemical conglomerate (\u20ac42B mkt cap) that moved on a broker note \u2014 a slow, sentiment-driven fade rather than a gap or volume spike. Pre-market signal was absent, and any momentum filter would have seen flat-to-down drift for weeks rather than a tradeable s",
+  "top_movers": [
+    {
+      "ticker": "ASML.AS",
+      "move_pct": 3.584,
+      "close": 1514.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Elon Musk called ASML 'arguably the greatest company in Europe' at its Jun 9\u201310 tech conference; Terafab ($55B SpaceX/Tesla EUV fab) announced; BofA/JPM/MS raised price targets same week.",
+      "miss_reason": "Outside any active strategy's universe. ASML is a \u20ac600B+ EU mega-cap EUV monopoly. The move was event-driven (Musk conference appearance + Terafab JV); pre-market positioning was needed \u2014 post-open momentum or mean-reversion signals cannot capture this.",
+      "suggestion": "Add top EU large-cap semis (ASML, Infineon, STMicro, ASM Int'l) to universe with a conference-catalyst gate: release names on \u2265+2% pre-market gap when a high-profile speaker or major JV announcement is tagged for that ticker on that day.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": 3.5,
+      "close": 280.9,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned-hmm"
+      ],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": 2.889,
+      "close": 80.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide European chip relief rally continuing recovery from ~12% Broadcom-induced selloff (June 5); SOXX rebounded +5.6%, lifting DAX semiconductor names including IFX as hyperscaler capex commitments ($750B in 2026) reassured investors.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IFX.DE is a DAX large-cap (~\u20ac60B mkt cap) semiconductor, almost certainly excluded from mid-cap UK/EU screens. The move was a sector-recovery continuation from June 8; the viable entry window was pre-market on the rebound day, not the close signal.",
+      "suggestion": "Add a semiconductor-sector-recovery sleeve: include large-cap EU chip names (IFX.DE, ASML.AS) when SOXX rebounds \u22655% within 2 sessions after a \u22658% peak-to-trough drawdown, capped at 0.5% NAV per name to stay within large-cap risk tolerance.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": 2.653,
+      "close": 890.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector sympathy rally with ASML on Musk/Terafab conference (June 9-10) + JPM/MS/BofA target raises; reinforced by ASM's own Q1 2026 EPS beat (\u20ac5.01 vs \u20ac4.02 est) and Q2 guidance of \u20ac980M.",
+      "miss_reason": "Outside any active strategy's universe. ASM International (~\u20ac44B, Euronext Amsterdam) is a large-cap semiconductor equipment peer of ASML but likely absent from the bot's AEX momentum screen; the +2.65% move was a sector-sympathy drift, not a standalone signal, making pre-market positioning essential.",
+      "suggestion": "Extend the momentum universe to include ASML's direct Euronext equipment peers (ASM, BESI); when ASML fires a long signal, auto-screen same-sector names with correlation \u22650.75 and momentum lag \u22651 session for a secondary entry within the same day.",
+      "failed": false
+    },
+    {
+      "ticker": "SY1.DE",
+      "move_pct": 2.639,
+      "close": 77.78,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Bullish analyst note(s) on June 9 drove Symrise shares sharply higher (overriding a Goldman Sachs Buy\u2192Neutral cut on June 8), with buy-side conviction underpinned by a CFRA price-target raise to \u20ac120 from \u20ac110; rally extended into June 10 close.",
+      "miss_reason": "Outside any active strategy's universe. SY1.DE is a MDAX-listed German flavors-and-fragrances specialty-chemicals name; the move was pure broker-catalyst (analyst PT upgrade), not a technical-momentum signal \u2014 strategies without sell-side event monitoring have no entry trigger regardless of universe gaps.",
+      "suggestion": "Add a broker-upgrade screener to the news-reactive strategy: surface XETRA names \u2265\u20ac3B market cap where \u22651 analyst raises PT by \u22655% vs. prior consensus; enter at next open, 1-day hold, position-size capped at 0.5\u00d7 normal to control event-driven gap risk.",
+      "failed": false
+    },
+    {
+      "ticker": "BATS.L",
+      "move_pct": 2.112,
+      "close": 44.97,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "BAT H1 2026 pre-close trading update raised New Category revenue growth outlook to mid-teens and reaffirmed FY guidance at 390\u2013410p EPS; FTSE 100 defensive sector rotation into consumer-staples names provided additional lift.",
+      "miss_reason": "Outside any active strategy's universe. BATS.L is a mega-cap FTSE 100 tobacco name, likely excluded by ESG screens and low-volatility floors. The move traced to a pre-close guidance update issued days prior \u2014 not capturable via reactive signals.",
+      "suggestion": "Add a pre-close/trading-statement gate: flag FTSE 100 names outside the current universe for next-open momentum entry when a positive guidance update lands and the opening gap exceeds +1% on volume \u22651.2\u00d7 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "BAS.DE",
+      "move_pct": -4.178,
+      "close": 48.85,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Kepler Cheuvreux downgraded BAS.DE to Hold (PT cut \u20ac56\u2192\u20ac54), reinforcing a sector-wide chemicals de-rating on weak China demand and BASF's below-consensus FY2026 EBITDA guidance midpoint (\u20ac6.6B vs ~\u20ac7B consensus).",
+      "miss_reason": "Outside any active strategy's universe. BASF is a large-cap DAX chemical conglomerate (\u20ac42B mkt cap) that moved on a broker note \u2014 a slow, sentiment-driven fade rather than a gap or volume spike. Pre-market signal was absent, and any momentum filter would have seen flat-to-down drift for weeks rather than a tradeable s",
+      "suggestion": "Add a 'sell-side rating-change' event filter: if \u22651 major broker downgrades a large-cap DAX name pre-open with PT implying >10% downside, flag it for the news-reactive strategy's watchlist so it can size a short at the open within its existing risk limits.",
+      "failed": false
+    },
+    {
+      "ticker": "HEI.DE",
+      "move_pct": -3.626,
+      "close": 172.75,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Pre-ECB rate-hike positioning (25bp hike fully priced for June 11 meeting) pressured rate-sensitive construction/cement names alongside continued German construction PMI slump and materials sector rotation from June 9.",
+      "miss_reason": "Outside any active strategy's universe \u2014 HEI.DE is a large-cap DAX construction cyclical excluded as a low-volatility macro-driven name. The drop reflects pre-ECB positioning ahead of the 25bp June 11 hike, not a tradable technical signal.",
+      "suggestion": "Add a central-bank-event overlay: screen rate-sensitive sectors for \u22652% 2-day relative weakness in the 48h pre-ECB/BoE window and expand the universe for short-side expression on event days where strategy constraints allow.",
+      "failed": false
+    },
+    {
+      "ticker": "BNR.DE",
+      "move_pct": -3.451,
+      "close": 54.84,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "GS June 9 note downgraded Lanxess to Sell and cut BASF target citing fading Middle East tailwinds; European chemicals sold off broadly, pulling Brenntag lower on sector contagion.",
+      "miss_reason": "Outside any active strategy's universe. Brenntag (~\u20ac8B German chemicals distributor) is in an uncovered EU sector; drop was broker-note contagion (no pre-open signal) \u2014 profiting required short-selling capability the bot lacks.",
+      "suggestion": "Add EU chemicals sector-downgrade gate: if \u22652 broker notes cut sector within 5 sessions, trigger early exit on any chemicals-correlated longs; the BNR.DE short itself requires short capability not in current strategy set.",
+      "failed": false
+    },
+    {
+      "ticker": "BKG.L",
+      "move_pct": -2.808,
+      "close": 33.92,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    }
+  ],
+  "generated_at": "2026-06-10T15:07:45.650369+00:00"
+}
