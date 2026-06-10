@@ -1,0 +1,126 @@
+{
+  "date": "2026-06-10",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 1 of today's 10 biggest US movers.\n\n\u2022 5 upside misses \u2014 INTC +11%, MU +10%, KLAC +9%, LRCX +7%, COHR +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (AKAM -5%, HSY -5%, CIEN -4%, GDDY -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: INTC (+11.19%) \u2014 Alphabet reportedly placed an order for 3M+ Google TPU units to be manufactured by Intel's foundry for 2028 delivery, validating Intel's foundry turnaround and signaling hyperscaler AI-silicon supply-chain diversification away from Nvidia. Why we passed: Outside any active strategy's universe. INTC (mega-cap semiconductor, +~250% YTD entering today) surged on unconfirmed reports of a Google TPU foundry order \u2014 a rumor-driven catalyst requiring real-time pre-open news-flow monitoring that post-signal momentum strategies cannot act on in time.",
+  "top_movers": [
+    {
+      "ticker": "INTC",
+      "move_pct": 11.193,
+      "close": 110.27,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Alphabet reportedly placed an order for 3M+ Google TPU units to be manufactured by Intel's foundry for 2028 delivery, validating Intel's foundry turnaround and signaling hyperscaler AI-silicon supply-chain diversification away from Nvidia.",
+      "miss_reason": "Outside any active strategy's universe. INTC (mega-cap semiconductor, +~250% YTD entering today) surged on unconfirmed reports of a Google TPU foundry order \u2014 a rumor-driven catalyst requiring real-time pre-open news-flow monitoring that post-signal momentum strategies cannot act on in time.",
+      "suggestion": "Expand the news-reactive strategy's universe to include mega-cap semiconductors (INTC, AMD, TSM) and add a hyperscaler-foundry-deal trigger: release names with a credible reported order and gap-up \u2265+8% at open within 15 minutes of session start.",
+      "failed": false
+    },
+    {
+      "ticker": "MU",
+      "move_pct": 9.869,
+      "close": 949.28,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Micron issued a Jun 10 press release selecting Bechtel as EPC partner for its historic Clay, NY semiconductor fab, reinforcing the CHIPS-Act domestic-manufacturing narrative and amplifying pre-earnings momentum ahead of the Jun 24 Q3 report (guided $33.5B revenue).",
+      "miss_reason": "Outside any active strategy's universe \u2014 MU is a ~$1T mega-cap semiconductor. The move blends a same-day capacity-expansion PR with pre-earnings drift (report Jun 24); even if added to universe, standard earnings-proximity blackouts (~14-day window) would likely have blocked entry regardless.",
+      "suggestion": "Add large-cap AI-memory semis (MU) to the momentum strategy universe and tighten the earnings-blackout to \u22645 days (from ~14) when a same-day company press release containing CHIPS-Act or fab-capacity keywords fires, allowing entry on catalyst-confirmed pre-earnings runs.",
+      "failed": false
+    },
+    {
+      "ticker": "KLAC",
+      "move_pct": 9.271,
+      "close": 2108.0601,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "KLAC reported Q3 FY2026 earnings beat (revenue, EPS, gross margins above estimates), announced a 10-for-1 stock split effective ~June 12, raised quarterly dividend 21%, and guided WFE market to $209.5B in 2027 vs prior $159B estimate.",
+      "miss_reason": "Outside any active strategy's universe. At ~$2,100/share pre-split, KLAC likely breaches a max-share-price or notional-per-share filter. Even if admitted, the +9% move was an earnings-gap catalyst requiring pre-results positioning \u2014 post-open momentum signals arrive too late to capture the bulk of the move.",
+      "suggestion": "Add an earnings-breakout gate that re-admits names with a post-results gap \u2265+5% within 15 min of open regardless of per-share price ceiling; size by dollar-notional rather than share price so high-priced names like KLAC (pre-split) aren't structurally excluded.",
+      "failed": false
+    },
+    {
+      "ticker": "AMAT",
+      "move_pct": 8.644,
+      "close": 492.17,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive",
+        "macro-aligned-hmm",
+        "pead-us"
+      ],
+      "catalyst": "Applied Materials inaugurated its $500M Singapore AI-chip facility and reiterated >30% semiconductor equipment growth for 2026, sparking a sector-wide rally in chip gear stocks (LRCX, KLA also up).",
+      "miss_reason": "Outside any active strategy's universe. AMAT is a mega-cap semi-equipment name; the catalyst arrived ~4 weeks post-earnings, past the typical PEAD drift window, and news-reactive likely lacks mega-cap semiconductor equipment names in its screened watchlist.",
+      "suggestion": "Extend pead-us re-entry window to 60 days for names with \u22655% EPS beat and a raised-guidance flag, allowing a follow-on corporate-event announcement to re-trigger entry rather than dropping the name after the standard ~20-day drift window.",
+      "failed": false
+    },
+    {
+      "ticker": "LRCX",
+      "move_pct": 6.98,
+      "close": 324.45,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "UBS raised LRCX price target to $375 from $310 (+21%) on June 10; amplified by fiscal Q3 2026 beat ($5.84B rev) and raised WFE spending outlook driven by AI/advanced-packaging demand.",
+      "miss_reason": "Outside any active strategy's universe \u2014 LRCX is a large-cap ($45B+) semiconductor equipment name not covered by any current strategy. The catalyst was a pre-market analyst PT raise; post-open entry signals would have faced a gap-up already too extended for standard momentum filters.",
+      "suggestion": "Add a semi-equipment watchlist (LRCX, AMAT, KLAC) with an analyst-upgrade trigger: if a tier-1 bank raises PT \u226515% pre-market, route into the intraday momentum strategy with a 0.5% NAV cap and a 2% hard stop.",
+      "failed": false
+    },
+    {
+      "ticker": "COHR",
+      "move_pct": 6.616,
+      "close": 401.93,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "AI-sector momentum continuation \u2014 COHR extended its post-Computex/NVIDIA $2B investment rally (+17.4% June 2, +8.49% June 8) as the AI hardware trade re-accelerated in optical connectivity names.",
+      "miss_reason": "Outside any active strategy's universe \u2014 COHR is a ~$55B large-cap photonics company. Even if listed, RSI and gap filters would have flagged it as overextended after +17.4% (June 2) and +8.49% (June 8) on the two immediately prior sessions.",
+      "suggestion": "Add COHR to the momentum universe with a post-acceleration cooldown gate: re-enable entry only when price pulls back \u22653% below the rolling 5-day VWAP, preventing late-cycle chasing after multi-session sector runs.",
+      "failed": false
+    },
+    {
+      "ticker": "AKAM",
+      "move_pct": -4.989,
+      "close": 141.87,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continuation of Zacks strong-sell downgrade (~May 25) and FY2026 EPS estimate cuts; Q1 EPS $1.61 hit consensus but fell from prior-year $1.70, reinforcing bearish re-rating. Broader CDN/edge sector risk-off amplified the drift.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AKAM is a large-cap (~$21B) CDN/cloud-security name not in scope. The -5% was a multi-day drift from a late-May analyst action with no clean intraday gap; momentum and news-reactive entry filters would not have fired.",
+      "suggestion": "Add a large-cap tech-infrastructure watchlist tier (CDN, cloud-security) gated by Zacks-rank deterioration \u22652 notches in prior 30 days; enable short-side entry when price crosses \u22653% below 20-day MA post-downgrade.",
+      "failed": false
+    },
+    {
+      "ticker": "HSY",
+      "move_pct": -4.703,
+      "close": 175.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "CIEN",
+      "move_pct": -4.412,
+      "close": 466.67,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued dilution pressure from Ciena's upsized $2.5B 0% convertible notes offering (priced June 8\u20139, settling June 11), compounding the ~20% post-Q2-earnings selloff that began June 4.",
+      "miss_reason": "Outside any active strategy's universe \u2014 large-cap optical networking stock (~$467/share, ~$25B+ mkt cap). Move is a multi-day continuation of post-earnings + convertible-notes-offering pressure from June 4\u20139, with no clean single-session catalyst to trigger an intraday signal today.",
+      "suggestion": "Add a secondary-offering event scanner: when an extended-universe name prices a convertible or equity deal \u2265$500M, flag it as a 3\u20135 session short-bias watch candidate, gated on existing short capability and position-count headroom.",
+      "failed": false
+    },
+    {
+      "ticker": "GDDY",
+      "move_pct": -4.361,
+      "close": 80.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "GoDaddy's promo dotcom-domain pricing drained near-term bookings/revenue; Kaplan Fox opened a securities-law probe and UBS/multiple analysts cut targets, extending the year-long guidance-miss narrative with a ~4.4% decline on Jun 10.",
+      "miss_reason": "Outside any active strategy's universe \u2014 GDDY is a ~$13B large-cap internet/web-services name. The move extended a slow-burn guidance-cut narrative (not a clean single-day gap event), so intraday momentum and news-reactive filters were unlikely to fire.",
+      "suggestion": "Add a revenue-guidance-cut watchlist for large-cap internet names (mkt cap >$5B): open a short-side news-reactive entry within 30 min of open when an 8-K or press release reduces full-year revenue guidance by \u22652%.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-10T19:36:00.152174+00:00"
+}
