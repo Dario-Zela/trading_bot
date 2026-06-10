@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-10T15:48:40.197799+00:00",
+  "generated_at": "2026-06-10T16:30:50.343011+00:00",
   "as_of_iso": "2026-06-10",
   "regions": [
     "uk-eu",
@@ -10,18 +10,18 @@
       "tiers": [
         "alpaca-paper"
       ],
-      "today_pnl_gbp": 0.0,
-      "today_n_trades": 0,
-      "alltime_pnl_gbp": 290.57,
-      "alltime_n_trades": 48,
-      "alltime_n_wins": 17,
-      "alltime_hit_rate": 0.354,
+      "today_pnl_gbp": 174.72,
+      "today_n_trades": 1,
+      "alltime_pnl_gbp": 465.29,
+      "alltime_n_trades": 49,
+      "alltime_n_wins": 18,
+      "alltime_hit_rate": 0.367,
       "regions": {
         "us": {
-          "today_pnl_gbp": 0.0,
-          "today_n_trades": 0,
-          "alltime_pnl_gbp": 290.57,
-          "alltime_n_trades": 48
+          "today_pnl_gbp": 174.72,
+          "today_n_trades": 1,
+          "alltime_pnl_gbp": 465.29,
+          "alltime_n_trades": 49
         }
       }
     },
@@ -29,12 +29,12 @@
       "tiers": [
         "shadow"
       ],
-      "today_pnl_gbp": 137388.19,
-      "today_n_trades": 20,
-      "alltime_pnl_gbp": 456957.52,
-      "alltime_n_trades": 553,
-      "alltime_n_wins": 132,
-      "alltime_hit_rate": 0.239,
+      "today_pnl_gbp": 137619.57,
+      "today_n_trades": 22,
+      "alltime_pnl_gbp": 457188.9,
+      "alltime_n_trades": 555,
+      "alltime_n_wins": 134,
+      "alltime_hit_rate": 0.241,
       "regions": {
         "uk-eu": {
           "today_pnl_gbp": 137388.19,
@@ -43,10 +43,10 @@
           "alltime_n_trades": 331
         },
         "us": {
-          "today_pnl_gbp": 0.0,
-          "today_n_trades": 0,
-          "alltime_pnl_gbp": -6896.11,
-          "alltime_n_trades": 222
+          "today_pnl_gbp": 231.38,
+          "today_n_trades": 2,
+          "alltime_pnl_gbp": -6664.73,
+          "alltime_n_trades": 224
         }
       }
     }
@@ -254,8 +254,8 @@
       ],
       "total_gbp": 208269.01,
       "n_trades": 78,
-      "n_open": 4,
-      "n_closed": 74
+      "n_open": 3,
+      "n_closed": 75
     },
     "all": {
       "by_sector": [
@@ -370,8 +370,8 @@
       ],
       "total_gbp": 347027.51,
       "n_trades": 134,
-      "n_open": 4,
-      "n_closed": 130
+      "n_open": 3,
+      "n_closed": 131
     }
   },
   "halt": {
@@ -143856,12 +143856,12 @@
       "tier2_marked_at": null,
       "tier2_thesis": "",
       "summary": {
-        "n_closed": 3,
-        "n_open": 3,
+        "n_closed": 4,
+        "n_open": 2,
         "n_open_multi_day": 1,
-        "total_pnl_gbp": 318.68,
-        "avg_pnl_pct": 6.87,
-        "hit_rate": 0.667,
+        "total_pnl_gbp": 364.35,
+        "avg_pnl_pct": 5.71,
+        "hit_rate": 0.75,
         "n_predictions": 194
       },
       "equity_curve": [
@@ -143880,6 +143880,10 @@
         {
           "date": "2026-06-09",
           "equity": 10318.68
+        },
+        {
+          "date": "2026-06-10",
+          "equity": 10364.35
         }
       ],
       "executed": [
@@ -143930,11 +143934,11 @@
           "stop_loss_pct": -2.5,
           "take_profit_pct": 3.0,
           "thesis": "Applied Materials has two today-specific positive catalysts \u2014 Cantor Fitzgerald raising the PT to $650 and a $500M Singapore manufacturing expansion \u2014 that distinguish it from the broader mega-cap semi selloff; strong technicals (RSI 62.7, above SMA20 at $449 and SMA50 at $412) confirm the semi-equipment cycle is tracking independently of AI inference names.",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
+          "exit_date": "2026-06-10",
+          "exit_price": 503.2099914550781,
+          "pnl_gbp": 45.669981206549565,
+          "pnl_pct": 2.2431228490446653,
+          "exit_reason": "midday_take_profit",
           "outcome_notes": null,
           "risks_observed": null,
           "broker_order_id": null,
@@ -143947,7 +143951,7 @@
           "target_exit_date": "2026-06-10",
           "hold_days": 1,
           "created_at": "2026-06-10T13:35:21.687187+00:00",
-          "updated_at": "2026-06-10T13:35:21.687195+00:00"
+          "updated_at": "2026-06-10T16:30:49.126007+00:00"
         },
         {
           "trade_id": "446fae4f-f251-46c1-b5a6-2d24d290e6f6",
@@ -280011,12 +280015,12 @@
       "tier2_marked_at": null,
       "tier2_thesis": "",
       "summary": {
-        "n_closed": 48,
-        "n_open": 4,
-        "n_open_multi_day": 1,
-        "total_pnl_gbp": 290.57,
-        "avg_pnl_pct": 0.52,
-        "hit_rate": 0.354,
+        "n_closed": 49,
+        "n_open": 3,
+        "n_open_multi_day": 0,
+        "total_pnl_gbp": 465.29,
+        "avg_pnl_pct": 0.6,
+        "hit_rate": 0.367,
         "n_predictions": 1934
       },
       "equity_curve": [
@@ -280215,6 +280219,10 @@
         {
           "date": "2026-06-09",
           "equity": 10290.57
+        },
+        {
+          "date": "2026-06-10",
+          "equity": 10465.29
         }
       ],
       "executed": [
@@ -280331,11 +280339,11 @@
           "stop_loss_pct": -2.0,
           "take_profit_pct": 3.5,
           "thesis": "Confirmed $1.25B acquisition of Vega Therapeutics filed via 8-K on June 8; 1.84\u00d7 elevated volume confirms institutional acceptance of the deal, and post-announcement analyst model updates and buy-side coverage initiation typically extend the initial reaction into session 2.",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
+          "exit_date": "2026-06-10",
+          "exit_price": 106.87,
+          "pnl_gbp": 174.72000000000014,
+          "pnl_pct": 4.3754272878210765,
+          "exit_reason": "midday_take_profit",
           "outcome_notes": null,
           "risks_observed": null,
           "broker_order_id": null,
@@ -280348,7 +280356,7 @@
           "target_exit_date": "2026-06-10",
           "hold_days": 2,
           "created_at": "2026-06-09T13:35:18.079521+00:00",
-          "updated_at": "2026-06-09T13:35:18.079532+00:00"
+          "updated_at": "2026-06-10T16:30:46.650371+00:00"
         },
         {
           "trade_id": "news-reactive-278d932c4f13",
@@ -378029,11 +378037,11 @@
       "tier2_marked_at": null,
       "tier2_thesis": "",
       "summary": {
-        "n_closed": 5,
-        "n_open": 2,
+        "n_closed": 6,
+        "n_open": 1,
         "n_open_multi_day": 1,
-        "total_pnl_gbp": 377.62,
-        "avg_pnl_pct": 4.51,
+        "total_pnl_gbp": 563.33,
+        "avg_pnl_pct": 4.79,
         "hit_rate": 1.0,
         "n_predictions": 95
       },
@@ -378061,6 +378069,10 @@
         {
           "date": "2026-06-09",
           "equity": 10377.62
+        },
+        {
+          "date": "2026-06-10",
+          "equity": 10563.33
         }
       ],
       "executed": [
@@ -378111,11 +378123,11 @@
           "stop_loss_pct": -2.5,
           "take_profit_pct": 3.0,
           "thesis": "Primary-grade 8-K anchor (Item 8.01, June 8) confirms $1.25B definitive cash acquisition of Vega Therapeutics' rare bleeding disorder asset \u2014 no dilution risk. HC Wainwright PT raise to $140 (+39% from $100.64) published June 9 confirms analyst re-rating is still in progress; volume 1.84x average and RSI 57 (room to run) support day-2 continuation. Pharma sector is bullish-leaning per today's news brief; transitional regime sizing applied.",
-          "exit_date": null,
-          "exit_price": null,
-          "pnl_gbp": null,
-          "pnl_pct": null,
-          "exit_reason": null,
+          "exit_date": "2026-06-10",
+          "exit_price": 106.87000274658203,
+          "pnl_gbp": 185.71154793471894,
+          "pnl_pct": 6.190384931157289,
+          "exit_reason": "midday_take_profit",
           "outcome_notes": null,
           "risks_observed": null,
           "broker_order_id": null,
@@ -378128,7 +378140,7 @@
           "target_exit_date": "2026-06-10",
           "hold_days": 1,
           "created_at": "2026-06-10T13:35:21.734520+00:00",
-          "updated_at": "2026-06-10T13:35:21.734528+00:00"
+          "updated_at": "2026-06-10T16:30:49.148906+00:00"
         },
         {
           "trade_id": "09a57571-cf88-4509-9fe8-ac7f59457d83",
