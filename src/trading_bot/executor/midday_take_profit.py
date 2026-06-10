@@ -45,6 +45,33 @@ log = logging.getLogger(__name__)
 
 DEFAULT_TP_FACTOR = 0.7
 
+# Any one-day move beyond this magnitude is treated as a suspected
+# unreported corporate action (reverse-split, consolidation, denomination
+# change) rather than a real intraday return. Strategies cap their
+# take-profit at 8–15%, so an exit firing at +80% is already an order of
+# magnitude above the largest legitimate TP — and a 3x-leveraged ETP
+# theoretically tops out near ±30% in a true tape day. Refusing to book
+# at the absurd price keeps the ledger honest at the cost of one missed
+# close pass (the EOD pipeline re-tries, and by then either the corporate
+# action is in the feed or the price has reverted).
+#
+# History note: 2026-06-10 commodity-momentum @ uk-eu booked +11,895%
+# on 3SSI.L because yfinance reported a post-reverse-split LSE quote
+# (~1822p) against a pre-split ledger entry (~15.65p), with no split
+# row in yfinance.splits to alert us.
+CORP_ACTION_PCT_CUTOFF = 80.0
+
+
+def _looks_like_corp_action(entry_price: float, current_price: float) -> bool:
+    """True if `current_price` vs `entry_price` implies a return so large
+    that the most likely explanation is an unreported corporate action
+    rather than a real intraday move. Symmetric on both sides — a -90%
+    one-day collapse is just as suspect as a +900% one."""
+    if entry_price <= 0 or current_price <= 0:
+        return False
+    pct = (current_price / entry_price - 1.0) * 100.0
+    return abs(pct) > CORP_ACTION_PCT_CUTOFF
+
 
 @dataclass
 class TakeProfitAction:
@@ -212,6 +239,23 @@ def _take_profit_one_alpaca_slot(
             continue
 
         if pct_up < threshold:
+            continue
+
+        if _looks_like_corp_action(entry_price, current_price):
+            actions.append(TakeProfitAction(
+                ticker=symbol, slot=creds.slot, broker="alpaca",
+                strategy_id=sid, entry_price=entry_price,
+                current_price=current_price, pct_up=pct_up,
+                threshold_pct=threshold, take_profit_pct=tp_pct, tp_factor=factor,
+                status="skipped",
+                reason=f"suspected corporate action (one-day {pct_up:+.0f}% > ±{CORP_ACTION_PCT_CUTOFF:.0f}% cutoff)",
+            ))
+            log.warning(
+                "midday-tp: refusing to close alpaca %s — implied %+.0f%% "
+                "one-day return looks like an unreported corporate action "
+                "(entry %.4f → now %.4f). EOD pipeline will reconcile.",
+                symbol, pct_up, entry_price, current_price,
+            )
             continue
 
         # Cancel bracket children first so an orphan TP/SL doesn't fire
@@ -389,6 +433,37 @@ def _take_profit_one_t212_slot(
         if pct_up < threshold:
             continue
 
+        # Corporate-action guard. T212's currentPrice/averagePrice are
+        # internally consistent so pct_up here would not flag a split,
+        # but the ledger's entry_price (recorded at trade time, possibly
+        # pre-split) would still mis-book the exit. We compare T212's
+        # raw current_price against the ledger entry_price after FX
+        # translation to catch that.
+        try:
+            ledger_entry_raw = float(ledger_row.get("entry_price") or 0)
+        except (TypeError, ValueError):
+            ledger_entry_raw = 0.0
+        if ledger_entry_raw > 0 and _looks_like_corp_action(
+            ledger_entry_raw, current_price_raw
+        ):
+            implied_pct = (current_price_raw / ledger_entry_raw - 1.0) * 100.0
+            actions.append(TakeProfitAction(
+                ticker=yf_ticker, slot=creds.slot, broker="t212",
+                strategy_id=sid, entry_price=avg_price_raw,
+                current_price=current_price_raw, pct_up=pct_up,
+                threshold_pct=threshold, take_profit_pct=tp_pct, tp_factor=factor,
+                status="skipped",
+                reason=f"suspected corporate action vs ledger entry "
+                       f"({implied_pct:+.0f}% > ±{CORP_ACTION_PCT_CUTOFF:.0f}% cutoff)",
+            ))
+            log.warning(
+                "midday-tp: refusing to close t212 %s — ledger entry "
+                "%.4f vs T212 current %.4f implies %+.0f%% "
+                "(unreported corporate action). EOD pipeline will reconcile.",
+                yf_ticker, ledger_entry_raw, current_price_raw, implied_pct,
+            )
+            continue
+
         # Cancel any open stops on this ticker before the market close.
         for oid in stops_by_ticker.get(t212_ticker, []):
             try:
@@ -510,6 +585,24 @@ def take_profit_shadow_strategies(
         if tp_pct is None:
             continue
         if pct_up < threshold:
+            continue
+
+        if _looks_like_corp_action(entry, current):
+            actions.append(TakeProfitAction(
+                ticker=ticker, slot=0, broker="shadow",
+                strategy_id=sid, entry_price=entry,
+                current_price=current, pct_up=pct_up,
+                threshold_pct=threshold, take_profit_pct=tp_pct, tp_factor=factor,
+                status="skipped",
+                reason=f"suspected corporate action ({pct_up:+.0f}% one-day "
+                       f"> ±{CORP_ACTION_PCT_CUTOFF:.0f}% cutoff)",
+            ))
+            log.warning(
+                "midday-tp: refusing to close shadow %s — implied %+.0f%% "
+                "one-day return looks like an unreported corporate action "
+                "(entry %.4f → now %.4f). EOD pipeline will reconcile.",
+                ticker, pct_up, entry, current,
+            )
             continue
 
         # For shadow, exit_price is the current intraday price.

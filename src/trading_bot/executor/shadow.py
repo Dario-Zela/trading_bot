@@ -168,6 +168,32 @@ class ShadowExecutor(Executor):
                 take_profit_pct=trade.get("take_profit_pct"),
             )
 
+            # Corporate-action guard. yfinance back-fills can lag a
+            # reverse-split / consolidation by days, so a tiny-priced
+            # LSE leveraged ETP entered pre-action can read out today's
+            # post-action bar at ~100x its prior magnitude. Strategies
+            # cap their take-profit at 8–15%, so anything booking at
+            # |1-day return| > 80% is almost certainly a units mismatch,
+            # not a real intraday move. Leave the trade open and let
+            # the next session reconcile (by then either yf.splits has
+            # the action or the user has fixed the ledger).
+            #
+            # 2026-06-10: caught 3SSI.L commodity-momentum @ uk-eu post-hoc;
+            # added pre-hoc here so the EOD pipeline doesn't repeat
+            # the midday-TP's mistake on tomorrow's roll.
+            if entry_price > 0 and exit_price > 0:
+                implied_pct = (exit_price / entry_price - 1.0) * 100.0
+                if abs(implied_pct) > 80.0:
+                    log.warning(
+                        "shadow EOD: refusing to close %s/%s — implied "
+                        "%+.0f%% one-day return looks like an unreported "
+                        "corporate action (entry %.4f → bar close %.4f). "
+                        "Leaving trade open for next-session reconciliation.",
+                        trade.get("strategy_id"), trade["ticker"],
+                        implied_pct, entry_price, exit_price,
+                    )
+                    continue
+
             # Shadow mirrors whichever live broker we'd use for this
             # region. yfinance prices are in the instrument's native
             # currency — except for LSE listings where yfinance returns
