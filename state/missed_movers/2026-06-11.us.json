@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-11",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 CASY +20%, FDXF +6%, FICO +6%, MPWR +5%, KO +5%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (SMCI -32%, APP -12%, QCOM -12%, COHR -11%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: SMCI (-31.53%) \u2014 SMCI priced a $7B equity + convertible-preferred offering (45.5M shares at $27.50) to fund ~$39B in AI server orders, triggering severe dilution fears and a -31% collapse. Why we passed: Outside any active strategy's universe. SMCI's SEC/auditor history likely triggers governance/quality screens; the -31% was a dilution event announced Jun 9 \u2014 48hr before the pricing gap \u2014 requiring pre-open short positioning the bot cannot execute.",
+  "top_movers": [
+    {
+      "ticker": "CASY",
+      "move_pct": 20.115,
+      "close": 902.82,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q4 2026 EPS of $4.37 crushed the $3.36 consensus by 30%; revenue $4.57B beat $4.39B est; S&P 500 index inclusion, 14% dividend raise, and $1B buyback expansion all announced June 9 after close.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CASY is a consumer-staples convenience-store name not in the bot's tradable set. The entire move was a post-close gap triggered by the June 9 earnings release, so no intraday signal could have captured it without pre-announcement positioning.",
+      "suggestion": "Expand the tradable universe to include S&P 500 consumer-staples constituents; add an earnings-gap gate that admits names with EPS surprise \u226525% and after-hours gap \u226510% for a market-open momentum entry on the following session.",
+      "failed": false
+    },
+    {
+      "ticker": "FDXF",
+      "move_pct": 6.22,
+      "close": 178.28,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-spin pure-play re-rating momentum: FDXF (FedEx Freight Holding Co.) debuted as a standalone NYSE listing June 1 after FedEx spin-off; S&P 500 + Dow Transports index inclusion is driving forced passive-fund inflows and LTL pure-play multiple expansion.",
+      "miss_reason": "Outside any active strategy's universe \u2014 FDXF has only ~8 trading days of price history as a standalone ticker (spun off June 1, 2026), making it ineligible for any signal that requires lookback windows (RSI, momentum z-score, avg-volume baseline). No historical OHLCV series exists to screen against.",
+      "suggestion": "Add a spin-off ingestion rule: auto-enroll newly listed tickers into the momentum universe after 5 trading days of history, gated by S&P 500 or Dow Transports membership and ADV \u2265 $50M, to capture post-spin drift without requiring a full lookback window.",
+      "failed": false
+    },
+    {
+      "ticker": "FICO",
+      "move_pct": 6.156,
+      "close": 1207.34,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "$2B buyback authorization + $1.5B accelerated share repurchase (ASR) announced June 8 drove multi-day rally; June 9 adoption of FICO Score 10T by mortgage lender Rate added incremental tailwind.",
+      "miss_reason": "Outside any active strategy's universe \u2014 FICO (~$28B cap, ~$1,200/share) likely excluded by sector or price-per-share filters. The catalyst was a pre-open corporate 8-K (buyback); intraday signals cannot front-run it.",
+      "suggestion": "Add a pre-open 8-K scanner for buyback authorizations \u2265$1B; for names not yet in universe, trigger a one-day inclusion check against standard entry filters (volume, gap size) so capital-return events can be entered at the open.",
+      "failed": false
+    },
+    {
+      "ticker": "MPWR",
+      "move_pct": 5.275,
+      "close": 1559.1801,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q1 2026 earnings beat (revenue $804M vs ~$782M est, +26% YoY; Enterprise Data +97.7% YoY) with analyst price-target raises continuing to reprice the stock at the Jun 11 AGM.",
+      "miss_reason": "Outside any active strategy's universe \u2014 MPWR is a $60B+ large-cap AI-power semiconductor priced above $1,500/share. The primary +6.38% gap occurred Jun 8 on earnings; by Jun 11 any momentum filter would also see a multi-day extended RSI, blocking a clean entry signal.",
+      "suggestion": "Add large-cap semiconductors (mkt-cap >$20B, SIC 3674) to the post-earnings momentum universe with a 3-session reentry window after a gap \u2265+5% on \u22651.5\u00d7 30-day avg volume, capped at 0.5% NAV per name to contain single-stock concentration risk.",
+      "failed": false
+    },
+    {
+      "ticker": "KO",
+      "move_pct": 5.274,
+      "close": 83.735,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Morgan Stanley raised PT to $89 (from ~$82) and reiterated Overweight on June 10, citing Fairlife growth and FIFA World Cup partnership kicking off June 12 \u2014 stock extended a 4-day rally on event-driven optimism.",
+      "miss_reason": "Outside any active strategy's universe. KO is a mega-cap (~$360B) defensive consumer staple \u2014 typical momentum and mean-reversion screens target higher-beta, smaller-cap names. The +5% move was also driven by a sell-side PT lift the prior afternoon, requiring pre-market positioning to capture.",
+      "suggestion": "Add an analyst-catalyst watchlist filter: flag large-cap names with a PT upgrade \u22656% from a top-5 bank within 18 hours of a known macro event (World Cup, Olympics, Super Bowl) and route them into a one-day event-momentum sleeve with a tight 1.5% stop.",
+      "failed": false
+    },
+    {
+      "ticker": "DXCM",
+      "move_pct": 5.161,
+      "close": 76.62,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "CONNECT RCT at ADA 2026 (June 6) showed Dexcom G7 cut A1C 1.6% in non-insulin Type 2 diabetics \u2014 first Level-A evidence for CGM in this population, materially expanding DXCM's total addressable market.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DXCM (~$30B large-cap MedTech) is likely excluded by sector or cap-tier filters. Catalyst was a medical-conference readout (ADA 2026, June 6); delayed market digestion of clinical data cannot be captured by reactive price or momentum signals.",
+      "suggestion": "Add a medical-conference event watchlist (ADA, ASCO, ASH) that flags Level-A clinical readouts for names meeting min-ADV/price criteria; eligible tickers enter the news-reactive strategy for a 3-day momentum window starting T+1 after the session date.",
+      "failed": false
+    },
+    {
+      "ticker": "SMCI",
+      "move_pct": -31.53,
+      "close": 30.12,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "SMCI priced a $7B equity + convertible-preferred offering (45.5M shares at $27.50) to fund ~$39B in AI server orders, triggering severe dilution fears and a -31% collapse.",
+      "miss_reason": "Outside any active strategy's universe. SMCI's SEC/auditor history likely triggers governance/quality screens; the -31% was a dilution event announced Jun 9 \u2014 48hr before the pricing gap \u2014 requiring pre-open short positioning the bot cannot execute.",
+      "suggestion": "Add an S-3/prospectus monitor for in-universe AI hardware names; secondary-offering filings are 24\u201348hr leading signals for pricing-day gaps. SMCI would first need its governance screen cleared before entering the universe.",
+      "failed": false
+    },
+    {
+      "ticker": "APP",
+      "move_pct": -11.815,
+      "close": 497.09,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "May CPI printed at a 3-year high on Jun 10, stoking rate-cut-delay fears; combined with Strait of Hormuz geopolitical risk (oil supply spike), risk-off rotation crushed high-beta ad-tech names.",
+      "miss_reason": "Outside any active strategy's universe; APP is a mega-cap ad-tech platform (~$160B mkt cap) beyond current coverage. Move was macro-driven (CPI + geopolitics), not a technical or momentum signal \u2014 capturing it required short capability the bot does not have.",
+      "suggestion": "(no actionable change \u2014 profiting from APP's downside requires short capability we don't have; if short strategies are ever added, gate entries on CPI-print risk-off days with a high-beta ad-tech screen above $50B market cap)",
+      "failed": false
+    },
+    {
+      "ticker": "QCOM",
+      "move_pct": -11.613,
+      "close": 192.48,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Export-control risk on QCOM's ByteDance AI chip deal unwound the prior 27% spike; Nvidia's competing RTX Spark and Broadcom's cautious AI capex guidance amplified a sector-wide semiconductor selloff.",
+      "miss_reason": "Outside any active strategy's universe. QCOM (~$210B market cap) is a mega-cap semiconductor excluded by universe size/sector filters; the 3-day reversal followed a deal-announcement spike that predated any momentum signal window.",
+      "suggestion": "Add a China-deal reversal gate: mega-cap semis that spike \u226515% on a China-customer deal news enter the news-reactive short watchlist, triggered if a US export-control headline appears within 10 sessions of the announcement.",
+      "failed": false
+    },
+    {
+      "ticker": "COHR",
+      "move_pct": -10.865,
+      "close": 358.26,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "SemiAnalysis report (~Jun 10) claimed Nvidia's 800VDC power architecture and co-packaged optics (CPO) mass production are both pushed to 2028\u20132029, triggering a sector-wide optical-networking rout; COHR fell ~11%, AAOI \u201317%, LITE \u20138%.",
+      "miss_reason": "Outside any active strategy's universe. COHR is a large-cap AI-optical-component name (P/E ~170x) that had already run triple digits YTD, placing it beyond typical valuation and momentum-extension filters. The catalyst was a third-party research report\u2014pre-market positioning is structurally required to capture it.",
+      "suggestion": "Add AI-optical-networking names (COHR, LITE, AAOI) to the news-reactive strategy universe with a short-bias gate: entry allowed only when a sector-level technology-delay headline is detected and the gap-down at open exceeds 5%, with execution within the first 30 min.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-11T19:35:25.758325+00:00"
+}
