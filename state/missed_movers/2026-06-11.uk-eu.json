@@ -1,0 +1,124 @@
+{
+  "date": "2026-06-11",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 1 of today's 10 biggest UK/EU movers.\n\n\u2022 5 upside misses \u2014 DSFIR.AS +7%, ADS.DE +5%, BN.PA +4%, BESI.AS +3%, EL.PA +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (ENR.DE -11%, STAN.L -8%, IFX.DE -6%, HSBA.L -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: ENR.DE (-10.67%) \u2014 US-Iran escalation and pre-CPI risk-off (May est. ~4.2%) accelerated profit-taking on ENR's stretched 60.9\u00d7 P/E; continuation of a -24% slide from April's record high \u2014 no company-specific news on the day. Why we passed: Outside any active strategy's universe \u2014 ENR.DE is a XETRA-listed German industrial large-cap in a confirmed downtrend from its April peak. Momentum signal was already negative; the macro-driven acceleration required short capability to monetise.",
+  "top_movers": [
+    {
+      "ticker": "DSFIR.AS",
+      "move_pct": 7.257,
+      "close": 71.24,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FDA approved DSM-Firmenich's PARSOL\u00ae Shield (bemotrizinol) \u2014 first new U.S. sunscreen active ingredient in 25+ years \u2014 announced post-close 10 Jun; drove a gap-up open on 11 Jun.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DSFIR.AS is a large-cap Dutch specialty-ingredients company not covered by current sector filters. Move was a regulatory catalyst (FDA approval announced post-close 10 Jun); capturing it required pre-market positioning.",
+      "suggestion": "Add a pre-market regulatory-catalyst scanner for EU specialty-chemicals/ingredients names; release them for gap-up entry within 30 min of open on overnight FDA or EMA approval announcements if volume \u22651.2\u00d7 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "ADS.DE",
+      "move_pct": 4.801,
+      "close": 172.45,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "RBC Capital Markets upgraded Adidas to Outperform, raising PT \u20ac170\u2192\u20ac210 (+24%), coinciding with FIFA World Cup 2026 opening day; underpinned by Q1 beat (EPS \u20ac2.70 vs \u20ac2.66e, rev \u20ac6.59B vs \u20ac6.32Be).",
+      "miss_reason": "Outside any active strategy's universe \u2014 ADS.DE is a DAX 40 large-cap likely screened out by a sector or market-cap ceiling filter. Move was analyst-upgrade + World Cup kickoff confluence, a pre-market catalyst that reactive intraday signals cannot front-run.",
+      "suggestion": "Add a broker-upgrade event scanner: flag DAX/STOXX 50 constituents receiving an upgrade with \u226515% PT upside; open a 1-day momentum position within 30 min of open if pre-market volume is \u22651.2\u00d7 30-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "ULVR.L",
+      "move_pct": 3.941,
+      "close": 43.52,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned"
+      ],
+      "catalyst": "Defensive sector rotation into FTSE 100 consumer staples amid Middle East oil-price spike (Trump/Iran remarks); post-buyback technical support after Unilever's \u20ac1.5B repurchase programme completed 5 Jun.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ULVR.L is a FTSE 100 mega-cap consumer staples name (~\u00a350B mkt cap). The move was macro/sector-driven requiring pre-positioned exposure; no intraday momentum or mean-reversion signal would have triggered an entry.",
+      "suggestion": "Add FTSE 100 defensive-sector names (Unilever, Reckitt) to macro-aligned's universe behind a sector-rotation gate: allow entry when Brent 1-day change \u2265+1.5% AND FTSE staples/cyclicals ratio breaks its 10-day rolling high.",
+      "failed": false
+    },
+    {
+      "ticker": "BN.PA",
+      "move_pct": 3.521,
+      "close": 66.44,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Grupo Santander upgraded BN.PA from Neutral to Outperform, raising PT \u20ac81.90\u2192\u20ac85, coinciding with CMA comment period closing on Danone's \u20ac1B Huel acquisition with no formal opposition surfaced.",
+      "miss_reason": "Outside any active strategy's universe. Danone is a CAC 40 large-cap consumer staples name (~\u20ac45B market cap); the move was analyst-upgrade-driven, requiring pre-market catalyst parsing to position at open \u2014 post-signal momentum entry would have missed most of the move.",
+      "suggestion": "Add a broker-upgrade catalyst filter to a news-reactive strategy: on Tier-1 upgrade (Neutral\u2192Outperform, PT lift \u22655%) for CAC 40/AEX names at open, allow entry within 30 min if price confirmation \u2264+1.5% from prior close.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": 3.204,
+      "close": 289.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector sympathy rally: ASML surged +6.5% on June 8\u201310 driven by Musk/Terafab AI-fab news; BESI, as the prime European hybrid-bonding pure-play, carried higher through June 11 on the same advanced-packaging/AI-capex theme.",
+      "miss_reason": "Outside any active strategy's universe. BESI is a ~\u20ac23B Euronext Amsterdam mid-cap with P/E ~148\u00d7; the move was a multi-day sector tailwind off ASML's catalyst, not a discrete event flag, so no news-reactive or momentum filter had it in scope.",
+      "suggestion": "Add an ASML-sympathy trigger: when ASML 1-day return \u2265+4%, expand the next-session momentum universe to include AEX-listed equipment peers (BESI, AIXA) with a relaxed P/E cap (\u2264160\u00d7) and \u22650.8\u00d7 average daily volume floor.",
+      "failed": false
+    },
+    {
+      "ticker": "EL.PA",
+      "move_pct": 3.003,
+      "close": 178.35,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "EssilorLuxottica announced (9 Jun) it will launch its first smart-glasses production line at its Agordo, Italy plant by early 2027, onshoring Ray-Ban Meta wearable manufacturing from Asia; Delfin SARL (32% holder) added ~\u20ac7.9M in open-market shares on 3\u20134 Jun.",
+      "miss_reason": "Outside any active strategy's universe. EL.PA is a ~\u20ac70B large-cap EU consumer-healthcare name in a -28% YTD downtrend, making it invisible to momentum screens. The move was a multi-session catalyst-driven rebound (announced Tue, continued Thu) requiring news-reactive positioning before technical signals could confirm.",
+      "suggestion": "Add a news-reactive universe-expansion rule: large-cap EU names (mkt cap \u2265\u20ac15B, not already held) that gap \u2265+1.5% intraday on a wearable/AI-manufacturing press release should be eligible for a one-session entry with a 1% hard stop and a 3% profit target.",
+      "failed": false
+    },
+    {
+      "ticker": "ENR.DE",
+      "move_pct": -10.67,
+      "close": 140.82,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "US-Iran escalation and pre-CPI risk-off (May est. ~4.2%) accelerated profit-taking on ENR's stretched 60.9\u00d7 P/E; continuation of a -24% slide from April's record high \u2014 no company-specific news on the day.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ENR.DE is a XETRA-listed German industrial large-cap in a confirmed downtrend from its April peak. Momentum signal was already negative; the macro-driven acceleration required short capability to monetise.",
+      "suggestion": "No actionable long-only change \u2014 flag ENR on a high-multiple mean-reversion watchlist (entry trigger: P/E <35\u00d7 AND drawdown stabilises \u226530d) for re-entry once Gamesa cash drag and geopolitical headwinds resolve.",
+      "failed": false
+    },
+    {
+      "ticker": "STAN.L",
+      "move_pct": -7.958,
+      "close": 17.87,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued selloff in Asia-exposed UK banks after SCMP/Bloomberg reports Beijing is tightening cross-border capital flow scrutiny, forcing HK banks to suspend mainland client overseas-investment accounts; compounded by ongoing HKMA/MAS regulatory heat over CEO Winters' May AI job-",
+      "miss_reason": "Outside any active strategy's universe. STAN.L is a FTSE 100 EM/Asia-franchise bank whose move was driven by a China macro-regulatory story \u2014 not a corporate earnings or technical event \u2014 making it a poor fit for momentum and mean-reversion strategies that screen on domestic UK/EU sector universes with no China-bank pr",
+      "suggestion": "Add an Asia-exposed-banks basket (STAN.L, HSBC.L, PRUD.L) as a monitored sector proxy; trigger a universe-inclusion flag when the basket's rolling 5-day return breaches -5%, so news-reactive strategies can evaluate entry on the second leg rather than missing it entirely.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": -6.0,
+      "close": 75.67,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Broadcom Q3 AI chip guidance missed analyst expectations, sparking a European semis sector sell-off; IFX fell ~6% alongside ASML and STM as investors rotated out of names with 100%+ YTD gains.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IFX.DE is a Xetra/DAX name requiring EUR execution the bot lacks. The June 5 12.8% gap-down would have triggered gap-filter exclusion anyway; today's -6% is a continuation, not a fresh entry signal.",
+      "suggestion": "Add a cross-market contagion flag: when a US semis bellwether (Broadcom, NVDA) misses AI guidance by >5%, pre-stage EU chip proxies on the watchlist \u2014 actionable only once Xetra EUR execution is added to the bot's routing.",
+      "failed": false
+    },
+    {
+      "ticker": "HSBA.L",
+      "move_pct": -5.613,
+      "close": 12.914,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "China tightened cross-border capital controls, forcing brokers to liquidate mainland accounts; mainland flows represent 59% of HK cross-border wealth, directly pressuring HSBC's highest-ROE segment (private banking ~35% RoE). French prosecutors also filed preliminary charges agai",
+      "miss_reason": "Outside any active strategy's universe. HSBA.L is a FTSE-100 mega-cap financials name (~$150B+ mkt cap); most momentum/mean-reversion strategies target mid-cap or sector-specific universes with higher idiosyncratic volatility. The primary driver was a macro regulatory shock (China capital-control tightening) announced ",
+      "suggestion": "Add a macro-event watchlist trigger: when a China regulatory filing or JPMorgan/analyst note flags cross-border wealth restrictions, auto-screen FTSE-100 HK-exposed financials (HSBA.L, STAN.L) for short-side inclusion; gate on prior-session ADV \u2265 2\u00d7 and gap-filter \u2265 -2% at open to avoid false positives.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-11T15:06:17.836114+00:00"
+}
