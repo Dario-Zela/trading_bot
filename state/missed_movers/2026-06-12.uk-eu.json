@@ -1,0 +1,124 @@
+{
+  "date": "2026-06-12",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 1 of today's 10 biggest UK/EU movers.\n\n\u2022 5 upside misses \u2014 ASM.AS +6%, UNA.AS +5%, JD.L +4%, ADM.L +4%, STMPA.PA +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (HLMA.L -15%, DSY.PA -8%, SAP.DE -6%, CAP.PA -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: HLMA.L (-15.38%) \u2014 Full-year FY2026 results beat on revenue (\u00a32.58B, +15%) and EBIT, but FY2027 guidance cut to 'low double-digit' growth vs 16.2% organic in FY2026, and single-customer concentration in Photonics rising to 20% of group sales triggered a sharp derating. Why we passed: Outside any active strategy's universe \u2014 HLMA.L is a FTSE-100 large-cap industrial/safety-tech conglomerate, likely above the liquidity-normalised cap tier the momentum and mean-reversion strategies target. The move was entirely results-day driven; any signal would only appear post-open, by which time >10% of the gap h",
+  "top_movers": [
+    {
+      "ticker": "BESI.AS",
+      "move_pct": 6.899,
+      "close": 309.9,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned"
+      ],
+      "catalyst": "Stacked broker upgrades: Berenberg lifted PT to \u20ac240 from \u20ac140 on Jun 10 citing AI hybrid bonding ramp; BofA raised target ~Jun 12 \u2014 compounding analyst momentum into a +6.9% gap on heavy AEX volume.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BESI (\u20ac23B AEX semiconductor equipment, GICS 45301020) is not in macro-aligned's or any other strategy's coverage list, so no technical filter was even reached; the move was structurally invisible.",
+      "suggestion": "Extend macro-aligned's universe to include AEX large-cap semis equipment (mkt-cap >\u20ac5B, GICS 45301020); add a multi-broker-upgrade entry gate (\u22652 PT raises within 5 sessions) to limit churn and target analyst-momentum setups like this one.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": 5.86,
+      "close": 961.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Delayed sector spillover from ASML's Terafab/Elon Musk-driven rally (Jun 8\u201311 +~10%); ASM International's own Q1 2026 beat (\u20ac862M rev, record 33.1% op margin) provided fundamental support for the re-rating.",
+      "miss_reason": "Outside any active strategy's universe entirely. ASM.AS is a high-priced (~\u20ac961), large-cap (~\u20ac45B) Dutch semiconductor equipment name; the move was a sector rotation spillover requiring a peer-correlation link to ASML \u2014 not a detectable pre-market signal in an isolated single-name screener.",
+      "suggestion": "Add a 'semicon-equipment sector contagion' rule: when ASML.AS closes >+3% on day T, expand the next-open universe to include correlated AEX/Euronext semiconductor equipment peers (ASM, BESI) with a 1-session lookback gate.",
+      "failed": false
+    },
+    {
+      "ticker": "UNA.AS",
+      "move_pct": 4.585,
+      "close": 50.75,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Cluster of fresh Buy reiterations from J.P. Morgan (9 Jun) and Barclays (10 Jun), combined with completion of Unilever's \u20ac1.5 bn share buyback (5 Jun) and ongoing re-rating optimism around the announced food-division spin-off / McCormick merger (Project Apollo, Mar 2026).",
+      "miss_reason": "Outside any active strategy's universe \u2014 UNA.AS is an AEX mega-cap (~\u20ac130 bn) consumer-staples name that likely sits above the market-cap ceiling or outside the sector scope of all running strategies. The move was also catalyst-stacked (buyback completion + dual analyst upgrades over two days), meaning the trigger was ",
+      "suggestion": "Add an 'analyst-upgrade cluster' trigger to the news-reactive strategy: if \u22652 Tier-1 upgrades/reiterations with Buy arrive within a 3-day window on any in-universe OR watchlist name, override the market-cap ceiling for that session and allow a long entry sized at 0.5\u00d7 normal risk; this would have caught the two-day JPM",
+      "failed": false
+    },
+    {
+      "ticker": "JD.L",
+      "move_pct": 4.243,
+      "close": 0.8746,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "JD Sports likely announced launch of second \u00a3100m buyback tranche (first \u00a3100m tranche completed 29 May 2026 at avg 73.09p; second tranche flagged as forthcoming 'in due course'), driving direct buy-side demand and valuation confidence.",
+      "miss_reason": "Outside any active strategy's universe. JD.L is a FTSE 100 large-cap UK sports retail name (~\u00a34.2B mkt cap); the move was triggered by a corporate-action RNS (buyback tranche launch), not a technical or price-momentum signal, making pre-open positioning structurally unavailable without an event feed.",
+      "suggestion": "Wire a FTSE 350 RNS corporate-actions parser to flag new buyback tranche launches as same-day long candidates; a fresh \u00a3100m tranche on a name with FCF momentum and sub-12x forward P/E is a low-noise signal the current strategy set has no channel to receive.",
+      "failed": false
+    },
+    {
+      "ticker": "ADM.L",
+      "move_pct": 4.235,
+      "close": 34.46,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": 3.963,
+      "close": 64.79,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Deutsche Bank raised price target to \u20ac75 from \u20ac52 (Buy) on Jun 11, re-rating STM on AI data-centre revenue guidance lifted to ~$1B for 2026; upgrade carried stock ~+4% at the next session open.",
+      "miss_reason": "Outside any active strategy's universe \u2014 STMPA is a large-cap EU semiconductor (~\u20ac55B mkt cap, +168% YTD) likely above RSI/valuation ceilings in screeners; the catalyst was a tier-1 analyst re-rating requiring pre-market positioning to capture.",
+      "suggestion": "Add an analyst-upgrade gate: tier-1 PT raise \u226525% on large-cap EU semiconductor releases the name into the momentum universe with a 15-min open entry and 2% hard stop, bypassing the RSI ceiling filter for that session only.",
+      "failed": false
+    },
+    {
+      "ticker": "HLMA.L",
+      "move_pct": -15.381,
+      "close": 39.28,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Full-year FY2026 results beat on revenue (\u00a32.58B, +15%) and EBIT, but FY2027 guidance cut to 'low double-digit' growth vs 16.2% organic in FY2026, and single-customer concentration in Photonics rising to 20% of group sales triggered a sharp derating.",
+      "miss_reason": "Outside any active strategy's universe \u2014 HLMA.L is a FTSE-100 large-cap industrial/safety-tech conglomerate, likely above the liquidity-normalised cap tier the momentum and mean-reversion strategies target. The move was entirely results-day driven; any signal would only appear post-open, by which time >10% of the gap h",
+      "suggestion": "Add an earnings-release screener for FTSE-100 names where FY+1 guidance implies \u22653pp organic growth deceleration vs the year just reported; admit them to a short-bias module at open-auction rather than requiring an intraday signal build \u2014 this is the class of miss that pre-market positioning catches and post-open filte",
+      "failed": false
+    },
+    {
+      "ticker": "DSY.PA",
+      "move_pct": -8.118,
+      "close": 18.28,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "SAP.DE",
+      "move_pct": -6.403,
+      "close": 140.32,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Oracle Q4 FY2026 post-earnings capex shock ($95B guidance vs ~$68B est.) triggered a 10%+ Oracle plunge and broad enterprise-software sector selloff; Goldman Sachs simultaneously cut SAP H2 2026 gross-margin forecasts on elevated hardware costs, extending June 11's \u22125% into a fur",
+      "miss_reason": "Outside any active strategy's universe \u2014 SAP.DE is a DAX-40 mega-cap (~\u20ac140B), likely above the bot's size ceiling or below its volatility floor. Oracle capex-shock contagion unfolded across two sessions; capturing it required pre-earnings positioning in a US peer before EU open.",
+      "suggestion": "Add a peer-contagion overlay: when a major US ERP/cloud peer (Oracle, Salesforce) gaps \u2264 \u22128% post-earnings, flag SAP.DE as a short candidate at next EU open requiring \u22651.2\u00d7 avg volume in the first 30 min before entry.",
+      "failed": false
+    },
+    {
+      "ticker": "CAP.PA",
+      "move_pct": -5.462,
+      "close": 94.68,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "European tech-sector contagion from Broadcom's AI-chip warning (~June 5) compounded Capgemini's post-CMD guidance miss (FCF \u20ac1.8-1.9B vs ~\u20ac2B est) and a cluster of analyst PT cuts; no discrete June 12 release identified.",
+      "miss_reason": "Outside any active strategy's universe. CAP.PA is a French large-cap IT services name in a 32%-YTD downtrend; long-only constraints make the short side of deteriorating FCF guidance and analyst growth-cut stories inaccessible.",
+      "suggestion": "If a sector-pairs strategy is ever added, include EU large-cap IT services (CAP, DSY, ATO) on the short leg triggered by post-CMD FCF guidance misses \u22655%; until then, no actionable change \u2014 this requires short capability the current book lacks.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-12T15:07:00.717167+00:00"
+}
