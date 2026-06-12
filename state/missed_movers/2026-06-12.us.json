@@ -1,0 +1,126 @@
+{
+  "date": "2026-06-12",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 2 of today's 10 biggest US movers.\n\n\u2022 4 upside misses \u2014 SNDK +15%, KLAC +13%, AMAT +11%, SATS +11%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (PTC -12%, ADBE -9%, ORCL -9%, AKAM -7%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: SNDK (+14.66%) \u2014 Q3 FY2026 earnings beat (revenue +251% YoY, EPS $24.43 vs prior-year loss) combined with Morgan Stanley upgrade citing a prolonged AI NAND upcycle; Susquehanna PT raised to $3,250. Why we passed: Outside any active strategy's universe. SNDK trades at ~$1,883/share (+693% YTD), likely breaching nominal-price and RSI ceilings in all universe screens; the 14%+ gap crystallised from post-earnings institutional buying that requires pre-open positioning ahead of any intraday signal window.",
+  "top_movers": [
+    {
+      "ticker": "CASY",
+      "move_pct": 20.115,
+      "close": 902.82,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive-disclosure"
+      ],
+      "catalyst": "Q4 FY2026 EPS $4.37 beat estimates by 31.6% ($3.32 est); revenue +14% to $4.57B; $1B buyback authorized and quarterly dividend raised 14% \u2014 pre-market release June 9.",
+      "miss_reason": "Outside any active strategy's universe (mid-cap convenience-store/fuel retail). news-reactive-disclosure flagged the catalyst but the ~20% pre-market gap likely tripped its max-gap entry filter, leaving no actionable opening-session setup.",
+      "suggestion": "In news-reactive-disclosure, add a pre-open entry path for EPS beats \u226525%: allow limit orders at T-30 min if gap <+12% and pre-market volume \u22652\u00d7 30-day avg, sized at 0.3\u00d7 normal \u2014 current hard gap cap misses extreme-beat continuation.",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": 14.661,
+      "close": 1882.9043,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 FY2026 earnings beat (revenue +251% YoY, EPS $24.43 vs prior-year loss) combined with Morgan Stanley upgrade citing a prolonged AI NAND upcycle; Susquehanna PT raised to $3,250.",
+      "miss_reason": "Outside any active strategy's universe. SNDK trades at ~$1,883/share (+693% YTD), likely breaching nominal-price and RSI ceilings in all universe screens; the 14%+ gap crystallised from post-earnings institutional buying that requires pre-open positioning ahead of any intraday signal window.",
+      "suggestion": "Add a post-earnings gap sleeve: admit names with \u2265+10% open gap on a revenue-beat quarter regardless of nominal-price ceiling, capped at a 1-day holding period and 0.5\u00d7 normal position size, to capture asymmetric earnings-momentum moves like this one.",
+      "failed": false
+    },
+    {
+      "ticker": "KLAC",
+      "move_pct": 13.389,
+      "close": 2428.3101,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "KLAC's 10-for-1 stock split began trading on an adjusted basis June 12, amplified by a Q3 FY2026 revenue beat ($3.41B) and raised FY guidance on AI-driven process-control demand, plus a 21% dividend hike and fresh analyst upgrades (Cantor Fitzgerald PT $2,500).",
+      "miss_reason": "Outside any active strategy's universe \u2014 pre-split KLAC traded above $21,000/share, far above any practical per-share price ceiling in the screener. The universe was compiled on pre-split prices so the newly accessible ~$2,400 name was never evaluated; the earnings/split catalyst also required overnight positioning bef",
+      "suggestion": "Add a post-split ingestion rule that re-screens split-effective-date names against all universe filters using split-adjusted prices at market open, so gap-momentum strategies can evaluate day-one moves for names that have crossed into tradeable price ranges.",
+      "failed": false
+    },
+    {
+      "ticker": "LRCX",
+      "move_pct": 12.804,
+      "close": 363.67,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned"
+      ],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "AMAT",
+      "move_pct": 11.291,
+      "close": 555.91,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Applied Materials Q2 2026 earnings beat: revenue $7.91B and EPS $2.86 topped estimates; raised CY2026 semiconductor equipment growth outlook to >30%, plus Barclays PT lift to $590.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AMAT is a mega-cap semiconductor-equipment name (~$450B market cap) whose +11% move was an overnight post-earnings gap. Reactive intraday signals cannot pre-position before the open when the print drops after prior-day close.",
+      "suggestion": "Add a large-cap semis-equipment tier (AMAT, KLAC, LRCX) with a post-earnings gap-gate: if open/prev-close \u2265 +5% and earnings were reported <16h prior, allow entry on first 30-min breakout confirmation rather than requiring prior-session volume signal.",
+      "failed": false
+    },
+    {
+      "ticker": "SATS",
+      "move_pct": 11.185,
+      "close": 128.13,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FCC approved EchoStar's $40B spectrum sale \u2014 SpaceX acquires 65 MHz for $17B, AT&T acquires 50 MHz for $23B; SATS's ~2.2% SpaceX stake further amplified the rally as a SpaceX IPO proxy.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SATS is a mid-cap satellite/telecom name outside standard screens. The +11% move was a regulatory catalyst (FCC spectrum ruling) requiring pre-open positioning before any technical or momentum signal could fire.",
+      "suggestion": "Add a regulatory-event watch list for FCC spectrum/M&A decision candidates; the news-reactive strategy should auto-include these names and trigger on \u22653\u00d7 avg volume gap-up within 15 min of open when a ruling drops.",
+      "failed": false
+    },
+    {
+      "ticker": "PTC",
+      "move_pct": -12.356,
+      "close": 118.39,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-Q2 FY2026 selloff extended as analysts (Citi, Berenberg) cut targets after CFO confirmed new ARR ex-deferred was ~flat YoY, exposing weak organic growth behind headline beats.",
+      "miss_reason": "Outside any active strategy's universe. PTC is a large-cap PLM/IoT software name; the drop is a multi-week post-earnings drift on ARR-quality concerns, not an intraday gap event \u2014 momentum and news-reactive screens would not trigger.",
+      "suggestion": "(no actionable change \u2014 capturing multi-week post-earnings ARR-quality drift on an out-of-universe name requires a fundamental-drift sleeve or short capability; neither fits current risk tolerance without significant scope expansion)",
+      "failed": false
+    },
+    {
+      "ticker": "ADBE",
+      "move_pct": -9.36,
+      "close": 222.06,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 beat ($6.62B rev vs $6.46B est, non-GAAP EPS $5.96 vs $5.82) was overshadowed by CFO Dan Durn's surprise departure, a freemium pivot delaying Creative Cloud price hikes, and an Evercore ISI downgrade (Outperform\u2192In Line, PT $325\u2192$225).",
+      "miss_reason": "Outside any active strategy's universe \u2014 ADBE is a large-cap SaaS name (~$95B market cap). The -9% move was a post-earnings gap triggered after June 11 close; no intraday technical or momentum signal could front-run it without a dedicated earnings-reaction playbook.",
+      "suggestion": "Add a post-earnings gap-down rule: if earnings-day open gaps \u2265-5% versus prior close and first-30-min volume \u22651.5\u00d7 20-day avg, flag for a short entry sized to sector-risk limits \u2014 this would have caught ADBE at open without pre-positioning risk.",
+      "failed": false
+    },
+    {
+      "ticker": "ORCL",
+      "move_pct": -8.519,
+      "close": 184.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q4 FY2026 earnings beat (EPS $2.11 vs $1.95 est, revenue +21% to $19.2B) but stock sold off on surprise $40B AI capex plan, raising concerns about debt load and free-cash-flow sustainability.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ORCL is a $500B+ mega-cap cloud/enterprise name. Additionally, the move was a post-earnings gap reaction (results reported June 10 after close); capturing it required either a pre-positioned short into the print or a news-reactive entry at the open, both outside current strategy",
+      "suggestion": "Add a post-earnings capex-shock screen: if a name beats EPS but guides capex \u226520% above prior consensus, flag it for a gap-fade short entry within 15 min of open \u2014 requires enabling short capability for large-cap tech in at least one strategy.",
+      "failed": false
+    },
+    {
+      "ticker": "AKAM",
+      "move_pct": -7.306,
+      "close": 131.505,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued unwind of May AI-contract surge ($110\u2192$165 peak); selling accelerates on CDN sector rotation, $3.5B convertible-note dilution overhang, and elevated-capex margin concerns; no single discrete June 12 newsbreak found.",
+      "miss_reason": "Outside any active strategy's universe. AKAM is a ~$19B large-cap CDN/cloud-security name not covered by existing sleeves. The move is a post-hype downtrend continuation requiring short exposure \u2014 outside standard long-only momentum or mean-reversion parameters.",
+      "suggestion": "(no actionable change \u2014 outside risk tolerance / requires short capability we don't have); if a large-cap short-momentum sleeve is ever added, AKAM-type setups (\u226520% off 30-day peak + convertible-note overhang) would be natural entry candidates.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-12T19:35:08.343757+00:00"
+}
