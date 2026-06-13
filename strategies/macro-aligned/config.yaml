@@ -28,8 +28,9 @@ model_assignment:
   final_select: sonnet
 runs_in:
 - region: us
-  tier: shadow
+  tier: alpaca-paper
   universe: t212_isa_us
+  alpaca_slot: 3
 - region: uk-eu
   tier: shadow
   t212_slot: null

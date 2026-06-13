@@ -35,12 +35,15 @@ runs_in:
   tier: shadow
   alpaca_slot: null
   universe: t212_isa_us
-  tier2_candidate: false
-  tier2_marked_at: null
-  tier2_thesis: ''
+  tier2_candidate: true
+  tier2_marked_at: '2026-06-13'
+  tier2_thesis: "CONTENDER #2: 66.7% hit rate, avg_pnl_pct=2.749%, max_drawdown=-0.73%\
+    \ on 9 trades \u2014 best execution metrics in slate. IC=0.018 too low to lead;\
+    \ thesis is that these execution metrics reflect real disclosure-event edge that\
+    \ IC ranking doesn't yet capture at n=199."
 - region: uk-eu
-  tier: shadow
-  t212_slot: null
+  tier: trading212-paper
+  t212_slot: 1
   universe: t212_isa_uk_eu
   alpaca_slot: null
 prefilter_mode: llm

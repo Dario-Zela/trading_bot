@@ -1,46 +1,35 @@
 id: commodity-momentum
-display_name: "Commodity momentum"
-description: |
-  LLM-driven. Trades commodity ETFs based on dollar index, real yields,
-  supply/demand themes. Commodities are dollar-denominated globally so the
-  same US-listed ETF universe (GLD, SLV, USO, DBA, DBB) is used in both
-  regions — only the underlying decision logic differs by macro regime.
-
+display_name: Commodity momentum
+description: "LLM-driven. Trades commodity ETFs based on dollar index, real yields,\n\
+  supply/demand themes. Commodities are dollar-denominated globally so the\nsame US-listed\
+  \ ETF universe (GLD, SLV, USO, DBA, DBB) is used in both\nregions \u2014 only the\
+  \ underlying decision logic differs by macro regime.\n"
 implementation: llm
-active: true
-
+active: false
 capital_gbp: 10000
 max_positions: 3
 max_position_pct: 50
 min_position_gbp: 100
-
 use_stops: true
 use_take_profits: true
 stop_loss_pct: -4.0
 take_profit_pct: 3.0
 last_tune_date: '2026-05-27'
-
 tools:
-  - get_universe
-  - get_history
-  - get_commodity_prices
-  - get_dollar_index
-  - get_yield_curve
-  - get_macro_view
-  - get_technicals
-  - get_recent_news
-
+- get_universe
+- get_history
+- get_commodity_prices
+- get_dollar_index
+- get_yield_curve
+- get_macro_view
+- get_technicals
+- get_recent_news
 model_assignment:
   wide_scoring: haiku
   deep_analysis: sonnet
   final_select: sonnet
-
 runs_in:
-  # US sleeve deprecated: us_etfs_commodity (GLD, USO, ...) is US-listed
-  # and absent from T212. The UK-EU sleeve now uses eu_etfs_commodity —
-  # the comprehensive GBP/GBX LSE commodity ETC set (physical metals,
-  # energy, agriculture, industrial metals, broad baskets), all
-  # ISA-eligible and trading in London hours.
-  - region: uk-eu
-    tier: shadow
-    universe: eu_etfs_commodity
+- region: uk-eu
+  tier: shadow
+  universe: eu_etfs_commodity
+deactivated_at: '2026-06-13'

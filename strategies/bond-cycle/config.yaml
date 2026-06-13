@@ -10,7 +10,7 @@ description: 'LLM-driven. Trades bond ETFs based on yield-curve shape, central-b
 
   '
 implementation: llm
-active: true
+active: false
 capital_gbp: 10000
 max_positions: 3
 max_position_pct: 50
@@ -39,3 +39,4 @@ runs_in:
 prefilter_mode: python
 prefilter_sort_key: dollar_volume_desc
 prefilter_top_n: 100
+deactivated_at: '2026-06-13'

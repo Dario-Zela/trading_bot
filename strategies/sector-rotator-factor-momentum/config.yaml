@@ -6,7 +6,7 @@ description: 'Auto-spawned variant of sector-rotator on 2026-05-30 by the weekly
   smoothing (Gao et al. 2026, SSRN 6371558). Parent''s IC -0.08 is consistent with
   buying crowded late-cycle sectors that meta-momentum correctly de-ranks.'
 implementation: llm
-active: true
+active: false
 capital_gbp: 10000.0
 max_positions: 4
 max_position_pct: 40.0
@@ -35,3 +35,4 @@ runs_in:
   alpaca_slot: null
 prefilter_mode: llm
 prefilter_top_n: 100
+deactivated_at: '2026-06-13'

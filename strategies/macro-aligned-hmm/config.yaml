@@ -31,9 +31,15 @@ model_assignment:
   final_select: sonnet
 runs_in:
 - region: us
-  tier: shadow
+  tier: alpaca-paper
   universe: t212_isa_us
-  alpaca_slot: null
+  alpaca_slot: 2
+  tier2_candidate: true
+  tier2_marked_at: '2026-06-13'
+  tier2_thesis: "LEADERBOARD LEADER: IC=0.124 (highest in entire slate), avg_pnl_pct=3.775%,\
+    \ max_drawdown=-0.63% on 7 trades. Strongest risk-adjusted IC signal; promoting\
+    \ to Alpaca-paper this run to grow n_trades from 7 toward the \u226520 needed\
+    \ for hit-rate confirmation."
 - region: uk-eu
   tier: shadow
   t212_slot: null
