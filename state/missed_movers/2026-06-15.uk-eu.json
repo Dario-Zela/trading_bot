@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-15",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 ANTO.L +6%, FRES.L +6%, SGO.PA +6%, EDV.L +6%, RNO.PA +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (TTE.PA -6%, SHELL.AS -4%, SHEL.L -4%, BP.L -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: ANTO.L (+6.48%) \u2014 Macro risk-on rally: US-Iran peace deal optimism lifted LME 3-month copper ~1.6% to $13,704/t on 15 Jun; ANTO surged in broad mining-sector sympathy alongside Rio Tinto, Glencore, and Anglo American \u2014 no company-specific news. Why we passed: Outside any active strategy's universe. ANTO.L is a FTSE 100 large-cap pure-play copper miner (~\u00a340B market cap) whose +6.48% move was entirely macro/commodity-driven; capturing it requires a commodity-linked equity sleeve, not a single-name momentum or news-reactive strategy.",
+  "top_movers": [
+    {
+      "ticker": "ANTO.L",
+      "move_pct": 6.479,
+      "close": 43.06,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Macro risk-on rally: US-Iran peace deal optimism lifted LME 3-month copper ~1.6% to $13,704/t on 15 Jun; ANTO surged in broad mining-sector sympathy alongside Rio Tinto, Glencore, and Anglo American \u2014 no company-specific news.",
+      "miss_reason": "Outside any active strategy's universe. ANTO.L is a FTSE 100 large-cap pure-play copper miner (~\u00a340B market cap) whose +6.48% move was entirely macro/commodity-driven; capturing it requires a commodity-linked equity sleeve, not a single-name momentum or news-reactive strategy.",
+      "suggestion": "Add a copper-sector equity sleeve that enters FTSE 100 mining names (ANTO, RIO, AAL) when LME copper 1-day spot move exceeds +1.5% on risk-on sessions; cap at 1\u20132 positions so macro commodity rallies are captured without needing a company-specific signal.",
+      "failed": false
+    },
+    {
+      "ticker": "FRES.L",
+      "move_pct": 6.262,
+      "close": 31.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Gold surged 2.8% to $4,339/oz and silver 4% above $70.5/oz after a US-Iran peace deal to reopen the Strait of Hormuz eased inflation fears and weakened the USD (DXY ~99.5), reversing Friday's NFP-driven precious-metals selloff.",
+      "miss_reason": "Outside any active strategy's universe. FRES.L is a UK-listed mid-cap precious-metals miner whose moves track spot gold/silver macro flows; without a commodity-equity sleeve the bot has no mechanism to hold miners even when bullion signals are strong.",
+      "suggestion": "Add a precious-metals-miner basket (FRES.L, POLY.L, AEM) to a commodity-equity sleeve triggered when XAU spot rises \u22652% intraday, so macro strategy can capture leveraged equity upside during bullion surges without futures exposure.",
+      "failed": false
+    },
+    {
+      "ticker": "SGO.PA",
+      "move_pct": 5.966,
+      "close": 80.28,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Goldman Sachs upgraded SGO from Neutral to Buy (PT \u20ac87 vs prior \u20ac62), citing a 're-rating path ahead of cyclical re-acceleration' in European housing and construction markets.",
+      "miss_reason": "SGO.PA is outside any active strategy's universe. The +5.97% gap was triggered by a Tier-1 broker upgrade published pre-market; post-session technical signals would lag the full move, and no existing strategy monitors analyst-note flow for Euronext large-caps.",
+      "suggestion": "Add a broker-upgrade scanner for Euronext-100 constituents: flag Neutral\u2192Buy upgrades from Tier-1 banks (GS/JPM/MS/BofA) with \u226520% PT upside and open a momentum entry within 30 min of open if the intraday gap is \u2265+3% on above-average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "EDV.L",
+      "move_pct": 5.727,
+      "close": 40.4933,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Gold surged +2.77% to ~$4,339/oz after a US-Iran peace deal to reopen the Strait of Hormuz eased inflation fears; Endeavour Mining (pure-play West African gold producer) amplified the move ~2\u00d7 via operating leverage.",
+      "miss_reason": "Outside any active strategy's universe \u2014 EDV.L is a mid-cap LSE gold miner not in the tradable universe. The +5.73% gain was a pure macro wave (gold +2.77%) requiring gold-equity coverage the strategies currently lack.",
+      "suggestion": "Add a gold-miner sub-universe (XAU correlation \u22650.70, ADV \u2265\u00a32M) to the momentum strategy, activated when spot gold moves \u2265+1.5% pre-market, to capture miners' operating leverage on outsized gold sessions.",
+      "failed": false
+    },
+    {
+      "ticker": "RNO.PA",
+      "move_pct": 5.69,
+      "close": 29.35,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Renault and Thales unveiled the 4 TROOP military tactical vehicle at Eurosatory 2026 on June 15, amplified by CEO-confirmed 50% EV order surge in France/Germany tied to Iran-war fuel spike.",
+      "miss_reason": "Outside any active strategy's universe. RNO.PA (~\u20ac7.9B, CAC 40 auto) moved on a live defense-expo press release (Eurosatory); no pre-market signal existed, requiring real-time monitoring of defense industry events to position pre-open.",
+      "suggestion": "Add RNO.PA and CAC 40 auto peers to a news-catalyst strategy universe; trigger entry on defense/EV press releases confirmed by intraday gap \u2265+3% within the first 30 min of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "MTX.DE",
+      "move_pct": 5.545,
+      "close": 329.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Team Gen 6 alliance signed at ILA Berlin Air Show (June 15); MTU named as propulsion partner in Germany's 8-company sixth-gen fighter program following FCAS Franco-German collapse on June 9.",
+      "miss_reason": "Outside any active strategy's universe \u2014 MTX.DE is a DAX large-cap aerospace name. The move combined an ILA Berlin air-show program announcement (MTU named in Team Gen 6) with a sector tailwind from the June 12 Berenberg aerospace upgrade; the primary catalyst broke intraday, not pre-open.",
+      "suggestion": "Add an air-show event gate (ILA/Farnborough/Paris) scanning official press releases for named DAX aerospace components; permit gap-up entries \u2265+3% within 15 min of Xetra open when a verified Tier-1 program role is cited.",
+      "failed": false
+    },
+    {
+      "ticker": "TTE.PA",
+      "move_pct": -5.774,
+      "close": 71.97,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "US-Iran peace framework announced June 15 erased oil geopolitical risk premium; Brent crude fell ~6%, dragging TTE.PA -5.77% in near-lockstep.",
+      "miss_reason": "Outside any active strategy's universe \u2014 TTE.PA is a CAC 40 mega-cap tracking crude macro, not stock-specific signals. Drop triggered by an overnight Iran peace headline; no pre-market technical entry for momentum or mean-reversion filters.",
+      "suggestion": "No actionable change \u2014 capturing this requires shorting a mega-cap on a macro crude event; without short capability and a crude-beta sector overlay, no filter tweak catches this without unacceptable long-book false-positive rate.",
+      "failed": false
+    },
+    {
+      "ticker": "SHELL.AS",
+      "move_pct": -4.476,
+      "close": 35.64,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Shell suspended its $3B share buyback (Jun 12\u2013Jul 14) due to ARC Resources M&A legal constraints, compounded by ~4% crude price decline on Middle East diplomatic easing reducing the energy risk premium.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Shell is a mega-cap EU oil major, above the bot's likely size screens. Drop combined an M&A buyback pause with crude weakness; both need pre-market macro signals unavailable to the bot's post-open filters.",
+      "suggestion": "Add Shell (SHELL.AS) to an 'EU large-cap energy' sub-universe gated on a crude-proxy trigger (Brent \u2264\u22122% intraday) or M&A buyback-suspension event flag; requires short capability not currently active.",
+      "failed": false
+    },
+    {
+      "ticker": "SHEL.L",
+      "move_pct": -4.44,
+      "close": 30.775,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "US-Iran peace deal announced 2026-06-15 signals Strait of Hormuz reopening; Brent fell ~4% as the 3-month supply-disruption premium unwound, dragging integrated oil majors lower.",
+      "miss_reason": "Outside any active strategy's universe. SHEL.L is a FTSE 100 mega-cap oil major; the move tracked Brent's ~4% macro shock on US-Iran peace news, not a name-specific signal \u2014 requires commodity-sector coverage not currently deployed.",
+      "suggestion": "Add a Brent-shock short rule: when Brent_1d_ret < -3.5%, include FTSE 100 oil majors (SHEL.L, BP.L) in a short-sell scan gated by ADV > \u00a3150M and RSI < 55 at open.",
+      "failed": false
+    },
+    {
+      "ticker": "BP.L",
+      "move_pct": -4.125,
+      "close": 5.1245,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Crude oil fell ~6% to ~$79.85/bbl after the US and Iran announced a peace deal removing the geopolitical risk premium and signalling imminent Strait of Hormuz reopening, dragging FTSE integrated energy majors sharply lower.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BP.L is a mega-cap FTSE 100 integrated oil major whose daily moves track crude rather than idiosyncratic signals. The -4.12% decline was a commodity-correlated short requiring a macro overlay or short capability absent from the current strategy set.",
+      "suggestion": "Add BP.L and SHEL.L to a new macro-short overlay triggered when front-month Brent futures drop \u22654% in pre-market; enter short at LSE open, 1-session hold, gated off unless the bot has short capability enabled.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-15T15:05:03.281545+00:00"
+}
