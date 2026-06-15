@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-15",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 MOS +8%, STX +7%, ALB +7%, INTC +7%, WDC +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (SATS -11%, ADBE -7%, CVNA -5%, LEN -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: SATS (-10.96%) \u2014 New Street analyst cut SATS fair value to ~$86/share (46% below $114 close), concluding SpaceX's direct listing eliminates the proxy premium; investors rotated capital from SATS into SPCX directly, compounding the sell-off. Why we passed: Outside any active strategy's universe. SATS is a distressed satellite stub ($24B debt, missed $183M interest payment June 1, going-concern warning); fundamental quality filters or sector exclusions would have blocked it from any universe before yesterday's proxy-driven setup formed.",
+  "top_movers": [
+    {
+      "ticker": "MOS",
+      "move_pct": 7.587,
+      "close": 22.69,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "US-China trade deal committing China to \u2265$17B/yr in US agricultural purchases (2026-2028) boosted fertilizer demand outlook; concurrent analyst upgrades from RBC Capital and peers reset price targets.",
+      "miss_reason": "Outside any active strategy's universe \u2014 mid-cap (~$7B) Materials/fertilizer name excluded by sector screen. Gain was macro-driven (US-China ag deal + analyst upgrades breaking pre-open), giving post-open momentum signals no actionable entry edge.",
+      "suggestion": "Add a macro-event trigger to the news-reactive universe: when a US-China ag purchasing deal >$10B/yr breaks pre-market, auto-include top phosphate/potash proxies (MOS, NTR, CF) for that session's gap-up filter.",
+      "failed": false
+    },
+    {
+      "ticker": "STX",
+      "move_pct": 7.252,
+      "close": 931.04,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Morgan Stanley raised STX price target to $1,035 from $767 on Jun 15, citing AI-driven nearline HDD demand with capacity nearly fully allocated through 2027 and HAMR technology edge.",
+      "miss_reason": "Outside any active strategy's universe. After a 224% YTD / ~685% 1-year run, STX's RSI and overbought technical filters almost certainly screened it out; the immediate driver was an intraday analyst PT raise \u2014 a catalyst type requiring news-reactive entry, not pre-session signals.",
+      "suggestion": "Add a tier-1 analyst PT-raise trigger: when a bulge-bracket firm raises target \u226520% on a large-cap tech name before 10:00 ET, allow a scaled momentum entry (\u22640.5% NAV) with hard stop at prior close, bypassing standard RSI ceiling for that session only.",
+      "failed": false
+    },
+    {
+      "ticker": "ALB",
+      "move_pct": 7.142,
+      "close": 170.42,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q1 2026 earnings beat by >125% on EPS ($2.95 vs $1.31 est) and +148% EBITDA y/y triggered an analyst upgrade cascade (RBC to $257, Vertical Research Buy at $224), extending a multi-session lithium-sector re-rating rally.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ALB is a large-cap S&P 500 materials/lithium producer. The +7% move was the third session of an earnings-driven upgrade cascade; capturing it required prior universe inclusion and a post-print momentum rule, not intraday signals.",
+      "suggestion": "Add a post-earnings watchlist gate: any S&P 500 materials name with adjusted EBITDA beat \u226540% vs consensus enters the momentum strategy's universe for up to 5 sessions post-print, subject to existing volume floor and position-count cap filters.",
+      "failed": false
+    },
+    {
+      "ticker": "INTC",
+      "move_pct": 6.506,
+      "close": 124.57,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Converging tailwinds: BofA double-upgrade to Buy (June 11, PT $135) citing 18A foundry traction + Google TPU manufacturing order + macro risk-on from U.S.\u2013Iran peace deal drove continued sector re-rating.",
+      "miss_reason": "Outside any active strategy's universe \u2014 INTC is a mega-cap semis name (~$525B market cap) likely excluded by cap-tier or sector filters. The +6.5% gain was a multi-day post-upgrade drift from BofA's June 11 call, not a clean intraday breakout signal.",
+      "suggestion": "Add a 'post-analyst-event momentum' screen for large-cap names: flag double-upgrades on names with mkt cap >$100B, enter on first close above the upgrade-day high within 5 sessions, with a 3% trailing stop from entry.",
+      "failed": false
+    },
+    {
+      "ticker": "WDC",
+      "move_pct": 6.356,
+      "close": 562.93,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Multiple same-day analyst price-target hikes (Morgan Stanley & JPMorgan both to $650, BofA to $610, Wells Fargo to $575) citing AI infrastructure demand and tight memory supply, extending WDC's blowout Q3 2026 earnings re-rating (+46% revenue YoY).",
+      "miss_reason": "Outside any active strategy's universe \u2014 large-cap NASDAQ storage hardware name (~$40B mkt cap). Today's move is analyst PT-cluster driven (4 sell-side hikes same day), a signal type price-action screens miss; primary post-earnings gap (+17%) had already priced in during May.",
+      "suggestion": "Add a post-earnings analyst-revision scan: include names with \u22653 sell-side PT upgrades within 30 days of a >10% earnings gap-up; enter on the cluster day with a 5-day time-decay exit to capture secondary drift without chasing stale momentum.",
+      "failed": false
+    },
+    {
+      "ticker": "COHR",
+      "move_pct": 5.9,
+      "close": 385.03,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued AI-data-center optical networking sector rally; JPMorgan issued a 'buy-the-dip' call on COHR/Lumentum on June 11, and the stock recovered from a brief pullback on broad momentum into AI infrastructure names.",
+      "miss_reason": "Outside any active strategy's universe \u2014 COHR is a large-cap photonic semiconductor name (~$75B market cap) in an optics/AI-infra niche likely absent from the strategy's sector filters. The move is macro sector rotation, not a rules-based signal the bot's universe was positioned to capture.",
+      "suggestion": "Add a small AI-optics watchlist (COHR, LITE, AAOI) to the momentum strategy, gated on sector RSI < 65 and \u22651.2\u00d7 20-day avg volume to avoid chasing extended runs like the stock's +97% YTD move.",
+      "failed": false
+    },
+    {
+      "ticker": "SATS",
+      "move_pct": -10.965,
+      "close": 114.08,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "New Street analyst cut SATS fair value to ~$86/share (46% below $114 close), concluding SpaceX's direct listing eliminates the proxy premium; investors rotated capital from SATS into SPCX directly, compounding the sell-off.",
+      "miss_reason": "Outside any active strategy's universe. SATS is a distressed satellite stub ($24B debt, missed $183M interest payment June 1, going-concern warning); fundamental quality filters or sector exclusions would have blocked it from any universe before yesterday's proxy-driven setup formed.",
+      "suggestion": "No actionable change \u2014 profiting from the short side requires short capability the bot lacks; capturing yesterday's long would require lifting quality filters for distressed stubs, introducing unacceptable credit-event tail risk.",
+      "failed": false
+    },
+    {
+      "ticker": "ADBE",
+      "move_pct": -6.755,
+      "close": 204.02,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "CFO Dan Durn's departure became effective June 15, compounding the post-earnings selloff; dual C-suite vacancies (active CEO search + now-vacant CFO) overshadowed a record Q2 beat of $6.62B revenue and raised FY2026 guidance.",
+      "miss_reason": "Outside any active strategy's universe (large-cap software, ~$88B market cap). The primary move triggered after-hours June 11 on CFO departure news; June 15 is the effective date \u2014 a leadership-risk continuation that required pre-market positioning no intraday reactive bot can execute.",
+      "suggestion": "Add a post-earnings C-suite departure flag: if an S&P 500 name discloses CFO/CEO exit simultaneous with earnings, queue it as a short candidate at open on the effective departure date contingent on a \u22654% overnight gap-down confirmation.",
+      "failed": false
+    },
+    {
+      "ticker": "CVNA",
+      "move_pct": -5.485,
+      "close": 64.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Gross profit per unit compressed by industry-wide used-car depreciation, ADESA reconditioning inefficiencies, and lower shipping fees; RBC cut PT to $85 from $92 on June 12, amplifying the selling.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CVNA is a high-beta auto retailer down ~35% YTD, likely excluded by sector or volatility filters; the move is fundamentals-driven (margin miss) and only capturable with short exposure.",
+      "suggestion": "(no actionable change \u2014 capturing downside in this non-universe, high-beta name requires short/put capability the bot does not currently support; revisit if a long-short strategy is added).",
+      "failed": false
+    },
+    {
+      "ticker": "LEN",
+      "move_pct": -4.897,
+      "close": 90.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Lennar Q2 2026 revenue missed at $7.94B vs $8.13B est (\u20135% YoY), EPS fell 31% YoY to $1.24, and operating margin compressed to 5.9% from 7.5%, driving continued post-earnings selling.",
+      "miss_reason": "Outside any active strategy's universe \u2014 LEN is a large-cap homebuilder not covered by current sector sleeves. Earnings dropped June 11 and the initial gap played out pre-signal; today's \u20134.90% is continued drift that requires a position held from open June 12.",
+      "suggestion": "Add a homebuilder earnings-week sleeve covering LEN/DHI/PHM that opens a short entry within 30 min of the Q-report open gap if gap \u2264 \u20133% and revenue miss \u2265 1%; close by EOD+3 to capture post-earnings drift.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-15T19:34:19.748313+00:00"
+}
