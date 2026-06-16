@@ -1,0 +1,126 @@
+{
+  "date": "2026-06-16",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 1 of today's 10 biggest UK/EU movers.\n\n\u2022 5 upside misses \u2014 EDV.L +7%, FRES.L +7%, ANTO.L +6%, WEIR.L +5%, MTX.DE +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (BA.L -5%, RHM.DE -5%, TTE.PA -4%, SHELL.AS -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: EDV.L (+7.21%) \u2014 Gold spot surged to ~$4,300/oz near record highs on 2026-06-16 (momentum from prior session's US-Iran peace deal rally), triggering a broad gold-miner sector rally that lifted EDV.L +7.21%. Why we passed: Outside any active strategy's universe \u2014 EDV.L is a FTSE 250 mid-cap gold miner (metals/mining sector). The move was entirely sector/commodity-driven by XAU/USD spot price action, not a company-specific signal any equity momentum or mean-reversion screener would surface.",
+  "top_movers": [
+    {
+      "ticker": "EDV.L",
+      "move_pct": 7.206,
+      "close": 41.06,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Gold spot surged to ~$4,300/oz near record highs on 2026-06-16 (momentum from prior session's US-Iran peace deal rally), triggering a broad gold-miner sector rally that lifted EDV.L +7.21%.",
+      "miss_reason": "Outside any active strategy's universe \u2014 EDV.L is a FTSE 250 mid-cap gold miner (metals/mining sector). The move was entirely sector/commodity-driven by XAU/USD spot price action, not a company-specific signal any equity momentum or mean-reversion screener would surface.",
+      "suggestion": "Add a gold-miners satellite screener that flags LSE metals/mining names when XAU/USD 1-day return exceeds +1.5% AND name-level volume is \u22651.2\u00d7 20-day avg; size positions at half normal risk given commodity-beta exposure.",
+      "failed": false
+    },
+    {
+      "ticker": "FRES.L",
+      "move_pct": 6.596,
+      "close": 32.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Silver spot surged ~3.5% on pre-FOMC rate-hold positioning (97% probability priced) ahead of incoming Fed Chair Warsh's debut meeting; Fresnillo, world's largest primary silver producer, amplified the commodity move with ~2\u00d7 equity beta.",
+      "miss_reason": "Outside any active strategy's universe. FRES.L is a FTSE 100 pure-play precious metals miner whose daily returns track XAG/XAU spot price with high equity beta; the bot's momentum and mean-reversion strategies do not cover commodity-regime-driven names and carry no precious-metals sector sleeve.",
+      "suggestion": "Add a commodity-equity satellite trigger: when XAG/USD intraday move exceeds +2% by 09:30 BST, scan FTSE350 miners for silver/gold beta >1.5 and fire a long signal \u2014 this rule would have flagged FRES.L at the open today without altering existing equity filters.",
+      "failed": false
+    },
+    {
+      "ticker": "ANTO.L",
+      "move_pct": 6.083,
+      "close": 42.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "US-Iran interim peace agreement signed 2026-06-16 boosted risk sentiment; LME copper surged ~1.2% to ~$13,650/t, lifting ANTO.L +6.08% as the FTSE 100's largest pure-play copper proxy.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ANTO.L is a large-cap FTSE 100 copper miner. The move was a macro commodity catalyst (geopolitical de-escalation \u2192 copper spike) that materialised at open, making pre-market equity signal positioning impossible for a reactive bot.",
+      "suggestion": "Add a commodity-proxy trigger: when LME copper front-month gaps >+1% vs prior close, auto-admit top-3 LSE copper miners by market cap (inc. ANTO.L) into the momentum universe for that session with a 2\u00d7 ATR stop.",
+      "failed": false
+    },
+    {
+      "ticker": "WEIR.L",
+      "move_pct": 5.164,
+      "close": 24.44,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "US-Iran peace deal (June 15) reopened Strait of Hormuz, sent gold above $4,300 and sparked a FTSE 100 mining-sector rally; Weir Group, as the leading hard-rock mining equipment OEM, followed miners higher with a one-session lag.",
+      "miss_reason": "Outside any active strategy's universe: Weir is classified as Industrials/mining-equipment, not a pure-play miner, so sector screens tracking Rio Tinto, Antofagasta, and Anglo American do not extend to OEM equipment proxies. The move also arrived a day after the primary commodity surge, limiting pre-market signal for n",
+      "suggestion": "Add a 'mining-capex proxy' sub-universe (Weir, Metso, Sandvik, Epiroc) to the mining momentum strategy, triggered when the FTSE mining sub-index gains \u22653% in a single session, releasing these names for next-day momentum entry.",
+      "failed": false
+    },
+    {
+      "ticker": "DBK.DE",
+      "move_pct": 4.315,
+      "close": 29.98,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned-hmm",
+        "macro-aligned",
+        "regime-router"
+      ],
+      "catalyst": "ECB's 25bp rate hike on 11 Jun (first since 2023, effective 17 Jun) repriced European bank NIM expectations; DBK.DE extended its post-announcement rally as sector tailwinds accumulated through the week.",
+      "miss_reason": "Outside any active strategy's screened universe. Macro-aligned strategies (macro-aligned-hmm, macro-aligned, regime-router) likely express ECB rate-sensitivity via broad financials ETFs rather than single European bank names; DBK.DE was absent from their single-name pick list.",
+      "suggestion": "Add top Euribor-sensitive DAX banks (incl. DBK.DE) to macro-aligned-hmm's universe with an entry gate: \u2265+2% close-to-close within 3 sessions of an ECB rate-decision date flagged in the macro calendar.",
+      "failed": false
+    },
+    {
+      "ticker": "MTX.DE",
+      "move_pct": 4.231,
+      "close": 325.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "European risk-on rally on Iran conflict peace-deal reports lifted DAX aerospace names; no MTU-specific announcement \u2014 macro/sector rotation into high-quality industrials.",
+      "miss_reason": "Outside any active strategy's universe \u2014 MTU Aero Engines is a DAX large-cap (~\u20ac17B) in aerospace/defense. Move was macro/geopolitical (Iran de-escalation reports); no company-level catalyst, so news-reactive and momentum filters had no signal to act on pre-open.",
+      "suggestion": "Add a European aerospace/defense macro-overlay universe (DAX A&D names incl. MTX.DE) that activates on broad geopolitical risk-off\u2192risk-on reversals, gated by a \u22653% same-day STOXX Aerospace & Defence index move as the entry trigger.",
+      "failed": false
+    },
+    {
+      "ticker": "BA.L",
+      "move_pct": -4.736,
+      "close": 18.205,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "UK Defence Secretary Healey resigned 12 Jun over underfunded Defence Investment Plan (2.68% GDP vs targets), raising contract-pipeline uncertainty; Monday selloff extended Friday's 1.75% fall into a 4.74% two-day drawdown.",
+      "miss_reason": "Outside any active strategy's universe. BA.L is a FTSE 100 large-cap whose move was driven by a UK government political catalyst (ministerial resignation), requiring macro pre-event positioning rather than the company-level momentum or earnings signals the bot screens for.",
+      "suggestion": "If shorts are available, add a UK-defence-policy event gate: senior MoD ministerial resignation or GDP-spend pledge cut \u22650.1pp triggers a short screen on top-5 FTSE defence names at next-session open within 30 min. If long-only, no-op.",
+      "failed": false
+    },
+    {
+      "ticker": "RHM.DE",
+      "move_pct": -4.595,
+      "close": 1150.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Defense sector de-rating: Q1 2026 miss (\u20ac1.94B vs \u20ac2.28B est) + Ukraine peace-talk progress drove JPMorgan/Deutsche Bank downgrades; RHM continues multi-week slide from \u20ac2,008 52-wk high.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RHM.DE is a \u20ac56B Xetra defense mega-cap in multi-month reset. Defense sector likely excluded by sector filter; macro-driven selloff requires short capability, not name-level long signals.",
+      "suggestion": "(no actionable change \u2014 capturing this requires shorting a defense mega-cap outside current universe and risk tolerance; adding RHM.DE long-only would increase exposure to an ongoing sector drawdown).",
+      "failed": false
+    },
+    {
+      "ticker": "TTE.PA",
+      "move_pct": -4.425,
+      "close": 73.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "US-Iran peace deal announced ~Jun 15 reopened Strait of Hormuz, erasing geopolitical risk premium and sending Brent crude down ~5% to ~$83/bbl; TotalEnergies fell in lockstep as an oil-price-beta major.",
+      "miss_reason": "Outside any active strategy's universe. TTE.PA is a CAC 40 large-cap integrated energy major whose move was a pure macro oil-price shock from an overnight geopolitical headline \u2014 no intraday technical signal could have preceded the gap; pre-open positioning was the only viable entry.",
+      "suggestion": "Add Brent-futures daily return as a universe-gate signal: when Brent moves \u22653% overnight, auto-include top-5 European energy names (TTE.PA, SHEL.L, BP.L, ENI.MI, REPSOL.MC) in the next-open scan with a sector-shock short-side allowance.",
+      "failed": false
+    },
+    {
+      "ticker": "SHELL.AS",
+      "move_pct": -4.369,
+      "close": 35.68,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Shell suspended its $3B share buyback (Jun 12\u2013Jul 14) due to ARC Resources securities-law constraints, removing ~$1B/month of mechanical demand support from a \u20ac197B market-cap stock.",
+      "miss_reason": "Outside any active strategy's universe \u2014 mega-cap EU energy major likely excluded by sector or size filters. The buyback-halt catalyst was filed Jun 12; news-reactive strategies relying on post-open momentum signals missed the ensuing multi-day drift.",
+      "suggestion": "Expand EU large-cap energy universe and add a buyback-suspension trigger (6-K / RNS keyword scan); halting a $1B+/qtr program creates predictable multi-day drift suitable for a news-reactive mean-reversion entry at next-day open.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-16T15:05:56.634648+00:00"
+}
