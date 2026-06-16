@@ -1,0 +1,126 @@
+{
+  "date": "2026-06-16",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 1 of today's 10 biggest US movers.\n\n\u2022 5 upside misses \u2014 WDC +15%, DASH +12%, STX +8%, COHR +8%, CVNA +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (FOXA -17%, FOX -15%, CBOE -9%, MPWR -7%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: FOXA (-16.84%) \u2014 Fox Corp announced a $22B acquisition of streaming platform Roku at a 34% premium in a cash-and-stock deal adding ~$8.3B debt and heavy shareholder dilution \u2014 market punished the acquirer. Why we passed: Outside any active strategy's universe. FOXA is a large-cap legacy media name unlikely screened by momentum or mean-reversion filters. The -16% move was a classic acquirer-discount gap on an M&A announcement; capturing it requires short capability and pre-announcement news-reactive positioning no current strategy holds",
+  "top_movers": [
+    {
+      "ticker": "WDC",
+      "move_pct": 15.16,
+      "close": 648.27,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Morgan Stanley raised WDC price target 33% ($488\u2192$650) on June 15 after-hours, projecting AI-driven HDD demand of 40-50% annually vs. 30-35% supply through 2028, lifting 2028 EPS estimates 70% above consensus.",
+      "miss_reason": "Outside any active strategy's universe. WDC is a large-cap AI storage hardware name; the catalyst (MS analyst PT hike, published after-hours June 15) produced a ~15% pre-open gap that would exceed most momentum gap filters even if the ticker were eligible.",
+      "suggestion": "Add an analyst-upgrade catalyst gate: for AI hardware names (HDD/SSD) with a \u226520% sell-side PT hike published after-hours, trigger long entry at open if pre-market gap is +5% to +12%; exclude gaps above that threshold to avoid overshoot risk.",
+      "failed": false
+    },
+    {
+      "ticker": "DASH",
+      "move_pct": 11.628,
+      "close": 168.09,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Trump Administration announced a peace deal reopening the Strait of Hormuz; falling oil prices and Treasury yields compressed discount rates, lifting consumer-internet valuations and signalling improved ad-spend and discretionary demand outlook for DoorDash.",
+      "miss_reason": "Outside any active strategy's universe. The move was a macro/geopolitical second-order effect \u2014 oil-yield compression rippling into consumer internet \u2014 not a company-specific signal; no pre-market fundamental screen flags this type of sector-wide re-rating.",
+      "suggestion": "Add a macro-trigger overlay: when WTI drops >3% and 10-yr yield falls >8bps intraday, expand the momentum strategy's universe to include watchlisted consumer-internet names (e.g. DASH, SNAP) gating on gap-up \u2265+3% at open to confirm direction.",
+      "failed": false
+    },
+    {
+      "ticker": "MU",
+      "move_pct": 10.501,
+      "close": 1084.6851,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive",
+        "macro-aligned",
+        "regime-router"
+      ],
+      "catalyst": "Multiple bulge-bracket analysts (TD Cowen \u2192$1,500, RBC \u2192$1,200) raised price targets on the same session citing record AI-driven HBM/DRAM demand, lifting MU ~10.8% ahead of June 24 fiscal Q3 earnings.",
+      "miss_reason": "MU is outside any active strategy's universe \u2014 likely excluded by a sector or name-list filter not yet updated for AI-era semiconductor mega-caps. Analyst upgrade cascades materialise pre-market, requiring positioning before post-open signals can trigger.",
+      "suggestion": "Add a coordinated-upgrade trigger to news-reactive that fires within 30 min of open when \u22652 tier-1 firms raise targets \u226515% on the same session, with a temporary universe waiver for large-cap semiconductor names.",
+      "failed": false
+    },
+    {
+      "ticker": "STX",
+      "move_pct": 8.028,
+      "close": 1005.785,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "COHR",
+      "move_pct": 7.753,
+      "close": 414.88,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "U.S. Commerce Dept signed a $50M CHIPS Act letter of intent with COHR to expand its 6-inch Indium Phosphide fab in Sherman TX, doubling production space and quadrupling wafer capacity.",
+      "miss_reason": "Outside any active strategy's universe. COHR is a ~$81B large-cap photonics/semiconductor name; the +7.75% move was driven by a government-funding announcement (CHIPS Act LOI) disclosed pre-market \u2014 not derivable from prior-session technical signals.",
+      "suggestion": "Maintain a watchlist of semiconductor names with pending CHIPS Act applications; add a news-reactive entry rule that buys at open when a CHIPS Act LOI \u2265$25M is confirmed in pre-market headlines for any watchlist name.",
+      "failed": false
+    },
+    {
+      "ticker": "CVNA",
+      "move_pct": 7.488,
+      "close": 68.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "CNBC June 16 feature revealed Carvana's quiet expansion into new-vehicle franchises (7 Stellantis dealerships acquired since 2025); one store hit 700+ units/month, becoming Stellantis' top-volume US dealer.",
+      "miss_reason": "Outside any active strategy's universe. Catalyst was a qualitative CNBC narrative piece \u2014 not an earnings beat or hard data \u2014 difficult to flag pre-open via structured news signals. Day's volume (3.85M vs 10M avg) would also fail most momentum strategies' volume floor filters.",
+      "suggestion": "Add a media-feature flag for major-outlet (CNBC/Bloomberg) stories on business-model pivots; gate entry requiring \u22650.5\u00d7 prior-session avg volume at open to avoid chasing low-volume narrative pops into names not otherwise in the universe.",
+      "failed": false
+    },
+    {
+      "ticker": "FOXA",
+      "move_pct": -16.841,
+      "close": 54.76,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Fox Corp announced a $22B acquisition of streaming platform Roku at a 34% premium in a cash-and-stock deal adding ~$8.3B debt and heavy shareholder dilution \u2014 market punished the acquirer.",
+      "miss_reason": "Outside any active strategy's universe. FOXA is a large-cap legacy media name unlikely screened by momentum or mean-reversion filters. The -16% move was a classic acquirer-discount gap on an M&A announcement; capturing it requires short capability and pre-announcement news-reactive positioning no current strategy holds",
+      "suggestion": "(no actionable change \u2014 capturing acquirer-discount gaps requires short capability and a deal-announcement event trigger the bot does not have; adding FOXA to a long-only universe would not have helped here)",
+      "failed": false
+    },
+    {
+      "ticker": "FOX",
+      "move_pct": -15.216,
+      "close": 49.955,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Fox Corp announced a $22B acquisition of Roku at a 34% premium (cash+stock), adding ~$8.3B in debt and significant shareholder dilution \u2014 classic acquirer-discount sell-off.",
+      "miss_reason": "Outside any active strategy's universe. FOX is a large-cap media/entertainment name not currently covered; the drop was M&A-catalyst-driven (acquirer discount on announcement day), a move type that requires short capability and intraday news-reactive entry \u2014 neither typically available in long-only momentum or mean-rev",
+      "suggestion": "Add FOX/FOXA to a news-reactive watchlist with an 'large-deal acquirer' signal: flag for short entry when announced deal-value exceeds 30% of acquirer market-cap at >25% premium; only actionable if short capability is enabled, otherwise mark as (no-op \u2014 long-only constraint).",
+      "failed": false
+    },
+    {
+      "ticker": "CBOE",
+      "move_pct": -9.119,
+      "close": 266.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Tentative US-Iran peace deal compressed the VIX sharply, threatening CBOE's volatility-dependent options revenue; a rival-exchange SpaceX equity options launch on the same day added market-share pressure.",
+      "miss_reason": "Outside any active strategy's universe. CBOE is a large-cap exchange operator; its decline was driven by VIX collapse from a geopolitical surprise, which pre-market momentum and mean-reversion signals cannot anticipate.",
+      "suggestion": "Add a 'VIX-compression short' rule: when spot VIX drops \u226515% intraday, allow short entries in exchange operators (CBOE, ICE, CME) \u2014 but only if short capability exists; otherwise mark as no-op.",
+      "failed": false
+    },
+    {
+      "ticker": "MPWR",
+      "move_pct": -7.056,
+      "close": 1535.71,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide de-risking of high-multiple semiconductors on global rate jitters; investors reduced exposure to elevated-P/E AI chip names \u2014 no company-specific catalyst, macro-driven pullback.",
+      "miss_reason": "Outside any active strategy's universe. MPWR (~$72B market cap) is a high-multiple semiconductor name; the -7% drop was macro-driven sector de-risking on rate jitters, not a technical or earnings signal bot filters would have detected pre-trade.",
+      "suggestion": "Onboard large-cap semis (market cap > $30B) to an expanded universe; add a rate-sensitivity momentum-short sub-strategy triggered by 10yr yield \u2265 +8bp intraday to capture sector-wide de-risk events like today's.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-16T19:36:23.070692+00:00"
+}
