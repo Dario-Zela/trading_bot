@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-17",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 XYZ +7%, TTWO +6%, ABNB +5%, MRNA +4%, WDC +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (CBOE -9%, MPWR -9%, INTC -8%, LITE -8%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: CBOE (-9.45%) \u2014 CFTC's June 10 proposed rule legitimising Polymarket/Kalshi prediction platforms stoked competition fears for CBOE's derivatives franchise; shares down ~28% over the month on the narrative. Why we passed: Outside any active strategy's universe \u2014 CBOE is a large-cap exchange operator in diversified financials. The move is a weeks-long regulatory/competitive narrative, not a technical trigger any momentum or mean-reversion filter surfaces.",
+  "top_movers": [
+    {
+      "ticker": "XYZ",
+      "move_pct": 6.948,
+      "close": 74.35,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "TTWO",
+      "move_pct": 6.354,
+      "close": 229.97,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Piper Sandler reiterated Overweight with $280 target, citing proprietary data suggesting GTA VI (Nov 19, 2026 launch) could sell 45M+ units; FY27 net-bookings guidance of $8.0\u2013$8.2B flagged as conservative.",
+      "miss_reason": "TTWO is outside all active strategy universes \u2014 large-cap gaming (~$18B mkt-cap) not covered by current scans. The move was triggered by an intraday sell-side reiteration; without real-time analyst-note ingestion, no strategy could react in time.",
+      "suggestion": "Add an analyst-catalyst signal: if a Tier-1 firm raises/reiterates target \u226512% above prior close on a name >$3B mkt-cap, queue for open-gap momentum entry requiring \u22651.5\u00d7 20-day avg volume within the first 15 min of regular trading.",
+      "failed": false
+    },
+    {
+      "ticker": "ABNB",
+      "move_pct": 5.05,
+      "close": 138.96,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Trump administration announced a Strait of Hormuz peace deal, restoring Europe\u2013Asia flight corridors and cutting jet-fuel costs; the entire online travel sector rallied on geopolitical relief.",
+      "miss_reason": "ABNB is outside any active strategy's universe. The move was macro-driven \u2014 the Hormuz reopening lifted all travel names simultaneously; no single-name momentum or news-reactive signal can pre-position for a simultaneous sector-wide geopolitical shock.",
+      "suggestion": "Add a travel-macro vehicle (e.g. JETS ETF or an ABNB/BKNG/EXPE basket) to a geopolitical-catalyst strategy that enters when \u22652 OTA names gap \u22653% at open on confirmed route-restoration or peace-deal news.",
+      "failed": false
+    },
+    {
+      "ticker": "MRNA",
+      "move_pct": 4.448,
+      "close": 52.13,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FDA VRBPAC briefing docs for Moderna's mFlusiva mRNA flu vaccine found no major deficiencies ahead of June 18 adcom, reversing prior refuse-to-file concerns and signaling a viable Aug 5 approval path.",
+      "miss_reason": "Outside any active strategy's universe. MRNA is mid-cap biotech; the move came from FDA briefing docs released pre-market for a pre-scheduled adcom \u2014 a catalyst requiring pre-market positioning the bot cannot capture post-open.",
+      "suggestion": "Build a pre-adcom overlay: ingest the FDA advisory committee calendar, flag names where briefing docs publish with no-major-deficiency language the day before VRBPAC, and allow the news-reactive strategy a capped entry at the open.",
+      "failed": false
+    },
+    {
+      "ticker": "WDC",
+      "move_pct": 4.216,
+      "close": 681.08,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Morgan Stanley raised WDC price target 33% to $650 on AI-HDD demand thesis (Jun 15), sparking a +16% then +7% move; today's +4.22% is third-day continuation of that analyst-upgrade re-rating.",
+      "miss_reason": "Outside any active strategy's universe. The catalyst was a multi-day analyst re-rating (Jun 15\u201316, +16% then +7%); by Jun 17 WDC was in high-RSI continuation mode and momentum filters requiring a fresh breakout would have screened it out.",
+      "suggestion": "Add a 'post-upgrade follow-through' rule: names with a \u226510% analyst-upgrade gap in the prior 2 sessions that hold above open-VWAP qualify for momentum entry with RSI ceiling lifted to 80 and a 1-day volume lookback instead of 5.",
+      "failed": false
+    },
+    {
+      "ticker": "FISV",
+      "move_pct": 4.008,
+      "close": 49.83,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "$2.75B debt tender offer (EUR refinancing for rate/FX savings) + multi-insider stock purchases (2 directors, CAO) reversed the June 15 CEO-departure selloff; new CEO Takis Georgakopoulos (internal, co-president merchant) seen as continuity.",
+      "miss_reason": "Outside any active strategy's universe (large-cap fintech processor). The +4% was a mean-reversion recovery from a CEO-exit gap-down two days prior, catalyzed by insider-buy SEC filings and a corporate refinancing \u2014 no current filter surfaces post-shock insider-buy setups.",
+      "suggestion": "Add a catalyst-recovery scanner: names down \u22658% on a C-suite departure that subsequently show SEC Form 4 insider buys within 48 hrs become eligible for a 1-day mean-reversion entry at next open, capped at 0.5% NAV.",
+      "failed": false
+    },
+    {
+      "ticker": "CBOE",
+      "move_pct": -9.447,
+      "close": 265.24,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "CFTC's June 10 proposed rule legitimising Polymarket/Kalshi prediction platforms stoked competition fears for CBOE's derivatives franchise; shares down ~28% over the month on the narrative.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CBOE is a large-cap exchange operator in diversified financials. The move is a weeks-long regulatory/competitive narrative, not a technical trigger any momentum or mean-reversion filter surfaces.",
+      "suggestion": "(no actionable change \u2014 capturing this downside requires short capability the bot does not have; log CBOE as a sector-risk monitor and revisit if a long-side mean-reversion setup emerges near the 200-day MA.)",
+      "failed": false
+    },
+    {
+      "ticker": "MPWR",
+      "move_pct": -9.291,
+      "close": 1498.77,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide semiconductor de-rating following Broadcom's June 3 soft AI forward guidance (no full-year raise); rising Treasury yields from a strong May jobs report amplified risk-off selling in high-multiple chip names like MPWR.",
+      "miss_reason": "Outside any active strategy's universe. At ~$1,499/share with 59x forward P/E, MPWR likely fails price-per-share or valuation caps; the drop was pure sector contagion\u2014no MPWR-specific news for a news-reactive strategy to trigger on.",
+      "suggestion": "Add a SOX-contagion rule: when the Philadelphia Semiconductor Index drops >5% in a rolling 10-day window, flag semiconductor names with P/E >40x outside the current universe as short candidates for a 48-hour entry window.",
+      "failed": false
+    },
+    {
+      "ticker": "INTC",
+      "move_pct": -8.455,
+      "close": 117.05,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Cluster of six analyst downgrades (Morgan Stanley, Wells Fargo, Barclays, Bernstein all cut to Underweight/Underperform June 11-12) triggered a valuation reset after INTC's ~250% 2026 AI-rally pushed it ~40% above the $87 consensus target.",
+      "miss_reason": "Outside any active strategy's universe \u2014 INTC is a $500B+ mega-cap semiconductor not in any configured universe. The 2-day cascade (-6.4% on June 16, -8.5% on June 17) was analyst-downgrade continuation, a signal type requiring event-driven coverage the current strategies lack.",
+      "suggestion": "Add a large-cap semi watchlist with a short-gate rule: \u22653 new Underweight/Underperform calls within 5 days AND price \u226530% above consensus activates a short signal for the next session (requires short capability to deploy).",
+      "failed": false
+    },
+    {
+      "ticker": "LITE",
+      "move_pct": -8.351,
+      "close": 877.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide profit-taking in AI photonics after LITE's ~140% YTD rally; no company-specific negative news \u2014 COHR and AAOI fell in tandem, consistent with valuation-stretch (~177x P/E) rotation.",
+      "miss_reason": "Outside any active strategy's universe. LITE (~$68B large-cap AI photonics, ~177x P/E, 52-wk range $84\u2013$1,086) likely fails both valuation and volatility screens calibrated for more moderate regimes across all running strategies.",
+      "suggestion": "Add AI-photonics names (LITE, COHR, AAOI) to a momentum-reversal universe: short entry when RSI(14) > 80 AND 5-day gain > 15%; their stretched P/E (~177x) makes them prone to sharp mean-reversion on sector rotation days.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-17T19:35:00.377361+00:00"
+}
