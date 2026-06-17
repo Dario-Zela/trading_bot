@@ -1,0 +1,127 @@
+{
+  "date": "2026-06-17",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 2 of today's 10 biggest UK/EU movers.\n\n\u2022 4 upside misses \u2014 LR.PA +2%, III.L +2%, ANTO.L +2%, BESI.AS +2%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (BMW.DE -7%, ORA.PA -3%, VOW3.DE -2%, ENT.L -2%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: BMW.DE (-7.28%) \u2014 BMW issued a profit warning (released Jun 16 after-hours) cutting 2026 automotive EBIT margin guidance to 1\u20133% from 4\u20136%, citing an accelerating China sales slump and Iran war-driven demand/cost headwinds. Why we passed: Outside any active strategy's universe \u2014 BMW.DE is a DAX large-cap automaker not in current coverage. The warning dropped Jun 16 post-close; only pre-open short positioning before Frankfurt open could have captured the gap, leaving reactive intraday filters with no viable entry.",
+  "top_movers": [
+    {
+      "ticker": "ASM.AS",
+      "move_pct": 3.007,
+      "close": 1017.5,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned",
+        "regime-router"
+      ],
+      "catalyst": "Sector sympathy move: Bernstein's June 15 Outperform reiteration on ASML (\u20ac1,700 PT) citing semiconductor equipment pricing power recovery rippled to EU equipment peers; no ASM-specific news found for June 17.",
+      "miss_reason": "Outside any active strategy's universe. ASM.AS (~\u20ac50B cap, \u20ac1,017/share) is likely excluded by a per-share price or lot-size filter; the move was also sector-driven (ASML contagion), leaving no idiosyncratic signal available to trigger entry before the gap.",
+      "suggestion": "Wire macro-aligned's sector-momentum gate to ASML: when ASML gains >1.5% on a broker-note day, allow long entry in correlated EU equipment peers (ASM.AS, Aixtron) within 90 min of Amsterdam open, subject to existing risk limits.",
+      "failed": false
+    },
+    {
+      "ticker": "ASML.AS",
+      "move_pct": 2.64,
+      "close": 1633.2,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned-hmm"
+      ],
+      "catalyst": "Musk made a virtual appearance at ASML's annual tech conference unveiling Terafab \u2014 a $55B SpaceX/Tesla/xAI chip initiative requiring ASML's exclusive EUV systems \u2014 coinciding with SpaceX IPO pricing the same day.",
+      "miss_reason": "Outside any active strategy's universe: ASML.AS is a ~\u20ac175B mega-cap on Euronext Amsterdam likely excluded by market-cap or exchange filters. The move was event-driven (CEO/partner conference reveal) requiring pre-market positioning before intraday signals could form.",
+      "suggestion": "Add ASML.AS to macro-aligned-hmm's EU large-cap watchlist as an AI-capex proxy; trigger a 0.5\u00d7 sized entry when a verified conference/partnership catalyst appears in the pre-market news feed with gap \u2265+1.5%.",
+      "failed": false
+    },
+    {
+      "ticker": "LR.PA",
+      "move_pct": 2.324,
+      "close": 138.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Legrand's Jun 10 acquisition of Girtz Industries (~$80M rev, Power Pod datacenter specialist) \u2014 its 4th datacenter bolt-on in 2026 \u2014 continued to be priced in, reinforced by AI-infrastructure sector tailwinds across European industrials.",
+      "miss_reason": "Outside any active strategy's universe \u2014 LR.PA is a CAC 40 large-cap French industrial (\u2248\u20ac15B mkt cap, electrical/digital building infra) uncovered by current geographic or sector filters. The move was M&A-momentum-driven, favouring pre-announcement positioning over post-open signals.",
+      "suggestion": "Extend the news-reactive strategy's universe to include CAC 40 electrical-infrastructure names (SIC-equivalent: digital/power building infra); trigger on acquisition press releases where target revenue \u2265$50M and datacenter keyword present within 5 trading days of the release.",
+      "failed": false
+    },
+    {
+      "ticker": "III.L",
+      "move_pct": 2.152,
+      "close": 23.73,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Last-day dividend capture before 48p (\u00a30.48) second interim dividend goes ex on 2026-06-18; buying to qualify for the ~2% single-payment yield drove the day's +2.15% close-to-close move.",
+      "miss_reason": "Outside any active strategy's universe \u2014 III.L is a FTSE 100 private-equity investment trust (3i Group), not a typical momentum or mean-reversion candidate. Move was mechanical pre-ex dividend-capture flow, not a scrapeable news catalyst; a news-reactive bot had no pre-market signal to act on.",
+      "suggestion": "Add a dividend-capture overnight scan: flag FTSE-universe names where ex-date = T+1 and the pending dividend payment \u22651.5% of prior close; enter a same-session long before the 4:30pm close and hard-exit at market open on ex-date to capture the pre-ex drift.",
+      "failed": false
+    },
+    {
+      "ticker": "ANTO.L",
+      "move_pct": 2.056,
+      "close": 43.18,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news identified; ANTO.L tracked LME copper (+0.35% to ~$6.51/lb on 17 Jun) as a high-beta pure-play copper miner \u2014 sector tailwind continuation from strong prior-week commodity rally.",
+      "miss_reason": "Outside any active strategy's universe. ANTO.L is a FTSE 100 large-cap materials name (~\u00a310B+ cap) whose price action is driven by LME copper spot rather than technical momentum signals; a commodity-equity beta sleeve is absent from the bot's strategy set.",
+      "suggestion": "Add a commodity-equity beta sleeve: enter FTSE 100 mining names (ANTO.L, GLEN.L, AAL.L) when LME 3-month copper closes \u2265+0.4% on the prior session, with position sizing capped at 0.5% NAV per name to contain commodity concentration risk.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": 2.041,
+      "close": 305.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Pre-positioning ahead of BESI Investor Day (June 18, 1pm CET live webcast); underpinned by Q1 2026 beat \u2014 revenue +28.3% YoY, orders +104.5% YoY, Q2 guidance +30\u201340% sequential growth.",
+      "miss_reason": "Outside any active strategy's universe. BESI is an Amsterdam-listed (AEX) large-cap (~\u20ac23bn) semiconductor equipment name trading at ~149\u00d7 P/E \u2014 too high-multiple for value screens, and the pre-Investor Day drift is a low-volatility, calendar-anticipatory move that post-open momentum signals don't capture.",
+      "suggestion": "Add a T-1 calendar-event flag: AEX/Euronext large-cap names with a confirmed Investor Day or Capital Markets Day the next session AND trailing order growth >50% YoY should enter the news-reactive watchlist at open with a reduced size cap.",
+      "failed": false
+    },
+    {
+      "ticker": "BMW.DE",
+      "move_pct": -7.275,
+      "close": 62.96,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "BMW issued a profit warning (released Jun 16 after-hours) cutting 2026 automotive EBIT margin guidance to 1\u20133% from 4\u20136%, citing an accelerating China sales slump and Iran war-driven demand/cost headwinds.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BMW.DE is a DAX large-cap automaker not in current coverage. The warning dropped Jun 16 post-close; only pre-open short positioning before Frankfurt open could have captured the gap, leaving reactive intraday filters with no viable entry.",
+      "suggestion": "Add a DAX/Euro-Stoxx large-cap earnings-gate: monitor official IR press releases for automotive EBIT-guidance cuts \u22652pp and emit a short-side signal if the pre-market indicated gap is \u2265-4% within 15 min of Frankfurt open (09:15 CET).",
+      "failed": false
+    },
+    {
+      "ticker": "ORA.PA",
+      "move_pct": -2.714,
+      "close": 17.03,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued deal-digestion selling from the June 6 SFR/Altice France MOU \u2014 Orange committed ~\u20ac4.3B to absorb 4.9M SFR customers amid 4\u21923 antitrust uncertainty \u2014 while the broader CAC 40 rose +0.3%.",
+      "miss_reason": "Outside any active strategy's universe. ORA is a mega-cap French telecom (~\u20ac44B) held in income portfolios, not momentum screens. The -2.71% is multi-day post-MOU drift \u2014 a slow-burn that intraday gap/momentum filters are not designed to capture.",
+      "suggestion": "Add a post-MOU/M&A gate: any name in the active universe with a deal press release in the prior 14 days is blocked from new long entries until price reclaims its 5-day pre-announcement close.",
+      "failed": false
+    },
+    {
+      "ticker": "VOW3.DE",
+      "move_pct": -2.231,
+      "close": 87.66,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "BMW cut its FY2026 profit outlook citing China sales collapse and Iran-war energy cost spikes, sending BMW -7% and dragging the European auto sector down; pre-AGM jitters (Blume to confirm 19,000 job cuts on 18 Jun) compounded VOW3.DE's slide.",
+      "miss_reason": "Outside any active strategy's universe \u2014 VOW3.DE is a XETRA-listed European large-cap with no US ADR in scope. The move was peer-contagion driven (BMW warning) requiring cross-sector awareness, and the EUR 5.26 dividend ex-date on 19 Jun two days out would have distorted momentum/RSI signals even if the name were in-un",
+      "suggestion": "Add a sector-contagion short trigger: when a DAX auto-sector peer (BMW.DE, MBG.DE) drops \u22655% intraday, scan same-sector XETRA names for short entry within 30 min of open \u2014 gated on short capability being enabled; otherwise log as '(no actionable change \u2014 requires short and XETRA universe expansion)'.",
+      "failed": false
+    },
+    {
+      "ticker": "ENT.L",
+      "move_pct": -2.11,
+      "close": 5.8244,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "UK Remote Gaming Duty hike (21%\u219240% from Apr 2026) continues to weigh on sector; Royal Ascot Day 2 bookmaker liability risk and negative PR from Entain/Ladbrokes dropping charity support compounded the move.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Entain is an FTSE 100 UK gambling large-cap in structural decline (~30% YTD 2026). Long-only momentum strategies exclude downtrending names; a -2.11% decline requires short capability to capture.",
+      "suggestion": "Add FTSE leisure/gambling names to a short-eligible universe triggered by confirmed RGD or equivalent tax-rate catalyst; gate entry on \u22653 consecutive sessions of sector underperformance vs FTSE 100 to avoid noise.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-17T15:06:27.667226+00:00"
+}
