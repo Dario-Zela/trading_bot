@@ -1,0 +1,132 @@
+{
+  "date": "2026-06-18",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 3 of today's 10 biggest UK/EU movers.\n\n\u2022 3 upside misses \u2014 LR.PA +4%, III.L +2%, ANTO.L +2%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (BMW.DE -7%, MBG.DE -4%, ORA.PA -3%, VOW3.DE -2%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: BMW.DE (-7.28%) \u2014 BMW cut its 2026 automotive EBIT margin guidance from 4\u20136% to 1\u20133%, citing accelerating China demand slump and Middle East conflict cost pressures; announcement on 16\u201317 Jun triggered ~7\u20138% sell-off. Why we passed: Outside any active strategy's universe \u2014 BMW.DE is a DAX large-cap auto OEM not covered by the bot's current uk-eu universe. Even if added, the driver was a pre-market profit warning requiring short positioning unavailable to long-only strategies.",
+  "top_movers": [
+    {
+      "ticker": "LR.PA",
+      "move_pct": 4.326,
+      "close": 144.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Technical gap-fill to the Jun 5 open at ~\u20ac143.4, fuelled by positive M&A sentiment after Legrand announced the acquisition of Girtz Industries (US data-centre power solutions, ~$80M rev) on Jun 10 \u2014 its sixth deal of 2026.",
+      "miss_reason": "Outside any active strategy's universe. LR.PA is a CAC 40 large-cap (\u20ac30B+ market cap) in the electrical-infrastructure / building-tech sector; the move was a delayed technical gap-fill over 8 sessions rather than a clean day-of catalyst, so news-reactive and momentum filters would have found no entry signal on Jun 18 ",
+      "suggestion": "Add a post-M&A gap-fill scanner for CAC 40 / AEX industrials: if a name gaps down on restructuring news then announces an acquisition within 10 sessions, flag it as a candidate once price reclaims the pre-gap level \u2014 this pattern would have triggered an entry around \u20ac142\u2013143 on Jun 16\u201317.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": 3.007,
+      "close": 1017.5,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned-hmm",
+        "macro-aligned"
+      ],
+      "catalyst": "UBS reinstated ASML as Europe's top semiconductor pick (price target raised to \u20ac1,900), sparking a sector-wide re-rating; ASM International rose ~3% in sympathy as the primary correlated Dutch semicap peer.",
+      "miss_reason": "Outside any active strategy's screened universe today \u2014 ASM.AS appears excluded by sector or market-cap filters in the macro-aligned strategies, which hold prior positions but generate no fresh signals. Sector-sympathy moves from peer analyst action are structurally invisible to the current signal pipeline.",
+      "suggestion": "When a first-tier semicap peer (e.g. ASML) receives a same-day price-target raise \u226515%, auto-expand the macro-aligned universe to include its top-5 correlated EU subsector names for that session, subject to existing position-count and liquidity caps.",
+      "failed": false
+    },
+    {
+      "ticker": "ASML.AS",
+      "move_pct": 2.64,
+      "close": 1633.2,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive"
+      ],
+      "catalyst": "Follow-through from June 17 Terafab rally: Musk outlined $55B SpaceX/Tesla/xAI EUV chip initiative at ASML's tech conference; supported by GS, JPM, and Morgan Stanley price-target upgrades.",
+      "miss_reason": "Outside any active strategy's universe (mega-cap AEX semiconductor equipment). Catalyst fired Jun 17 (+5.32%); by Jun 18 the news was 24h stale and news-reactive's same-session entry rule or post-gap exclusion filter would have blocked a chase entry.",
+      "suggestion": "Add a 'catalyst carry' rule to news-reactive: if same-day entry is blocked by the post-gap filter but price closes >+4% on >1.5\u00d7 avg vol, allow next-open entry at 0.5% weight with a 1.5% trailing stop.",
+      "failed": false
+    },
+    {
+      "ticker": "III.L",
+      "move_pct": 2.152,
+      "close": 23.73,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "\u00a3750m buyback (7.88m shares/\u00a3174m repurchased June 8\u201312) continues lifting price during post-May 19% crash recovery; stock also goes ex-div today for 48p FY2026 H2 dividend (+13% YoY).",
+      "miss_reason": "Outside any active strategy's universe. III.L is a FTSE 100 PE holding co. (~70% concentrated in Action discount retailer); its investment-trust-like structure and a 19% single-day results crash in May would disqualify it from standard vol-filtered equity universes.",
+      "suggestion": "Add a buyback-momentum overlay for FTSE 100 names: auto-include when announced buyback \u22653% of market cap AND stock trades \u226510% below last-published NAV, with a halved max position size to capture systematic-buyer tailwinds.",
+      "failed": false
+    },
+    {
+      "ticker": "ANTO.L",
+      "move_pct": 2.056,
+      "close": 43.18,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Copper rally (+1.2% LME) on risk-on sentiment as Trump signalled an imminent US-Iran peace deal that could reopen the Strait of Hormuz, broadly lifting FTSE 100 mining stocks.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ANTO.L is a FTSE 100 large-cap copper pure-play. The move tracked LME copper (+1.2%) on geopolitical risk-off relief; requires commodity-correlation or sector-momentum triggers absent from current models.",
+      "suggestion": "Add FTSE 100 metals majors (ANTO.L, KAZ.L) to a commodity-momentum sleeve that gates entries on LME copper \u2265+1% intraday and FTSE All-Share Materials ranking in the top-2 sectors by session return.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": 2.041,
+      "close": 305.0,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned-hmm",
+        "news-reactive",
+        "macro-aligned",
+        "regime-router"
+      ],
+      "catalyst": "2026 Investor Day (Amsterdam) raised long-term revenue target to \u20ac1.7B\u2013\u20ac2.2B (from \u20ac1.5B\u2013\u20ac1.9B) and lifted operating margin floor to 45% from 40%, citing accelerating hybrid bonding demand from AI data-centre and HBM customers.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BESI is a large-cap Dutch semiconductor equipment name (Euronext Amsterdam/AEX) not currently covered by sector filters. The move was catalyst-driven by a pre-scheduled corporate Investor Day; post-open signals cannot capture pre-positioning advantage on such events.",
+      "suggestion": "Add BESI and peer EU semicap-equipment names (ASMI, ASML) to news-reactive's universe with a corporate-event calendar trigger: if raised-guidance or raised-target language is detected in an IR release within 30 min of open, release the name for entry sized at \u22640.5\u00d7 standard position.",
+      "failed": false
+    },
+    {
+      "ticker": "BMW.DE",
+      "move_pct": -7.275,
+      "close": 62.96,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "BMW cut its 2026 automotive EBIT margin guidance from 4\u20136% to 1\u20133%, citing accelerating China demand slump and Middle East conflict cost pressures; announcement on 16\u201317 Jun triggered ~7\u20138% sell-off.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BMW.DE is a DAX large-cap auto OEM not covered by the bot's current uk-eu universe. Even if added, the driver was a pre-market profit warning requiring short positioning unavailable to long-only strategies.",
+      "suggestion": "Add a DAX-50 profit-warning event filter: names with \u22653pp automotive EBIT margin guidance cuts within 48 h of session open flagged for short-sleeve routing; mark as watchlist-only until a short-capable strategy sleeve is live.",
+      "failed": false
+    },
+    {
+      "ticker": "MBG.DE",
+      "move_pct": -4.184,
+      "close": 46.835,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "BMW.DE profit warning slashed 2026 guidance citing China weakness and softer deliveries; sector contagion dragged German auto peers lower, with MBG.DE falling ~4% in sympathy.",
+      "miss_reason": "Outside any active strategy's universe \u2014 MBG.DE is a ~\u20ac44B large-cap European auto on Xetra. The move was peer-contagion from BMW's guidance cut, not an MBG-specific catalyst, so news-reactive signals would have flagged BMW first and MBG only as a downstream effect.",
+      "suggestion": "Add a DAX-auto-peer contagion gate: when a basket member (BMW.DE, VOW3.DE) gaps down >4% on a guidance cut, flag co-movers like MBG.DE as short-candidates within the first 30 min of Xetra open, subject to existing position-count limits.",
+      "failed": false
+    },
+    {
+      "ticker": "ORA.PA",
+      "move_pct": -2.714,
+      "close": 17.03,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Barclays reinstated Orange at Equal Weight with a \u20ac17 price target on June 17 (vs ~\u20ac17.51 prior close), citing fully-priced SFR deal synergies, above-peer leverage (2.5\u00d7 ND/EBITDA vs 2.2\u00d7 peers), and limited upside at current valuation.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ORA.PA is a ~\u20ac48B-cap French telecom blue chip that likely falls below the daily-volatility or sector filters used for universe construction. The move was broker-note-driven (analyst reinstatement at a below-market target), requiring pre-market positioning before the open-auctio",
+      "suggestion": "Add a broker-reinstatement trigger to the news-reactive strategy: when a tier-1 bank reinstates coverage with a price target \u22652% below last close, flag the name as a short-bias intraday candidate for that session, bypassing the standing universe filter.",
+      "failed": false
+    },
+    {
+      "ticker": "VOW3.DE",
+      "move_pct": -2.231,
+      "close": 87.66,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "AGM (18 Jun): CEO Blume confirmed binding 19,000 German job cuts by year-end; market underwhelmed by restructuring pace. EUR 5.26 dividend goes ex-date 19 Jun, adding pre-ex-date selling pressure.",
+      "miss_reason": "Outside any active strategy's universe \u2014 VOW3.DE is a large-cap EU auto OEM excluded due to high idiosyncratic risk (tariffs, unions, China). AGM/ex-div events require pre-market positioning the bot's signal stack does not model.",
+      "suggestion": "No actionable change \u2014 VOW3.DE is a deliberate universe exclusion. If EU large-cap autos are ever scoped in, add an AGM-day and ex-div-eve blackout filter to avoid entering whipsaw event-day positions.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-18T15:04:47.935646+00:00"
+}
