@@ -1,0 +1,124 @@
+{
+  "date": "2026-06-19",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 1 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 ENR.DE +9%, KER.PA +5%, CBK.DE +4%, LR.PA +4%, IFX.DE +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 3 downside moves (CAP.PA -8%, CA.PA -7%, BMW.DE -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: ENR.DE (+8.85%) \u2014 Manager Magazin report (~June 18/19) revealed Siemens Energy is exploring a spin-off or IPO of its Transformation of Industry division (~\u20ac5.7B revenue), with ~60% sold to public; portfolio sharpening to pure grid/gas play seen as valuation unlock. Why we passed: Outside any active strategy's universe. ENR.DE is a DAX-40 mega-cap (~\u20ac100B+ market cap); it falls above any mid/small-cap momentum or mean-reversion universe. The catalyst was a media leak of internal M&A deliberations \u2014 no technical pre-signal existed; the gap was fully baked in at open.",
+  "top_movers": [
+    {
+      "ticker": "ENR.DE",
+      "move_pct": 8.846,
+      "close": 170.04,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Manager Magazin report (~June 18/19) revealed Siemens Energy is exploring a spin-off or IPO of its Transformation of Industry division (~\u20ac5.7B revenue), with ~60% sold to public; portfolio sharpening to pure grid/gas play seen as valuation unlock.",
+      "miss_reason": "Outside any active strategy's universe. ENR.DE is a DAX-40 mega-cap (~\u20ac100B+ market cap); it falls above any mid/small-cap momentum or mean-reversion universe. The catalyst was a media leak of internal M&A deliberations \u2014 no technical pre-signal existed; the gap was fully baked in at open.",
+      "suggestion": "Add an event-driven catalyst overlay: screen DAX-40/MDAX names with overnight news gap \u2265+5% on restructuring/spin-off headlines, gating entry within 30 min of open if volume \u22652\u00d7 20-day average \u2014 this would catch the next ENR-style restructuring gap without touching normal universe filters.",
+      "failed": false
+    },
+    {
+      "ticker": "KER.PA",
+      "move_pct": 4.913,
+      "close": 275.45,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "CBK.DE",
+      "move_pct": 4.397,
+      "close": 38.23,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "UniCredit published audited final-acceptance figures on June 19 showing ~12.41% of CBK shares tendered as of the June 16 deadline, confirming the statutory two-week extension (June 20\u2013July 3) and keeping the M&A premium alive despite Germany formally rejecting the bid.",
+      "miss_reason": "Outside any active strategy's universe. CBK.DE is a DAX large-cap bank in a live M&A arb situation; the +4.40% move was driven by a regulatory disclosure event (acceptance-rate filing) on a pre-announced date, not a technical or momentum setup \u2014 a signal class the bot's current strategies do not screen for.",
+      "suggestion": "Add a deal-extension calendar trigger: when an active takeover target's statutory extension window opens (BaFin filing date known in advance), gate the name into the news-reactive strategy's universe for that session so the opening gap can be evaluated against normal entry filters.",
+      "failed": false
+    },
+    {
+      "ticker": "LR.PA",
+      "move_pct": 4.285,
+      "close": 150.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Citi raised Legrand price target to \u20ac185 (from \u20ac175) with a 90-day positive catalyst watch, calling the stock undervalued and flagging an expected growth target upgrade to 5\u20139% driven by accelerating data-center sales.",
+      "miss_reason": "Outside any active strategy's universe \u2014 LR.PA is a \u20ac37B Euronext large-cap electrical-infrastructure name, likely excluded by sector or exchange filters. The move was broker-upgrade-driven, requiring pre-catalyst positioning; a news-reactive signal alone cannot act on a name not in the universe.",
+      "suggestion": "Add a CAC40 electrical/infrastructure sub-universe (LR.PA, SU.PA) to the news-reactive strategy, gated by ADTV \u2265 \u20ac80M and triggered on broker price-target raises \u2265 5% from Tier-1 banks, with a 2-day holding window.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": 3.943,
+      "close": 82.25,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Munich District Court (18 Jun) ruled in Infineon's favour in two GaN patent cases vs Chinese rival Innoscience, ordering a German sales ban and damages \u2014 the fourth consecutive legal victory in this IP dispute.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IFX.DE is a DAX-40 large-cap semiconductor not covered by current strategies. The catalyst was a binary court-ruling event published via PR Newswire at open; no post-open momentum or technical signal would have triggered entry even if it were in-universe.",
+      "suggestion": "Add DAX semiconductor names (IFX.DE, AIXA.DE) to the EU large-cap momentum universe and wire the news-reactive scanner to PR Newswire 'patent ruling' tags per ticker; this press release hit at ~06:00 UTC and the stock gapped +2% at open \u2014 a 15-min post-open entry rule would have captured the continuation.",
+      "failed": false
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": 3.848,
+      "close": 68.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continuation of multi-week AI/quantum re-rating: ST's 'Alloy Pioneer' quantum processor announcement (Crolles fab, Quobly/OVHcloud) on 17-Jun and BofA street-high PT of \u20ac86 drew further buying toward the 52-wk high.",
+      "miss_reason": "Outside any active strategy's universe. STMPA.PA is a ~\u20ac58B large-cap Euronext Paris semiconductor name; all decisive moves (data-centre guidance double, AWS deal, analyst upgrades) required pre-announcement positioning \u2014 post-signal entries captured only the tail of a 177% YTD rally.",
+      "suggestion": "Add a 'guidance-revision burst' watchlist gate: when a name receives \u22652 sell-side upgrades within 10 trading days AND raises forward revenue guidance \u226530%, flag it for universe inclusion in the momentum strategy for the following session.",
+      "failed": false
+    },
+    {
+      "ticker": "CAP.PA",
+      "move_pct": -7.808,
+      "close": 90.44,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Accenture trimmed FY2026 revenue growth guidance to 3-4% (from 3-5%) after a Q3 revenue miss, triggering sector read-across selling in IT-services peers; Capgemini touched a 52-week low on no company-specific news.",
+      "miss_reason": "Outside any active strategy's universe. CAP.PA is a CAC 40 large-cap IT-services name (~\u20ac14B market cap) whose -8% move was pure Accenture read-across contagion. The trigger (Accenture's pre-EU-open earnings release) was invisible to prior-session technical signals, making momentum/mean-reversion entries structurally t",
+      "suggestion": "Add a US-comparable earnings tripwire: when ACN (or equivalent IT-services proxy) reports a revenue miss or guide-cut pre-market, auto-flag EU IT-services names in the watchlist for potential universe inclusion or a short-side catalyst scan at the EU open.",
+      "failed": false
+    },
+    {
+      "ticker": "CA.PA",
+      "move_pct": -6.663,
+      "close": 15.34,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "JPMorgan issued Negative Catalyst Watch on 18 Jun, cut PT \u20ac10\u2192\u20ac9 (Underweight), citing estimates 5-7% below FY consensus and double-digit below H1; stock gapped -6.5% at the European open on 19 Jun.",
+      "miss_reason": "Outside any active strategy's universe. The drop was triggered by a post-close JPMorgan note (18 Jun); no price or volume filter would have flagged the setup \u2014 only pre-open news scraping could position ahead of the gap.",
+      "suggestion": "Add CA.PA to the uk-eu universe and wire a pre-open broker-catalyst-watch screener: names with an overnight Tier-1 Negative Catalyst Watch are excluded from longs or queued for short entry (if short-enabled) before the European open.",
+      "failed": false
+    },
+    {
+      "ticker": "LSEG.L",
+      "move_pct": -6.024,
+      "close": 84.39,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "mean-reverter"
+      ],
+      "catalyst": "Rothschild Redburn cut LSEG from Buy to Neutral (PT \u00a3120\u2192\u00a3104), warning AI-driven workflow disruption threatens ~30% of group EBITDA in Data & Analytics; LSEG was the FTSE 100's biggest faller on the day.",
+      "miss_reason": "Outside any active strategy's universe \u2014 LSEG (FTSE 100 exchange operator/data infrastructure) is excluded by sector or cap-tier filter. The -6% drop was analyst-note-driven at open, leaving no pre-signal entry window for a mean-reversion setup.",
+      "suggestion": "Add a downgrade-gap screen for excluded FTSE 100 names: if close-to-close move \u22655% is triggered by a single analyst note, flag for next-session mean-reversion entry only if RSI <30 and volume \u22651.5\u00d7 20-day average at open.",
+      "failed": false
+    },
+    {
+      "ticker": "BMW.DE",
+      "move_pct": -5.94,
+      "close": 59.22,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "BMW slashed 2026 automotive EBIT margin guidance to 1\u20133% from 4\u20136% and cut free-cash-flow outlook to >\u20ac2.5B from >\u20ac4.5B, citing a 20% YTD China sales slump.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BMW.DE is a mega-cap German OEM (~\u20ac18B mkt cap) that sits outside typical mid-cap momentum/mean-reversion universes. The move was a downside profit-warning gap requiring short capability the bot does not appear to hold.",
+      "suggestion": "No actionable change \u2014 catching this requires short capability and a large-cap EU auto universe; adding those would exceed current risk tolerance. Monitor as a sector-sentiment signal for downstream auto-parts names already in the universe instead.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-19T15:05:22.497526+00:00"
+}
