@@ -13,7 +13,7 @@ use_stops: true
 use_take_profits: true
 stop_loss_pct: -3.0
 take_profit_pct: 3.0
-last_tune_date: '2026-05-30'
+last_tune_date: '2026-06-20'
 tools:
 - get_universe
 - get_history
@@ -39,5 +39,5 @@ runs_in:
   t212_slot: null
   universe: t212_isa_uk_eu
 prefilter_mode: llm
-prefilter_top_n: 100
-cost_gate_multiplier: 2.0
+prefilter_top_n: 50
+cost_gate_multiplier: 3.0

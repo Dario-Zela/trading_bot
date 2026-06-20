@@ -7,7 +7,7 @@ description: "Auto-spawned variant of mean-reverter on 2026-06-13 by the weekly 
   \ oversold filters with industry-adjusted return distance, isolating idiosyncratic\
   \ drawdown from sector momentum contamination."
 implementation: llm
-active: true
+active: false
 capital_gbp: 10000
 max_positions: 4
 max_position_pct: 30
@@ -44,3 +44,4 @@ prefilter_top_n: 100
 cost_gate_multiplier: 2.0
 last_tune_date: '2026-06-13'
 prefilter_sort_key: rsi_14_asc
+deactivated_at: '2026-06-20'

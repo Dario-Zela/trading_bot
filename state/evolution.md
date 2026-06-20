@@ -130,3 +130,33 @@
   - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 3, "enforcement": true, "slot_kind": "alpaca"}`
 - **news-reactive-disclosure@uk-eu** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow UK-EU candidate (IC=+0.126, n=196) → trading212-paper
   - details: `{"target_tier": "trading212-paper", "t212_slot": 1, "enforcement": true, "slot_kind": "trading212"}`
+
+## Weekly evolution — 2026-06-20
+
+- **mean-reverter-industry-rel** · `deactivate` · ✅ applied — Both regions show negative IC with robust samples (US: IC=-0.089/n=322; UK-EU: IC=-0.098/n=497); the industry-relative adjustment inverts prediction quality vs. the base mean-reverter which maintains positive IC in the same UK-EU universe (IC=+0.118/n=871). Structural defect, not recoverable by tuning; freeing 2 slots for the macro-attn spawn.
+  - details: `{"deactivated_at": "2026-06-20"}`
+- **macro-aligned** · `spawn-variant` · ✅ applied — Breaks the signal-source axis: adds monthly macro conditioning (DXY, yield-curve slope, CPI YoY) as soft-attention weighting per HANET (arXiv 2606.00624), replacing hard-coded regime gates with a learned macro-context layer. Parent macro-aligned@us generates positive P&L (+£621) despite near-zero IC — the execution edge suggests latent macro awareness; making it explicit and learnable targets the IC gap without changing universe or rebalance cadence.
+  - details: `{"variant_id": "macro-aligned-macro-attn", "addendum_applied": true}`
+- **sector-rotator-llm-macro@uk-eu** · `mark-tier2-candidate` · ✅ applied — IC=0.458/n=248 is unambiguously the strongest prediction signal in the entire slate; no other strategy is within 2× of this level. Zakamulin (SSRN 6792618) confirms sector-timing gains are concentrated in drawdown avoidance — IC-driven ranking quality is exactly the mechanism at work here. Surfacing as leader to motivate the T212-paper slot rotation when news-reactive-disclosure@uk-eu meets demotion criteria.
+  - details: `{"tier2_marked_at": "2026-06-20", "thesis_present": true}`
+- **macro-aligned-hmm@us** · `mark-tier2-candidate` · ✅ applied — Updating thesis: IC has declined 0.124→0.099 week-over-week and sector-rotator-llm-macro@uk-eu (IC=0.458) now leads the leaderboard decisively. macro-aligned-hmm retains #2 via paper-tier execution advantage and strongest confirmed hit rate in the slate; monitoring IC trend for further deterioration that would trigger unmark.
+  - details: `{"tier2_marked_at": "2026-06-20", "thesis_present": true}`
+- **news-reactive-disclosure@us** · `mark-tier2-candidate` · ✅ applied — IC nearly tripled in one week (0.018→0.061) with n_trades approaching the 20-trade confirmation threshold; the event-driven edge is strengthening rather than reverting. Updating thesis to reflect #3 rank and the rising IC as the thesis-confirming metric.
+  - details: `{"tier2_marked_at": "2026-06-20", "thesis_present": true}`
+- **news-reactive** · `tune` · ✅ applied — US sleeve (alpaca-paper) shows IC=-0.053 over 797 predictions — a robust negative signal at this sample size. Raising cost_gate_multiplier 2.0→3.0 and narrowing prefilter_top_n 100→50 forces entries to clear a materially higher quality bar, concentrating on the model's top-50 picks and requiring trades to cover 3× estimated costs; reduces exposure to the anti-predictive tail without changing the signal source. Ryu et al. (SSRN 6751823) reinforces raising the quality gate: downside of a bad news-driven entry structurally exceeds the upside of a marginal positive one.
+  - details: `{"applied": {"cost_gate_multiplier": 3.0, "prefilter_top_n": 50}, "rejected": {}}`
+- **pair-rotator** · `tune` · ✅ applied — 0 of 7 trades profitable despite IC=0.184 (positive prediction quality) — TP=5.0% is too aggressive for sector ETF intraday ranges; picks are almost certainly going into profit briefly then mean-reverting before hitting target. Lowering TP to 3.0% captures the gains the IC is generating before reversion erases them. Consistent with Zakamulin (SSRN 6792618) finding that sector-timing gains are concentrated in loss avoidance, not large wins.
+  - details: `{"applied": {"take_profit_pct": 3.0}, "rejected": {}}`
+- **news-reactive@us** · `keep` · ✅ applied — meets_demotion_criteria=false; tuned this run; monitoring IC trend on next snapshot.
+- **news-reactive@uk-eu** · `keep` · ✅ applied — IC=0.118 positive, P&L=+£240 on shadow; T212-paper slot occupied; strong shadow candidate for future promotion.
+- **mean-reverter@us** · `keep` · ✅ applied — IC=0.117 positive on shadow with n_trades=6; growing evidence but below promotion bar.
+- **mean-reverter@uk-eu** · `keep` · ✅ applied — IC=-0.11 concerning but n_trades=2 is too small to act on; monitoring — if IC stays negative with n>200 it becomes a deactivation candidate.
+- **macro-aligned@us** · `keep` · ✅ applied — P&L=+£621 and hit_rate=0.56 on alpaca-paper; execution edge persists despite IC=-0.017 near noise floor.
+- **macro-aligned@uk-eu** · `keep` · ✅ applied — Shadow, IC=0.051 positive, P&L=+£60; weak but not failing.
+- **macro-aligned-hmm@uk-eu** · `keep` · ✅ applied — Shadow, IC=0.054 positive, P&L=+£283; no paper slot available.
+- **news-reactive-disclosure@uk-eu** · `keep` · ✅ applied — T212-paper slot 1; IC=0.108 positive but hit_rate=0.111 on 9 trades is deeply concerning. meets_demotion_criteria=false (n_trades<20 for hit-rate trigger). Watching for second consecutive negative-P&L week — that trigger would free the slot for sector-rotator-llm-macro, the T2 leader.
+- **momentum-trader-vix-gated@us** · `keep` · ✅ applied — Shadow; hit_rate=0.8 and P&L=+£940 on 5 trades are impressive; IC=0.013 near noise floor and decile_spread=-24.75 is anomalous — awaiting more trades before drawing conclusions.
+- **momentum-trader-vix-gated@uk-eu** · `keep` · ✅ applied — Shadow; hit_rate=0.231 and P&L=-£147 on 13 trades are weak; IC=0.010 near-zero; monitoring.
+- **regime-router@us** · `keep` · ✅ applied — Shadow; IC=-0.002 noise floor but hit_rate=0.857 and avg_pnl=6.35% on 7 trades indicate the VIX-regime gate is doing real filtering; awaiting more trades to confirm if this is durable.
+- **regime-router@uk-eu** · `keep` · ✅ applied — Shadow; IC=0.137 — third-strongest in active slate; P&L=+£105; no paper slot available.
+- **sector-rotator-llm-macro@uk-eu** · `keep` · ✅ applied — Shadow T2 leader (IC=0.458); blocked from T212-paper by news-reactive-disclosure@uk-eu until demotion criteria are met.

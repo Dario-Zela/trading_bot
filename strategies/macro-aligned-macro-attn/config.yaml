@@ -1,0 +1,47 @@
+id: macro-aligned-macro-attn
+display_name: Macro aligned (variant)
+description: "Auto-spawned variant of macro-aligned on 2026-06-20 by the weekly evolution\
+  \ agent. Reason: Breaks the signal-source axis: adds monthly macro conditioning\
+  \ (DXY, yield-curve slope, CPI YoY) as soft-attention weighting per HANET (arXiv\
+  \ 2606.00624), replacing hard-coded regime gates with a learned macro-context layer.\
+  \ Parent macro-aligned@us generates positive P&L (+\xA3621) despite near-zero IC\
+  \ \u2014 the execution edge suggests latent macro awareness; making it explicit\
+  \ and learnable targets the IC gap without changing universe or rebalance cadence."
+implementation: llm
+active: true
+capital_gbp: 10000
+max_positions: 3
+max_position_pct: 35.0
+min_position_gbp: 50
+use_stops: true
+use_take_profits: true
+stop_loss_pct: -3.5
+take_profit_pct: 3.0
+tools:
+- get_universe
+- get_history
+- get_technicals
+- get_recent_news
+- get_sector_strength
+- get_macro_view
+- get_daily_news_brief
+model_assignment:
+  wide_scoring: haiku
+  deep_analysis: sonnet
+  final_select: sonnet
+runs_in:
+- region: us
+  tier: shadow
+  universe: t212_isa_us
+  alpaca_slot: null
+- region: uk-eu
+  tier: shadow
+  t212_slot: null
+  universe: t212_isa_uk_eu
+  alpaca_slot: null
+skip_if_earnings_in_days: 1
+prefilter_mode: python
+prefilter_top_n: 80
+prefilter_sort_key: dollar_volume_desc
+last_tune_date: '2026-05-27'
+cost_gate_multiplier: 2.0
