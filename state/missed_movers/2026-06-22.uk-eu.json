@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-22",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 IFX.DE +4%, BP.L +3%, FRES.L +3%, STMPA.PA +2%, CCC.L +2%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (ANTO.L -6%, ADM.L -3%, ADYEN.AS -3%, AAL.L -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: ANTO.L (-6.17%) \u2014 Copper retreated ~0.6% on the LME to ~$13,600/t, triggering amplified equity selling across London miners; European mining index fell 2.1%; no company-specific news accompanied the move. Why we passed: Outside any active strategy's universe. ANTO.L is a FTSE 100 large-cap copper-pure-play whose daily moves are governed by commodity beta, not idiosyncratic signals \u2014 capturing it requires a macro/sector strategy the bot does not currently run.",
+  "top_movers": [
+    {
+      "ticker": "IFX.DE",
+      "move_pct": 4.331,
+      "close": 85.52,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Bernstein raised IFX price target to \u20ac102 from \u20ac74 (+38%) on 22 Jun, maintaining Outperform, citing FY2026 guidance upgrade to significant growth and strengthening AI power semiconductor demand.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IFX.DE is a large-cap DAX semiconductor (~\u20ac100B mkt cap). The move was a pre-open tier-1 analyst re-rating; intraday momentum or mean-reversion signals arrive too late to capture the opening gap.",
+      "suggestion": "Add an analyst-upgrade trigger: on DAX/EURO STOXX 50 names, auto-queue a long at open when a tier-1 broker raises price target \u226525% pre-market, capped at 0.5% NAV with a 1-session hold and a -1.5% stop.",
+      "failed": false
+    },
+    {
+      "ticker": "BP.L",
+      "move_pct": 2.806,
+      "close": 5.038,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Institutional re-rating of BP's strategic pivot under new CEO Meg O'Neill \u2014 asset monetisation (Kaskida/Tiber GoM stake sales) and two-segment restructuring drew buying despite crude headwinds from US-Iran diplomatic progress.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BP.L is a FTSE 100 mega-cap energy major (~\u00a380B mkt cap) beyond the typical small/mid-cap scope of momentum and mean-reversion strategies. The move was driven by institutional re-rating over weeks, not an intraday signal a reactive bot could capture at open.",
+      "suggestion": "Add a large-cap UK energy sub-universe (BP.L, SHEL.L) gated on a corporate-catalyst flag: analyst upgrade or M&A/asset-sale news within 10 days AND Brent 5-day momentum \u2265 +1%; position size capped at 0.5\u00d7 normal to reflect lower volatility.",
+      "failed": false
+    },
+    {
+      "ticker": "FRES.L",
+      "move_pct": 2.759,
+      "close": 30.54,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Silver +1.31%/gold +0.90% after U.S.-Iran Swiss summit agreed a 60-day peace roadmap (Brent crude -2%); Fresnillo's ~3\u00d7 equity beta to spot metals translated the commodity move into a +2.76% stock gain.",
+      "miss_reason": "Outside any active strategy's universe. FRES.L is a FTSE 100 precious-metals miner whose price action tracks gold/silver spot and USD/GBP FX rather than equity momentum signals; the bot has no materials/mining-sector strategy covering LSE-listed names.",
+      "suggestion": "Add a metals-proxy sub-strategy for FTSE 100 miners (FRES.L, AAL.L); fire a long entry when same-day gold spot \u2265+0.75% OR silver \u2265+1.0%, sized at 0.5\u00d7 standard risk to contain commodity-beta drawdown.",
+      "failed": false
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": 2.326,
+      "close": 69.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continuation of multi-analyst upgrade cycle (BofA Buy, \u20ac86 PT; Mizuho Outperform) following June 2 intra-quarter data-centre revenue guidance raise from ~$500M to ~$1B; stock also went ex-dividend \u20ac0.09 on June 22.",
+      "miss_reason": "Outside any active strategy's universe. STMPA.PA is a large-cap Euronext Paris semiconductor whose +2.33% on June 22 is a momentum continuation from a June 2 event \u2014 news-reactive strategies would need to have entered three weeks prior; no same-day spike to trigger intraday signals.",
+      "suggestion": "Add a post-guidance-revision momentum tier: any universe-eligible large-cap that raised forward revenue guidance \u226530% intra-quarter enters a 30-day momentum watch-list; admit it when price closes above its 20d high with volume \u22651.2\u00d7 avg, to catch continuation phases like this.",
+      "failed": false
+    },
+    {
+      "ticker": "CCC.L",
+      "move_pct": 2.067,
+      "close": 42.46,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FTSE 100 index inclusion effective 22 Jun 2026 (quarterly reshuffle announced ~3 Jun); first trading day as a blue-chip constituent drove mandatory passive-fund buying.",
+      "miss_reason": "Outside any active strategy's universe: CCC.L was a FTSE 250 constituent until today's FTSE 100 entry. The move is passive-rebalancing driven; capturing it required pre-announcement positioning weeks before the effective date.",
+      "suggestion": "Add an index-change event trigger: on FTSE quarterly addition announcements (~3 weeks pre-effective), auto-add promoted names to the universe if they pass ADV and sector filters, capturing the run-up before passive-rebalancing flows hit.",
+      "failed": false
+    },
+    {
+      "ticker": "BAYN.DE",
+      "move_pct": 1.857,
+      "close": 37.84,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Bayer announced an AI-driven small-molecule drug-discovery partnership with Iambic Therapeutics; UBS the prior session flagged the stock as entering a 'catalyst-rich period', amplifying the move.",
+      "miss_reason": "Outside any active strategy's universe. BAYN.DE is a DAX 40 pharma/agrochem conglomerate; its \u20ac12B Roundup litigation reserve likely trips risk-filter exclusions, and no current strategy covers German large-cap names.",
+      "suggestion": "Extend the EU news-reactive universe to DAX 40 names; add a partnership/licensing headline trigger with \u2265+0.5% open gap, gated by a litigation-reserve-to-market-cap ratio cap (<35%) to suppress pure Roundup-headline noise.",
+      "failed": false
+    },
+    {
+      "ticker": "ANTO.L",
+      "move_pct": -6.165,
+      "close": 39.12,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Copper retreated ~0.6% on the LME to ~$13,600/t, triggering amplified equity selling across London miners; European mining index fell 2.1%; no company-specific news accompanied the move.",
+      "miss_reason": "Outside any active strategy's universe. ANTO.L is a FTSE 100 large-cap copper-pure-play whose daily moves are governed by commodity beta, not idiosyncratic signals \u2014 capturing it requires a macro/sector strategy the bot does not currently run.",
+      "suggestion": "Add a copper-beta mining-basket strategy seeded with FTSE 100 miners (ANTO, AAL, RIO) gated on LME copper futures moving >0.4% intraday, enabling commodity-sector shorts without individual-name universe gaps.",
+      "failed": false
+    },
+    {
+      "ticker": "ADM.L",
+      "move_pct": -3.212,
+      "close": 32.54,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "RBC Capital Markets downgraded ADM.L to 'sector perform' from 'outperform' on 19-Jun, cutting PT to 3,450p from 3,560p on UK motor insurance margin squeeze; sell-off continued into Monday open.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ADM.L is a FTSE 100 UK insurer (~\u00a39.8B mkt cap) not covered by current sector filters. The catalyst was a Friday analyst downgrade requiring a pre-weekend news signal most intraday strategies lack.",
+      "suggestion": "Add a broker-downgrade event gate: flag names with analyst tier cut \u22651 notch + PT reduction \u22653% in prior 72 h as short candidates at next open; ADM.L's RBC cut on 19-Jun would have seeded a Monday short entry.",
+      "failed": false
+    },
+    {
+      "ticker": "ADYEN.AS",
+      "move_pct": -3.098,
+      "close": 875.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Goldman Sachs reportedly removed Adyen from its European Conviction List; combined with technical pullback after a 13% bounce from June 5 Cleveland Research selloff lows.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ADYEN.AS (Euronext Amsterdam) is likely excluded by an exchange/settlement filter or sector screen. Even if added, the move is a downtrend pullback requiring short capability the bot does not have.",
+      "suggestion": "Extend the exchange filter to Euronext Amsterdam large-caps (\u2265\u20ac5B mkt cap, avg daily vol \u2265\u20ac20M), then add a conviction-list-removal gate to trigger a short-eligible scan within 30 min of Amsterdam open.",
+      "failed": false
+    },
+    {
+      "ticker": "AAL.L",
+      "move_pct": -2.628,
+      "close": 38.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide risk-off selloff: copper prices fell ~2.5% on geopolitical tension (Gulf) and oil spiking +1.7%, dragging FTSE 100 miners \u2014 Anglo American, Rio Tinto, Glencore \u2014 uniformly lower; no AAL-specific news on the day.",
+      "miss_reason": "Outside any active strategy's universe. AAL.L is a large-cap FTSE 100 miner mid-merger with Teck Resources, awaiting final China SAMR antitrust clearance (expected Q3 2026\u2013Q1 2027); universe filters likely exclude pending-M&A names to avoid binary regulatory-event gap risk.",
+      "suggestion": "Add an M&A-limbo re-entry trigger: names excluded due to pending regulatory approval auto-re-enter the universe within 5 trading sessions of final clearance, rather than requiring a manual universe rebuild after deal close.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-22T15:07:06.222386+00:00"
+}
