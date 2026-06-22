@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-22",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 SMCI +16%, COHR +9%, ON +7%, GLW +7%, VRT +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (PLTR -7%, ACN -7%, GEN -6%, NFLX -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: SMCI (+16.47%) \u2014 GF Securities upgraded SMCI from Hold to Buy with a $48 price target (vs ~$31 prior close), citing an attractive entry point; company also unveiled a Vera Rubin NVL4 data-center blueprint at ISC 2026 in Hamburg. Why we passed: Outside any active strategy's universe \u2014 SMCI is a volatile AI-server mid-cap with prior audit/accounting irregularities that likely triggered permanent universe exclusion filters; the move was also analyst-upgrade-driven, requiring pre-market detection to position ahead of the open.",
+  "top_movers": [
+    {
+      "ticker": "SMCI",
+      "move_pct": 16.471,
+      "close": 35.71,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "GF Securities upgraded SMCI from Hold to Buy with a $48 price target (vs ~$31 prior close), citing an attractive entry point; company also unveiled a Vera Rubin NVL4 data-center blueprint at ISC 2026 in Hamburg.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SMCI is a volatile AI-server mid-cap with prior audit/accounting irregularities that likely triggered permanent universe exclusion filters; the move was also analyst-upgrade-driven, requiring pre-market detection to position ahead of the open.",
+      "suggestion": "Add a pre-market analyst-upgrade scanner: names receiving a major broker upgrade with new price target \u226520% above prior close should be admitted to the momentum strategy's universe for that session's open, bypassing standing exclusion flags.",
+      "failed": false
+    },
+    {
+      "ticker": "COHR",
+      "move_pct": 9.105,
+      "close": 425.04,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "AI optical networking sector recovery after ~20% post-Computex pullback; JPMorgan reiterated Overweight calling the dip overdone, lifting COHR back toward its June 2 record high of $426.89.",
+      "miss_reason": "Outside any active strategy's universe \u2014 COHR is a ~$30B AI photonics large-cap (semiconductor/telecom hybrid). The move was a mean-reversion bounce from a post-catalyst drawdown; catching it required prior coverage after COHR's +17% June 2 Computex spike.",
+      "suggestion": "Add an AI-photonics sub-universe (COHR, LITE, AAOI) to the momentum strategy with a gap-recovery filter: price \u226510% below rolling 5-day high after an initial catalyst gap \u2265+10%, requiring \u22651.5\u00d7 20-day avg volume on the recovery session.",
+      "failed": false
+    },
+    {
+      "ticker": "ON",
+      "move_pct": 7.408,
+      "close": 130.63,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Citi placed ON on a 90-day catalyst watch while Wells Fargo raised its PT to $140 (Overweight); both actions hit during a broad semiconductor sector recovery fuelled by ~77% market odds of a 2026 Fed rate cut.",
+      "miss_reason": "Outside any active strategy's universe. ON is a ~$47B large-cap semiconductor (SiC/power, auto/AI data-centre); the move was analyst-action-driven (catalyst watch + PT raise), requiring pre-open positioning before any price-action or volume screen would fire.",
+      "suggestion": "Add a news-reactive analyst-action trigger: scan pre-market for large-cap semis (mkt cap >$15B) receiving a top-bank catalyst-watch initiation or PT raise \u226510%, and open a sized position within the first 30 min if gap is <5%.",
+      "failed": false
+    },
+    {
+      "ticker": "GLW",
+      "move_pct": 6.587,
+      "close": 207.76,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Truist raised price target $149\u2192$205 citing AI optical fiber demand driving ~17% sales CAGR through 2030; continuation of a multi-session run following hyperscaler deals with Amazon, Nvidia, and Meta announced June 8\u201312.",
+      "miss_reason": "Outside any active strategy's universe. GLW is a large-cap (~$35B) specialty-materials/AI-infrastructure name; additionally, after a +11% gap on June 20, RSI would be deeply overbought and any momentum or gap filter requiring mean-reversion proximity would have excluded it regardless.",
+      "suggestion": "Create a sell-side PT-revision watchlist: when \u22652 analysts raise targets \u226520% within 5 trading days on a name not yet in universe, auto-flag it for a breakout-continuation entry rule on the next session open, capped at 0.5% NAV.",
+      "failed": false
+    },
+    {
+      "ticker": "VRT",
+      "move_pct": 6.365,
+      "close": 354.25,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "ThermoKey acquisition (Italian dry-cooler/heat-exchange specialist) completed, expanding EMEA thermal capacity; reinforced AI data center backlog narrative amid multi-session infrastructure sector momentum (VRT +90% YTD).",
+      "miss_reason": "Outside any active strategy's universe \u2014 VRT is a ~$140B AI infrastructure name up ~90% YTD with multi-session overbought RSI. Deal-close catalysts (ThermoKey 8-K filing) require pre-positioning the bot's post-open momentum signals cannot generate.",
+      "suggestion": "Add an acquisition-close event trigger: when a name files a deal-completion 8-K pre-market and gaps \u2265+3% on volume \u22651.5\u00d7 avg, add it to the eligible universe for same-day momentum entry, bypassing the RSI overbought exclusion for that session.",
+      "failed": false
+    },
+    {
+      "ticker": "CIEN",
+      "move_pct": 5.914,
+      "close": 453.545,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-Q2 analyst re-rating recovery: Ciena beat Q2 EPS ($1.64 vs $1.40 est, rev +40% YoY) and raised FY2026 guidance on June 4; analysts lifted targets (avg $543) as the initial -15% sell-the-news drop unwound.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CIEN is a $64B large-cap optical networking equipment maker, likely excluded by sector or instrument filters. Even if in-universe, the move is a multi-week post-earnings re-rating, not a clean same-day momentum or news-gap signal.",
+      "suggestion": "Add a post-earnings-gap-down recovery scan: for large-caps with EPS beat \u226510% that still sold off \u22658% on print day, enter when RSI crosses back above 50 within 30 sessions \u2014 this pattern would have flagged CIEN well before today's +5.9% leg.",
+      "failed": false
+    },
+    {
+      "ticker": "PLTR",
+      "move_pct": -6.788,
+      "close": 119.75,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "France's domestic intelligence service announced it will replace Palantir's AI tools with a domestic provider, citing strategic sovereignty (PM Lecornu); compounding similar contract losses in Switzerland and UK NHS scrutiny.",
+      "miss_reason": "Outside any active strategy's universe. PLTR (~$290B market cap, 88\u2013144\u00d7 P/E) sits outside typical cap/sector filters. The catalyst was a pre-market geopolitical contract cancellation\u2014a class of event that price/volume signals cannot anticipate.",
+      "suggestion": "(no actionable change \u2014 the move was a downside geopolitical catalyst requiring short capability the bot lacks; if shorting is added later, flag names >80\u00d7 forward P/E deriving >30% revenue from international gov contracts as elevated contract-loss risk.)",
+      "failed": false
+    },
+    {
+      "ticker": "ACN",
+      "move_pct": -6.626,
+      "close": 119.4999,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-Q3 earnings continuation selloff: bookings fell 13% sequentially, full-year revenue guidance trimmed to 3-4%; TD Cowen/Jefferies downgrades on AI cannibalization and federal-spend pressure drove Monday follow-through selling.",
+      "miss_reason": "Outside any active strategy's universe. ACN is a large-cap IT consulting name (~$75B mkt cap); the prior session's ~18% earnings-gap already exceeded any gap-filter threshold, and catching the continuation requires short-side capability the bot does not have.",
+      "suggestion": "Add a post-earnings gap screener: names down \u226512% on earnings day with \u22652 same-day analyst downgrades enter a short watchlist for the next session, gated by \u2265$30M daily volume and negative intraday momentum \u2014 requires enabling short execution.",
+      "failed": false
+    },
+    {
+      "ticker": "GEN",
+      "move_pct": -6.059,
+      "close": 22.715,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-day news event identified; drop appears driven by insider-selling overhang \u2014 CEO Ondrej Vlcek sold 100k shares at $24.78 on June 10 \u2014 combined with a 7.15% rise in short interest and no buy-side catalyst to absorb the supply.",
+      "miss_reason": "Outside any active strategy's universe. GEN is a ~$13.6B mid-cap cybersecurity/software name not covered by current sector filters. The move was supply-driven with no clean technical or earnings catalyst, making it difficult for momentum or news-reactive strategies to pre-position.",
+      "suggestion": "Extend the news-reactive universe to include mid-cap NASDAQ software names (>$5B market cap) where a C-suite insider files a Form-4 open-market sale \u2265$1M; flag for short consideration if price breaks below the 5-day low within 15 calendar days of the filing.",
+      "failed": false
+    },
+    {
+      "ticker": "NFLX",
+      "move_pct": -5.912,
+      "close": 72.805,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Reed Hastings resigned as board chairman (governance shock), compounded by Netflix losing the Roku acquisition bid to Fox and analysts cutting price targets after management held flat FY guidance despite a Q1 beat.",
+      "miss_reason": "Outside any active strategy's universe. NFLX completed a 10-for-1 stock split, pushing its per-share price to ~$72; a minimum price filter (e.g. price > $100) likely excludes it despite its ~$314B market cap and high ADV.",
+      "suggestion": "Replace per-share minimum price filters with a market-cap floor (e.g. mkt_cap > $5B) so post-split mega-caps re-enter the universe automatically after corporate actions without manual intervention.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-22T19:36:32.668006+00:00"
+}
