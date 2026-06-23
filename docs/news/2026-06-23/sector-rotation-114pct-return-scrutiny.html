@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A 114% annual return, a 51% drawdown, and the institutional investors walking away — 2026-06-23 — Trading Bot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../../index.html">Dashboard</a>
+<a class="nav-tab active" href="../../news/latest.html">News</a>
+<a class="nav-tab" href="../../macro/latest.html">Macro</a>
+<a class="nav-tab" href="../../evolution.html">Evolution</a>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper article-page"><div class="edition-nav" data-edition="2026-06-23" data-kind="news"><a class="edition-nav-link" data-role="prev" href="../2026-06-22/" title="2026-06-22">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><a class="edition-nav-link disabled" data-role="next" href="#" aria-disabled="true">next →</a><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">MARKETS · QUANT · By M. Halloway · 2026-06-23 · 3 min read</div><h1>A 114% annual return, a 51% drawdown, and the institutional investors walking away</h1><img class="hero" src="https://upload.wikimedia.org/wikipedia/commons/e/ea/NY_stock_exchange_traders_floor_LC-U9-10548-6.jpg" alt="NYSE trading floor: institutional allocators apply drawdown budgets that many high-return quant strategies cannot survive on paper"><div class="hero-caption">NYSE trading floor: institutional allocators apply drawdown budgets that many high-return quant strategies cannot survive on paper — <em>Library of Congress / Wikimedia Commons</em></div><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>A sector-rotation algorithm&#x27;s 114% annual return is losing institutional backers because its 51% peak-to-trough drawdown blows past the hard risk limits most allocators operate under.</div></div><div class="body"><p>A sector-rotation algorithm that doubled investors' money in twelve months is struggling to find institutional takers. The reason is not the return — it's the ride.</p>
+<p>The strategy in question, the Quartile Sector Rotation model, selects a single fund from a universe of more than 100 sector ETFs and concentrates the entire portfolio there. Over the past year it returned 114%. Over the past decade it also experienced a peak-to-trough drawdown of 50.7% — roughly half the portfolio erased before recovery. For most institutional mandates, that figure is disqualifying before any other number is examined.</p>
+<h2>The investability gap</h2>
+<p>The collision between exceptional returns and ineligible risk profiles is not new, but it is becoming more visible as algorithmic strategies multiply and marketing materials lead with the top-line number. Risk managers at pension funds, endowments, and multi-manager platforms typically work from a drawdown budget, not a return target. Industry practice has converged on a redemption-trigger threshold in the 15–20% range for many mandates; a strategy that breaches that threshold — even once, even while ultimately profitable — can trigger involuntary liquidation or hard stop-outs before recovery occurs.</p>
+<p>A 51% drawdown does not just exceed those limits. It more than doubles them.</p>
+<p>The Calmar ratio — annualised return divided by maximum drawdown — offers a fairer read than raw return alone. For the Quartile model the figure comes out around 2.25, which looks reasonable in isolation. The problem is that Calmar ratios are strategy-relative: an allocator whose mandate caps drawdown at 20% cannot fund a strategy regardless of its Calmar score if the absolute loss depth exceeds that ceiling.</p>
+<p>Comparison across sector-rotation strategies makes the trade-off concrete. A diversified variant that holds the top five momentum sectors returned 54.4% over the same twelve-month period — striking by any conventional standard — with a maximum drawdown of 16.3%. The S&amp;P 500 returned 29.8% with a 23.9% drawdown. The Quartile model's extra 60 percentage points of annual return came at the cost of a drawdown three times as deep as its closest peer, purchased by concentrating into a single sector and rotating aggressively.</p>
+<p>For a family office running its own capital, that trade-off is a choice. For a fiduciary managing assets against a written investment-policy statement, it is generally not.</p>
+<h2>What allocators are actually asking</h2>
+<p>Institutional due diligence frameworks for quantitative strategies increasingly frame risk expectations in three numbers: expected volatility, expected peak-to-trough drawdown, and worst-case liquidity — the time required to de-risk without moving markets. A single-holding sector-rotation model fails on at least two of those dimensions. When the entire portfolio is in one sector ETF, concentration risk and the speed of potential losses compound in ways that a volatility figure alone does not capture.</p>
+<p>The broader implication is structural. As algorithmic strategies become easier to build and easier to market, the gap between what a model can produce and what an institution can hold will force a reckoning on how performance is presented. Return optimisation and portfolio suitability are not the same objective, and strategies built only for the former will find the most likely source of scalable capital — institutional allocators — increasingly out of reach.</p>
+<p>The next test for sector-rotation models of this type will come if equity volatility spikes; drawdown behaviour under stress, rather than trailing twelve-month return, is what determines whether a strategy survives the next allocation review.</p></div><section class="sources-block"><h4>Sources</h4><ol><li><a href="https://www.benzinga.com/Opinion/26/06/60023687/one-sector-rotation-model-gained-114-percent-in-a-year-why-its-51-percent-drawdown-matters" rel="nofollow noopener" target="_blank">One Sector-Rotation Model Gained 114% In A Year: Why Its 51% Drawdown Matters — Benzinga</a></li><li><a href="https://www.recipeinvesting.com/2026-sector-rotation-portfolio-recipes-risk-performance-review/index.html" rel="nofollow noopener" target="_blank">2026 Sector Rotation Portfolio Recipes Risk Performance Review — RecipeInvesting</a></li><li><a href="https://resonanzcapital.com/insights/quant-hedge-funds-in-2026-a-due-diligence-framework-by-strategy-type" rel="nofollow noopener" target="_blank">Quant Hedge Funds in 2026: A Due Diligence Framework — Resonanz Capital</a></li><li><a href="https://www.dakotaridgecapital.com/fearless-investor/portfolio-risk-ratios-sharpe-sortino-calmar" rel="nofollow noopener" target="_blank">Risk-Adjusted Returns: Sharpe, Sortino &amp; Calmar Ratios Explained — Dakota Ridge Capital</a></li><li><a href="https://www.alphaexcapital.com/stocks/stock-portfolio-management/risk-management-for-stock-investors/maximum-drawdown-management" rel="nofollow noopener" target="_blank">Maximum Drawdown Management — AlphaEx Capital</a></li></ol></section><section class="related"><h4>Related in this edition</h4><a href="citadel-september-hike-call.html"><span style="display:block;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:0.2rem;">MARKETS</span>Citadel Securities calls a September Fed hike, sending dividend strategists back to the drawing board</a><a href="spacex-bond-debut-private-valuation.html"><span style="display:block;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:0.2rem;">MARKETS</span>SpaceX bond debut implies valuation gap, dragging private shares 10% and Alphabet 6%</a></section><footer class="colophon">The Bot Tribune · 2026-06-23 · <a href="index.html">Back to the edition</a></footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
+</body>
+</html>
