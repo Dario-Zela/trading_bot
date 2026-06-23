@@ -1,0 +1,124 @@
+{
+  "date": "2026-06-23",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 1 of today's 10 biggest US movers.\n\n\u2022 5 upside misses \u2014 COHR +9%, ON +7%, GLW +7%, VRT +6%, CIEN +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (PLTR -7%, ACN -7%, GEN -6%, NFLX -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: COHR (+9.11%) \u2014 BofA raised its 2030 AI datacenter TAM estimate to ~$1.7T (from ~$1.4T), lifting optical stocks broadly; compounded by JPMorgan Overweight reaffirm and CMB International $465 street-high Buy initiation the prior session. Why we passed: Outside any active strategy's universe \u2014 COHR is a large-cap AI photonics/optical-networking name likely excluded by sector or industry filter. Move was day 2 of a back-to-back analyst/sector-upgrade cascade (+11.3% Jun 22 then +9.1% Jun 23); pre-open positioning was the only viable entry.",
+  "top_movers": [
+    {
+      "ticker": "SMCI",
+      "move_pct": 16.471,
+      "close": 35.71,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive-disclosure"
+      ],
+      "catalyst": "GF Securities upgraded SMCI to Buy with a $48 target and Supermicro unveiled a Vera Rubin NVL4 data center blueprint at ISC 2026 in Hamburg, the twin catalysts driving the +16% rally.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SMCI was likely on a compliance exclusion list stemming from 2024-25 late-filing and auditor-change issues. News-reactive-disclosure flagged the events but could not act without explicit universe membership.",
+      "suggestion": "Add a post-compliance-clearance gate to news-reactive-disclosure: names exiting the exclusion list become intraday-eligible on the next analyst upgrade \u22652 notches, capped at 0.5% gross exposure until two clean annual filings are on record.",
+      "failed": false
+    },
+    {
+      "ticker": "COHR",
+      "move_pct": 9.105,
+      "close": 425.04,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "BofA raised its 2030 AI datacenter TAM estimate to ~$1.7T (from ~$1.4T), lifting optical stocks broadly; compounded by JPMorgan Overweight reaffirm and CMB International $465 street-high Buy initiation the prior session.",
+      "miss_reason": "Outside any active strategy's universe \u2014 COHR is a large-cap AI photonics/optical-networking name likely excluded by sector or industry filter. Move was day 2 of a back-to-back analyst/sector-upgrade cascade (+11.3% Jun 22 then +9.1% Jun 23); pre-open positioning was the only viable entry.",
+      "suggestion": "Add optical-networking/photonics names (COHR, LITE, etc.) to momentum universe; gate entry on \u22652 sell-side catalyst events (rating change or TAM-raise note) within 5 sessions to capture multi-day analyst upgrade cascades without chasing day 1.",
+      "failed": false
+    },
+    {
+      "ticker": "ON",
+      "move_pct": 7.408,
+      "close": 130.63,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "NVIDIA unveiled its Vera Rubin AI supercomputing platform at ISC High Performance 2026 in Hamburg (7 exaflops, 144 GPUs/rack), triggering a broad semiconductor supply-chain rotation; onsemi rallied as AI datacenter revenues are expected to double in 2026.",
+      "miss_reason": "Outside any active strategy's universe \u2014 onsemi is a $46B large-cap analog/power semiconductor not currently tracked. The move was an intraday sector rotation sparked by a mid-session NVIDIA product reveal; no prior-session momentum or pre-market signal existed to trigger entry.",
+      "suggestion": "Add a SOX-momentum gate: when the Philadelphia Semiconductor Index gains >2% intraday on a named NVIDIA/AI hardware catalyst, auto-scan AI-supply-chain names with AI-datacenter revenue exposure (e.g. ON, MPWR) for a 1-hour momentum entry with a 3% hard stop.",
+      "failed": false
+    },
+    {
+      "ticker": "GLW",
+      "move_pct": 6.587,
+      "close": 207.76,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Multi-day continuation of AI fiber-optic infrastructure re-rating: Corning's multibillion-dollar supply deals with Amazon, Meta ($6B), and Nvidia for AI data-center optical connectivity drove a Truist PT raise to $205 (from $149) on Jun 22, extending a +30% 5-day run.",
+      "miss_reason": "Outside any active strategy's universe. GLW is a ~$180B large-cap industrial/materials name classified under specialty glass, not tech \u2014 likely excluded from momentum and news-reactive universes by sector filter. The primary catalyst gap (+11%) struck on Jun 18-19; by Jun 23 this was a 3rd-day continuation, arriving to",
+      "suggestion": "Add a 'catalyst-continuation' eligibility window: names with a confirmed fundamental gap >8% (AI-deal/supply-agreement 8-K) that hold above the gap close for 2+ sessions remain eligible for momentum entry up to T+3, subject to normal RSI/volume gates.",
+      "failed": false
+    },
+    {
+      "ticker": "VRT",
+      "move_pct": 6.365,
+      "close": 354.25,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "CIEN",
+      "move_pct": 5.914,
+      "close": 453.545,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "CIEN fell 15% on June 4 despite Q2 EPS beat ($1.64 vs $1.46 est) and raised FY guidance to $6.3B; stock recovering aided by AI optical networking sector tailwinds and broad analyst price target upgrades.",
+      "miss_reason": "Outside any active strategy's universe \u2014 large-cap AI optical networking play (~$450/share, ~500% YTY) likely excluded by sector or market-cap filters. June 23 move was a gradual post-earnings drift back, not a clean intraday gap signal.",
+      "suggestion": "Add a post-earnings-gap-down recovery screen: names with EPS beat but \u226510% earnings-day drop re-enter the universe after a 10-session stabilisation window, sized at half-normal to account for elevated uncertainty.",
+      "failed": false
+    },
+    {
+      "ticker": "PLTR",
+      "move_pct": -6.788,
+      "close": 119.75,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "France's DGSI replaced Palantir with domestic rival ChapsVision over US-overreliance fears (PM Lecornu, June 16); extended US defense CR freeze further threatens high-margin federal contract revenue.",
+      "miss_reason": "Outside any active strategy's universe. PLTR is large-cap defense-AI; the June 23 drop is the tail of a multi-day sell-off from June 16's France contract news \u2014 single-session signal bots miss distributed government-contract news flow.",
+      "suggestion": "Add a sovereign-contract-cancellation news trigger: flag affected tickers for exit/avoid within 1 session of any G7 government announcing a US-tech vendor replacement, preventing being caught long in multi-day government-contract unwinds.",
+      "failed": false
+    },
+    {
+      "ticker": "ACN",
+      "move_pct": -6.626,
+      "close": 119.4999,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 FY26 revenue miss ($18.7B vs $18.8B est), bookings decline, and guidance cut to 3\u20134% growth; analyst wave (TD Cowen \u2013$100 PT) cited AI disrupting consulting model. June 23 was day 3 of the post-earnings selloff.",
+      "miss_reason": "Outside any active strategy's universe. The primary gap event (\u201318%) occurred June 20 on earnings; by June 23 this was a 3-day continuation drift on a mega-cap IT-consulting name, past the window where news-reactive and momentum triggers fire on the initial signal.",
+      "suggestion": "Add a post-earnings continuation rule: names with an initial gap \u2264\u201310% on earnings day that close lower for 2 consecutive sessions become eligible short candidates on day-3 open, gated by ADV \u2265 $300M to cover large-caps like ACN.",
+      "failed": false
+    },
+    {
+      "ticker": "GEN",
+      "move_pct": -6.059,
+      "close": 22.715,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Nasdaq sell-off (-1.32%) driven by South Korean memory-ETF regulator warning; IBM+OpenAI enterprise cybersecurity AI partnership announced same day amplified the drop for consumer security incumbent GEN.",
+      "miss_reason": "Outside any active strategy's universe; GEN (~$14B, Norton/LifeLock consumer security) sits outside enterprise-tech momentum scope. Move was macro sell-off plus competitive narrative fear, not a pre-positionable company-specific catalyst.",
+      "suggestion": "No actionable change \u2014 the sell-off reflects macro rotation and AI-disruption narrative requiring short capability not currently in scope; adding long exposure on a -6% day would run counter to risk parameters.",
+      "failed": false
+    },
+    {
+      "ticker": "NFLX",
+      "move_pct": -5.912,
+      "close": 72.805,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "52-week low hit (~$72.97) as Meta's Instagram-on-Samsung-TVs expansion announcement sparked fresh streaming competition fears, compounding prior weak Q2 guidance miss, Reed Hastings' board exit, and Nasdaq tech sector rotation.",
+      "miss_reason": "Outside any active strategy's universe \u2014 NFLX is a large-cap media/streaming name in a confirmed -31% YTD downtrend hitting 52-week lows; profiting from continued weakness requires short-selling capability the bot does not hold.",
+      "suggestion": "(no actionable change \u2014 capturing the downside in a large-cap media name outside existing universes requires short capability; adding NFLX long-only into a sustained -31% YTD downtrend would expose the strategy to further drawdown)",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-23T19:35:07.105899+00:00"
+}
