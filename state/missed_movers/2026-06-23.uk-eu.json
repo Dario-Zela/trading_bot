@@ -1,0 +1,127 @@
+{
+  "date": "2026-06-23",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 2 of today's 10 biggest UK/EU movers.\n\n\u2022 4 upside misses \u2014 BARC.L +4%, AKZA.AS +4%, CA.PA +4%, AALB.AS +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (BAB.L -6%, BRBY.L -3%, BA.L -2%, TEP.PA -2%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: BAB.L (-5.89%) \u2014 Audited annual-report detail crystallised ~\u00a3700M of outstanding Type 31 Royal Navy frigate costs; a 10% cost variance implies a ~\u00a370M swing, overwhelming the \u00a3200M buyback announced alongside May results. Why we passed: Outside any active strategy's universe \u2014 BAB.L is a UK defense/industrial contractor (FTSE 250) not covered by current sector filters. The move was also a secondary re-rating of a previously disclosed charge (May 13), not a fresh breakout signal, so news-reactive systems had no new trigger to fire on.",
+  "top_movers": [
+    {
+      "ticker": "IFX.DE",
+      "move_pct": 4.331,
+      "close": 85.52,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned",
+        "regime-router"
+      ],
+      "catalyst": "Bernstein lifted IFX PT from EUR 74 to EUR 102 (Outperform) after EU close on Jun 22; compounded by a European semiconductor sector relief rally as names recovered from the Jun 5 Broadcom-triggered oversell.",
+      "miss_reason": "Outside any strategy's universe \u2014 IFX.DE is a large-cap DAX semiconductor not in EU filters. The move combined a post-EU-close Bernstein PT raise with sector mean-reversion; pre-market positioning is needed to catch this pattern.",
+      "suggestion": "Expand macro-aligned's EU universe to include DAX/MDAX semiconductor names and add a post-EU-close analyst PT-raise gate (\u226520% target increase) that flags for pre-market limit entry at next open.",
+      "failed": false
+    },
+    {
+      "ticker": "BARC.L",
+      "move_pct": 3.757,
+      "close": 5.151,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "UK PM Keir Starmer's resignation triggered a broad FTSE 100 financial sector rally; NatWest +4%, Barclays and Lloyds both ~+3.8%, amplified by a BofA price-target upgrade to 600p on 21 June.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BARC.L is a FTSE 100 mega-cap UK bank. Move was sector-wide co-movement triggered by PM Starmer's resignation (intraday political catalyst); no pre-market signal could have positioned ahead of it.",
+      "suggestion": "Add a FTSE 100 large-cap financials sleeve (BARC, LLOY, NWG, HSBA) to a macro/sector rotation strategy, gated on intraday breadth: trigger when \u22653 of the 4 names are up >1.5% by 10:00 BST with financials leading the index.",
+      "failed": false
+    },
+    {
+      "ticker": "AKZA.AS",
+      "move_pct": 3.619,
+      "close": 60.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "CA.PA",
+      "move_pct": 3.537,
+      "close": 16.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Morgan Stanley initiated coverage on 22-Jun with Overweight and \u20ac20.10 PT (\u224822% upside), citing faster-than-expected restructuring execution, 11% EPS CAGR to 2028, ~14% FCF yield, and a 40% P/E discount to EU retail peers.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CA.PA is a \u20ac11B EU large-cap consumer-staples retailer not covered by the bot's filters. The trigger was a tier-1 broker initiation published after Monday's close; no pre-open momentum or mean-reversion signal existed before Tuesday's gap-up.",
+      "suggestion": "Add a broker-initiation gate to a news-reactive strategy: for EU large-cap consumer/retail names, open a small position at next-session open when a tier-1 bank initiates Overweight with implied upside \u226520% and prior-session volume is within normal range.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": 3.292,
+      "close": 320.0,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned-macro-attn"
+      ],
+      "catalyst": "Besi's June 18 Investor Day raised long-term revenue targets to \u20ac1.7\u20132.2B on surging AI/2.5D packaging demand; analyst price-target upgrades published in the days following continued to re-rate the stock into today's close.",
+      "miss_reason": "Outside any active strategy's universe. BESI is a Dutch semi-equipment mid-cap specialising in hybrid bonding/advanced packaging not covered by current screeners; the +3.3% gain was a slow-burn post-investor-day re-rating requiring pre-event positioning to capture.",
+      "suggestion": "Add EU semiconductor-equipment peers (BESI.AS, ASMI.AS) to macro-aligned-macro-attn's universe with an investor-day or raised-guidance event flag that opens a 3-session entry window post-announcement.",
+      "failed": false
+    },
+    {
+      "ticker": "AALB.AS",
+      "move_pct": 2.953,
+      "close": 41.14,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Aalberts N.V. rejoined the AEX index effective 22 Jun 2026 (Euronext quarterly review), driving index-tracker fund inflows on the first full trading session after inclusion.",
+      "miss_reason": "Outside any active strategy's universe. AALB.AS is a Dutch large-cap industrial; the +2.95% move reflects forced passive-fund buying on day-1 of AEX re-inclusion \u2014 a structural corporate-action event not captured by price/volume momentum or mean-reversion signals.",
+      "suggestion": "Add a Euronext quarterly-review event filter: auto-enroll newly confirmed AEX/AMX entrants into the news-reactive strategy's universe for the 3 trading sessions following the effective inclusion date.",
+      "failed": false
+    },
+    {
+      "ticker": "BAB.L",
+      "move_pct": -5.889,
+      "close": 9.844,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Audited annual-report detail crystallised ~\u00a3700M of outstanding Type 31 Royal Navy frigate costs; a 10% cost variance implies a ~\u00a370M swing, overwhelming the \u00a3200M buyback announced alongside May results.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BAB.L is a UK defense/industrial contractor (FTSE 250) not covered by current sector filters. The move was also a secondary re-rating of a previously disclosed charge (May 13), not a fresh breakout signal, so news-reactive systems had no new trigger to fire on.",
+      "suggestion": "Add a 'delayed_risk_reassessment' screen: LSE defense/industrial names with unresolved material charges >\u00a3100M in the prior 60 days showing renewed >3% single-day weakness should be auto-admitted to the news-reactive universe for that session.",
+      "failed": false
+    },
+    {
+      "ticker": "BRBY.L",
+      "move_pct": -2.821,
+      "close": 11.025,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "New Fed Chair Warsh's surprise hawkish rate signal on 23 Jun triggered a global risk-off; FTSE 100 fell ~0.76% and European luxury sold off in sympathy \u2014 no Burberry-specific RNS or earnings catalyst.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BRBY.L is a mid-cap UK luxury name (~\u00a33.8bn mkt cap). The -2.82% decline was pure macro/sector contagion with no company RNS, earnings surprise, or pre-market volume spike to trigger a momentum or news-reactive entry.",
+      "suggestion": "No actionable change \u2014 macro-driven sector contagion with no stock-specific signal; capturing this type of move requires short capability and a Fed-sentiment overlay that is outside current strategy scope.",
+      "failed": false
+    },
+    {
+      "ticker": "BA.L",
+      "move_pct": -2.464,
+      "close": 18.01,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Babcock FY results (19% op-profit drop, \u00a3140M Type 31 frigate charge) spread UK defence sector contagion; US-Iran ceasefire road map (talks concluded June 21) simultaneously stripped the geopolitical risk premium from European defence names.",
+      "miss_reason": "Outside any active strategy's universe. BA.L is a FTSE 100 mega-cap defence prime (~\u00a355B mkt cap); the decline was a gradual multi-day macro de-rating from geopolitical de-risking and peer contagion \u2014 not an event-driven gap that pre-open news or momentum signals could front-run.",
+      "suggestion": "If short capability exists, add a 'geopolitical de-risk short' gate for FTSE 100 defence names: trigger when a ceasefire/peace MoU is confirmed in the news feed AND STOXX Aerospace & Defence index is down >1.5% pre-open, allowing a short entry sized at \u22640.5% NAV.",
+      "failed": false
+    },
+    {
+      "ticker": "TEP.PA",
+      "move_pct": -2.032,
+      "close": 54.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No specific breaking catalyst on 2026-06-23; likely continued BPO sector de-rating on AI displacement fears, amplified by TEP's Q1 2026 revenue miss (\u22122.2% LFL) and persistent analyst downgrades from Citi and Morgan Stanley.",
+      "miss_reason": "Outside any active strategy's universe. TEP.PA is a French mid-cap (~\u20ac3.1B) in deep structural decline (>80% drawdown from 2022 peak), disqualified from momentum screens; capturing further downside requires short capability the bot does not have.",
+      "suggestion": "Add a 'fallen-large-cap watchlist' tier for ex-CAC 40 names with mkt cap \u20ac1\u20135B and 52-week return < \u221250% to surface for short-side review; no actionable long-only change \u2014 this move is only capturable with short capability.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-23T15:07:08.526924+00:00"
+}
