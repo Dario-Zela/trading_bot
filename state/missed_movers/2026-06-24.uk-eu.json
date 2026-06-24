@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-24",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 BNZL.L +5%, HEIA.AS +4%, LLOY.L +4%, BATS.L +4%, AKZA.AS +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (STMPA.PA -8%, ASM.AS -8%, BESI.AS -7%, RMS.PA -7%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: STMPA.PA (-7.84%) \u2014 Triple headwind: global chip-sector selloff on AI-valuation/rate fears (SK Hynix -12%, ASMI -7%+), convertible-arb short pressure from June 16 $1.5B dual-tranche bond deal still unwinding, plus ex-dividend mechanical drag (~$0.09/share on June 23). Why we passed: Outside any active strategy's universe \u2014 STMPA.PA (Euronext Paris) is not covered by current sector/exchange filters. The move was a multi-factor confluence (macro selloff + convertible-arb shorts + ex-div) with no clean pre-open momentum or mean-reversion signal; pre-positioning before arb unwind would have been requi",
+  "top_movers": [
+    {
+      "ticker": "BNZL.L",
+      "move_pct": 4.992,
+      "close": 25.87,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Bunzl upgraded FY2026 guidance on 23 Jun: H1 revenue +~4% at constant FX, adjusted op profit 'good YoY growth', driven by North America volume gains and geopolitical product-cost inflation tailwinds; Scientifix (AU) acquisition also completed.",
+      "miss_reason": "Outside any strategy's universe \u2014 BNZL.L is a FTSE 100 large-cap distributor uncovered by current screeners. The guidance upgrade published via LSE RNS post-close on 23 Jun; no strategy runs an RNS-reactive gate to pull such names in pre-open.",
+      "suggestion": "Add an RNS-catalyst gate that monitors LSE regulatory announcements for upward guidance revisions across FTSE 350 names; any name implying a gap \u2265+3% at open enters a 1-day momentum sub-strategy regardless of existing universe membership.",
+      "failed": false
+    },
+    {
+      "ticker": "HEIA.AS",
+      "move_pct": 4.297,
+      "close": 72.82,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Heineken nominated Rafael Oliveira (JDE Peet's CEO) as its first-ever outside CEO hire, announced via press release after market close on Jun 23; shares gapped +4% at the Jun 24 open.",
+      "miss_reason": "Outside any active strategy's universe. HEIA is a large-cap AEX consumer-staples name; the catalyst was a post-close press release on Jun 23, requiring overnight positioning before any intraday signal could form.",
+      "suggestion": "Add an after-hours press-release scanner for AEX large-caps that flags CEO/leadership-change events and queues them for a next-open gap-entry order, gated by a minimum implied gap of +2% to avoid noise.",
+      "failed": false
+    },
+    {
+      "ticker": "LLOY.L",
+      "move_pct": 4.135,
+      "close": 1.0955,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "UK banking sector relief rally extending after PM Keir Starmer's resignation on 22 June reduced political uncertainty; gilt yields held stable and sterling steadied, confirming an orderly Labour leadership transition.",
+      "miss_reason": "Outside any active strategy's universe \u2014 LLOY.L is a FTSE 100 domestic large-cap bank; the +4.13% gain was a macro political event-driven move (PM resignation) requiring pre-event positioning that no technical momentum or mean-reversion screen could have anticipated from prior-session signals.",
+      "suggestion": "Add a FTSE 100 domestic-financials satellite universe (LLOY, NWG, BARC) activated by a UK macro-event flag \u2014 e.g., GBP 1-day implied vol spike \u22651.5\u03c3 or 10-yr gilt yield move \u226512 bps intraday \u2014 to capture coordinated sector relief rallies within 30 min of open.",
+      "failed": false
+    },
+    {
+      "ticker": "BATS.L",
+      "move_pct": 3.915,
+      "close": 45.92,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "BAT pre-close (2 Jun) raised New Category (Vuse/Velo) rev growth to mid-teens from low double-digit; stock continues re-rating on Jun-24 aided by defensive rotation as broader equities fell ~1.5%.",
+      "miss_reason": "Outside any active strategy's universe. BATS.L is a \u00a393bn defensive income mega-cap. The catalyst (guidance upgrade Jun 2) was 3 weeks stale; move blends slow re-rating with defensive rotation, invisible to short-look-back momentum filters.",
+      "suggestion": "Introduce a 'guidance-upgrade' universe expansion rule: names issuing pre-close KPI upgrades \u2265+2pp vs prior guidance enter a 25-session event-momentum sleeve with a \u22651.5\u00d7 avg-volume entry filter.",
+      "failed": false
+    },
+    {
+      "ticker": "AKZA.AS",
+      "move_pct": 3.619,
+      "close": 60.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "SEC declared AkzoNobel's Form F-4 effective June 23, clearing path to mid-July shareholder vote on the Axalta all-stock merger of equals; process milestone re-rated deal-completion probability.",
+      "miss_reason": "Outside any active strategy's universe. AKZA.AS is a large-cap Euronext Amsterdam name in a live binary M&A event (Axalta merger; earlier \u20ac73 Nippon/Sherwin bid rejected). M&A-arbitrage names are typically excluded from systematic universe screens as price is anchored to deal terms, not technicals.",
+      "suggestion": "Add an M&A-clearance trigger: when a Euronext-listed target's registration statement (F-4 or equivalent) is declared effective, flag it for a 1-session event-driven entry next open, capped at 0.5\u00d7 normal position size to account for deal-break tail risk.",
+      "failed": false
+    },
+    {
+      "ticker": "CA.PA",
+      "move_pct": 3.537,
+      "close": 16.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Romanian Competition Council greenlit the \u20ac823M sale of Carrefour Romania to Pav\u0103l Holding on 23 Jun 2026, removing the last regulatory hurdle on a deal representing ~3.5% of group sales.",
+      "miss_reason": "Outside any active strategy's universe. Carrefour is a ~\u20ac11B-cap European grocery retailer; the move was driven by a late-evening regulatory clearance that required pre-open positioning to capture \u2014 intraday momentum or volume-trigger screens would have seen the gap already closed by the time filters ran.",
+      "suggestion": "Maintain a pending-regulatory-clearance watchlist for held-out names; on the trading day after a competition-authority greenlights a material divestiture (deal EV \u2265 5% of market cap), admit the name to the news-reactive strategy provided the open gap is \u2264 +4%.",
+      "failed": false
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": -7.842,
+      "close": 64.05,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Triple headwind: global chip-sector selloff on AI-valuation/rate fears (SK Hynix -12%, ASMI -7%+), convertible-arb short pressure from June 16 $1.5B dual-tranche bond deal still unwinding, plus ex-dividend mechanical drag (~$0.09/share on June 23).",
+      "miss_reason": "Outside any active strategy's universe \u2014 STMPA.PA (Euronext Paris) is not covered by current sector/exchange filters. The move was a multi-factor confluence (macro selloff + convertible-arb shorts + ex-div) with no clean pre-open momentum or mean-reversion signal; pre-positioning before arb unwind would have been requi",
+      "suggestion": "Add STMPA.PA to a European-semiconductor universe but gate long entries: flag any name within 7 sessions of a >$500M convertible-bond pricing as ineligible until average daily volume reverts to within 1.3\u00d7 its 20-day baseline, filtering out arb-driven noise windows.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": -7.524,
+      "close": 999.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector contagion from KOSPI crash (-10%) on June 23: Samsung/SK Hynix each fell ~12% on SK Hynix AI-memory-capex slowdown fears; EU semiconductor equipment names swept lower with ASML -7.06% and ASMI explicitly cited among the biggest Stoxx 600 losers.",
+      "miss_reason": "Outside any active strategy's universe. ASM.AS (\u20ac59B market cap, ALD/epitaxy equipment) fell on Korean macro contagion \u2014 a KOSPI circuit-breaker event, not a per-name catalyst \u2014 giving momentum and news-reactive strategies no actionable pre-market signal on this specific name.",
+      "suggestion": "Add a Korean-contagion flush trigger: when KOSPI futures drop >5% overnight, flag EU semiconductor-equipment names (ASML, ASMI, BE Semiconductor) as short candidates at Amsterdam open with a 1-day hold; if long-only, use this signal to exit or reduce existing EU semicon longs before open.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": -7.219,
+      "close": 296.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Broad semiconductor sector rout (Asian contagion: KOSPI -10%, SK Hynix/Samsung -12%) plus BoFA rate-hike warning pulled BESI back -7.2% from its June 15 ATH of \u20ac328 at stretched P/E ~155x.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BESI.AS is a ~\u20ac23.5B Euronext Amsterdam semiconductor equipment maker. Move was macro/sector mean-reversion from ATH; no name-specific catalyst to trigger news-reactive or momentum signals.",
+      "suggestion": "Add BESI.AS to a sector-short basket: trigger short entry when the AEX tech sub-index drops >3% intraday and BESI is >10% below its 20d high; requires enabling short selling on Euronext Amsterdam, else mark as no actionable change.",
+      "failed": false
+    },
+    {
+      "ticker": "RMS.PA",
+      "move_pct": -6.979,
+      "close": 1599.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Cluster of sell-side PT cuts (Jefferies to \u20ac2,000, Citi to \u20ac1,821, JPMorgan to \u20ac2,000) citing China demand softness and ~100 bps H1 EBIT margin contraction warning from Kepler; ECB hawkish signal amplified sector-wide luxury selloff alongside LVMH and Kering.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RMS.PA is a mega-cap Euronext Paris luxury name, likely excluded by sector/geography filters. The move was a 48h multi-broker downgrade cascade, not a single intraday event; news-reactive signals would have fired too late to capture the full move.",
+      "suggestion": "Add a 'multi-broker PT revision' screen: flag names where \u22653 sell-side analysts cut targets >5% within 72h as short candidates at next open, which would have surfaced the RMS.PA downgrade cluster before the -7% close-to-close leg completed.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-24T15:04:45.077222+00:00"
+}
