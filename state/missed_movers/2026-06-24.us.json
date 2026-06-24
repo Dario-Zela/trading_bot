@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-24",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 ACN +6%, IBM +6%, GNRC +5%, CAG +5%, PWR +5%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (SNDK -14%, MU -12%, ON -10%, VRT -10%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: SNDK (-14.02%) \u2014 SK Hynix announced a Nasdaq ADR listing (July 10, raising ~$29.4B), eroding SNDK's scarcity premium as the sole US pure-play AI-memory stock; compounded by second-day KOSPI/Samsung/SK Hynix contagion selloff (-10% KOSPI, -12% each). Why we passed: Outside any active strategy's universe \u2014 SNDK's ~$1,981 price and ~79x P/E after a 5,000% post-spin-off run likely breach universe filters (per-share price cap, vol ceiling, or float/liquidity thresholds). The SK Hynix ADR catalyst also required pre-open short positioning before US signals formed.",
+  "top_movers": [
+    {
+      "ticker": "ACN",
+      "move_pct": 6.297,
+      "close": 127.025,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Accenture raised FY2026 buybacks by $2B to $7.5B on June 23, signaling management views shares as undervalued following the stock's ~17% drop on June 18 on weak Q3 bookings and trimmed guidance.",
+      "miss_reason": "Outside any active strategy's universe; ACN is a large-cap IT services stock. Post-earnings buyback-bounce moves require event-driven fundamental coverage \u2014 momentum and mean-reversion algos screen out stocks down ~17% in the prior week.",
+      "suggestion": "Add a buyback-expansion event gate: if a stock files an 8-K announcing \u2265$1B repurchase increase within 5 sessions of a \u226510% earnings gap-down, trigger a mean-reversion long with 3-day max hold for liquid large-caps.",
+      "failed": false
+    },
+    {
+      "ticker": "IBM",
+      "move_pct": 6.118,
+      "close": 263.1201,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "JPMorgan upgraded IBM to Overweight (PT $270\u2192$291) citing software's ~66% profit contribution; IBM simultaneously joined OpenAI's Daybreak Cyber program and received White House quantum endorsement at an Oval Office ceremony.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IBM is a mega-cap Dow component excluded from typical momentum screens. Move was triggered by a post-close analyst upgrade (June 23), requiring pre-open positioning that reactive signal scanners cannot capture.",
+      "suggestion": "Add a Tier-1 analyst-upgrade event gate: when a major bank issues an Overweight upgrade with \u22657% price-target raise on a large-cap name before market open, admit the name into the news-reactive strategy's universe for that session only.",
+      "failed": false
+    },
+    {
+      "ticker": "GNRC",
+      "move_pct": 5.495,
+      "close": 294.49,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Jefferies upgraded GNRC Hold\u2192Buy (PT $302 from $239) citing data center contract conversion opportunities, layering onto the June 2 hyperscale supply-agreement announcement and AI infrastructure tailwind.",
+      "miss_reason": "Outside any active strategy's universe \u2014 GNRC is a NYSE mid/large-cap C&I industrial (~$7B+ market cap, power generation equipment). Move was analyst-upgrade-driven, with the gap priced in pre-market before any reactive signal could fire.",
+      "suggestion": "Add a catalyst-upgrade tier that scans for \u22652-notch analyst upgrades (Hold\u2192Buy) on NYSE industrials with new PT implying \u226510% upside, gated by pre-market volume \u22651.5\u00d7 30-day avg, to enter within the first 30 minutes of open.",
+      "failed": false
+    },
+    {
+      "ticker": "CAG",
+      "move_pct": 5.491,
+      "close": 13.545,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Pre-earnings re-rating ahead of July 15 Q4 FY2026 report; new CEO John Brase (installed June 1) + Q3 2.4% organic sales growth fueling turnaround confidence in a heavily sold-off consumer staples name.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CAG was demoted to S&P SmallCap 600 after steep YoY declines (~-32%), falling below large/mid-cap universe thresholds. The move was gradual pre-earnings sentiment drift, not an overnight gap or volume spike catchable by momentum filters.",
+      "suggestion": "Expand universe to include former S&P 500/400 names now in SmallCap 600 within 21 days of earnings showing positive organic-revenue trend; apply standard liquidity floor (\u2265$5M ADTV) to gate entry.",
+      "failed": false
+    },
+    {
+      "ticker": "PWR",
+      "move_pct": 5.227,
+      "close": 738.96,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh Jun 24 catalyst found; technical snap-back from Jun 23's -5.1% pullback, continuing Jun 22 momentum from Hyosung HICO high-voltage circuit-breaker JV and raised FY2026 revenue guidance ($34.7B\u2013$35.2B).",
+      "miss_reason": "Outside any active strategy's universe. PWR is a ~$112B large-cap industrial EPC contractor trading near $739/share \u2014 likely excluded by sector scope (Industrials/grid-services EPC not covered) or a per-share price ceiling rather than any technical filter.",
+      "suggestion": "Add a grid-infrastructure sector sleeve to the momentum strategy (market cap \u2265 $10B, sub-sector = Electrical Contractors/EPC) and raise the per-share price ceiling to $1,000 to include names like PWR.",
+      "failed": false
+    },
+    {
+      "ticker": "ERIE",
+      "move_pct": 4.705,
+      "close": 221.53,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Erie Insurance rose 15 spots to #308 on the 2026 Fortune 500 list, signalling franchise strength; bounce amplified by technical recovery near the 52-week low ($205) after a -22.7% YTD drawdown.",
+      "miss_reason": "Outside any active strategy's universe. ERIE is a mid-cap P&C insurer with only 3 sell-side analysts and negative YTD momentum (-22.7%); likely misses liquidity floors and momentum signal thresholds on all universe screens.",
+      "suggestion": "Add a mean-reversion sub-universe for P&C insurers with a JD Power top-5 ranking, >15% YTD drawdown, and avg daily dollar volume >$8M; trigger entry on days the KIE ETF rises \u22650.5%.",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": -14.016,
+      "close": 1981.085,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "SK Hynix announced a Nasdaq ADR listing (July 10, raising ~$29.4B), eroding SNDK's scarcity premium as the sole US pure-play AI-memory stock; compounded by second-day KOSPI/Samsung/SK Hynix contagion selloff (-10% KOSPI, -12% each).",
+      "miss_reason": "Outside any active strategy's universe \u2014 SNDK's ~$1,981 price and ~79x P/E after a 5,000% post-spin-off run likely breach universe filters (per-share price cap, vol ceiling, or float/liquidity thresholds). The SK Hynix ADR catalyst also required pre-open short positioning before US signals formed.",
+      "suggestion": "Add a competitor-listing catalyst rule: when a direct sub-sector rival announces a US ADR/IPO \u2265$5B, flag the incumbent pure-play proxy for a short entry within 30 minutes of open, gated on prior-session beta \u22651.5 vs SOX.",
+      "failed": false
+    },
+    {
+      "ticker": "MU",
+      "move_pct": -11.589,
+      "close": 1060.5463,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "SK Hynix disclosed an HBM4 capacity slowdown (shifting production to conventional DRAM), sparking sector-wide AI memory demand fears; compounded by pre-earnings profit-taking ahead of MU's own Q3 report due after today's close.",
+      "miss_reason": "Outside any active strategy's universe \u2014 likely excluded by mega-cap size (~$1.2T mkt cap at prior close). The drop was competitor-driven sector contagion from an SK Hynix capacity disclosure, not a MU-specific technical or fundamental signal.",
+      "suggestion": "Add a semiconductor sector-contagion watch: when a top-3 memory peer (SK Hynix, Samsung) files a capacity-shift disclosure, automatically flag in-universe chip names for a momentum short entry within 30 minutes of the news crossing wires.",
+      "failed": false
+    },
+    {
+      "ticker": "ON",
+      "move_pct": -9.929,
+      "close": 117.66,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Broad semiconductor sector profit-taking after a sharp recent rally (BofA/WF raised targets to $138-140 signaling peak sentiment); no ON-specific negative news \u2014 AI/EV power tailwinds intact but valuation stretched ~14% above models.",
+      "miss_reason": "Outside any active strategy's universe. ON is a $26B large-cap pure-play semiconductor (NASDAQ) \u2014 likely excluded by a sector or universe filter. The move was sector-rotation driven, not a momentum/mean-reversion signal; pre-position would have required shorting into an extended rally.",
+      "suggestion": "Add top-10 semiconductor names (ON, MCHP, MPWR) to a sector-momentum overlay: when SOXX ETF drops \u22653% over 2 sessions and individual name is +20% over prior 30 days, flag for short entry \u2014 captures stretched-valuation sector unwinds without broad universe expansion.",
+      "failed": false
+    },
+    {
+      "ticker": "VRT",
+      "move_pct": -9.571,
+      "close": 320.345,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Macro AI-sector contagion: South Korea's financial regulator flagged leveraged chip-fund risks (Samsung/SK Hynix), sparking a broad AI-infrastructure sell-off that dragged VRT ~9.6% with no company-specific news.",
+      "miss_reason": "Outside any active strategy's universe. The drop was pure macro contagion \u2014 no earnings, no filing, no pre-market signal \u2014 making pre-open positioning impossible. VRT's ~175% prior-year run and ~83\u00d7 forward P/E also place it above typical momentum-strategy valuation ceilings.",
+      "suggestion": "Add a macro-shock mean-reversion scan: when an AI-infrastructure proxy ETF (e.g. GRID) falls \u22653% intraday on no single-stock catalyst, auto-flag high-beta correlated names for next-open fade entries, gated to names with 90-day return \u226550% to target the most stretched.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-24T19:34:17.106032+00:00"
+}
