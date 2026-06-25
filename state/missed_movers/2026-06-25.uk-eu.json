@@ -1,0 +1,124 @@
+{
+  "date": "2026-06-25",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 1 of today's 10 biggest UK/EU movers.\n\n\u2022 5 upside misses \u2014 III.L +10%, IFX.DE +6%, STMPA.PA +4%, BTRW.L +4%, ASM.AS +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (FME.DE -5%, EXPN.L -3%, WKL.AS -2%, ADYEN.AS -2%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: III.L (+9.94%) \u2014 3i Group AGM (25 Jun) portfolio update: Action LFL sales +3.3% YTD, 105 new stores on track for 2026, \u20ac699m cash post-dividend \u2014 update read as above-expectations, lifting NAV confidence. Why we passed: Outside any active strategy's universe \u2014 III.L is a FTSE 100 listed private-equity vehicle, not a direct equity. The +10% move was AGM event-driven, requiring pre-market positioning on a scheduled corporate calendar event that reactive momentum/mean-reversion filters cannot capture post-open.",
+  "top_movers": [
+    {
+      "ticker": "III.L",
+      "move_pct": 9.94,
+      "close": 24.9894,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "3i Group AGM (25 Jun) portfolio update: Action LFL sales +3.3% YTD, 105 new stores on track for 2026, \u20ac699m cash post-dividend \u2014 update read as above-expectations, lifting NAV confidence.",
+      "miss_reason": "Outside any active strategy's universe \u2014 III.L is a FTSE 100 listed private-equity vehicle, not a direct equity. The +10% move was AGM event-driven, requiring pre-market positioning on a scheduled corporate calendar event that reactive momentum/mean-reversion filters cannot capture post-open.",
+      "suggestion": "Integrate a scheduled AGM/portfolio-update event calendar for FTSE 100 investment companies; flag names with a confirmed AGM-day gap-up \u22655% within 30 min of open and inject into a short-hold catalyst sub-universe for that session only.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": 5.857,
+      "close": 84.22,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Mean-reversion bounce from a -6% June 23 SpaceX-IPO crowding selloff; supported by Bernstein (PT \u20ac74\u2192\u20ac102) and Susquehanna (PT \u20ac70\u2192\u20ac100) upgrades on AI power-semiconductor demand.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IFX.DE is a DAX large-cap (~\u20ac26B) European semiconductor not in coverage. The move was a same-day rebound from a non-fundamental selloff; catching it required intraday mean-reversion capability on European large-caps the bot does not hold.",
+      "suggestion": "Add DAX50 semiconductor names to a mean-reversion strategy's universe with a cross-asset rotation flag: prior-session decline >4% with no company-specific news qualifies name as a rebound candidate at open.",
+      "failed": false
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": 4.072,
+      "close": 65.94,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Broad EU semiconductor sector rally driven by strong Micron and Qualcomm US earnings forecasts; STMPA amplified by its earlier AI data-center revenue raise to ~$1B for 2026.",
+      "miss_reason": "Outside any active strategy's universe. High-momentum Euronext large-cap semi up ~150% in 90 days; extreme RSI likely excludes it from mean-reversion screens. Sector catalyst (Micron/Qualcomm beats) required pre-open positioning.",
+      "suggestion": "Add a US-peer-earnings sector proxy rule: on Micron/Qualcomm beats >3%, scan European semi names (STMPA, IFX) with RSI<75 and 20d avg volume >\u20ac50M for long entry within 15 min of Euronext open.",
+      "failed": false
+    },
+    {
+      "ticker": "BTRW.L",
+      "move_pct": 3.986,
+      "close": 2.922,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "ONS data showing UK house prices +3.8% YoY in April (strongest reading in months) combined with rising BoE rate-cut expectations after GDP contracted 0.1% drove a broad UK housebuilder sector rally.",
+      "miss_reason": "Outside any active strategy's universe. The move was a macro sector rotation \u2014 the whole housebuilder sector lifted simultaneously (Vistry +6.2%, Persimmon +3.8%, Taylor Wimpey +3.5%) driven by an ONS data print and BoE event positioning, not capturable from individual price-action signals.",
+      "suggestion": "Add a UK-housebuilder sector-event trigger: on ONS house-price release or BoE-surprise days, bypass single-stock RSI/volume filters and enter a capped equal-weight basket (BTRW, PSN, BWY, TW) sized at \u22640.5\u00d7 normal position limit.",
+      "failed": false
+    },
+    {
+      "ticker": "ASML.AS",
+      "move_pct": 3.836,
+      "close": 1613.4,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive"
+      ],
+      "catalyst": "Micron Q3 2026 blowout earnings ($41.5B revenue, +346% YoY; Q4 guide $49-51B) triggered a broad chip-sector rally; Micron also announced a new multi-year EUV supply agreement with ASML directly, lifting ASML.AS ~4%.",
+      "miss_reason": "ASML.AS is outside every active strategy's universe \u2014 a \u20ac670B+ mega-cap European semiconductor equipment name beyond current coverage tiers. News-reactive flagged the Micron catalyst but had no universe entry to execute against.",
+      "suggestion": "Extend news-reactive's universe with a supplier-beneficiary rule: when a tracked customer (Micron, TSMC, Intel) posts earnings citing an explicit ASML supply agreement, add ASML.AS for that session with a 0.5\u00d7 position-size cap.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": 3.642,
+      "close": 1004.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Micron Technology Q3 FY2026 blowout earnings (revenue $41.5B vs $35.8B est, quadrupled YoY) triggered broad European semicap equipment rally on Jun 25; ASML +4.5%, ASMI led sector +3-6%.",
+      "miss_reason": "Outside any active strategy's universe. ASM.AS is a large-cap (~\u20ac52B) ALD-equipment specialist on Euronext Amsterdam; the move was overnight sector contagion from US memory earnings, gapping at the open before intraday momentum or news-reactive signals could fire.",
+      "suggestion": "Add a 'semicap-contagion' trigger: when a tier-1 memory/logic report (Micron, TSMC) beats revenue by \u226510%, scan European semicap names (ASML, ASMI, BESI) for gap-up entries within the first 30 minutes of Amsterdam open.",
+      "failed": false
+    },
+    {
+      "ticker": "FME.DE",
+      "move_pct": -4.674,
+      "close": 40.18,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No hard single-day catalyst found for 2026-06-25; stock likely faded a Goldman Sachs price-target lift (\u20ac38\u2192\u20ac43, Jun 22) back into bearish consensus \u2014 UBS Sell, Jefferies Strong Sell, Metzler downgrade Jun 19 \u2014 after Q1 EPS missed 60% on U.S. treatment volume decline.",
+      "miss_reason": "Outside any active strategy's universe. FME.DE is a DAX mid-large healthcare name (~\u20ac11B cap) in dialysis services \u2014 a sector excluded from the bot's tradable set due to idiosyncratic reimbursement/regulatory risk. Even if admitted, its persistent downtrend and 'Reduce' consensus would block long-momentum filters, and ",
+      "suggestion": "No actionable change \u2014 the fade of an analyst-upgrade bounce in a heavily shorted EU healthcare name requires short capability the bot does not have; adding FME.DE to any long-only universe against a 'Reduce' consensus would increase adverse-selection risk.",
+      "failed": false
+    },
+    {
+      "ticker": "EXPN.L",
+      "move_pct": -2.587,
+      "close": 24.85,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Ex-dividend day for EXPN.L: $0.96 USD/share final dividend from FY26 (record year, +15% Benchmark EPS), causing mechanical ~2.6% price-only drop; total return approximately flat.",
+      "miss_reason": "Outside any active strategy's universe. The move was a mechanical ex-dividend price adjustment, not a signal-driven opportunity \u2014 a momentum or mean-reversion filter would correctly see no tradable edge here, as the total-return return was near zero.",
+      "suggestion": "Tag ex-dividend dates in the universe screener and suppress them from loss-attribution reports; the -2.59% is not a missed short but a scheduled price adjustment \u2014 no strategy change warranted.",
+      "failed": false
+    },
+    {
+      "ticker": "WKL.AS",
+      "move_pct": -2.488,
+      "close": 54.86,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Morningstar cut economic moat Wide\u2192Narrow on AI-disruption risk; JPMorgan/Morgan Stanley trimmed targets (JPM to \u20ac105, MS to Equalweight). No fresh company news today \u2014 continuation of sector de-rating drove stock to 52-wk low of \u20ac54.64.",
+      "miss_reason": "Outside any active strategy's universe. WKL is a large-cap AEX information-services stock (~\u20ac14B mkt cap) in a sustained fundamental re-rating driven by AI fears \u2014 neither momentum (falling-knife setup) nor mean-reversion (structural, not cyclic decline) signals would trigger entry.",
+      "suggestion": "Add a broker-downgrade cascade screen: names with \u22653 consensus target cuts within 90 days and weekly RSI<35 surfaced as short-universe candidates; without short capability, auto-tag as monitor-only to avoid blind spots on large-cap de-ratings.",
+      "failed": false
+    },
+    {
+      "ticker": "ADYEN.AS",
+      "move_pct": -2.488,
+      "close": 823.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "CFO Ethan Tandowsky announced surprise resignation (effective Aug 31 2026) after-hours Wed Jun 24, triggering leadership-uncertainty selling in a stock already down ~41% over 6 months.",
+      "miss_reason": "Outside any active strategy's universe. Adyen (~\u20ac26B mkt-cap, Euronext Amsterdam) sits in a severe 6-month downtrend (Momentum Grade F, -41%); the move was directionally down, so without short capability there was no viable long entry to pursue.",
+      "suggestion": "(no actionable change \u2014 capturing this downside requires short capability the bot does not have; adding ADYEN.AS long-only into a -41% 6-month trend would violate momentum-floor rules and create adverse-selection risk on each C-suite shock)",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-25T15:05:01.167382+00:00"
+}
