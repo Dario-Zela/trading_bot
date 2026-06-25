@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-25",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 DD +186%, BLDR +11%, IQV +8%, CRL +8%, UAL +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (APO -6%, BX -6%, HOOD -6%, ARES -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: DD (+185.99%) \u2014 DuPont executed a 1-for-3 reverse stock split effective June 24, 2026; the +186% close-to-close gain is a mechanical price artifact of the consolidation, not a fundamental or news-driven move. Why we passed: Outside any active strategy's universe. The +186% is a reverse-split artifact (1-for-3, eff. June 24), not a real gain \u2014 momentum/gap filters would flag this as a false positive without a corporate-action exclusion layer.",
+  "top_movers": [
+    {
+      "ticker": "DD",
+      "move_pct": 185.993,
+      "close": 137.82,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "DuPont executed a 1-for-3 reverse stock split effective June 24, 2026; the +186% close-to-close gain is a mechanical price artifact of the consolidation, not a fundamental or news-driven move.",
+      "miss_reason": "Outside any active strategy's universe. The +186% is a reverse-split artifact (1-for-3, eff. June 24), not a real gain \u2014 momentum/gap filters would flag this as a false positive without a corporate-action exclusion layer.",
+      "suggestion": "Add a corporate-action filter that ingests daily 8-K/exchange announcements and blacklists tickers with an active reverse split from all gap/momentum scanners on the split effective date.",
+      "failed": false
+    },
+    {
+      "ticker": "BLDR",
+      "move_pct": 11.312,
+      "close": 85.41,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "ROAD to Housing Act passed Congress June 22-23 (Senate 85-5, House 358-32), removing construction regulatory barriers; market continued to price in the housing supply tailwind on June 25, a direct demand catalyst for BLDR.",
+      "miss_reason": "Outside any active strategy's universe. BLDR (~$10B market cap, building materials) is a sector the bot doesn't cover. The catalyst was a multi-day legislative event (bill passage June 22-23), requiring a policy-trigger entry rather than intraday price/volume signals.",
+      "suggestion": "Add a housing-supply legislative trigger: when a major housing bill passes both chambers, flag direct-beneficiary names (BLDR, DOOR, CARR) for momentum entry next session open, gated on volume \u22651.2\u00d7 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "IQV",
+      "move_pct": 8.372,
+      "close": 185.62,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "CRL",
+      "move_pct": 8.307,
+      "close": 202.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No new corporate event on Jun 25; continuation rally off Morgan Stanley upgrade to OW/$220 (Jun 17) + Lilly TuneLab nonclinical-testing collaboration (Jun 18); sector rotation into CRO/pharma-services as Nasdaq 100 sold off.",
+      "miss_reason": "Outside any active strategy's universe. CRL is a mid-large-cap CRO (pharma-services sector) not covered by the bot's tradable universe; the +8% move was a multi-day institutional accumulation following a week-old analyst upgrade, not an intraday gap-up signal that news-reactive or momentum strategies could act on.",
+      "suggestion": "Add a post-Tier-1-upgrade watchlist layer: when a name in the CRO/pharma-services peer group (CRL, IQV, MEDP) receives a \u22652-notch upgrade with \u226515% PT raise, stage it for momentum entry if price holds above the upgrade-day close for 3+ sessions \u2014 this captures delayed institutional rotation without chasing the initial ",
+      "failed": false
+    },
+    {
+      "ticker": "UAL",
+      "move_pct": 7.396,
+      "close": 130.54,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Crude oil fell below $70/barrel (multi-month low), cutting jet-fuel cost outlook, while UBS raised its UAL price target to $153 from $148 (Buy maintained), triggering a broad airline sector rally to 52-week highs.",
+      "miss_reason": "Outside any active strategy's universe. The move was a macro/sector tailwind (oil drop) combined with an analyst price-target lift \u2014 not a pre-market earnings gap or technical momentum signal \u2014 so no existing filter had a pathway to admit the name intraday.",
+      "suggestion": "Add an oil-price-shock universe gate: when crude drops \u22653% intraday, admit large-cap airline names (UAL, DAL, AAL) to the momentum strategy provided analyst consensus \u2265 Buy, capturing sector-rotation tailwinds without requiring short capability.",
+      "failed": false
+    },
+    {
+      "ticker": "BKNG",
+      "move_pct": 7.287,
+      "close": 181.25,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "WTI crude fell below $70 as the Strait of Hormuz began reopening following a Middle East peace deal, reversing BKNG's biggest 2026 travel headwind and triggering a broad sector rally.",
+      "miss_reason": "Outside any active strategy's universe. BKNG is a ~$181B mega-cap OTA (post-25-for-1 split, April 2026); the +7% gap was a geopolitical macro catalyst (oil price collapse / Strait of Hormuz reopening) that materialised pre-open before any intraday momentum or volume signal could fire.",
+      "suggestion": "Add a macro-travel trigger rule: when WTI crude drops \u22653% intraday, scan large-cap OTA names (BKNG, EXPE) for pre-open gaps \u22653% and allow a news-reactive long entry within the first 30 min of the session.",
+      "failed": false
+    },
+    {
+      "ticker": "APO",
+      "move_pct": -6.133,
+      "close": 122.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Apollo capped withdrawals from Apollo Debt Solutions retail private credit fund at 5% vs ~17% redemption requests (2nd consecutive quarter gate); SEC concurrently opened a valuation-practice and investor-disclosure probe.",
+      "miss_reason": "Outside any active strategy's universe \u2014 APO is a large-cap alt-asset manager in diversified financials. Move was catalyst-driven (redemption gate + SEC probe) with no pre-market technical signal for momentum or mean-reversion filters to act on.",
+      "suggestion": "Add a news-reactive short filter for large-cap financials: trigger on \u22655% gap-down + confirmed 'redemption gate' or 'SEC investigation' headline within 30 min of open to capture institutional liquidity-event selloffs.",
+      "failed": false
+    },
+    {
+      "ticker": "BX",
+      "move_pct": -5.897,
+      "close": 112.99,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Partners Group (Swiss PE peer) disclosed fund-level withdrawal restrictions, sparking sector-wide contagion across alt-asset managers; BX fell in sympathy amid its own BCRED redemption-limit overhang and CRE exposure concerns.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BX is a large-cap alt-asset manager not covered by any momentum/mean-reversion filter. The drop was peer-contagion-driven (Partners Group news), not a BX-specific event; no single-name signal would have enabled pre-market positioning.",
+      "suggestion": "Add alt-asset managers (BX, KKR, APO) to the universe with a sector-contagion rule: when any peer announces fund redemption restrictions pre-market, auto-flag the group for a short-side fade at open with a \u22652% gap threshold.",
+      "failed": false
+    },
+    {
+      "ticker": "HOOD",
+      "move_pct": -5.869,
+      "close": 97.19,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Meta CEO Zuckerberg directed development of 'Arena', a prediction-markets app directly targeting Robinhood's fastest-growing event-contract business; a concurrent $2B convertible-note offering added dilution pressure.",
+      "miss_reason": "Outside any active strategy's universe. HOOD had already surged ~50% from April lows (~$70\u2192$105), making it too extended for a fresh momentum entry; the reversal was headline-driven (direct competitor entry + capital-structure event), requiring pre-open news detection that purely technical strategies lack.",
+      "suggestion": "Seed a catalyst-reversal watchlist nightly from the top-50 prior-month momentum winners; gate intraday mean-reversion entries when a direct-competitor or capital-structure headline (convertible, secondary) crosses pre-market, targeting entry within the first 30 min of open.",
+      "failed": false
+    },
+    {
+      "ticker": "ARES",
+      "move_pct": -5.721,
+      "close": 113.87,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Bloomberg reported Ares' Strategic Income Fund (~$11bn) capped redemptions at 5% after 14.4% of investors sought to exit (up from 11.6% prior quarter), reigniting private credit liquidity fears.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ARES is a large-cap alternative asset manager. The drop was news-driven (fund redemption gate disclosure); no technical pre-signal exists for this event type, so momentum and mean-reversion filters had no edge.",
+      "suggestion": "Add large-cap alt-asset managers (ARES, APO, BX, KKR) to a news-reactive universe; trigger short entry on 8-K/PR keywords 'redemption cap' or 'gate' within 30 min of SEC filing, with a 3% stop-loss.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-25T19:35:04.717057+00:00"
+}
