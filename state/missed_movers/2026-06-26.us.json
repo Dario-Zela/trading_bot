@@ -1,0 +1,128 @@
+{
+  "date": "2026-06-26",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 2 of today's 10 biggest US movers.\n\n\u2022 4 upside misses \u2014 SNDK +22%, TECH +20%, MU +16%, AMAT +13%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (AAPL -6%, TJX -6%, ROST -6%, DELL -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: SNDK (+21.97%) \u2014 Micron reported record Q3 revenue of $41.46B (+346% YoY) with $50B Q4 guidance after close June 25; SNDK surged ~22% as the closest NAND-peer beneficiary, with Citi raising its PT to $2,500. Why we passed: Outside any active strategy's universe \u2014 SNDK (~$2,335/share, ~4,000% YTD run) sits above typical price-cap and RSI thresholds; move was a sympathy trade on Micron earnings requiring sector-peer logic no current strategy carries.",
+  "top_movers": [
+    {
+      "ticker": "SNDK",
+      "move_pct": 21.967,
+      "close": 2335.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Micron reported record Q3 revenue of $41.46B (+346% YoY) with $50B Q4 guidance after close June 25; SNDK surged ~22% as the closest NAND-peer beneficiary, with Citi raising its PT to $2,500.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SNDK (~$2,335/share, ~4,000% YTD run) sits above typical price-cap and RSI thresholds; move was a sympathy trade on Micron earnings requiring sector-peer logic no current strategy carries.",
+      "suggestion": "Add a MU-earnings-sympathy gate: when Micron beats revenue by \u226510% post-close, unlock NAND-peer tickers (SNDK) for the next session with RSI ceiling +10 pts and volume confirm \u22651.2\u00d7 20-day avg.",
+      "failed": false
+    },
+    {
+      "ticker": "TECH",
+      "move_pct": 20.075,
+      "close": 70.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Activist Ananym Capital built a stake and urged Bio-Techne's board to pursue a sale or strategic review; amplified by TD Cowen reiterating Buy ($65 target) and Piper Sandler initiating at Neutral.",
+      "miss_reason": "Outside any active strategy's universe; Bio-Techne (~$8B mid-cap life-science tools) falls outside sector/universe filters. Activist letter surfaced June 15 \u2014 move built over multiple sessions, requiring early positioning to capture.",
+      "suggestion": "Add a 13D/13G activist-filing monitor; flag names with new >5% activist stakes and allow a universe exception if the name clears a momentum threshold within 10 trading days of the filing date.",
+      "failed": false
+    },
+    {
+      "ticker": "MU",
+      "move_pct": 15.741,
+      "close": 1213.5601,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Micron Q3 FY2026 beat: EPS $25.11 vs $20.20 est (+24%); Q4 revenue guidance ~$50B vs $43.6B consensus; data-center revenue +7\u00d7 YoY on AI/HBM memory demand surge.",
+      "miss_reason": "Outside any active strategy's universe. MU gapped ~20% on June 24 earnings; a post-gap volatility or earnings-exclusion filter likely blocked re-admission, leaving the +15.74% continuation move on June 26 unreachable without a post-earnings re-entry rule.",
+      "suggestion": "Add a post-earnings re-admission gate: names with \u2265+15% earnings gap whose next-session close holds above the gap-day high and volume \u22651.5\u00d7 20-day avg may re-enter the momentum universe within 2 sessions of the catalyst date.",
+      "failed": false
+    },
+    {
+      "ticker": "AMAT",
+      "move_pct": 13.418,
+      "close": 668.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Micron Q3 earnings blowout (revenue $41.5B vs $35.7B est; EPS $25.11 vs $20.49 est) reported after-hours Jun 25 triggered a read-across rally in AMAT as the world's largest memory-fab equipment supplier; BofA, Wells Fargo, Citi all raised targets to $710\u2013720.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AMAT is a large-cap ($250B+) semiconductor equipment name with no coverage. The move was a pre-open read-across from Micron's after-hours print; the full 13% gap was baked in at open before any intraday momentum or volume signal could form.",
+      "suggestion": "Add a read-across earnings trigger: when MU beats revenue by \u226510%, add AMAT/LRCX/KLAC to a pre-open watchlist and enter on a confirmed gap-up of \u2265+5% within the first 30 minutes of the open, sized at half normal position given single-session gap risk.",
+      "failed": false
+    },
+    {
+      "ticker": "GLW",
+      "move_pct": 10.776,
+      "close": 228.01,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned-macro-attn",
+        "regime-router"
+      ],
+      "catalyst": "Analyst PT upgrades (UBS to $228, Truist to $205) following Corning's multi-year multibillion-dollar optical fiber supply deal with Amazon for U.S. AI data centers and an Nvidia equity partnership, repricing GLW as core AI infrastructure supplier.",
+      "miss_reason": "Outside any active strategy's universe \u2014 GLW is a mega-cap industrials/materials name with no momentum or news-reactive sleeve coverage. The macro-aligned-macro-attn and regime-router strategies were exposed but GLW had already gained ~20% across Jun 20-24, almost certainly tripping RSI-overbought or cumulative-gap fil",
+      "suggestion": "Add a named-hyperscaler-contract flag to regime-router's entry gate: if a security has a disclosed multi-year supply agreement with a top-5 cloud/AI hyperscaler within the prior 5 sessions, exempt it from the RSI/gap ceiling and allow half-size entry, since analyst PT cascades reliably follow over subsequent sessions.",
+      "failed": false
+    },
+    {
+      "ticker": "TER",
+      "move_pct": 10.478,
+      "close": 471.96,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned",
+        "macro-aligned-macro-attn"
+      ],
+      "catalyst": "Micron reported FQ3 2026 revenue of $41.5B vs $36.5B est (+346% YoY) with $100B in new multi-year contracts, signalling a surge in HBM production that directly drives Teradyne memory-test equipment demand.",
+      "miss_reason": "Outside any active strategy's universe. TER is a large-cap semi-cap equipment name (~$69B) whose +10.5% move was a sympathy/read-through from Micron's after-hours print \u2014 a third-party earnings catalyst that pre-market positioning captures better than intraday signals.",
+      "suggestion": "Add a 'customer earnings read-through' trigger: when a disclosed major customer (e.g. MU) beats revenue consensus by \u226510%, flag semi-cap equipment suppliers (TER, AMAT, KLAC) for next-open momentum entry if they are not already in-universe.",
+      "failed": false
+    },
+    {
+      "ticker": "AAPL",
+      "move_pct": -6.118,
+      "close": 275.15,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Apple raised MacBook/iPad prices 18\u201325% mid-cycle, citing AI-driven memory cost inflation ('hundred-year flood' per CEO Cook), stoking demand-destruction fears and a broad margin-squeeze narrative.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AAPL's mega-cap status excludes it from current scope. Move was catalyst-driven by a product-pricing press release; post-close momentum signals arrived too late to capture the gap.",
+      "suggestion": "Add AAPL to a catalyst watchlist: gate a momentum-short entry when a product-pricing press release drives a pre-market gap \u22654% (or express via QQQ inverse proxy if short capability is unavailable).",
+      "failed": false
+    },
+    {
+      "ticker": "TJX",
+      "move_pct": -6.042,
+      "close": 155.19,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Insider sell-off: Chairman Meyrowitz sold 21.6% of her stake (~$9.1M) and CEO Herrman ~$12M in early June; Form 4 disclosures circulated June 25\u201326, amplified by elevated PCE inflation data and a stretched 30\u00d7 forward-PE premium.",
+      "miss_reason": "Outside any active strategy's universe (large-cap consumer discretionary, ~$170B market cap). Even if in-universe, the move was Form 4 disclosure-driven \u2014 a multi-day drift without a single-session gap or volume spike that momentum or news-reactive filters require.",
+      "suggestion": "No actionable change for long-only strategies \u2014 missing a loser is the correct outcome. If a market-neutral sleeve exists, add a Form-4 signal (C-suite sale >15% stake within 30 days) as a short-entry trigger for large-cap consumer discretionary.",
+      "failed": false
+    },
+    {
+      "ticker": "ROST",
+      "move_pct": -5.888,
+      "close": 215.13,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Wells Fargo cut ROST to Equal Weight on Jun 23 citing stretched valuation after ~80% YoY rally; selling extended through Jun 26, amplified by Q1 tariff-margin warnings (~50% China sourcing, Q2 EPS hit $0.11\u2013$0.16).",
+      "miss_reason": "Outside any active strategy's universe \u2014 ROST is a large-cap (~$71B) consumer discretionary off-price retailer not covered by sector screens. The move was analyst-downgrade-driven with a 3-day lag, favouring pre-positioning over reactive signals.",
+      "suggestion": "Add off-price retail peers to a consumer discretionary watchlist with a downgrade-momentum short gate: flag when a mega-cap is cut to Hold after >60% 12-month rally and price confirms >2% below the downgrade day's close within one session.",
+      "failed": false
+    },
+    {
+      "ticker": "DELL",
+      "move_pct": -5.67,
+      "close": 409.45,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "GF Securities downgraded DELL Buy\u2192Hold on Jun 25, citing ~34\u00d7 P/E vs 13\u00d7 historical median; AI revenue upside seen as fully priced in, amplified by $1.56B insider selling and ODM-direct customer disintermediation risk.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DELL is a large-cap AI-infrastructure hardware name not covered by current strategies. The move was catalyst-driven (analyst downgrade published pre-market Jun 25), requiring positioning before the signal rather than reacting to a technical setup.",
+      "suggestion": "Add a news-reactive short gate: names with analyst Buy\u2192Hold/Sell downgrade + P/E > 2\u00d7 5yr median + net insider selling > $500M/90d enter a 1-session mean-reversion short list; back-test on large-cap hardware (DELL, HPE, SMCI) before enabling.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-26T19:35:27.659861+00:00"
+}
