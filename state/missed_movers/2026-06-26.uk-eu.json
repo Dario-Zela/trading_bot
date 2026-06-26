@@ -1,0 +1,129 @@
+{
+  "date": "2026-06-26",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 2 of today's 10 biggest UK/EU movers.\n\n\u2022 5 upside misses \u2014 BTRW.L +5%, ANTO.L +4%, ABDN.L +4%, DHL.DE +4%, VNA.DE +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 3 downside moves (ZAL.DE -7%, PAH3.DE -5%, ADYEN.AS -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: ZAL.DE (-7.05%) \u2014 BaFin opened a formal accounting probe into Zalando's FY2025 financials over allegedly omitted related-party disclosures tied to the ~\u20ac1.2B About You acquisition; shares fell up to 11% intraday before paring losses. Why we passed: Outside any active strategy's universe \u2014 ZAL.DE is a large-cap DAX e-commerce name not currently covered. The move was a BaFin probe announced intraday; pre-market momentum and mean-reversion filters had no signal to act on prior to the disclosure.",
+  "top_movers": [
+    {
+      "ticker": "BAYN.DE",
+      "move_pct": 18.717,
+      "close": 47.0,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive",
+        "macro-aligned",
+        "news-reactive-disclosure",
+        "regime-router"
+      ],
+      "catalyst": "US Supreme Court ruled 7-2 to preempt state-level Roundup cancer-warning lawsuits under FIFRA, eliminating a >$10B litigation overhang that had depressed Bayer shares for years.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BAYN.DE is a large-cap DAX pharma not covered by current sector filters. Move was a binary legal event with zero technical pre-signal; no price/volume pattern can anticipate a Supreme Court ruling.",
+      "suggestion": "Add a 'pending-high-court-decision' watchlist to news-reactive; names on it become eligible for intraday entry if gap \u2265+8% within 30 min of open on ruling day, bypassing the standard prior-session volume gate.",
+      "failed": false
+    },
+    {
+      "ticker": "BTRW.L",
+      "move_pct": 4.626,
+      "close": 2.94,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Berenberg upgraded BTRW.L (Barratt Redrow) from Hold to Buy on 26 Jun 2026, citing attractive valuation after the pullback, a ~6% dividend yield, and strong net cash \u2014 stock up ~4.6% on the day, ~14% on the week.",
+      "miss_reason": "Outside any active strategy's universe. BTRW.L is a FTSE 250 UK housebuilder \u2014 a sector-specific mid-cap. Even if screened in, a 14% weekly run into today's session would likely have tripped RSI / over-extension filters before the Berenberg note hit the tape.",
+      "suggestion": "Add a broker-upgrade event filter: for FTSE 350 names with trailing-5-day gain \u226415% and RSI <65, allow a news-reactive entry within 30 min of open when a tier-1 broker upgrades to Buy \u2014 currently no strategy handles analyst-catalyst gaps.",
+      "failed": false
+    },
+    {
+      "ticker": "ANTO.L",
+      "move_pct": 3.918,
+      "close": 37.93,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Copper futures rebounded +2.1% after Freeport-McMoRan confirmed the Grasberg mine (world's #2 copper producer) restart delayed to early 2028, triggering a supply-shock rally across LSE-listed copper miners.",
+      "miss_reason": "Outside any active strategy's universe. ANTO.L is a FTSE 100 pure-play copper miner with high LME copper beta; the move was commodity-driven (supply shock at a competitor mine), not a company-specific signal a momentum or news-reactive strategy would detect pre-open.",
+      "suggestion": "Add a copper-sector satellite basket (ANTO.L, KAZ.L) that activates when LME copper is up \u22651.5% intraday on confirmed supply-disruption headlines, sized at 0.5\u00d7 normal to account for commodity-price uncertainty.",
+      "failed": false
+    },
+    {
+      "ticker": "ABDN.L",
+      "move_pct": 3.621,
+      "close": 2.404,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Aberdeen's interactive investor unit disclosed Q2 2026 net flows >\u00a33.7bn (+23% QoQ, +50% YoY) at a CEO-hosted roundtable, signalling record D2C platform growth momentum.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ABDN re-entered the FTSE 100 on ~June 21 (5 days prior), so universe refresh had not yet captured it; the catalyst was a non-earnings investor day, which resists pre-market news-reactive positioning.",
+      "suggestion": "Add a 'recent FTSE 100 entrant' watchlist covering names promoted within the prior 10 trading days; passive-flow tailwinds and coincident positive catalysts create an exploitable edge before the standard universe refresh cycle runs.",
+      "failed": false
+    },
+    {
+      "ticker": "DHL.DE",
+      "move_pct": 3.556,
+      "close": 53.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "EU Council gave final approval on June 25 for the EU-US tariff deal (US tariffs on EU goods capped at 15%), boosting DHL's transatlantic freight and express volume outlook; market re-rated at the June 26 open.",
+      "miss_reason": "Outside any active strategy's universe. DHL.DE (~EUR 61B DAX large-cap) was trading near its 52-wk high; the trigger was a macro legislative event (EU Council ratification vote) that rewards pre-market positioning ahead of the vote, not post-signal reactive entry.",
+      "suggestion": "Extend the UK-EU universe to include DAX logistics large-caps (DHL.DE); add a macro-event admission gate for trade-deal ratification signals, conditioned on \u22651.5% pre-open gap and \u22651.2\u00d7 prior-session average daily volume to filter noise.",
+      "failed": false
+    },
+    {
+      "ticker": "VNA.DE",
+      "move_pct": 3.175,
+      "close": 21.45,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Deutsche Bank upgraded Vonovia Hold\u2192Buy on 25 Jun, raising PT to \u20ac26, citing residential RE at trough valuations; move extended 26 Jun on an upsized \u20ac850M convertible bond that reduced leverage concerns.",
+      "miss_reason": "Outside any active strategy's universe \u2014 VNA is a DAX40 REIT in a sector the bot excludes. Catalyst (Deutsche Bank Hold\u2192Buy, PT \u20ac26) published after-hours 25 Jun required overnight positioning that intraday signals cannot capture.",
+      "suggestion": "Add an overnight sell-side-upgrade scanner: DAX/STOXX600 names upgraded to Buy by a tier-1 broker with PT \u2265+10% upside vs prior close should be admitted to the next session's long universe, capped at half-normal position size.",
+      "failed": false
+    },
+    {
+      "ticker": "ZAL.DE",
+      "move_pct": -7.053,
+      "close": 24.51,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "BaFin opened a formal accounting probe into Zalando's FY2025 financials over allegedly omitted related-party disclosures tied to the ~\u20ac1.2B About You acquisition; shares fell up to 11% intraday before paring losses.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ZAL.DE is a large-cap DAX e-commerce name not currently covered. The move was a BaFin probe announced intraday; pre-market momentum and mean-reversion filters had no signal to act on prior to the disclosure.",
+      "suggestion": "Wire a DGAP/ad-hoc filing scanner to the event-driven sleeve: names with a confirmed regulator probe and intraday gap \u22655% should route to a short-eligible event-driven filter within 30 min of open, else flag for manual review.",
+      "failed": false
+    },
+    {
+      "ticker": "PAH3.DE",
+      "move_pct": -5.359,
+      "close": 28.08,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "EUR 1.51 annual dividend went ex-date 2026-06-26 (pay date 2026-06-30), mechanically stripping ~5.1% from the pre-ex price; residual ~0.3% reflects EU auto sector drift on BMW guidance cut.",
+      "miss_reason": "Outside any active strategy's universe. PAH3.DE is a preference share in Porsche SE, a holding company whose NAV is ~32% economic interest in Volkswagen Group \u2014 not a pure operating stock. The move is a mechanical dividend strip, not an alpha signal.",
+      "suggestion": "Add a dividend-calendar flag to the post-trade biggest-mover screen: suppress or annotate names whose |return| \u2264 declared dividend \u00f7 (prev_close + dividend) on ex-date, so mechanical strips don't surface as unexplained losers.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": -3.475,
+      "close": 79.16,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned"
+      ],
+      "catalyst": "Sector-wide AI/chip spending selloff on Jun 26 dragged European semiconductors broadly (STM -3%, ASM -3.7%); Infineon also carries China GaN sales-ban overhang from Supreme Court ruling on Jun 13.",
+      "miss_reason": "Outside any active strategy's universe; IFX.DE is a Xetra large-cap semiconductor in macro-aligned scope but not yet in any tradable universe. Move was sector-driven with no name-specific pre-signal, so no entry trigger fired before the opening leg was complete.",
+      "suggestion": "Add European large-cap semiconductors (IFX.DE, ASML.AS, STM.PA) to macro-aligned's universe gated on SOX futures gap-down \u22652% at EU open, enabling a sector-short trade when US chip weakness precedes the European session open.",
+      "failed": false
+    },
+    {
+      "ticker": "ADYEN.AS",
+      "move_pct": -2.618,
+      "close": 821.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news on Jun 26; broad AEX index weakness (~-1.60%) drove sector-wide selling, with lingering overhang from Feb 2026 earnings miss (2026 guidance 20-22% vs 22.8% analyst consensus).",
+      "miss_reason": "Outside any active strategy's universe \u2014 Adyen is a \u20ac26.6B Euronext Amsterdam large-cap payments name, likely excluded by exchange or sector filter. Move was macro/sector-driven with no pre-market company-specific catalyst to trigger news-reactive entry.",
+      "suggestion": "Expand universe to include AEX top-20 names under a sector mean-reversion filter, gated on AEX index daily return < -1% to avoid noise; requires short capability on Euronext to be actionable on the downside.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-26T15:05:22.550256+00:00"
+}
