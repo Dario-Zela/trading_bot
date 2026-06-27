@@ -160,3 +160,35 @@
 - **regime-router@us** · `keep` · ✅ applied — Shadow; IC=-0.002 noise floor but hit_rate=0.857 and avg_pnl=6.35% on 7 trades indicate the VIX-regime gate is doing real filtering; awaiting more trades to confirm if this is durable.
 - **regime-router@uk-eu** · `keep` · ✅ applied — Shadow; IC=0.137 — third-strongest in active slate; P&L=+£105; no paper slot available.
 - **sector-rotator-llm-macro@uk-eu** · `keep` · ✅ applied — Shadow T2 leader (IC=0.458); blocked from T212-paper by news-reactive-disclosure@uk-eu until demotion criteria are met.
+
+## Weekly evolution — 2026-06-27
+
+- **macro-aligned@us** · `demote` · ✅ applied — meets_demotion_criteria=true: IC=-0.015 on n=896 (noise), total_pnl=-204.71 negative, hit_rate=0.364 on 22 trades. Three demotion signals aligned; slot 3 freed for a stronger candidate.
+  - details: `{"from_tier": "alpaca-paper", "slot_cleared": true, "previous_slot": 3, "slot_kind": "alpaca"}`
+- **news-reactive-disclosure@us** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 19, "hit_rate": 0.474, "total_pnl_gbp": 1005.12, "avg_pnl_pct": 3.084, "max_drawdown_pct": -0.77, "n_predictions_graded": 448, "ic": 0.121, "decile_spread": 0.925}}`
+- **macro-aligned-hmm@us** · `unmark-tier2-candidate` · ✅ applied — IC collapsed 0.099→0.018 on n=896 predictions — large-sample noise territory. avg_pnl turned negative (-0.86%), total_pnl=-122.43. Last week's thesis required stabilisation above 0.10; it moved in the opposite direction. news-reactive-disclosure@us supersedes it with superior IC trajectory and P&L.
+- **sector-rotator-llm-macro@uk-eu** · `mark-tier2-candidate` · ✅ applied — Updating thesis to reflect sharp IC decline (0.458→0.201 in one week). Maintains #1 solely because 0.201 still tops the entire slate — hit rate trend is encouraging but negative P&L and IC direction are the critical risk flags. If IC falls below 0.15 next week, this loses the top spot to news-reactive-disclosure.
+  - details: `{"tier2_marked_at": "2026-06-27", "thesis_present": true}`
+- **news-reactive-disclosure@us** · `mark-tier2-candidate` · ✅ applied — IC has risen two consecutive weeks, P&L quality leads the entire slate, and promotion to paper this week delivers the live-execution validation the shadow data can't. Strongest upward trajectory in the tournament.
+  - details: `{"tier2_marked_at": "2026-06-27", "thesis_present": true}`
+- **pair-rotator** · `deactivate` · ✅ applied — IC=-0.044 on n=247, hit_rate=0.143 (1 win in 7 trades), total_pnl=-67.88. All three metrics indicate broken signal with no recovery indicators across the observation window. Frees the eu_etfs_sector slot for sector-rotator-median, a variant with a stronger theoretical anchor from MDPI 2026.
+  - details: `{"deactivated_at": "2026-06-27"}`
+- **sector-rotator-llm-macro** · `spawn-variant` · ✅ applied — Breaks the selection axis vs. the parent: median-momentum sectors rather than momentum leaders. The parent's IC=0.201 is the slate's best, but hit_rate=0.217 on 23 trades suggests the top-momentum picks are already crowded at entry, compressing realised returns. The MDPI 2026 finding that median-ranked sectors outperform leaders on Sharpe directly tests whether that crowding cost explains the parent's IC-to-P&L conversion gap.
+  - details: `{"variant_id": "sector-rotator-median", "addendum_applied": true}`
+- **news-reactive@us** · `keep` · ✅ applied — IC=-0.019 on n=247 (noise) but total_pnl=83.5 positive and hit=0.538; no demotion criteria met. Monitoring IC trend.
+- **news-reactive@uk-eu** · `keep` · ✅ applied — IC=0.176 on n=242, hit=0.636, total_pnl=815.5 — second-strongest IC in UK-EU shadow after sector-rotator-llm-macro. T212 slot occupied; prime promotion candidate if that slot opens.
+- **mean-reverter@us** · `keep` · ✅ applied — IC=0.036, hit=0.60 on 20 trades, avg_pnl=1.344%. Solid US execution; monitoring.
+- **mean-reverter@uk-eu** · `keep` · ✅ applied — IC=-0.111 on n=918 is a large negative sample but doesn't reach the -0.20 deactivation threshold. Tuning is strategy-wide and would risk the decent US-side; watching for further deterioration before acting.
+- **macro-aligned@uk-eu** · `keep` · ✅ applied — IC=0.15, hit=0.414, avg_pnl=1.307% on shadow. Solid but T212 slot occupied; keep.
+- **macro-aligned-hmm@us** · `keep` · ✅ applied — Remaining on alpaca-paper (meets_demotion_criteria=false, n_trades=10 below formal thresholds). T2 candidacy revoked; monitoring for IC recovery.
+- **macro-aligned-hmm@uk-eu** · `keep` · ✅ applied — IC=0.128 on n=990, meets_promotion_criteria=true but T212 slot occupied. Strongest promotion-ready UK-EU shadow if news-reactive-disclosure@uk-eu earns a demotion next week.
+- **macro-aligned-macro-attn@us** · `keep` · ✅ applied — IC=-0.06 negative on n=496 but avg_pnl=3.103% on 10 trades (sample too small to conclude); monitoring.
+- **macro-aligned-macro-attn@uk-eu** · `keep` · ✅ applied — IC=0.13 but hit_rate=0.1 on 10 trades (n<20 demotion threshold). IC/execution disconnect needs more data; keeping.
+- **momentum-trader-vix-gated@us** · `keep` · ✅ applied — IC=0.027 modest but total_pnl=952.66, avg_pnl=4.899% on 10 trades — best absolute P&L on US shadow. Monitoring for IC improvement with more predictions.
+- **momentum-trader-vix-gated@uk-eu** · `keep` · ✅ applied — IC=0.013, hit_rate=0.286 on 7 trades (n<20 demotion threshold), total_pnl=-81.93. Weak UK-EU execution but not yet formal demotion territory; monitoring.
+- **news-reactive-disclosure@uk-eu** · `keep` · ✅ applied — IC=0.118 positive on n=487 but execution poor (hit=0.143, 7 trades). n_trades<20 blocks hit-rate demotion trigger; monitoring for a confirmed second consecutive negative P&L week which would trigger demotion and open the T212 slot for macro-aligned-hmm@uk-eu.
+- **regime-router@us** · `keep` · ✅ applied — IC=-0.054 negative but hit=0.615, avg_pnl=4.407% on 13 trades — highly selective trader; IC/P&L disconnect tracked but does not meet demotion criteria.
+- **regime-router@uk-eu** · `keep` · ✅ applied — IC=0.089, hit=0.312 on 16 trades (below 35% but n<20 formal threshold). Mixed signals; monitoring.
+- **news-reactive-disclosure@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.121, n=448) → Alpaca slot 3
+  - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 3, "enforcement": true, "slot_kind": "alpaca"}`

@@ -14,7 +14,7 @@ description: "Long-short sector pair strategy on GBP-denominated LSE-listed ETFs
   \ (gold, gilts) so the LLM can\npick a true hedge when no inverse-sector ETF matches\
   \ the laggard\nsector cleanly.\n"
 implementation: llm
-active: true
+active: false
 capital_gbp: 8000
 max_positions: 4
 max_position_pct: 30
@@ -42,3 +42,4 @@ runs_in:
 prefilter_mode: llm
 prefilter_top_n: 50
 cost_gate_multiplier: 2.5
+deactivated_at: '2026-06-27'

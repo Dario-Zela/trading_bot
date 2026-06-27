@@ -1,0 +1,46 @@
+id: sector-rotator-median
+display_name: Sector rotator (variant) (variant)
+description: 'Auto-spawned variant of sector-rotator-llm-macro on 2026-06-27 by the
+  weekly evolution agent. Reason: Breaks the selection axis vs. the parent: median-momentum
+  sectors rather than momentum leaders. The parent''s IC=0.201 is the slate''s best,
+  but hit_rate=0.217 on 23 trades suggests the top-momentum picks are already crowded
+  at entry, compressing realised returns. The MDPI 2026 finding that median-ranked
+  sectors outperform leaders on Sharpe directly tests whether that crowding cost explains
+  the parent''s IC-to-P&L conversion gap.'
+implementation: llm
+active: true
+capital_gbp: 8000.0
+max_positions: 2
+max_position_pct: 40
+min_position_gbp: 100
+use_stops: true
+use_take_profits: true
+stop_loss_pct: -4.0
+take_profit_pct: 5.0
+cost_gate_multiplier: 2.5
+last_tune_date: '2026-05-28'
+tools:
+- get_universe
+- get_history
+- get_technicals
+- get_sector_strength
+- get_macro_view
+model_assignment:
+  wide_scoring: haiku
+  deep_analysis: sonnet
+  final_select: sonnet
+runs_in:
+- region: uk-eu
+  tier: shadow
+  t212_slot: null
+  universe: eu_etfs_sector
+  alpaca_slot: null
+  tier2_candidate: true
+  tier2_marked_at: '2026-06-27'
+  tier2_thesis: "LEADERBOARD LEADER: IC=0.201 on 494 predictions (down from 0.458;\
+    \ still slate-best). Hit rate 0.154\u21920.217 on 23 trades but P&L marginally\
+    \ negative (-\xA322). IC must hold \u22650.20 next week; news-reactive-disclosure@us\
+    \ (IC=0.121 rising) is closing the gap."
+prefilter_mode: llm
+prefilter_top_n: 50
+deactivated_at: '2026-06-13'

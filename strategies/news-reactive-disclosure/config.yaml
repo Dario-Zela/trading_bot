@@ -32,15 +32,15 @@ model_assignment:
   final_select: sonnet
 runs_in:
 - region: us
-  tier: shadow
-  alpaca_slot: null
+  tier: alpaca-paper
+  alpaca_slot: 3
   universe: t212_isa_us
   tier2_candidate: true
-  tier2_marked_at: '2026-06-20'
-  tier2_thesis: "LEADERBOARD #3: IC risen 0.018\u21920.061 over 399 predictions (n_trades=18,\
-    \ hit_rate=0.556, avg_pnl=3.177%, max_drawdown=-1.74%). Fastest IC growth rate\
-    \ in slate this week. Disclosure-event edge accumulating evidence. One more week\
-    \ at this trajectory closes on #2 macro-aligned-hmm on both IC and trade c"
+  tier2_marked_at: '2026-06-27'
+  tier2_thesis: "LEADERBOARD #2: IC rising 0.061\u21920.121 on 448 predictions (19\
+    \ trades, hit=0.474, avg_pnl=3.084%, max_dd=-0.77%). Best P&L conversion on slate.\
+    \ Now on alpaca-paper. IC\u22650.15 next week with maintained P&L makes this the\
+    \ new leader."
 - region: uk-eu
   tier: trading212-paper
   t212_slot: 1

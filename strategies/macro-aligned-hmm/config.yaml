@@ -34,12 +34,9 @@ runs_in:
   tier: alpaca-paper
   universe: t212_isa_us
   alpaca_slot: 2
-  tier2_candidate: true
-  tier2_marked_at: '2026-06-20'
-  tier2_thesis: 'LEADERBOARD #2: IC=0.099 (declining from 0.124; n=11 trades on alpaca-paper),
-    avg_pnl=3.233%, max_drawdown=-0.63%. Holds #2 via confirmed paper-tier execution
-    and superior hit_rate (0.636) over sector-rotator-llm-macro. IC trend is the risk;
-    needs stabilisation above 0.10 or the hit-rate edge must w'
+  tier2_candidate: false
+  tier2_marked_at: null
+  tier2_thesis: ''
 - region: uk-eu
   tier: shadow
   t212_slot: null
