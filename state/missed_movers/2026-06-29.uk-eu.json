@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-29",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 VNA.DE +4%, BN.PA +3%, EDV.L +3%, CCH.L +3%, SGE.L +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (PAH3.DE -6%, ENR.DE -6%, ZAL.DE -5%, CRDA.L -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: PAH3.DE (-6.20%) \u2014 PAH3 went ex-dividend EUR 1.51 (~5.1% of prior close ~29.76) on 26 Jun; residual ~1% decline driven by compounding passive selling from confirmed DAX\u2192MDAX index demotion. Why we passed: Outside any active strategy's universe. PAH3 is a pure holding company (controls 53.3% VW voting stake; GICS 40203010) classified as Financials/Holdings, not an operating auto name. The move is a fully calendar-driven ex-dividend mechanical step-down, not a price-discovery signal.",
+  "top_movers": [
+    {
+      "ticker": "VNA.DE",
+      "move_pct": 3.704,
+      "close": 21.56,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Vonovia cleared a hybrid bond tender/refinancing preserving BBB+ equity credit and confirmed its 2026 dividend policy, signalling successful execution of its balance-sheet repair programme.",
+      "miss_reason": "Outside any active strategy's universe \u2014 VNA.DE is a DAX residential REIT excluded at the sector/geography stage. Catalyst required pre-positioning on credit-market news before the ad-hoc disclosure fired.",
+      "suggestion": "Add an EU ad-hoc disclosure scanner (EQS/DGAP feed) that flags DAX large-cap real-estate names with balance-sheet milestones (debt tender, rating-affirmation press releases) as candidate universe additions for a 1-day event-driven strategy.",
+      "failed": false
+    },
+    {
+      "ticker": "BN.PA",
+      "move_pct": 3.058,
+      "close": 72.12,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Danone announced A$2B acquisition of Australian protein brand Made Group (Jun 22) plus Saputo JV buyout; BNP Paribas upgraded to Outperform \u20ac83 PT, driving a week-long re-rating into month-end.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Danone is a ~\u20ac40B large-cap EU consumer staples name unlikely to pass mid/small-cap momentum screeners. Primary M&A catalyst landed Jun 22; a news-reactive entry would have required multi-day hold, outside typical intraday/overnight strategy scope.",
+      "suggestion": "Add a post-M&A drift screen: flag EU large-caps with confirmed strategic acquisitions \u2265$1B and sustained price drift >+1.5% over 3 sessions post-announcement as a separate catalyst-continuation signal with a 5-day holding window.",
+      "failed": false
+    },
+    {
+      "ticker": "EDV.L",
+      "move_pct": 2.912,
+      "close": 38.52,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Ongoing Barrick Mining $30B all-share merger speculation plus gold price strength (~$4,000/oz on geopolitical risk) lifted this West Africa gold producer.",
+      "miss_reason": "Outside any active strategy's universe entirely. EDV.L is a mid-cap London-listed gold miner (~\u00a35B market cap) whose commodity-beta profile likely sits outside the sector scope and/or minimum liquidity thresholds of all current strategies.",
+      "suggestion": "Add a gold-miners sleeve (LSE-listed, mkt-cap \u2265 \u00a32B, 30-day ADV \u2265 \u00a35M) to the commodity universe with an M&A-flag trigger on RNS deal-rumour tags, so merger-driven moves in names like EDV.L are captured at the next analogous event.",
+      "failed": false
+    },
+    {
+      "ticker": "CCH.L",
+      "move_pct": 2.731,
+      "close": 48.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "52-week high extension; no June 29 catalyst found \u2014 continuation momentum from strong Q1 2026 (organic volume +9.6%) and bullish analyst consensus (Berenberg PT 5,007p, UBS PT 4,900p).",
+      "miss_reason": "Outside any active strategy's universe \u2014 CCH.L is a \u00a317B+ FTSE 100 defensive consumer staples name, typically excluded from universes targeting higher-beta mid-caps. No intraday news trigger existed to activate a news-reactive strategy either.",
+      "suggestion": "Add a FTSE 100 '52-week-high breakout' screen to the momentum universe: names printing new highs on \u22651.2\u00d7 avg volume within 10 sessions of a positive earnings revision; cap at 0.5\u00d7 normal size given lower beta.",
+      "failed": false
+    },
+    {
+      "ticker": "SGE.L",
+      "move_pct": 2.688,
+      "close": 8.176,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific RNS on 29 Jun; likely defensive rotation into recurring-revenue enterprise software amid EU tech sell-off, underpinned by the ongoing \u00a3300m share buyback programme (launched March 2026).",
+      "miss_reason": "Outside any active strategy's universe. SGE.L (FTSE 100, ~\u00a38bn SaaS) generates no gap or volume spike; its subscription-driven drift fails momentum/mean-reversion signal filters, and no existing universe tier covers defensive-growth mega-caps.",
+      "suggestion": "Add a 'defensive-tech' universe bucket for FTSE 100 SaaS names with volume-surge threshold \u22651.2\u00d7 20-day avg and a buyback-active flag; this captures SGE-style compounder moves without lowering the mid-cap momentum bar.",
+      "failed": false
+    },
+    {
+      "ticker": "BRBY.L",
+      "move_pct": 2.355,
+      "close": 11.085,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific RNS on 29 Jun; move appears sector-driven \u2014 US/Iran ceasefire removed weekend risk-off premium and lifted European luxury names broadly, riding Burberry's analyst-upgrade recovery narrative from May 2026.",
+      "miss_reason": "Outside any active strategy's universe. BRBY.L is a FTSE 100 large-cap luxury goods name (~\u00a32.4B mkt cap); the +2.35% was a macro/sector rotation triggered by a geopolitical weekend event \u2014 no close-of-prior-session technical or volume signal would have flagged it pre-open.",
+      "suggestion": "Add a geopolitical risk-reversal gate: when a major risk event (conflict ceasefire, sanctions lift) is detected pre-open via news feed, release Consumer Discretionary FTSE 100 names trading within 5% of 20-day high into a short-duration momentum sleeve capped at 0.5% NAV each.",
+      "failed": false
+    },
+    {
+      "ticker": "PAH3.DE",
+      "move_pct": -6.202,
+      "close": 27.83,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "PAH3 went ex-dividend EUR 1.51 (~5.1% of prior close ~29.76) on 26 Jun; residual ~1% decline driven by compounding passive selling from confirmed DAX\u2192MDAX index demotion.",
+      "miss_reason": "Outside any active strategy's universe. PAH3 is a pure holding company (controls 53.3% VW voting stake; GICS 40203010) classified as Financials/Holdings, not an operating auto name. The move is a fully calendar-driven ex-dividend mechanical step-down, not a price-discovery signal.",
+      "suggestion": "No actionable change \u2014 ex-dividend drops on holding-company vehicles are non-tradeable artefacts; adding PAH3 would require a Financials/Holdings universe extension plus an ex-date suppression gate (\u00b12 sessions around ex-date), outside current strategy scope.",
+      "failed": false
+    },
+    {
+      "ticker": "ENR.DE",
+      "move_pct": -5.836,
+      "close": 153.92,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Global tech/AI sentiment selloff (Nvidia-led AI-bubble fears) dragged ENR.DE -5.84% on 2026-06-29 despite no negative company news; stock's 100%+ 2025 AI/grid re-rating made it highly correlated to tech risk-off.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ENR.DE is a DAX large-cap (~\u20ac140B) re-rated as AI/grid infrastructure proxy, invisible to typical energy-sector filters. The move was intraday tech-beta contagion; capturing it requires short capability not currently active.",
+      "suggestion": "Add DAX AI-proxy names (ENR.DE) to a tech-beta watchlist: trigger mean-reversion short when YTD-return >80% AND DAX tech-sector index drops >2% in first 30min of session; gate rule on short-capability flag to avoid silent no-ops.",
+      "failed": false
+    },
+    {
+      "ticker": "ZAL.DE",
+      "move_pct": -5.499,
+      "close": 24.92,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "BaFin opened a formal enforcement review into Zalando's 2025 accounts on 26 Jun, alleging related-party disclosure breaches tied to the About You acquisition; selloff extended into 29 Jun.",
+      "miss_reason": "Outside any active strategy's universe. ZAL.DE is a large-cap Xetra e-commerce name not covered by bot filters. The BaFin catalyst landed Fri 26 Jun (~9% intraday); 29 Jun continued the bleed \u2014 a regulatory news move requiring pre-weekend positioning to capture.",
+      "suggestion": "Add a regulatory-event scanner (BaFin/FCA enforcement filings) to flag in-universe names for next-session short entry, gated on prior-session close-down \u22654% and ADV \u2265\u20ac50M; ZAL.DE itself remains out-of-universe.",
+      "failed": false
+    },
+    {
+      "ticker": "CRDA.L",
+      "move_pct": -4.882,
+      "close": 30.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific announcement found; shares fell ~5% tracking broad European specialty-chemicals sector weakness (STOXX Chemicals under pressure from energy cost/demand headwinds), amplified by already-negative sentiment after Q1 2026 sales missed estimates (\u00a3431M vs \u00a3446M exp",
+      "miss_reason": "Outside any active strategy's universe. CRDA.L is a FTSE 100 large-cap (~\u00a34B mkt cap) specialty chemicals name whose moves are driven by sector rotation and macro factors rather than momentum or news-reactive signals; without a company-specific pre-market catalyst, no technical entry signal would have fired today.",
+      "suggestion": "Add a sector-sympathy screener: when the STOXX Europe 600 Chemicals index (SX4P) drops \u22652% in the first 30 min, auto-flag FTSE 350 Chemicals constituents with a 5-day RSI >60 as short candidates \u2014 this would surface CRDA on sector-flush days without permanently expanding the universe.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-29T15:06:46.715486+00:00"
+}
