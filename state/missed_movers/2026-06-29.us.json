@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-29",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 MRNA +13%, FDS +11%, NOW +10%, WDAY +9%, DDOG +9%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (ON -24%, WDC -13%, STX -12%, SNDK -10%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: ON (-23.66%) \u2014 ON Semiconductor announced a ~$7B all-stock acquisition of Synaptics on June 25 (physical-AI pivot); investors punished heavy share dilution and execution risk, sending the stock down ~24% over June 26\u201329. Why we passed: Outside any active strategy's universe. Even if added, profiting required a short on the acquirer immediately post-announcement \u2014 a pre-market catalyst gap that no momentum or mean-reversion signal using prior-session data can reliably front-run.",
+  "top_movers": [
+    {
+      "ticker": "MRNA",
+      "move_pct": 12.586,
+      "close": 67.27,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "9-0 FDA advisory panel vote backing Moderna's mRNA flu vaccine mFLUSIVA (mRNA-1010) ahead of Aug 5 full approval decision, amplified by Science Day pipeline reframe across oncology, autoimmune, and AI-driven mRNA programs.",
+      "miss_reason": "Outside any active strategy's universe. MRNA is a large-cap biotech with binary FDA event risk and was already up 40%+ in June (+125% YTD) before this session; a name this extended on a pre-flagged calendar catalyst is typically excluded by both RSI ceilings and event-gate rules that freeze positioning around known adc",
+      "suggestion": "Add a post-adcom momentum gate: names with a unanimous (\u22658-0) FDA advisory vote within the prior 5 sessions and a session-open gap \u2264+8% become eligible for a single-session momentum entry, with position sizing capped at 0.5\u00d7 normal to contain binary approval risk.",
+      "failed": false
+    },
+    {
+      "ticker": "FDS",
+      "move_pct": 10.965,
+      "close": 231.74,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FactSet announced a strategic investment in and partnership with TIFIN.AI on June 29, embedding agentic AI advisor tools (Meeting Prep Agent, Book Intelligence Agent) into FactSet Workstation; pre-earnings drift into the July 1 Q3 call and 15.86% short float amplified the move.",
+      "miss_reason": "Outside any active strategy's universe \u2014 FDS is a ~$8B mid-cap financial data/analytics provider. The move required same-day press-release monitoring plus pre-earnings positioning; no momentum or mean-reversion signal would have flagged it pre-open, and short-squeeze dynamics further compressed the entry window.",
+      "suggestion": "Expand a news-gate strategy's watchlist to include financial-data peers (FDS, MSCI, MORN); trigger universe inclusion when a partnership/AI press release drops \u22643 trading days before a scheduled earnings call on a name with short interest \u226510% of float.",
+      "failed": false
+    },
+    {
+      "ticker": "NOW",
+      "move_pct": 9.853,
+      "close": 98.34,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "ServiceNow and Accenture jointly launched AI-powered agentic risk-platform migration services, reigniting bullish sentiment around NOW's enterprise AI monetization ahead of July 29 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 NOW is a large-cap SaaS name (~$90B+ mkt cap) above the bot's likely cap/sector filters. The catalyst was an intraday partnership announcement requiring news-reactive logic the current strategies don't have.",
+      "suggestion": "Add a news-reactive catalyst scanner for large-cap SaaS/cloud names: if a major partnership announcement drives intraday surge \u22657% with volume \u22652\u00d7 20-day avg, permit a momentum entry within 60 min of the headline timestamp.",
+      "failed": false
+    },
+    {
+      "ticker": "WDAY",
+      "move_pct": 9.176,
+      "close": 124.21,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Monness Crespi Hardt upgraded WDAY to Buy (from Neutral) with $150 PT, citing depressed valuation and strong AI-driven cash flow; broad enterprise-SaaS sector tailwind amplified the +9% move.",
+      "miss_reason": "Outside any active strategy's universe \u2014 WDAY is a large-cap enterprise SaaS name (~$21B mkt cap) unlikely to appear in smaller-cap or sector-specific momentum screens. Analyst-upgrade catalysts also print pre-market, before intraday signal generation.",
+      "suggestion": "Add a sell-side upgrade event screen (\u22651 Buy/Outperform initiation or upgrade intraday with price-target \u2265+10% above prior close) as a universe expansion trigger, with a pre-market gap floor of \u2265+3% to filter noise.",
+      "failed": false
+    },
+    {
+      "ticker": "DDOG",
+      "move_pct": 8.523,
+      "close": 239.77,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Cluster of bulge-bracket analyst upgrades (Truist Buy/$300, Arete $340, Citi $270, BMO/Needham $260) citing accelerating agentic-AI observability demand; volume ran ~2\u00d7 daily average confirming institutional accumulation.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DDOG is a large-cap NASDAQ cloud-software name (~$50B+ market cap), above typical small/mid-cap universe bounds. The move was an analyst re-rating cluster; capturing the gap required pre-market news parsing before price gapped up at the open.",
+      "suggestion": "Add a large-cap news-reactive layer that screens for \u22653 analyst PT raises of \u226515% within a rolling 5-day window, entering at open only if the intraday gap is <+4% to avoid chasing; otherwise queue for a pullback limit.",
+      "failed": false
+    },
+    {
+      "ticker": "VEEV",
+      "move_pct": 8.401,
+      "close": 171.36,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q1 FY2027 earnings beat ($882.9M revenue, +16% YoY vs $857.7M est.; EPS $2.24 vs $2.02 est.), FY27 guidance raised to ~$3.64B, and June 23 Falcon MLR AI launch (regulatory content automation) with Vault CRM wins at Teva and Merck KGaA.",
+      "miss_reason": "Outside any active strategy's universe \u2014 large-cap life sciences SaaS (~$27B market cap). The primary earnings catalyst printed June 3, 26 days before today's move fully materialised; the stock's slow re-rating from compounding AI/CRM news resists reactive intraday signals and requires pre-event or post-earnings-drift ",
+      "suggestion": "Add a post-earnings-drift screen: flag names with \u22655% EPS beat plus a guidance raise that have not recaptured their initial gap-up close within 20 sessions, and enter on a breakout above that level with a one-ATR stop.",
+      "failed": false
+    },
+    {
+      "ticker": "ON",
+      "move_pct": -23.657,
+      "close": 90.65,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "ON Semiconductor announced a ~$7B all-stock acquisition of Synaptics on June 25 (physical-AI pivot); investors punished heavy share dilution and execution risk, sending the stock down ~24% over June 26\u201329.",
+      "miss_reason": "Outside any active strategy's universe. Even if added, profiting required a short on the acquirer immediately post-announcement \u2014 a pre-market catalyst gap that no momentum or mean-reversion signal using prior-session data can reliably front-run.",
+      "suggestion": "Add an M&A-acquirer watchlist: when a universe-adjacent large-cap gaps down >15% on an all-stock deal announcement, flag it for a mean-reversion long entry (not short) on day 2\u20133 if volume normalises \u2014 actionable without requiring short capability.",
+      "failed": false
+    },
+    {
+      "ticker": "WDC",
+      "move_pct": -13.169,
+      "close": 586.45,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Retirement of $858M convertible notes for ~21.3M new WDC shares caused material dilution, compounding the June 22 SanDisk exchange overhang and sector fears from SK Hynix's AI-memory production pivot.",
+      "miss_reason": "Outside any active strategy's universe. WDC's ~1,000% YTD rally stretched forward P/E to ~43\u00d7; corporate-action-driven gaps (8-K share issuance \u22655% float) are structurally invisible to momentum and mean-reversion technical filters that have no earnings-gate or dilution flag.",
+      "suggestion": "Add an 8-K corporate-action monitor: names filing share issuance \u22655% of float auto-enter a mean-reversion watchlist for that session, letting the strategy fade dilution-driven gap-downs intraday without requiring pre-market positioning.",
+      "failed": false
+    },
+    {
+      "ticker": "STX",
+      "move_pct": -12.236,
+      "close": 899.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Broad memory/storage sector rout: Fox Advisors downgrade (Jun 22) + SK Hynix HBM slowdown report rattled AI-hardware complex; hawkish Fed repricing under Chair Warsh piled on, erasing ~12% from STX's 290% YTD run.",
+      "miss_reason": "Outside any active strategy's universe. At ~$900/share with a trailing P/E of ~98x, STX sits in high-multiple large-cap tech \u2014 above typical price/valuation caps. The drop was macro/sector-driven and multi-day, not a clean momentum or gap signal catchable intraday.",
+      "suggestion": "Add a correlated-sector selloff gate: if \u22653 AI-storage proxies (e.g. MU, WDC, NVDA) each drop \u22653% on the same session, flag high-multiple storage names for a mean-reversion short watchlist even outside the normal universe cap.",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": -10.462,
+      "close": 2090.71,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "June 2026 Russell US Index Reconstitution (effective June 29) reclassified SNDK from Value to fully Growth, forcing large passive value-fund outflows that overwhelmed growth-fund inflows on a stock already up 781% YTD.",
+      "miss_reason": "Outside any active strategy's universe; SNDK's ~$2,090 share price and 781% YTD run likely exceeded the bot's price or volatility caps. The -10% move was a passive-fund structural rebalancing event \u2014 no actionable pre-close momentum or mean-reversion signal existed.",
+      "suggestion": "Add a Russell-reconstitution event gate: on the reconstitution effective date, flag Value\u2192Growth reclassifications down \u22658% at open as mean-reversion fade candidates, with a hard 1-session hold limit and a universe price cap override for that day only.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-29T19:33:14.875230+00:00"
+}
