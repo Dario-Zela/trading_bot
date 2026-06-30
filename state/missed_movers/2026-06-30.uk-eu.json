@@ -1,0 +1,122 @@
+{
+  "date": "2026-06-30",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 RWE.DE +3%, PCT.L +3%, ENT.L +2%, BGEO.L +2%, SAP.DE +2%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (DTE.DE -7%, BAB.L -5%, TEP.PA -5%, SGO.PA -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: DTE.DE (-7.01%) \u2014 \u20ac550M share buyback second tranche expired on 30 Jun, removing the stock's key price-floor buyer; compounded by persistent T-Mobile US merger uncertainty after SpaceX acquisition rumours (25 Jun) suppressed fresh demand. Why we passed: Outside any active strategy's universe \u2014 DTE.DE is a DAX-40 mega-cap telecom (~\u20ac135B mkt cap). The decline was structural: a pre-announced buyback expiry plus a weeks-long merger overhang, neither of which generates the sharp intraday signal momentum or news-reactive filters look for.",
+  "top_movers": [
+    {
+      "ticker": "RWE.DE",
+      "move_pct": 2.738,
+      "close": 55.54,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Re-rating from June 22 Amprion majority-stake deal (\u20ac3.6B, 55% ownership) continued into Q2 close, amplified by Barclays/UBS/JPM Buy reaffirmations and end-of-quarter utilities sector rotation.",
+      "miss_reason": "Outside any active strategy's universe. RWE is a \u20ac43B DAX-40 regulated utility \u2014 too large and low-beta for momentum screens; the Amprion catalyst was announced 8 days prior, leaving no clean same-day signal for a news-reactive strategy to act on.",
+      "suggestion": "Add a post-deal re-rating window: when a large-cap EU utility announces transformative M&A (>\u20ac1B deal size), enrol it in the momentum universe for 15 trading days with a relaxed volume floor (\u22650.8\u00d7 avg vs. standard \u22651.5\u00d7) to capture the multi-day re-rating tail.",
+      "failed": false
+    },
+    {
+      "ticker": "PCT.L",
+      "move_pct": 2.508,
+      "close": 7.0269,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Global tech rally on 29 Jun (NASDAQ +2.07%, Alphabet +5%, semis +3%+) lifted Polar Capital Technology Trust's underlying portfolio NAV; June 30 daily NAV RNS confirmed the gain and share price followed.",
+      "miss_reason": "Outside any active strategy's universe. PCT.L is a UK-listed closed-end investment trust (FTSE 250, ~\u00a37.8B AUM) that tracks global technology equities \u2014 it acts as a sector fund derivative rather than a single-name operating company, and is categorically excluded from single-stock selection strategies.",
+      "suggestion": "No actionable change \u2014 PCT.L mirrors the global tech NAV and adding it would duplicate exposure already captured by individual tech equity positions. Systematic inclusion would require a separate NAV-discount-compression strategy outside current risk parameters.",
+      "failed": false
+    },
+    {
+      "ticker": "ENT.L",
+      "move_pct": 2.354,
+      "close": 5.914,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Entain announced 20% divestment of Entain CEE to JV partner EMMA Capital for \u20ac425m (\u00a3366m) on 2026-06-25, beginning phased full exit; net proceeds earmarked for debt reduction \u2014 stock drifted +2.35% further through week-end.",
+      "miss_reason": "Outside any active strategy's universe. ENT.L is a FTSE 100 regulated-gaming name likely excluded by sector filter. The actionable catalyst (RNS filing) landed 2026-06-25 pre-close; today's move is lagged M&A drift \u2014 pre-announcement positioning was the only way to capture it cleanly.",
+      "suggestion": "Add an RNS catalyst watchlist: when a FTSE 100/250 name files a divestment or debt-reduction deal \u2265\u00a3200m, open a 3-session momentum entry window even for sector-gated names, closing if price reverts below the announcement-day close.",
+      "failed": false
+    },
+    {
+      "ticker": "BGEO.L",
+      "move_pct": 2.208,
+      "close": 111.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-Investor Day institutional follow-through: Lion Finance Group (formerly Bank of Georgia) hosted a ~100-investor Analyst Day in Tbilisi on 26 Jun (JPMorgan, Morgan Stanley, M&G attending), generating buy-side order flow into week-end.",
+      "miss_reason": "Outside any active strategy's universe. BGEO.L is a FTSE 100-listed EM financial (Georgian + Armenian banking), likely screened out by UK/EU domestic-bank sector filters or by EM-revenue exclusion rules. The move was also event-driven (Investor Day sentiment) \u2014 a pre-market catalyst that technical momentum signals woul",
+      "suggestion": "When a FTSE 100 name files an LSE RNS tagged 'Investor Day' or 'Capital Markets Day', auto-promote it to the UK watchlist for the following 2 sessions with a \u22651.2\u00d7 prior-30d average volume confirmation gate to capture the institutional follow-through window.",
+      "failed": false
+    },
+    {
+      "ticker": "SAP.DE",
+      "move_pct": 2.176,
+      "close": 138.08,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news; +2.18% reflects Q2 quarter-end window dressing and DAX 15%-cap rebalancing flows, with SAP bouncing from a -3% June 22 sell-off as institutional funds dressed portfolios into H1 close.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SAP is a \u20ac166B DAX 40 enterprise-software mega-cap, likely excluded by cap-tier or sector screen. Window dressing also pre-positions pre-open, making it inaccessible to reactive intraday signals.",
+      "suggestion": "Add a DAX 40 end-of-quarter sleeve: on the final 2 sessions of each quarter, buy DAX names within 5% of 52-week high, sized \u22640.5% NAV each, exit next open \u2014 capturing window-dressing flows without permanent universe expansion.",
+      "failed": false
+    },
+    {
+      "ticker": "MRO.L",
+      "move_pct": 1.926,
+      "close": 4.709,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "UK-wide defence sector rally after PM Starmer announced a \u00a315bn military spending plan; Melrose advanced with peers Rolls-Royce (+2.6%), BAE Systems (+1.8%), and Babcock (+3.2%) on the same session.",
+      "miss_reason": "Outside any active strategy's universe. MRO.L is a FTSE 100 large-cap aerospace-components supplier (~\u00a35.8B market cap); its ~2% gain was pure macro sector rotation on a government-spending headline rather than a company-specific signal that single-stock momentum or news-reactive screens would have captured.",
+      "suggestion": "Add a UK-defence sector-basket trigger: when the FTSE 350 Aerospace & Defence sub-index moves \u22651.5% intraday, enter constituents with sub-index beta >0.9 (including MRO.L) at open, sizing by ATR; exit same-day close to avoid overnight event risk.",
+      "failed": false
+    },
+    {
+      "ticker": "DTE.DE",
+      "move_pct": -7.01,
+      "close": 24.41,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "\u20ac550M share buyback second tranche expired on 30 Jun, removing the stock's key price-floor buyer; compounded by persistent T-Mobile US merger uncertainty after SpaceX acquisition rumours (25 Jun) suppressed fresh demand.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DTE.DE is a DAX-40 mega-cap telecom (~\u20ac135B mkt cap). The decline was structural: a pre-announced buyback expiry plus a weeks-long merger overhang, neither of which generates the sharp intraday signal momentum or news-reactive filters look for.",
+      "suggestion": "Add a corporate-action calendar that flags names where a published buyback programme expires within 5 trading days; route flagged names to a short-bias screen so the bot can express support-removal risk if the name enters a compatible universe.",
+      "failed": false
+    },
+    {
+      "ticker": "BAB.L",
+      "move_pct": -5.149,
+      "close": 9.21,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "UK MoD confirmed cancellation of the Type 83 destroyer programme on 29 Jun; Babcock was a leading build-contract bidder, removing a multi-billion-pound pipeline opportunity and compounding the \u00a3140M Type 31 frigate charge disclosed 22 Jun.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BAB.L is a FTSE 100 large-cap defence contractor (~\u00a35B mkt cap). The move was driven by a discrete government policy cancellation announced pre-open; no technical or momentum signal could have provided advance positioning.",
+      "suggestion": "Expand the news-reactive strategy's universe to include FTSE 100 defence names (BAB.L, BA.L) with a 60-min post-RNS entry window triggered on MoD contract cancellation/award keywords; gate with a \u00a31B+ mkt cap filter to limit universe bloat.",
+      "failed": false
+    },
+    {
+      "ticker": "TEP.PA",
+      "move_pct": -4.521,
+      "close": 49.63,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Concentrix (CNXC) slashed FY2026 revenue guidance to $9.93\u201310.03B and EPS to $10.83\u201311.18 on June 30, citing client spending cuts and AI displacement; TEP.PA fell in sector sympathy as RBC called CXO outsourcing 'uninvestable'.",
+      "miss_reason": "Outside any active strategy's universe \u2014 TEP.PA is a large-cap French BPO services name on Euronext Paris not covered by any current strategy. The move was peer-contagion from a US competitor's earnings miss, not predictable from TEP.PA's own pre-market price or volume signals.",
+      "suggestion": "Add a sector-contagion gate: when a US CXO/BPO peer (CNXC, TDCX) gaps down >10% on earnings, auto-flag correlated Euronext names sharing the same GICS sub-industry (2520/5020) for short review within 30 min of EU cash open.",
+      "failed": false
+    },
+    {
+      "ticker": "SGO.PA",
+      "move_pct": -3.251,
+      "close": 77.98,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    }
+  ],
+  "generated_at": "2026-06-30T15:07:32.383447+00:00"
+}
