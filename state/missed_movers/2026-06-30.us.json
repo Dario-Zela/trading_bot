@@ -1,0 +1,126 @@
+{
+  "date": "2026-06-30",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 2 of today's 10 biggest US movers.\n\n\u2022 5 upside misses \u2014 GLW +16%, KLAC +12%, WDC +11%, AXON +10%, CHTR +9%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 3 downside moves (CPRT -8%, SMCI -6%, ULTA -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: GLW (+16.25%) \u2014 FTSE Russell growth-index reconstitution forced passive buying, layered on a week-long AI-datacenter optical fiber re-rating (Amazon fiber supply deal, Nvidia plant expansion, UBS/Truist target hikes). Why we passed: Outside any active strategy's universe \u2014 GLW is a large-cap industrial/glass-tech name, not in tech/momentum scan lists. The move was a multi-day grind (+14% prior day, +9.75% days earlier) from passive index flows and an AI-capex theme, not a single-session news spike a scanner would flag.",
+  "top_movers": [
+    {
+      "ticker": "GLW",
+      "move_pct": 16.254,
+      "close": 256.98,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FTSE Russell growth-index reconstitution forced passive buying, layered on a week-long AI-datacenter optical fiber re-rating (Amazon fiber supply deal, Nvidia plant expansion, UBS/Truist target hikes).",
+      "miss_reason": "Outside any active strategy's universe \u2014 GLW is a large-cap industrial/glass-tech name, not in tech/momentum scan lists. The move was a multi-day grind (+14% prior day, +9.75% days earlier) from passive index flows and an AI-capex theme, not a single-session news spike a scanner would flag.",
+      "suggestion": "Add a semiannual watchlist trigger for FTSE Russell reconstitution effective-dates (late June/Dec) that temporarily admits affected large-caps showing >10% trailing 5-day momentum into the universe.",
+      "failed": false
+    },
+    {
+      "ticker": "KLAC",
+      "move_pct": 11.528,
+      "close": 277.3037,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Short squeeze (short interest spiked ~1,060% to ~36.6% of float) plus analyst upgrades (Cantor $325 PT, BofA $317 PT) atop bullish AI-driven WFE spending outlook, post 10-for-1 split.",
+      "miss_reason": "Outside any active strategy's universe; KLAC is a large-cap semicap-equipment (WFE) name, likely excluded by sector scope or not yet re-admitted after its June 12 10-for-1 split changed its price/share-count profile.",
+      "suggestion": "Add semicap/WFE equipment names to the covered sector bucket, and add a corporate-action watcher that re-admits recently split tickers within 1 session instead of waiting on the periodic universe refresh.",
+      "failed": false
+    },
+    {
+      "ticker": "AMAT",
+      "move_pct": 11.328,
+      "close": 697.85,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive"
+      ],
+      "catalyst": "Cluster of sell-side price-target hikes (Cantor $850, KeyBanc $750, B. Riley $790) extended the AI-memory chip equipment rally sparked by AMAT's June 25 DRAM/packaging tool launch.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AMAT is a mega-cap semicap-equipment name, and news-reactive (the strategy that would normally flag an analyst-target-driven momentum spike) doesn't carry it on its tradable list.",
+      "suggestion": "Add AMAT and peer AI-capex semicap names (LRCX, ASML, KLAC) to news-reactive's universe, or auto-admit any liquid large-cap on \u22653 same-day sell-side price-target hikes.",
+      "failed": false
+    },
+    {
+      "ticker": "WDC",
+      "move_pct": 11.051,
+      "close": 651.26,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued AI-storage supply-shortage rally: Melius Research initiated Buy (6/29), Cramer touted multi-year HDD/NAND demand on air (6/30), name is +250% YTD on sold-out capacity and raised FY26 guidance.",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 WDC re-rated from a legacy storage-hardware/industrial name into a mega-cap AI-infrastructure play over months; static universe/sector lists built before the re-rating never added it back in.",
+      "suggestion": "Add a quarterly universe-refresh rule that auto-includes names whose 90-day return or market-cap percentile crosses a threshold (e.g., >100% trailing-quarter return) even if their legacy sector tag (storage hardware) wasn't previously in scope.",
+      "failed": false
+    },
+    {
+      "ticker": "AXON",
+      "move_pct": 9.847,
+      "close": 510.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Disclosure that Trump bought up to $5M of AXON stock ahead of an ICE procurement notice for a $220M Taser contract, plus a WSJ feature on Axon's AI-policing push, sent shares up ~9-10%.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AXON is an industrials/public-safety-tech name (~$30-35B cap) that likely falls outside the sector buckets (e.g. mega-cap tech/momentum) the bot's strategies actually scan, so it was never evaluated.",
+      "suggestion": "Expand the momentum strategy's universe to include industrials/public-safety equipment names above a $15B market-cap floor, or add a headline scanner that flags govt-contract/insider-buy disclosures regardless of sector tag.",
+      "failed": false
+    },
+    {
+      "ticker": "CHTR",
+      "move_pct": 9.376,
+      "close": 146.17,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Bloomberg reported Charter is in exclusive talks with SpaceX to route Starlink consumer mobile traffic over its broadband network; stock is in follow-through after a 24% pre-market spike on 6/29.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CHTR was dropped from the Nasdaq-100 on 2026-06-19, so index-membership-gated large-cap universes excluded it just before this M&A/partnership rumor broke.",
+      "suggestion": "Decouple universe inclusion from live index membership; keep recently-removed Nasdaq-100 names (e.g. trailing 30-day) eligible so partnership/M&A-rumor gap-ups like this aren't structurally excluded.",
+      "failed": false
+    },
+    {
+      "ticker": "HON",
+      "move_pct": -50.348,
+      "close": 230.595,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive"
+      ],
+      "catalyst": "Honeywell completed Aerospace spin-off (HONA) + 1-for-2 reverse split on 6/29; the -50.35% print is a mechanical price-adjustment artifact, not an economic loss.",
+      "miss_reason": "Outside any active strategy's universe \u2014 corporate-action tickers (split/spin-off ex-dates) are typically excluded pending price-adjustment to avoid false signals; only news-reactive saw the headline and traded it.",
+      "suggestion": "Add a corporate-actions calendar check that suppresses/re-includes tickers around split or spin-off ex-dates only after confirming the feed's prior-close is adjustment-corrected, rather than blanket-excluding them.",
+      "failed": false
+    },
+    {
+      "ticker": "CPRT",
+      "move_pct": -8.02,
+      "close": 28.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Surprise CEO transition: Jeff Liaw to step down effective 7/31; Exec Chairman Jay Adair returns as CEO, spooking investors already worried about declining insurance auction volumes.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CPRT is a large-cap industrial/auto-salvage name (auctions), a sector category the bot's tradable universe doesn't cover, so no filter ever saw the move.",
+      "suggestion": "Add a sector-agnostic leadership-change/8-K event scanner that flags universe-eligible-by-cap names outside current sector coverage so industrials like CPRT can be reviewed for universe inclusion.",
+      "failed": false
+    },
+    {
+      "ticker": "SMCI",
+      "move_pct": -6.219,
+      "close": 28.725,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Taiwan authorities raided SMCI offices and affiliates June 29-30 in an expanding probe into Nvidia chip smuggling into China via its servers.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SMCI likely excluded as a volatile, scandal-prone AI-hardware name; a sudden regulatory raid is a headline-risk event no momentum/mean-reversion model screens for intraday.",
+      "suggestion": "Add a news/regulatory-headline gate that flags universe-eligible and adjacent AI-hardware names on raid/investigation keywords, routing them to a no-trade list rather than relying on price-only filters to surface them.",
+      "failed": false
+    },
+    {
+      "ticker": "ULTA",
+      "move_pct": -6.005,
+      "close": 459.12,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst \u2014 likely technical / sector move (broad consumer-discretionary/specialty-retail weakness this week, no ULTA-specific news today)",
+      "miss_reason": "Outside any active strategy's universe \u2014 ULTA is a mega-cap (~$19-20B) specialty beauty retailer, a sector/cap bucket the bot's tradable universe doesn't include, so no filter ever evaluated the move.",
+      "suggestion": "Add a sector-rotation watchlist that flags non-universe large caps when their sector ETF (e.g. XLY) moves beyond a threshold, surfacing candidates like ULTA for periodic universe-expansion review.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-06-30T19:32:57.523117+00:00"
+}
