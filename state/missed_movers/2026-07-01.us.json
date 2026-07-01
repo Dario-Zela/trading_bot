@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-01",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 SNDK +11%, AXON +10%, VRT +9%, KLAC +8%, APD +8%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (DLR -6%, HRL -6%, ZBH -6%, MOS -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: SNDK (+10.89%) \u2014 Bernstein hiked its price target to $3,000 from $1,700 on AI-driven NAND demand and favorable long-term supply agreements, extending SNDK's 830%+ YTD rally. Why we passed: Outside any active strategy's universe \u2014 SNDK re-rated from ~$36 to $2,274 within a year, likely outrunning periodic (e.g. quarterly) universe-refresh cycles that would add a memory-chip name at this new mega-cap tier.",
+  "top_movers": [
+    {
+      "ticker": "SNDK",
+      "move_pct": 10.893,
+      "close": 2273.73,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Bernstein hiked its price target to $3,000 from $1,700 on AI-driven NAND demand and favorable long-term supply agreements, extending SNDK's 830%+ YTD rally.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SNDK re-rated from ~$36 to $2,274 within a year, likely outrunning periodic (e.g. quarterly) universe-refresh cycles that would add a memory-chip name at this new mega-cap tier.",
+      "suggestion": "Add a monthly (or >50% MTD move-triggered) universe re-scan for cap/sector membership so parabolic re-ratings like SNDK get added before extending further, instead of waiting on the standard rebalance cadence.",
+      "failed": false
+    },
+    {
+      "ticker": "AXON",
+      "move_pct": 9.794,
+      "close": 560.61,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "ICE ~220M TASER solicitation news (linked to a Trump Feb 2026 stock-purchase disclosure) plus a WSJ AI-policing feature drove a multi-day rally atop strong Q1 (34% rev growth) results.",
+      "miss_reason": "Outside every US strategy universe today: T212 lists it (AAXN_US_EQ to AXON), but the OHLCV data-coverage filter drops tickers with no cached bar in the last 14 days, likely a stale/missing cache entry, not a technical/momentum filter.",
+      "suggestion": "Backfill/refresh the OHLCV cache for T212-eligible US names before the 14-day data-coverage filter (universe.py _filter_against_data_cache) runs, so stale-cache gaps do not silently exclude tradable large-caps like AXON.",
+      "failed": false
+    },
+    {
+      "ticker": "VRT",
+      "move_pct": 9.073,
+      "close": 334.82,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Extension of a sector-wide AI data-center infrastructure rally sparked by South Korea's ~$518B chip/AI investment plan (announced Jun 29); no VRT-specific news today, ahead of Q2 earnings on Jul 29.",
+      "miss_reason": "Outside any active strategy's universe \u2014 VRT is a large-cap (~$100B) industrials/capital-goods name (power & thermal management for data centers), not classified as tech, so momentum universes built around tech/semis tickers skip it. The move is also a multi-day grind (+7.52% Jun 30, +9.07% Jul 1) rather than a single ",
+      "suggestion": "Extend the momentum universe's sector tags to include 'AI-capex-adjacent industrials' (electrical equipment, thermal management, power infra suppliers to hyperscalers) so names like VRT are included alongside pure-play semis/software AI names.",
+      "failed": false
+    },
+    {
+      "ticker": "KLAC",
+      "move_pct": 8.377,
+      "close": 301.71,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Samsung's 1.4nm process disclosure sparked a semiconductor capital-equipment rally; KLA (dominant in process control/yield mgmt) hit a 52-wk high on short-covering plus Cantor Fitzgerald's PT hike to $325.",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 KLAC sits in semiconductor capital equipment/process-control, a subsector likely absent from the bot's sector coverage list, so no filter ever got a chance to evaluate today's gap.",
+      "suggestion": "Add 'Semiconductor Equipment & Materials' (KLAC, LRCX, AMAT, ASML) to the universe config or add a dynamic-universe rule that pulls in any name with >3x avg volume and >5% gap regardless of static sector list.",
+      "failed": false
+    },
+    {
+      "ticker": "APD",
+      "move_pct": 8.045,
+      "close": 293.18,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Air Products scrapped its $4.5B Louisiana blue-hydrogen/CCS project (up to $2.9B charge) and pivoted to an asset-light Yara NEOM renewable-ammonia distribution deal; market cheered the capital discipline.",
+      "miss_reason": "Outside any active strategy's universe \u2014 APD is a large-cap industrials/materials (specialty gas) name, a sector not covered by growth/momentum-tech-focused universes; also a low-beta, rarely-gapping stock unlikely to surface on volatility/gap scanners.",
+      "suggestion": "Add an event-driven overlay that scans 8-K/press-release feeds for material corporate-action keywords (project cancellation, impairment charge, capital reallocation) across all US large-caps regardless of sector universe membership, flagging same-day gap-ups >5% for a one-off watchlist add.",
+      "failed": false
+    },
+    {
+      "ticker": "AMD",
+      "move_pct": 7.678,
+      "close": 580.91,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide chip rally plus sell-side upgrades \u2014 Wells Fargo raised PT to $615 and Cantor Fitzgerald to $700, both citing accelerating EPYC/MI350-MI450 data-center demand.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AMD is a mega-cap semiconductor that has already tripled YTD; likely excluded by a static/stale universe list or a sector/valuation-extension screen that hasn't been refreshed since its re-rating.",
+      "suggestion": "Refresh universe membership monthly via rolling market-cap/sector rank instead of a static list, and add a mega-cap override so names with sustained >100% 3-month momentum aren't permanently excluded.",
+      "failed": false
+    },
+    {
+      "ticker": "DLR",
+      "move_pct": -5.772,
+      "close": 179.58,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Blackstone priced its $2.28B secondary offering of 12.31M DLR shares at $185 (from the $3.5B Blackstone JV stake deal); shares drifted below that print to close at $179.58 as the market absorbed the block/dilution overhang.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DLR is a large-cap data-center REIT (Real Estate sector), a category the bot's tech/growth-momentum universes exclude; the move was also a supply/overhang-driven secondary pricing, not a news or technical-momentum signal the bot screens for.",
+      "suggestion": "Add a corporate-actions gate that flags large secondary/block offerings (>$1B, priced at a discount to prior close) so REIT/real-estate names can be temporarily admitted to the news-reactive universe around the pricing date.",
+      "failed": false
+    },
+    {
+      "ticker": "HRL",
+      "move_pct": -5.663,
+      "close": 24.82,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-day news catalyst found; move fits Hormel's ongoing margin-pressure narrative (elevated beef/pork/freight costs, trimmed FY26 guidance, recent JPMorgan downgrade) rather than a fresh trigger today.",
+      "miss_reason": "Outside any active strategy's universe \u2014 HRL is a slow-moving, low-beta consumer-staples/packaged-meats name (~$13-14B cap) that momentum and news-reactive bots typically exclude as non-tradable/low-volatility.",
+      "suggestion": "Add a low-beta staples watchlist with a relaxed ATR floor so multi-day margin-compression grinders like HRL enter the universe once realized vol crosses a threshold (e.g. 20d ATR% > 2x sector median), not just single-day gappers.",
+      "failed": false
+    },
+    {
+      "ticker": "ZBH",
+      "move_pct": -5.644,
+      "close": 86.09,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Zimmer Biomet announced a $140M bolt-on acquisition of Pacira's iovera\u00b0 cryoneurolysis system, spooking investors already worried about its $6.9B net debt load from prior M&A (Paragon 28, Monogram).",
+      "miss_reason": "Outside any active strategy's universe \u2014 ZBH is a large-cap medtech name likely excluded by sector/universe scoping rather than a technical filter; also this was an early-session M&A-announcement gap that pre-market news-driven signals would need to catch, not a momentum/mean-reversion setup.",
+      "suggestion": "Add large-cap healthcare/medtech (XLV constituents) to the news-reactive strategy's universe, or add an M&A-announcement gate that flags acquirer-side gaps \u22653% on same-day deal press releases for review.",
+      "failed": false
+    },
+    {
+      "ticker": "MOS",
+      "move_pct": -5.57,
+      "close": 21.19,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Morgan Stanley cut PT to $26 (from $28) amid Hormuz-driven sulfur/ammonia cost spike crushing phosphate margins; MOS at 5.5yr lows on curtailed output.",
+      "miss_reason": "Outside any active strategy's universe \u2014 MOS is a mid-cap commodity/fertilizer cyclical (materials sector), and the bot's universes skew toward large-cap tech/momentum names, not geopolitically-driven ag-chemical input-cost stories.",
+      "suggestion": "Add a materials/fertilizer commodity bucket to the universe with an analyst-rating-change trigger, so sustained PT cuts on supply-chain-cost narratives (e.g. sulfur/ammonia spikes) get flagged even without a tech-style earnings catalyst.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-01T19:33:44.528204+00:00"
+}
