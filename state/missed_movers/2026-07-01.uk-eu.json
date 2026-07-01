@@ -1,0 +1,124 @@
+{
+  "date": "2026-07-01",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 1 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 ASML.AS +7%, BAYN.DE +5%, DTG.DE +4%, BAB.L +3%, ASM.AS +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 3 downside moves (PUB.PA -5%, BRBY.L -3%, CAP.PA -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: ASML.AS (+6.79%) \u2014 Continuation of AI-driven semiconductor rally (Micron blowout results, analyst price-target hikes, easing MATCH Act/export-control tail risk) \u2014 no single discrete same-day headline found. Why we passed: Outside any active strategy's universe \u2014 ASML.AS is a \u20ac665B+ Euronext Amsterdam mega-cap semiconductor-equipment name; likely excluded because the uk-eu universe isn't configured to include AEX-listed megacaps or the semis-equipment sector bucket.",
+  "top_movers": [
+    {
+      "ticker": "ASML.AS",
+      "move_pct": 6.787,
+      "close": 1721.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continuation of AI-driven semiconductor rally (Micron blowout results, analyst price-target hikes, easing MATCH Act/export-control tail risk) \u2014 no single discrete same-day headline found.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ASML.AS is a \u20ac665B+ Euronext Amsterdam mega-cap semiconductor-equipment name; likely excluded because the uk-eu universe isn't configured to include AEX-listed megacaps or the semis-equipment sector bucket.",
+      "suggestion": "Add AEX index constituents (or ASML.AS specifically) to the uk-eu region universe definition so semiconductor-equipment mega-caps are eligible for momentum/mean-reversion screening.",
+      "failed": false
+    },
+    {
+      "ticker": "BAYN.DE",
+      "move_pct": 5.171,
+      "close": 48.41,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Federal judge blocked Roundup objectors' move to federal court, clearing Missouri to finalize Bayer's $7.25B glyphosate settlement, extending the Supreme Court litigation-relief rally.",
+      "miss_reason": "BAYN.DE sits outside every strategy's universe: it's a DAX pharma/agrochem conglomerate whose price action is driven by binary mass-tort legal rulings, not the technical/fundamental signals the uk-eu universe screens for.",
+      "suggestion": "Add a litigation-catalyst watchlist for DAX/CAC large-caps with scheduled court rulings, allowing a reduced-size entry when a favorable ruling is confirmed same-session, instead of blanket-excluding legal-risk names.",
+      "failed": false
+    },
+    {
+      "ticker": "DTG.DE",
+      "move_pct": 3.839,
+      "close": 42.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No same-day news catalyst found; DTG.DE (Daimler Truck) has been trading in a volatile band on ongoing US heavy-truck tariff exposure and analyst target revisions (avg PT ~\u20ac46), but no July 1-specific trigger surfaced.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DTG.DE is a German DAX-listed heavy-industrial/truck-manufacturing large-cap, a sector/category likely excluded from the uk-eu universe's sector allowlist (e.g. financials/consumer/tech-weighted lists that skip auto & capital-goods names).",
+      "suggestion": "Add DAX-40 industrial/auto-sector constituents (or a market-cap > \u20ac10B threshold override) to the uk-eu universe refresh so large European industrials like DTG.DE aren't structurally excluded by sector tag.",
+      "failed": false
+    },
+    {
+      "ticker": "BAB.L",
+      "move_pct": 3.344,
+      "close": 9.518,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "UK government unveiled a ~$20B defense spending increase, lifting the whole FTSE aerospace/defense complex (BAE, Babcock, Chemring) ~5%.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Babcock is a UK defense/industrials large-cap, a sector commonly excluded by ESG/sin-stock screens or simply not covered by the region's tracked sector list, so no filter ever saw it.",
+      "suggestion": "Add a defense/industrials sector bucket to the uk-eu universe (or a policy-news gate that admits FTSE names on sector-wide govt spending headlines) rather than relying solely on existing sector inclusions.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": 2.953,
+      "close": 1000.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Read-through from Samsung/SK Hynix's ~$516B new fab capex plans lifted chip-equipment names sector-wide (ASML +6.8%); no ASM.AS-specific news, next earnings not until 2026-07-28.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ASM.AS is a large-cap (~EUR40B+) Dutch semiconductor deposition/ALD equipment maker on Euronext Amsterdam; uk-eu universes likely track ASML as the sole chip-equipment proxy and never added its equipment-basket peers.",
+      "suggestion": "Add ASM.AS to the uk-eu semiconductor-equipment basket alongside ASML so correlated capex-driven pops (Samsung/SK Hynix-style fab announcements) are captured, not just the single-name ASML slot.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": 2.94,
+      "close": 287.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single fresh news item on 07-01; continued melt-up after Jun 18 Investor Day guidance raise (rev target to \u20ac1.7-2.2B, margin floor to 45%) plus fresh analyst hikes (JPMorgan to \u20ac342, Barclays to \u20ac270) on AI/hybrid-bonding optimism.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BESI.AS is a Euronext Amsterdam semiconductor-equipment name; the uk-eu universe is likely built from a static large-cap/sector list (banks, energy, consumer) that excludes semi-equipment tickers, or an ADV/cap screen not yet refreshed to reflect its 92%+ 6-month rally.",
+      "suggestion": "Add a monthly market-cap/ADV re-screen for Euronext-listed names so recent big gainers like BESI.AS (now ~\u20ac24B cap, +135% YoY) get pulled into the uk-eu universe instead of relying on a stale static list.",
+      "failed": false
+    },
+    {
+      "ticker": "PUB.PA",
+      "move_pct": -4.95,
+      "close": 82.18,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Mechanical ex-dividend adjustment: PUB.PA went ex-div for EUR 3.75/share (~4.3% of prior close) on 2026-07-01, payable 2026-07-03 \u2014 not a genuine sell-off.",
+      "miss_reason": "Outside any active strategy's universe (mid/large-cap French media/adtech, euro-denominated Paris listing). Even if watched, a news-reactive/momentum bot correctly ignores this since the 'loss' is a scheduled corporate-action price adjustment, not tradeable alpha.",
+      "suggestion": "Add an ex-dividend filter to the universe/loser screen that nets out announced dividend amounts from close-to-close returns so mechanical ex-div drops aren't flagged as movers or chased as mean-reversion candidates.",
+      "failed": false
+    },
+    {
+      "ticker": "DTE.DE",
+      "move_pct": -3.908,
+      "close": 23.85,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "mean-reverter"
+      ],
+      "catalyst": "Handelsblatt reported H\u00f6ttges is exploring folding T-Mobile US into a holding structure (SpaceX IPO-linked); expiry of buyback tranche 2 (30 Jun) and Starlink mobile-competition fears drove shares to a 52-week low.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DTE.DE is a DAX40 mega-cap telecom, likely excluded because universes are scoped to UK/US large-caps or specific sectors that don't include German-listed telecoms; the decline was also a multi-day grind (buyback support removal) rather than a single sharp gap a news-reactive bot",
+      "suggestion": "Add DAX40 constituents (or German large-cap telecom) to the mean-reversion/momentum universe, and add a 'buyback-expiry' flag that surfaces names losing repurchase-driven support as mean-reversion candidates.",
+      "failed": false
+    },
+    {
+      "ticker": "BRBY.L",
+      "move_pct": -3.014,
+      "close": 10.62,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No dated news catalyst found for 2026-07-01; likely profit-taking / sector pullback after Burberry's sharp turnaround rally and recent FTSE 100 re-entry.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BRBY.L likely still excluded as a recently-reinstated FTSE 100 name (universe membership lists lag index changes) or filtered out under a luxury/consumer-discretionary sector cap.",
+      "suggestion": "Add a same-day index-membership refresh so newly re-added FTSE 100/350 constituents (like BRBY.L's re-entry) are picked up into the uk-eu universe without waiting for the next scheduled universe rebuild.",
+      "failed": false
+    },
+    {
+      "ticker": "CAP.PA",
+      "move_pct": -2.85,
+      "close": 87.96,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh company news; continuation of IT-services sector derating (post-Accenture guidance cut, AI-spend fears) pushing CAP.PA to fresh 52-week lows.",
+      "miss_reason": "Outside any active strategy's universe \u2014 likely excluded as a non-US/UK-EU-listed IT-services large cap without a dedicated Euronext Paris tech coverage bucket, so no filter ever evaluated it.",
+      "suggestion": "Add CAC 40 IT-services names (CAP.PA, ATO.PA, TEP.PA) to a euro-tech universe with a sector-momentum gate keyed off Accenture/Concentrix guidance revisions.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-01T15:03:54.648319+00:00"
+}
