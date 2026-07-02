@@ -1,0 +1,127 @@
+{
+  "date": "2026-07-02",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 2 of today's 10 biggest US movers.\n\n\u2022 4 upside misses \u2014 APP +10%, COIN +10%, AXON +10%, PLTR +9%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (GLW -13%, KLAC -12%, TER -10%, LRCX -10%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: GLW (-13.48%) \u2014 No clear news catalyst \u2014 valuation-driven pullback/profit-taking after GLW's ~390% YTD AI-optical-fiber rally pushed P/E to ~105x, amid reports of heavy June insider selling. Why we passed: Outside any active strategy's universe \u2014 GLW is tagged as industrials/specialty-glass, not tech/AI, so momentum and news-reactive strategies scoped to tech/semis sectors never scanned it despite its AI-driven re-rating this year.",
+  "top_movers": [
+    {
+      "ticker": "APP",
+      "move_pct": 10.225,
+      "close": 567.91,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Multi-day analyst re-rating: Raymond James initiated Strong Buy ($640 PT) on AI ad growth + Axon e-commerce rollout, extending a Q1 earnings-beat rally (~27% in a week).",
+      "miss_reason": "Outside any active strategy's universe: APP (mega-cap ad-tech) is ISA-eligible and sits in the T212 instrument cache, but was likely dropped by the OHLCV data-coverage post-filter (_filter_against_data_cache) for lacking recent cached bars.",
+      "suggestion": "Log tickers dropped by _filter_against_data_cache (tools/universe.py) by name, not just count, and alert when a dropped ticker is also a top gainer/loser so OHLCV backfill gaps like APP get caught fast.",
+      "failed": false
+    },
+    {
+      "ticker": "COIN",
+      "move_pct": 10.098,
+      "close": 160.9525,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Extended multi-day rally on Coinbase joining bank-backed 'Open USD' stablecoin coalition (Visa, Mastercard, Google, BlackRock); Benchmark/Rosenblatt/Cantor reiterated Buy w/ $208-270 targets.",
+      "miss_reason": "Outside any active strategy's universe \u2014 COIN sits in the crypto-exchange/digital-asset equity bucket, likely sector-blacklisted or excluded via a crypto-correlation risk filter rather than a standard cap/liquidity screen.",
+      "suggestion": "Carve out a capped crypto-adjacent equities watchlist (COIN, MSTR, HOOD) with reduced position-size limits so momentum strategies can opt in on confirmed multi-day breakouts, instead of a blanket sector exclusion.",
+      "failed": false
+    },
+    {
+      "ticker": "AXON",
+      "move_pct": 9.794,
+      "close": 560.61,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued rally on disclosure that Trump bought up to $5M in AXON stock ahead of a $220M ICE Taser procurement notice, layered on record Q1 revenue (+34% YoY) and raised FY guidance.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AXON sits in a public-safety/government-services niche (large-cap industrials-adjacent, not core tech/momentum sector tags), so it's never scanned even as a multi-day, news-driven gainer.",
+      "suggestion": "Add a 'government services & public safety' sector tag to the large-cap universe builder so names like AXON (>$30B market cap) get included alongside core tech/industrials.",
+      "failed": false
+    },
+    {
+      "ticker": "META",
+      "move_pct": 9.258,
+      "close": 615.44,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive"
+      ],
+      "catalyst": "Bloomberg reported Meta is building a cloud business to sell excess AI compute capacity/models, directly rivaling AWS, Azure and Google Cloud \u2014 a major AI-monetization pivot.",
+      "miss_reason": "Outside any active strategy's universe: META isn't on the news-reactive strategy's tracked ticker list, so the pre-market Bloomberg scoop never generated a signal even though it's a textbook news-driven gap.",
+      "suggestion": "Expand news-reactive's universe to include mega-cap AI-infrastructure names (META, etc.) so confirmed Bloomberg/Reuters strategic-pivot scoops trigger trades, not just scheduled earnings/M&A events.",
+      "failed": false
+    },
+    {
+      "ticker": "HOOD",
+      "move_pct": 8.975,
+      "close": 109.28,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned-macro-attn",
+        "regime-router"
+      ],
+      "catalyst": "Robinhood hosted 'The World is Flat' event, launching the Robinhood Chain mainnet (Arbitrum-based RWA blockchain) plus EU perp-futures/UK crypto expansion, triggering GS/BTIG/Deutsche Bank target hikes to $113-125.",
+      "miss_reason": "Outside any active strategy's universe \u2014 HOOD is a fintech/broker-dealer name likely excluded by sector filters (crypto/blockchain-adjacent volatility) rather than by cap; the move was a scheduled product-launch/analyst-day event, not a price/volume signal any in-universe screen would have caught pre-open.",
+      "suggestion": "Add a scheduled-event watchlist gate (analyst days, product launches, blockchain mainnet launches) that temporarily admits sector-excluded fintech/crypto-adjacent names into the universe on their announced event date.",
+      "failed": false
+    },
+    {
+      "ticker": "PLTR",
+      "move_pct": 8.674,
+      "close": 126.79,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Expanded Nvidia sovereign-AI partnership, US Army picked Foundry for its NGC2 program, and a DA Davidson upgrade to Buy ($175 PT) extended a multi-day AI/defense-contract rally.",
+      "miss_reason": "Outside any active strategy's universe \u2014 PLTR is a mega-cap, high-multiple AI/defense name likely excluded by a valuation or sector-cap screen (e.g. max P/E or 'no pure-AI-narrative' filter), not a technical miss.",
+      "suggestion": "Add a narrow 'AI-infrastructure mega-cap' watchlist bucket with relaxed valuation caps so contract/partnership headlines (Nvidia, DoD awards) can trigger a same-day momentum entry.",
+      "failed": false
+    },
+    {
+      "ticker": "GLW",
+      "move_pct": -13.485,
+      "close": 220.985,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear news catalyst \u2014 valuation-driven pullback/profit-taking after GLW's ~390% YTD AI-optical-fiber rally pushed P/E to ~105x, amid reports of heavy June insider selling.",
+      "miss_reason": "Outside any active strategy's universe \u2014 GLW is tagged as industrials/specialty-glass, not tech/AI, so momentum and news-reactive strategies scoped to tech/semis sectors never scanned it despite its AI-driven re-rating this year.",
+      "suggestion": "Add a rolling 6-month price-momentum overlay (flag any name up >100% trailing 6mo) to universe construction so re-rated 'AI-adjacent' industrials like GLW get pulled in regardless of static sector tags.",
+      "failed": false
+    },
+    {
+      "ticker": "KLAC",
+      "move_pct": -11.829,
+      "close": 266.02,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news \u2014 semiconductor-equipment sector-wide profit-taking after chips' record H1 (SOXX +82% YTD), compounded by SK Hynix HBM ramp-slowdown worries and stretched KLAC valuation (52-wk high into the drop).",
+      "miss_reason": "Outside any active strategy's universe entirely (large-cap semicap equipment, not covered) \u2014 even if it were in-universe, this was a broad sector de-rating with no earnings/news trigger, so a catalyst-driven or gap-filter bot wouldn't have flagged it pre-market.",
+      "suggestion": "Add a semicap-equipment basket (KLAC, ASML, LRCX, AMAT) to the momentum universe with a sector-relative-volume trigger, since these names now move >10% on macro/profit-taking days without idiosyncratic news.",
+      "failed": false
+    },
+    {
+      "ticker": "TER",
+      "move_pct": -10.446,
+      "close": 433.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Global chip-stock rout (SK Hynix -9\u201315%, Samsung -7\u20139%, Nasdaq chip selloff) hit TER just after its June 30 ATH ($487.91), unwinding a 56\u201364x forward P/E built on AI-testing hype.",
+      "miss_reason": "Outside any active strategy's universe \u2014 TER is a semiconductor test-equipment/capex name, not a mega-cap tech/AI ticker the bot tracks, so this sector-wide momentum unwind never entered its scan.",
+      "suggestion": "Add a semiconductor-equipment sub-universe (TER, AMAT, LRCX, KLAC) so momentum/mean-reversion strategies can capture AI-capex-driven swings instead of missing them entirely.",
+      "failed": false
+    },
+    {
+      "ticker": "LRCX",
+      "move_pct": -10.304,
+      "close": 388.68,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single hard catalyst \u2014 broad semis profit-taking (TSMC, Micron, SanDisk, Marvell all down) after LRCX's ~154% H1 surge, plus a weak ADP jobs print and China-revenue/export-control concerns.",
+      "miss_reason": "Outside any active strategy's universe \u2014 LRCX is a large-cap semiconductor-equipment name whose multi-day slide (down ~4-9% on prior sessions too) is a macro/valuation unwind, not a single-day news shock a catalyst-scanner would catch.",
+      "suggestion": "Add mega-cap semiconductor-equipment names (LRCX, AMAT, KLAC) to the universe with a mean-reversion trigger on 3-day cumulative drawdown \u226515% after a prior 12-month run-up \u2265100%, rather than requiring a same-day catalyst.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-02T19:33:34.598854+00:00"
+}
