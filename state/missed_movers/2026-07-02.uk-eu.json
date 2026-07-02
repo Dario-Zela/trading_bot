@@ -1,0 +1,126 @@
+{
+  "date": "2026-07-02",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 2 of today's 10 biggest UK/EU movers.\n\n\u2022 5 upside misses \u2014 EL.PA +5%, DTG.DE +4%, BAB.L +3%, ADYEN.AS +3%, RNO.PA +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 3 downside moves (PUB.PA -5%, ABF.L -4%, ENGI.PA -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: PUB.PA (-4.95%) \u2014 Stock went ex-dividend on 2026-07-02 (\u20ac3.75/share, ~4.3% of prior close \u224886.46); the bulk of the -4.95% 'move' is a mechanical price adjustment, not a real selloff \u2014 no negative news/earnings/M&A found for the date. Why we passed: Outside any active strategy's universe (in_universe_of empty) \u2014 PUB.PA is a French CAC40 large-cap advertising name; uk-eu strategies likely don't cover this sector/listing, and even if they did, ex-dividend gap days are typically excluded from momentum/gap scanners to avoid corporate-action noise.",
+  "top_movers": [
+    {
+      "ticker": "EL.PA",
+      "move_pct": 4.877,
+      "close": 172.05,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear firm-specific news found for 2026-07-02; likely an oversold technical bounce after the stock's ~40% slide since its Nov 2025 peak, ahead of July 28 H1 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 EL.PA is a mega-cap (\u20ac86B) French CAC40/Euronext Paris consumer-healthcare crossover (eyewear/AI glasses) name that the uk-eu region universe apparently doesn't include, likely due to sector/listing-venue scoping rather than size.",
+      "suggestion": "Audit the uk-eu universe's inclusion rule for Euronext Paris large-caps in the consumer/healthcare crossover sector (e.g. CAC40 constituents) and add EL.PA if it's missing due to sector-tag mismatch rather than a deliberate exclusion.",
+      "failed": false
+    },
+    {
+      "ticker": "DTG.DE",
+      "move_pct": 3.839,
+      "close": 42.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Swept up in a German defense-sector rally (Rheinmetall +5-6%, Renk +4.7%, Hensoldt +4.4%) on reports Germany seeks US approval to co-produce Tomahawk/Patriot missiles domestically; DTG's new 'Daimler Truck Defence' brand (launched Jun 16, targeting \u20ac1B revenue by 2028) made it a ",
+      "miss_reason": "Outside any active strategy's universe \u2014 DTG.DE is classified as European Autos/Industrials, not Aerospace & Defense, so defense-sector momentum strategies never pull it in despite its growing defense-mobility revenue line.",
+      "suggestion": "Add a secondary sector tag for industrials with disclosed defense-revenue exposure (e.g. >5% of segment revenue or a named defense sub-brand) so defense-momentum strategies can include cross-listed names like DTG.DE alongside pure-play peers.",
+      "failed": false
+    },
+    {
+      "ticker": "BAB.L",
+      "move_pct": 3.344,
+      "close": 9.518,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "UK govt confirmed \u00a315bn ($19.9bn) boost to Defence Investment Plan, lifting spend to 2.7% GDP by 2029 \u2014 sector-wide rally, Babcock +3.3%, BAE +2.0%, QinetiQ +2.4%",
+      "miss_reason": "Outside any active strategy's universe \u2014 Babcock is a UK defense/industrials prime (~\u00a310bn cap, LSE only, no US ADR); uk-eu universe likely doesn't cover aerospace/defense primes as a sector.",
+      "suggestion": "Add LSE defense primes (BAE, Babcock, QinetiQ, Rolls-Royce) to the uk-eu universe and add a policy-news scanner that flags sector-wide rallies off government spending announcements.",
+      "failed": false
+    },
+    {
+      "ticker": "ADYEN.AS",
+      "move_pct": 2.755,
+      "close": 843.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single dated headline for 07-02; extends a multi-week re-rating on Adyen's \u20ac335M Orb acquisition (Jun), the Adyen Agentic AI-commerce launch, and JPMorgan's Positive Catalyst Watch call.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ADYEN.AS is a ~\u20ac27B Amsterdam payments mega-cap (AEX-listed); the live uk-eu screen likely drops AEX fintech names via its data-coverage or LLM prefilter rather than a hard gap.",
+      "suggestion": "Exempt AEX-25 constituents from news-reactive-disclosure's LLM prefilter top_n=50 cut (or add an explicit AEX-momentum bucket) so multi-week analyst-driven re-ratings like ADYEN.AS aren't silently dropped pre-scoring.",
+      "failed": false
+    },
+    {
+      "ticker": "RNO.PA",
+      "move_pct": 2.552,
+      "close": 25.72,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Multi-day rally continuing into 07/02 after Renault's 6/30 pre-close call reaffirmed FY26 guidance (5.5% op margin, \u20ac1B industrial FCF), plus 7/02 Nissan CEO comments downplaying alliance/board tension and cooling French inflation data.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RNO.PA is a mid/large-cap (~\u20ac9B) French automaker on Euronext Paris; uk-eu strategies likely scope to tech/momentum names or exclude cyclical autos sector entirely, so no filter ever saw this ticker.",
+      "suggestion": "Add CAC40/large-cap EU autos (mkt cap > \u20ac5B) to the uk-eu universe with a guidance-reaffirmation news gate that flags pre-close/investor-call reiterations ahead of H1 earnings season.",
+      "failed": false
+    },
+    {
+      "ticker": "DTE.DE",
+      "move_pct": 2.432,
+      "close": 24.43,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "mean-reverter"
+      ],
+      "catalyst": "No single news catalyst \u2014 technical bounce off deeply oversold RSI (~20-27) after a multi-week slide to 52-week lows (T-Mobile US merger overhang), aided by ongoing 2026 buyback purchases and insider (board member Diehl) share buying.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DTE.DE is a mega-cap DAX telecom incumbent, a category the bot's current cap/sector scopes don't cover. Even for mean-reversion, this was a slow oversold-RSI grind-and-bounce, not a single-session gap a reactive filter would catch.",
+      "suggestion": "Extend mean-reverter's universe to DAX-30 large-cap names and add a multi-day RSI<30 reversal trigger (not just single-session gap detection) so slow oversold grinds like this qualify for entry.",
+      "failed": false
+    },
+    {
+      "ticker": "PUB.PA",
+      "move_pct": -4.95,
+      "close": 82.18,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Stock went ex-dividend on 2026-07-02 (\u20ac3.75/share, ~4.3% of prior close \u224886.46); the bulk of the -4.95% 'move' is a mechanical price adjustment, not a real selloff \u2014 no negative news/earnings/M&A found for the date.",
+      "miss_reason": "Outside any active strategy's universe (in_universe_of empty) \u2014 PUB.PA is a French CAC40 large-cap advertising name; uk-eu strategies likely don't cover this sector/listing, and even if they did, ex-dividend gap days are typically excluded from momentum/gap scanners to avoid corporate-action noise.",
+      "suggestion": "Add a dividend-adjustment step to the daily 'biggest losers' scan (subtract known ex-div amount from raw % change before ranking) so mechanical ex-div drops like this stop masquerading as tradeable losers and consuming review time.",
+      "failed": false
+    },
+    {
+      "ticker": "ASML.AS",
+      "move_pct": -4.531,
+      "close": 1643.4,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive-disclosure"
+      ],
+      "catalyst": "Dutch govt formally aligned with the US-led 'Pax Silica' export-control pact, raising China shipment-restriction risk; TSMC/peers also delaying High-NA EUV upgrade adoption.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ASML.AS (EU large-cap semicap equipment) isn't onboarded even though this is exactly the kind of regulatory/export-control disclosure move news-reactive-disclosure is built to catch.",
+      "suggestion": "Add EU semicap-equipment large-caps (ASML.AS, ASMI.AS) to news-reactive-disclosure's tracked universe given their recurring sensitivity to export-control headlines.",
+      "failed": false
+    },
+    {
+      "ticker": "ABF.L",
+      "move_pct": -3.857,
+      "close": 19.0939,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-profit-warning drift: Jul-1 trading update flagged FY26 sugar losses (\u00a325-60m) and weak European Primark LFL; Citi cut PT to \u00a313.30 (Sell) on Jul-2, extending the selloff.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ABF.L is a large-cap UK staples/retail conglomerate, likely excluded because bot universes skew to tech/momentum names or ex-UK/ex-consumer-staples sectors, not because of a technical filter.",
+      "suggestion": "Add a UK large-cap staples/retail bucket (FTSE100 ex-financials, mkt cap > \u00a35B) to the universe with a post-earnings-drift rule that flags names with analyst PT cuts \u22655% within 24h of a trading update.",
+      "failed": false
+    },
+    {
+      "ticker": "ENGI.PA",
+      "move_pct": -3.625,
+      "close": 26.59,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-07-02 \u2014 no earnings, M&A, or regulatory news; likely profit-taking/sector rotation after stock's ~45% 12-month run and pullback from Feb 2026 ATH of 33.16.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ENGIE is a large-cap French regulated utility/energy-transition name (CAC40), a defensive/sector-rotation category that momentum and news-reactive bots typically exclude in favor of higher-beta or catalyst-rich names.",
+      "suggestion": "Add a CAC40/Euro Stoxx utilities sleeve to the uk-eu universe (mkt cap > \u20ac20B) so large defensive movers \u22653% get flagged even without a news catalyst, gated on realized-vol floor to avoid low-beta noise.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-02T15:04:50.320844+00:00"
+}
