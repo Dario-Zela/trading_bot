@@ -1,0 +1,127 @@
+{
+  "date": "2026-07-03",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 2 of today's 10 biggest UK/EU movers.\n\n\u2022 4 upside misses \u2014 BAB.L +11%, BAYN.DE +9%, TEP.PA +7%, DBK.DE +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (PUB.PA -5%, IFX.DE -5%, ASM.AS -4%, STMPA.PA -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: BAB.L (+10.95%) \u2014 UK defence stocks extending post-Defence Investment Plan rally (\u00a3300bn/4yr plan announced 30-Jun) ahead of NATO Ankara summit Jul 7-8; no single-name news today. Why we passed: Outside any active strategy's universe \u2014 BAB.L is a UK mid-cap defence/naval services contractor, a sector the uk-eu strategies likely don't cover (focus skews large-cap diversified or non-defence industrials).",
+  "top_movers": [
+    {
+      "ticker": "BAB.L",
+      "move_pct": 10.948,
+      "close": 10.56,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "UK defence stocks extending post-Defence Investment Plan rally (\u00a3300bn/4yr plan announced 30-Jun) ahead of NATO Ankara summit Jul 7-8; no single-name news today.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BAB.L is a UK mid-cap defence/naval services contractor, a sector the uk-eu strategies likely don't cover (focus skews large-cap diversified or non-defence industrials).",
+      "suggestion": "Add a UK defence/aerospace sector bucket (BAB.L, BA.L, RR.L, QQ.L) to the uk-eu universe given the multi-year government spending tailwind, rather than relying on ad hoc single-name inclusion.",
+      "failed": false
+    },
+    {
+      "ticker": "RHM.DE",
+      "move_pct": 10.297,
+      "close": 1114.0,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive"
+      ],
+      "catalyst": "Rebound in oversold defense stock: fresh Ukraine 155mm shell order (announced Jun 30) + CEO's \u20ac3M insider buy, plus sector-wide bounce ahead of Jul 7-8 NATO Ankara summit funding announcements.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RHM.DE is a Xetra-listed European large-cap defense name, likely excluded by a US-listing/exchange filter or an ESG/weapons-sector exclusion screen rather than a technical signal.",
+      "suggestion": "Add a Xetra/European-large-cap defense allow-list carve-out (or relax the weapons-sector ESG exclusion) so momentum/mean-reversion universes include liquid names like RHM.DE ahead of known binary catalysts (NATO summits, earnings).",
+      "failed": false
+    },
+    {
+      "ticker": "BAYN.DE",
+      "move_pct": 9.009,
+      "close": 53.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Follow-through from Jun-25 SCOTUS Roundup win (Bayer immune from failure-to-warn suits); Deutsche Bank upgraded Hold\u2192Buy, PT \u20ac45\u2192\u20ac60, citing litigation clarity from the $7.25B glyphosate settlement.",
+      "miss_reason": "Outside any active strategy's universe: BAYN is a German large-cap agrochemical/pharma conglomerate with binary litigation tail-risk, a profile quant universes typically screen out; RSI ~84 also marks it as too overbought to chase now.",
+      "suggestion": "Add a gated litigation-catalyst watchlist: admit binary-legal-risk large-caps into universe only after a confirmed high-court ruling plus multi-day follow-through volume, capped by an RSI<80 entry ceiling to avoid buying exhaustion moves.",
+      "failed": false
+    },
+    {
+      "ticker": "TEP.PA",
+      "move_pct": 7.207,
+      "close": 50.28,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single dated news item found for 2026-07-03; TEP.PA is a beaten-down, high-short-interest name (down ~41% YoY) prone to sharp technical rebounds/short-covering pops off oversold lows ahead of July 30 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 a Euronext Paris BPO/CX name that's likely excluded by a US-centric or quality/volatility screen given its distressed-stock profile (heavy short interest, sub-200DMA downtrend).",
+      "suggestion": "No actionable change \u2014 this is a foreign-listed, high-beta distressed name outside current market/quality mandate; not worth chasing technical squeeze moves without a dedicated EU short-interest-rebound screen.",
+      "failed": false
+    },
+    {
+      "ticker": "DBK.DE",
+      "move_pct": 6.434,
+      "close": 31.595,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No same-day headline found; likely continued re-rating off the Jul-1 announced sale of Deutsche Bank's India retail/wealth unit to Kotak Mahindra, seen as capital-accretive under its Hausbank strategy.",
+      "miss_reason": "Outside any active strategy's universe entirely (large-cap European bank/ADR-style DE-listed name, not a US large-cap or sector-ETF constituent the bot tracks), so no filter even evaluated it \u2014 not excluded on signal quality.",
+      "suggestion": "Add DAX/European bank large-caps (DBK.DE, plus peers) as a monitored international universe with a lightweight gap/re-rating scanner, since M&A-driven re-ratings in this space currently generate zero signals for any strategy.",
+      "failed": false
+    },
+    {
+      "ticker": "BA.L",
+      "move_pct": 6.382,
+      "close": 19.92,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned",
+        "macro-aligned-macro-attn"
+      ],
+      "catalyst": "UK government confirmed its Defence Investment Plan: +\u00a315bn over 4 years, spending to 2.7% GDP by 2029, driving a 2-day rally in BAE shares.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BA.L is a GBP-denominated LSE large-cap defence/aerospace name; only macro-aligned strategies (which track policy/fiscal catalysts) hold it, while momentum/mean-reversion universes are scoped elsewhere.",
+      "suggestion": "Add UK large-cap defence names (BA.L, RR.L) to the momentum-trader universe, or build a policy-catalyst gate that flags stocks with same-sector government spending headlines for next-day inclusion.",
+      "failed": false
+    },
+    {
+      "ticker": "PUB.PA",
+      "move_pct": -4.95,
+      "close": 82.18,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh operational news; move coincides with Publicis's EUR 3.75/share dividend going ex around 7/1\u20137/2, mechanically depressing the close (~4.3% of price) into payment date 7/3.",
+      "miss_reason": "Outside any active strategy's universe (large-cap FR media/ad holding co, Euronext Paris in EUR). Even if scanned, a bot would likely correctly treat this as a corporate-action artifact, not a genuine momentum/reversion signal worth trading.",
+      "suggestion": "Ensure the 'biggest losers' scan uses dividend/corporate-action-adjusted returns (or excludes names within 2 days of an ex-div date) so mechanical drops aren't flagged as tradeable losers alongside real news-driven moves.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": -4.921,
+      "close": 77.29,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No IFX-specific news; caught in a global chip selloff (AI-valuation fears, hawkish Fed, SK Hynix HBM capex slowdown) \u2014 Infineon was the DAX's biggest decliner, down ~5-6%.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IFX.DE is a Xetra-listed continental semiconductor name; uk-eu strategies appear scoped to UK/EU financials, energy and consumer names, not European chipmakers.",
+      "suggestion": "Add DAX/Euronext semiconductor majors (IFX.DE, ASML.AS, STM) to the uk-eu universe so a sector-wide chip rout can trigger a beta/momentum signal on these liquid large-caps.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": -4.42,
+      "close": 938.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news; likely dragged down by a broader semiconductor-equipment sector pullback (ongoing China export-control/tariff jitters affecting ASML/KLA/Lam peers).",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 ASM.AS is a large-cap Dutch semicap-equipment name likely excluded for being a non-US/non-core-index listing or falling outside the bot's sector/cap coverage, not filtered out on a signal.",
+      "suggestion": "Add EU semiconductor-equipment names (ASM.AS, ASML.AS, BESI.AS) to the universe with a sector-correlation flag, so sector-wide selloffs tied to US chip-export headlines are tradeable via EU proxies.",
+      "failed": false
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": -4.286,
+      "close": 62.08,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news; STM was dragged down by a broad AI-chip valuation selloff (SOX -12% over two sessions) plus lingering dilution overhang from its June 16 $1.5B convertible bond deal.",
+      "miss_reason": "Outside any active strategy's universe \u2014 STMPA.PA is the Euronext Paris line of a semiconductor name; uk-eu universes likely skip semiconductors/tech-hardware or only track the NYSE ADR (STM), not the Paris listing.",
+      "suggestion": "Add STMPA.PA to the uk-eu universe under a semiconductors/tech-hardware bucket (or mirror STM's NYSE ADR inclusion) so sector-wide selloffs like this trip mean-reversion/momentum signals.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-03T15:03:36.734808+00:00"
+}
