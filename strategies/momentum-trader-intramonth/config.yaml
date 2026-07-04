@@ -1,0 +1,45 @@
+id: momentum-trader-intramonth
+display_name: Momentum trader (variant)
+description: "Auto-spawned variant of momentum-trader on 2026-07-04 by the weekly\
+  \ evolution agent. Reason: The parent momentum-trader has been inactive with no\
+  \ metrics \u2014 a fresh calendar-gated variant anchored to a specific, dated finding\
+  \ (SSRN 6426026) is a genuine axis break (event-window-only vs daily rebalance)\
+  \ rather than a retune, and the slate has had no new spawn in recent runs. Funded\
+  \ by deactivating the two collapsed sector-rotator variants (net active count unchanged\
+  \ at 18/18)."
+implementation: llm
+active: true
+deactivated_at: '2026-05-30'
+capital_gbp: 10000.0
+max_positions: 4
+max_position_pct: 30.0
+min_position_gbp: 50
+use_stops: true
+use_take_profits: true
+stop_loss_pct: -3.0
+take_profit_pct: 4.0
+tools:
+- get_universe
+- get_history
+- get_technicals
+- get_recent_news
+- get_macro_view
+model_assignment:
+  wide_scoring: haiku
+  deep_analysis: sonnet
+  final_select: sonnet
+runs_in:
+- region: us
+  tier: shadow
+  alpaca_slot: null
+  universe: t212_isa_us
+- region: uk-eu
+  tier: shadow
+  t212_slot: null
+  universe: t212_isa_uk_eu
+  alpaca_slot: null
+skip_if_earnings_in_days: 1
+prefilter_mode: python
+prefilter_top_n: 100
+last_tune_date: '2026-05-27'
+cost_gate_multiplier: 2.0

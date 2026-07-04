@@ -8,7 +8,7 @@ description: 'Auto-spawned variant of sector-rotator on 2026-06-13 by the weekly
   layering CPI/PMI/central-bank regime assessment onto sector ranking rather than
   using relative price strength alone.'
 implementation: llm
-active: true
+active: false
 capital_gbp: 8000.0
 max_positions: 3
 max_position_pct: 40
@@ -35,12 +35,9 @@ runs_in:
   t212_slot: null
   universe: eu_etfs_sector
   alpaca_slot: null
-  tier2_candidate: true
-  tier2_marked_at: '2026-06-27'
-  tier2_thesis: "LEADERBOARD LEADER: IC=0.201 on 494 predictions (down from 0.458;\
-    \ still slate-best). Hit rate 0.154\u21920.217 on 23 trades but P&L marginally\
-    \ negative (-\xA322). IC must hold \u22650.20 next week; news-reactive-disclosure@us\
-    \ (IC=0.121 rising) is closing the gap."
+  tier2_candidate: false
+  tier2_marked_at: null
+  tier2_thesis: ''
 prefilter_mode: llm
 prefilter_top_n: 50
-deactivated_at: '2026-06-13'
+deactivated_at: '2026-07-04'

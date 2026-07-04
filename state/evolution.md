@@ -192,3 +192,39 @@
 - **regime-router@uk-eu** · `keep` · ✅ applied — IC=0.089, hit=0.312 on 16 trades (below 35% but n<20 formal threshold). Mixed signals; monitoring.
 - **news-reactive-disclosure@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.121, n=448) → Alpaca slot 3
   - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 3, "enforcement": true, "slot_kind": "alpaca"}`
+
+## Weekly evolution — 2026-07-04
+
+- **news-reactive@us** · `keep` · ✅ applied — Mild negative P&L (-£69.41) but hit-rate 42.9% and meets_demotion_criteria=false; no hard trigger met.
+- **news-reactive@uk-eu** · `keep` · ✅ applied — Strong trade-level performance (50% hit-rate, +£758.04) despite flat IC (0.0); shadow tier, monitor.
+- **mean-reverter@us** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 26, "hit_rate": 0.731, "total_pnl_gbp": 1389.67, "avg_pnl_pct": 2.349, "max_drawdown_pct": -0.88, "n_predictions_graded": 755, "ic": 0.035, "decile_spread": 1.029}}`
+- **mean-reverter@uk-eu** · `keep` · ✅ applied — Weak hit-rate (26.1%) and negative IC (-0.056); shadow tier, no slot at risk. Holding rather than tuning to avoid disturbing the shared prompt now that the us sibling is being promoted.
+- **macro-aligned@us** · `keep` · ✅ applied — IC -0.023 on n=892; attribution shows no clear actionable bleeder (llm-mode sample too small to act on).
+- **macro-aligned@uk-eu** · `keep` · ✅ applied — Second-best IC (0.067) among active uk-eu shadow strategies; hold as a promotion candidate-in-waiting.
+- **macro-aligned-hmm@us** · `demote` · ✅ applied — meets_demotion_criteria=true: IC≈0 (-0.001), hit-rate 30%, P&L -£260.79 on the alpaca-paper slot — not earning its slot. Refilling in the same run with mean-reverter@us.
+  - details: `{"from_tier": "alpaca-paper", "slot_cleared": true, "previous_slot": 2, "slot_kind": "alpaca"}`
+- **macro-aligned-hmm@uk-eu** · `keep` · ✅ applied — Healthier than its demoted us sibling: IC 0.06, hit-rate 33.3%, +£175.65. No trigger to touch the uk-eu shadow row.
+- **macro-aligned-macro-attn@us** · `keep` · ✅ applied — Mixed signal (IC -0.031, hit 50%, +£385.73); no hard trigger, hold.
+- **macro-aligned-macro-attn@uk-eu** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 22, "hit_rate": 0.136, "total_pnl_gbp": -375.37, "avg_pnl_pct": -0.45, "max_drawdown_pct": -4.44, "n_predictions_graded": 989, "ic": 0.113, "decile_spread": 1.294}}`
+- **momentum-trader-vix-gated@us** · `keep` · ✅ applied — Dormant pattern (n_graded=436, n_trades=5) is likely the VIX-gate condition itself, not a tunable field we control; shadow tier so demotion doesn't apply.
+- **momentum-trader-vix-gated@uk-eu** · `keep` · ✅ applied — 0% hit-rate but only 4 trades — too small a sample to act on; shadow tier, hold.
+- **sector-rotator-llm-macro@uk-eu** · `unmark-tier2-candidate` · ✅ applied — Own thesis predicted IC must hold ≥0.20; instead IC fell to -0.091 (n=519) from last week's 0.201 — leadership thesis falsified.
+- **sector-rotator-llm-macro** · `deactivate` · ✅ applied — IC has declined across consecutive checks (0.458→0.201→-0.091) with no stabilization; a structurally non-recovering shadow strategy consuming a slot. Retiring to fund a genuine axis-break spawn.
+  - details: `{"deactivated_at": "2026-07-04"}`
+- **sector-rotator-median@uk-eu** · `unmark-tier2-candidate` · ✅ applied — Same shared thesis failed identically: IC fell to -0.077 (n=200) from 0.201, hit-rate collapsed to 0% on its 5 trades.
+- **sector-rotator-median** · `deactivate` · ✅ applied — Same eu_etfs_sector sleeve and collapsing trend as its sibling; redundant and non-recovering. Retiring alongside sector-rotator-llm-macro.
+  - details: `{"deactivated_at": "2026-07-04"}`
+- **news-reactive-disclosure@us** · `mark-tier2-candidate` · ✅ applied — Now the only positive-IC tier-2 candidate left after both sector-rotator theses failed; despite missing its own IC≥0.15 bar, it remains the strongest live-slot candidate by comparison.
+  - details: `{"tier2_marked_at": "2026-07-04", "thesis_present": true}`
+- **news-reactive-disclosure@uk-eu** · `demote` · ✅ applied — meets_demotion_criteria=true: hit-rate 16.7%, P&L -£235.95 on the single trading212-paper slot while the us sibling is fine. Freeing the slot for macro-aligned-macro-attn@uk-eu in the same run.
+  - details: `{"from_tier": "trading212-paper", "slot_cleared": false, "previous_slot": 1, "slot_kind": "t212"}`
+- **regime-router@us** · `keep` · ✅ applied — IC -0.014 but positive P&L (+£375.49); no hard trigger, hold.
+- **regime-router@uk-eu** · `keep` · ✅ applied — IC 0.008, mixed hit-rate 18.2%; insufficient signal to act, hold.
+- **momentum-trader** · `spawn-variant` · ✅ applied — The parent momentum-trader has been inactive with no metrics — a fresh calendar-gated variant anchored to a specific, dated finding (SSRN 6426026) is a genuine axis break (event-window-only vs daily rebalance) rather than a retune, and the slate has had no new spawn in recent runs. Funded by deactivating the two collapsed sector-rotator variants (net active count unchanged at 18/18).
+  - details: `{"variant_id": "momentum-trader-intramonth", "addendum_applied": true}`
+- **mean-reverter@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.035, n=755) → Alpaca slot 2
+  - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 2, "enforcement": true, "slot_kind": "alpaca"}`
+- **macro-aligned-macro-attn@uk-eu** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow UK-EU candidate (IC=+0.113, n=989) → trading212-paper
+  - details: `{"target_tier": "trading212-paper", "t212_slot": 1, "enforcement": true, "slot_kind": "trading212"}`

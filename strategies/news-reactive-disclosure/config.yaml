@@ -36,14 +36,14 @@ runs_in:
   alpaca_slot: 3
   universe: t212_isa_us
   tier2_candidate: true
-  tier2_marked_at: '2026-06-27'
-  tier2_thesis: "LEADERBOARD #2: IC rising 0.061\u21920.121 on 448 predictions (19\
-    \ trades, hit=0.474, avg_pnl=3.084%, max_dd=-0.77%). Best P&L conversion on slate.\
-    \ Now on alpaca-paper. IC\u22650.15 next week with maintained P&L makes this the\
-    \ new leader."
+  tier2_marked_at: '2026-07-04'
+  tier2_thesis: "Sole surviving contender: IC=0.078 (down from 0.121, missed 0.15\
+    \ bar) but still positive, best P&L on slate (n=448, hit=0.429, +\xA3409.83).\
+    \ Both sector-rotator rivals collapsed to negative IC. Needs IC\u22650.10 next\
+    \ week to hold the lead."
 - region: uk-eu
-  tier: trading212-paper
-  t212_slot: 1
+  tier: shadow
+  t212_slot: null
   universe: t212_isa_uk_eu
   alpaca_slot: null
 prefilter_mode: llm
