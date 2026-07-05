@@ -16,3 +16,9 @@
 - **Claim**: XLY total return underperforms XLP total return over the 2-week period ending 2026-05-30 (consumer squeeze thesis holds)
 - **Falsification criteria**: XLY 2-week return equals or exceeds XLP 2-week return as of the 2026-05-30 close
 - **What happened**: XLY returned +1.83% 5d / +2.13% 20d vs XLP -2.07% 5d / -1.66% 20d — Consumer Discretionary outperformed Consumer Staples across both timeframes as oil's collapse relieved the consumer squeeze.
+
+## 2026-W26-p03 — falsified 2026-07-05
+
+- **Claim**: 10Y Treasury yield will fall below 4.25% by 2026-07-11 (currently 4.372%), as the demand-scare narrative deepens and bonds continue to rally
+- **Falsification criteria**: 10Y yield closes above 4.45% at any point before 2026-07-11, reversing the downtrend
+- **What happened**: Falsification criterion was 10Y closing above 4.45% at any point before 2026-07-11; the 2026-07-02 snapshot shows 10Y at 4.485%, breaching that bar ahead of the target date.
