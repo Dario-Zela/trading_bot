@@ -1,0 +1,124 @@
+{
+  "date": "2026-07-06",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 1 of today's 10 biggest US movers.\n\n\u2022 5 upside misses \u2014 ANET +8%, WDC +7%, NTAP +6%, RMD +6%, AMD +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (ORLY -6%, AZO -6%, STZ -5%, ARE -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: ANET (+7.61%) \u2014 BlackRock named ANET a top-30 AI stock and it rode continued momentum from its new 1.6T AI-networking platform launch and raised 2026 outlook. Why we passed: Outside any active strategy's universe \u2014 ANET is a large-cap networking-equipment/AI-infrastructure name that isn't in the covered tech/momentum universe, so no filter ever saw it to include or exclude.",
+  "top_movers": [
+    {
+      "ticker": "ANET",
+      "move_pct": 7.61,
+      "close": 172.165,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "BlackRock named ANET a top-30 AI stock and it rode continued momentum from its new 1.6T AI-networking platform launch and raised 2026 outlook.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ANET is a large-cap networking-equipment/AI-infrastructure name that isn't in the covered tech/momentum universe, so no filter ever saw it to include or exclude.",
+      "suggestion": "Expand the tech-sector universe to include AI-infrastructure/networking-equipment names (e.g. ANET, and peers) alongside chips/hyperscalers so sector-driven rallies like this are captured.",
+      "failed": false
+    },
+    {
+      "ticker": "WDC",
+      "move_pct": 7.154,
+      "close": 577.56,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "AI-storage supercycle: BofA/Cantor/Melius hiked WDC targets ($732-$1,050) on tight HDD supply and 2026 capacity fully booked, sparking a dip-buying rally after last week's AI-hardware selloff.",
+      "miss_reason": "Outside any active strategy's universe \u2014 WDC's price (~$578, 52-wk range $64-$800) and realized volatility (250% YTD, ~14% intraday range today) likely place it above a max-share-price or max-ATR/price threshold used to size and gate the tradable list.",
+      "suggestion": "Add a periodic universe-refresh rule that re-admits names once trailing 20d ATR/price falls under the strategy's vol cap, so re-rated high-flyers like WDC aren't permanently excluded after crossing the price/vol ceiling.",
+      "failed": false
+    },
+    {
+      "ticker": "AVGO",
+      "move_pct": 6.09,
+      "close": 382.4,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive-disclosure"
+      ],
+      "catalyst": "Broadcom announced an expanded custom-chip/wireless partnership with Apple through 2031, easing customer-concentration fears and sparking a broad semi-sector rally.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AVGO is a mega-cap AI/semiconductor name likely excluded by a sector-cap or single-name concentration rule rather than a technical filter, since no bot universe currently includes it.",
+      "suggestion": "Add AVGO to the AI-semiconductor sector bucket in at least one large-cap momentum universe so partnership/contract-announcement gaps in this name become tradable.",
+      "failed": false
+    },
+    {
+      "ticker": "NTAP",
+      "move_pct": 5.938,
+      "close": 163.325,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh same-day news; likely continuation of the post-Q4-earnings AI-storage re-rating (stock +48% YTD, still digesting late-May's 27-35% earnings pop) amid a broader AI-infra sector bid.",
+      "miss_reason": "NTAP sits outside any active strategy's tradable universe entirely \u2014 a large-cap enterprise storage/hardware name not on the sector/watchlist these bots cover, so no filter ever evaluated it regardless of today's move.",
+      "suggestion": "Add NTAP (and peer AI-storage names like PSTG, WDC) to the tech-hardware/infra universe given their post-earnings volatility profile now qualifies them under the existing large-cap liquidity threshold.",
+      "failed": false
+    },
+    {
+      "ticker": "RMD",
+      "move_pct": 5.91,
+      "close": 222.02,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Extending oversold bounce after Goldman Sachs added RMD to its APAC Conviction List (~7/2); GLP-1/Philips competitive fears from Morgan Stanley's prior downgrade fading ahead of Aug 6 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RMD is a large-cap ($40B+) medical-device/sleep-apnea name that simply isn't in the region's covered sector list, so no filter ever got a chance to evaluate it.",
+      "suggestion": "Add med-device/healthcare large-caps (RMD, peers) to the us universe watchlist so analyst-upgrade-driven oversold bounces get scanned by a mean-reversion or news-reactive strategy instead of being invisible entirely.",
+      "failed": false
+    },
+    {
+      "ticker": "AMD",
+      "move_pct": 5.508,
+      "close": 546.34,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Goldman Sachs hiked PT to $640 (from $450) and Citi added AMD to its upside catalyst list; broad semis rally plus Turing AI GPU deal news added momentum.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AMD is a mega-cap, high-beta AI-chip name (>150% YTD, 75x fwd P/E) likely excluded by a market-cap/valuation-extension or sector-concentration cap keeping bot exposure to semis limited to names like NVDA already held.",
+      "suggestion": "Add a headline-catalyst watchlist rule: mega-cap semis on analyst-upgrade gap-ups \u22655% at open get a same-day universe-inclusion override, independent of the static valuation/cap filter.",
+      "failed": false
+    },
+    {
+      "ticker": "ORLY",
+      "move_pct": -6.338,
+      "close": 84.53,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "ORLY offered ~$10B cash for Genuine Parts' auto-parts division; market punished the acquirer on deal cost/integration risk (GPC jumped ~13%).",
+      "miss_reason": "Outside any active strategy's universe \u2014 ORLY is a mega-cap ($70B), low-beta auto-parts retailer that rarely moves >2%/day, so volatility/momentum-based universe construction never onboarded it as a frequent mover.",
+      "suggestion": "Add a same-day M&A-acquirer overlay: any S&P 500 name with a live deal headline (>$1B, 'to acquire/offers for') and same-day move >=5% gets temporary universe inclusion for the news-reactive strategy, independent of its static volatility screen.",
+      "failed": false
+    },
+    {
+      "ticker": "AZO",
+      "move_pct": -5.718,
+      "close": 2978.6199,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued post-earnings overhang: May 26 Q3 revenue miss + tariff-driven margin pressure on auto-parts imports, compounded by O'Reilly/Genuine Parts M&A chatter roiling auto-parts retail sector.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AZO's ~$3,000/share nominal price (company has never split the stock) likely trips a max-price-per-share or lot-sizing filter, and its specialty-retail auto-parts sector may not map to any strategy's covered sector list.",
+      "suggestion": "Add a price-agnostic dollar-notional entry path (or explicit high-price whitelist) so strategies aren't gated by a max-share-price filter, and add specialty-auto-retail to at least one sector-coverage universe.",
+      "failed": false
+    },
+    {
+      "ticker": "STZ",
+      "move_pct": -5.259,
+      "close": 130.24,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single fresh headline: continued bleed from Jun 30 earnings (EPS beat but soft FY organic sales guidance -1%/+1%), capped today by a 50/200-day death cross triggering technical selling.",
+      "miss_reason": "Outside any active strategy's universe \u2014 STZ is a large-cap alcohol/beverage staples name, a sector likely excluded from momentum/growth-focused universes and too low-beta/low-volume-surge to trip catalyst scanners.",
+      "suggestion": "Add a staples/beverage large-cap bucket (or explicitly whitelist STZ) with a technical-breakdown tag (50dma<200dma cross) so death-cross days get flagged even absent a same-day news catalyst.",
+      "failed": false
+    },
+    {
+      "ticker": "ARE",
+      "move_pct": -4.507,
+      "close": 50.21,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No same-day news catalyst found; move extends ARE's ongoing slide as a life-science REIT hit by falling occupancy (87.7%\u219288.5% guided), ~30% FFO decline, and a 45% dividend cut this year.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ARE is a large-cap life-science/biotech office REIT, a sector typically excluded from momentum/news-reactive equity universes since REITs trade on occupancy, FFO, and rate-sensitivity rather than typical earnings/momentum signals.",
+      "suggestion": "If REIT coverage is desired, add a separate rate-sensitive REIT sleeve using FFO-guidance revisions and occupancy trend as triggers rather than forcing ARE into the standard momentum/news-reactive universe filters.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-06T19:35:01.550784+00:00"
+}
