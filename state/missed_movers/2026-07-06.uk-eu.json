@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-06",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 MT.AS +6%, AALB.AS +5%, EOAN.DE +4%, BESI.AS +4%, ASM.AS +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (STLAP.PA -3%, ENT.L -2%, G24.DE -2%, RHM.DE -2%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: MT.AS (+5.89%) \u2014 EU steel import-quota tightening (eff. Jul 1) plus BofA PT hike to $80 and AWS/XCarb supply deal drove a multi-catalyst re-rating. Why we passed: Outside any active strategy's universe \u2014 ArcelorMittal is a large-cap EU cyclical/materials (steel) name; bot's uk-eu universe likely excludes commodity/steel sector or Euronext Amsterdam dual-listings entirely, not just filtered on signal.",
+  "top_movers": [
+    {
+      "ticker": "MT.AS",
+      "move_pct": 5.891,
+      "close": 58.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "EU steel import-quota tightening (eff. Jul 1) plus BofA PT hike to $80 and AWS/XCarb supply deal drove a multi-catalyst re-rating.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ArcelorMittal is a large-cap EU cyclical/materials (steel) name; bot's uk-eu universe likely excludes commodity/steel sector or Euronext Amsterdam dual-listings entirely, not just filtered on signal.",
+      "suggestion": "Add EU materials/steel large-caps (e.g. MT.AS) to the uk-eu universe screen, or add a policy-catalyst gate that flags names with same-week regulatory/tariff announcements for next-day inclusion review.",
+      "failed": false
+    },
+    {
+      "ticker": "AALB.AS",
+      "move_pct": 5.472,
+      "close": 40.86,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q1 2026 trading update (5 Jul): revenue \u20ac772m (+2.8% organic), EBITA margin rose to 14.2% from 13.6%, positive 2026 guidance reaffirmed.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Aalberts is a ~\u20ac6-7B Dutch mid-cap industrial on Euronext Amsterdam, a cap/sector bucket (mid-cap industrials) the uk-eu strategies don't currently scan.",
+      "suggestion": "Add an earnings-calendar watchlist that temporarily pulls in non-universe mid-caps (>\u20ac3B) with a scheduled trading update, flagging next-day names with post-print gap \u22655% for review.",
+      "failed": false
+    },
+    {
+      "ticker": "EOAN.DE",
+      "move_pct": 4.382,
+      "close": 19.175,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "German government agreed a grid-reform package (faster approvals, digitalization, binding connection deadlines) seen as a positive for grid operators like E.ON; stock broke its 100-day line.",
+      "miss_reason": "Outside any active strategy's universe \u2014 EOAN.DE is a large-cap German utility/grid operator, a sector/geography (uk-eu regulated utilities) not currently covered by the bot's tradable universe.",
+      "suggestion": "Add large-cap EU regulated utilities (e.g. DAX utility names like EOAN.DE) to the universe with a policy-catalyst gate that flags government infrastructure/regulatory announcements affecting grid operators.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": 4.237,
+      "close": 273.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No firm-specific news \u2014 broad European chip-sector rally (ASML +3%, ASMI +8%) on dovish Fed rate-cut bets after weak US jobs data, plus a rebound from this week's hybrid-bonding-delay selloff.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BESI.AS is a mid-cap Euronext Amsterdam semicap-equipment name, likely excluded because uk-eu universes are scoped to large-cap/index-constituent lists rather than semiconductor-equipment niche tickers.",
+      "suggestion": "Add BESI.AS and its AEX semicap peers (ASMI.AS) to the uk-eu universe's tech/semiconductor watchlist so sector-correlated rallies (ASML/ASMI beta >0.8) are captured, not just index-member names.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": 4.097,
+      "close": 975.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single hard headline \u2014 sector-wide re-rating in semicap names ahead of ASML's July 15 earnings, plus a July 4 analyst upgrade (Zacks Buy) on rising 2026 capex/AI-upcycle estimates.",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 ASM.AS is a large-cap Dutch semiconductor-equipment maker (AEX constituent, ~\u20ac40B+ mkt cap) that simply isn't on the uk-eu universe's whitelist, so no filter ever evaluated it today.",
+      "suggestion": "Widen the uk-eu universe from a static ticker list to auto-include AEX/major EU index constituents above a market-cap floor, so names like ASM.AS enter the tradable set without manual onboarding.",
+      "failed": false
+    },
+    {
+      "ticker": "EDEN.PA",
+      "move_pct": 3.731,
+      "close": 23.91,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Edenred confirmed BC Partners-led investors approached it about a take-private buyout, extending the M&A speculation rally that began 2026-06-18.",
+      "miss_reason": "Outside any active strategy's universe \u2014 EDEN.PA is a ~\u20ac4.9B French small/mid-cap name still weighed down by Brazil/Italy regulatory reforms; its pop is binary M&A rumor speculation, not the fundamentals/momentum signal type the bot's universes screen for.",
+      "suggestion": "Add a watch-only tier for EU small/mid-cap 'take-private exploring consortium' wire hits so the bot flags these for manual review instead of full systematic entry, given binary deal-break risk.",
+      "failed": false
+    },
+    {
+      "ticker": "STLAP.PA",
+      "move_pct": -3.466,
+      "close": 4.93,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued fallout from HSBC's Jul-3 downgrade to 'Reduce' (PT cut to \u20ac4 from \u20ac5.50) on swollen 93-day US dealer inventory and 19 recalls covering 2.5M vehicles YTD.",
+      "miss_reason": "Outside any active strategy's universe \u2014 STLAP.PA is a EUR-denominated Euronext Paris large-cap automaker; the uk-eu region universe likely screens mainly LSE/UK tickers and doesn't ingest CAC40/Paris-listed names.",
+      "suggestion": "Extend the uk-eu universe screen to include major Euronext Paris (CAC40) constituents alongside LSE names, so EUR-denominated large caps like STLAP.PA are eligible for the news-reactive strategy.",
+      "failed": false
+    },
+    {
+      "ticker": "ENT.L",
+      "move_pct": -2.111,
+      "close": 5.286,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No firm-specific news found for 2026-07-06; move likely reflects the ongoing UK gambling-tax overhang (remote gaming duty rising 21%\u219240% from Apr 2026) rather than a fresh catalyst.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Entain is large-cap FTSE-100/250, so exclusion is likely a sector screen (gambling/betting names often carved out for ESG/regulatory-risk reasons), not a cap or liquidity filter.",
+      "suggestion": "If sector exclusion is intentional, no change; if it's incidental, add a carve-in for large-cap UK gambling names with a regulatory-tax-risk tag so mean-reversion strategies can trade budget/tax-driven selloffs distinct from ESG-screened long-term holds.",
+      "failed": false
+    },
+    {
+      "ticker": "G24.DE",
+      "move_pct": -2.013,
+      "close": 73.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst \u2014 Scout24 (G24.DE) has been the DAX's biggest single-day loser repeatedly this week, extending a downtrend in place since Oct 2025 (~-30%); likely technical/sector drift, not a discrete event.",
+      "miss_reason": "Outside any active strategy's universe. Scout24 is a real-estate/classifieds digital marketplace (ImmoScout24) only added to the DAX in Sept 2025; bot's uk-eu large-cap universe lists likely haven't been refreshed to include this recent index addition, so no strategy ever screens it.",
+      "suggestion": "Add a periodic index-membership sync (e.g. refresh DAX/FTSE/CAC constituent lists monthly) so recently-added large-caps like Scout24 (DAX since 2025-09-22) enter the tradable universe automatically instead of relying on a stale snapshot.",
+      "failed": false
+    },
+    {
+      "ticker": "RHM.DE",
+      "move_pct": -1.937,
+      "close": 1093.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued fallout from Germany scrapping the \u20ac12.8B F126 frigate program (Rheinmetall as lead contractor) plus JPMorgan's Jul 3 downgrade to Hold amid sector-wide defense de-rating on Ukraine/Mideast peace hopes.",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 RHM.DE is a large-cap German defense/industrials name; uk-eu universes likely scope to broader indices or sectors that exclude single-name European defense primes.",
+      "suggestion": "Add top European defense primes (RHM.DE, HO.PA, BA.L) to the uk-eu universe given their outsized, headline-driven volatility this cycle, gated by a minimum liquidity/market-cap filter.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-06T15:03:06.901129+00:00"
+}
