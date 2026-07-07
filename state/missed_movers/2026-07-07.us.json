@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-07",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 ANET +8%, WDC +7%, AVGO +6%, NTAP +6%, RMD +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (ORLY -6%, AZO -6%, STZ -5%, ARE -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: ANET (+7.61%) \u2014 Continued AI-networking momentum: BofA/Morgan Stanley/KeyBanc hiked PTs toward $190-$200 and BlackRock named it a top-30 AI stock after Arista's new 1.6T rack-scale AI switch launch. Why we passed: Outside any active strategy's universe \u2014 ANET is a mega-cap ($170B+) networking-hardware name already up ~55% over the past year, likely excluded by market-cap/sector caps or an extended-valuation/RSI filter meant to avoid chasing fully-priced AI momentum names.",
+  "top_movers": [
+    {
+      "ticker": "ANET",
+      "move_pct": 7.61,
+      "close": 172.165,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued AI-networking momentum: BofA/Morgan Stanley/KeyBanc hiked PTs toward $190-$200 and BlackRock named it a top-30 AI stock after Arista's new 1.6T rack-scale AI switch launch.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ANET is a mega-cap ($170B+) networking-hardware name already up ~55% over the past year, likely excluded by market-cap/sector caps or an extended-valuation/RSI filter meant to avoid chasing fully-priced AI momentum names.",
+      "suggestion": "Add a mega-cap AI-infrastructure bucket (networking/semis, >$50B cap) to the momentum universe with a relaxed RSI ceiling when triggered by same-day sell-side PT hikes of >10%.",
+      "failed": false
+    },
+    {
+      "ticker": "WDC",
+      "move_pct": 7.154,
+      "close": 577.56,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued AI-storage rally: fresh sell-side price target hikes (Cantor to $900, Melius to $1,050) on tight HDD supply/exabyte demand, plus Russell growth-index reclassification.",
+      "miss_reason": "Outside any active strategy's universe \u2014 WDC sits in the memory/storage-hardware sector, up ~115% YTD with extreme realized volatility, likely excluded by a sector or volatility-cap screen rather than a market-cap cutoff.",
+      "suggestion": "Add a sector-momentum override that pulls a name into the tradable universe once it clears an index-reclassification event (e.g., Russell growth add) combined with \u22653 analyst target hikes in a rolling 5-day window.",
+      "failed": false
+    },
+    {
+      "ticker": "AVGO",
+      "move_pct": 6.09,
+      "close": 382.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Broadcom expanded its custom AI/ASIC chip partnership with Apple through 2031, easing in-sourcing fears (Apple ~20% of revenue) and fueling a broad semis rebound.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AVGO is a mega-cap semiconductor name typically excluded from smaller-cap or sector-specific universes; the move was a pre-market/overnight partnership announcement, so post-open news-reactive signals lagged the gap.",
+      "suggestion": "Add mega-cap AI-semiconductor names (AVGO, and peers) to the news-reactive strategy's universe with an earnings/deal-gate that releases positions on confirmed multi-year partnership or contract disclosures \u22653% pre-market gap.",
+      "failed": false
+    },
+    {
+      "ticker": "NTAP",
+      "move_pct": 5.938,
+      "close": 163.325,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Analysts hiked price targets (to ~$171.75) and NTAP was added to Russell defensive indices, extending the rally from its strong FY27 AI/storage-demand guidance issued at Q4 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 NTAP is a large-cap, low-beta enterprise storage/dividend name that likely doesn't clear the universe's tech-momentum or volatility screens, so it's never scanned regardless of today's move.",
+      "suggestion": "Add a periodic universe-refresh rule that pulls in large-cap tech names on Russell index-addition events or >2 consecutive analyst price-target upgrades, even if historical beta/volatility was previously too low to qualify.",
+      "failed": false
+    },
+    {
+      "ticker": "RMD",
+      "move_pct": 5.91,
+      "close": 222.02,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Goldman Sachs added ResMed to its APAC Conviction List (Buy, bullish on CPAP patient growth) on top of building pre-earnings optimism ahead of Aug 6 FY26 Q4 results.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RMD is a large-cap ($30B+) medtech/healthcare-equipment name, dual-listed NYSE/ASX; the bot's universes appear scoped to other sectors (e.g. tech/growth momentum names) and don't scan healthcare equipment.",
+      "suggestion": "Add GICS Healthcare Equipment (351020) large-caps \u2265$20B mkt cap to the universe scanner so sell-side conviction-list adds and pre-earnings drift in medtech names get picked up.",
+      "failed": false
+    },
+    {
+      "ticker": "AMD",
+      "move_pct": 5.508,
+      "close": 546.34,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Goldman Sachs hiked AMD price target to $640 (from $450) same-day as news that AI startup Turing is running ~10% of its training on AMD GPUs with AMD Ventures investing, pushing shares to a 52-week high.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AMD is a mega-cap semiconductor already up ~154% YTD; likely excluded via a sector-concentration or correlation cap (redundant with existing NVDA/semis exposure) or a static/stale universe list never refreshed to add it.",
+      "suggestion": "Add AMD to the momentum strategy's tradable universe and replace the static sector-cap with a per-name correlation check so a second semis name is only excluded if correlation to an existing holding exceeds a set threshold (e.g. 0.85), not blanket sector dedup.",
+      "failed": false
+    },
+    {
+      "ticker": "ORLY",
+      "move_pct": -6.338,
+      "close": 84.53,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Bloomberg reported ORLY is preparing a $10B+ cash bid for Genuine Parts' NAPA auto-parts business, spooking investors on financing/integration/antitrust risk despite analyst buy ratings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ORLY is a large-cap consumer-discretionary/auto-parts retailer likely excluded by sector scope, not a liquidity or cap-size gap. This was acquirer-side M&A deal-risk speculation, a headline-driven repricing no technical/momentum filter would have flagged pre-move.",
+      "suggestion": "Add auto-parts/specialty-retail large-caps (ORLY, AZO, GPC) to the news-reactive strategy's tradable universe and add an M&A-rumor gate that flags acquirer tickers on >5% intraday moves tied to unconfirmed deal reports for next-day mean-reversion review.",
+      "failed": false
+    },
+    {
+      "ticker": "AZO",
+      "move_pct": -5.718,
+      "close": 2978.6199,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Bloomberg reported O'Reilly's $10B+ bid for Genuine Parts' NAPA distribution arm, seen as a competitive threat to AutoZone; shares extended Monday's 6.4% plunge into today's session.",
+      "miss_reason": "AZO was tracked by macro-aligned/mean-reverter models through late June (predictions.jsonl) but fell out of every current universe at the last refresh; this M&A-driven sector move hit between refresh cycles, so no live filter saw it.",
+      "suggestion": "Add an event-driven universe override that re-admits recently-dropped names on a sector M&A headline + >5% single-day move, instead of waiting for the next periodic universe refresh.",
+      "failed": false
+    },
+    {
+      "ticker": "STZ",
+      "move_pct": -5.259,
+      "close": 130.24,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued post-earnings slide: fresh analyst price-target cuts (UBS, Jefferies, Barclays) on soft beer demand/volume trends despite the June 30 EPS beat.",
+      "miss_reason": "Outside any active strategy's universe \u2014 STZ is a large-cap consumer staples/beverage name, a sector likely excluded from momentum/news-reactive universes tuned toward higher-beta tech/growth names.",
+      "suggestion": "Add a consumer-staples sleeve or widen sector filters to admit large-cap beverage/staples names showing multi-day post-earnings analyst downgrade clusters (\u22653 price-target cuts within 5 sessions).",
+      "failed": false
+    },
+    {
+      "ticker": "ARE",
+      "move_pct": -4.507,
+      "close": 50.21,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Multi-day slide extended: Mizuho cut PT to $60 (7/6) atop a Morgan Stanley downgrade to Underweight and Moody's debt-rating cut, all citing weak lab-space leasing/occupancy for life-science REITs.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ARE is a life-sciences office REIT; momentum/news-reactive equity strategies typically exclude the REIT sector since price action is driven by rates, credit ratings, and dividend policy rather than the earnings/volume signals the bot screens for.",
+      "suggestion": "No actionable change \u2014 REIT exclusion is intentional given differing rate/credit sensitivity; if desired, add a narrow REIT sleeve gated on credit-rating-action and dividend-cut triggers rather than folding it into the existing momentum universe.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-07T19:32:45.448762+00:00"
+}
