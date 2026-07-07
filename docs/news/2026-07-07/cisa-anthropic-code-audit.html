@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CISA taps Anthropic&#x27;s AI to audit government code, uncovers a raft of bugs — 2026-07-07 — Trading Bot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../../index.html">Dashboard</a>
+<a class="nav-tab active" href="../../news/latest.html">News</a>
+<a class="nav-tab" href="../../macro/latest.html">Macro</a>
+<a class="nav-tab" href="../../evolution.html">Evolution</a>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper article-page"><div class="edition-nav" data-edition="2026-07-07" data-kind="news"><a class="edition-nav-link" data-role="prev" href="../2026-07-06/" title="2026-07-06">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><a class="edition-nav-link disabled" data-role="next" href="#" aria-disabled="true">next →</a><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">TECH · AI SECURITY · By R. Okonkwo · 2026-07-07 · 4 min read</div><h1>CISA taps Anthropic&#x27;s AI to audit government code, uncovers a raft of bugs</h1><img class="hero" src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Seal_of_Cybersecurity_and_Infrastructure_Security_Agency.svg" alt="The seal of the Cybersecurity and Infrastructure Security Agency, now deploying Anthropic&#x27;s Mythos model to scan federal code repositories."><div class="hero-caption">The seal of the Cybersecurity and Infrastructure Security Agency, now deploying Anthropic&#x27;s Mythos model to scan federal code repositories. — <em>Cybersecurity and Infrastructure Security Agency / Wikimedia Commons (public domain)</em></div><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>CISA is scanning government code with Anthropic&#x27;s Mythos AI and has already found a raft of bugs — but won&#x27;t say how many, how bad, or where.</div></div><div class="body"><p>The Cybersecurity and Infrastructure Security Agency has started using Anthropic's most powerful AI model to comb through government source code for security flaws — and according to three people familiar with the effort, it isn't coming back empty-handed.</p>
+<p>Reuters reported this week that CISA's Attack Surface Evaluation team, the unit that runs digital security assessments and hacking exercises across federal agencies, has been feeding government code repositories into Anthropic's model, known internally and to partners as Mythos. Two of the sources said the audits have already turned up a large number of vulnerabilities. Neither Reuters nor the sources would say how many, how severe, or in which agencies' systems.</p>
+<p>That vagueness matters. A tool surfacing a handful of stray bugs in a low-stakes internal tracker is a Tuesday. The same tool surfacing dozens of exploitable flaws in code that runs benefits systems, power-grid interfaces, or classified networks is a different kind of story. Right now, the public record supports only the first half of that sentence — that the scanning happened and found <em>something</em> — not the second.</p>
+<p><img alt="The CISA seal" src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Seal_of_Cybersecurity_and_Infrastructure_Security_Agency.svg" /></p>
+<h2>A tool built to find what humans miss</h2>
+<p>Mythos is not a routine linter. Anthropic has described it, in a preview assessment published on its own site, as capable of finding and exploiting software vulnerabilities at a level that surpasses all but the most skilled human researchers. The company's red team has said the model surfaced zero-days in every major operating system and web browser it was pointed at, including a 27-year-old bug in OpenBSD — an operating system whose entire reputation rests on having been audited to death. In cryptographic libraries, it reportedly found weaknesses in TLS, AES-GCM and SSH implementations serious enough to let an attacker forge certificates or decrypt supposedly secure traffic. Engineers with no formal security background were, according to Anthropic's own account, able to turn the model's findings into working exploits using little more than the prompt "find a security vulnerability in this program."</p>
+<p>That capability is precisely why a government audit function wants it, and precisely why the same capability makes governments nervous about who else has it. Anthropic chose not to release Mythos publicly, instead handing access to more than 40 vetted companies and institutions — a decision the company has framed as buying time to build defenses before the offensive version of this technology spreads.</p>
+<h2>From locked out to logged in, in three months</h2>
+<p>What makes CISA's involvement notable is how recently it wasn't involved at all. Axios reported in April that CISA — the one federal agency whose entire job is securing the systems everyone else relies on — had no access to Mythos, even as the NSA was already using it. Anthropic had briefed CISA on the model's capabilities without granting access, while the Commerce Department's AI standards testing arm got hands-on time instead. The optics were not flattering: the country's top cyber-defense agency on the outside of a security tool that mattered.</p>
+<p>The gap traces back to a fight that had nothing to do with code quality. In February, the Pentagon designated Anthropic a formal "supply chain risk" — a label historically reserved for firms suspected of working with foreign adversaries — after Anthropic refused to strip contractual safeguards blocking its models from being used in autonomous weapons systems or mass domestic surveillance. An appeals court let the designation stand in April even as Anthropic contested it. The NSA kept using Mythos regardless, an arrangement that drew criticism from lawmakers who argued the risk label was being weaponized against a compliant American company rather than reserved for actual foreign threats.</p>
+<p>By April 7, Anthropic had folded the tool into Project Glasswing, a coalition of a dozen companies — including Microsoft, Google, Apple, AWS and CrowdStrike — pledging $100 million in Mythos usage credits and $4 million to open-source security groups, with a promise of public reporting on findings within 90 days. CISA's current access appears to have arrived somewhere in that window, well after the companies that write much of the world's software already had theirs.</p>
+<h2>The leadership vacuum underneath it all</h2>
+<p>All of this is happening at an agency that hasn't had a Senate-confirmed director since Jen Easterly left in January 2025. Palantir's chief technology officer, Shyam Sankar, has been floated as a likely pick, with DHS Secretary Markwayne Mullin telling lawmakers in June that a nominee was imminent. Whoever takes the job inherits an agency now dependent, at least for this audit work, on a model built by a company the Pentagon still formally distrusts.</p>
+<p>The next real test of how significant this is won't come from another leak about bug counts — it will come from whether Project Glasswing's 90-day public reporting commitment, or a confirmed CISA director with reason to make the audit's findings public, actually puts numbers, agencies and severity ratings on the record. Until then, this is a story about a capability being deployed, not yet a story about what it found.</p></div><section class="sources-block"><h4>Sources</h4><ol><li><a href="https://www.rappler.com/technology/united-states-cisa-using-anthropic-mythos-audit-government-code/" rel="nofollow noopener" target="_blank">US cyber agency is using Anthropic&#x27;s Mythos to audit government code, sources say — Rappler</a></li><li><a href="https://www.benzinga.com/news/26/07/60292030/u-s-cyber-defense-agency-cisa-using-anthropic-audit-government-code-cisa-has-already-found-many-bugs" rel="nofollow noopener" target="_blank">Benzinga: CISA Using Anthropic To Audit Government Code</a></li><li><a href="https://www.axios.com/2026/04/21/cisa-anthropic-mythos-ai-security" rel="nofollow noopener" target="_blank">CISA doesn&#x27;t have access to Anthropic&#x27;s Mythos — Axios</a></li><li><a href="https://red.anthropic.com/2026/mythos-preview/" rel="nofollow noopener" target="_blank">Assessing Claude Mythos Preview&#x27;s cybersecurity capabilities — Anthropic</a></li><li><a href="https://www.anthropic.com/glasswing" rel="nofollow noopener" target="_blank">Project Glasswing: Securing critical software for the AI era — Anthropic</a></li><li><a href="https://www.npr.org/2026/03/06/g-s1-112713/pentagon-labels-ai-company-anthropic-a-supply-chain-risk" rel="nofollow noopener" target="_blank">Pentagon labels AI company Anthropic a supply chain risk &#x27;effective immediately&#x27; — NPR</a></li><li><a href="https://www.cnbc.com/2026/04/08/anthropic-pentagon-court-ruling-supply-chain-risk.html" rel="nofollow noopener" target="_blank">Anthropic loses appeals court bid to temporarily block Pentagon blacklisting — CNBC</a></li><li><a href="https://therecord.media/trump-considers-palantir-exec-to-lead-cisa" rel="nofollow noopener" target="_blank">Trump considers Palantir exec to lead CISA — The Record</a></li></ol></section><section class="related"><h4>Related in this edition</h4><a href="c3ai-shell-partnership-expansion.html"><span style="display:block;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:0.2rem;">TECH &amp; SCIENCE</span>C3.ai and Shell expand predictive maintenance partnership</a></section><footer class="colophon">The Bot Tribune · 2026-07-07 · <a href="index.html">Back to the edition</a></footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
+</body>
+</html>
