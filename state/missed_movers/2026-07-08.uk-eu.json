@@ -1,0 +1,124 @@
+{
+  "date": "2026-07-08",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 1 of today's 10 biggest UK/EU movers.\n\n\u2022 5 upside misses \u2014 DGE.L +5%, CA.PA +4%, BEI.DE +4%, OR.PA +4%, WKL.AS +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (ENR.DE -9%, IFX.DE -8%, ASM.AS -8%, STMPA.PA -7%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: ENR.DE (-9.38%) \u2014 Barclays downgraded Siemens Energy to Underweight (PT raised to \u20ac130), arguing the gas-turbine order supercycle is peaking and unsustainable; stock led DAX losses. Why we passed: Outside any active strategy's universe \u2014 ENR.DE is a large-cap German industrial/power-equipment name (DAX-40); likely excluded because uk-eu universes are scoped by sector/index and don't cover Xetra industrial equipment makers, and the bot's catalyst taxonomy tracks earnings/M&A/news, not sell-side rating changes.",
+  "top_movers": [
+    {
+      "ticker": "DGE.L",
+      "move_pct": 4.795,
+      "close": 15.845,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Diageo rallied on Rare Series luxury whisky launch (33yr Talisker) plus expanded airport draught-pouring partnership (Belfast) \u2014 sentiment-driven product/PR news, not scheduled earnings (next report Aug 6).",
+      "miss_reason": "Outside any active strategy's universe \u2014 DGE.L is a large-cap UK staples/spirits name, a sector momentum and news-reactive strategies typically exclude in favor of higher-beta tech/growth or commodity-linked tickers.",
+      "suggestion": "Add a defensive/staples sleeve or FTSE100-consumer-staples watchlist so PR-driven re-rating names like DGE.L get screened; gate entries on same-day volume \u22651.5x avg to avoid chasing single-day PR pops.",
+      "failed": false
+    },
+    {
+      "ticker": "CA.PA",
+      "move_pct": 4.491,
+      "close": 16.635,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "RBC Capital Markets initiated coverage at Outperform w/ \u20ac22 target, citing double-digit FCF yield & margin expansion; extended Jul-7's 3.6% pop into a 2nd day.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CA.PA is a Paris-listed EU staples/retail large-cap; bot likely scopes news-catalyst detection to earnings/M&A keywords, not sell-side initiation/rating events.",
+      "suggestion": "Add sell-side rating-initiation/upgrade events (not just earnings/M&A) as a catalyst trigger, and extend uk-eu universe to include CAC40 retail names like CA.PA.",
+      "failed": false
+    },
+    {
+      "ticker": "BEI.DE",
+      "move_pct": 4.151,
+      "close": 78.78,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-day news catalyst found \u2014 Beiersdorf has been on a multi-session grind higher (+3.25% on 7/7, +4.15% close-to-close on 7/8) amid an active \u20ac100M share buyback tranche and steady Nivea/skincare demand narrative.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BEI.DE is a large-cap German consumer-staples/DAX blue-chip with low volatility and no momentum/news trigger, a profile the bot's universe (likely tilted to higher-beta or sector-specific names) doesn't cover.",
+      "suggestion": "Add DAX large-cap consumer-staples names to the uk-eu universe with a low-beta/slow-grind sub-filter (e.g., 5-day return > 3% on below-average ATR) so buyback-driven steady climbs like this get flagged.",
+      "failed": false
+    },
+    {
+      "ticker": "ULVR.L",
+      "move_pct": 4.082,
+      "close": 47.43,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive"
+      ],
+      "catalyst": "No single sharp headline; extends a multi-day rally (+3.99% prior day too) on M&A/portfolio-simplification optimism (McCormick foods combination progress, Thorne wellness-bid speculation) ahead of H1 results.",
+      "miss_reason": "Outside the static universe of momentum/mean-reversion strategies \u2014 ULVR.L is a mega-cap, low-beta UK/EU consumer-staples defensive name that typically fails cap/volatility screens tuned for higher-beta movers; only news-reactive, which isn't universe-constrained, engaged with it.",
+      "suggestion": "Add a low-beta mega-cap staples bucket (or explicit ULVR.L inclusion) to momentum-trader's uk-eu universe gated on a relative-volume \u22651.3x trigger, so multi-day M&A-driven grinds aren't left solely to news-reactive.",
+      "failed": false
+    },
+    {
+      "ticker": "OR.PA",
+      "move_pct": 3.73,
+      "close": 392.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "L'Or\u00e9al signed a 50-year exclusive license to create/distribute Gucci fragrance & beauty products, taking over from Coty after Kering's early redemption of the license \u2014 announced 2026-07-07.",
+      "miss_reason": "Outside any active strategy's universe \u2014 OR.PA is a French large-cap luxury/personal-care name on Euronext Paris; uk-eu strategies likely scope to UK-listed or narrower EU sector coverage and exclude French consumer/luxury megacaps entirely.",
+      "suggestion": "Add top Euronext Paris luxury/consumer names (OR.PA, MC.PA) to the EU universe with an M&A/licensing news-gate that admits names on same-day >3% unscheduled gap tied to a corporate press release.",
+      "failed": false
+    },
+    {
+      "ticker": "WKL.AS",
+      "move_pct": 3.663,
+      "close": 60.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst \u2014 no earnings (next report Aug 5, 2026) or M&A found; likely a technical bounce/short-covering after a ~57% 12-month slump, possibly aided by a Jul 2 Deutsche Bank Buy reiteration.",
+      "miss_reason": "Outside any active strategy's universe \u2014 WKL.AS is a large-cap Dutch info-services/tax-compliance software name (AEX-listed), a sector/geography the bot's uk-eu momentum and news-reactive universes don't currently cover.",
+      "suggestion": "Add AEX large-cap info-services/software names (>\u20ac10B mkt cap) to the uk-eu universe screen so technical bounce moves in adjacent sectors aren't structurally excluded.",
+      "failed": false
+    },
+    {
+      "ticker": "ENR.DE",
+      "move_pct": -9.376,
+      "close": 154.46,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Barclays downgraded Siemens Energy to Underweight (PT raised to \u20ac130), arguing the gas-turbine order supercycle is peaking and unsustainable; stock led DAX losses.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ENR.DE is a large-cap German industrial/power-equipment name (DAX-40); likely excluded because uk-eu universes are scoped by sector/index and don't cover Xetra industrial equipment makers, and the bot's catalyst taxonomy tracks earnings/M&A/news, not sell-side rating changes.",
+      "suggestion": "Add a sell-side rating-change feed (upgrade/downgrade + PT revision) as a catalyst type, and extend uk-eu universe inclusion to DAX-40 constituents above a liquidity floor so single-name analyst-driven gaps like this are screenable.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": -8.341,
+      "close": 70.77,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide semiconductor selloff: Samsung Q2 profit up ~19x but only modestly beat estimates, sparking 'sell the news' profit-taking in AI chip valuations that hit high-beta EU chipmakers.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IFX.DE is a large-cap DAX semiconductor name not currently included in the uk-eu tradable universe, so no filter ever got a chance to evaluate it; the move was a macro/sector rotation, not a single-name signal anyway.",
+      "suggestion": "Add major DAX semiconductor components (IFX.DE, and peers like ASML.AS proxy names) to the uk-eu universe with a sector-beta tag so momentum/mean-reversion strategies can react to AI-valuation-driven chip selloffs.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": -7.715,
+      "close": 890.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news \u2014 sector-wide semiconductor-equipment sell-off on AI-chip overproduction/DeepSeek in-house-chip fears; ASML, BESI, STMicro, Infineon also fell >4% same session.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ASM.AS lists only on Euronext Amsterdam; uk-eu universe construction likely tracks FTSE/DAX/CAC large-caps and omits AEX-listed names like ASMI.",
+      "suggestion": "Add AEX constituents (ASML, ASMI, BESI) to the uk-eu universe so correlated semiconductor-equipment sector moves aren't structurally invisible to every strategy.",
+      "failed": false
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": -7.434,
+      "close": 58.65,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No stock-specific news; caught in a broad global semiconductor sell-off (AI-valuation/rate fears) that hit chip names worldwide July 6-8, 2026.",
+      "miss_reason": "Outside any active strategy's universe \u2014 STMPA.PA is a Euronext Paris large-cap semiconductor name with no mapped US ADR line, so it falls outside the uk-eu universe's listing-venue coverage entirely.",
+      "suggestion": "Map STMPA.PA to its dual-listed NYSE ticker (STM) or add it directly to the uk-eu semiconductor watchlist so sector-wide beta sell-offs trigger the mean-reversion sleeve instead of being invisible to the bot.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-08T15:03:40.729064+00:00"
+}
