@@ -1,0 +1,124 @@
+{
+  "date": "2026-07-08",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 1 of today's 10 biggest US movers.\n\n\u2022 5 upside misses \u2014 CTSH +6%, CBOE +6%, GILD +5%, DVN +5%, DOW +5%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (INTC -10%, TER -10%, GNRC -9%, WDC -8%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: INTC (-9.66%) \u2014 18A foundry process reportedly won't hit profitable yields until late 2026/2027, AMD overtook Intel in data-center revenue for the first time, and a BofA AI-bubble note triggered a sector-wide chip selloff \u2014 capping a 21% 7-day drawdown from ~$140 to ~$110. Why we passed: Outside any active strategy's universe. INTC is a mega-cap semiconductor that spent years as a laggard/value name outside momentum and growth universes; its static/periodically-refreshed universe list likely wasn't updated to capture INTC's 2026 breakout (+270% YTD) before this reversal.",
+  "top_movers": [
+    {
+      "ticker": "CTSH",
+      "move_pct": 6.212,
+      "close": 43.94,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Cognizant deepened its Google Cloud/Gemini Enterprise partnership (embedding 'Frontier Certified Engineers', deploying Gemini to 100k+ staff), sparking a bargain-hunting rally off a recent 52-week low ahead of July 29 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CTSH is a large-cap IT-services/BPO name, a sector these strategies don't cover. Even if screened, its recent downtrend to a 52-week low would likely have failed a positive-momentum/trend-quality filter right before the reversal.",
+      "suggestion": "Add large-cap IT-services/tech-outsourcing names (CTSH, INFY, WIT) to the momentum universe, and let a partnership/AI-announcement news-gate override a stale negative-momentum score for one session.",
+      "failed": false
+    },
+    {
+      "ticker": "OXY",
+      "move_pct": 5.88,
+      "close": 51.68,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive"
+      ],
+      "catalyst": "Evercore double-upgrade to Outperform (PT $65) coincided with WTI crude spiking ~6% to $74.58 on renewed US-Iran/Strait of Hormuz strike fears; OXY has highest oil-price beta among US majors.",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 OXY is a large-cap energy/E&P name not covered by current strategy universes, so no filter was even applied; only the news-reactive strategy, which scans headlines broadly, caught it.",
+      "suggestion": "Add large-cap energy E&P names (XLE constituents with oil-price beta) to momentum-trader's universe, or add a macro trigger that expands universe inclusion when WTI moves >4% intraday on geopolitical headlines.",
+      "failed": false
+    },
+    {
+      "ticker": "CBOE",
+      "move_pct": 5.533,
+      "close": 258.64,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Iran truce collapse/renewed strikes spiked market volatility & oil >4%; CBOE, which owns VIX and options exchanges, rallied as a vol-beneficiary while S&P/Dow fell.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CBOE is a large-cap financial/exchange operator, not a typical high-beta momentum name, and it's a countercyclical 'vol proxy' that rises on macro shocks, a pattern momentum/mean-reversion equity screens aren't built to flag.",
+      "suggestion": "Add a small vol-proxy watchlist (CBOE, ICE, CME) triggered off intraday VIX% change, so a geopolitical/VIX-spike signal can route into strategies even when the name sits outside the standard momentum universe.",
+      "failed": false
+    },
+    {
+      "ticker": "GILD",
+      "move_pct": 5.208,
+      "close": 136.36,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FDA approved Trodelvy as first-line therapy for advanced triple-negative breast cancer (with EU approval too), plus positive HIV Phase 3 long-acting regimen data and an HSBC upgrade to Buy ($155 PT).",
+      "miss_reason": "Outside any active strategy's universe \u2014 GILD is large-cap pharma/biotech with binary FDA/regulatory catalysts, a category many momentum/mean-reversion universes exclude to avoid idiosyncratic clinical-trial and approval-decision risk rather than trade on price/volume signals.",
+      "suggestion": "Add a biotech/pharma sleeve with a regulatory-catalyst gate (e.g., FDA approval/PDUFA date within prior session + gap-up \u22653%) so large-cap names like GILD enter the universe on approval-driven moves instead of being excluded outright.",
+      "failed": false
+    },
+    {
+      "ticker": "DVN",
+      "move_pct": 5.079,
+      "close": 42.41,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news; WTI crude spiked ~5% to ~$74/bbl on Middle East escalation (US strikes on Iran, ceasefire collapse), lifting E&P names broadly including DVN.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DVN is a large-cap oil & gas E&P/energy producer, a sector likely excluded from momentum/mean-reversion universes that focus on tech/broad-market liquid names rather than commodity-correlated equities.",
+      "suggestion": "Add a geopolitical/commodity-shock sleeve: when WTI moves \u22653% intraday, auto-admit top-liquidity E&P names (DVN, FANG, OXY, etc.) into the tradable universe for that session.",
+      "failed": false
+    },
+    {
+      "ticker": "DOW",
+      "move_pct": 4.793,
+      "close": 28.64,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Chemical/materials play on Iran war escalation: US strikes on Iran + Strait of Hormuz attacks spiked oil ~5%, boosting feedstock-cost-advantaged US petrochemical producers like Dow even as broader indices fell.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DOW is a large-cap industrial/materials chemical name, likely excluded because bot's universes skew toward tech/liquid momentum names, and this move is a geopolitical sector-rotation trade (oil-driven margin story) rather than a name-specific earnings/news signal.",
+      "suggestion": "Add a commodity-linked materials basket (Dow, LyondellBasell, etc.) gated on WTI/Brent daily % change > 3%, so a geopolitical oil-shock regime flag can pull in feedstock-cost beneficiaries without touching the core momentum universe.",
+      "failed": false
+    },
+    {
+      "ticker": "INTC",
+      "move_pct": -9.664,
+      "close": 110.39,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "18A foundry process reportedly won't hit profitable yields until late 2026/2027, AMD overtook Intel in data-center revenue for the first time, and a BofA AI-bubble note triggered a sector-wide chip selloff \u2014 capping a 21% 7-day drawdown from ~$140 to ~$110.",
+      "miss_reason": "Outside any active strategy's universe. INTC is a mega-cap semiconductor that spent years as a laggard/value name outside momentum and growth universes; its static/periodically-refreshed universe list likely wasn't updated to capture INTC's 2026 breakout (+270% YTD) before this reversal.",
+      "suggestion": "Add a quarterly universe-refresh rule that auto-includes names crossing a trailing-90d return threshold (e.g. >100%) into the momentum universe, so parabolic movers like INTC get tracked (and their pullbacks tradable) once they're 'in play'.",
+      "failed": false
+    },
+    {
+      "ticker": "TER",
+      "move_pct": -9.594,
+      "close": 343.11,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No TER-specific news; caught in broad semiconductor selloff on AI-capex/valuation fears, hawkish Fed, and memory-oversupply worries hitting the whole chip sector.",
+      "miss_reason": "Outside any active strategy's universe \u2014 TER is a large-cap semi-equipment name, and sector-wide macro-driven selloffs (no idiosyncratic catalyst, next earnings not until 7/28) rarely trip news-reactive or earnings-gated filters.",
+      "suggestion": "Add a semiconductor-sector-beta screen that flags names moving >2x SMH ETF's daily move with no company-specific news, so macro-driven outliers in adjacent universes get evaluated for mean-reversion entries.",
+      "failed": false
+    },
+    {
+      "ticker": "GNRC",
+      "move_pct": -8.537,
+      "close": 235.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single fresh news item found for 7/8; move extends a volatile multi-week unwind of the AI/data-center trade \u2014 Dow rotated out of AI-linked names 7/7, echoing GNRC's 6/10 and 7/1 ~8% drops.",
+      "miss_reason": "Outside any active strategy's universe \u2014 GNRC is a ~$14B mid-cap industrial/power-equipment (generator) name, a sector/cap bucket the bot's momentum and mega-cap-tech-leaning universes don't cover despite its recent AI-data-center-driven volatility.",
+      "suggestion": "Add a sector-agnostic volatility screener (e.g., flag any name with 5-day avg abs daily move >4% and market cap >$5B) to pull high-beta industrials like GNRC into the tradable universe rather than gating inclusion by static sector/cap lists.",
+      "failed": false
+    },
+    {
+      "ticker": "WDC",
+      "move_pct": -7.855,
+      "close": 532.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Samsung's Q2 report showed a ~19x YoY operating-profit surge, but the sell-the-news reaction hit memory/storage peers (WDC, MU, SanDisk) as investors took profits after WDC's huge AI-storage-driven run-up; no negative company-specific news.",
+      "miss_reason": "Outside any active strategy's universe \u2014 WDC now trades as a >$500/share mega-cap memory/storage hardware name post its SanDisk share-exchange close (2026-06-22), a sector/cap bucket the bot's tradable universe doesn't currently cover.",
+      "suggestion": "Add memory/storage semiconductor names (WDC, MU, SNDK) to the universe and gate them with a peer-earnings sell-the-news filter that flags same-day moves following major sector-peer (e.g. Samsung) earnings releases.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-08T19:33:52.129297+00:00"
+}
