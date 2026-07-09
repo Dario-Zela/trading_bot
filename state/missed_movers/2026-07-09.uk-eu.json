@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-09",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 PRX.AS +3%, REN.AS +3%, CCEP.L +3%, CPG.L +3%, BRBY.L +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (VNA.DE -7%, RHM.DE -5%, GLE.PA -5%, FRES.L -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: VNA.DE (-6.57%) \u2014 US strikes on Iran ended ceasefire, Brent crude spiked ~7.7% toward $80/bbl, driving bond yields up and hitting rate-sensitive German real estate sector-wide (LEG, TAG, Aroundtown also fell sharply). Why we passed: Outside any active strategy's universe \u2014 VNA.DE is a large-cap German REIT/real-estate name, a sector this uk-eu universe likely excludes or under-weights; the move itself was a macro/rates-driven sector selloff with no idiosyncratic news, which single-name catalyst filters aren't designed to catch.",
+  "top_movers": [
+    {
+      "ticker": "PRX.AS",
+      "move_pct": 3.421,
+      "close": 40.665,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh company news; move tracks a rally in Tencent (its core holding) on HKEX, amplified by residual momentum from FY26 earnings beat and $5B buyback announced June 29.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Prosus is a mega-cap investment holding company (NAV pass-through vehicle for Tencent/Naspers stakes), not a standard operating-company sector name, so cap/sector filters likely exclude holding-company structures entirely.",
+      "suggestion": "Add an investment-holding-company category to the uk-eu universe with a rule that gates entry on the underlying asset's move (e.g., Tencent HKEX gap \u22653%) rather than PRX's own technicals.",
+      "failed": false
+    },
+    {
+      "ticker": "REN.AS",
+      "move_pct": 2.998,
+      "close": 28.86,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-day news catalyst; likely drift from RELX's ongoing \u00a3100m buyback tranche (1-21 Jul, part of \u00a32.25bn 2026 plan) and pre-earnings positioning ahead of Jul 23 results.",
+      "miss_reason": "Outside any active strategy's universe \u2014 REN.AS is the Euronext Amsterdam secondary listing of RELX PLC, whose primary listing is LSE:REL.L; universe construction likely keys off primary-exchange tickers only, so this dual-listing symbol is never enumerated.",
+      "suggestion": "Extend the universe builder to map known dual-listed secondary tickers (e.g., REN.AS -> REL.L) to the same underlying entity so existing signals/positions on the primary listing also register coverage on the secondary venue.",
+      "failed": false
+    },
+    {
+      "ticker": "CCEP.L",
+      "move_pct": 2.967,
+      "close": 81.55,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Wells Fargo raised CCEP PT to $115 (Jul 8) and Deutsche Bank to 8480p (Jul 2); active \u20ac500mn buyback tranche plus defensive-staples rotation amid Iran-ceasefire risk-off supported the move.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CCEP is a large-cap (~$47B) UK/EU consumer-staples bottler, dual-listed LSE/Nasdaq; likely excluded by sector (staples/defensive) or region-tagging confusion from its US ADR listing, not a technical filter.",
+      "suggestion": "Add FTSE100 large-cap consumer-staples names (mkt cap >$30B) to the uk-eu universe, and fix region-tagging so LSE-primary/Nasdaq-dual-listed tickers like CCEP aren't miscategorized as US-only.",
+      "failed": false
+    },
+    {
+      "ticker": "CPG.L",
+      "move_pct": 2.851,
+      "close": 32.47,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh company news on 2026-07-09 (last RNS was the May 11 H1 beat/guidance raise); move looks like continued re-rating drift ahead of the July 21 Q3 update, aided by broad FTSE 100 strength.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CPG.L is a mega-cap FTSE 100 contract-catering/support-services name, a defensive/staples sector the bot's uk-eu momentum & news-reactive strategies don't cover; also redenominated its LSE quote from GBp to USD on 2026-04-01, which likely breaks GBP-keyed universe/eligibility fi",
+      "suggestion": "Audit the uk-eu universe builder for a GBP-currency assumption on LSE listings and whitelist USD-quoted LSE names like CPG.L explicitly, since a silent currency-redenomination can drop a FTSE 100 constituent from coverage without any alert.",
+      "failed": false
+    },
+    {
+      "ticker": "BRBY.L",
+      "move_pct": 2.608,
+      "close": 11.215,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No same-day news catalyst found \u2014 stock has been depressed near 52-week lows on a revenue turnaround story, with the AGM not until 2026-07-15; move looks like a technical/short-covering bounce.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BRBY.L is a UK large-cap luxury/consumer-discretionary name currently in a documented revenue-decline turnaround story, a profile uk-eu strategies likely exclude via a sector or trend-quality filter (negative revenue growth, near 52-week lows) rather than a liquidity/cap cutoff.",
+      "suggestion": "Add a controlled carve-out to the uk-eu universe for FTSE 100 constituents currently excluded on trend-quality grounds, gated by a mean-reversion signal (e.g., >2% bounce off a 20-day low on >1.2x avg volume) rather than a blanket sector exclusion.",
+      "failed": false
+    },
+    {
+      "ticker": "BP.L",
+      "move_pct": 2.53,
+      "close": 4.9045,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Brent crude spiked ~5% (to ~$79/bbl) as US-Iran tensions escalated (US revoked Iran crude waiver, Iran struck US bases in Bahrain/Kuwait), lifting UK oil majors sector-wide.",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 BP.L is a large-cap FTSE 100 UK oil major, a geography/sector (UK-listed integrated energy) the bot's tradable universe doesn't cover, so no filter ever saw it.",
+      "suggestion": "Add a UK large-cap energy bucket (e.g. FTSE 100 oil & gas majors) to the uk-eu universe with a geopolitical-event gate keyed off Brent/WTI intraday % move, so oil-sensitive names become tradable on sector-wide crude spikes.",
+      "failed": false
+    },
+    {
+      "ticker": "VNA.DE",
+      "move_pct": -6.572,
+      "close": 21.04,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "US strikes on Iran ended ceasefire, Brent crude spiked ~7.7% toward $80/bbl, driving bond yields up and hitting rate-sensitive German real estate sector-wide (LEG, TAG, Aroundtown also fell sharply).",
+      "miss_reason": "Outside any active strategy's universe \u2014 VNA.DE is a large-cap German REIT/real-estate name, a sector this uk-eu universe likely excludes or under-weights; the move itself was a macro/rates-driven sector selloff with no idiosyncratic news, which single-name catalyst filters aren't designed to catch.",
+      "suggestion": "Add a rate-sensitive EU real-estate/REIT basket (VNA, LEG, TAG, AT1) gated on a macro trigger (Brent \u22655% intraday move or Bund 10Y yield spike \u226510bp) instead of requiring per-name news catalysts.",
+      "failed": false
+    },
+    {
+      "ticker": "RHM.DE",
+      "move_pct": -5.426,
+      "close": 1059.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Broker downgrade cycle continues: MWB Research cut RHM.DE to Sell (PT \u20ac1,450) on fears NATO budgets are pivoting to air-defense/drones, adding to Berenberg/JPMorgan cuts after Germany scrapped the F126 frigate deal in late June.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RHM.DE is a DAX-listed defense/industrial mega-cap, a sector likely excluded from the uk-eu universe via an ESG/arms-sector screen or simply never added despite its size and liquidity.",
+      "suggestion": "Add large-cap DAX/XETRA defense-adjacent names (RHM.DE, etc.) to the uk-eu universe watchlist with an explicit ESG-exclusion flag, so future misses are a documented policy choice rather than a silent coverage gap.",
+      "failed": false
+    },
+    {
+      "ticker": "GLE.PA",
+      "move_pct": -5.077,
+      "close": 71.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-name news: sector-wide French bank selloff as OAT-Bund spread widened on budget/political uncertainty, compounded by oil-driven bond yield spikes from Middle East/Iran tensions.",
+      "miss_reason": "Outside any active strategy's universe \u2014 GLE.PA (CAC40 bank) isn't in the uk-eu tradable list, so this was a macro/rates-driven sector move with no strategy positioned to react regardless of signal quality.",
+      "suggestion": "Add major CAC40 banks (GLE.PA, BNP.PA, ACA.PA) to the uk-eu universe with a rates-sensitivity tag so sector-wide moves tied to OAT-Bund spread widening become tradable, not just single-name catalysts.",
+      "failed": false
+    },
+    {
+      "ticker": "FRES.L",
+      "move_pct": -4.925,
+      "close": 27.1154,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Broker price-target cuts (Barclays to 3200p from 3775p, Berenberg also trimmed) amid a weak week for silver (dollar strength, Mideast-driven risk-off) hit precious-metals miners broadly.",
+      "miss_reason": "Outside any active strategy's universe \u2014 FRES.L is a UK-listed (LSE) primary-listing precious-metals miner, a sector/geography the bot's equity universes likely exclude (commodity-linked mining names, non-US primary listings).",
+      "suggestion": "Add a UK/LSE precious-metals-miner sleeve (or a silver-proxy equity list) to the universe so broker-downgrade/commodity-driven gappers like FRES.L are visible to a news-reactive or sector-momentum strategy.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-09T15:03:32.314178+00:00"
+}
