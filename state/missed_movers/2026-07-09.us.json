@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-09",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 SMCI +6%, CBOE +6%, AVGO +5%, VLO +5%, DOW +5%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (GNRC -9%, FIX -6%, PANW -5%, JBL -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: GNRC (-8.54%) \u2014 Multi-day unwind of GNRC's AI/data-center rally: BofA cut PT to $224 (from $236) after stock hit a 52-wk high $277.88; compounded by recall headlines on portable generators/pressure washers. Why we passed: Outside any active strategy's universe \u2014 GNRC is a capital-goods/industrial name (backup generators), not classified under tech/AI baskets despite its data-center supply-deal driven rally, so no strategy was even scanning it.",
+  "top_movers": [
+    {
+      "ticker": "SMCI",
+      "move_pct": 5.581,
+      "close": 27.715,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Launched Kubernetes Edge AI appliances jointly with Red Hat & Everpure (Portworx), expanding edge AI product line; stock extended its multi-day rally off product-momentum enthusiasm.",
+      "miss_reason": "Outside any active strategy's universe \u2014 likely excluded as a legal/regulatory headline-risk name (Taiwan prosecutors detained two SMCI employees July 1 in an Nvidia chip-smuggling probe, ~50 servers seized in May) and/or high realized volatility (down >55% from 52-wk high of $62.36 to ~$26.60 before this move), trippi",
+      "suggestion": "Add a time-decay to the headline-risk exclusion (e.g. auto-review names 30 trading days after a regulatory-probe flag) so product-driven rallies aren't permanently missed once acute legal risk fades from news flow.",
+      "failed": false
+    },
+    {
+      "ticker": "CBOE",
+      "move_pct": 5.533,
+      "close": 258.64,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Exchanges rallied as renewed US-Iran tensions (truce collapse) spiked market volatility; CBOE, operator of VIX and record-volume options exchanges, benefits directly from the resulting spike in trading activity.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CBOE is a large-cap financial market-infrastructure/exchange operator, a low-beta 'volatility-of-volatility' name that momentum/news-reactive bots typically don't track since its moves are driven by macro vol spikes rather than idiosyncratic stock news.",
+      "suggestion": "Add a small 'vol-beneficiary' basket (CBOE, CME, ICE) to the universe with a rule that gaps \u22653% on days VIX rises \u226510% trigger inclusion, capturing exchange-operator upside during volatility spikes.",
+      "failed": false
+    },
+    {
+      "ticker": "AVGO",
+      "move_pct": 5.262,
+      "close": 390.29,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Broadcom disclosed a new multiyear Apple chip-supply deal worth $30B+ (through 2031, custom ASICs incl. AI silicon), announced via 8-K ~July 8; stock gapped up and extended gains into 7/9 close.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AVGO is a $1.85T mega-cap semiconductor name, likely excluded by a sector-concentration cap (semis already represented by other holdings like NVDA) or a per-share price/notional filter given its ~$390-400 share price.",
+      "suggestion": "Add an 8-K/press-release news-gate that whitelists mega-cap names on disclosed multiyear supply-agreement filings \u2265$X, overriding the sector-concentration cap for a single-day opportunistic add.",
+      "failed": false
+    },
+    {
+      "ticker": "VLO",
+      "move_pct": 5.195,
+      "close": 280.05,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-day news event; multi-session rally on surging refining crack spreads, tight fuel inventories, high refinery utilization, and falling crude feedstock costs ahead of July 30 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 VLO is a large-cap energy/refining cyclical, a sector likely excluded or under-weighted by universes tuned for tech/growth momentum or news-driven small/mid-cap names.",
+      "suggestion": "Add an energy-sector crack-spread proxy screen (e.g., include refiners when 3-2-1 crack spread rises >X% over 5 sessions) to the universe builder so multi-day cyclical sector rallies aren't structurally excluded.",
+      "failed": false
+    },
+    {
+      "ticker": "DOW",
+      "move_pct": 4.793,
+      "close": 28.64,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single confirmed news catalyst on 7/9; bounce coincided with falling oil prices post Iran de-escalation, easing naphtha/feedstock cost worries for chemical producers after weeks of analyst price-target cuts (BofA, RBC, BMO, Wells Fargo, Mizuho all trimmed targets in late June)",
+      "miss_reason": "Outside any active strategy's universe \u2014 DOW is a large-cap basic-materials/commodity-chemicals name, a sector the bot's momentum/news strategies don't cover since they're weighted toward tech/growth and liquid mega-caps.",
+      "suggestion": "Add a materials/chemicals sector sleeve (or broaden universe by sector, not just market cap) so heavily-shorted, analyst-downgraded cyclicals can be caught on oversold-bounce or feedstock-cost-relief setups tied to oil moves.",
+      "failed": false
+    },
+    {
+      "ticker": "BKR",
+      "move_pct": 4.636,
+      "close": 56.995,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "BKR (Baker Hughes) rallied on news of a multi-year power-equipment supply agreement with Kodiak Gas Services tied to data-center electricity demand, alongside broader energy strength.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BKR is a large-cap oilfield-services/energy-equipment name, a sector the bot's current strategies likely don't cover, so no filter ever evaluated the move.",
+      "suggestion": "Add an energy-equipment/services sleeve (or a cross-sector catalyst scanner for data-center-power partnership announcements) so large-cap names like BKR enter the tradable universe instead of being structurally excluded.",
+      "failed": false
+    },
+    {
+      "ticker": "GNRC",
+      "move_pct": -8.537,
+      "close": 235.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Multi-day unwind of GNRC's AI/data-center rally: BofA cut PT to $224 (from $236) after stock hit a 52-wk high $277.88; compounded by recall headlines on portable generators/pressure washers.",
+      "miss_reason": "Outside any active strategy's universe \u2014 GNRC is a capital-goods/industrial name (backup generators), not classified under tech/AI baskets despite its data-center supply-deal driven rally, so no strategy was even scanning it.",
+      "suggestion": "Add a cross-sector 'AI-capex-linked industrials' watchlist (names with hyperscaler supply deals) so momentum/mean-reversion strategies can pick up non-tech AI plays like GNRC, not just semis/software.",
+      "failed": false
+    },
+    {
+      "ticker": "FIX",
+      "move_pct": -6.112,
+      "close": 1683.4399,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-day news trigger; FIX extended a multi-week pullback (down ~19% from its 52-wk high near $2074) amid heavy insider selling, a July 1 C-suite reshuffle, and profit-taking after its huge 2026 run.",
+      "miss_reason": "Outside any active strategy's universe \u2014 FIX is a >$1,600/share industrial HVAC/engineering-services name, likely screened out by a max-share-price or sector (non-tech, engineering & construction) filter rather than a technical signal.",
+      "suggestion": "Switch universe inclusion from a per-share price cap to dollar-notional or fractional-share sizing so high-priced compounders like FIX aren't structurally excluded from the tradable universe.",
+      "failed": false
+    },
+    {
+      "ticker": "PANW",
+      "move_pct": -5.148,
+      "close": 319.69,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No firm news trigger on 7/9; multi-day pullback from all-time highs (~$358) after ~80-100% YTD rally \u2014 profit-taking, stretched valuation (51% above GF fair value), overbought RSI, and insider selling.",
+      "miss_reason": "PANW isn't in any strategy's tradable universe at all \u2014 likely excluded as a mega-cap cybersecurity/software name outside the bot's sector/cap coverage, so no filter ever got a chance to evaluate the move.",
+      "suggestion": "Add large-cap cybersecurity names (PANW, CRWD, FTNT) to the mean-reversion universe with a post-rally guard (e.g., trigger only after >70% trailing-quarter gain + RSI>70) to catch overextended-momentum reversals like this one.",
+      "failed": false
+    },
+    {
+      "ticker": "JBL",
+      "move_pct": -5.068,
+      "close": 321.08,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued AI/semiconductor de-rating (SK Hynix HBM capex worries, hawkish Fed) plus analyst downgrade to Hold at ~23x NTM P/E near 10-yr highs after June's Russell index removal.",
+      "miss_reason": "Outside any active strategy's universe \u2014 JBL is an EMS/contract-manufacturer, not classified as core semis/tech, so momentum and sector-rotation universes built around chip names likely never scanned it despite its AI-capex correlation.",
+      "suggestion": "Extend momentum-trader's universe filter to include EMS/supply-chain proxies (Jabil, Celestica, Flex) correlated with AI capex, not just pure-play semis, so index-exit/de-rating cascades in adjacent names get flagged.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-09T19:32:37.508547+00:00"
+}
