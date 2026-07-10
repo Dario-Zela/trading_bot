@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-10",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 LITE +11%, HPE +10%, SNDK +8%, NCLH +7%, LRCX +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (APA -5%, PSKY -4%, COST -4%, CINF -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: LITE (+11.13%) \u2014 Leaked internal Meta memo showing plans to double AI compute to 14GW next year (plus custom AI chip entering production) ignited a fiber-optics/AI-networking rally; JPMorgan also reiterated Overweight, calling recent weakness a buying opportunity. Why we passed: Outside any active strategy's universe \u2014 Lumentum is classified as an optical-components/photonics industrial name, not tagged as AI-infrastructure/semiconductor, so momentum and news-reactive bots never scan it despite its ~700% 1yr AI-driven run and now-mega-cap size.",
+  "top_movers": [
+    {
+      "ticker": "LITE",
+      "move_pct": 11.126,
+      "close": 785.77,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Leaked internal Meta memo showing plans to double AI compute to 14GW next year (plus custom AI chip entering production) ignited a fiber-optics/AI-networking rally; JPMorgan also reiterated Overweight, calling recent weakness a buying opportunity.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Lumentum is classified as an optical-components/photonics industrial name, not tagged as AI-infrastructure/semiconductor, so momentum and news-reactive bots never scan it despite its ~700% 1yr AI-driven run and now-mega-cap size.",
+      "suggestion": "Add optical-networking/photonics names (LITE, COHR, FN) to the AI-infrastructure universe tag alongside semis, and refresh universe membership using rolling sector-momentum/market-cap screens rather than a static sector list.",
+      "failed": false
+    },
+    {
+      "ticker": "HPE",
+      "move_pct": 9.94,
+      "close": 49.11,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Vultr picked HPE (with Nvidia GB300 NVL72 gear) to build large-scale AI data centers, adding to a ~$6B AI order backlog and fresh Q2/Juniper-integration momentum.",
+      "miss_reason": "Outside any active strategy's universe \u2014 HPE is a legacy enterprise-hardware/server OEM name, a category the bot's universes (built around semis/hyperscalers/pure AI-momentum names) likely don't cover despite its now-mega-cap AI-infrastructure exposure.",
+      "suggestion": "Add server-OEM/enterprise-hardware names with rising AI-infra order backlogs (e.g. HPE, DELL) to the AI-momentum strategy's universe screen based on backlog-growth or hyperscaler-deal keyword flags.",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": 7.59,
+      "close": 1858.27,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "NCLH",
+      "move_pct": 6.984,
+      "close": 19.76,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Multi-day short-covering rally on stacked analyst price-target hikes (Wells Fargo $19\u2192$25, Citi $21\u2192$25, Morgan Stanley $20\u2192$22) plus falling oil prices easing cruise fuel-cost worries.",
+      "miss_reason": "Outside any active strategy's universe \u2014 NCLH is a ~$19, sub-$10B travel/leisure mid-cap with heavy short interest; likely excluded by a market-cap or sector-inclusion filter rather than a signal miss.",
+      "suggestion": "Add travel/leisure mid-caps (cruise operators) to the universe screen and add a short-interest-driven oversold-bounce trigger (5-session drawdown \u226510% + oil price reversal) to flag squeeze candidates pre-open.",
+      "failed": false
+    },
+    {
+      "ticker": "LRCX",
+      "move_pct": 6.009,
+      "close": 353.17,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Wave of analyst price-target hikes (Stifel to $425, TD Cowen/Mizuho to $400, Morgan Stanley to $404) on AI-driven memory-chip equipment demand, plus SK Hynix's $26.5B Nasdaq IPO.",
+      "miss_reason": "Outside any active strategy's universe - LRCX is a mega-cap semi-equipment name. The move was a multi-day analyst-upgrade cascade, not a scheduled catalyst (earnings not until 7/29), so no news-reactive trigger applied either.",
+      "suggestion": "Add a sector-agnostic analyst-momentum trigger (>=3 price-target hikes + >=5% move over a rolling 5-day window) so names outside the static sector/ticker universe list can still surface.",
+      "failed": false
+    },
+    {
+      "ticker": "IVZ",
+      "move_pct": 5.845,
+      "close": 28.61,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Invesco released preliminary June AUM of $2,470.3B (+0.7% MoM), with $8.0B net long-term inflows and $14.3B money-market inflows, pre-market on 7/10.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IVZ is a mid-cap (~$18-19B) traditional asset manager whose moves are driven by scheduled monthly AUM prints, not technical/momentum patterns the universe screens for.",
+      "suggestion": "Add asset-manager tickers to the news-reactive universe with a monthly-AUM-release calendar trigger (similar to earnings-gate) so a MoM AUM beat like +0.7% flags pre-market inclusion, not just quarterly earnings days.",
+      "failed": false
+    },
+    {
+      "ticker": "APA",
+      "move_pct": -5.048,
+      "close": 33.29,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Broad energy-sector selloff: WTI/Brent crude fell ~4% to multi-month lows as Hormuz tensions eased (tankers resuming transit, IEA data showing supply normalizing); Truist also issued a bearish note on APA on 7/10.",
+      "miss_reason": "Outside any active strategy's universe \u2014 APA is a mid-cap E&P/oil & gas explorer whose price action is dominated by commodity (WTI/Brent) beta rather than idiosyncratic, stock-specific catalysts, so it likely falls outside the equity universes the bot's momentum/news-reactive strategies are built to screen.",
+      "suggestion": "Add a macro-conditioned energy sub-universe keyed off daily WTI/Brent % change (e.g., include E&P names when sector ETF XOP moves >2%) so oil-beta-driven movers like APA become visible to a dedicated commodity-overlay strategy instead of being permanently filtered out.",
+      "failed": false
+    },
+    {
+      "ticker": "PSKY",
+      "move_pct": -4.308,
+      "close": 9.33,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Multi-state coalition prepping antitrust lawsuits to block the PSKY-WBD merger; Arete downgraded to Sell citing deal debt burden, forcing merger close to be pushed to July 22.",
+      "miss_reason": "Outside any active strategy's universe \u2014 PSKY is a sub-$10, recently-formed merger entity (Paramount+Skydance closed 2025) with a short listing history, likely below the market-cap/liquidity-track-record thresholds used for universe inclusion.",
+      "suggestion": "Add a merger-arb/deal-risk watchlist that admits active M&A-target tickers regardless of listing-age cutoff, so regulatory-driven gaps in newly merged names aren't structurally excluded from coverage.",
+      "failed": false
+    },
+    {
+      "ticker": "COST",
+      "move_pct": -4.213,
+      "close": 912.97,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "June sales report: comp sales decelerated to 8.8% (from May's 12.5%) despite 10.6% net sales growth; analysts also flagged a modeled ~71% FY Q4 free-cash-flow drop from warehouse capex/tariff refund delays.",
+      "miss_reason": "Outside any active strategy's universe \u2014 COST is a mega-cap, low-beta consumer-staples retailer; the bot's universes screen for higher-beta/momentum names, so a staple with a scheduled monthly sales print never entered the candidate list.",
+      "suggestion": "Add a recurring monthly-sales-release calendar watch for staples/retail tickers (Costco-style same-store-sales prints) that can flag deceleration-driven moves even for names normally filtered out by low-beta/volatility screens.",
+      "failed": false
+    },
+    {
+      "ticker": "CINF",
+      "move_pct": -3.382,
+      "close": 175.43,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sell-side analyst downgraded CINF to 'Market Perform' with a trimmed price target, cited as overvalued near its recent all-time high (~$192 on 7/2); stock fell 3.38% on the rating cut.",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 CINF is a staid, low-beta $28B P&C insurer, not the kind of high-momentum/liquid name these strategies track. A single analyst downgrade (not earnings/M&A) also isn't a signal type most news-reactive scanners are tuned to catch pre-move.",
+      "suggestion": "No actionable change \u2014 outside risk tolerance/universe design; large-cap low-beta insurers are intentionally excluded from momentum/news-reactive universes, and single-analyst rating actions are low-conviction, hard-to-front-run catalysts.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-10T19:35:28.653183+00:00"
+}
