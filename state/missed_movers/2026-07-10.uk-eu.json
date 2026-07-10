@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-10",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 STMPA.PA +7%, AAL.L +5%, BESI.AS +5%, ASML.AS +5%, GLEN.L +5%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (AZN.L -8%, EDV.L -7%, ANTO.L -6%, STLAP.PA -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: AZN.L (-7.88%) \u2014 Phase III CARDIO-TTRansform trial for heart drug Wainua (with Ionis) missed its primary efficacy endpoint, triggering AstraZeneca's worst single-day drop since March 2020. Why we passed: Outside any active strategy's universe \u2014 large-cap UK pharma/biotech binary-event names are typically excluded since trial readouts are unscheduled, non-technical shocks that momentum/mean-reversion signals can't anticipate pre-open.",
+  "top_movers": [
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": 6.582,
+      "close": 62.34,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Multi-day AI/data-center re-rating: STM raised 2026 data-center revenue ambition to ~$1B and BofA upgraded to Buy (PT $100) on silicon-photonics/optical-interconnect growth story.",
+      "miss_reason": "Outside any active strategy's universe \u2014 STM is dual-listed (NYSE: STM / Euronext Paris STMPA.PA); bot likely tracks only the US-listed line for this large-cap semis name, so the EU-EU ticker never enters a tradable universe.",
+      "suggestion": "Add STMPA.PA as a recognized EU counter mapped to the existing STM entity so cross-listing dedup logic includes it in the uk-eu universe instead of silently dropping the European line.",
+      "failed": false
+    },
+    {
+      "ticker": "AAL.L",
+      "move_pct": 5.324,
+      "close": 35.61,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide copper rally (LME copper +2.8% to a 2-week high on dollar weakness) lifted major copper miner AAL.L; JPMorgan also raised its price target to GBX 3,350 same day.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AAL.L is a large-cap UK diversified miner/commodity name, a sector the uk-eu strategies apparently don't screen, so the move was structurally invisible regardless of size.",
+      "suggestion": "Add a commodities/miners sleeve to the uk-eu universe (AAL.L, RIO.L, GLEN.L) gated on LME copper/iron-ore daily % move >2%, so sector-driven gainers in mining aren't excluded by default.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": 5.015,
+      "close": 253.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sympathy rally in EU chip-equipment names after Micron's blowout earnings/guidance; JPMorgan hiked PT to \u20ac266 and Goldman reiterated Buy post Besi's June 18 investor-day target raise.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BESI.AS is an Amsterdam-listed semicap-equipment large cap, not a UK/US name. The move was a cross-border sympathy reaction to a US peer's (Micron) earnings, not a name-level signal any single-stock scanner would catch.",
+      "suggestion": "Add a semicap sector-sympathy rule: when Micron/ASML/TSMC beat-and-raise pre/post-market, pull EU peers (BESI.AS, ASM.AS) into a same-day watchlist so uk-eu strategies can react to supply-chain sympathy moves.",
+      "failed": false
+    },
+    {
+      "ticker": "ASML.AS",
+      "move_pct": 4.722,
+      "close": 1601.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-day headline; move capped a multi-day run-up from a wave of analyst PT hikes (Bernstein to \u20ac2,623/$2,623, Wells Fargo, BofA, Morgan Stanley) on AI/EUV demand ahead of July 15 Q2 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ASML.AS is a mega-cap (~$400B) Dutch semi-equipment name; uk-eu strategies likely cap out at mid/large-cap and don't carry a dedicated large-cap tech/semis sleeve, so it's never in the scan set.",
+      "suggestion": "Add a mega-cap EU-semis sleeve (or widen the uk-eu universe's market-cap ceiling) with a pre-earnings analyst-revision trigger (\u22653 sell-side PT hikes within 5 sessions) to catch earnings run-ups like this one.",
+      "failed": false
+    },
+    {
+      "ticker": "GLEN.L",
+      "move_pct": 4.677,
+      "close": 5.136,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide copper rally (supply squeeze from Strait of Hormuz sulphuric acid disruptions) lifted FTSE miners broadly; no GLEN-specific news.",
+      "miss_reason": "Outside any active strategy's universe \u2014 GLEN.L falls into UK large-cap commodities/mining, a sector likely excluded from the bot's tradable universe entirely rather than filtered out on a signal.",
+      "suggestion": "Add a UK mining/commodities sector bucket to the universe with a sector-momentum trigger (e.g., \u22653 of 5 FTSE miners up >2% intraday) so broad commodity-driven rallies aren't structurally unreachable.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": 4.136,
+      "close": 926.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No ASM-specific news; move tracks sector-wide AI/memory-capex enthusiasm after SK Hynix's record $26.5B Nasdaq IPO on 2026-07-10 lifted chip-equipment names.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ASM.AS is a Euronext Amsterdam-listed semiconductor-equipment large-cap; the uk-eu universe roster apparently excludes this sector/exchange bucket entirely rather than screening it out on a technical filter.",
+      "suggestion": "Add Euronext Amsterdam semi-equipment peers (ASM.AS, ASML.AS, BESI.AS) to the uk-eu universe sector whitelist so sector-wide AI-capex catalysts (e.g., HBM-supplier IPOs/capex news) can be captured.",
+      "failed": false
+    },
+    {
+      "ticker": "AZN.L",
+      "move_pct": -7.879,
+      "close": 131.18,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Phase III CARDIO-TTRansform trial for heart drug Wainua (with Ionis) missed its primary efficacy endpoint, triggering AstraZeneca's worst single-day drop since March 2020.",
+      "miss_reason": "Outside any active strategy's universe \u2014 large-cap UK pharma/biotech binary-event names are typically excluded since trial readouts are unscheduled, non-technical shocks that momentum/mean-reversion signals can't anticipate pre-open.",
+      "suggestion": "No actionable change \u2014 this is an idiosyncratic clinical-trial binary event, not a technical/momentum miss; adding pharma-earnings-style catalyst gating would require a clinical-trial-calendar feed we don't currently ingest.",
+      "failed": false
+    },
+    {
+      "ticker": "EDV.L",
+      "move_pct": -7.07,
+      "close": 35.62,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-day EDV-specific news; move looks tied to a broader July gold-miner rout (Equinox, Alamos down >25% this month) as gold eased off highs and West Africa cost/royalty overhang weighs on sentiment.",
+      "miss_reason": "Outside any active strategy's universe \u2014 EDV.L is a London-listed frontier-market gold miner (West Africa ops), likely excluded by a materials/commodity-sector filter rather than by market cap, since it's actually a FTSE 100 constituent (~\u00a39.7B).",
+      "suggestion": "Add a narrow gold-mining/materials sleeve (FTSE 100/250 constituents tagged GICS Metals&Mining) so sector-wide commodity-equity gaps of \u22655% can trigger a mean-reversion or momentum signal instead of being filtered out entirely.",
+      "failed": false
+    },
+    {
+      "ticker": "ANTO.L",
+      "move_pct": -6.396,
+      "close": 35.27,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No firm-specific news; LME copper fell toward $6/lb (2-week low) as renewed Iran conflict fears spiked the dollar and hit industrial metals sector-wide.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ANTO.L is an LSE-listed copper mining large-cap, a commodity/resources name our uk-eu universes typically exclude since the bot targets firm-specific catalysts, not macro/FX-driven commodity selloffs.",
+      "suggestion": "Add a commodity_beta_proxy gate for LSE miners keyed off LME copper futures (e.g. flag names when copper moves >2% intraday) so macro-driven commodity-equity moves like today's dollar-strength selloff get surfaced for review.",
+      "failed": false
+    },
+    {
+      "ticker": "STLAP.PA",
+      "move_pct": -5.848,
+      "close": 4.6935,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "JPMorgan downgraded STLA to Neutral (PT cut \u20ac10\u2192\u20ac6) on Jul 9 citing cost-savings delayed to FY27/28; adds to HSBC's Reduce call on bloated US dealer inventory (93 days) and 2.5M-unit recalls.",
+      "miss_reason": "Outside any active strategy's universe \u2014 a large-cap Dutch-domiciled, dual-listed (NYSE/Euronext) auto OEM likely falls outside a uk-eu book scoped to UK/EU-domiciled names or excluding the autos sector, so no filter ever saw it.",
+      "suggestion": "Add STLA/STLAP.PA (and peer EU autos) to the uk-eu universe with a sell-side-downgrade trigger: flag when \u22652 analyst rating cuts hit within 5 trading days, independent of index/domicile screens.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-10T15:03:27.721839+00:00"
+}
