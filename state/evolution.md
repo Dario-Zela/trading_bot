@@ -228,3 +228,40 @@
   - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 2, "enforcement": true, "slot_kind": "alpaca"}`
 - **macro-aligned-macro-attn@uk-eu** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow UK-EU candidate (IC=+0.113, n=989) → trading212-paper
   - details: `{"target_tier": "trading212-paper", "t212_slot": 1, "enforcement": true, "slot_kind": "trading212"}`
+
+## Weekly evolution — 2026-07-11
+
+- **news-reactive@us** · `demote` · ✅ applied — Flagged meets_demotion_criteria=true: IC 0.008 (noise floor), hit rate 31.2%, negative P&L (-£212.58) over 16 trades — not earning its alpaca-paper slot.
+  - details: `{"from_tier": "alpaca-paper", "slot_cleared": true, "previous_slot": 1, "slot_kind": "alpaca"}`
+- **news-reactive@uk-eu** · `keep` · ✅ applied — Positive P&L (+£48.68) but IC -0.117 on a decent sample (n=482); not yet actionable either way, holding shadow tier.
+- **mean-reverter@us** · `mark-tier2-candidate` · ✅ applied — News-reactive-disclosure's thesis missed decisively, leaving mean-reverter@us as the clear leaderboard leader by hit-rate, P&L and drawdown — promoting it to the tier-2 shortlist.
+  - details: `{"tier2_marked_at": "2026-07-11", "thesis_present": true}`
+- **mean-reverter@uk-eu** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 17, "hit_rate": 0.235, "total_pnl_gbp": 220.5, "avg_pnl_pct": 0.602, "max_drawdown_pct": -2.41, "n_predictions_graded": 946, "ic": 0.021, "decile_spread": -0.188}}`
+- **macro-aligned@us** · `keep` · ✅ applied — IC -0.08, no promotion signal; watching alongside its macro-aligned-hmm and macro-attn siblings before pruning the family further.
+- **macro-aligned@uk-eu** · `keep` · ✅ applied — Weakest of the macro family this week (hit 9.1%, P&L -£412.56); on watch for deactivation next week if it doesn't turn.
+- **macro-aligned-hmm@us** · `keep` · ✅ applied — IC -0.074, no edge yet; giving it one more cycle before considering deactivation alongside the rest of the macro-aligned family.
+- **macro-aligned-hmm@uk-eu** · `keep` · ✅ applied — IC -0.112, weak hit rate; same watch-list status as its US leg.
+- **macro-aligned-macro-attn@us** · `keep` · ✅ applied — Sibling of the just-demoted UK-EU leg; US leg still marginally better (hit 35.7%, +£81.47) so keeping it in shadow rather than pruning both regions at once.
+- **macro-aligned-macro-attn@uk-eu** · `demote` · ✅ applied — Worst performer holding a paper slot: hit rate 18.2%, P&L -£404.42, drawdown -4.23%, IC -0.066 — flagged meets_demotion_criteria=true, freeing the single T212 slot for a stronger backstop pick.
+  - details: `{"from_tier": "trading212-paper", "slot_cleared": false, "previous_slot": 1, "slot_kind": "t212"}`
+- **momentum-trader-intramonth** · `deactivate` · ✅ applied — Structurally dormant: zero trades across 685 combined graded predictions (266 US / 419 UK-EU) since inception — the entry gate never fires in either region, an irrecoverable execution defect rather than a tunable one. Freeing its slot to fund a genuine axis-break spawn.
+  - details: `{"deactivated_at": "2026-07-11"}`
+- **momentum-trader-vix-gated@us** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 2, "hit_rate": 0.5, "total_pnl_gbp": 228.91, "avg_pnl_pct": 15.577, "max_drawdown_pct": -0.39, "n_predictions_graded": 472, "ic": 0.063, "decile_spread": 2.577}}`
+- **momentum-trader-vix-gated@uk-eu** · `keep` · ✅ applied — IC -0.034 on a tiny sample (n=2 trades); its US leg is stronger and gets the promotion this week, UK-EU stays in shadow.
+- **news-reactive-disclosure@us** · `demote` · ✅ applied — IC collapsed to -0.038 (from 0.078 last week, missing its own 0.10 bar), hit rate 30%, P&L -£121.95 — flagged meets_demotion_criteria=true.
+  - details: `{"from_tier": "alpaca-paper", "slot_cleared": true, "previous_slot": 3, "slot_kind": "alpaca"}`
+- **news-reactive-disclosure@us** · `unmark-tier2-candidate` · ✅ applied — Thesis explicitly required IC≥0.10 to hold the lead; instead IC went negative. Prediction missed decisively — dropping it from the leaderboard in favor of mean-reverter@us.
+- **news-reactive-disclosure@uk-eu** · `keep` · ✅ applied — IC -0.138, still shadow-only; no action needed beyond the US-leg demotion this week.
+- **regime-router@us** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 9, "hit_rate": 0.556, "total_pnl_gbp": 117.38, "avg_pnl_pct": 1.85, "max_drawdown_pct": -1.35, "n_predictions_graded": 889, "ic": -0.046, "decile_spread": -0.086}}`
+- **regime-router@uk-eu** · `keep` · ✅ applied — Hit rate only 7.7% (n=13) despite the US leg's promotion; UK-EU signal doesn't support elevating this leg yet.
+- **news-reactive** · `spawn-variant` · ✅ applied — news-reactive@us's IC has sat near the noise floor (0.008) for weeks and its slot is being freed this cycle; anchoring a variant to the ComSIA 2026 finding that sentiment works better as a suppression gate than an entry signal gives it a genuinely different decision logic (signal-source axis break), not a parameter tweak. Keeping the parent active as a control for comparison.
+  - details: `{"variant_id": "news-reactive-sentiment-gate", "addendum_applied": true}`
+- **momentum-trader-vix-gated@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.063, n=472) → Alpaca slot 1
+  - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 1, "enforcement": true, "slot_kind": "alpaca"}`
+- **news-reactive@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.008, n=448) → Alpaca slot 3
+  - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 3, "enforcement": true, "slot_kind": "alpaca"}`
+- **mean-reverter@uk-eu** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow UK-EU candidate (IC=+0.021, n=946) → trading212-paper
+  - details: `{"target_tier": "trading212-paper", "t212_slot": 1, "enforcement": true, "slot_kind": "trading212"}`

@@ -32,15 +32,12 @@ model_assignment:
   final_select: sonnet
 runs_in:
 - region: us
-  tier: alpaca-paper
-  alpaca_slot: 3
+  tier: shadow
+  alpaca_slot: null
   universe: t212_isa_us
-  tier2_candidate: true
-  tier2_marked_at: '2026-07-04'
-  tier2_thesis: "Sole surviving contender: IC=0.078 (down from 0.121, missed 0.15\
-    \ bar) but still positive, best P&L on slate (n=448, hit=0.429, +\xA3409.83).\
-    \ Both sector-rotator rivals collapsed to negative IC. Needs IC\u22650.10 next\
-    \ week to hold the lead."
+  tier2_candidate: false
+  tier2_marked_at: null
+  tier2_thesis: ''
 - region: uk-eu
   tier: shadow
   t212_slot: null
