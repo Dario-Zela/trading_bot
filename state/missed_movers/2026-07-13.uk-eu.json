@@ -1,0 +1,124 @@
+{
+  "date": "2026-07-13",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 1 of today's 10 biggest UK/EU movers.\n\n\u2022 5 upside misses \u2014 MT.AS +6%, ENT.L +4%, TEP.PA +4%, STLAP.PA +4%, RAND.AS +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (STJ.L -9%, AZN.L -4%, ENR.DE -3%, HSX.L -2%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: STJ.L (-8.55%) \u2014 Major partner firm Sovereign Wealth (~\u00a33bn AUM, 50+ advisers) reportedly defecting to S\u00f6derberg & Partners, compounding a Barclays downgrade citing AI disruption risk to SJP's advice model. Why we passed: Outside any active strategy's universe \u2014 STJ.L is a UK wealth-manager/insurer, a sector likely excluded from momentum/mean-reversion books due to idiosyncratic regulatory and adviser-retention headline risk rather than clean price-driven signals.",
+  "top_movers": [
+    {
+      "ticker": "VOD.L",
+      "move_pct": 12.623,
+      "close": 1.101,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned-hmm"
+      ],
+      "catalyst": "French billionaire Xavier Niel's Vega vehicle agreed to buy e&'s 16.2% Vodafone stake for ~\u00a34.4bn at a ~15% premium (112.5p), becoming top shareholder.",
+      "miss_reason": "Outside any active strategy's universe \u2014 VOD.L is a UK/LSE-listed large-cap telecom; non-macro strategies here appear scoped away from UK telecom large-caps, so no filter ever saw the name to act on.",
+      "suggestion": "Add an M&A/stake-catalyst gate that admits any name (regardless of sector/region universe scoping) on disclosed >10% stake purchases at a >10% premium, so strategic-investor news isn't filtered out purely by universe membership.",
+      "failed": false
+    },
+    {
+      "ticker": "MT.AS",
+      "move_pct": 6.42,
+      "close": 58.02,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Steel sector re-rating: EU import safeguard regime (tighter quotas, higher out-of-quota duty) took effect Jul 1; JPMorgan upgraded MT to Neutral, joining Jefferies/Deutsche Bank/Wells Fargo target hikes \u2014 no earnings (next Jul 30).",
+      "miss_reason": "Outside any active strategy's universe \u2014 large-cap EU steel/basic-materials cyclical, a sector likely excluded from uk-eu strategy coverage (tilted toward tech/healthcare/consumer names), so no filter ever got a chance to evaluate it.",
+      "suggestion": "Add a basic-materials/cyclicals sleeve (or a policy-catalyst watchlist keyed to EU tariff/safeguard announcements) so regulatory re-rating names like MT.AS enter the scan universe even without a pre-existing earnings trigger.",
+      "failed": false
+    },
+    {
+      "ticker": "ENT.L",
+      "move_pct": 3.925,
+      "close": 5.508,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No dated news for 7/13 found; likely a technical bounce off 52-week lows (~501p) after last week's sell-off on the UK Gambling Commission's confirmed 25% licence-fee hike, amid ongoing CEE-exit/MGM-BetMGM speculation.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Entain is a UK sports-betting/gaming large-cap (~\u00a33.4B); this sector is typically screened out entirely (sin-stock/regulatory-risk exclusion) rather than filtered by daily price action.",
+      "suggestion": "If the sin-stock/gambling sector exclusion is a blanket rule, add a carve-out for UK large-caps (>\u00a32B mkt cap) with a relief-rally filter (e.g. move >3% while >15% below 52wk high) to catch oversold bounces like this.",
+      "failed": false
+    },
+    {
+      "ticker": "TEP.PA",
+      "move_pct": 3.701,
+      "close": 52.12,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear same-day news catalyst found; likely a technical relief bounce after TEP.PA's steep 2026 selloff (52-wk range 43.65-90.68), with earnings not due until 2026-07-30.",
+      "miss_reason": "Outside any active strategy's universe \u2014 a French mid-cap outsourcing/BPO name that's been in a prolonged, high-volatility drawdown (down from ~90 to ~50 this year) likely excluded by cap/sector/quality or volatility screens rather than a live technical filter.",
+      "suggestion": "Add a distressed-mega-cap-EU watchlist tier that admits large-cap ex-US names purely on % move + volume even when they fail standard quality/volatility screens, so post-selloff relief bounces like this aren't structurally invisible.",
+      "failed": false
+    },
+    {
+      "ticker": "STLAP.PA",
+      "move_pct": 3.639,
+      "close": 4.841,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Prelim Q2 2026 shipments +10% YoY to 1.6M units; N. America +38% on strong Ram/Jeep/Chrysler volumes, beating estimates ahead of July 30 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 STLAP.PA is a large-cap European auto OEM. Likely excluded by a sector filter (autos/cyclicals) and because it's a pre-earnings operational update, not a scheduled earnings print the news gate watches for.",
+      "suggestion": "Add STLAP.PA/auto-OEM large caps to the uk-eu universe, and extend the news-reactive gate to trigger on operational updates (shipment/production releases) not just formal earnings dates.",
+      "failed": false
+    },
+    {
+      "ticker": "RAND.AS",
+      "move_pct": 3.288,
+      "close": 28.59,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear same-day news catalyst; earnings due 2026-07-22 and no confirmed M&A/regulatory news for 2026-07-13 \u2014 likely technical bounce or sector-wide staffing re-rating ahead of results.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RAND.AS is a mid-cap Euronext Amsterdam staffing name, likely excluded by a EU small/mid-cap or sector (HR services) filter rather than any technical signal.",
+      "suggestion": "Add RAND.AS and peer staffing names (Adecco, ManpowerGroup) to the uk-eu universe's mid-cap watchlist so pre-earnings drift (2026-07-22 report date) is captured by the mean-reversion scanner.",
+      "failed": false
+    },
+    {
+      "ticker": "STJ.L",
+      "move_pct": -8.548,
+      "close": 11.555,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Major partner firm Sovereign Wealth (~\u00a33bn AUM, 50+ advisers) reportedly defecting to S\u00f6derberg & Partners, compounding a Barclays downgrade citing AI disruption risk to SJP's advice model.",
+      "miss_reason": "Outside any active strategy's universe \u2014 STJ.L is a UK wealth-manager/insurer, a sector likely excluded from momentum/mean-reversion books due to idiosyncratic regulatory and adviser-retention headline risk rather than clean price-driven signals.",
+      "suggestion": "Add UK wealth-management/insurance names to the uk-eu universe behind a news-catalyst gate that requires a confirmed RNS or press report (e.g. partner-exit, regulatory fine) before allowing entry, rather than a blanket sector exclusion.",
+      "failed": false
+    },
+    {
+      "ticker": "AZN.L",
+      "move_pct": -3.894,
+      "close": 128.34,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "HSBC downgraded AZN to Hold (PT cut to 137.50p) citing execution risk on pending SERENA-4/AVANZAR trial readouts, compounding sentiment damage from the Jul 9 CARDIO-TTRansform/Wainua Phase III miss.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AZN.L is a large-cap LSE-listed pharma/healthcare name, a sector/geography the bot's tradable universe likely excludes (US-centric or ex-healthcare mandate), so no filter ever saw it regardless of the multi-day binary-readout selloff.",
+      "suggestion": "Add a news-driven watchlist override that ingests sell-side rating changes and clinical trial readouts for large-cap ex-universe names, auto-admitting a name for 3-5 sessions when it posts >3% single-day drops on two distinct catalyst days within a week.",
+      "failed": false
+    },
+    {
+      "ticker": "ENR.DE",
+      "move_pct": -2.637,
+      "close": 152.12,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued fallout from Barclays' 'Underweight' downgrade on peak-order/peak-FCF concerns, compounded by uncertainty ahead of Germany's gas power plant tender (Kraftwerkssicherheitsgesetz) vote.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ENR.DE is a DAX40 German industrials/energy-equipment mega-cap (~\u20ac130B), and this region's book appears scoped to UK-listed names plus a narrower EU large-cap set that excludes German industrials; the move was also driven by a sell-side rating change rather than a hard data cata",
+      "suggestion": "Add DAX40 constituents to the uk-eu universe and add a sell-side rating-change trigger (e.g., major bank downgrade \u22651 notch with >3% same-day move) to the news-reactive catalyst list, not just earnings/M&A events.",
+      "failed": false
+    },
+    {
+      "ticker": "HSX.L",
+      "move_pct": -2.264,
+      "close": 18.56,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst today \u2014 likely profit-taking after Hiscox's M&A-speculation rally (Intact Financial bid reports, May 2026) and the July 10 JPMorgan target hike to 2050p.",
+      "miss_reason": "Outside any active strategy's universe \u2014 HSX.L is an LSE-listed, Bermuda-domiciled specialty insurer (FTSE 100, GBP); insurance/financials and non-US-listed names are commonly excluded from momentum/news-reactive universes.",
+      "suggestion": "Add FTSE 100 insurers to the UK universe with an M&A-speculation flag (surface names carrying unconfirmed takeover press reports) instead of blanket-excluding the insurance sector.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-13T15:04:17.069404+00:00"
+}
