@@ -1,0 +1,127 @@
+{
+  "date": "2026-07-13",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 1 of today's 10 biggest US movers.\n\n\u2022 5 upside misses \u2014 WY +4%, SBAC +4%, NVDA +4%, CCI +4%, BF-B +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (MRNA -11%, CRWD -6%, DDOG -4%, FTNT -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: MRNA (-10.83%) \u2014 Profit-taking/rout after +160% YTD rally; JPMorgan reaffirmed Sell and named MRNA a top Q3 short idea, dragging biotech peers (Sarepta, ImmunityBio) down too. Why we passed: Outside any active strategy's universe \u2014 MRNA is a large-cap biotech with binary FDA catalyst risk (flu vaccine PDUFA Aug 5, Q2 earnings Jul 31), a profile typically excluded from momentum/mean-reversion universes to avoid gap/event risk.",
+  "top_movers": [
+    {
+      "ticker": "META",
+      "move_pct": 5.975,
+      "close": 669.21,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned",
+        "macro-aligned-macro-attn",
+        "regime-router",
+        "news-reactive"
+      ],
+      "catalyst": "Meta announced a $40B expansion of its Louisiana AI data center (total >$250B) amid a week-long AI-infrastructure/cloud rally sparked by the 'Meta Compute' business plans.",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 META is a mega-cap AI-infra name likely excluded via a sector/correlation concentration cap to avoid crowding with existing AI-adjacent (semis/cloud) holdings, not a technical filter miss.",
+      "suggestion": "Add a capped mega-cap-AI-infra sleeve (e.g. 1-2 name allowance outside normal universe) so top-decile gainers in this cluster aren't fully excluded by the correlation cap.",
+      "failed": false
+    },
+    {
+      "ticker": "WY",
+      "move_pct": 4.222,
+      "close": 23.45,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Raymond James upgraded WY to Strong Buy (from Outperform, $30 PT) on 7/10, and improving lumber-price sentiment fueled a multi-day continuation rally into 7/13.",
+      "miss_reason": "Outside any active strategy's universe \u2014 WY is a timber REIT/forest-products name, a sector likely excluded from momentum/news-reactive universes that focus on non-REIT equities or higher-beta growth names.",
+      "suggestion": "Add timber/forest-product REITs to universe scope and add an analyst-upgrade trigger (Buy-rating upgrade + PT raise within prior 3 sessions) so multi-day sector-sentiment moves aren't missed.",
+      "failed": false
+    },
+    {
+      "ticker": "SBAC",
+      "move_pct": 4.137,
+      "close": 190.03,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single dated headline found for 7/13; SBAC likely rode continued M&A/takeover speculation (KKR/Brookfield interest, initially +19% in April) plus a broad tower-REIT sector rally on rate-cut optimism.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SBAC is a tower-infrastructure REIT, a sector/asset class the bot's momentum and news-reactive strategies don't scope to, and the move is driven by speculative/binary M&A chatter rather than a clean earnings or fundamental signal.",
+      "suggestion": "Add a small event-driven satellite universe covering large-cap REITs/infra names under active take-private speculation (position-capped, deal-risk-aware) rather than expanding the core momentum universe to REITs broadly.",
+      "failed": false
+    },
+    {
+      "ticker": "NVDA",
+      "move_pct": 4.034,
+      "close": 210.96,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Trump administration eased AI-chip export controls to the UAE, opening a major new advanced-chip market via G42/Microsoft's Abu Dhabi data-center buildout.",
+      "miss_reason": "Outside any active strategy's universe \u2014 as a mega-cap AI/semis name NVDA is likely excluded by a market-cap ceiling or sector-concentration cap meant to limit crowded, highly-correlated large-cap tech exposure, so this policy-driven gap was never evaluated.",
+      "suggestion": "Add a narrow regulatory-catalyst override letting cap-excluded mega-caps take a small same-day position on export-control/policy headlines, bypassing the market-cap/sector cap for that single trade.",
+      "failed": false
+    },
+    {
+      "ticker": "CCI",
+      "move_pct": 3.886,
+      "close": 79.66,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single 7/13 headline; stock extended a re-rating after RBC Capital's 7/10 Buy upgrade, riding the tower-only pivot/$1B buyback story into the 7/22 earnings date, even as yields rose and the broader tape fell.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CCI is a large-cap communications-infrastructure REIT/dividend name, a sector category the bot's momentum/mean-reversion universes likely exclude in favor of higher-beta tech/growth names.",
+      "suggestion": "Add a sector-agnostic 'fresh analyst upgrade + buyback catalyst' screen that can pull large-cap REIT/telecom-infra names into the tradable universe on Buy upgrades, rather than blanket-excluding the REIT sector.",
+      "failed": false
+    },
+    {
+      "ticker": "BF-B",
+      "move_pct": 3.767,
+      "close": 26.17,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Renewed M&A speculation \u2014 ongoing Sazerac ($32/sh bid, rejected May) and Pernod Ricard merger saga keeps BF-B bid up on deal-revival chatter",
+      "miss_reason": "Outside any active strategy's universe. BF-B is a dual-class (non-voting Class B) consumer-staples/spirits name that's been in a months-long M&A special-situation with elevated event risk \u2014 bots likely exclude dual-class tickers or flag it as deal-speculation noise unsuited to momentum/mean-reversion signals.",
+      "suggestion": "Add BF-B to universe via a dual-class-share allowlist (map to BF-A's sector/liquidity profile) and gate entries behind an M&A-rumor filter requiring confirmed 8-K/press disclosure rather than excluding all speculation-driven names outright.",
+      "failed": false
+    },
+    {
+      "ticker": "MRNA",
+      "move_pct": -10.828,
+      "close": 68.27,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Profit-taking/rout after +160% YTD rally; JPMorgan reaffirmed Sell and named MRNA a top Q3 short idea, dragging biotech peers (Sarepta, ImmunityBio) down too.",
+      "miss_reason": "Outside any active strategy's universe \u2014 MRNA is a large-cap biotech with binary FDA catalyst risk (flu vaccine PDUFA Aug 5, Q2 earnings Jul 31), a profile typically excluded from momentum/mean-reversion universes to avoid gap/event risk.",
+      "suggestion": "No actionable change \u2014 move was analyst-downgrade/short-interest driven with a pending binary FDA catalyst, which is the exact risk profile the biotech exclusion is designed to avoid.",
+      "failed": false
+    },
+    {
+      "ticker": "CRWD",
+      "move_pct": -5.655,
+      "close": 187.18,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No news catalyst \u2014 profit-taking after a strong run to 52-wk highs, compounded by post-split (4-for-1, effective 7/2) volatility and disclosed CEO 10b5-1 insider sales.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CRWD sits in the large-cap, richly-valued cybersecurity/software bucket typically excluded from momentum/mean-reversion coverage lists, and the recent 4-for-1 split likely reset trailing volume/price history used for universe inclusion checks.",
+      "suggestion": "Add a post-split re-qualification rule: re-run universe inclusion checks within 10 trading days of any 4:1+ split using split-adjusted history instead of waiting for the standard lookback window to refill.",
+      "failed": false
+    },
+    {
+      "ticker": "DDOG",
+      "move_pct": -4.26,
+      "close": 257.54,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Bernstein downgrade (Outperform\u2192Market Perform, PT $226) flagged Q3/Q4 demand deceleration and AI-lab customer plateau, triggering a broader high-multiple software selloff (DDOG, ZS) amid growth-to-value rotation.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DDOG is a large-cap enterprise SaaS/observability name, a sector class the bot's tradable lists don't cover (likely scoped to semis/hardware AI plays or a fixed legacy tech watchlist), so no filter ever saw the ticker.",
+      "suggestion": "Add a rich-valuation SaaS/software cohort (DDOG, ZS, CRWD, NET) to the universe with an analyst-downgrade gate that flags names down >3% same-day on a sell-side rating cut for mean-reversion or short-bias review.",
+      "failed": false
+    },
+    {
+      "ticker": "FTNT",
+      "move_pct": -3.799,
+      "close": 157.51,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "HSBC downgraded FTNT to 'Hold' on stretched 55x forward P/E, compounding lingering overhang from active exploitation of CVE-2026-35616 in FortiClient EMS disclosed July 9.",
+      "miss_reason": "Outside any active strategy's universe \u2014 FTNT is large-cap cybersecurity software, a sector/category the bot's current universes don't cover, so no filter ever evaluated it regardless of the move's size.",
+      "suggestion": "Add a large-cap cybersecurity/software bucket to the universe config so analyst-downgrade and CVE-driven gaps in names like FTNT, PANW, CRWD become visible to the news-reactive strategy.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-13T19:33:13.043665+00:00"
+}
