@@ -1,0 +1,128 @@
+{
+  "date": "2026-07-14",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 2 of today's 10 biggest UK/EU movers.\n\n\u2022 4 upside misses \u2014 TEP.PA +7%, RAND.AS +6%, IMCD.AS +5%, BNR.DE +5%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (AC.PA -4%, BESI.AS -4%, IGG.L -3%, IFX.DE -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: TEP.PA (+6.71%) \u2014 Peer read-through: US comp Concentrix (CNXC) jumped +8.3% on Q2 beat (record cash flow, +400% YoY AI contract signings), easing AI-disruption fears that hit BPO peers earlier this year. Why we passed: Outside any active strategy's universe \u2014 TEP.PA is a Euronext Paris CX/BPO outsourcing name whose ~-40% YTD collapse likely dropped it below cap/liquidity screens; bot's news-scanner is single-name and wouldn't map a US comp's earnings to a French cross-sector peer.",
+  "top_movers": [
+    {
+      "ticker": "TEP.PA",
+      "move_pct": 6.715,
+      "close": 55.62,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Peer read-through: US comp Concentrix (CNXC) jumped +8.3% on Q2 beat (record cash flow, +400% YoY AI contract signings), easing AI-disruption fears that hit BPO peers earlier this year.",
+      "miss_reason": "Outside any active strategy's universe \u2014 TEP.PA is a Euronext Paris CX/BPO outsourcing name whose ~-40% YTD collapse likely dropped it below cap/liquidity screens; bot's news-scanner is single-name and wouldn't map a US comp's earnings to a French cross-sector peer.",
+      "suggestion": "Add a peer-correlation trigger: flag TEP.PA for universe review whenever CNXC/TTEC post an earnings-day move >5%, since TEP has shown historically correlated reactions (e.g. -13% on a prior Concentrix guidance cut).",
+      "failed": false
+    },
+    {
+      "ticker": "RAND.AS",
+      "move_pct": 5.911,
+      "close": 30.28,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious July-14 news catalyst; likely pre-earnings positioning/sector rally ahead of Randstad's Jul 22 Q2 report (LTIMindtree tech-unit sale news is stale, from May 2026)",
+      "miss_reason": "Outside any active strategy's universe \u2014 RAND.AS is a ~\u20ac5B EUR-denominated Euronext Amsterdam mid-cap staffing name, a market/cap-cap segment the bot's tradable universes don't cover at all.",
+      "suggestion": "Add a EUR-denominated Euronext Amsterdam/Brussels mid-cap bucket (\u20ac2-10B) to the universe scanner so pre-earnings European movers like RAND.AS surface for review, even if not yet tradable.",
+      "failed": false
+    },
+    {
+      "ticker": "IMCD.AS",
+      "move_pct": 5.427,
+      "close": 90.14,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "UBS upgraded IMCD to 'Buy' from 'Neutral', raising PT to \u20ac100 from \u20ac85, citing a path back to 6-7% organic EPS growth as chemicals distribution headwinds ease.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IMCD is a mid-cap (~\u20ac5-6B) Dutch chemicals distributor, likely excluded by a large-cap/sector filter; the move was a broker-rating re-rate, not a scheduled earnings event (results due 2026-07-29), so no pre-positioned catalyst signal existed either.",
+      "suggestion": "Add a sell-side rating-change scanner (upgrade/downgrade + PT change \u226515%) as a universe-expansion trigger for uk-eu mid-caps, independent of market-cap filters.",
+      "failed": false
+    },
+    {
+      "ticker": "BNR.DE",
+      "move_pct": 5.087,
+      "close": 59.08,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No firm same-day news; move looks like a technical rebound off the 200-day MA after a month-long slide, still carrying tailwind from the Jun-23 FY26 EBITDA guidance raise (\u20ac1.25-1.40bn).",
+      "miss_reason": "Outside any active strategy's universe \u2014 BNR.DE is a mid-cap German chemical distributor (~\u20ac13bn cap, Xetra) that falls outside the uk-eu strategies' large-cap/sector coverage lists, so no filter ever saw it to include or exclude.",
+      "suggestion": "Add Xetra-listed EU industrials/chemicals distributors like BNR.DE to the uk-eu universe, or add a mean-reversion screen flagging names bouncing >5% off their 200-day MA on above-average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "VOD.L",
+      "move_pct": 4.541,
+      "close": 1.151,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned-macro-attn",
+        "news-reactive-disclosure",
+        "regime-router"
+      ],
+      "catalyst": "Continued re-rating after Xavier Niel's Vega vehicle agreed to buy e&'s 16.2% Vodafone stake at ~112.5p/share (announced 2026-07-10); stock closed above deal price on turnaround optimism.",
+      "miss_reason": "Outside any active strategy's universe \u2014 VOD.L is a UK large-cap telecom on LSE; none of the running strategies' universes include UK telecom/FTSE-100 names, so no filter ever got a chance to evaluate it.",
+      "suggestion": "Add a UK large-cap telecom/FTSE-100 sleeve to news-reactive-disclosure's universe so LSE-listed stake-sale/M&A disclosures (e.g. RNS filings) can be traded, not just US/EU names.",
+      "failed": false
+    },
+    {
+      "ticker": "BP.L",
+      "move_pct": 3.785,
+      "close": 5.0092,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive-sentiment-gate"
+      ],
+      "catalyst": "BP's Q2 trading update beat on pricing/refining margins & lower net debt despite $1B impairment; Brent +3.3% on US-Iran Strait of Hormuz tensions amplified the move.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BP.L is a UK-primary-listed FTSE 100 integrated energy major; strategy universes appear scoped away from LSE energy names, so even news-reactive-sentiment-gate's coverage list excluded it despite the clear catalyst.",
+      "suggestion": "Add FTSE 100 energy majors (BP.L, SHEL.L) to news-reactive-sentiment-gate's tradable universe and wire in a scheduled trading-update calendar so pre-market guidance releases trigger the gate, not just ad-hoc headlines.",
+      "failed": false
+    },
+    {
+      "ticker": "AC.PA",
+      "move_pct": -3.919,
+      "close": 47.07,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh same-day headline found; move looks like continued drift after Jefferies' late-June downgrade (Hold, PT cut to \u20ac52 on weak Middle East RevPAR) ahead of July 30 H1 results.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AC.PA is a French CAC 40 travel & leisure/hospitality name; the uk-eu book's eurozone coverage likely skews to core sectors (banks, industrials, staples) and doesn't include hotel/leisure tickers or full CAC 40 breadth.",
+      "suggestion": "Add CAC 40 constituents (or a travel & leisure sector bucket) to the eurozone universe file so analyst-downgrade-driven laggards like AC.PA are at least screened pre-earnings.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": -3.604,
+      "close": 246.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Dutch media reported Samsung/SK Hynix are weighing delaying hybrid-bonding adoption for HBM packaging in favor of new heat-dissipation tech, hitting BESI's key long-term growth driver.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BESI.AS is a large-cap Euronext Amsterdam semicap-equipment name; uk-eu strategies likely scope to broader indices/sectors that exclude niche semiconductor-supply-chain names like this one.",
+      "suggestion": "Add an AEX/semicap-equipment watchlist (ASML supply-chain peers: BESI, ASMI, BE) to the uk-eu universe so rumor-driven single-stock shocks in this cluster get flagged even without index membership.",
+      "failed": false
+    },
+    {
+      "ticker": "IGG.L",
+      "move_pct": -3.433,
+      "close": 17.44,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "IG Group proposed a new Jersey-incorporated holding company + H1 trading update (revenue +18%, guidance reaffirmed) tied to its March 2026 strategic review; restructuring uncertainty overshadowed the strong numbers.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IGG.L is a UK mid-cap financials/spread-betting name, likely excluded by sector or market-cap screens rather than any technical filter; the move was driven by a corporate-structure headline (Jersey re-domiciliation) rather than a clean earnings beat/miss a news-reactive bot patt",
+      "suggestion": "Add UK mid-cap financials (e.g. FTSE 250 constituents like IGG.L) to the universe with a headline-classifier gate that flags 'strategic review/restructuring' announcements separately from standard earnings surprises.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": -3.077,
+      "close": 70.25,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news \u2014 continuation of a multi-day semiconductor sector selloff (profit-taking on AI-capex/valuation fears after Samsung's Q2 print) hitting DAX chip names.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IFX.DE is a German Xetra-listed large-cap semiconductor name; the uk-eu universe likely skews to UK/FTSE and non-tech sectors, so it was never eligible to trade the sector-wide selloff.",
+      "suggestion": "Add key EU semiconductor mega-caps (IFX.DE, ASML.AS, STM.PA) to the uk-eu universe with a sector-momentum/reversion overlay to catch AI-capex-driven, multi-day DAX chip selloffs.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-14T15:03:48.204357+00:00"
+}
