@@ -1,0 +1,125 @@
+{
+  "date": "2026-07-14",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 1 of today's 10 biggest US movers.\n\n\u2022 5 upside misses \u2014 IT +6%, VLO +6%, FDS +5%, PSX +5%, INTU +5%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (SNDK -13%, APP -13%, MRVL -8%, INTC -7%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: SNDK (-13.49%) \u2014 SanDisk (SNDK) plunged in a broad memory/semiconductor selloff \u2014 KOSPI -10% on Samsung/SK Hynix declines, AI-capex valuation fears, and profit-taking after its huge prior 12-month run. Why we passed: Outside any active strategy's universe entirely \u2014 SNDK is a 2025 Western Digital spinoff with a short standalone trading history and extreme realized volatility (1000%+ 12-month run), likely excluded by a listing-age/volatility screen rather than sector or cap filters.",
+  "top_movers": [
+    {
+      "ticker": "IT",
+      "move_pct": 6.057,
+      "close": 141.31,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No hard catalyst \u2014 a technical snapback off multi-year lows (stock down ~66% over the trailing year) amid AI-narrative buzz (AskGartner rollout, IT Symposium/Xpo), even as Morgan Stanley cut its price target to $173.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Gartner is a ~$12B IT research/advisory name in a prolonged downtrend, not a mega-cap tech or 52-week-high momentum name, so it never enters momentum/growth scans, and deep-drawdown bounces aren't targeted by mean-reversion filters tuned for shorter pullbacks.",
+      "suggestion": "Add a deep-drawdown mean-reversion scanner (e.g., names >40% off 52-week high bouncing on \u22652x average volume) to widen the universe past momentum-near-highs names, catching oversold snapbacks like this.",
+      "failed": false
+    },
+    {
+      "ticker": "VLO",
+      "move_pct": 5.69,
+      "close": 296.66,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide refiner rally: tight fuel inventories, high refinery utilization, and softer crude costs widened crack spreads; Jefferies/Raymond James hiked price targets ($312/$340) ahead of Jul 30 earnings, plus Iran-tension-driven Brent/WTI spike lifted energy names.",
+      "miss_reason": "Outside any active strategy's universe \u2014 VLO is a large-cap energy refiner, a sector likely excluded from the bot's tradable list (no oil & gas/commodity-linked coverage), so no filter ever got a chance to evaluate the move.",
+      "suggestion": "Add a dedicated energy-refiner sleeve (XLE/CRAK constituents) to the universe with a crack-spread or sector-relative-strength trigger, so macro-driven refiner rallies aren't structurally invisible to the bot.",
+      "failed": false
+    },
+    {
+      "ticker": "FDS",
+      "move_pct": 5.184,
+      "close": 259.92,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued post-earnings re-rating: FactSet's July 1 Q3 beat, raised guidance, and AI partnerships (Google Cloud, TIFIN.AI) drove a multi-day drift higher, compounded by a broad market rally on cooler CPI data.",
+      "miss_reason": "Outside any active strategy's universe \u2014 FDS is a large-cap financial-data/analytics name (index/research subscription business), a sector-cap bucket the bot's tradable universes don't cover; also the move was earnings-drift over ~2 weeks, not a single-day gap a news-reactive filter would catch on 7/14 itself.",
+      "suggestion": "Add a post-earnings-drift scanner that flags names with cumulative +X% move in the 10 trading days following a reported beat/guide-raise, and expand universe inclusion criteria to cover large-cap financial-data/index providers alongside existing sector buckets.",
+      "failed": false
+    },
+    {
+      "ticker": "PSX",
+      "move_pct": 5.123,
+      "close": 198.01,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide rally in refiners on Middle East tensions lifting crack spreads/refining margin expectations; no PSX-specific news (next earnings not due until late July).",
+      "miss_reason": "Outside any active strategy's universe \u2014 PSX is a large-cap integrated refiner, a sector likely excluded from momentum/tech-tilted universes that don't track energy/commodity-sensitive cyclicals.",
+      "suggestion": "Add a energy-sector geopolitical-risk proxy (e.g., crack-spread or Brent-vol trigger) that temporarily admits large-cap refiners like PSX into the tradable universe during Middle East supply-risk spikes.",
+      "failed": false
+    },
+    {
+      "ticker": "BIIB",
+      "move_pct": 4.961,
+      "close": 209.03,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive-sentiment-gate",
+        "news-reactive-disclosure"
+      ],
+      "catalyst": "Truist upgraded BIIB to Buy (PT $190\u2192$235) ahead of AAIC Alzheimer's data; FDA approved at-home starter dose for Leqembi autoinjector, bioequivalence data also positive.",
+      "miss_reason": "Outside any active strategy's universe \u2014 large-cap biotech name driven by a pre-market analyst upgrade + FDA/conference catalyst cluster, a category none of the current universes track; even in-universe, the gap priced in overnight before any intraday technical/momentum signal could trigger.",
+      "suggestion": "Add a biotech/healthcare-catalyst watchlist (FDA decisions, AAIC/ASCO-type conference dates, analyst rating changes) feeding a pre-market gap scanner so news-reactive strategies can pick up \u22653% premarket movers in this sector, not just post-open volume/RSI triggers.",
+      "failed": false
+    },
+    {
+      "ticker": "INTU",
+      "move_pct": 4.812,
+      "close": 288.19,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh news \u2014 a technical/relief bounce (~+5%) after INTU's ~60% YTD crash driven by weak Q3 TurboTax pricing results; sector rotation into beaten-down software names amid chip profit-taking.",
+      "miss_reason": "Outside any active strategy's universe \u2014 INTU was likely dropped after its earnings-driven 20% crash, multiple sell-rating downgrades, and securities-fraud investigations flagged it as high-litigation-risk, so momentum/quality screens exclude it despite today's bounce.",
+      "suggestion": "Add a mean-reversion re-entry rule that re-admits recently-crashed large caps to the universe once RSI recovers above 35 on rising volume, sized small, even while a litigation/fundamentals flag remains active.",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": -13.491,
+      "close": 1657.4399,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "SanDisk (SNDK) plunged in a broad memory/semiconductor selloff \u2014 KOSPI -10% on Samsung/SK Hynix declines, AI-capex valuation fears, and profit-taking after its huge prior 12-month run.",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 SNDK is a 2025 Western Digital spinoff with a short standalone trading history and extreme realized volatility (1000%+ 12-month run), likely excluded by a listing-age/volatility screen rather than sector or cap filters.",
+      "suggestion": "Relax the universe's minimum listing-history requirement (or add an explicit override) for spinoffs once they clear ~12 months of trading and meet standard liquidity/market-cap thresholds, so names like SNDK enter the tradable set.",
+      "failed": false
+    },
+    {
+      "ticker": "APP",
+      "move_pct": -13.15,
+      "close": 440.31,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh single-day news; 5th straight down day (~19% cumulative) driven by BofA/Citi bearish notes, AXON self-serve rollout execution-risk fears, and a broader AI/growth-tech risk-off tied to Mideast tensions.",
+      "miss_reason": "Outside any active strategy's universe \u2014 APP is a large-cap mobile-adtech/AI-ad-targeting name, a sector the bot's screens likely don't cover; also no earnings/8-K trigger existed today (next print Aug 5), so news-reactive gates had nothing to fire on.",
+      "suggestion": "Add adtech/AI-ad-targeting as a tracked sector in the universe builder, and add a multi-day-breakdown trigger (e.g. 5-session cumulative return < -15% with no scheduled catalyst) to flag mean-reversion candidates like this.",
+      "failed": false
+    },
+    {
+      "ticker": "MRVL",
+      "move_pct": -7.661,
+      "close": 217.745,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No firm-specific news \u2014 broad AI/semiconductor selloff (sector rotation into Energy) plus fading S&P 500 index-inclusion flows and valuation/insider-selling worries hit MRVL like peers.",
+      "miss_reason": "Outside any active strategy's universe \u2014 MRVL sits in the mega-cap semiconductor/AI-infra bucket, which isn't covered by the bot's current tradable universe, so no filter ever got a chance to evaluate it.",
+      "suggestion": "Add MRVL (and its semiconductor/AI-infra peer group) to a sector-momentum or mean-reversion strategy's universe now that it's S&P 500-listed, with a volatility/gap filter to catch multi-day sector-rotation drawdowns.",
+      "failed": false
+    },
+    {
+      "ticker": "INTC",
+      "move_pct": -6.874,
+      "close": 102.2901,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "$5.7B Ireland (Leixlip) foundry expansion revived capex/cash-flow worries (Q1 foundry op loss $2.4B, FCF -$2.0B) amid a semis sector selloff (SK Hynix rout) and JPMorgan's bearish top-short call ahead of 7/23 earnings.",
+      "miss_reason": "Outside any active strategy's universe. INTC's 270%+ H1 2026 run-up likely trips an extreme-momentum/bubble-risk exclusion, and its capex-heavy foundry profile falls outside sector filters tuned for cleaner momentum megacaps.",
+      "suggestion": "Add a capped high-beta megacap tier: admit ex-universe names with outsized YTD run-ups at reduced size when a scheduled capex/earnings catalyst drives a same-day move beyond a 5% ATR-relative threshold.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-14T19:33:25.195014+00:00"
+}
