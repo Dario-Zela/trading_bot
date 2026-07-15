@@ -1,0 +1,130 @@
+{
+  "date": "2026-07-15",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 3 of today's 10 biggest US movers.\n\n\u2022 3 upside misses \u2014 CRWD +12%, CVNA +8%, MPWR +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (IBM -25%, BIIB -8%, NOW -6%, GEHC -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: IBM (-24.54%) \u2014 Pre-market CEO letter flagged prelim Q2 revenue of $17.2B (vs $17.86B est.); mainframe/infrastructure weakness as clients redirected capex to AI hardware. Why we passed: Outside any active strategy's universe (mega-cap legacy tech/enterprise IT, not in tradable list). Even if included, the gap was driven by a pre-market CEO disclosure hours before open, so post-open momentum/mean-reversion signals had no edge \u2014 price had already re-rated by the bell.",
+  "top_movers": [
+    {
+      "ticker": "CRWD",
+      "move_pct": 12.144,
+      "close": 210.73,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide cyber rally after IBM's Q2 warning flagged spending shifting to cybersecurity, plus cooler June CPI boosting growth names; CRWD hit a 52-wk high on Benchmark/UBS target hikes.",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 likely excluded as a single-name cybersecurity/software growth stock rather than an index/mega-cap constituent, and its July 2 4-for-1 split may have reset volume/price history screens.",
+      "suggestion": "Add a sector-agnostic 'peer-group sympathy' rule: when 2+ names in the same GICS sub-industry (e.g. cybersecurity: FTNT, PANW) gap >5% on a common macro catalyst, auto-admit correlated large-caps into the momentum universe for that session.",
+      "failed": false
+    },
+    {
+      "ticker": "GS",
+      "move_pct": 8.705,
+      "close": 1136.9615,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned-macro-attn",
+        "macro-aligned",
+        "news-reactive-disclosure"
+      ],
+      "catalyst": "Q2 EPS $20.98 vs $14.40 est, revenue +39% YoY to $20.34B on record equity underwriting (+130%) amid AI-driven dealmaking boom",
+      "miss_reason": "GS sits outside any active strategy's universe (large-cap financials/banks category not covered by the currently-live momentum/mean-reversion/news-reactive strategies), so no filter ever evaluated the post-earnings gap.",
+      "suggestion": "Add large-cap financials (GS, MS, JPM) to news-reactive-disclosure's universe with an earnings-gate rule releasing names on post-results gap \u22655% within 30 min of open.",
+      "failed": false
+    },
+    {
+      "ticker": "CVNA",
+      "move_pct": 8.294,
+      "close": 70.38,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "CVNA confirmed Q2 earnings (July 29) with CFO reiterating guidance for all-time-record retail units & EBITDA, amplified by peer KMX's strong beat/turnaround lifting used-car retail sentiment.",
+      "miss_reason": "Outside any active strategy's universe entirely - CVNA is likely excluded as a high-beta, historically volatile/meme-prone auto-retail name that momentum/mean-reversion filters screen out on volatility or sector-classification grounds, not by market cap.",
+      "suggestion": "Add a pre-earnings-date-confirmation trigger: when a name announces its earnings date with reiterated beat-and-raise guidance, add it to a 2-week watchlist universe so gap-anticipation moves aren't missed entirely.",
+      "failed": false
+    },
+    {
+      "ticker": "DELL",
+      "move_pct": 7.125,
+      "close": 457.54,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "regime-router"
+      ],
+      "catalyst": "Wave of same-day analyst price-target hikes (Evercore/Goldman/Morgan Stanley to $500/$477) on AI-server demand optimism, plus a political tailwind from Michael Dell's $6B Trump Accounts pledge highlighted at an Oval Office event.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DELL is classified as legacy PC/hardware OEM rather than AI-semis/software momentum, so static universes never included it; only regime-router's opportunistic, non-universe-gated logic could reach it.",
+      "suggestion": "Add large-cap AI-server-exposed hardware OEMs (DELL, HPE, SMCI) to the momentum-trader universe, or let regime-router's dynamic picks auto-promote a name into other strategies' universes after 2+ same-day analyst target hikes.",
+      "failed": false
+    },
+    {
+      "ticker": "PANW",
+      "move_pct": 6.839,
+      "close": 352.89,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "regime-router"
+      ],
+      "catalyst": "IBM's Q2 profit warning/miss ($17.2B rev vs $17.9B est) and CEO comments on cybersecurity budget resilience sparked a sector-wide rally; PANW closed +6.8% to $352.89.",
+      "miss_reason": "Outside any active strategy's universe \u2014 PANW is a large-cap cybersecurity software name, but the move was peer-contagion from IBM's earnings miss on a different ticker, not a PANW-specific signal a name-scoped scanner would catch.",
+      "suggestion": "Add PANW/CRWD/OKTA/ZS/S to a large-cap cybersecurity universe bucket, and add a peer-contagion trigger that flags sector peers for review when one constituent (e.g. IBM) posts an outsized earnings surprise.",
+      "failed": false
+    },
+    {
+      "ticker": "MPWR",
+      "move_pct": 6.715,
+      "close": 1378.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Broad semiconductor/AI-infra rally (soft CPI print + IBM capex read-through) plus MPWR reaffirming its $2.00/share Q2 dividend ahead of July 30 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 MPWR is a ~$1,378/share large-cap semiconductor name likely excluded by a share-price or notional-per-position cap rather than by sector/liquidity screens.",
+      "suggestion": "Switch universe inclusion and position sizing from share-count-based to notional/dollar-based limits (or allow fractional shares) so high-priced names like MPWR aren't filtered out purely on price-per-share.",
+      "failed": false
+    },
+    {
+      "ticker": "IBM",
+      "move_pct": -24.539,
+      "close": 219.0112,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Pre-market CEO letter flagged prelim Q2 revenue of $17.2B (vs $17.86B est.); mainframe/infrastructure weakness as clients redirected capex to AI hardware.",
+      "miss_reason": "Outside any active strategy's universe (mega-cap legacy tech/enterprise IT, not in tradable list). Even if included, the gap was driven by a pre-market CEO disclosure hours before open, so post-open momentum/mean-reversion signals had no edge \u2014 price had already re-rated by the bell.",
+      "suggestion": "If adding IBM-class large-cap tech to universe, pair with an overnight-gap news gate that flags pre-market CEO/8-K disclosures and either holds new entries for T+1 confirmation or explicitly excludes same-day entry on gaps >10%.",
+      "failed": false
+    },
+    {
+      "ticker": "BIIB",
+      "move_pct": -8.286,
+      "close": 191.71,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Phase II CELIA data for Alzheimer's candidate diranersen missed its primary dose-response endpoint (lowest dose beat higher doses), reviving doubts about the late-stage program.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BIIB is a large-cap biotech whose moves are binary/trial-readout-driven, a profile momentum and mean-reversion equity strategies typically exclude given event-risk and gap unpredictability.",
+      "suggestion": "Add a narrow biotech-catalyst watchlist (conference/PDUFA calendar-gated) so large-cap names with scheduled trial readouts get temporary universe inclusion around known event dates.",
+      "failed": false
+    },
+    {
+      "ticker": "NOW",
+      "move_pct": -5.761,
+      "close": 104.85,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Fell in sympathy with IBM's disappointing preliminary Q2 results, given their close enterprise-AI partnership; NOW reports its own Q2 on 7/22.",
+      "miss_reason": "Outside any active strategy's universe (large-cap enterprise SaaS, not covered) \u2014 but even if tracked, this was a peer-contagion/read-through move on IBM's print, not NOW's own news, which pre-market/relative-strength signals on IBM would need to catch, not NOW's own price action.",
+      "suggestion": "Add a peer-contagion trigger: when a closely-partnered/comped name (e.g., IBM) reports a pre-market miss, flag correlated large-cap peers (NOW) for a same-day review even if outside the core universe.",
+      "failed": false
+    },
+    {
+      "ticker": "GEHC",
+      "move_pct": -5.589,
+      "close": 61.66,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "HCA's Q2 warning (weaker surgery volumes, unfavorable payer mix) sparked read-through selling in medtech suppliers, amplifying fears from GEHC's own soft Q1 order growth (1.1% vs 10.3% y/y).",
+      "miss_reason": "Outside any active strategy's universe \u2014 GEHC is a large-cap medtech/imaging-equipment name, likely excluded because current universes are scoped to core sector ETFs/names rather than hospital-equipment suppliers reacting to peer (HCA) guidance.",
+      "suggestion": "Add GEHC to the universe of any large-cap healthcare-equipment strategy, and add a peer-read-through rule flagging equipment suppliers when a major hospital operator (e.g., HCA) issues a volume/payer-mix warning intraday.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-15T19:32:58.000298+00:00"
+}
