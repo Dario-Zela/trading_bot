@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-15",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 EDEN.PA +5%, ASM.AS +3%, RMS.PA +3%, KER.PA +3%, ICG.L +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (PSON.L -7%, TEP.PA -5%, RHM.DE -3%, PHIA.AS -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: PSON.L (-6.66%) \u2014 JPMorgan downgraded PSON.L to Neutral from Overweight (ending a 6-yr bullish call) on valuation after a 52-wk high, trimming 2027 EPS 1% on stronger USD hurting its ~65% US-revenue base. Why we passed: Outside any active strategy's universe \u2014 appears to be a UK large-cap education/publishing name not covered by the bot's tradable list, so no filter ever got a chance to evaluate the sell-side downgrade signal.",
+  "top_movers": [
+    {
+      "ticker": "EDEN.PA",
+      "move_pct": 4.668,
+      "close": 25.56,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued run-up on BC Partners take-private speculation (first reported mid-June); no fresh confirmed news found for today specifically, but deal-watch flow persists into the Jul 23 earnings date.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Edenred is a French mid-cap payments/HR-benefits name, likely excluded as non-core sector/cap-band rather than filtered out technically; M&A rumor-driven grinds also favor pre-rumor positioning over reactive signals.",
+      "suggestion": "Add a small-cap EU deal-speculation watchlist that flags names with >10% cumulative move on unconfirmed M&A press reports, so post-rumor drift (not just the initial gap) becomes tradable within existing risk limits.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": 3.305,
+      "close": 919.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "ASML (peer/Euronext semicap) beat Q2 2026 estimates and raised FY26 sales guidance to \u20ac43-45B on AI demand, lifting the whole semiconductor-equipment complex incl. ASM.AS",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 ASM.AS isn't in the tradable list (likely excluded as a non-US/ADR-only or smaller-cap EU semicap name), so no filter even evaluated it; the move was a sympathy rally off a peer's earnings, not ASM's own news.",
+      "suggestion": "Add a peer-correlation trigger: when a same-subsector large-cap (ASML) beats and raises guidance, temporarily admit correlated EU semicap tickers (ASM.AS, BESI.AS) into the universe for same-day momentum screening.",
+      "failed": false
+    },
+    {
+      "ticker": "RMS.PA",
+      "move_pct": 3.121,
+      "close": 1685.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide luxury rally (LVMH +2.8%, Kering +2.3%) after US-Iran ceasefire framework news sent Brent down ~4%, de-risking the sector; no Herm\u00e8s-specific news.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RMS.PA is a mega-cap French luxury/consumer-discretionary name (CAC 40), and today's move was a macro/geopolitical beta rally across the whole luxury complex rather than a stock-specific signal a news-reactive bot would flag.",
+      "suggestion": "Add a CAC40/luxury-sector basket (RMS.PA, MC.PA, KER.PA) to the uk-eu universe with a sector-beta filter so broad geopolitical-driven rallies in this cohort become tradeable, not just single-name catalysts.",
+      "failed": false
+    },
+    {
+      "ticker": "KER.PA",
+      "move_pct": 2.868,
+      "close": 251.05,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-day news trigger found; move tracks a broader European luxury sector rally (LVMH/Kering) on China demand-recovery optimism ahead of Kering's Jul 28 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 KER.PA is a large-cap EU consumer-discretionary/luxury name (Euronext Paris), a sector/exchange not covered by the bot's current uk-eu tradable universe.",
+      "suggestion": "Extend uk-eu universe to include Euronext Paris CAC40 luxury/consumer-discretionary large caps (e.g. KER.PA, LVMH.PA) so sector-wide momentum moves become eligible for signal generation.",
+      "failed": false
+    },
+    {
+      "ticker": "ICG.L",
+      "move_pct": 2.649,
+      "close": 18.21,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q1 FY27 trading statement (alongside AGM): fee-earning AUM +3% QoQ/+10% YoY to $88bn, $4.1bn raised; flagship Europe IX fund tracking to close at ~\u20ac12bn vs \u20ac10bn target.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ICG is a niche private-markets/alternative asset manager whose quarterly AUM/fundraising update isn't a standard EPS-surprise, so momentum/news-reactive screens tuned to liquid large-caps never see it as an event.",
+      "suggestion": "Add an AUM-update event type to the earnings-gate covering alternative asset managers, flagging names where fee-earning AUM growth \u22653% QoQ or a flagship fund closes above target size.",
+      "failed": false
+    },
+    {
+      "ticker": "MC.PA",
+      "move_pct": 2.595,
+      "close": 494.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide luxury rally after Cartier-owner Richemont posted a blowout quarter (jewelry sales +24% YoY); Herm\u00e8s/Kering also rose, ahead of LVMH's own July 27 H1 print.",
+      "miss_reason": "Outside any active strategy's universe \u2014 MC.PA is a Euronext Paris mega-cap luxury conglomerate, a sector/listing category the bot's tradable universe doesn't cover, so no filter ever evaluated it.",
+      "suggestion": "Add a EU-luxury basket (LVMH, Richemont, Herm\u00e8s, Kering) to the universe with a peer-earnings-gate rule: release names when a sector bellwether beats and peers gap up together, rather than waiting for the name's own catalyst.",
+      "failed": false
+    },
+    {
+      "ticker": "PSON.L",
+      "move_pct": -6.662,
+      "close": 12.05,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "JPMorgan downgraded PSON.L to Neutral from Overweight (ending a 6-yr bullish call) on valuation after a 52-wk high, trimming 2027 EPS 1% on stronger USD hurting its ~65% US-revenue base.",
+      "miss_reason": "Outside any active strategy's universe \u2014 appears to be a UK large-cap education/publishing name not covered by the bot's tradable list, so no filter ever got a chance to evaluate the sell-side downgrade signal.",
+      "suggestion": "Add a lightweight 'analyst rating change' scanner for FTSE 100/large-cap UK names outside current universes, gating entry on >-5% single-day moves tied to a sell-side downgrade so these are flagged even without full universe coverage.",
+      "failed": false
+    },
+    {
+      "ticker": "TEP.PA",
+      "move_pct": -4.746,
+      "close": 52.98,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single fresh headline on 7/15 \u2014 continuation of the AI-disruption/BPO-sector selloff (peer Concentrix's FY guidance cut, weak Q1 revenue) dragging shares to fresh 52-week lows ahead of TEP's 7/30 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 TEP.PA is a French mid/small-cap (~\u20ac2.9B mkt cap after its selloff) business-process-outsourcing name, a sector/cap bucket the uk-eu universe doesn't currently cover.",
+      "suggestion": "Add a market-cap band (\u20ac1-5B) for CAC 40/SBF 120 constituents in business-services/BPO to the uk-eu universe so persistent structural-selloff names like TEP become tradable ahead of the 7/30 earnings catalyst.",
+      "failed": false
+    },
+    {
+      "ticker": "RHM.DE",
+      "move_pct": -3.268,
+      "close": 950.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued defense-sector selloff: lingering fallout from Germany's F126 frigate contract cancellation plus a Berenberg price-target cut (\u20ac1750\u2192\u20ac1600) ahead of Aug 6 earnings; no single fresh headline today.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RHM.DE is a German industrials/defense name, a sector likely excluded by ESG/sector screens or simply not covered by uk-eu strategies focused on other GICS sectors, so no filter ever got the chance to evaluate it.",
+      "suggestion": "Add a DAX industrials/defense sleeve to the uk-eu universe (starting with RHM.DE, RENK.DE) gated by a realized-vol cap, since 30-day vol is now >2x normal following the F126 cancellation shock.",
+      "failed": false
+    },
+    {
+      "ticker": "PHIA.AS",
+      "move_pct": -3.045,
+      "close": 23.24,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single clear news event on 2026-07-15; stock extended a multi-day slide (-4.7% on 7/14) into earnings (due 7/28) amid soft 2026 growth outlook concerns and ongoing CPAP litigation overhang.",
+      "miss_reason": "Outside any active strategy's universe \u2014 PHIA.AS is a large-cap EU medtech name on Euronext Amsterdam; bot coverage appears US/ADR-centric (PHG) and doesn't map the primary NL listing, so no filter ever got a chance to evaluate it.",
+      "suggestion": "Add PHIA.AS (and its NL0000009538 ISIN) to the uk-eu universe mapping alongside/instead of the PHG ADR so EU-listed large caps aren't silently excluded from coverage.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-15T15:03:42.159773+00:00"
+}
