@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-16",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 PYPL +17%, BLK +7%, CBRE +6%, IVZ +5%, BKNG +5%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (PNR -15%, ERIE -12%, DELL -10%, PGR -9%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: PYPL (+17.20%) \u2014 Stripe + Advent International (with Block) offered $60.50/share (~$53B) to acquire PayPal, a 28% premium; board meets ~July 20 to weigh it. Why we passed: Outside any active strategy's universe entirely \u2014 PYPL falls in the fintech/payments-processor category the bot doesn't cover, and this was a one-off M&A gap (89M shares, 446% of avg volume) that pre-market positioning would beat, not a name any technical filter would have screened.",
+  "top_movers": [
+    {
+      "ticker": "PYPL",
+      "move_pct": 17.205,
+      "close": 55.52,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Stripe + Advent International (with Block) offered $60.50/share (~$53B) to acquire PayPal, a 28% premium; board meets ~July 20 to weigh it.",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 PYPL falls in the fintech/payments-processor category the bot doesn't cover, and this was a one-off M&A gap (89M shares, 446% of avg volume) that pre-market positioning would beat, not a name any technical filter would have screened.",
+      "suggestion": "No universe change needed \u2014 the stock gapped straight to near the $60.50 deal price, so a momentum/mean-reversion bot chasing it post-announcement has capped upside and poor risk/reward; leave to a dedicated merger-arb strategy if one exists.",
+      "failed": false
+    },
+    {
+      "ticker": "BLK",
+      "move_pct": 6.627,
+      "close": 1093.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 EPS $13.91 vs $12.70 est. and AUM hit record $15.3T; revenue also beat, driving the post-earnings pop.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BLK is a mega-cap asset manager trading near $1,000+/share, likely excluded by a price-per-share or financials-sector cap rather than a technical signal.",
+      "suggestion": "Add an earnings-gate override that admits universe-excluded names showing a pre-market gap \u22655% on an EPS beat, sized small, rather than relying solely on static price/sector filters.",
+      "failed": false
+    },
+    {
+      "ticker": "CBRE",
+      "move_pct": 6.219,
+      "close": 141.41,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news; broad rally in rate-sensitive real estate/services names after cooler June CPI (headline -0.4%, core flat) cut Fed hike odds and pulled yields lower.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CBRE sits in large-cap real estate services/management, a sector likely excluded from bot's tradable list since it's neither a core-tech/momentum name nor a classic REIT the strategies track.",
+      "suggestion": "Add a rate-sensitive real-estate-services bucket (SIC/GICS 'Real Estate Management') to the universe so CPI-driven yield-sensitive rallies in names like CBRE, JLL, CWK get picked up alongside REITs.",
+      "failed": false
+    },
+    {
+      "ticker": "IVZ",
+      "move_pct": 5.465,
+      "close": 30.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Barclays raised its IVZ price target to $31 from $26 (Equal Weight) on 7/16, a ~19% target hike ahead of the 7/28 Q2 earnings/AUM print.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IVZ is a mid-cap asset manager (financials/asset-management sector), a category typically excluded from tech/momentum-focused tradable lists; the move was a sell-side target re-rating, not a news/earnings surprise a scanner would flag.",
+      "suggestion": "Add an analyst-revision trigger (PT change \u226515% same-day) to the universe screen so financials/asset-managers get pulled in in-day even when the static sector filter would otherwise exclude them.",
+      "failed": false
+    },
+    {
+      "ticker": "BKNG",
+      "move_pct": 4.547,
+      "close": 182.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide travel rally: Jefferies hiked BKNG PT to $190 (from $180) on strong peak-season hotel/flight demand data; peers EXPE and ABNB got similar PT raises the same day \u2014 no BKNG-specific news.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BKNG is a large-cap travel/consumer-discretionary name whose static universe lists likely predate its April 2026 25-for-1 stock split and were never refreshed to re-include it at its new lower per-share price.",
+      "suggestion": "Add a quarterly universe-refresh job that re-screens eligible tickers by market cap/sector after corporate actions (splits), so recently-split mega-caps like BKNG automatically re-enter tradable universes instead of staying excluded on stale price/ticker metadata.",
+      "failed": false
+    },
+    {
+      "ticker": "CTAS",
+      "move_pct": 4.362,
+      "close": 192.37,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q4 FY26 earnings beat (EPS $1.29 vs $1.24 est, rev $2.91B vs $2.87B est) plus FY27 guidance above consensus; BofA upgraded to Buy, PT raised to $230.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CTAS is a low-beta, low-volatility business-services compounder that typical momentum/mean-reversion scanners exclude via volatility/ATR floors, so it was never a candidate pre-earnings.",
+      "suggestion": "Add a post-earnings-gap override that admits any universe-eligible-by-cap name into a temporary watchlist when it gaps \u22653% on an earnings day, bypassing the low-beta filter for that session only.",
+      "failed": false
+    },
+    {
+      "ticker": "PNR",
+      "move_pct": -14.997,
+      "close": 64.33,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Pentair pre-announced Q2 sales of $930M (vs $1.134B prior guide) and slashed FY26 EPS guidance to $4.60-4.80 on ~$250M pool-channel destocking hit, plus a surprise CFO resignation.",
+      "miss_reason": "Outside any active strategy's universe \u2014 PNR is a ~$10B industrial/water-treatment name, a sector/cap bucket the bot's momentum and news-reactive strategies don't currently cover.",
+      "suggestion": "Add mid-cap Industrials (building products/water treatment, $5-20B cap) to the universe scan, or add a pre-earnings 8-K guidance-cut trigger that flags any ticker with a same-day negative preliminary-results filing regardless of universe membership.",
+      "failed": false
+    },
+    {
+      "ticker": "ERIE",
+      "move_pct": -11.859,
+      "close": 210.19,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-day news trigger; extension of a multi-week technical breakdown (RSI oversold, sell signal since 2026-07-02) amid slowing premium growth, retention decline to 88%, and Feb-2026 CEO/CFO retirement overhang. Next earnings not until Aug 6.",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 ERIE is a mid-cap (~$11-14B), low-float, closely-held P&C insurance holding company, a sector/cap profile the bot's tech/momentum-oriented universe doesn't cover regardless of today's move size.",
+      "suggestion": "Add a sector-agnostic 'accelerating breakdown' scanner (new 52-week low + RSI<30 + volume>1.5x avg) that pulls in non-core-sector mid-caps like insurance/financials for a one-off watchlist add, rather than gating universe membership purely by sector/cap tier.",
+      "failed": false
+    },
+    {
+      "ticker": "DELL",
+      "move_pct": -9.805,
+      "close": 412.68,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide AI-hardware selloff (memory pricing/overcapacity fears, CoreWeave hedging reports) plus GF Securities downgrade to Hold after DELL's ~200% run-up.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DELL likely falls outside a large-cap tech/momentum universe scope or was excluded as a richly-valued 'story' name; this was a multi-day sector derate (started 7/15) that a same-day news-reactive or mean-reversion filter wouldn't front-run without pre-market positioning.",
+      "suggestion": "Add a sector-contagion trigger that pulls in peer names (HPE, SMCI, Micron) into the tradable universe once \u22652 of them move >5% on the same news theme within a session.",
+      "failed": false
+    },
+    {
+      "ticker": "PGR",
+      "move_pct": -9.427,
+      "close": 205.22,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 earnings (reported 7/15): EPS beat estimates ($5.67 vs ~$5.30 est) but combined ratio worsened to ~90% vs ~88.8% est, signaling underwriting margin deterioration; KBW cut price target.",
+      "miss_reason": "Outside any active strategy's universe \u2014 PGR is a large-cap P&C insurer, a sector/name class the bot's momentum and mean-reversion universes don't cover, so no filter ever got a chance to evaluate the post-earnings gap.",
+      "suggestion": "Add a financials/insurance earnings-gate that ingests combined-ratio surprise vs. estimate and admits names with post-results gap \u22655% into a next-day mean-reversion or fade watchlist, even if outside the core universe.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-16T19:33:11.434548+00:00"
+}
