@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-16",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 STLAP.PA +5%, HEI.DE +4%, BTRW.L +4%, RNO.PA +4%, STJ.L +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (IFX.DE -5%, STMPA.PA -5%, AAF.L -4%, EXPN.L -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: IFX.DE (-5.30%) \u2014 Global chip selloff (SK Hynix -11.5%, Samsung -8%, Micron -8%) on AI-valuation/memory-price fears spilled into European semis; no IFX-specific news, TSMC's strong earnings same day were overshadowed. Why we passed: Outside any active strategy's universe \u2014 IFX.DE is a EUR-denominated DAX-listed large-cap (~\u20ac87B), and the bot's universes appear scoped to US-listed/ADR tickers, so it never had a chance to react to the sector-wide chip rout.",
+  "top_movers": [
+    {
+      "ticker": "STLAP.PA",
+      "move_pct": 4.582,
+      "close": 5.204,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Preliminary Q2 shipments +10% YoY (Ram/Jeep/Chrysler-led NA rebound) reported Jul 13, plus easing US-EU auto tariff fears ahead of trade deal deadline.",
+      "miss_reason": "Outside any active strategy's universe \u2014 STLAP.PA is a Euronext Paris-listed large-cap EU automaker; bot's coverage appears US/ADR-centric or excludes the auto sector, so no filter ever saw this name to evaluate.",
+      "suggestion": "Add large-cap Euronext Paris auto names (STLAP.PA, RNO.PA) to the universe, or map STLA's US listing to its Paris primary listing so shipment-data and tariff-driven catalysts are captured pre-open.",
+      "failed": false
+    },
+    {
+      "ticker": "HEI.DE",
+      "move_pct": 4.353,
+      "close": 175.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed single-day news catalyst found; construction-materials names were broadly firm and HEI.DE has pending Maas Group (AU) and Ak\u00e7ansa stake-increase M&A in the background, but nothing dated 2026-07-16 explains the move.",
+      "miss_reason": "Outside any active strategy's universe \u2014 HEI.DE is a large-cap DAX 40 cement/building-materials name, a cyclical industrials/materials sector the uk-eu strategies apparently don't scan, so no filter ever saw the gap-up to react to.",
+      "suggestion": "Add DAX 40 materials/construction constituents (market cap > \u20ac20B, e.g. HEI.DE) to the uk-eu universe config so the momentum scanner at least evaluates the name before excluding it on technical grounds.",
+      "failed": false
+    },
+    {
+      "ticker": "BTRW.L",
+      "move_pct": 4.277,
+      "close": 2.901,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FY26 trading update (completions ~17,667, PBT in line with \u00a3559.5m consensus) plus new \u00a3400m buyback; sector-wide housebuilder rally on BoE rate-cut hopes added tailwind.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BTRW is a FTSE 100 housebuilder/construction name; uk-eu universe appears to exclude the rate-sensitive homebuilder/cyclical sector entirely.",
+      "suggestion": "Add FTSE 100/250 housebuilders (BTRW, PSN, TW., BWY, VTY) to the uk-eu universe, gated by an earnings-release filter that surfaces names with post-results gap \u22653% at the open.",
+      "failed": false
+    },
+    {
+      "ticker": "RNO.PA",
+      "move_pct": 4.086,
+      "close": 26.75,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single fresh headline dated 7/16; move reads as a sector-wide French auto rally (Renault+Stellantis) amid easing EU-China tariff jitters and lingering reassurance from Renault's June 30 guidance reaffirmation ahead of July 30 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RNO.PA is a CAC 40 European auto/industrial large-cap that the uk-eu region strategies apparently don't cover, likely because the universe is scoped to UK-listed names or excludes the autos sector after recent profit-warning-driven volatility.",
+      "suggestion": "Add CAC 40 auto/industrial constituents (RNO.PA, STLA.PA) to the uk-eu universe with a pre-earnings guidance-reaffirmation flag so names confirming FY targets within 30 days of results become eligible for the momentum screen.",
+      "failed": false
+    },
+    {
+      "ticker": "STJ.L",
+      "move_pct": 3.944,
+      "close": 11.8756,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No firm-specific news; broad rally in UK wealth managers/rate-sensitive financials on falling interest-rate expectations, even as broader FTSE 100 fell on geopolitical/oil risk.",
+      "miss_reason": "Outside any active strategy's universe \u2014 STJ.L is a FTSE 100 wealth manager/life-insurance name, a sector the uk-eu strategies apparently exclude, so no filter ever evaluated today's sector-wide rate-cut-expectation rally.",
+      "suggestion": "Add FTSE 100 wealth-management/life-insurance tickers (e.g. STJ.L, plus peers like Aviva) to the uk-eu universe so sector-wide, rate-driven rallies get screened instead of being excluded outright.",
+      "failed": false
+    },
+    {
+      "ticker": "CAP.PA",
+      "move_pct": 3.721,
+      "close": 93.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Gartner named Capgemini a 'Market Shaper' / 'Company to Beat' in Physical AI Services on 2026-07-16; also lifted by BofA's bullish European IT-services recovery thesis naming CAP as top pick.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CAP.PA is a French (Euronext Paris) large-cap IT-services/consulting name; uk-eu universes here likely skew to UK-listed or narrower sector buckets and exclude CAC 40 tech-services mega-caps entirely.",
+      "suggestion": "Extend uk-eu universe's developed-Europe eligible list to include CAC 40 IT-services/consulting names (CAP.PA, SOP.PA) rather than UK-only large caps, since sector-recovery narratives are pan-European, not single-market.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": -5.3,
+      "close": 66.47,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Global chip selloff (SK Hynix -11.5%, Samsung -8%, Micron -8%) on AI-valuation/memory-price fears spilled into European semis; no IFX-specific news, TSMC's strong earnings same day were overshadowed.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IFX.DE is a EUR-denominated DAX-listed large-cap (~\u20ac87B), and the bot's universes appear scoped to US-listed/ADR tickers, so it never had a chance to react to the sector-wide chip rout.",
+      "suggestion": "Add a EUR-listed semiconductor sector bucket (IFX.DE, ASML.AS) to momentum/sector-rotation universes, or add IFNNY (Infineon's US ADR) as a proxy if the pipeline only ingests USD tickers.",
+      "failed": false
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": -4.664,
+      "close": 58.26,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued profit-taking after +200% YTD AI-fueled rally; $1.5B dual-tranche convertible bond (announced Jun 16, priced ~Jul 13) fed dilution/overhang fears ahead of Jul 23 Q2 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 STMPA.PA is a large-cap (~\u20ac50B) EU-domiciled semiconductor dual-listed in Paris/NYSE; likely excluded as a non-US primary-listing or duplicate-ticker (STM vs STMPA) name the universe screen doesn't carry.",
+      "suggestion": "Add STMPA.PA (or map it to existing STM coverage) to the uk-eu universe under semiconductors/large-cap-EU, with a dedup rule so bot doesn't double-count NYSE:STM and EPA:STMPA as separate positions.",
+      "failed": false
+    },
+    {
+      "ticker": "AAF.L",
+      "move_pct": -3.837,
+      "close": 3.358,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear same-day news catalyst; court approval of capital reduction was neutral/positive, so move looks like technical drift amid ongoing Bharti Airtel stake-swap volatility.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AAF.L is a sub-$5B LSE-listed EM telecom (African markets exposure), a cap/sector bucket none of the bot's strategies currently cover.",
+      "suggestion": "No actionable change \u2014 adding thinly-traded EM-telecom ADRs/LSE lines would require new FX and liquidity risk controls outside current strategy scope.",
+      "failed": false
+    },
+    {
+      "ticker": "EXPN.L",
+      "move_pct": -3.254,
+      "close": 25.4055,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q1 trading update: FY guidance reaffirmed but North America organic growth slowed to 7% (from 10% LY) on consumer data-breach contract runoff; EMEA/APAC also softer than expected.",
+      "miss_reason": "Outside any active strategy's universe \u2014 EXPN.L is a large-cap UK consumer-data/credit-bureau name on LSE, a sector/region combo none of our uk-eu strategies currently track; also a scheduled trading-update-day mover, a category typically pre-excluded from intraday momentum scans.",
+      "suggestion": "Add an earnings/trading-update calendar overlay for uk-eu large-caps that flags scheduled-update-day names with post-release gaps \u22653% into a watchlist, even when outside the standard sector universe.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-16T15:03:46.566995+00:00"
+}
