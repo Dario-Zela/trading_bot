@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-17",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 ABT +11%, JBHT +8%, ERIE +7%, DXCM +7%, CTAS +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (SNDK -13%, STX -10%, GLW -9%, WDC -9%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: SNDK (-12.63%) \u2014 Sector-wide NAND/memory sell-off: fears of weakening memory pricing and rising Chinese competition (CXMT chips) hit SanDisk after its huge 12-month AI-memory-driven run-up. Why we passed: Outside any active strategy's universe \u2014 SNDK only began trading in Feb 2025 (Western Digital spinoff), so it likely fails a minimum listing-history/track-record filter, and its ~$1,400/share price (never split) may breach nominal share-price sanity caps sized for normal-priced equities.",
+  "top_movers": [
+    {
+      "ticker": "ABT",
+      "move_pct": 10.709,
+      "close": 98.83,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 EPS $1.31 beat ($1.28 est), raised FY26 adjusted EPS guide to $5.45-$5.60 on Medical Devices/Diagnostics strength (FreeStyle Libre); shares gapped ~11%.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ABT is a mega-cap ($170B+), low-beta defensive healthcare/diagnostics name, a profile momentum/mean-reversion universes typically screen out in favor of higher-beta, higher-turnover names.",
+      "suggestion": "Add a narrow earnings-gap sleeve that admits any US large-cap on post-earnings gap \u22658% with guidance raise, regardless of the name's beta/sector screen used for the core universe.",
+      "failed": false
+    },
+    {
+      "ticker": "JBHT",
+      "move_pct": 8.01,
+      "close": 298.41,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 earnings beat: EPS $1.91 vs ~$1.71-1.74 est on $3.5B revenue (+19% YoY); intermodal revenue +22% YoY drove the surprise, reported after close 7/15.",
+      "miss_reason": "Outside any active strategy's universe \u2014 JBHT is a large-cap trucking/intermodal logistics name, a sector the bot's tracked lists apparently don't cover, so no strategy was even watching it pre-earnings.",
+      "suggestion": "Add an earnings-gate scanner that pulls in any name (regardless of static universe membership) posting a post-earnings gap \u22655% on volume, so transports/industrials with surprise beats aren't structurally excluded.",
+      "failed": false
+    },
+    {
+      "ticker": "ERIE",
+      "move_pct": 7.493,
+      "close": 225.94,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh earnings or corporate news; short-covering rally off 52-week-low support ($204.63 range) ahead of Jul 30 Q2 print, aided by earlier insider buying.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ERIE is a high-priced ($200+), thinly-traded P&C insurance holding co (financials/insurance sector), a category typically excluded from momentum/mean-reversion universes built around higher-ADV, non-insurance names.",
+      "suggestion": "No actionable change \u2014 a pure short-covering bounce with no catalyst isn't a signal type the bot targets; if insurance reversals are wanted, add a narrow high-short-interest-reversal screen rather than broadening sector inclusion.",
+      "failed": false
+    },
+    {
+      "ticker": "DXCM",
+      "move_pct": 7.218,
+      "close": 77.98,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Cluster of analyst price-target hikes (Truist $80\u2192$87, Stifel/Mizuho to $90, Piper Sandler $75\u2192$88) ahead of July 30 earnings, plus Health Canada G7 15-Day nod.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DXCM is a ~$32B medtech/healthcare-equipment name, a sector/cap bucket the bot's current universes don't scan. The move was a diffuse multi-analyst upgrade wave, not a single sharp headline a news-reactive filter would catch.",
+      "suggestion": "Add a healthcare-equipment/medtech bucket (mkt cap >$20B) to the universe scan and a same-day-multi-upgrade signal (\u22652 PT raises within 24h) to flag pre-earnings analyst momentum.",
+      "failed": false
+    },
+    {
+      "ticker": "CTAS",
+      "move_pct": 7.215,
+      "close": 206.25,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q4 FY26 EPS $1.29 beat $1.24 est., revenue $2.91B beat $2.87B est., and FY27 guidance ($12.10-12.25B rev, $5.36-5.50 EPS) came in above consensus.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CTAS is a large-cap, low-beta uniform/facility-services name that typically doesn't clear momentum/mean-reversion universes screening for higher-volatility or thematic (tech/growth) names.",
+      "suggestion": "Add an earnings-day universe expansion rule that auto-includes any S&P 500 name reporting overnight with a pre-market gap \u22655% on volume, regardless of its normal sector/beta filter.",
+      "failed": false
+    },
+    {
+      "ticker": "IR",
+      "move_pct": 7.127,
+      "close": 84.78,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Peer read-through: Swedish rival Atlas Copco posted 26% organic order growth in Q2, lifting sentiment for close competitor Ingersoll Rand ahead of its own July 30 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IR is a mid/large-cap industrial machinery name, a sector U.S. equity strategies here don't cover; the trigger was a foreign peer's earnings print, not a domestic news-scan hit.",
+      "suggestion": "Add an industrials/machinery bucket to the universe and a peer-earnings trigger that flags same-sector US names when a key foreign comp (e.g., Atlas Copco for compressors) reports a large order/beat surprise pre-open.",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": -12.627,
+      "close": 1411.08,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide NAND/memory sell-off: fears of weakening memory pricing and rising Chinese competition (CXMT chips) hit SanDisk after its huge 12-month AI-memory-driven run-up.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SNDK only began trading in Feb 2025 (Western Digital spinoff), so it likely fails a minimum listing-history/track-record filter, and its ~$1,400/share price (never split) may breach nominal share-price sanity caps sized for normal-priced equities.",
+      "suggestion": "Shorten the listing-history requirement to ~6 months for spinoffs that inherit a parent's trading/volatility history, and raise or remove the max nominal share-price filter so high-priced but liquid names like SNDK aren't excluded by legacy lot-size assumptions.",
+      "failed": false
+    },
+    {
+      "ticker": "STX",
+      "move_pct": -9.998,
+      "close": 745.49,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "SK Hynix's weak earnings outlook sparked a memory/storage sector selloff; STX also saw profit-taking after a 667% YoY rally ahead of its July 28 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 STX is a mega-cap AI-storage momentum name (~$745, up 667% YoY) that likely sits outside the tradable-universe cap/sector filters, or was excluded pending its July 28 earnings blackout.",
+      "suggestion": "Add a peer-earnings-contagion rule: when a same-sector bellwether (e.g., SK Hynix) misses/guides down, widen the universe scan to correlated names (STX, WDC) for the next session even if they're normally filtered out.",
+      "failed": false
+    },
+    {
+      "ticker": "GLW",
+      "move_pct": -9.185,
+      "close": 158.39,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single fresh headline today \u2014 continuation of a multi-week de-risking of Corning's AI-fiber momentum trade (down from $271 peak on 6/30) amid carrier-spend guidance-cut fears, heavy insider selling, and pre-earnings put buying ahead of 7/28 results.",
+      "miss_reason": "Outside any active strategy's universe \u2014 GLW is a large-cap industrial/optical-components manufacturer (~$135B mkt cap, NYSE) rather than a core tech/semis name, so it was likely never screened into a tech-focused universe despite trading like an AI momentum stock.",
+      "suggestion": "Add a sector-agnostic 'YTD momentum leaders' scan (e.g. top-quartile 6-month return regardless of GICS sector) so industrials/hardware names riding a thematic run-up like GLW's AI-fiber trade get universe coverage, not just labeled tech tickers.",
+      "failed": false
+    },
+    {
+      "ticker": "WDC",
+      "move_pct": -9.153,
+      "close": 466.81,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued memory-sector rout: SK Hynix's historic post-IPO reversal, weak earnings guidance, and Samsung results triggered profit-taking across storage/memory names after WDC's 238% YTD run.",
+      "miss_reason": "Outside any active strategy's universe \u2014 WDC sits in the semiconductor/memory-storage hardware sector, a category the bot's tradable universe doesn't cover, so no filter ever got a chance to evaluate the multi-day sector unwind.",
+      "suggestion": "Add memory/storage semiconductor names (WDC, STX, MU peers) to the universe with a volatility-scaled position cap, since these are high-beta names prone to sharp sector-contagion swings like the SK Hynix-driven selloff.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-17T19:32:45.393550+00:00"
+}
