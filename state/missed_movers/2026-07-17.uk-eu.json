@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-17",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 RAND.AS +9%, VOD.L +8%, EXPN.L +7%, MTLN.L +7%, BATS.L +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (STMPA.PA -9%, STJ.L -8%, BESI.AS -7%, IFX.DE -7%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: STMPA.PA (-9.17%) \u2014 Sector-wide semiconductor selloff plus Borsa Italiana derivatives expiry and pre-Q2-earnings (Jul 23) caution; still digesting July 13's $1.5B convertible bond deal seen as dilutive. Why we passed: Outside any active strategy's universe: STMPA.PA is the Paris/Milan line of NYSE-dual-listed STM; universe likely tracks the US ticker only, so this EU listing is invisible to uk-eu strategies.",
+  "top_movers": [
+    {
+      "ticker": "RAND.AS",
+      "move_pct": 8.536,
+      "close": 32.55,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-day news catalyst found; RAND.AS is in a multi-day pre-earnings run (+19% over 2 weeks, +7.65% on 7/16) ahead of Jul 22 earnings, amid steady European staffing-sector demand chatter.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Randstad NV is an AEX-listed HR/staffing mid-large cap; uk-eu strategies likely scope to a fixed index list (e.g., FTSE/DAX/CAC) or exclude HR-services as a tracked sector, so Euronext Amsterdam names like this never entered the candidate pool.",
+      "suggestion": "Expand uk-eu universe ingestion to include AEX constituents above a liquidity/market-cap floor (e.g., >\u20ac5B, >\u20ac10M ADV) rather than a fixed per-index name list, so sector-adjacent movers like Randstad aren't structurally excluded.",
+      "failed": false
+    },
+    {
+      "ticker": "VOD.L",
+      "move_pct": 8.224,
+      "close": 1.1975,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Xavier Niel's Vega SAS disclosed a TR-1 crossing 19.87% voting rights in Vodafone (financial instruments tied to the e&-stake purchase agreed 7/10), extending the ownership-driven rally.",
+      "miss_reason": "Outside any active strategy's universe \u2014 VOD.L is a UK-listed (LSE) large-cap telecom, and the bot's universes appear US/ADR-focused, so a London-only line never entered the tradable set regardless of the stake-disclosure catalyst.",
+      "suggestion": "Add LSE-listed FTSE 100 large-caps (or their US ADRs) to a catalyst-driven strategy's universe, gated on market cap and an ownership/stake-disclosure (TR-1/13D-equivalent) event feed.",
+      "failed": false
+    },
+    {
+      "ticker": "EXPN.L",
+      "move_pct": 6.749,
+      "close": 27.12,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q1 FY27 trading update (16 Jul 2026): 7% organic revenue growth, in-line with guidance, reaffirmed FY outlook; RBC reiterated Outperform (4,000p PT) next day, extending the move.",
+      "miss_reason": "Outside any active strategy's universe \u2014 EXPN.L is a UK-primary-listed credit-data/analytics large-cap; likely excluded either by a sector/listing scope filter (uk-eu universe skews toward names with US ADR/dual-listing) or a post-earnings blackout since it had just reported a trading update the prior session.",
+      "suggestion": "Add EXPN.L and peer credit-bureau/data-analytics names to the uk-eu universe watchlist, and add a 24h post-trading-update re-entry rule so names aren't permanently blacklisted the day after a scheduled corporate update.",
+      "failed": false
+    },
+    {
+      "ticker": "MTLN.L",
+      "move_pct": 6.693,
+      "close": 44.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single dated news item found for 7/17; move likely reflects continued strength in metals/aluminium prices plus lingering momentum from Metlen's reiterated 2026 EBITDA guidance (\u20ac1.0-1.15bn).",
+      "miss_reason": "Outside any active strategy's universe \u2014 Metlen is a Greek-domiciled, EUR-denominated dual listing (Athens primary, LSE secondary) despite FTSE 100 membership; universe filters likely key off GBP-quoted/UK-domiciled issuers and exclude EUR-priced LSE lines.",
+      "suggestion": "Extend uk-eu universe inclusion to FTSE 100/250 constituents regardless of quote currency or domicile, so EUR-denominated dual listings like MTLN.L aren't dropped by a GBP-only currency filter.",
+      "failed": false
+    },
+    {
+      "ticker": "BATS.L",
+      "move_pct": 6.566,
+      "close": 46.58,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Fit2Win restructuring (~9,000 roles cut, targeting \u00a3600M/yr savings by 2028) plus an extended share buyback through 7/29 and a US regulatory tailwind for reduced-risk nicotine products (ZYN) lifted shares ~6-7%.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BATS.L is a large-cap FTSE 100 tobacco/consumer-staples defensive, most likely excluded via a sin-stock/ESG sector screen or a universe scoped to growth/momentum names rather than low-beta dividend defensives.",
+      "suggestion": "If the tobacco exclusion is an intentional ESG/sin-stock screen, no change needed; otherwise add a FTSE100-defensives watchlist tier so buyback/restructuring re-rate catalysts in excluded sectors still get flagged for review.",
+      "failed": false
+    },
+    {
+      "ticker": "DGE.L",
+      "move_pct": 5.772,
+      "close": 16.035,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single fresh headline for 7/17; move extends a multi-week turnaround re-rating (new CEO Sir David Lewis's cost-cutting plan, TD Securities Buy upgrade, strong Europe/Guinness growth).",
+      "miss_reason": "Outside any active strategy's universe \u2014 DGE.L is a large-cap FTSE 100 consumer-staples/spirits name; the bot's uk-eu universe likely skews toward higher-beta/momentum sectors and excludes defensive staples tickers.",
+      "suggestion": "Add FTSE 100 consumer-staples/spirits tickers (DGE.L, ULVR.L) to the uk-eu universe watchlist so multi-week analyst-upgrade-driven re-rating moves \u22655% aren't structurally excluded by sector.",
+      "failed": false
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": -9.166,
+      "close": 52.92,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide semiconductor selloff plus Borsa Italiana derivatives expiry and pre-Q2-earnings (Jul 23) caution; still digesting July 13's $1.5B convertible bond deal seen as dilutive.",
+      "miss_reason": "Outside any active strategy's universe: STMPA.PA is the Paris/Milan line of NYSE-dual-listed STM; universe likely tracks the US ticker only, so this EU listing is invisible to uk-eu strategies.",
+      "suggestion": "Add STMPA.PA as an EU-listing alias for STM in the uk-eu semiconductor universe so dual-listed large-caps get coverage on their primary regional exchange, not just the NYSE ticker.",
+      "failed": false
+    },
+    {
+      "ticker": "STJ.L",
+      "move_pct": -8.468,
+      "close": 10.87,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Partner firm Sovereign Wealth (~\u00a33B AUM) reported in talks to defect to S\u00f6derberg & Partners, capping weeks of adviser exits amid AI-disruption fears for SJP's advice model.",
+      "miss_reason": "Outside any active strategy's universe \u2014 STJ.L is a UK wealth-management/financial-advice name, a sector category the bot's tradable universe likely excludes entirely (no LSE financials/asset-manager basket configured).",
+      "suggestion": "Add a UK-listed asset-manager/wealth-platform sector basket (e.g. STJ.L, SJP peers) to the universe so adviser-exit and AI-disruption headline risk in this niche isn't structurally invisible.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": -7.309,
+      "close": 227.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued fallout from reports Samsung/SK Hynix are delaying hybrid-bonding adoption (BESI's key growth driver), compounded by broad semiconductor sector profit-taking ahead of BESI's July 23 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BESI.AS is an Euronext Amsterdam (AEX) semicap-equipment name; uk-eu strategies likely scope to UK/broader large-cap or US-ADR-covered names and don't include AEX-listed semi-equipment tickers at all.",
+      "suggestion": "Add AEX semicap-equipment names (BESI.AS, ASML.AS) to the uk-eu universe, gated by a sector-news filter that flags supply-chain/roadmap-delay headlines from primary customers (Samsung, SK Hynix) as short triggers.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": -6.875,
+      "close": 61.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No Infineon-specific news; fell with a sector-wide EU/Asia semiconductor selloff after Samsung's Q2 profit beat was only 'modest' vs sky-high AI expectations, sparking sell-the-news profit-taking.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IFX.DE is a DAX-listed EU semiconductor large-cap, and the bot's uk-eu universes evidently don't carry semiconductor/tech-hardware names on Xetra, so no strategy ever screened it despite the sector-wide, non-idiosyncratic move.",
+      "suggestion": "Add a semiconductor/tech-hardware bucket (incl. IFX.DE, ASML.AS, STM.PA) to the uk-eu momentum universe so sector-wide moves triggered by cross-region peers (e.g., Samsung earnings) can be captured via correlation/beta screens.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-17T15:08:05.014594+00:00"
+}
