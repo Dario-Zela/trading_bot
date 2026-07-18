@@ -9,7 +9,7 @@ description: "Auto-spawned variant of macro-aligned-hmm on 2026-06-13 by the wee
   \ always-on cross-sectional picking \u2014 the regime gate is the primary filter,\
   \ stock selection is secondary."
 implementation: llm
-active: true
+active: false
 capital_gbp: 10000
 max_positions: 2
 max_position_pct: 30
@@ -46,3 +46,4 @@ prefilter_top_n: 100
 prefilter_sort_key: dollar_volume_desc
 last_tune_date: '2026-05-27'
 cost_gate_multiplier: 2.5
+deactivated_at: '2026-07-18'
