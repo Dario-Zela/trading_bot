@@ -34,3 +34,9 @@
 - **Claim**: XLV will outperform XLK by at least 5 percentage points on a 5d basis for the week ending 2026-07-11 (repeat of this week's 12.7pp spread)
 - **Falsification criteria**: XLV 5d minus XLK 5d differential is less than 2pp, indicating the defensive/growth spread has collapsed
 - **What happened**: XLV 5d (-1.77%) minus XLK 5d (+2.87%) = -4.64pp; XLK actually outperformed XLV, well under the 2pp bar.
+
+## 2026-W26-p04 — falsified 2026-07-19
+
+- **Claim**: Oil (USO) will close below $100 by 2026-07-18 (currently $105.48), continuing the commodity-complex deflation trend
+- **Falsification criteria**: USO closes above $110 at any point before 2026-07-18
+- **What happened**: USO closed at $123.96 on 2026-07-17, far above the $110 falsification threshold and moving further from (not toward) the $100 target — the commodity-deflation thesis was wrong and oil instead rallied hard.
