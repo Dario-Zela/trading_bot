@@ -1,0 +1,124 @@
+{
+  "date": "2026-07-20",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 1 of today's 10 biggest UK/EU movers.\n\n\u2022 5 upside misses \u2014 NG.L +3%, SVT.L +3%, BA.L +3%, SSE.L +2%, SHEL.L +2%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (BRBY.L -6%, PRX.AS -5%, BESI.AS -5%, IMCD.AS -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: BRBY.L (-6.38%) \u2014 Q1 FY27 update (Jul 17) beat on sales (+5% comp, all 4 divisions positive) but cautious geopolitical/macro guidance and EMEIA -3% tourist weakness triggered a multi-day sell-off into Jul 20. Why we passed: Outside any active strategy's universe \u2014 BRBY.L is a UK-listed luxury/apparel retailer (FTSE 100, GBp-denominated), a sector/region combo the bot's uk-eu universe screen likely doesn't cover, so no filter ever saw it, let alone excluded it on signal grounds.",
+  "top_movers": [
+    {
+      "ticker": "NG.L",
+      "move_pct": 3.329,
+      "close": 12.57,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No dated news catalyst found for 2026-07-20; National Grid's last scheduled events were FY results (14 May) and RIIO-T3 acceptance \u2014 likely a rate-sensitive/defensive sector move.",
+      "miss_reason": "Outside any active strategy's universe \u2014 NG.L is a large-cap UK regulated utility with structurally low beta/ATR, a profile momentum/gainer screens typically exclude even though today's 3.33% move is unusually large for the name.",
+      "suggestion": "Add a low-beta/defensive-utility bucket to the uk-eu universe with a relaxed inclusion rule: admit names when daily move exceeds 2x their 20-day ATR, even if baseline beta/volatility falls below the standard momentum floor.",
+      "failed": false
+    },
+    {
+      "ticker": "BATS.L",
+      "move_pct": 2.955,
+      "close": 46.69,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned-macro-attn"
+      ],
+      "catalyst": "Defensive rotation into tobacco during a tech-sector selloff, amplified by BAT's disclosed closed-period share buyback (up to 217.5M shares) running through July 29 ahead of July 30 H1 results.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BATS.L is a FTSE 100 defensive/tobacco name, a sector category likely excluded from growth/momentum-focused universes. Only macro-aligned-macro-attn, which tracks sector-rotation/defensive-flow signals, held it.",
+      "suggestion": "Add FTSE 100 defensive/tobacco names to other strategies' universes, or add a buyback-RNS signal flagging stocks with disclosed closed-period buybacks as low-risk momentum candidates.",
+      "failed": false
+    },
+    {
+      "ticker": "SVT.L",
+      "move_pct": 2.886,
+      "close": 30.66,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-name news; sector-wide UK water-utility rally (SVT +2.89%, peers UU/NG/SSE also up 2-3%) tracking falling gilt yields and BoE rate-cut expectations \u2014 a bond-proxy rotation.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SVT.L is a defensive, low-beta FTSE 100 regulated utility, a category momentum/news-reactive bots typically exclude in favor of higher-volatility, higher-volume names.",
+      "suggestion": "Add a macro rate-proxy screen (trigger on 10Y gilt yield move \u226515bps) that temporarily admits FTSE bond-proxy utilities (water/National Grid/SSE) into a mean-reversion sleeve during rate-driven sector rotations.",
+      "failed": false
+    },
+    {
+      "ticker": "BA.L",
+      "move_pct": 2.508,
+      "close": 18.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide defense re-rating: Germany/Italy raising defense budgets pre-NATO summit, Kepler upgrade to Buy, Erste Group lifted FY26 EPS ahead of July 30 H1 results.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BAE Systems is a large-cap aerospace/defense name; bot's uk-eu universe likely applies an ESG/defense-sector exclusion screen rather than a cap or liquidity filter.",
+      "suggestion": "Add a defense/aerospace carve-out or separate sector universe (e.g. `uk_eu_defense_watchlist`) so sector-driven rallies like the NATO-spending re-rating aren't fully excluded by the ESG screen.",
+      "failed": false
+    },
+    {
+      "ticker": "SSE.L",
+      "move_pct": 2.429,
+      "close": 24.88,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-day news catalyst found; move likely reflects continued re-rating on Ofgem RIIO-T3/ED3 regulatory clarity plus a sector-wide defensive/utility rotation as gilt yields eased.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SSE.L is a FTSE 100 large-cap UK regulated utility/renewables name, a low-beta, dividend-defensive sector the bot's momentum/news-reactive screens don't cover at all.",
+      "suggestion": "Add FTSE 100 regulated-utility names (market cap > \u00a310B) as a dedicated defensive/sector-rotation universe slice so regulatory-driven re-ratings like Ofgem price-control settlements are captured.",
+      "failed": false
+    },
+    {
+      "ticker": "SHEL.L",
+      "move_pct": 2.405,
+      "close": 32.36,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Brent crude spiked above $90/bbl on renewed US-Iran military escalation and Strait of Hormuz supply threats, lifting Shell alongside BP and other majors.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SHEL.L is a large-cap UK integrated energy major, likely excluded because current strategies focus on other sectors/caps and don't carry an oil & gas / geopolitical-risk sleeve.",
+      "suggestion": "Add a UK/EU large-cap energy sub-universe (SHEL.L, BP.L) gated on a Brent-crude daily-move trigger (e.g. >3% move) so geopolitically-driven oil rallies become tradable signals.",
+      "failed": false
+    },
+    {
+      "ticker": "BRBY.L",
+      "move_pct": -6.381,
+      "close": 10.49,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q1 FY27 update (Jul 17) beat on sales (+5% comp, all 4 divisions positive) but cautious geopolitical/macro guidance and EMEIA -3% tourist weakness triggered a multi-day sell-off into Jul 20.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BRBY.L is a UK-listed luxury/apparel retailer (FTSE 100, GBp-denominated), a sector/region combo the bot's uk-eu universe screen likely doesn't cover, so no filter ever saw it, let alone excluded it on signal grounds.",
+      "suggestion": "Add FTSE 100 luxury-goods/apparel names to the uk-eu universe screen, or add a post-earnings-drift rule flagging names with cumulative 3-day move beyond -8% after a trading update for mean-reversion review.",
+      "failed": false
+    },
+    {
+      "ticker": "PRX.AS",
+      "move_pct": -4.75,
+      "close": 38.505,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-day trigger; continuation of multi-day slide from global tech/Tencent-linked selloff (AI-competition jitters) plus forced Delivery Hero-to-Uber stake-sale overhang and failed technical breakout.",
+      "miss_reason": "Outside any active strategy's universe \u2014 PRX.AS is a Netherlands-domiciled holding company (Tencent proxy) on Euronext Amsterdam, a non-US large-cap conglomerate listing that falls outside the sector/cap buckets the bot's uk-eu universe currently tracks.",
+      "suggestion": "Add large-cap EU holding/conglomerate tickers with high China-proxy correlation (PRX.AS, and flag Tencent 0700.HK co-movement) to the uk-eu universe so sector-wide Asia-tech selloffs get sized even without a discrete headline.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": -4.53,
+      "close": 225.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Broad EU chip-equipment selloff (ASML, ASM Intl both ~-6% on AI-capex sustainability jitters) layered on Besi's own hybrid-bonding delay overhang (Samsung/SK Hynix reconsidering adoption timeline) ahead of its July 23 earnings.",
+      "miss_reason": "Outside any active strategy's universe: BESI.AS is a Euronext Amsterdam semiconductor-equipment large-cap (~\u20ac17.5B) not in the uk-eu sector coverage; even if covered, a pre-earnings blackout (report due July 23, 3 trading days out) would likely have excluded it anyway.",
+      "suggestion": "Add EU semiconductor-equipment peers (ASML, ASM International, BESI.AS) to the uk-eu momentum universe, and let a sector-selloff rule override the pre-earnings blackout when the move tracks a peer-group gap of \u22655% same-day.",
+      "failed": false
+    },
+    {
+      "ticker": "IMCD.AS",
+      "move_pct": -4.38,
+      "close": 88.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-day news trigger found \u2014 extends a ~10% one-month downtrend amid Q1 margin-pressure concerns, likely de-risking ahead of July 29 H1 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IMCD.AS is a ~\u20ac5B Euronext Amsterdam specialty-chemicals distributor (AEX-listed mid-cap), a sector/exchange combo the uk-eu universe screens don't currently cover.",
+      "suggestion": "Extend uk-eu universe cap/exchange filter to include Euronext Amsterdam AEX constituents \u2265\u20ac3B mkt cap so blue-chip mid-caps like IMCD are screened, not just FTSE/DAX/CAC names.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-20T15:06:08.862013+00:00"
+}
