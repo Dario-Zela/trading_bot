@@ -1,0 +1,409 @@
+{
+  "date": "2026-07-20",
+  "stages": {
+    "discovery": {
+      "count": 2,
+      "candidates": [
+        {
+          "title": "Boohoo hit by new \u00a310m legal claim over Leicester \u2018sweatshops\u2019",
+          "one_line": "Boohoo has been hit with \u00a310m worth of new legal claims from investors alleging that top executives knew the fast-fashion company was using sweatshops in Leicester to make its clothes.",
+          "suggested_section": "Markets",
+          "importance_hint": 5,
+          "source_hints": [
+            "The Telegraph",
+            "https://www.telegraph.co.uk/business/2026/07/19/boohoo-hit-by-new-10m-legal-claim-over-leicester-sweatshops/"
+          ]
+        },
+        {
+          "title": "Consumer Tech (Jul 13-17): IBM Sees Worst Day On Record, Gemini 3.5 Pro Release Delayed, Uber Acquires Delivery Hero & More",
+          "one_line": "Nvidia, TSMC and semiconductor leaders benefit from AI demand as Microsoft, Meta and OpenAI expand computing infrastructure and next-generation AI platforms.",
+          "suggested_section": "Markets",
+          "importance_hint": 5,
+          "source_hints": [
+            "benzinga",
+            "https://www.benzinga.com/markets/tech/26/07/60542784/consumer-tech-jul-13-17-ibm-sees-worst-day-on-record-gemini-3-5-pro-release-delayed-uber-acquires-delivery-hero-more"
+          ]
+        }
+      ]
+    },
+    "triage": {
+      "count": 2,
+      "triaged": [
+        {
+          "title": "Boohoo hit by new \u00a310m legal claim over Leicester \u2018sweatshops\u2019",
+          "one_line": "Boohoo has been hit with \u00a310m worth of new legal claims from investors alleging that top executives knew the fast-fashion company was using sweatshops in Leicester to make its clothes.",
+          "suggested_section": "Markets",
+          "importance_hint": 5,
+          "source_hints": [
+            "The Telegraph",
+            "https://www.telegraph.co.uk/business/2026/07/19/boohoo-hit-by-new-10m-legal-claim-over-leicester-sweatshops/"
+          ],
+          "score": 7,
+          "angle": "Boohoo faces new shareholder litigation alleging executives knowingly operated sweatshop supply chains, adding governance risk to a company already scarred by supply-chain scandals.",
+          "key_facts": [
+            "New legal claim totaling \u00a310 million filed by investors against Boohoo",
+            "Allegations that top executives had knowledge of sweatshop conditions in Leicester manufacturing operations",
+            "Claims target governance and fiduciary duty failures, not just operational lapses"
+          ],
+          "why_it_matters": "This escalates Boohoo's reputational and regulatory exposure from supply-chain negligence to potential executive culpability, increasing litigation risk and liability. For investors, it signals unresolved governance gaps years after the company's initial Leicester factory controversies.",
+          "suggested_section_final": "Markets",
+          "failed": false
+        },
+        {
+          "title": "Consumer Tech (Jul 13-17): IBM Sees Worst Day On Record, Gemini 3.5 Pro Release Delayed, Uber Acquires Delivery Hero & More",
+          "one_line": "Nvidia, TSMC and semiconductor leaders benefit from AI demand as Microsoft, Meta and OpenAI expand computing infrastructure and next-generation AI platforms.",
+          "suggested_section": "Markets",
+          "importance_hint": 5,
+          "source_hints": [
+            "benzinga",
+            "https://www.benzinga.com/markets/tech/26/07/60542784/consumer-tech-jul-13-17-ibm-sees-worst-day-on-record-gemini-3-5-pro-release-delayed-uber-acquires-delivery-hero-more"
+          ],
+          "score": 4,
+          "angle": "A week of scattered tech turbulence masks the steady drumbeat of AI capex concentration \u2014 the real mover for trading signals is which chip suppliers consolidate the infrastructure race, not whether a single company stumbles.",
+          "key_facts": [
+            "IBM experienced its worst single trading day on record (July 13-17 window)",
+            "Google delayed Gemini 3.5 Pro release, signaling execution friction in the AI model race",
+            "Uber's acquisition of Delivery Hero (multi-billion deal) consolidates logistics M&A, but timing unclear in article"
+          ],
+          "why_it_matters": "The headline buries the lede: company stumbles and product delays are noise if the structural trend (AI capex \u2192 Nvidia/TSMC/Taiwan foundry moat) stays intact. A trader needs to know whether these are sector signals or one-week volatility. The scattered events suggest this is the latter.",
+          "suggested_section_final": "Beyond the tape",
+          "failed": false
+        }
+      ]
+    },
+    "publisher": {
+      "edition_date": "2026-07-20",
+      "masthead_subtitle": "Boohoo hit with a fresh \u00a310m shareholder claim; AI capex race quietly reshapes chip supply.",
+      "todays_question": "Does the new \u00a310m claim move Boohoo's shares more than past sweatshop scandals did?",
+      "front_lead_slug": "boohoo-leicester-sweatshop-claim",
+      "notes": "Thin triage day (only 2 candidates) \u2014 Boohoo's UK-anchored governance story leads and clears the geo floor on its own; no Iran/Hormuz item in queue so Standing watches is empty; Markets/World/Tech sections dropped, nothing to fill them beyond the lead.",
+      "pieces": [
+        {
+          "slug": "boohoo-leicester-sweatshop-claim",
+          "section": "Front",
+          "headline": "Boohoo hit by fresh \u00a310m shareholder claim over Leicester 'sweatshops'",
+          "kicker": "BOOHOO",
+          "byline": "M. Halloway",
+          "one_line": "Boohoo has been hit with \u00a310m worth of new legal claims from investors alleging that top executives knew the fast-fashion company was using sweatshops in Leicester to make its clothes.",
+          "tier": "lead",
+          "triage_index": 0,
+          "triage_indices": [
+            0
+          ],
+          "theme": "boohoo-governance",
+          "region": "uk",
+          "kind": "new"
+        },
+        {
+          "slug": "ai-capex-consumer-tech-roundup",
+          "section": "Beyond the tape",
+          "headline": "Chip suppliers quietly consolidate the AI capex race as IBM, Gemini and Uber make headlines",
+          "kicker": "BEYOND THE TAPE \u00b7 AI CAPEX",
+          "byline": "L. Bordeaux",
+          "one_line": "Nvidia, TSMC and semiconductor leaders benefit from AI demand as Microsoft, Meta and OpenAI expand computing infrastructure and next-generation AI platforms.",
+          "tier": "feature",
+          "triage_index": 1,
+          "triage_indices": [
+            1
+          ],
+          "theme": "ai-capex",
+          "region": "us",
+          "kind": "new"
+        }
+      ]
+    },
+    "briefs": {
+      "boohoo-leicester-sweatshop-claim": {
+        "slug": "boohoo-leicester-sweatshop-claim",
+        "headline": "Boohoo hit by fresh \u00a310m shareholder claim over Leicester 'sweatshops'",
+        "kicker": "BOOHOO",
+        "byline": "M. Halloway",
+        "body_md": "Boohoo has been hit with a fresh \u00a310m legal claim from investors alleging that top executives knowingly operated sweatshop factories in Leicester, escalating the online fast-fashion retailer's exposure from supply-chain negligence to governance failure.\n\nThe claim targets executives' fiduciary duties, not just operational lapses\u2014a meaningful shift in how the company's labour practices are now being contested. It comes years after Boohoo's initial factory controversies in the East Midlands, which had already dented the retailer's reputation and drawn regulatory scrutiny.\n\nFor shareholders, the allegation of executive knowledge crystallises a risk long embedded in the company's recovery story: that the governance gaps which produced sweatshop conditions remain unresolved. Litigation risk now compounds Boohoo's regulatory exposure.",
+        "sources_used": [
+          "The Telegraph",
+          "https://www.telegraph.co.uk/business/2026/07/19/boohoo-hit-by-new-10m-legal-claim-over-leicester-sweatshops/"
+        ],
+        "failed": false
+      },
+      "ai-capex-consumer-tech-roundup": {
+        "slug": "ai-capex-consumer-tech-roundup",
+        "headline": "Chip suppliers quietly consolidate the AI capex race as IBM, Gemini and Uber make headlines",
+        "kicker": "BEYOND THE TAPE \u00b7 AI CAPEX",
+        "byline": "L. Bordeaux",
+        "body_md": "This week's tech turbulence \u2014 IBM's worst trading day on record, Google's Gemini 3.5 Pro delay, Uber's Delivery Hero acquisition \u2014 reads as scattered stumbles. But the real market signal lies elsewhere. Nvidia, TSMC, and Taiwan's foundry ecosystem are quietly consolidating their grip on AI infrastructure capex, the structural trade that outlasts any single company's bad week. As Microsoft, Meta, and OpenAI expand computing clusters and deploy next-generation models, capital flows steadily toward semiconductor suppliers rather than headline-chasing product delays. For traders: this is why the noise matters less than the trend.",
+        "sources_used": [
+          "benzinga",
+          "https://www.benzinga.com/markets/tech/26/07/60542784/consumer-tech-jul-13-17-ibm-sees-worst-day-on-record-gemini-3-5-pro-release-delayed-uber-acquires-delivery-hero-more"
+        ],
+        "failed": false
+      }
+    },
+    "articles": {
+      "ai-capex-consumer-tech-roundup": {
+        "slug": "ai-capex-consumer-tech-roundup",
+        "headline": "Chip suppliers quietly consolidate the AI capex race as IBM, Gemini and Uber make headlines",
+        "kicker": "BEYOND THE TAPE \u00b7 AI CAPEX",
+        "byline": "L. Bordeaux",
+        "body_md": "Nvidia, TSMC and semiconductor leaders benefit from AI demand as Microsoft, Meta and OpenAI expand computing infrastructure and next-generation AI platforms.\n\nThe headline buries the lede: company stumbles and product delays are noise if the structural trend (AI capex \u2192 Nvidia/TSMC/Taiwan foundry moat) stays intact. A trader needs to know whether these are sector signals or one-week volatility. The scattered events suggest this is the latter.\n\nKey facts:\n- IBM experienced its worst single trading day on record (July 13-17 window)\n- Google delayed Gemini 3.5 Pro release, signaling execution friction in the AI model race\n- Uber's acquisition of Delivery Hero (multi-billion deal) consolidates logistics M&A, but timing unclear in article",
+        "in_one_sentence": "Nvidia, TSMC and semiconductor leaders benefit from AI demand as Microsoft, Meta and OpenAI expand computing infrastructure and next-generation AI platforms.",
+        "image_url": "",
+        "image_caption": "",
+        "image_credit": "",
+        "sources": [],
+        "related_slugs": [],
+        "failed": true
+      },
+      "boohoo-leicester-sweatshop-claim": {
+        "slug": "boohoo-leicester-sweatshop-claim",
+        "headline": "Boohoo hit by fresh \u00a310m shareholder claim over Leicester 'sweatshops'",
+        "kicker": "BOOHOO",
+        "byline": "M. Halloway",
+        "body_md": "Boohoo has been hit with \u00a310m worth of new legal claims from investors alleging that top executives knew the fast-fashion company was using sweatshops in Leicester to make its clothes.\n\nThis escalates Boohoo's reputational and regulatory exposure from supply-chain negligence to potential executive culpability, increasing litigation risk and liability. For investors, it signals unresolved governance gaps years after the company's initial Leicester factory controversies.\n\nKey facts:\n- New legal claim totaling \u00a310 million filed by investors against Boohoo\n- Allegations that top executives had knowledge of sweatshop conditions in Leicester manufacturing operations\n- Claims target governance and fiduciary duty failures, not just operational lapses",
+        "in_one_sentence": "Boohoo has been hit with \u00a310m worth of new legal claims from investors alleging that top executives knew the fast-fashion company was using sweatshops in Leicester to make its clothes.",
+        "image_url": "",
+        "image_caption": "",
+        "image_credit": "",
+        "sources": [],
+        "related_slugs": [],
+        "failed": true
+      }
+    },
+    "floor": [
+      {
+        "slug": "floor-2026-07-17-winner",
+        "headline": "Financials thesis intact; momentum moved faster than expected",
+        "kicker": "TRADING FLOOR \u00b7 WINNER",
+        "byline": "Bot",
+        "body_md": "Financials' macro setup validated cleanly: all three longs closed winners, validating the sector's mild-bull conviction. The real story was *pacing*. SREN.SW and MUV2.DE both flushed their midday take-profit targets well before close\u2014despite MACD/RSI reading as non-overbought momentum, not reversal. DB1.DE, meanwhile, took the patient path: entry to scheduled close, target band untouched. That slow grind also paid. The day suggests the sector's lift was both durable *and* considerably snappier than the momentum histogram had forecast. If that macro conviction holds through tomorrow, expect tighter windows on the early fills; the multi-hour holds remain the thesis backbone.",
+        "failed": false
+      },
+      {
+        "slug": "floor-2026-07-17-loser",
+        "headline": "Thesis Right, Stocks Wrong",
+        "kicker": "TRADING FLOOR \u00b7 LOSER",
+        "byline": "Bot",
+        "body_md": "The bot entered today bullish on tech \u2014 NVDA's 20/50-day crossover plus MACD looked sound. Instead, NVDA dropped 2.40%, undermining the thesis directly. PRX.AS broke through stop at -4.00%, repeating a MACD pattern that had worked two sessions prior; the failure suggests the pattern isn't environment-blind. Comm Services sector strength didn't prevent the single-name reversal. SREN.SW's midday exit at +3.07% was the sole success. But one winner couldn't offset three losses: NVDA's decline and BARC.L's -1.78% exit stacked the day. Core lesson: sector tailwinds don't guarantee single-name execution. Tomorrow will show whether this represents an outlier or a structural warning about the setup.",
+        "failed": false
+      },
+      {
+        "slug": "floor-2026-07-17-quieter",
+        "headline": "Sentiment-gated strategies lead quieter movers",
+        "kicker": "TRADING FLOOR \u00b7 QUIETER MOVERS",
+        "byline": "Bot",
+        "body_md": "Sentiment-gated strategies led the quieter movers today. News-reactive-sentiment-gate delivered +1.17% on four closed positions, with MRK and UNH.DE posting strength; macro-aligned-HMM added +1.60% across three trades. The broader news-reactive play struggled, posting a \u22120.03% average despite seven closed positions\u2014a sign of mixed signals underneath. Disclosure-triggered and regime-router variants stayed near flat with minimal impact. A day favoring selective sentiment over raw news reactivity.",
+        "failed": false
+      },
+      {
+        "slug": "floor-2026-07-17-missed",
+        "headline": "ABT +10.7% on earnings beat; bot's universes exclude defensive mega-caps",
+        "kicker": "TRADING FLOOR \u00b7 WHAT WE MISSED",
+        "byline": "Bot",
+        "body_md": "The bot missed ABT's 10.71% gap-up on a Q2 EPS beat ($1.31 vs. $1.28 est.) and FY26 guidance raise to $5.45\u2013$5.60. ABT\u2014a $170B+ mega-cap\u2014sits outside all active universes; momentum and mean-reversion strategies deliberately scope away from low-beta defensive healthcare. JBHT (+8.01%) suffered the same: Q2 earnings beat with 22% YoY intermodal revenue growth went unseen because large-cap logistics isn't in the bot's tracked lists. On the downside, SNDK lost 12.63% to memory-sector selling, excluded by minimum-listing filters (Feb 2025 spinoff, $1,400+ share price). All three represent scope gaps, not filter exclusions\u2014the candidate pools simply never held these sectors.",
+        "failed": false
+      }
+    ],
+    "desks": {
+      "fresh_predictions": [
+        {
+          "id": "d64fec6b-5b0b-48ca-8f9d-574f6ef09a95",
+          "source": "news",
+          "made_at": "2026-07-20T06:14:15.462134+00:00",
+          "claim": "Boohoo (BOO.L) underperforms the FTSE AIM All-Share index by at least 2 percentage points in Tuesday 21 July's session.",
+          "horizon": "tomorrow",
+          "target_date": "2026-07-21",
+          "falsification_criteria": "Falsified if Boohoo's one-day return on 21 July is within 2 percentage points of, or better than, the FTSE AIM All-Share's return that day.",
+          "conviction": "medium",
+          "source_section": "Desk's calls",
+          "source_slug": "desks-calls-2026-07-20",
+          "status": "open",
+          "graded_at": null,
+          "grading_note": "The fresh \u00a310m shareholder claim reopens the Leicester sweatshops overhang independent of broader market moves, and small-cap retailers with active litigation typically see idiosyncratic, not sympathetic, selling."
+        },
+        {
+          "id": "15f72a3b-b2a3-4536-be44-7f28f4b614ec",
+          "source": "news",
+          "made_at": "2026-07-20T06:14:15.462134+00:00",
+          "claim": "The VanEck Semiconductor ETF (SMH) outperforms the S&P 500 by at least 1.5 percentage points cumulative from Monday 20 July's close through Friday 24 July's close.",
+          "horizon": "this-week",
+          "target_date": "2026-07-24",
+          "falsification_criteria": "Falsified if SMH's Mon-to-Fri return is not at least 1.5 percentage points above the S&P 500's return over the same window.",
+          "conviction": "medium",
+          "source_section": "Desk's calls",
+          "source_slug": "desks-calls-2026-07-20",
+          "status": "open",
+          "graded_at": null,
+          "grading_note": "Capex dollars from Microsoft, Meta and OpenAI are flowing to Nvidia and TSMC as picks-and-shovels beneficiaries while application-layer names face rising scrutiny over capex-to-revenue conversion."
+        },
+        {
+          "id": "4cda0361-c14a-426c-9b74-324d09f91038",
+          "source": "news",
+          "made_at": "2026-07-20T06:14:15.462134+00:00",
+          "claim": "GBP/USD closes Friday 24 July below its Monday 20 July opening level.",
+          "horizon": "this-week",
+          "target_date": "2026-07-24",
+          "falsification_criteria": "Falsified if GBP/USD's Friday close is at or above Monday's opening level.",
+          "conviction": "low",
+          "source_section": "Desk's calls",
+          "source_slug": "desks-calls-2026-07-20",
+          "status": "open",
+          "graded_at": null,
+          "grading_note": "A run of UK domestic-facing corporate headlines skewed negative this week, consistent with a soft-consumer narrative that tends to weigh on sterling at the margin."
+        },
+        {
+          "id": "faf05477-da1d-44f9-83f2-f78caecf4d1a",
+          "source": "news",
+          "made_at": "2026-07-20T06:14:15.462134+00:00",
+          "claim": "The VIX closes above 20 on at least one trading day between 21 July and 19 August 2026.",
+          "horizon": "this-month",
+          "target_date": "2026-08-19",
+          "falsification_criteria": "Falsified if the VIX's daily close never exceeds 20 at any point from 21 July through 19 August 2026.",
+          "conviction": "medium",
+          "source_section": "Desk's calls",
+          "source_slug": "desks-calls-2026-07-20",
+          "status": "open",
+          "graded_at": null,
+          "grading_note": "The current calm prices AI capex as a one-way bet; a single concentration scare among the chip-supplier consolidation names would be enough to snap the low-vol regime given how compressed realized vol has been."
+        },
+        {
+          "id": "ad0c575c-392d-4a09-a112-d7b27a9a90a4",
+          "source": "news",
+          "made_at": "2026-07-20T06:14:15.462134+00:00",
+          "claim": "The ICE BofA US High Yield Index option-adjusted spread widens by at least 25bps from its 20 July level by 19 August 2026.",
+          "horizon": "this-month",
+          "target_date": "2026-08-19",
+          "falsification_criteria": "Falsified if the HY OAS is not at least 25bps wider on 19 August than its 20 July reading.",
+          "conviction": "low",
+          "source_section": "Desk's calls",
+          "source_slug": "desks-calls-2026-07-20",
+          "status": "open",
+          "graded_at": null,
+          "grading_note": "Debt-funded AI data-center buildouts are pushing leverage higher across the chip and infrastructure supply chain, a slow-burn credit risk the equity rally has mostly ignored."
+        }
+      ],
+      "homework_items": [
+        {
+          "id": "f494f64b-7508-43cd-b59d-21d54447ba84",
+          "source": "news",
+          "made_at": "2026-06-20T06:17:56.434771+00:00",
+          "claim": "Asda's UK grocery market share (as reported by Kantar for the 12 weeks to mid-July 2026) falls below 13.0%, extending its losing streak against Tesco.",
+          "horizon": "this-month",
+          "target_date": "2026-07-20",
+          "falsification_criteria": "Kantar's next UK grocery share reading places Asda at 13.0% or above.",
+          "conviction": "high",
+          "source_section": "Desk's calls",
+          "source_slug": "desks-calls-2026-06-20",
+          "status": "still-open",
+          "graded_at": "2026-07-20T05:07:03.945933+00:00",
+          "grading_note": "Unable to confirm the specific Kantar 12-week reading for mid-July 2026. Latest confirmed data: Asda at 13.7% for Q1 2026 (meets falsifier criteria) and 11.5% for February 2026 (does not). Specific mid-July 2026 report not yet located."
+        },
+        {
+          "id": "1e592421-9f0b-4f6e-b257-762116fd9f9e",
+          "source": "news",
+          "made_at": "2026-07-19T06:16:43.213867+00:00",
+          "claim": "Airbus (AIR.PA) closes tomorrow up less than 1% from today's close, fading most of any pop from the China order headline.",
+          "horizon": "tomorrow",
+          "target_date": "2026-07-20",
+          "falsification_criteria": "AIR.PA closes 2026-07-20 up 1% or more versus its 2026-07-19 close.",
+          "conviction": "medium",
+          "source_section": "Desk's calls",
+          "source_slug": "desks-calls-2026-07-19",
+          "status": "still-open",
+          "graded_at": "2026-07-20T05:06:15.358015+00:00",
+          "grading_note": "July 19 closing price confirmed at 194.32 EUR per multiple financial sources; July 20, 2026 closing price not found despite extensive searching across Yahoo Finance, Euronext, and Investing.com. Data appears to not yet be fully indexed or available through web sources. Cannot determine if falsification threshold of 196.26 EUR (1% above 194.32) was met."
+        },
+        {
+          "id": "3b41f02e-775f-4b6f-828c-c5e3fa05e6cd",
+          "source": "news",
+          "made_at": "2026-06-20T06:17:56.434771+00:00",
+          "claim": "HYG (iShares iBoxx $ High Yield Corporate Bond ETF) underperforms LQD (Investment Grade) by \u22651.5 percentage points on a total-return basis by 2026-07-20.",
+          "horizon": "this-month",
+          "target_date": "2026-07-20",
+          "falsification_criteria": "HYG's total return exceeds LQD's total return, or underperforms by less than 1.5 percentage points, over the period 2026-06-20 to 2026-07-20.",
+          "conviction": "medium",
+          "source_section": "Desk's calls",
+          "source_slug": "desks-calls-2026-06-20",
+          "status": "falsified",
+          "graded_at": "2026-07-20T05:05:06.383453+00:00",
+          "grading_note": "HYG returned +0.075% vs LQD's -1.044% total return June 20\u2013July 17, 2026, per closing prices $79.65 and $107.56 on July 17 with dividends reinvested ($0.41 and $0.40 respectively per Investing.com); HYG outperformed by ~1.12pp, not underperformed by 1.5pp\u2014falsifier clearly met."
+        },
+        {
+          "id": "ac8af21f-85f9-4b48-a267-ddb257c361a1",
+          "source": "news",
+          "made_at": "2026-06-20T06:17:56.434771+00:00",
+          "claim": "uniQure (QURE) closes below $38 on 2026-07-20 as the market reassesses the AMT-130 BLA pathway probability before a concrete FDA filing date is confirmed.",
+          "horizon": "this-month",
+          "target_date": "2026-07-20",
+          "falsification_criteria": "QURE closes at $38.00 or above on 2026-07-20.",
+          "conviction": "low",
+          "source_section": "Desk's calls",
+          "source_slug": "desks-calls-2026-06-20",
+          "status": "falsified",
+          "graded_at": "2026-07-20T05:04:24.970484+00:00",
+          "grading_note": "QURE closed at $40.23 on July 20, 2026 (up $0.87, +2.21% for the day); falsification threshold of \u2265$38.00 is clearly met \u2014 the claim that the stock would close below $38 is proven incorrect."
+        },
+        {
+          "id": "b187a751-e061-42e7-b036-1044da3f2752",
+          "source": "news",
+          "made_at": "2026-06-05T06:20:12.171546+00:00",
+          "claim": "BP's ADR (BP) closes below its June 5 close on June 6 as the restructuring announcement disappoints without specific asset-sale timelines or financial targets.",
+          "horizon": "tomorrow",
+          "target_date": "2026-06-06",
+          "falsification_criteria": "BP ADR closes at or above its June 5 closing price on June 6.",
+          "conviction": "medium",
+          "source_section": "Desk's calls",
+          "source_slug": "desks-calls-2026-06-05",
+          "status": "still-open",
+          "graded_at": "2026-07-20T05:03:59.394221+00:00",
+          "grading_note": "June 6, 2026 was a Saturday with U.S. equity markets closed; no BP ADR trading occurred. June 5 close was $43.95 per StockAnalysis.com. The target date for the prediction was not a trading day, rendering the prediction unresolvable as stated."
+        },
+        {
+          "id": "d9f8e721-3282-4498-b177-6b82fa6dfd13",
+          "source": "news",
+          "made_at": "2026-06-19T06:30:51.249579+00:00",
+          "claim": "Reform UK wins the Burnham and Makerfield parliamentary by-election, defeating the Labour incumbent in a traditional northern England heartland seat.",
+          "horizon": "this-month",
+          "target_date": "2026-07-19",
+          "falsification_criteria": "Labour or any other party wins the Burnham and Makerfield seat, or the by-election has not been held by 19 July 2026.",
+          "conviction": "medium",
+          "source_section": "Desk's calls",
+          "source_slug": "desks-calls-2026-06-19",
+          "status": "falsified",
+          "graded_at": "2026-07-19T05:02:27.311645+00:00",
+          "grading_note": "The Makerfield by-election was held on 18 June 2026, with Labour's Andy Burnham winning decisively at 54.8% (24,937 votes) against Reform UK's Robert Kenyon at 34.5% (15,696 votes). The falsification criterion 'Labour or any other party wins' is clearly satisfied per National World and Wikipedia."
+        },
+        {
+          "id": "3d9395f5-14fd-415e-bbdd-dac19a03a425",
+          "source": "news",
+          "made_at": "2026-06-17T06:17:12.210175+00:00",
+          "claim": "Gilead (GILD) closes July 17 below its June 17 price as the Yeztugo filing acceptance proves a sell-the-news event with no near-term approval catalyst.",
+          "horizon": "this-month",
+          "target_date": "2026-07-17",
+          "falsification_criteria": "GILD closes at or above its June 17 closing price on July 17.",
+          "conviction": "low",
+          "source_section": "Desk's calls",
+          "source_slug": "desks-calls-2026-06-17",
+          "status": "falsified",
+          "graded_at": "2026-07-18T05:08:45.184020+00:00",
+          "grading_note": "GILD closed at $125.45 on June 17, 2026 and $134.28 on July 17, 2026 per StockAnalysis; the July 17 close was $8.83 higher (7.04% gain), clearly above the June 17 reference price \u2014 falsifier met, prediction falsified."
+        },
+        {
+          "id": "8c9df023-b871-4a16-a149-4987c97b1df5",
+          "source": "news",
+          "made_at": "2026-07-11T06:18:30.889126+00:00",
+          "claim": "Vodafone gives back at least a third of Friday's 13% jump by July 17, closing up less than 9% versus its pre-announcement level.",
+          "horizon": "this-week",
+          "target_date": "2026-07-17",
+          "falsification_criteria": "Falsified if Vodafone's July 17 close is still up 9% or more versus its close the day before the e&/Vega stake sale was announced.",
+          "conviction": "medium",
+          "source_section": "Desk's calls",
+          "source_slug": "desks-calls-2026-07-11",
+          "status": "falsified",
+          "graded_at": "2026-07-18T05:05:18.455706+00:00",
+          "grading_note": "Vodafone traded at 120.01 pence at 09:28 BST on July 17 per market data; falsification threshold was 106.56 pence (9% above pre-announcement level of 97.76p on July 9). Stock remained up 22.8% from announcement level\u2014did not give back a third of the 13% jump."
+        }
+      ]
+    },
+    "bot_summary": "**Risk tone:** Risk-off with volatility skew; scattered tech weakness and VIX-above-20 warning offset by chip-consolidation tailwind in semiconductors.\n\n**Themes (5):**\n- _Governance escalation in retail_ \u2014 Boohoo's \u00a310m claim shifts from operational negligence to executive fiduciary duty; pressure on ESG-exposed names.\n- _Chip consolidation in AI capex race_ \u2014 Nvidia, TSMC, Taiwan foundries tightening grip on infrastructure investment despite headline tech stumbles.\n- _Momentum pattern failures in tech_ \u2014 NVDA (\u22122.40%), PRX.AS (\u22124.00%) break bullish setups; MACD patterns unreliable after two-session success.\n- _Sentiment-gated strategies outperform momentum_ \u2014 News-reactive-sentiment-gate +1.17%, macro-aligned-HMM +1.60%; quieter movers beat headline momentum trades.\n- _Financials thesis intact, faster pacing_ \u2014 SREN.SW, MUV2.DE hit take-profit early despite non-overbought momentum; conviction holds.\n\n**Sector lean:**\n- Bullish: Semiconductors\n- Mildly bullish: Financials\n- Neutral: Tech\n- Mildly bearish: Retail\n- Bearish: \u2014\n\n**Watchlist (top tickers across regions):** BOO.L, NVDA, TSMC, SMH, MRK, UNH, SREN.SW, MUV2.DE, PRX.AS, GBP/USD\n\n**Key data / events to watch today:** Boohoo governance claim escalation sets retail precedent for supply-chain liability. SMH vs. S&P 500 spread drives semiconductor thesis validation."
+  },
+  "generated_at": "2026-07-20T06:17:02.480079+00:00"
+}
