@@ -3,6 +3,9 @@
 -- One row per intraday trail / midday-TP exit event. Reference-only:
 -- the authoritative PnL lives on stg_ledger; this is for exit-timing
 -- and reason-attribution analysis.
+--
+-- Source columns (verified against actual JSONL): ticker, region,
+-- strategy_id, exit_date, exit_reason, pnl_pct, appended_at.
 
 with source as (
     select * from read_json_auto(
@@ -14,19 +17,15 @@ with source as (
 
 typed as (
     select
-        try_cast(exited_at as timestamp)       as exited_at,
-        try_cast(entry_date as date)           as entry_date,
-        try_cast(exit_date as date)            as exit_date,
-        strategy_id,
-        region,
-        tier,
-        ticker,
-        exit_reason,
-        try_cast(exit_price as double)         as exit_price,
-        try_cast(pnl_pct as double)            as pnl_pct,
-        try_cast(pnl_gbp as double)            as pnl_gbp
+        try_cast(source.appended_at as timestamp) as appended_at,
+        try_cast(source.exit_date as date)        as exit_date,
+        source.strategy_id                        as strategy_id,
+        source.region                             as region,
+        source.ticker                             as ticker,
+        source.exit_reason                        as exit_reason,
+        try_cast(source.pnl_pct as double)        as pnl_pct
     from source
-    where exited_at is not null
+    where source.appended_at is not null
 )
 
 select * from typed

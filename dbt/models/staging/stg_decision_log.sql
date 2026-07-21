@@ -3,6 +3,13 @@
 -- One row per evolution-agent decision. Used to trace strategy state
 -- transitions (promote / demote / tune / spawn / deactivate) and to
 -- window metrics from a strategy's `last_tune_date`.
+--
+-- Source columns (verified against actual JSONL): week_iso, decided_at,
+-- strategy_id, region, action, reason, details (nested), pre_metrics
+-- (nested), post_metrics (nested), grade (nested), graded_at.
+--
+-- All source refs are qualified with `source.` — DuckDB's binder
+-- rejects `try_cast(x as t) as x` as a forward alias reference.
 
 with source as (
     select * from read_json_auto(
@@ -14,18 +21,16 @@ with source as (
 
 typed as (
     select
-        try_cast(decided_at as timestamp)      as decided_at,
-        try_cast(week_ending as date)          as week_ending,
-        strategy_id,
-        region,
-        action,
-        rationale,
-        details,
-        applied,
-        try_cast(applied_at as timestamp)      as applied_at
+        try_cast(source.decided_at as date)  as decided_at,
+        source.week_iso                      as week_iso,
+        source.strategy_id                   as strategy_id,
+        source.region                        as region,
+        source.action                        as action,
+        source.reason                        as reason,
+        try_cast(source.graded_at as date)   as graded_at
     from source
-    where decided_at is not null
-      and strategy_id is not null
+    where source.decided_at is not null
+      and source.strategy_id is not null
 )
 
 select * from typed
