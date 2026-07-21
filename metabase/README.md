@@ -1,10 +1,26 @@
 # Metabase for trading-bot analytics
 
 Reads the dbt-built DuckDB store (`dbt/analytics.duckdb`) and serves
-dashboards at http://localhost:3000. Everything you'd write as an ad-hoc
-Python rollup can live here instead as a saved question or dashboard tile.
+dashboards. Everything you'd write as an ad-hoc Python rollup can live
+here instead as a saved question or dashboard tile.
 
-## One-time setup
+## Fastest path — GitHub Codespaces (no clone, browser-only)
+
+1. On the repo page: **Code → Codespaces → Create codespace on main**
+2. Wait ~2 min for first build. The devcontainer auto-installs deps,
+   fetches the DuckDB driver, builds the analytics store, and starts
+   Metabase in the background.
+3. Open the **PORTS** tab (bottom panel in VS Code Web) — click the
+   forwarded URL next to port 3000.
+4. First load asks you to create an admin account (stored in the
+   Codespace's `metabase/data/`; persists across container restarts
+   until the Codespace itself is deleted).
+5. Add the DuckDB connection (see [Add the DuckDB connection](#add-the-duckdb-connection) below).
+
+Codespaces auto-suspends after 30 min idle; wakes on next request.
+Free tier: 60h/month on personal accounts.
+
+## Alternative — Local Docker
 
 Requires: Docker + `curl`. Run all commands from the repo root.
 
@@ -35,7 +51,9 @@ docker compose logs -f metabase   # wait for "Metabase Initialization COMPLETE"
 Cold start ~45s. Open http://localhost:3000, create an admin account
 (local-only, credentials stored in `metabase/data/`).
 
-**4. Add the DuckDB connection** (Admin → Databases → Add database):
+## Add the DuckDB connection
+
+Admin → Databases → Add database:
 
 - Database type: **DuckDB**
 - Display name: `trading_bot_analytics`
