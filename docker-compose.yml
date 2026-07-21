@@ -16,7 +16,7 @@
 
 services:
   metabase:
-    image: metabase/metabase:latest
+    build: ./metabase   # thin Dockerfile that adds libstdc++ for the DuckDB JNI driver
     container_name: trading-bot-metabase
     ports:
       - "3000:3000"
