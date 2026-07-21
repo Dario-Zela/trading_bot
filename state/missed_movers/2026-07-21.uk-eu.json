@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-21",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 BAB.L +7%, CCC.L +5%, FRES.L +3%, EDV.L +3%, STMPA.PA +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (KGF.L -4%, BNR.DE -4%, HWDN.L -3%, BNZL.L -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: BAB.L (+7.43%) \u2014 Babcock Canada disclosed a ~$1.1bn six-year extension of the Victoria-class submarine in-service support contract (announced 20 Jul), layering on ongoing buyback/FY26-beat momentum. Why we passed: Outside any active strategy's universe: Babcock is a UK defence/gov-services mid-cap, likely screened out by a defense-sector exclusion list or an index-membership filter that omits contract-news-driven names like this.",
+  "top_movers": [
+    {
+      "ticker": "BAB.L",
+      "move_pct": 7.432,
+      "close": 11.13,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Babcock Canada disclosed a ~$1.1bn six-year extension of the Victoria-class submarine in-service support contract (announced 20 Jul), layering on ongoing buyback/FY26-beat momentum.",
+      "miss_reason": "Outside any active strategy's universe: Babcock is a UK defence/gov-services mid-cap, likely screened out by a defense-sector exclusion list or an index-membership filter that omits contract-news-driven names like this.",
+      "suggestion": "Add a contract-win RNS trigger for defense primes (Babcock, BAE, QinetiQ) that surfaces material MOD/allied contract announcements to a research watchlist, without lifting the sector's core universe exclusion.",
+      "failed": false
+    },
+    {
+      "ticker": "CCC.L",
+      "move_pct": 4.585,
+      "close": 47.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Berenberg (and Stifel/Jefferies/JPM) upgraded CCC.L to Buy with targets raised to ~5,300p, following its Jul 9 H1 update showing profit nearly doubling on AI/hyperscale demand.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CCC.L only joined the FTSE 100 in the June 2026 index review, so it likely hasn't been added to index-tracking universe lists yet; also sits in an IT-services/reseller sector bucket strategies may not cover.",
+      "suggestion": "Add a quarterly (or event-triggered) FTSE 100/250 constituent refresh to the universe builder so newly promoted names like CCC.L are picked up within one review cycle instead of waiting for the next scheduled rebuild.",
+      "failed": false
+    },
+    {
+      "ticker": "FRES.L",
+      "move_pct": 3.488,
+      "close": 25.2719,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company news; tracked a ~5% spot silver rebound ($58\u2192$59/oz) on eased US-Iran tension/rate-hike fears \u2014 Fresnillo is the world's largest silver miner, a high-beta proxy for the metal.",
+      "miss_reason": "Outside any active strategy's universe \u2014 falls in the UK-listed metals/mining large-cap bucket, a commodity-linked equity category the uk-eu universes don't currently cover, so the move was never seen regardless of filters.",
+      "suggestion": "Add a precious-metals miner basket (FRES.L, HOC.L, etc.) to the uk-eu universe with a rule that flags names when the underlying spot metal (XAG/XAU) moves >3% intraday.",
+      "failed": false
+    },
+    {
+      "ticker": "EDV.L",
+      "move_pct": 2.888,
+      "close": 35.27,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-name news; gold rebounded above $4,000/oz amid US-Iran tension and Fed rate-hike bets, lifting West African gold producer EDV.L in a broad sector rally (~8x gold's own 0.36% move).",
+      "miss_reason": "Outside any active strategy's universe \u2014 EDV.L is a large-cap ($11.6B) West African gold miner; uk-eu equity universes likely exclude mining/commodity-linked names as a sector category, not via a cap or liquidity filter.",
+      "suggestion": "Add a gold/materials sleeve (e.g. FTSE 350 Mining constituents) to the uk-eu universe so commodity-beta movers like EDV.L get screened by existing momentum/RSI filters instead of blanket sector exclusion.",
+      "failed": false
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": 2.692,
+      "close": 56.07,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide semis rally after ASML's blowout Q2 beat + raised FY26 revenue guidance (\u20ac43-45B), plus a wave of STM price-target hikes (TD Cowen, BofA, Deutsche Bank) ahead of STM's own Q2 print on Jul 23.",
+      "miss_reason": "Outside any active strategy's universe \u2014 STMPA.PA is a Euronext Paris-listed EU semiconductor name; the bot's uk-eu universe appears to exclude it (likely a cap/liquidity/sector-coverage gap rather than a filter trip), so no strategy ever evaluated the move.",
+      "suggestion": "Add STMPA.PA to the uk-eu semiconductor watchlist and wire a peer-earnings proxy so a supplier's (ASML) guidance beat auto-flags correlated EU chip names for review ahead of their own earnings date.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": 2.669,
+      "close": 65.39,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No firm-specific news today; sector-wide chip rally as DAX semiconductor names (Infineon, Aixtron, S\u00fcss MicroTec) extended gains following ASML's July 15 guidance raise.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IFX.DE is a large-cap DAX-listed semiconductor cyclical; uk-eu universes appear scoped by index/sector selection that excludes German chip names, so no filter ever saw the move.",
+      "suggestion": "Add a DAX semiconductor cohort (Infineon, Aixtron, S\u00fcss MicroTec) to the uk-eu universe via a sector-momentum rule triggered when a bellwether (e.g. ASML) beats guidance by a set threshold.",
+      "failed": false
+    },
+    {
+      "ticker": "KGF.L",
+      "move_pct": -4.043,
+      "close": 2.919,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news; sector-wide slide as new PM Andy Burnham's cabinet reshuffle pushed 30Y gilt yields to 2-month highs, hitting rate-sensitive UK homebuilders/domestic retailers incl. KGF.",
+      "miss_reason": "Outside any active strategy's universe \u2014 KGF.L (B&Q/Screwfix) is a UK domestic DIY retailer whose move was a macro/political gilt-yield reaction, not a name-specific earnings or volume catalyst a news-reactive scanner would flag.",
+      "suggestion": "Add a UK-macro sector screen (gilt-yield-shock proxy) that flags correlated FTSE homebuilder/domestic-retail sell-offs on political/fiscal event days, independent of per-name earnings or volume filters.",
+      "failed": false
+    },
+    {
+      "ticker": "BNR.DE",
+      "move_pct": -3.997,
+      "close": 57.16,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Prelim Q2 EBITDA ~\u20ac450m beat (~\u20ac367m est) and FY26 guidance hike to \u20ac1.25-1.40bn, but cautious H2 demand-weakness commentary drove a sell-the-news reaction.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BNR.DE is a German mid-cap (~\u20ac7-8bn) chemicals-distribution/DAX name, a sector/cap bucket the bot's universes don't currently cover.",
+      "suggestion": "Add DAX/European chemicals-distribution mid-caps (\u20ac5-15bn) to the uk-eu universe, or add an earnings-day scanner that pulls in any preliminary-results movers \u22653% for next-session review.",
+      "failed": false
+    },
+    {
+      "ticker": "HWDN.L",
+      "move_pct": -3.498,
+      "close": 7.725,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No same-day news catalyst; sector-wide de-risking in UK housing/RMI-exposed names into Howdens' HY results due 23-Jul-2026 (two days out), amid weak UK mortgage/house-price data.",
+      "miss_reason": "Outside any active strategy's universe \u2014 HWDN.L falls into UK building-products/RMI-distribution, a sector the bot's uk-eu universe doesn't currently track, so no filter ever saw it despite FTSE 100 liquidity.",
+      "suggestion": "Add a building-materials/RMI sub-universe (HWDN, TPK, KGF, SIG) to the uk-eu strategy roster, gated by an earnings-proximity flag so pre-results volatility (like this -3.5% two days ahead of Howdens' 23-Jul HY print) is at least monitored even if not traded.",
+      "failed": false
+    },
+    {
+      "ticker": "BNZL.L",
+      "move_pct": -3.29,
+      "close": 27.04,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "BofA reinstated coverage on Bunzl with Underperform and a 2,206p target, flagging a stretched valuation after a ~30% YTD rally and ~\u00a31.9bn of M&A charges seen as flattering EPS by ~28%.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Bunzl is a FTSE 100 defensive distribution/industrials name, a low-beta staple likely excluded by sector/volatility screens tuned for momentum or news-reactive names rather than sell-side rating revisions.",
+      "suggestion": "Add an analyst-rating-change scanner (new Underperform/Sell initiations or reinstatements from top-tier banks on large-cap UK/EU names) that can pull qualifying tickers into the universe intraday, independent of existing sector/volatility filters.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-21T15:03:44.966368+00:00"
+}
