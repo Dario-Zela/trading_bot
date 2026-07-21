@@ -26,15 +26,15 @@ vars:
 models:
   trading_bot_analytics:
     staging:
-      # Materialized as tables (not views) so downstream consumers
-      # like Metabase never re-execute read_json_auto() at query
-      # time. The path baked into a view's definition is the path
-      # the dbt runner saw (Codespace host, e.g. /workspaces/.../state)
-      # — Metabase runs inside the compose container and can't see
-      # that path. Materializing means Metabase reads from DuckDB's
-      # internal storage instead.
-      +materialized: table
+      # Views — always fresh, read by Python callers that share the
+      # dbt runner's filesystem view (path in `read_json_auto()`
+      # resolves correctly). Anything OUTSIDE that env (Metabase in
+      # its own container, external tools) must read from marts, not
+      # staging — staging views' baked JSONL paths won't resolve.
+      +materialized: view
       +schema: staging
     marts:
+      # Tables — materialized snapshots consumers can query from any
+      # environment; contain no external-path references.
       +materialized: table
       +schema: marts

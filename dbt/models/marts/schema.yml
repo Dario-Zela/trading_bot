@@ -46,3 +46,30 @@ models:
         tests: [not_null]
       - name: fees_share_of_gross
         description: fees / (|gross| + fees). Higher means costs are eating the signal.
+
+  - name: mart_strategy_recent
+    description: >
+      Trailing-window rollups per (strategy, region). Stacked windows
+      of 7d / 30d / 90d — filter by `window_days` in the consumer.
+      Complements mart_fee_drag (lifetime) with the windowed view
+      leaderboards and short-term deltas need.
+    columns:
+      - name: window_days
+        tests:
+          - accepted_values:
+              arguments:
+                values: [7, 30, 90]
+      - name: strategy_id
+        tests: [not_null]
+      - name: region
+        tests: [not_null]
+
+  - name: mart_trades_recent
+    description: >
+      Individual closed trades in the trailing 30 days, denormalized
+      for Metabase scatter/table views. Excludes control benchmark.
+    columns:
+      - name: trade_id
+        tests: [unique, not_null]
+      - name: strategy_id
+        tests: [not_null]

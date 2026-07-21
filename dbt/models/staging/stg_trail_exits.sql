@@ -1,4 +1,4 @@
-{{ config(materialized='table') }}
+{{ config(materialized='view') }}
 
 -- One row per intraday trail / midday-TP exit event. Reference-only:
 -- the authoritative PnL lives on stg_ledger; this is for exit-timing

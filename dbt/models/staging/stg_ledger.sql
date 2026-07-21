@@ -1,4 +1,4 @@
-{{ config(materialized='table') }}
+{{ config(materialized='view') }}
 
 -- One row per trade. Types coerced, obvious-null trades dropped.
 -- The is_closed / is_win flags exist so marts can filter without
