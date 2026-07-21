@@ -1,27 +1,44 @@
-# Extend the official Metabase image with libstdc++.
+# Metabase on a Debian JRE base, not Alpine.
 #
-# The DuckDB JNI driver (community-maintained, motherduckdb/metabase_duckdb_driver)
-# ships a native libduckdb_java.so that was built against glibc/libstdc++.
-# Metabase's official image is Alpine-based (musl libc), which does NOT
-# include libstdc++ by default. Loading the driver fails at connection time:
+# Why not extend metabase/metabase:latest directly:
+#   The official image is Alpine (musl libc). The community DuckDB
+#   Metabase driver ships libduckdb_java.so linked against glibc.
+#   Progressive failure modes we already hit trying to make Alpine work:
+#     1. libstdc++.so.6 missing            → fixed with `apk add libstdc++`
+#     2. Class-init failure (glibc symbols) → fixed with `apk add gcompat`
+#     3. JVM segfault on actual connection → gcompat can't bridge every
+#                                            glibc symbol the JNI blob
+#                                            calls, so runtime calls
+#                                            still crash the JVM
 #
-#   Error loading shared library libstdc++.so.6: No such file or directory
-#     (needed by /tmp/libduckdb_java*.so)
-#
-# `apk add libstdc++` provides the compat layer the JNI blob needs.
+# The durable fix is a glibc host. This Dockerfile takes the official
+# Metabase jar (from their Alpine image) and runs it on Debian —
+# the jar itself is JVM bytecode and doesn't care about the OS, only
+# the native libraries the JNI drivers load do. On Debian all
+# glibc-linked native libraries work directly.
 
-FROM metabase/metabase:latest
+FROM metabase/metabase:latest AS source
 
-USER root
-# libstdc++ — C++ runtime the DuckDB JNI blob was linked against
-# gcompat  — glibc→musl shim; Alpine is musl-based, but the native
-#            libduckdb_java.so was compiled on glibc. Without gcompat
-#            the JNI class-init fails with:
-#              Could not initialize class org.duckdb.DuckDBNative
-RUN apk add --no-cache libstdc++ gcompat
-# Metabase's official image runs its entrypoint as UID 2000. Some
-# recent image builds don't include a `metabase` name in /etc/passwd
-# though — `USER metabase` fails with:
-#   unable to find user metabase: no matching entries in passwd file
-# Using the numeric UID sidesteps the lookup entirely.
-USER 2000
+FROM eclipse-temurin:21-jre-noble
+
+# curl needed for the docker-compose healthcheck.
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends curl \
+ && rm -rf /var/lib/apt/lists/*
+
+# Match the container UID/GID of the upstream image so bind-mounted
+# volumes chown'd to 2000 in post-start.sh are writable.
+RUN groupadd -g 2000 metabase \
+ && useradd  -u 2000 -g metabase -m -s /bin/bash metabase
+
+# Copy Metabase's runtime layout from the official image. The jar is
+# at /app/metabase.jar, plus supporting scripts under /app.
+COPY --from=source --chown=metabase:metabase /app /app
+
+USER metabase
+WORKDIR /app
+
+EXPOSE 3000
+
+# Same entrypoint the upstream image uses.
+CMD ["java", "-jar", "/app/metabase.jar"]
