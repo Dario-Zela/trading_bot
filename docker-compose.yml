@@ -1,0 +1,50 @@
+# Metabase dashboards for the dbt analytics layer.
+#
+# Points at dbt/analytics.duckdb (read-only mount) so dashboards don't
+# fight `dbt run` for the write lock. Metabase's own app database
+# (users, dashboards, saved questions) persists in metabase/data/.
+#
+# First-run: see metabase/README.md — you need to fetch the community
+# DuckDB driver into metabase/plugins/ before starting.
+#
+#   docker compose up -d           # start
+#   docker compose logs -f metabase # follow startup
+#   docker compose down            # stop (state persists)
+#
+# Open http://localhost:3000 once the "Metabase Initialization COMPLETE"
+# line appears in the log (~30-60s cold start).
+
+services:
+  metabase:
+    image: metabase/metabase:latest
+    container_name: trading-bot-metabase
+    ports:
+      - "3000:3000"
+    volumes:
+      # App state (users, dashboards, saved questions). Backed by H2
+      # by default — fine for single-user; swap to Postgres if this
+      # ever needs to survive an accidental `docker compose down -v`.
+      - ./metabase/data:/metabase-data
+      # Community DuckDB driver JAR — fetch via
+      # metabase/fetch_duckdb_driver.sh before first start.
+      - ./metabase/plugins:/plugins
+      # The dbt-built analytics store. Read-only so Metabase never
+      # tries to acquire DuckDB's exclusive write lock; `dbt run` in
+      # a sibling terminal keeps working.
+      - ./dbt:/dbt:ro
+    environment:
+      MB_DB_FILE: /metabase-data/metabase.db
+      MB_PLUGINS_DIR: /plugins
+      # Tell Metabase the JAR is a "3rd-party" driver so the DuckDB
+      # community plugin loads on startup.
+      MB_ALLOW_UNVERIFIED_DRIVERS: "true"
+      # 60s query cache — DuckDB reads are already fast, no point
+      # hammering it for every dashboard tile refresh.
+      MB_QUERY_CACHE_MAX_AGE: "60"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
