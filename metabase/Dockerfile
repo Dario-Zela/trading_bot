@@ -14,4 +14,9 @@ FROM metabase/metabase:latest
 
 USER root
 RUN apk add --no-cache libstdc++
-USER metabase
+# Metabase's official image runs its entrypoint as UID 2000. Some
+# recent image builds don't include a `metabase` name in /etc/passwd
+# though — `USER metabase` fails with:
+#   unable to find user metabase: no matching entries in passwd file
+# Using the numeric UID sidesteps the lookup entirely.
+USER 2000
