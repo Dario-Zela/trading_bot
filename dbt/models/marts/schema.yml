@@ -28,7 +28,8 @@ models:
       - name: scope
         tests:
           - accepted_values:
-              values: ['system', 'strategy']
+              arguments:
+                values: ['system', 'strategy']
       - name: exit_reason
         tests: [not_null]
 

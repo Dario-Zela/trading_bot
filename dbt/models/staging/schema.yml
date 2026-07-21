@@ -15,11 +15,13 @@ models:
       - name: region
         tests:
           - accepted_values:
-              values: ['us', 'uk-eu', 'asia']
+              arguments:
+                values: ['us', 'uk-eu', 'asia']
       - name: side
         tests:
           - accepted_values:
-              values: ['long', 'short']
+              arguments:
+                values: ['long', 'short']
       - name: is_closed
         description: True when exit_date is populated.
 
@@ -45,8 +47,9 @@ models:
       - name: action
         tests:
           - accepted_values:
-              values: ['keep', 'tune', 'promote', 'demote', 'spawn-variant',
-                       'deactivate', 'mark-tier2-candidate', 'unmark-tier2-candidate']
+              arguments:
+                values: ['keep', 'tune', 'promote', 'demote', 'spawn-variant',
+                         'deactivate', 'mark-tier2-candidate', 'unmark-tier2-candidate']
               config:
                 severity: warn  # new actions get added over time; warn not error
 

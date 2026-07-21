@@ -5,7 +5,11 @@
 -- and reason-attribution analysis.
 
 with source as (
-    select * from {{ source('raw', 'trail_exits') }}
+    select * from read_json_auto(
+        '{{ var("state_root") }}/trail_exits.jsonl',
+        format = 'newline_delimited',
+        ignore_errors = true
+    )
 ),
 
 typed as (

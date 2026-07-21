@@ -6,7 +6,11 @@
 -- prediction_date == entry_date).
 
 with source as (
-    select * from {{ source('raw', 'predictions') }}
+    select * from read_json_auto(
+        '{{ var("state_root") }}/predictions.jsonl',
+        format = 'newline_delimited',
+        ignore_errors = true
+    )
 ),
 
 typed as (

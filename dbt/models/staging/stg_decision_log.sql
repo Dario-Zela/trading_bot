@@ -5,7 +5,11 @@
 -- window metrics from a strategy's `last_tune_date`.
 
 with source as (
-    select * from {{ source('raw', 'decision_log') }}
+    select * from read_json_auto(
+        '{{ var("state_root") }}/decision_log.jsonl',
+        format = 'newline_delimited',
+        ignore_errors = true
+    )
 ),
 
 typed as (

@@ -5,7 +5,11 @@
 -- re-deriving the exit-date logic every time.
 
 with source as (
-    select * from {{ source('raw', 'ledger') }}
+    select * from read_json_auto(
+        '{{ var("state_root") }}/ledger.jsonl',
+        format = 'newline_delimited',
+        ignore_errors = true
+    )
 ),
 
 typed as (

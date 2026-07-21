@@ -1,34 +1,32 @@
 version: 2
 
+# Sources are documented here for lineage/docs. Staging models read
+# the underlying JSONL files directly via `read_json_auto()` inside
+# each model — dbt-duckdb's `external_location` meta on a source
+# didn't reliably render nested Jinja (`{{ var(...) }}` leaked into
+# the compiled SQL as literal braces), so we keep the source list
+# for descriptions and use inline read_json_auto for the actual read.
+
 sources:
   - name: raw
     description: >
       The bot's append-only state files. Each JSONL row is a durable
-      record; dbt-duckdb reads them via the `external_location` meta
-      (JSONL is auto-dispatched to `read_json_auto`). The OHLCV SQLite
-      database is attached in profiles.yml as the `ohlcv` schema.
+      record; dbt reads them via DuckDB's `read_json_auto`. The OHLCV
+      SQLite database is attached in profiles.yml as the `ohlcv` schema.
     tables:
       - name: ledger
         description: >
           One row per position (open or closed). Written by every
           entry-run pipeline and updated on exit.
-        meta:
-          external_location: "{{ var('state_root') }}/ledger.jsonl"
       - name: predictions
         description: >
           One row per (strategy, ticker, prediction_date) — the full
           fan-out of LLM picks before cost/entry filtering.
-        meta:
-          external_location: "{{ var('state_root') }}/predictions.jsonl"
       - name: decision_log
         description: >
           Weekly evolution actions — promote / demote / tune / spawn /
           deactivate.
-        meta:
-          external_location: "{{ var('state_root') }}/decision_log.jsonl"
       - name: trail_exits
         description: >
           Intraday trail / midday-TP exit events. Reference-only —
           authoritative PnL lives on stg_ledger.
-        meta:
-          external_location: "{{ var('state_root') }}/trail_exits.jsonl"
