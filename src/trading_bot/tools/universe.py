@@ -182,15 +182,10 @@ def _t212_to_yfinance_ticker(t212_ticker: str, short_name: str | None = None) ->
 
 
 # Substrings in instrument names that flag products as non-ISA-eligible
-# or otherwise undesirable for the bot (leveraged ETPs, inverse, short).
-# T212 ISA explicitly excludes leveraged / inverse products per HMRC's
-# "complex instruments" guidance; we filter pre-flight rather than
-# discover at order time.
-_NON_ISA_NAME_FILTERS = (
-    "3X ", "2X ", "DAILY LEVERAGED", "DAILY SHORT", "DAILY INVERSE",
-    "LEVERAGED", "INVERSE", "SHORT ETF", "ULTRASHORT", "ULTRA SHORT",
-    "BEAR ETF", "BULL ETF",     # Direxion-style branding
-)
+# Leveraged / inverse ETPs are intentionally NOT filtered here — strategies
+# either self-moderate via sizing or get demoted by the evolution loop; the
+# universe layer does not denylist instrument classes.
+_NON_ISA_NAME_FILTERS: tuple[str, ...] = ()
 
 
 def _is_isa_eligible(inst: dict) -> bool:

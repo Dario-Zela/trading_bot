@@ -47,7 +47,7 @@ def _to_config(raw: dict) -> StrategyConfig:
         tools=list(raw.get("tools", [])),
         model_assignment=dict(raw.get("model_assignment", {})),
         target_daily_risk_pct=float(raw.get("target_daily_risk_pct", 1.0)),
-        cost_gate_multiplier=float(raw.get("cost_gate_multiplier", 2.0)),
+        cost_gate_multiplier=float(raw.get("cost_gate_multiplier", 4.0)),
         skip_if_earnings_in_days=int(raw.get("skip_if_earnings_in_days", 0)),
         last_tune_date=raw.get("last_tune_date"),
         tier2_candidate=bool(raw.get("tier2_candidate", False)),
