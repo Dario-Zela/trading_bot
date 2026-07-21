@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-21",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 GPN +6%, LITE +4%, TER +4%, AXON +3%, MRVL +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (HONA -5%, CVNA -5%, ORCL -4%, KKR -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: GPN (+5.85%) \u2014 Morgan Stanley upgraded GPN to Overweight, hiking PT from $65 to $100, citing improving Worldpay/Genius integration checks ahead of Q2 earnings. Why we passed: Outside any active strategy's universe \u2014 GPN is a large-cap ($22.5B) payments-processing/fintech name likely excluded because the bot's universe doesn't cover that sector, not because of a technical filter.",
+  "top_movers": [
+    {
+      "ticker": "GPN",
+      "move_pct": 5.847,
+      "close": 82.37,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Morgan Stanley upgraded GPN to Overweight, hiking PT from $65 to $100, citing improving Worldpay/Genius integration checks ahead of Q2 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 GPN is a large-cap ($22.5B) payments-processing/fintech name likely excluded because the bot's universe doesn't cover that sector, not because of a technical filter.",
+      "suggestion": "Add a sell-side rating-change gate that pulls large-cap financials/payments names (mkt cap >$10B) into the universe on same-day >30% price-target hikes from bulge-bracket analysts.",
+      "failed": false
+    },
+    {
+      "ticker": "LITE",
+      "move_pct": 4.466,
+      "close": 765.55,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Barclays upgraded LITE to Overweight with a $1,000 PT, extending an AI-optics/800G-1.6T transceiver demand rally (stock +107% YTD) ahead of Aug 11 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 likely a stale universe list: LITE re-rated from a ~$370 small/mid-cap optical-component name to a >$700 mega-mover this year, but universe membership (cap/sector bucket) wasn't refreshed to catch the reclassification.",
+      "suggestion": "Refresh universe cap/sector buckets monthly (not quarterly) so YTD +100%+ re-raters like LITE get pulled into the tradable set instead of being filtered on stale market-cap tier data.",
+      "failed": false
+    },
+    {
+      "ticker": "TER",
+      "move_pct": 3.536,
+      "close": 333.76,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single fresh headline; extension of a multi-week AI-testing rally (stock ~250% off recent lows) fueled by a wave of analyst PT hikes (Cantor $550, BofA $525, UBS $500) ahead of July 28 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 TER falls in semiconductor capital-equipment/test, a sector/name class the bot's tradable list doesn't cover, so no filter ever got a chance to evaluate it.",
+      "suggestion": "Add SOX-index semiconductor-equipment names (TER, KLAC, LRCX, AMAT) to universe scans; a sector-coverage gap, not a signal-threshold miss, kept this one untouched.",
+      "failed": false
+    },
+    {
+      "ticker": "AXON",
+      "move_pct": 3.371,
+      "close": 527.48,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued multi-week rally fueled by bullish analyst coverage (Piper Sandler PT to $724, Needham to $750) and ICE/public-safety contract momentum; no single fresh headline dated today.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AXON is a ~$43B Nasdaq industrials/capital-goods name (TASER/body-cams/public-safety SaaS), a sector likely excluded from tech/momentum-focused universes, and its huge 52-week range ($339-$886) may also trip volatility caps.",
+      "suggestion": "Add a large-cap ($30B+) 'public-safety tech' carve-out to the industrials universe filter so idiosyncratic-catalyst names like AXON aren't screened out purely by GICS sector classification.",
+      "failed": false
+    },
+    {
+      "ticker": "MRVL",
+      "move_pct": 3.318,
+      "close": 194.94,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No firm-specific news; broad AI-capex/semiconductor rally (AMD's Helios launch stoking GPU/ASIC-adjacent demand optimism) lifted MRVL ahead of its Aug 27 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 MRVL is a high-beta AI-semis name only added to the S&P 500 in June 2026 and down ~37% over the trailing month, likely screened out by volatility/drawdown or recent-index-add filters before universe refresh caught it.",
+      "suggestion": "Refresh universe membership from S&P 500 constituent changes monthly (not quarterly) so recently-added names like MRVL enter the tradable set within weeks of inclusion, not months.",
+      "failed": false
+    },
+    {
+      "ticker": "BF-B",
+      "move_pct": 3.245,
+      "close": 26.41,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh company news \u2014 technical short-covering rally off oversold levels (RSI ~39, price below 20/50/200-day MAs) following recent Sazerac bid rejection/Pernod talks collapse volatility.",
+      "miss_reason": "Outside any active strategy's universe entirely; BF-B is a dual-class ticker (Class B non-voting, hyphen/dot suffix) in consumer-staples/spirits, a sector and symbol format the bot's universe ingestion likely doesn't cover or normalize.",
+      "suggestion": "Extend universe symbol normalization to handle dual-class suffixes (-A/-B, .A/.B) so shares like BF-B aren't silently dropped, and review whether consumer-staples/spirits names above a market-cap floor should be added to sector coverage.",
+      "failed": false
+    },
+    {
+      "ticker": "HONA",
+      "move_pct": -4.872,
+      "close": 201.32,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-day news trigger; HONA drifted to a fresh 52-week low amid post-spinoff outflows and a broad aerospace/defense sector selloff (peers like Northrop down despite beats).",
+      "miss_reason": "Outside any active strategy's universe \u2014 HONA only began trading June 29, 2026 after its Honeywell spinoff, so it lacks the 60-90 day price/volume history most universe-inclusion screens require.",
+      "suggestion": "Add a spinoff fast-track rule: admit new spinoff tickers to the universe after ~15 trading days once avg volume/price history minimums are met, instead of the standard 60-90 day lookback gate.",
+      "failed": false
+    },
+    {
+      "ticker": "CVNA",
+      "move_pct": -4.752,
+      "close": 64.14,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh single-day headline; continued slide from CarMax's Jun-17 margin/credit-loss read-through, Jefferies/RBC price-target cuts (to $90/$85), and insider selling into the Jul-29 earnings date.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CVNA is a high-beta auto-retail name still carrying headline risk from a Jan 2026 short-seller fraud allegation, likely screened out by sector or headline-risk/volatility filters entirely.",
+      "suggestion": "If CVNA clears cap/liquidity thresholds, add it under a pre-earnings volatility gate (exclude only within T-3 days of earnings) instead of a blanket sector exclusion, so peer-driven read-through moves like CarMax\u2192Carvana get traded.",
+      "failed": false
+    },
+    {
+      "ticker": "ORCL",
+      "move_pct": -3.979,
+      "close": 121.38,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continuing AI-capex/credit selloff after Jul 9 S&P downgrade to BBB- (OpenAI concentration, ~$42B FY27 FCF deficit); New Mexico data-center permit setback added pressure; fresh 52-wk low.",
+      "miss_reason": "Outside any active strategy's universe: ORCL is a mega-cap tech name in a multi-week grinding decline (down ~50% since June), not a single-day gap/news spike a momentum or news-reactive scanner would flag intraday.",
+      "suggestion": "Add a 'crumbling mega-cap' watchlist (>25% drawdown in 60d + recent credit-rating downgrade) feeding a slow-momentum/short sleeve, so grinding de-ratings like ORCL become eligible if short capability exists.",
+      "failed": false
+    },
+    {
+      "ticker": "KKR",
+      "move_pct": -3.933,
+      "close": 96.97,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Bloomberg reported KKR is selling 9 China commercial real-estate properties at ~50-60% of purchase price, just enough to repay the acquisition loans.",
+      "miss_reason": "Outside any active strategy's universe \u2014 KKR is a large-cap alternative asset manager/financials name not covered by the bot's tradable list, and the move stemmed from an intraday Bloomberg report rather than a pre-market gap or earnings print the bot's news-reactive signals scan for.",
+      "suggestion": "Add large-cap alternative asset managers (KKR, BX, APO, ARES) to the financials universe and wire a headline-trigger gate for 'asset write-down/fire-sale' language from Bloomberg/Reuters on constituents.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-21T19:33:28.722103+00:00"
+}
