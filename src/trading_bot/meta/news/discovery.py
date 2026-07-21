@@ -23,8 +23,11 @@ from __future__ import annotations
 
 import logging
 import os
+import xml.etree.ElementTree as ET
 from dataclasses import asdict, dataclass, field
 from datetime import date
+
+import requests
 
 from trading_bot.llm.claude_code import ClaudeCodeError, run_claude_for_json
 from trading_bot.tools.news import get_recent_news
@@ -52,9 +55,34 @@ _EU_PROXIES = (
     "SAP", "ASML", "MC.PA", "OR.PA", "AIR.PA", "SIE.DE", "NESN.SW",
 )
 
+# Non-market RSS feeds — fill the UK-politics / world / tech / sport
+# gap that the ticker-based seed structurally can't reach. Fetched
+# directly (not via WebSearch) so they arrive regardless of the LLM's
+# search behaviour.
+_RSS_FEEDS: tuple[tuple[str, str], ...] = (
+    ("BBC UK", "http://feeds.bbci.co.uk/news/uk/rss.xml"),
+    ("BBC Politics", "http://feeds.bbci.co.uk/news/politics/rss.xml"),
+    ("BBC World", "http://feeds.bbci.co.uk/news/world/rss.xml"),
+    ("BBC Business", "http://feeds.bbci.co.uk/news/business/rss.xml"),
+    ("BBC Technology", "http://feeds.bbci.co.uk/news/technology/rss.xml"),
+    ("BBC Sport", "http://feeds.bbci.co.uk/sport/rss.xml"),
+    ("Guardian Politics", "https://www.theguardian.com/politics/rss"),
+    ("Guardian UK", "https://www.theguardian.com/uk-news/rss"),
+)
+
+# Cap per-feed to keep the seed block from ballooning; the LLM sees a
+# balanced non-market starter set rather than 80 BBC-World bullets.
+_RSS_ITEMS_PER_FEED = 6
+
 # Target count for the discovery output. The agent is told to aim for
 # this; triage handles whatever it gets.
 _TARGET_CANDIDATES = 40
+
+# If more than this share of candidates tag as Markets, we retry once
+# with a stronger diversity nudge. The seed and prompt already push for
+# 40-50% UK/EU + 30-40% US + 10-20% RoW across all sections, so a
+# >70% Markets result means the LLM anchored on the tickers.
+_MARKETS_BIAS_RETRY_THRESHOLD = 0.70
 
 
 @dataclass
@@ -71,27 +99,47 @@ class Candidate:
 def discover_stories(today: date) -> list[Candidate]:
     """Run the discovery stage. Returns the candidates (~30-50) the rest
     of the pipeline will triage."""
+    market_seed = _gather_seed_headlines()
+    rss_seed = _gather_rss_headlines()
+    log.info(
+        "Discovery: seed = %d market + %d non-market (RSS) headlines",
+        len(market_seed), len(rss_seed),
+    )
+
     if not os.environ.get("CLAUDE_CODE_OAUTH_TOKEN"):
         log.error("CLAUDE_CODE_OAUTH_TOKEN not set — discovery cannot run, returning seed only")
-        return _candidates_from_seed_only(_gather_seed_headlines())
+        return _candidates_from_seed_only(market_seed + rss_seed)
 
-    seed = _gather_seed_headlines()
-    log.info("Discovery: %d seed headlines from Alpaca + yfinance", len(seed))
-
-    prompt = _build_prompt(today, seed)
+    prompt = _build_prompt(today, market_seed, rss_seed)
     try:
-        response = run_claude_for_json(prompt, model="sonnet")
+        response = run_claude_for_json(
+            prompt,
+            model="sonnet",
+            extra_args=["--allowedTools", "WebSearch,WebFetch"],
+        )
     except ClaudeCodeError as e:
         log.warning("Discovery LLM call failed: %s — falling back to seed-only", e)
-        return _candidates_from_seed_only(seed)
+        return _candidates_from_seed_only(market_seed + rss_seed)
 
     candidates = _parse_candidates(response)
     log.info("Discovery: %d candidates returned", len(candidates))
+
+    # Markets-bias retry: if the LLM anchored on the market seed and
+    # returned a >70% Markets slate, ask again with a stronger diversity
+    # nudge and merge the two rounds (triage picks from the union).
+    if candidates and _markets_share(candidates) > _MARKETS_BIAS_RETRY_THRESHOLD:
+        markets_n = sum(1 for c in candidates if c.suggested_section == "Markets")
+        log.warning(
+            "Discovery: %d/%d candidates tagged Markets (%.0f%%) — retrying for section diversity",
+            markets_n, len(candidates), 100 * markets_n / len(candidates),
+        )
+        candidates = _retry_for_diversity(today, market_seed, rss_seed, candidates)
+
     if len(candidates) < 5:
         # Anything below 5 is suspicious — agent probably hit a parsing or
         # search failure. Augment with seed to keep the pipeline alive.
         log.warning("Discovery returned only %d candidates — augmenting with seed", len(candidates))
-        seed_cands = _candidates_from_seed_only(seed)
+        seed_cands = _candidates_from_seed_only(market_seed + rss_seed)
         existing_titles = {c.title.lower() for c in candidates}
         for sc in seed_cands:
             if sc.title.lower() not in existing_titles:
@@ -99,6 +147,44 @@ def discover_stories(today: date) -> list[Candidate]:
                 if len(candidates) >= 20:
                     break
     return candidates
+
+
+def _markets_share(candidates: list[Candidate]) -> float:
+    if not candidates:
+        return 0.0
+    markets = sum(1 for c in candidates if c.suggested_section == "Markets")
+    return markets / len(candidates)
+
+
+def _retry_for_diversity(
+    today: date,
+    market_seed: list[dict],
+    rss_seed: list[dict],
+    first_round: list[Candidate],
+) -> list[Candidate]:
+    """Second-pass discovery call when round one skewed too Markets-heavy.
+    Returns the union of both rounds, deduped by title."""
+    retry_prompt = _build_retry_prompt(today, market_seed, rss_seed, first_round)
+    try:
+        response = run_claude_for_json(
+            retry_prompt,
+            model="sonnet",
+            extra_args=["--allowedTools", "WebSearch,WebFetch"],
+        )
+    except ClaudeCodeError as e:
+        log.warning("Discovery retry failed: %s — keeping round-one candidates", e)
+        return first_round
+
+    extra = _parse_candidates(response)
+    log.info("Discovery retry: %d additional candidates", len(extra))
+    seen = {c.title.lower() for c in first_round}
+    merged = list(first_round)
+    for c in extra:
+        key = c.title.lower()
+        if key not in seen:
+            merged.append(c)
+            seen.add(key)
+    return merged
 
 
 def _gather_seed_headlines() -> list[dict]:
@@ -134,17 +220,79 @@ def _gather_seed_headlines() -> list[dict]:
     return out[:30]
 
 
-def _build_prompt(today: date, seed: list[dict]) -> str:
-    seed_block = ""
-    if seed:
+def _gather_rss_headlines() -> list[dict]:
+    """Pull top headlines from BBC + Guardian RSS feeds.
+
+    The ticker-based seed is Markets-only by construction; this fills the
+    UK-politics / world / tech / sport gap. Fetched directly (no LLM tool
+    dependency) so it arrives even if WebSearch degrades. Each feed is
+    capped at _RSS_ITEMS_PER_FEED to keep the prompt balanced."""
+    out: list[dict] = []
+    seen: set[str] = set()
+    for source, url in _RSS_FEEDS:
+        try:
+            r = requests.get(url, timeout=8, headers={"User-Agent": "trading-bot-discovery/1.0"})
+            r.raise_for_status()
+            root = ET.fromstring(r.content)
+        except (requests.RequestException, ET.ParseError) as e:
+            log.warning("RSS fetch failed for %s: %s", source, e)
+            continue
+        items = root.findall(".//item")[:_RSS_ITEMS_PER_FEED]
+        for it in items:
+            title = (it.findtext("title") or "").strip()
+            link = (it.findtext("link") or "").strip()
+            if not title or link in seen:
+                continue
+            seen.add(link)
+            desc = (it.findtext("description") or "").strip()
+            # Strip trivial HTML tags that Guardian embeds in <description>
+            desc = _strip_html_tags(desc)
+            out.append({
+                "title": title,
+                "summary": desc[:220],
+                "source": source,
+                "url": link,
+                "timestamp": (it.findtext("pubDate") or "").strip(),
+                "tickers": [],
+            })
+    return out
+
+
+def _strip_html_tags(text: str) -> str:
+    import re
+    return re.sub(r"<[^>]+>", "", text).strip()
+
+
+def _format_seed_block(market_seed: list[dict], rss_seed: list[dict]) -> str:
+    """Build the seed section of the discovery prompt. Markets and
+    non-market bullets are listed separately so the LLM can see that
+    UK-politics / world / sport / tech starters have already been
+    surfaced and it should extend both tracks, not just markets."""
+    parts: list[str] = []
+    if market_seed:
         bullets = "\n".join(
             f"- [{(h.get('source') or 'src')[:25]}] {h.get('title', '')}"
-            for h in seed
+            for h in market_seed
         )
-        seed_block = (
-            f"\n## Markets seed headlines (starting point — not exhaustive, "
-            f"and you must extend well beyond these)\n\n{bullets}\n"
+        parts.append(
+            "\n## Markets seed headlines (ticker-based; starting point, "
+            "not exhaustive — extend well beyond these)\n\n" + bullets
         )
+    if rss_seed:
+        bullets = "\n".join(
+            f"- [{(h.get('source') or 'src')[:25]}] {h.get('title', '')}"
+            for h in rss_seed
+        )
+        parts.append(
+            "\n## Non-market seed headlines (BBC / Guardian RSS; UK politics, "
+            "world, sport, tech — verify freshness and extend with WebSearch "
+            "for developments in the last few hours)\n\n" + bullets
+        )
+    return "\n".join(parts) + ("\n" if parts else "")
+
+
+def _build_prompt(today: date, market_seed: list[dict], rss_seed: list[dict]) -> str:
+    seed_block = _format_seed_block(market_seed, rss_seed)
 
     return f"""You are the discovery editor for The Bot Tribune, a
 UK-based algorithmic trading bot's daily newspaper. Today is
@@ -257,6 +405,97 @@ Return JSON only, no preamble:
 
 Aim for ~{_TARGET_CANDIDATES} candidates. Distribute importance hints
 honestly — most days have 2-4 genuine 9-10s and a long tail of 4-7s.
+"""
+
+
+def _build_retry_prompt(
+    today: date,
+    market_seed: list[dict],
+    rss_seed: list[dict],
+    first_round: list[Candidate],
+) -> str:
+    """Retry prompt when round one skewed too Markets-heavy. Shows the
+    LLM its own output so it can see the imbalance, and demands
+    non-Markets sections be filled from web search."""
+    seed_block = _format_seed_block(market_seed, rss_seed)
+    first_round_bullets = "\n".join(
+        f"- [{c.suggested_section}] {c.title}" for c in first_round[:30]
+    )
+    markets_n = sum(1 for c in first_round if c.suggested_section == "Markets")
+    total = len(first_round)
+    pct = round(100 * markets_n / total) if total else 0
+
+    return f"""You are the discovery editor for The Bot Tribune (UK-based
+algorithmic trading bot's daily newspaper). Today is {today.isoformat()}.
+
+Your previous discovery attempt was too Markets-heavy: {markets_n} of
+{total} candidates ({pct}%) tagged as `Markets`. The Tribune is a
+general-interest publication with a UK-first lens, and its readers
+expect substantive non-Markets coverage every day.
+
+## Round-one output (for your reference — do NOT re-submit these)
+
+{first_round_bullets}
+
+## Your task now
+
+Return an ADDITIONAL ~20-30 candidates that specifically fill the gaps
+above. Do NOT emit stories already listed. Target the following
+sections:
+
+- **World** — UK politics (PMQs, byelections, party leadership,
+  Reform UK, Labour internal, Conservative rebuild, Scottish/Welsh
+  government), European politics, US politics beyond markets impact,
+  major diplomacy / conflicts
+- **Tech & science** — AI research and product news, biotech, space,
+  frontier science, regulatory (UK/EU AI Act, DMA), major consumer
+  tech
+- **Sport** — Premier League / Championship / cricket / rugby / F1 /
+  tennis / Olympics / major football transfers or governance
+- **Culture** — arts, books, film, TV, music with substance (releases,
+  awards, industry moves) — no red-carpet gossip
+- **Health / Medicine** — NHS news, drug approvals, major studies,
+  public-health developments
+- **Climate** — significant climate events, policy decisions, notable
+  research
+- **Beyond the tape** — long-tail oddments that are genuinely
+  interesting
+
+**Explicit UK-politics discovery is required.** Search for:
+- "UK politics news {today.isoformat()}"
+- "PMQs today", "House of Commons today"
+- "Andy Burnham", "Keir Starmer", "Nigel Farage", "Reform UK",
+  "Labour leadership", "byelection"
+- BBC Politics, Guardian Politics, Politico UK, Sky News Politics
+
+Use WebSearch aggressively — the non-market RSS seed above is a
+starting point, extend with searches for developments in the last few
+hours.
+
+## Constraints
+
+- Do NOT emit any story listed under "Round-one output" above.
+- At least 60% of your response MUST be non-Markets. If you can't hit
+  that from the last 24 hours, extend the window to 36 hours rather
+  than filling with Markets padding.
+- Return valid JSON in the same schema as round one.
+{seed_block}
+
+## Required output
+
+```json
+{{
+  "candidates": [
+    {{
+      "title": "<full headline>",
+      "one_line": "<one sentence>",
+      "suggested_section": "Markets" | "World" | "Tech & science" | "Climate" | "Health" | "Sport" | "Culture" | "Beyond the tape",
+      "importance_hint": <1-10>,
+      "source_hints": ["<publication>", "<url>"]
+    }}
+  ]
+}}
+```
 """
 
 
