@@ -14,6 +14,16 @@ if ! python -c "from trading_bot.analytics.dbt_runner import build; build()" 2>&
   echo "WARN: dbt build failed; Metabase will start with the previously-built store"
 fi
 
+# The Metabase container runs as UID 2000 (upstream image convention),
+# but the bind-mounted metabase/data/ is created by the codespace's
+# `vscode` user (UID 1000). Without a chown, H2 can't write its
+# trace/lock files inside the container:
+#   java.nio.file.AccessDeniedException: /metabase-data/metabase.db.trace.db
+# Codespaces have passwordless sudo, so this is safe to do unattended.
+echo "==> Fixing metabase/data ownership for container UID 2000"
+sudo mkdir -p metabase/data
+sudo chown -R 2000:2000 metabase/data
+
 # Ensure Docker is up (it is, once the DinD feature has initialised).
 # Bring Metabase up in the background — the compose config restarts on
 # failure so a stale container from a previous session is replaced.
