@@ -1,4 +1,4 @@
-{{ config(materialized='view') }}
+{{ config(materialized='table') }}
 
 -- One row per (strategy, ticker, prediction_date). Feeds IC + decile
 -- spread computation downstream. Predictions may or may not become

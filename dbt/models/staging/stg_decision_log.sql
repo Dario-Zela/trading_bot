@@ -1,4 +1,4 @@
-{{ config(materialized='view') }}
+{{ config(materialized='table') }}
 
 -- One row per evolution-agent decision. Used to trace strategy state
 -- transitions (promote / demote / tune / spawn / deactivate) and to

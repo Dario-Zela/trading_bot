@@ -26,7 +26,14 @@ vars:
 models:
   trading_bot_analytics:
     staging:
-      +materialized: view
+      # Materialized as tables (not views) so downstream consumers
+      # like Metabase never re-execute read_json_auto() at query
+      # time. The path baked into a view's definition is the path
+      # the dbt runner saw (Codespace host, e.g. /workspaces/.../state)
+      # — Metabase runs inside the compose container and can't see
+      # that path. Materializing means Metabase reads from DuckDB's
+      # internal storage instead.
+      +materialized: table
       +schema: staging
     marts:
       +materialized: table
