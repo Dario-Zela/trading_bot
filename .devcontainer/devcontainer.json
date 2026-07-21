@@ -1,8 +1,19 @@
 {
   "name": "trading-bot",
-  "image": "mcr.microsoft.com/devcontainers/python:1-3.11",
+
+  // The `devcontainers/python:1-3.11` image ships a pre-configured
+  // Yarn apt repo whose GPG key has since rotated — when the
+  // docker-in-docker feature runs `apt-get update` during install,
+  // apt fails on the unverified Yarn signature and the whole
+  // container build errors out. Using the plain base image and
+  // adding Python as a feature sidesteps that entirely.
+  "image": "mcr.microsoft.com/devcontainers/base:bookworm",
 
   "features": {
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11",
+      "installTools": true
+    },
     "ghcr.io/devcontainers/features/docker-in-docker:2": {
       "moby": true,
       "dockerDashComposeVersion": "v2"
@@ -33,10 +44,7 @@
         "ms-python.python",
         "ms-python.vscode-pylance",
         "redhat.vscode-yaml"
-      ],
-      "settings": {
-        "python.defaultInterpreterPath": "/usr/local/bin/python"
-      }
+      ]
     }
   }
 }
