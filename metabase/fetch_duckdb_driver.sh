@@ -15,8 +15,20 @@ set -euo pipefail
 PLUGIN_DIR="$(cd "$(dirname "$0")" && pwd)/plugins"
 DRIVER_JAR="$PLUGIN_DIR/duckdb.metabase-driver.jar"
 
-# Pin the release you want here — bumping this is a deliberate act.
-DRIVER_REPO="${DUCKDB_DRIVER_REPO:-motherduckdb/metabase_duckdb_driver}"
+# Default to the AlexR2D2 fork — the pre-MotherDuck community driver.
+# The MotherDuck fork (motherduckdb/metabase_duckdb_driver) hardcodes
+# MotherDuck-specific connection options like `motherduck_token` and
+# `connection-pool-type` and passes them unconditionally to DuckDB.
+# Plain (local) DuckDB doesn't recognize them and rejects the connection:
+#
+#   Invalid Input Error: The following options were not recognized:
+#     motherduck_token
+#     connection-pool-type
+#
+# The AlexR2D2 fork predates that integration and works with local
+# DuckDB out of the box. Override via DUCKDB_DRIVER_REPO if you need
+# MotherDuck instead.
+DRIVER_REPO="${DUCKDB_DRIVER_REPO:-AlexR2D2/metabase_duckdb_driver}"
 DRIVER_VERSION="${DUCKDB_DRIVER_VERSION:-latest}"
 
 if [[ "$DRIVER_VERSION" == "latest" ]]; then
