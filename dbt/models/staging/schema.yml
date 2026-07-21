@@ -1,0 +1,54 @@
+version: 2
+
+models:
+  - name: stg_ledger
+    description: Typed, deduped ledger rows. One per trade.
+    columns:
+      - name: trade_id
+        description: Uuid, unique per trade.
+        tests:
+          - unique
+          - not_null
+      - name: strategy_id
+        tests:
+          - not_null
+      - name: region
+        tests:
+          - accepted_values:
+              values: ['us', 'uk-eu', 'asia']
+      - name: side
+        tests:
+          - accepted_values:
+              values: ['long', 'short']
+      - name: is_closed
+        description: True when exit_date is populated.
+
+  - name: stg_predictions
+    description: Typed prediction records. Grades attach as they land.
+    columns:
+      - name: strategy_id
+        tests:
+          - not_null
+      - name: ticker
+        tests:
+          - not_null
+      - name: prediction_date
+        tests:
+          - not_null
+
+  - name: stg_decision_log
+    description: Evolution-agent decisions.
+    columns:
+      - name: strategy_id
+        tests:
+          - not_null
+      - name: action
+        tests:
+          - accepted_values:
+              values: ['keep', 'tune', 'promote', 'demote', 'spawn-variant',
+                       'deactivate', 'mark-tier2-candidate', 'unmark-tier2-candidate']
+              config:
+                severity: warn  # new actions get added over time; warn not error
+
+  - name: stg_trail_exits
+    description: Intraday trail / midday-TP events (reference-only).

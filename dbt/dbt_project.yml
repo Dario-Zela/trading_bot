@@ -1,0 +1,33 @@
+name: 'trading_bot_analytics'
+version: '0.1.0'
+config-version: 2
+
+profile: 'trading_bot'
+
+model-paths: ['models']
+seed-paths: ['seeds']
+test-paths: ['tests']
+macro-paths: ['macros']
+analysis-paths: ['analyses']
+snapshot-paths: ['snapshots']
+
+clean-targets:
+  - 'target'
+  - 'dbt_packages'
+  - 'logs'
+
+vars:
+  # Resolved at run-time from the TRADING_BOT_STATE_ROOT env var when set,
+  # else '../state' relative to the dbt project dir. The Python runner in
+  # trading_bot.analytics.dbt_runner sets the env var explicitly so dbt
+  # works from any cwd.
+  state_root: "{{ env_var('TRADING_BOT_STATE_ROOT', '../state') }}"
+
+models:
+  trading_bot_analytics:
+    staging:
+      +materialized: view
+      +schema: staging
+    marts:
+      +materialized: table
+      +schema: marts

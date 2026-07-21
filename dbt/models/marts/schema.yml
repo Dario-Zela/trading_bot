@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: mart_strategy_weekly
+    description: >
+      Weekly PnL per (strategy_id, region). Feeds the dashboard's
+      trajectory panel and the evolution agent's week-over-week trend
+      inputs.
+    columns:
+      - name: strategy_id
+        tests: [not_null]
+      - name: region
+        tests: [not_null]
+      - name: iso_year
+        tests: [not_null]
+      - name: iso_week
+        tests: [not_null]
+      - name: n_trades
+        tests: [not_null]
+      - name: hit_rate
+        description: n_wins / n_trades. Zero when n_trades = 0 (rare here since we group by trades).
+
+  - name: mart_exit_attribution
+    description: >
+      PnL by exit_reason, system-wide and per (strategy, region). Two
+      row levels stacked; use `scope` to pick.
+    columns:
+      - name: scope
+        tests:
+          - accepted_values:
+              values: ['system', 'strategy']
+      - name: exit_reason
+        tests: [not_null]
+
+  - name: mart_fee_drag
+    description: >
+      Per-(strategy, region) gross / net / fees / fees-as-share-of-gross.
+      Replaces trading_bot.meta.evolution_inputs.fees_pct_of_gross.
+    columns:
+      - name: strategy_id
+        tests: [not_null]
+      - name: region
+        tests: [not_null]
+      - name: n_trades
+        tests: [not_null]
+      - name: fees_share_of_gross
+        description: fees / (|gross| + fees). Higher means costs are eating the signal.

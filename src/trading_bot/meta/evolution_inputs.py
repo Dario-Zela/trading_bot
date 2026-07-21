@@ -71,29 +71,14 @@ def fees_pct_of_gross(sid: str, region: str | None = None, days: int = _LOOKBACK
 
     A strategy that's gross-positive but net-zero because of fees is a
     very different problem from one that's just bad — this surfaces
-    that distinction to the evolution agent."""
-    fees = 0.0
-    net = 0.0
-    n = 0
-    for rec in _iter_ledger_window(sid=sid, days=days):
-        if region is not None and rec.get("region") != region:
-            continue
-        fees += float(rec.get("fees_gbp") or 0.0)
-        net += float(rec.get("pnl_gbp") or 0.0)
-        n += 1
-    gross = net + fees
-    # `fees / gross` flips sign when the strategy is gross-negative,
-    # which renders as "−5% of gross eaten by fees" — meaningless. Use
-    # abs(gross) for the share calculation; the gross_pnl_gbp number
-    # itself still carries the sign for the agent to read.
-    pct = (fees / abs(gross) * 100.0) if abs(gross) > 0.01 else 0.0
-    return {
-        "n_trades": n,
-        "fees_gbp": round(fees, 2),
-        "gross_pnl_gbp": round(gross, 2),
-        "net_pnl_gbp": round(net, 2),
-        "fees_pct_of_gross": round(pct, 1),
-    }
+    that distinction to the evolution agent.
+
+    Delegates to the dbt analytics layer. The prior JSONL-iterating
+    implementation lived here; the SQL equivalent is
+    trading_bot.analytics.reader.get_fee_drag_windowed.
+    """
+    from trading_bot.analytics.reader import get_fee_drag_windowed
+    return get_fee_drag_windowed(sid, region=region, days=days)
 
 
 def sector_concentration(sid: str, *, days: int = _LOOKBACK_DAYS, top_n: int = 5) -> list[dict]:

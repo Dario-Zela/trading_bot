@@ -37,3 +37,17 @@ Thumbs.db
 # few runs while it warms up).
 state/ohlcv.db
 state/ohlcv.db-*
+
+# dbt — the DuckDB analytics store + compilation artefacts regenerate
+# from state/*.jsonl on every `dbt run`; nothing here is source of truth.
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+dbt/analytics.duckdb
+dbt/analytics.duckdb-*
+
+# Metabase — app state (users, saved questions, session tokens) and
+# downloaded driver JARs. Both are rebuildable; committing them would
+# leak per-user creds and add ~30 MB of binaries per driver.
+metabase/data/
+metabase/plugins/*.jar

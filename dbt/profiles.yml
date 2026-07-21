@@ -1,0 +1,13 @@
+trading_bot:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('TRADING_BOT_DUCKDB_PATH', 'analytics.duckdb') }}"
+      threads: 4
+      # Attach the OHLCV SQLite store as an external database so the
+      # marts can join predictions to price bars without a copy.
+      attach:
+        - path: "{{ env_var('TRADING_BOT_OHLCV_PATH', '../state/ohlcv.db') }}"
+          type: sqlite
+          alias: ohlcv
