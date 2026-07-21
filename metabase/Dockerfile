@@ -17,7 +17,15 @@
 # the native libraries the JNI drivers load do. On Debian all
 # glibc-linked native libraries work directly.
 
-FROM metabase/metabase:latest AS source
+# Pinned to v0.55.12: MotherDuck's DuckDB driver 1.5.x is built against
+# Metabase v0.55's plugin API. Newer Metabase (v0.63+) sends connection
+# options the driver doesn't know (`connection-pool-type` etc.) and
+# every attempt to open a DuckDB connection fails with:
+#   Invalid Input Error: The following options were not recognized: ...
+# Pinning both sides to the pair they were tested against sidesteps
+# the mismatch. Bump both together when MotherDuck releases a
+# Metabase-v0.63-targeting driver.
+FROM metabase/metabase:v0.55.12 AS source
 
 FROM eclipse-temurin:21-jre-noble
 

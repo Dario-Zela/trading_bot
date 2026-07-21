@@ -15,20 +15,18 @@ set -euo pipefail
 PLUGIN_DIR="$(cd "$(dirname "$0")" && pwd)/plugins"
 DRIVER_JAR="$PLUGIN_DIR/duckdb.metabase-driver.jar"
 
-# Default to the AlexR2D2 fork — the pre-MotherDuck community driver.
-# The MotherDuck fork (motherduckdb/metabase_duckdb_driver) hardcodes
-# MotherDuck-specific connection options like `motherduck_token` and
-# `connection-pool-type` and passes them unconditionally to DuckDB.
-# Plain (local) DuckDB doesn't recognize them and rejects the connection:
+# Default to the MotherDuck fork — the actively maintained community
+# driver. Paired with Metabase v0.55.12 (pinned in metabase/Dockerfile)
+# because the driver's 1.5.x releases target Metabase v0.55's plugin
+# API. Newer Metabase versions send connection options this driver
+# doesn't know (`connection-pool-type` etc.); older Metabase (< 0.55)
+# doesn't have the plugin API this driver expects. Keep the pair in
+# sync when bumping either side.
 #
-#   Invalid Input Error: The following options were not recognized:
-#     motherduck_token
-#     connection-pool-type
-#
-# The AlexR2D2 fork predates that integration and works with local
-# DuckDB out of the box. Override via DUCKDB_DRIVER_REPO if you need
-# MotherDuck instead.
-DRIVER_REPO="${DUCKDB_DRIVER_REPO:-AlexR2D2/metabase_duckdb_driver}"
+# The AlexR2D2 fork was an earlier community driver but its releases
+# are ~2 years old and no longer register the JDBC driver with
+# modern Metabase's classloader.
+DRIVER_REPO="${DUCKDB_DRIVER_REPO:-motherduckdb/metabase_duckdb_driver}"
 DRIVER_VERSION="${DUCKDB_DRIVER_VERSION:-latest}"
 
 if [[ "$DRIVER_VERSION" == "latest" ]]; then
