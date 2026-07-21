@@ -13,7 +13,12 @@
 FROM metabase/metabase:latest
 
 USER root
-RUN apk add --no-cache libstdc++
+# libstdc++ — C++ runtime the DuckDB JNI blob was linked against
+# gcompat  — glibc→musl shim; Alpine is musl-based, but the native
+#            libduckdb_java.so was compiled on glibc. Without gcompat
+#            the JNI class-init fails with:
+#              Could not initialize class org.duckdb.DuckDBNative
+RUN apk add --no-cache libstdc++ gcompat
 # Metabase's official image runs its entrypoint as UID 2000. Some
 # recent image builds don't include a `metabase` name in /etc/passwd
 # though — `USER metabase` fails with:
