@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-22",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 SNDK +14%, WDC +13%, MU +12%, TER +12%, COHR +11%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (DHR -11%, MSCI -10%, TYL -6%, HAL -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: SNDK (+14.27%) \u2014 Multi-day NAND supply-squeeze rally: SK Hynix's bullish memory commentary plus Bernstein ($3,000 PT) and Wedbush ($2,000 PT) target hikes ahead of Aug 5 earnings drove the stock up 14%+. Why we passed: Outside any active strategy's universe \u2014 SNDK is a 2025 Western Digital spinoff trading near $1,589/share; likely excluded by a per-share price cap or simply not yet re-added to the semiconductor/NAND universe post-spinoff.",
+  "top_movers": [
+    {
+      "ticker": "SNDK",
+      "move_pct": 14.267,
+      "close": 1589.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Multi-day NAND supply-squeeze rally: SK Hynix's bullish memory commentary plus Bernstein ($3,000 PT) and Wedbush ($2,000 PT) target hikes ahead of Aug 5 earnings drove the stock up 14%+.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SNDK is a 2025 Western Digital spinoff trading near $1,589/share; likely excluded by a per-share price cap or simply not yet re-added to the semiconductor/NAND universe post-spinoff.",
+      "suggestion": "Add a quarterly universe-refresh job that pulls recent spinoffs/IPOs into sector universes (semis/memory), and check the price-per-share filter isn't excluding high-nominal-price names like SNDK.",
+      "failed": false
+    },
+    {
+      "ticker": "WDC",
+      "move_pct": 12.509,
+      "close": 548.39,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Reports of resumed Kioxia merger talks + sold-out 2026 HDD/NAND capacity through 2028 sparked fresh analyst target hikes (Cantor $900), extending a multi-week sector rally ahead of Aug 5 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 WDC is a large-cap tech-hardware/semis-adjacent name likely excluded because current universes skew toward core mega-cap tech/momentum names and don't cover storage/memory hardware suppliers.",
+      "suggestion": "Add semiconductor/storage-hardware peers (WDC, STX, KIOXY-adjacent) to the momentum universe's sector list, or add an M&A-rumor news trigger that adds a name to the tradable universe intraday on confirmed merger-talk headlines.",
+      "failed": false
+    },
+    {
+      "ticker": "MU",
+      "move_pct": 12.174,
+      "close": 970.82,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Analyst-driven rebound: Morgan Stanley & BofA issued buy-the-dip calls citing $22B non-cancelable HBM contracts and structural AI memory demand after a recent pullback from highs.",
+      "miss_reason": "Outside any active strategy's universe. MU is a large-cap, high-beta memory/semiconductor cyclical (~$970/share, recent swings from ~$848 to ~$970); likely excluded by sector-concentration caps on AI-semis or volatility/ATR thresholds tuned to steadier names.",
+      "suggestion": "Add high-beta memory/semi cyclicals to the universe with a wider ATR band, or add a rule that re-admits names showing >10% rebound off a >20% drawdown when accompanied by multiple sell-side upgrades within 48h.",
+      "failed": false
+    },
+    {
+      "ticker": "TER",
+      "move_pct": 12.069,
+      "close": 374.04,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Cantor Fitzgerald (to $550) and BofA (to $525) hiked price targets pre-earnings on AI-driven semiconductor test demand ahead of Teradyne's July 28 Q2 report.",
+      "miss_reason": "Outside any active strategy's universe \u2014 TER is a ~$60B semi-equipment name that fell outside the bot's tracked tech/semis coverage list, and the move was driven by analyst target hikes rather than a scheduled earnings/8-K event the news-reactive filter watches for.",
+      "suggestion": "Add TER to the semis/AI-infrastructure universe given its $60B+ cap, and extend the catalyst scanner to flag same-day analyst price-target hikes of >20% (not just earnings/8-K events).",
+      "failed": false
+    },
+    {
+      "ticker": "COHR",
+      "move_pct": 11.149,
+      "close": 317.22,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single dated headline for 7/22 \u2014 COHR extended the 2026 AI-datacenter optics/CPO rally (NVIDIA tie-up, 800G/1.6T transceiver demand), likely bouncing after an ~19% one-month pullback.",
+      "miss_reason": "Outside any active strategy's universe \u2014 COHR is a mid/large-cap specialty photonics-equipment name (optical components/lasers), a sector the bot's universes likely don't cover, and its extreme YTD run (+217% y/y) would also trip an overextension filter if it were included.",
+      "suggestion": "Add photonics/optics-equipment tickers (COHR, LITE, AAOI) to the AI-infrastructure momentum universe via SIC/GICS sub-industry expansion, gated by a volatility-scaled position size rather than a flat exclusion.",
+      "failed": false
+    },
+    {
+      "ticker": "STX",
+      "move_pct": 11.138,
+      "close": 891.83,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Multi-day rally into Jul 28 earnings on a wave of bullish analyst PT hikes (Wells Fargo to $1100, BofA to $1150) tied to AI/hyperscaler nearline HDD demand for Mozaic 3+ drives.",
+      "miss_reason": "Outside any active strategy's universe \u2014 STX sits in legacy HDD/storage hardware, a sector the bot's tech-momentum coverage likely skips in favor of mega-cap AI/semis names, so the pre-earnings analyst-upgrade cluster never entered any watchlist.",
+      "suggestion": "Add a rolling scanner for 3+ sell-side price-target hikes within 5 sessions on AI-infrastructure-adjacent hardware names (storage, networking, power) and auto-admit them to the momentum universe ahead of earnings.",
+      "failed": false
+    },
+    {
+      "ticker": "DHR",
+      "move_pct": -10.989,
+      "close": 179.01,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 EPS beat ($1.94 vs $1.85 est) and FY guidance raised, but stock cratered on bioprocessing order-timing delays from biopharma clients and margin concerns flagged on the call.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DHR is a large-cap, low-beta life sciences/diagnostics conglomerate, not the type of high-beta/momentum name these bots typically track; the move was an earnings-day gap that pre-market news scanning would need to catch, not a signal visible in prior-day technicals.",
+      "suggestion": "Add an earnings-day gap scanner that pulls large-cap names (>$50B mcap) reporting overnight with post-earnings gap \u22658% into a temporary watch list, regardless of static sector universe membership.",
+      "failed": false
+    },
+    {
+      "ticker": "MSCI",
+      "move_pct": -10.137,
+      "close": 561.74,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 EPS missed ($4.94 vs $5.03 est.) and MSCI raised FY26 expense guidance (acquisitions, incentive comp, AI investment) despite in-line revenue, spooking margin outlook.",
+      "miss_reason": "Outside any active strategy's universe \u2014 MSCI is a large-cap financial data/index-provider name, a niche sector category the bot's universes (likely tech/consumer/industrial momentum names) don't cover.",
+      "suggestion": "Add a financial-data/index-provider bucket (MSCI, SPGI, ICE, MCO) to the earnings-reactive universe so post-earnings expense-guidance gaps \u22655% get evaluated, not just revenue/EPS beats-misses.",
+      "failed": false
+    },
+    {
+      "ticker": "TYL",
+      "move_pct": -5.73,
+      "close": 299.74,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No earnings or company-specific news; -5.7% move appears to be pre-earnings de-risking/profit-taking ahead of Q2 report due July 29.",
+      "miss_reason": "Outside any active strategy's universe \u2014 TYL is a $12B gov-tech/vertical SaaS name with no scheduled catalyst today, a profile (mid-cap, low newsflow, earnings still a week out) that doesn't fit momentum or news-reactive screens.",
+      "suggestion": "No actionable change \u2014 a pre-earnings drift with no news trigger isn't a signal type these strategies are built to catch; revisit only if post-July-29 earnings reaction is missed too.",
+      "failed": false
+    },
+    {
+      "ticker": "HAL",
+      "move_pct": -5.469,
+      "close": 33.19,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 revenue/EPS beat headline estimates, but Completion & Production margins missed and Q3 guidance came in below consensus, triggering a ~6% post-earnings selloff (TD Cowen cut PT to $47).",
+      "miss_reason": "Outside any active strategy's universe \u2014 HAL is a large-cap energy/oilfield-services name, a sector the bot's coverage likely doesn't track, so no filter ever saw the pre-market earnings gap to act on.",
+      "suggestion": "Add an energy/oilfield-services bucket (e.g. XLE constituents) to the earnings-reactive universe with a post-results gap-down gate of \u22654% within 30min of open to catch margin-miss selloffs like this.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-22T19:32:32.893137+00:00"
+}
