@@ -1,0 +1,124 @@
+{
+  "date": "2026-07-22",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 1 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 AIR.PA +7%, G1A.DE +6%, BESI.AS +4%, ANTO.L +3%, RAND.AS +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 3 downside moves (BN.PA -4%, RI.PA -4%, REN.AS -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: AIR.PA (+7.02%) \u2014 Airbus launched a \u20ac5bn buyback and unveiled 2029 targets (core operating profit \u20ac12-13B, near-double) at Farnborough Airshow investor day Why we passed: Outside any active strategy's universe \u2014 AIR.PA is a mega-cap (~\u20ac200B) aerospace/industrials name on Euronext Paris, likely excluded if uk-eu universes skew toward UK-listed or mid/small-cap names rather than large European industrials.",
+  "top_movers": [
+    {
+      "ticker": "AIR.PA",
+      "move_pct": 7.017,
+      "close": 206.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Airbus launched a \u20ac5bn buyback and unveiled 2029 targets (core operating profit \u20ac12-13B, near-double) at Farnborough Airshow investor day",
+      "miss_reason": "Outside any active strategy's universe \u2014 AIR.PA is a mega-cap (~\u20ac200B) aerospace/industrials name on Euronext Paris, likely excluded if uk-eu universes skew toward UK-listed or mid/small-cap names rather than large European industrials.",
+      "suggestion": "Add a scheduled-event feed (capital markets days, air shows, investor days) alongside earnings calendars so large-cap industrials with known catalyst dates get temporarily admitted to the universe regardless of market-cap/exchange filters.",
+      "failed": false
+    },
+    {
+      "ticker": "G1A.DE",
+      "move_pct": 6.213,
+      "close": 62.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Ad-hoc preliminary Q2 2026 results beat consensus (revenue \u20ac1.44B vs \u20ac1.38B est, 11% organic growth vs 6.3% est) and raised FY2026 guidance",
+      "miss_reason": "Outside any active strategy's universe \u2014 G1A.DE (GEA Group, German industrial/machinery mid-large cap) isn't tracked by uk-eu strategies; even if it were, the ad-hoc pre-market disclosure would have priced in the gap before intraday signals could react.",
+      "suggestion": "Add GEA Group and comparable DAX/MDAX industrials to the uk-eu universe, and add an earnings-gate rule releasing names with ad-hoc/pre-market guidance-raise disclosures showing post-announcement gap \u22655% for same-day entry consideration.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": 3.617,
+      "close": 237.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "TrendForce reported today Samsung picked BESI as preferred hybrid-bonding equipment supplier for next-gen HBM/AI chips; move also reflects pre-earnings positioning (Q2 results due July 23) and sector-wide AI-capex re-rating after ASML's guidance hike.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BESI.AS is a Dutch AEX-listed semiconductor-equipment mid/large-cap, a niche sub-sector (chip packaging tools) that uk-eu strategies likely don't cover, so no filter ever got a chance to see the move.",
+      "suggestion": "Add AEX semiconductor-equipment names (ASML, BESI, ASMI) to the uk-eu universe given the ongoing AI-capex re-rating in this sub-sector, so existing momentum/news filters can at least evaluate them.",
+      "failed": false
+    },
+    {
+      "ticker": "ANTO.L",
+      "move_pct": 3.472,
+      "close": 36.95,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Copper prices surged (>$6.35/lb) on Chile storm-driven mine/port disruptions plus a JPMorgan upgrade to Overweight (4500p target) citing peer-leading production growth into 2028.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ANTO.L is a large-cap London-listed pure-play copper miner, a commodity-cyclical resource name that equity momentum/mean-reversion/news-reactive universes typically exclude as macro/FX/commodity-beta rather than idiosyncratic-signal names.",
+      "suggestion": "Add a commodity-producer carve-out to the uk-eu universe (e.g. GICS Metals & Mining constituents of FTSE100) gated on a copper-price-momentum proxy, so supply-shock rallies in miners like ANTO.L become tradable.",
+      "failed": false
+    },
+    {
+      "ticker": "RAND.AS",
+      "move_pct": 3.342,
+      "close": 33.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 earnings beat: organic growth 1.9% vs 1.0% est, adj. EBIT +6% YoY (~4% above consensus) on Germany/N. America hiring recovery; shares gapped >11% intraday, fading to +3.34% close.",
+      "miss_reason": "Outside any active strategy's universe -- RAND.AS is a large-cap Dutch HR/staffing name on Euronext Amsterdam not covered by uk-eu universes; also an earnings gap-and-fade (open +11%, close +3.34%) favors pre-market positioning.",
+      "suggestion": "Add AEX large-cap HR/staffing names (e.g. RAND.AS) to the uk-eu universe, and add an earnings-gate rule releasing names with post-results intraday gap >=8% for same-day entry despite fading by close.",
+      "failed": false
+    },
+    {
+      "ticker": "EDV.L",
+      "move_pct": 2.92,
+      "close": 36.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No EDV-specific news; gold rallied 1.81% to ~$4,150/oz on Mideast safe-haven demand ahead of the Fed meeting, lifting gold miner EDV with its typical >1x beta to bullion.",
+      "miss_reason": "Outside any active strategy's universe \u2014 EDV.L is a West African gold-mining producer (materials/commodity sector), a category uk-eu equity strategies likely exclude to avoid unhedged commodity-price beta.",
+      "suggestion": "Add LSE gold miners to the universe via a commodity-beta sleeve that gates entry when XAU/USD moves >1.5% intraday, capturing miner leverage to bullion moves without altering core equity filters.",
+      "failed": false
+    },
+    {
+      "ticker": "BN.PA",
+      "move_pct": -4.044,
+      "close": 69.76,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Jefferies double-downgraded BN.PA from Buy to Underperform, cutting PT to \u20ac62 from \u20ac80, citing US yogurt share losses to Chobani and slowing China nutrition growth.",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 large-cap French consumer-staples/food name likely excluded by sector or geography filters, not a technical-signal miss. A pure sell-side downgrade with no pre-market gap-driven volume spike would be hard for a momentum/mean-reversion bot to catch anyway.",
+      "suggestion": "Add a CAC40 consumer-staples bucket to the universe with an analyst-rating-change trigger (\u22652-notch downgrade + \u226515% PT cut) so news-reactive strategies can flag names like this even without a pre-existing position.",
+      "failed": false
+    },
+    {
+      "ticker": "RI.PA",
+      "move_pct": -3.827,
+      "close": 62.32,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Ex-dividend date (2026-07-22) for a EUR 2.35 cash dividend \u2014 the ~3.83% drop is almost entirely mechanical dividend adjustment off a ~64.8 prior close, not a fundamental move.",
+      "miss_reason": "Outside any active strategy's universe (Pernod Ricard, ~EUR16B mid-large-cap spirits name, Paris-listed) \u2014 but even if covered, this is an ex-div price adjustment, not a genuine momentum/news signal worth chasing.",
+      "suggestion": "No universe change warranted; instead have the 'biggest loser' scanner net out known ex-dividend effects (flag tickers with a same-day ex-div corporate action) so mechanical drops aren't surfaced as tradable losers.",
+      "failed": false
+    },
+    {
+      "ticker": "REN.AS",
+      "move_pct": -3.472,
+      "close": 28.36,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued AI-disruption de-rating ahead of RELX's July 23 H1 results; LexisNexis moat concerns since Anthropic's legal AI tool launch have already cut the stock ~50% off 2025 highs.",
+      "miss_reason": "Outside any active strategy's universe \u2014 REN.AS is a secondary Euronext Amsterdam listing of RELX PLC (UK large-cap info/analytics), whose primary and far more liquid listing is REL.L on LSE; the uk-eu universe likely tracks primary listings only and never onboarded this cross-listed ticker.",
+      "suggestion": "Add a cross-listing map so REN.AS resolves to primary ticker REL.L for universe inclusion/liquidity checks, instead of silently dropping the Amsterdam-listed duplicate.",
+      "failed": false
+    },
+    {
+      "ticker": "SGRO.L",
+      "move_pct": -3.345,
+      "close": 8.554,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive-buzz-fade"
+      ],
+      "catalyst": "Prologis's 'best and final' \u00a314bn/1,031.7p bid failed to secure a recommended firm offer by today's 5pm PUSU deadline, leaving the takeover in limbo and pressuring the stock.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SGRO.L is a large-cap UK REIT (industrial/logistics real estate) on the LSE, a sector/listing category the bot's momentum and mean-reversion strategies don't cover.",
+      "suggestion": "Add a merger-arb/event-driven watchlist that flags FTSE-listed names with live Takeover Panel PUSU deadlines so REIT/M&A special situations aren't structurally excluded by sector filters.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-22T15:03:18.810249+00:00"
+}
