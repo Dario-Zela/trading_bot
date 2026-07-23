@@ -1,0 +1,125 @@
+{
+  "date": "2026-07-23",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 1 of today's 10 biggest UK/EU movers.\n\n\u2022 5 upside misses \u2014 AIR.PA +7%, G1A.DE +6%, PRU.L +5%, LLOY.L +4%, ANTO.L +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (PRX.AS -7%, BN.PA -4%, RI.PA -4%, REN.AS -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: AIR.PA (+7.02%) \u2014 Jul 21 Capital Markets Day: Airbus raised 2029 EBIT-adj target to \u20ac12-13B, launched \u20ac5B/3yr buyback; analyst upgrades (Panmure Liberum to Buy) fueled follow-through into Jul 23. Why we passed: Outside any active strategy's universe \u2014 AIR.PA is a large-cap EU aerospace/industrial name in a sector/cap bucket the uk-eu strategies don't track, and the move was a scheduled Investor Day gap where pre-market positioning beats intraday signals.",
+  "top_movers": [
+    {
+      "ticker": "AIR.PA",
+      "move_pct": 7.017,
+      "close": 206.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Jul 21 Capital Markets Day: Airbus raised 2029 EBIT-adj target to \u20ac12-13B, launched \u20ac5B/3yr buyback; analyst upgrades (Panmure Liberum to Buy) fueled follow-through into Jul 23.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AIR.PA is a large-cap EU aerospace/industrial name in a sector/cap bucket the uk-eu strategies don't track, and the move was a scheduled Investor Day gap where pre-market positioning beats intraday signals.",
+      "suggestion": "Add a corporate-events watchlist that temporarily admits large-cap EU industrials into the universe around known Capital Markets Day/investor-update dates, gated on a post-event open gap \u22655%.",
+      "failed": false
+    },
+    {
+      "ticker": "G1A.DE",
+      "move_pct": 6.213,
+      "close": 62.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "GEA Group's prelim Q2 2026 results beat (rev \u20ac1.44B vs \u20ac1.38B est, order intake \u20ac1.49B) with FY26 guidance raised (organic growth to 6-8%, EBITDA margin to 17.0-17.4%).",
+      "miss_reason": "Outside any active strategy's universe \u2014 GEA (G1A.DE) is a DAX40 European capital-goods/industrials name traded only on Xetra with no US ADR, a category the uk-eu region's tracked universe apparently doesn't cover.",
+      "suggestion": "Add full DAX40 constituent list (incl. industrials like G1A.DE) to the uk-eu universe screen rather than a partial large-cap/sector subset.",
+      "failed": false
+    },
+    {
+      "ticker": "PRU.L",
+      "move_pct": 5.302,
+      "close": 11.055,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No PRU-specific news; the move rode a multi-day Hang Seng rally on China stimulus hopes plus a UK inflation-driven FTSE surge \u2014 Prudential's earnings are Asia/HK-centric.",
+      "miss_reason": "Outside any active strategy's universe \u2014 PRU.L is a UK-listed insurer whose profits are Asia/HK-centric, likely excluded from domestic-UK sector/momentum universes not built to treat it as a China proxy.",
+      "suggestion": "Add a 'China-proxy financials' bucket (PRU.L, HSBA.L, STAN.L) to the universe, gated on Hang Seng moving >2% intraday, so Asia-earnings UK names get picked up during stimulus-driven rallies.",
+      "failed": false
+    },
+    {
+      "ticker": "LLOY.L",
+      "move_pct": 3.757,
+      "close": 1.153,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide UK bank rally into Jul 30 HY results/buyback update, easing motor-finance redress liability fears (scheme partly suspended) and BoE hints of lighter capital rules for lenders.",
+      "miss_reason": "Outside any active strategy's universe - LLOY.L is a low-nominal-price (\u00a31.15) FTSE100 UK bank; likely excluded by a min-share-price filter or a blanket financials/litigation-overhang exclusion tied to motor-finance redress risk.",
+      "suggestion": "Add a UK-banks carve-out: admit FTSE100 financials priced under \u00a32 that fail the min-price filter, gating on market-cap/liquidity instead of raw price, so mega-cap low-nominal-price names like LLOY.L aren't screened out.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": 3.617,
+      "close": 237.8,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive",
+        "news-reactive-buzz-fade"
+      ],
+      "catalyst": "Q2-26 results beat: revenue \u20ac249.9M (+68.7% YoY), orders \u20ac292.9M (+128.8% YoY) on AI/hybrid-bonding demand, plus Q3 guidance of +10-15% revenue growth.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BESI.AS is a Dutch mid-cap semicap equipment maker (chip packaging/bonding tools), a niche EU industrial-tech name likely excluded by a large-cap/sector filter rather than any technical signal.",
+      "suggestion": "Add EU semicap-equipment names (BESI.AS, ASMI.AS) to the momentum/earnings universes given their AI-driven earnings sensitivity, or extend earnings-gate to scan all-cap EU tech reporters for post-results gap \u22653%.",
+      "failed": false
+    },
+    {
+      "ticker": "ANTO.L",
+      "move_pct": 3.472,
+      "close": 36.95,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Copper spiked ~3% to 5-week highs on China supply tightness/inventory draws, plus Chile storm-related output disruptions directly hitting Antofagasta's mines.",
+      "miss_reason": "Outside any active strategy's universe \u2014 as a large-cap UK-listed commodity/mining producer, ANTO.L likely falls outside equity momentum/mean-reversion universes scoped to sector-diversified names rather than single-commodity miners.",
+      "suggestion": "Add a commodity-linked miners bucket (e.g. LME copper >2% daily move) that whitelists names like ANTO.L, GLEN.L, RIO.L so a proxy-driven supply shock can be traded even without company-specific news.",
+      "failed": false
+    },
+    {
+      "ticker": "PRX.AS",
+      "move_pct": -6.729,
+      "close": 37.01,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Tencent (PRX's ~25%-owned core holding) plunged ~7% on gaming-revenue fears and a buyback halt, dragging Prosus's NAV and share price down in sympathy.",
+      "miss_reason": "Outside any active strategy's universe \u2014 PRX.AS is a Euronext-listed holding/conglomerate (NAV proxy for Tencent), a category likely excluded from single-sector momentum/news screens that don't map cross-listed underlying-asset correlation.",
+      "suggestion": "Add a holding-company NAV-proxy rule: when a >5% overnight move in a tracked underlying (e.g. 0700.HK for PRX.AS) occurs, auto-admit the parent ticker to the catalyst-watch universe for that session.",
+      "failed": false
+    },
+    {
+      "ticker": "BN.PA",
+      "move_pct": -4.044,
+      "close": 69.76,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Jefferies downgraded Danone to Underperform from Buy, cutting PT to \u20ac62 from \u20ac80 on China nutrition slowdown and weak NORAM dairy trends.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BN.PA is a French large-cap consumer staples name (Euronext Paris ADR-style listing) not covered by uk-eu strategies, so no filter ever evaluated it; the move was a single-broker rating/PT cut, not a scheduled earnings print (H1 results due 2026-07-29), making it a pure sell-sid",
+      "suggestion": "Add large-cap EU consumer-staples ADRs/primary listings (e.g. BN.PA, NESN) to the uk-eu universe with an analyst-rating-change trigger that flags names on same-day downgrades of \u22652 notches or PT cuts \u226515%.",
+      "failed": false
+    },
+    {
+      "ticker": "RI.PA",
+      "move_pct": -3.827,
+      "close": 62.32,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Stock went ex-dividend for its \u20ac2.35/share interim dividend (~3.8% of price) on 2026-07-22/23 \u2014 a mechanical adjustment, not a trading-driven move; no other fresh news found.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RI.PA is a large-cap French (Euronext Paris) consumer-staples/spirits name, likely excluded because the uk-eu universe is scoped to UK-listed or narrower-cap/sector coverage, not French CAC40 names.",
+      "suggestion": "Add an ex-dividend filter to the 'biggest loser' screen (exclude or flag names with a same-day dividend \u2265 move size) so mechanical ex-div drops like this aren't miscategorized as tradeable losers requiring universe review.",
+      "failed": false
+    },
+    {
+      "ticker": "REN.AS",
+      "move_pct": -3.472,
+      "close": 28.36,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "RELX (REN.AS = Amsterdam listing) posted H1 2026 results: underlying revenue +7%, EPS +11%, dividend +7%, guidance reaffirmed \u2014 but shares fell in a 'sell the news' reaction to a richly-valued grower.",
+      "miss_reason": "Outside any active strategy's universe \u2014 REN.AS is the Euronext Amsterdam secondary listing of dual-listed UK/Dutch large-cap RELX; universes likely track only the primary line (REL.L), so the secondary ticker is invisible to screens.",
+      "suggestion": "Add cross-listing mapping so dual-listed names (REL.L/REN.AS) resolve to one universe entry, and add an 'earnings-beat-but-price-down' flag to catch sell-the-news reactions that pure beat/miss earnings gates don't trigger on.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-23T15:03:28.165446+00:00"
+}
