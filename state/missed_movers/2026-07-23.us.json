@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-23",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 SMCI +21%, DELL +10%, HAS +9%, CIEN +8%, FCX +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (MSCI -10%, GEV -8%, PLTR -6%, TYL -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: SMCI (+20.80%) \u2014 Preliminary Q4 FY26 results (7/21) raised gross margin guidance to 15-17% from 8.2-8.4%, backed by record $60B+ new AI infrastructure order backlog. Why we passed: Outside any active strategy's universe entirely \u2014 SMCI's 2024 accounting restatement/delayed-filing history likely keeps it on a compliance or volatility-driven exclusion list rather than screened out by a live technical filter.",
+  "top_movers": [
+    {
+      "ticker": "SMCI",
+      "move_pct": 20.804,
+      "close": 30.805,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Preliminary Q4 FY26 results (7/21) raised gross margin guidance to 15-17% from 8.2-8.4%, backed by record $60B+ new AI infrastructure order backlog.",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 SMCI's 2024 accounting restatement/delayed-filing history likely keeps it on a compliance or volatility-driven exclusion list rather than screened out by a live technical filter.",
+      "suggestion": "Periodically re-review legacy blocklist/exclusion entries (e.g. SMCI's restatement-era flag) to confirm they're still warranted rather than leaving names permanently outside the universe.",
+      "failed": false
+    },
+    {
+      "ticker": "DELL",
+      "move_pct": 9.708,
+      "close": 443.385,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Peer read-through rally: Super Micro's strong new AI-server order growth (SMCI +7%) plus AI-optimism led DELL +9.7%, even absent company-specific news (next earnings not until Sep 3, 2026).",
+      "miss_reason": "Outside any active strategy's universe \u2014 DELL is likely bucketed as a legacy PC/hardware large-cap rather than an AI-infrastructure name, so momentum/news-reactive strategies scanning AI-server peers (e.g. SMCI, NVDA) never scored it despite the correlated catalyst.",
+      "suggestion": "Add DELL to the AI-infrastructure peer-correlation basket (alongside SMCI/NVDA) so a peer's order-growth beat triggers a same-day correlated-mover scan across enterprise hardware names with \u22655% sector-peer moves.",
+      "failed": false
+    },
+    {
+      "ticker": "HAS",
+      "move_pct": 8.812,
+      "close": 88.78,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 EPS $1.28 beat $1.14 est; Hasbro raised FY26 revenue/margin guidance on 27% Wizards of the Coast growth (Magic: The Gathering +32%) \u2014 day-3 continuation of Tue's earnings pop.",
+      "miss_reason": "Outside any active strategy's universe \u2014 HAS is a legacy large-cap toy/gaming consumer-discretionary name not covered by tech/momentum-focused screens, and today's gain is a multi-day earnings drift past the initial gap-open window scanners key on.",
+      "suggestion": "Add legacy large-cap consumer-discretionary/toy names (HAS, MAT) to the universe screen, and add a post-earnings-drift rule allowing entry within 3 sessions of a confirmed >5% earnings gap, not just day-of.",
+      "failed": false
+    },
+    {
+      "ticker": "CIEN",
+      "move_pct": 7.91,
+      "close": 408.73,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide optical-networking rally after Barclays upgraded peer Lumentum to Overweight on AI data-center optics demand, ahead of MSFT/AMZN capex updates due July 29-30.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CIEN sits in the optical-networking/AI-infra hardware niche, and at ~$409/share with ~90% YTD gains it likely also exceeds typical price-cap or volatility screens even where general tech names are covered.",
+      "suggestion": "Add a peer-sympathy scanner that flags same-day co-moves (>=5%) across a defined optical-networking basket (CIEN, LITE, COHR, AAOI, GLW) so a sector-upgrade catalyst on one name pulls correlated tickers into the tradable universe.",
+      "failed": false
+    },
+    {
+      "ticker": "FCX",
+      "move_pct": 6.413,
+      "close": 62.56,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 EPS $0.74 vs $0.60 est. on $7.03B revenue beat, driven by rising copper prices and strong Grasberg/Cerro Verde output; Stifel raised PT to $80.",
+      "miss_reason": "Outside any active strategy's universe \u2014 FCX is a large-cap copper miner (materials/metals), a sector the bot's tradable list apparently doesn't cover, so no filter ever got a chance to evaluate the pre-market earnings gap.",
+      "suggestion": "Add a materials/metals-miner bucket (e.g. FCX, SCCO, NEM) to the universe with an earnings-day gap rule: admit names with pre-market gap \u22655% on an EPS beat for same-day momentum entry.",
+      "failed": false
+    },
+    {
+      "ticker": "FLEX",
+      "move_pct": 6.238,
+      "close": 127.39,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No FLEX-specific news dated 7/23; move rode a broad AI/semiconductor infrastructure rally (Intel earnings, AMD event, memory surge) into FLEX's July 29 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 FLEX is a large-cap EMS/AI-infrastructure contract manufacturer, a sector bucket likely not whitelisted in the tech-momentum universe despite its Cerebras/Nvidia data-center exposure.",
+      "suggestion": "Add EMS/AI-infra contract manufacturers (FLEX, CLS, JBL) to the momentum universe's sector whitelist so semiconductor-rally days that lift these correlated names get captured.",
+      "failed": false
+    },
+    {
+      "ticker": "MSCI",
+      "move_pct": -10.137,
+      "close": 561.74,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 EPS ($4.94) narrowly missed the $4.97 consensus, retention rates dipped, and raised FY26 expense guidance (First Street integration) triggered a selloff that deepened as analysts cut targets (Redburn to Neutral, $554 PT) two days later.",
+      "miss_reason": "Outside any active strategy's universe \u2014 MSCI is a large-cap financial-data/index-provider name, a sector/business-model category likely excluded from momentum and mean-reversion universes that focus on higher-beta tech, consumer, or biotech tickers.",
+      "suggestion": "Add an earnings-drift watchlist rule that pulls in any name (regardless of sector) posting a post-earnings gap \u22658% within 2 sessions of reporting, so multi-day analyst-downgrade continuations like this get evaluated even if outside the core universe.",
+      "failed": false
+    },
+    {
+      "ticker": "GEV",
+      "move_pct": -7.91,
+      "close": 993.48,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 EPS/EBIT badly missed (EBIT $653M vs $981M est, margin -323bps) despite revenue beat and raised FY guidance; high P/E (51x) left no room for the miss.",
+      "miss_reason": "Outside any active strategy's universe \u2014 GEV is a mega-cap industrial/power-equipment name likely excluded by sector/SIC filters (utilities-adjacent equipment maker) rather than a market-cap cutoff, so no strategy was positioned to react to the earnings gap.",
+      "suggestion": "Add an earnings-gate universe expansion: any name with a post-results gap \u22655% within 30min of open gets pulled into a temporary watchlist for the news-reactive strategy regardless of static sector/universe membership.",
+      "failed": false
+    },
+    {
+      "ticker": "PLTR",
+      "move_pct": -6.17,
+      "close": 124.475,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Pre-earnings de-rating: UK NHS Federated Data Platform regulatory scrutiny + a new free open-source rival ('World Monitor') + valuation/insider-selling jitters ahead of Aug 3 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 PLTR is a richly-valued, high-beta AI/software mega-cap; the move was a multi-day grind of soft headlines (regulatory scrutiny, competitive threat, valuation fear) rather than one hard, screenable event like an earnings beat/miss or M&A print.",
+      "suggestion": "Add a watchlist/universe tier for large-cap AI-software names with a valuation-derate trigger (e.g., \u22655% single-day drop on \u22652x avg volume with no earnings/8-K same day) so narrative-driven pre-earnings slides get flagged even without a single discrete catalyst.",
+      "failed": false
+    },
+    {
+      "ticker": "TYL",
+      "move_pct": -5.73,
+      "close": 299.74,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-day news trigger \u2014 TYL got caught in the broader 2026 SaaS/application-software 'de-rating' selloff (AI-disruption + higher-discount-rate fears), compounded by profit-taking ahead of its July 29 Q2 earnings after a 15.5% run-up in the prior four weeks.",
+      "miss_reason": "Outside any active strategy's universe \u2014 TYL is a ~$13-14B vertical/gov-tech SaaS name, not a typical high-beta momentum or news-reactive scanner constituent, and this was a multiple-compression/profit-taking move with no discrete headline for a catalyst-news filter to catch.",
+      "suggestion": "Add a sector-relative valuation-compression scanner (flag names down >5% with no news hit but elevated trailing P/E and a positive prior-4-week return) and widen the universe inclusion cap to sweep in $10B+ application-software names ahead of earnings windows.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-23T19:32:56.343337+00:00"
+}
