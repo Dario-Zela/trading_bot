@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-24",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 LMT +11%, ALLE +10%, URI +10%, TMO +9%, DGX +9%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (TSLA -15%, TMUS -11%, ROL -9%, DOV -8%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: TSLA (-14.52%) \u2014 Q2 2026 EPS $0.33 missed $0.53 est. (record $28.2B revenue) as capex/AI-robotics spend surged 142%, crushing margins; multiple analysts cut price targets over following days. Why we passed: Outside any active strategy's universe \u2014 likely excluded by an earnings-blackout filter that drops mega-cap names in the days around a scheduled print (earnings hit 7/22), so the bot had no live signal for the multi-day post-earnings slide into 7/24.",
+  "top_movers": [
+    {
+      "ticker": "LMT",
+      "move_pct": 10.543,
+      "close": 568.59,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 EPS $7.94 vs ~$7.09 est, revenue +11% YoY to $20.1B, record $230B backlog, raised FY26 guidance",
+      "miss_reason": "Outside any active strategy's universe \u2014 LMT is a large-cap defense/aerospace industrial, a sector/category the bot's tradable universe doesn't cover; the earnings gap was also pre-market driven, favoring pre-open positioning over intraday signals.",
+      "suggestion": "Add large-cap defense/aerospace (e.g. LMT, RTX, NOC, GD) to the universe, or add an earnings-gate that admits names with pre-market gap \u22658% and guidance raise on report day regardless of prior sector inclusion.",
+      "failed": false
+    },
+    {
+      "ticker": "ALLE",
+      "move_pct": 10.447,
+      "close": 154.57,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 beat: revenue +12.7% YoY, EPS $2.40 (+17.6% YoY) topped estimates; raised FY26 adjusted EPS guide to $8.85-$9.00",
+      "miss_reason": "Outside any active strategy's universe \u2014 ALLE is a ~$15B industrials/building-products name, a sector/cap bucket the bot's momentum and news-reactive strategies don't currently scan, so the premarket earnings gap was never evaluated.",
+      "suggestion": "Add an earnings-day universe override: scan all NYSE/NASDAQ names (not just core sector universe) for premarket gap >=8% on reported EPS/revenue beat + raised guidance, and route qualifiers into the earnings-gate strategy regardless of static sector inclusion.",
+      "failed": false
+    },
+    {
+      "ticker": "URI",
+      "move_pct": 10.111,
+      "close": 1139.71,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 EPS $12.76 vs $11.59 est, revenue $4.41B vs $4.21B est; raised FY26 revenue guide to $17.5-17.8B and EBITDA guide by $300M",
+      "miss_reason": "Outside any active strategy's universe \u2014 URI is a mega-cap industrial/equipment-rental name trading near $1,140/share, likely excluded by a max-share-price or sector (construction/industrials) filter rather than a technical signal.",
+      "suggestion": "Add a per-share-price cap override (or switch sizing to notional/fractional shares) so triple-digit-to-four-digit priced large-caps like URI aren't structurally excluded from the universe purely on nominal price.",
+      "failed": false
+    },
+    {
+      "ticker": "TMO",
+      "move_pct": 8.711,
+      "close": 572.32,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 earnings beat (EPS $6.03 vs est., revenue +10% to $11.99B) plus raised FY26 guidance to $47.4-48.1B, reported pre-market 7/23.",
+      "miss_reason": "Outside any active strategy's universe \u2014 TMO is a large-cap, low-beta life-sciences/lab-instruments name that momentum/mean-reversion universes built around higher-volatility sectors typically screen out entirely.",
+      "suggestion": "Add an earnings-gate override that admits any S&P 500 name posting a post-results gap \u22657% within the first 30min of trading, even if outside the strategy's default sector/beta universe filter.",
+      "failed": false
+    },
+    {
+      "ticker": "DGX",
+      "move_pct": 8.612,
+      "close": 227.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 EPS $3.12 vs $2.85 est, revenue +10.2% YoY; raised FY26 EPS/revenue guidance; NY cleared Haystack MRD test for all 50 states",
+      "miss_reason": "Outside any active strategy's universe \u2014 DGX is a large-cap diagnostics/healthcare-services name, a sector/cap bucket the bot's tradable universe doesn't cover, so no filter ever got a chance to evaluate the earnings gap.",
+      "suggestion": "Expand universe inclusion criteria to add healthcare-services large-caps (or a market-cap/sector screen sweep) so an earnings-gate can catch post-earnings gaps like this one even though it's not a typical momentum-sector name.",
+      "failed": false
+    },
+    {
+      "ticker": "DHR",
+      "move_pct": 7.458,
+      "close": 192.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Rebound rally continuing from the Jul 21 post-earnings selloff \u2014 investors reassessed the biotech guidance cut (delayed chromatography-resin shipments) as timing, not demand, weakness.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DHR is a mega-cap ($150B+) diagnostics/life-sciences conglomerate, a sector/cap bucket the bot doesn't track; also this was a multi-day post-earnings-drift recovery, not a same-day gap a scanner would catch.",
+      "suggestion": "Add a post-earnings-drift screen that admits any-sector large caps showing \u22655% 3-day recovery after a >10% post-earnings drop, bypassing the standard universe filter for a short event window.",
+      "failed": false
+    },
+    {
+      "ticker": "TSLA",
+      "move_pct": -14.524,
+      "close": 319.69,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 EPS $0.33 missed $0.53 est. (record $28.2B revenue) as capex/AI-robotics spend surged 142%, crushing margins; multiple analysts cut price targets over following days.",
+      "miss_reason": "Outside any active strategy's universe \u2014 likely excluded by an earnings-blackout filter that drops mega-cap names in the days around a scheduled print (earnings hit 7/22), so the bot had no live signal for the multi-day post-earnings slide into 7/24.",
+      "suggestion": "Add a post-earnings re-entry rule: names removed by the earnings-blackout filter re-enter the universe T+1 after release if the post-print gap/drift exceeds \u00b15%, so the bot can catch delayed selloffs like this one.",
+      "failed": false
+    },
+    {
+      "ticker": "TMUS",
+      "move_pct": -10.747,
+      "close": 170.42,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 EPS beat ($2.85 vs $2.58 est) but revenue missed ($22.79B vs $22.98B) and management guided to slower Q3 subscriber growth on churn risk from pricier plans.",
+      "miss_reason": "Outside any active strategy's universe \u2014 TMUS is a mega-cap, low-beta telecom typically screened out of momentum/small-cap universes; even if watched, this was a guidance-driven post-earnings gap that pre-market positioning would need to catch, not an intraday signal.",
+      "suggestion": "Add a large-cap earnings-reaction watchlist (S&P 500 telecom/staples) with a rule to flag next-day entries when post-earnings gap \u22658% is driven by forward guidance cuts, independent of the momentum universe's small/mid-cap filters.",
+      "failed": false
+    },
+    {
+      "ticker": "ROL",
+      "move_pct": -9.271,
+      "close": 39.44,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 EPS $0.32 missed $0.34 est. and revenue $1.08B missed $1.10B est.; slower Orkin residential pest-control demand growth.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ROL is a steady, low-beta specialty consumer-services/pest-control name, a sector/vol profile momentum and mean-reversion universes typically screen out in favor of higher-beta, higher-volume tickers.",
+      "suggestion": "Add an earnings-gap scanner that pulls any ticker (regardless of static universe membership) with an after-hours/pre-market gap \u22657% on an earnings date into a watchlist for next-day open evaluation.",
+      "failed": false
+    },
+    {
+      "ticker": "DOV",
+      "move_pct": -7.798,
+      "close": 197.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 EPS ($2.74) roughly in line/slight miss and revenue ($2.19B) missed estimates; facility-consolidation/labor issues cut organic growth ~1-1.5pts, overshadowing raised FY26 guidance and 16% bookings growth \u2014 stock fell ~8-10%.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DOV is a large-cap diversified industrial conglomerate (multi-segment: refrigeration, pumps, aerospace/defense, biopharma), a sector/cap bucket the bot's current strategies don't cover at all.",
+      "suggestion": "Add a diversified-industrials/large-cap sector bucket (mkt cap >$15B, S&P 500 members) with an earnings-day gap scanner that flags post-results moves \u22655% for next-day mean-reversion or momentum follow-through entries.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-24T19:32:23.111689+00:00"
+}
