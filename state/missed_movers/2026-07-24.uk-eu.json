@@ -1,0 +1,124 @@
+{
+  "date": "2026-07-24",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 1 of today's 10 biggest UK/EU movers.\n\n\u2022 5 upside misses \u2014 G1A.DE +6%, EDV.L +5%, III.L +5%, AAL.L +5%, AAF.L +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (AD.AS -7%, BESI.AS -6%, IFX.DE -6%, CBK.DE -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: AD.AS (-6.71%) \u2014 Read-through selloff after Albertsons slashed FY26 sales/EPS guidance on weak US grocery spending (stock -24% on 7/23); AD.AS gets ~60% of sales from US banners (Stop & Shop, Giant, Food Lion, Hannaford), hit ahead of its Aug 5 Q2 report. Why we passed: Outside any active strategy's universe \u2014 AD.AS is a Euronext Amsterdam consumer-staples/grocery name; uk-eu momentum/growth universes are typically screened from tech/industrial/high-beta names and structurally exclude defensive retailers like this.",
+  "top_movers": [
+    {
+      "ticker": "RAND.AS",
+      "move_pct": 13.873,
+      "close": 36.28,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "momentum-trader-vix-gated"
+      ],
+      "catalyst": "Q2 2026 earnings beat: 1.9% organic revenue growth and improved YoY operating profit vs. estimates, plus commentary that June momentum carried into July.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RAND.AS is a Euronext Amsterdam-listed staffing/HR services mid-cap with no US ADR, so it never entered a US-centric equity screen; also an overnight earnings gap that pre-market/EU-session positioning would capture, not a US post-open signal.",
+      "suggestion": "Add an EU/Euronext large-cap sleeve (e.g. AEX constituents) to the universe with an earnings-gap release rule (gap \u22658% on reported-day open) so foreign-listed gainers like RAND.AS become eligible.",
+      "failed": false
+    },
+    {
+      "ticker": "G1A.DE",
+      "move_pct": 5.654,
+      "close": 62.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 beat: orders/revenue ~5% above consensus, EBITDA +7%; GEA raised FY26 guidance (organic growth to 6-8%, EBITDA margin to 17.0-17.4%), driving the ~5.6% jump.",
+      "miss_reason": "Outside any active strategy's universe \u2014 GEA (G1A.DE) is a German DAX industrial/food-processing equipment maker not on the uk-eu coverage list, so no filter ever saw today's earnings gap.",
+      "suggestion": "Extend uk-eu universe to include DAX constituents (or any EU industrial \u2265\u20ac5B market cap) and add an earnings-gate that releases names gapping \u22655% on above-average post-print volume.",
+      "failed": false
+    },
+    {
+      "ticker": "EDV.L",
+      "move_pct": 5.318,
+      "close": 37.43,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news; sector-wide gold miner rally as safe-haven gold demand rose ~1.5% on escalating US-Iran/Middle East tensions, lifting Endeavour Mining alongside Newmont, Barrick, Gold Fields, Sibanye.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Endeavour Mining is a West Africa-focused gold miner (Mali/Burkina Faso/Senegal/Ivory Coast operations), a commodity/mining-sector mid-cap the bot's uk-eu universe likely excludes on sector or jurisdiction-risk grounds rather than liquidity.",
+      "suggestion": "Add a gold-miner sleeve (e.g. EDV.L, GDX-equivalent LSE constituents) to the uk-eu universe with a gold-spot-correlation trigger, so sector-wide bullion rallies driven by safe-haven flows get captured, not just single-name earnings movers.",
+      "failed": false
+    },
+    {
+      "ticker": "III.L",
+      "move_pct": 4.781,
+      "close": 26.74,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "3i's 23-Jul Q1 update showed NAV/share up to 3,131p (from 3,030p) and top holding Action posting H1 net sales +14%, EBITDA +13%, easing prior growth-slowdown fears.",
+      "miss_reason": "Outside any active strategy's universe \u2014 3i is a closed-end PE/investment-trust holding company (NAV-driven, not an operating business), a category typically screened out of momentum/mean-reversion universes built for standard equities.",
+      "suggestion": "Add a scheduled-RNS gate for large-cap UK investment trusts/PE holdcos that flags names with NAV-update-day gaps \u22653%, instead of blanket-excluding the NAV-vehicle category.",
+      "failed": false
+    },
+    {
+      "ticker": "AAL.L",
+      "move_pct": 4.732,
+      "close": 36.96,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Anglo American cut 2026 copper cash-cost guidance to ~145c/lb from 172c/lb (Peru to 65c from 100c) on by-product credits; Teck merger reaffirmed on track for Sep2026-Mar2027 close.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AAL.L is a large-cap FTSE100 diversified miner/commodity name, a sector the uk-eu strategies likely don't screen at all, so no filter ever got the chance to evaluate it.",
+      "suggestion": "Add a metals/mining sub-universe (FTSE 100 miners: AAL.L, GLEN.L, RIO.L, ANTO.L) to the uk-eu screen with a cost-guidance-revision event trigger, since these names move hard on cash-cost updates, not price action.",
+      "failed": false
+    },
+    {
+      "ticker": "AAF.L",
+      "move_pct": 4.117,
+      "close": 3.49,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single dated news event; likely driven by continued $110M buyback execution and speculation ahead of the Jul 31, 2026 Airtel Money listing deadline / $515M buyback trigger.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AAF.L is LSE/FTSE 100-listed but its revenue geography (Nigeria, East & Francophone Africa) likely gets it tagged as African EM by country-exposure filters, so uk-eu universe screens built on revenue geography rather than listing exchange exclude it.",
+      "suggestion": "Add an LSE-listing-exchange override so FTSE 100 constituents like AAF.L qualify for the uk-eu universe regardless of revenue-geography EM tagging.",
+      "failed": false
+    },
+    {
+      "ticker": "AD.AS",
+      "move_pct": -6.71,
+      "close": 33.37,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Read-through selloff after Albertsons slashed FY26 sales/EPS guidance on weak US grocery spending (stock -24% on 7/23); AD.AS gets ~60% of sales from US banners (Stop & Shop, Giant, Food Lion, Hannaford), hit ahead of its Aug 5 Q2 report.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AD.AS is a Euronext Amsterdam consumer-staples/grocery name; uk-eu momentum/growth universes are typically screened from tech/industrial/high-beta names and structurally exclude defensive retailers like this.",
+      "suggestion": "Add a cross-market peer-contagion scanner: when a US sector peer (e.g. Albertsons/Kroger) posts a guidance-cut move beyond a -15% threshold, pull EU/UK names with >30% revenue exposure to that sector onto a watchlist regardless of the core universe filter.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": -6.167,
+      "close": 232.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2-26 revenue/orders beat (record \u20ac292.9M orders, +128.8% YoY) but Q3 gross-margin guidance (63-65%) fell below Q2's 65.7% actual, spooking investors on cycle-peak fears.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Besi is a Euronext Amsterdam semicap-equipment name (AI/photonics supplier), likely excluded as non-US/non-core-index and only ADR-traded (BESIY) domestically.",
+      "suggestion": "Add Euronext AEX semicap/AI-supply-chain names (incl. BESI.AS) to the uk-eu universe and add an earnings-day gate flagging post-results gaps \u22655% for next-day review even for non-covered tickers.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": -5.516,
+      "close": 65.95,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No IFX-specific news; European chip-sector selloff spilling over from STMicroelectronics' automotive/industrial earnings miss (-15% on 7/23), dragging peer semis incl. IFX lower.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IFX.DE is a XETRA-listed large-cap (DAX) European semiconductor; bot's uk-eu strategies likely scope to US-listed/ADR names or exclude Frankfurt-primary-listed industrials, so a sector read-across move had no strategy positioned to react.",
+      "suggestion": "Extend the uk-eu momentum/news-reactive universe to include DAX-listed semiconductor names (or the IFNNY ADR) above a $30M ADV floor so sector-contagion selloffs like the STM-driven chip rout get flagged next time.",
+      "failed": false
+    },
+    {
+      "ticker": "CBK.DE",
+      "move_pct": -5.489,
+      "close": 36.33,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Commerzbank chairman said the board will open takeover talks with UniCredit but rejected any Berlin-brokered shortcut; shares fell toward/below the implied 0.485-ratio offer value (~\u20ac37.30) as merger-arb uncertainty resurfaced.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CBK.DE is a DAX financial embroiled in a binary, politically-entangled M&A/takeover situation, a category momentum and mean-reversion universes typically exclude since price action tracks deal terms/regulatory headlines, not technical signals.",
+      "suggestion": "Add a small event-driven/merger-arb sleeve for names under active tender offers, triggered on deal-keyword news (\"takeover talks\", \"exchange ratio\") and sized to spread-vs-offer-price rather than the standard technical filter stack.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-24T15:03:41.426742+00:00"
+}
