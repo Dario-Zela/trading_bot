@@ -1,0 +1,1051 @@
+{
+  "week_id": "2026-W30",
+  "generated_at": "2026-07-26T17:11:22.379391+00:00",
+  "snapshot": {
+    "yield_curve": {
+      "as_of": "2026-07-24",
+      "3M": 3.805000066757202,
+      "5Y": 4.426000118255615,
+      "10Y": 4.678999900817871,
+      "30Y": 5.1620001792907715,
+      "spread_3m10y": 0.873999834060669
+    },
+    "credit_spreads": {
+      "as_of": "2026-07-24",
+      "hyg_5d_return_pct": -0.527304659007255,
+      "lqd_5d_return_pct": -1.2365137893719624,
+      "hy_vs_ig_5d_diff": 0.7092091303647075
+    },
+    "dollar_index": {
+      "as_of": "2026-07-24",
+      "level": 101.47000122070312,
+      "return_5d_pct": 0.7146414101271814,
+      "return_20d_pct": 0.039436966782013805
+    },
+    "sector_strength": [
+      {
+        "ticker": "XLE",
+        "label": "Energy",
+        "5d": 3.3633817899527685,
+        "20d": 10.22369895303521
+      },
+      {
+        "ticker": "XLU",
+        "label": "Utilities",
+        "5d": 2.479527987565966,
+        "20d": 0.959656392692354
+      },
+      {
+        "ticker": "XLI",
+        "label": "Industrials",
+        "5d": 1.811493190826119,
+        "20d": -0.7929564923944699
+      },
+      {
+        "ticker": "XLB",
+        "label": "Materials",
+        "5d": 1.4446854539316156,
+        "20d": -1.11883068932771
+      },
+      {
+        "ticker": "XLRE",
+        "label": "Real Estate",
+        "5d": 1.1668925921633155,
+        "20d": 3.0500125716474757
+      },
+      {
+        "ticker": "XLV",
+        "label": "Health Care",
+        "5d": 0.9187479172969581,
+        "20d": 4.459295909315175
+      },
+      {
+        "ticker": "XLK",
+        "label": "Technology",
+        "5d": 0.1651623389545609,
+        "20d": -4.708241911775646
+      },
+      {
+        "ticker": "XLF",
+        "label": "Financials",
+        "5d": 0.08887851626309118,
+        "20d": 5.350796201175356
+      },
+      {
+        "ticker": "XLP",
+        "label": "Consumer Staples",
+        "5d": -1.2442835516026096,
+        "20d": 0.22634596912758376
+      },
+      {
+        "ticker": "XLC",
+        "label": "Communication Services",
+        "5d": -3.9313135238445596,
+        "20d": 0.681948482872019
+      },
+      {
+        "ticker": "XLY",
+        "label": "Consumer Discretionary",
+        "5d": -5.223491555587511,
+        "20d": -3.475954887561161
+      }
+    ],
+    "commodities": [
+      {
+        "name": "Gold",
+        "ticker": "GLD",
+        "close": 371.8999938964844,
+        "5d": 0.947311473543988,
+        "20d": 0.6604239966001568
+      },
+      {
+        "name": "Silver",
+        "ticker": "SLV",
+        "close": 52.59000015258789,
+        "5d": 3.5643982213503955,
+        "20d": 0.4392657363545993
+      },
+      {
+        "name": "Oil (USO)",
+        "ticker": "USO",
+        "close": 136.69000244140625,
+        "5d": 10.269444539329765,
+        "20d": 25.048033569057495
+      },
+      {
+        "name": "Natural gas (UNG)",
+        "ticker": "UNG",
+        "close": 10.550000190734863,
+        "5d": 0.3805895431201467,
+        "20d": -10.212764334171375
+      },
+      {
+        "name": "Agriculture (DBA)",
+        "ticker": "DBA",
+        "close": 28.239999771118164,
+        "5d": 1.4367802310988553,
+        "20d": 4.90341638589602
+      },
+      {
+        "name": "Base metals (DBB)",
+        "ticker": "DBB",
+        "close": 24.690000534057617,
+        "5d": 0.6522618953664239,
+        "20d": 2.193711465202175
+      }
+    ]
+  },
+  "plan": {
+    "edition_date": "2026-07-26",
+    "masthead_subtitle": "Crude's 25% monthly surge is steepening the curve, splitting sectors, and quietly bidding up the dollar",
+    "todays_question": "",
+    "front_lead_slug": "oil-shock-repricing",
+    "notes": "Thesis anchored on USO +25%/20d as the connective driver across curve steepening, sector dispersion (XLE vs XLY/XLC), IG-vs-HY duration gap, and dollar bounce; risk piece intentionally pushes back using gold/nat-gas divergence to keep the lead honest.",
+    "pieces": [
+      {
+        "slug": "oil-shock-repricing",
+        "section": "Editorial",
+        "headline": "Oil's 25% surge is quietly repricing the rest of the tape",
+        "kicker": "EDITORIAL \u00b7 THE WEEK",
+        "byline": "The Editor",
+        "one_line": "A month-long crude rally is bleeding into yields, the dollar, and consumer-facing equities faster than the headlines suggest.",
+        "tier": "lead",
+        "triage_index": 0,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "bear-steepener-inflation",
+        "section": "Rates",
+        "headline": "The long end is pricing an inflation problem, not a growth one",
+        "kicker": "RATES \u00b7 THE CURVE",
+        "byline": "G. Mehlman",
+        "one_line": "Thirty-year yields at 5.16% and a near-90bp 3m10y spread show the bond market backing away from a clean soft-landing base case.",
+        "tier": "feature",
+        "triage_index": 1,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "front-end-policy-hold",
+        "section": "Rates",
+        "headline": "The front end isn't buying a pivot anytime soon",
+        "kicker": "RATES \u00b7 POLICY PATH",
+        "byline": "G. Mehlman",
+        "one_line": "A steady 3.805% 3-month bill shows the market still pricing a Fed in no hurry to cut, even as the long end sells off.",
+        "tier": "brief",
+        "triage_index": 2,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "dollar-oil-shock-bid",
+        "section": "FX",
+        "headline": "The dollar's oil-shock bid",
+        "kicker": "FX \u00b7 THE DOLLAR",
+        "byline": "E. Castellano",
+        "one_line": "DXY's +0.71% weekly gain breaks a month of dead calm, and crude is the most likely catalyst.",
+        "tier": "feature",
+        "triage_index": 3,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "ig-duration-pain",
+        "section": "Credit",
+        "headline": "Investment-grade bonds are the ones getting hurt, not junk",
+        "kicker": "CREDIT \u00b7 IG VS HY",
+        "byline": "T. Larch",
+        "one_line": "LQD's 1.24% weekly slide outpaces HYG's 0.53% drop \u2014 a duration story for now, but Larch isn't ready to call it purely technical.",
+        "tier": "feature",
+        "triage_index": 4,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "energy-sector-repricing",
+        "section": "Sectors",
+        "headline": "Energy's quiet month is now impossible to ignore",
+        "kicker": "SECTORS \u00b7 ENERGY",
+        "byline": "I. Aresti",
+        "one_line": "XLE's 10% one-month gain, compounding with a 3.4% weekly pop, is starting to look like a genuine crude repricing rather than a rotation trade.",
+        "tier": "feature",
+        "triage_index": 5,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "consumer-sector-stress",
+        "section": "Sectors",
+        "headline": "Consumer-facing sectors are absorbing the oil shock",
+        "kicker": "SECTORS \u00b7 CONSUMER STRESS",
+        "byline": "I. Aresti",
+        "one_line": "XLY's 5.2% weekly drop and XLC's 3.9% slide mark the sharpest sector pain of the summer, right as energy costs climb.",
+        "tier": "feature",
+        "triage_index": 6,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "us-energy-tax-consumer",
+        "section": "Regions",
+        "headline": "The US macro mix: hot energy, cooling consumer",
+        "kicker": "REGIONS \u00b7 UNITED STATES",
+        "byline": "P. Kanu",
+        "one_line": "A steepening curve and a consumer-sector selloff point to an economy where energy costs are doing some of the Fed's tightening for it.",
+        "tier": "feature",
+        "triage_index": 7,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "em-oil-import-shock",
+        "section": "Regions",
+        "headline": "Emerging markets face a fresh oil-import bill",
+        "kicker": "REGIONS \u00b7 EMERGING MARKETS",
+        "byline": "P. Kanu",
+        "one_line": "A firmer dollar and a 25% crude rally together tighten financial conditions across oil-importing emerging economies.",
+        "tier": "brief",
+        "triage_index": 8,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "oil-shock-regime-skepticism",
+        "section": "Risk",
+        "headline": "One rally doesn't make a regime \u2014 yet",
+        "kicker": "RISK \u00b7 TAIL WATCH",
+        "byline": "S. Vance",
+        "one_line": "Vance flags the gap between a loud oil-and-rates move and thin cross-confirmation elsewhere before calling this a genuine regime shift.",
+        "tier": "feature",
+        "triage_index": 9,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      }
+    ]
+  },
+  "briefs": {
+    "front-end-policy-hold": {
+      "slug": "front-end-policy-hold",
+      "headline": "The front end isn't buying a pivot anytime soon",
+      "kicker": "RATES \u00b7 POLICY PATH",
+      "byline": "G. Mehlman",
+      "body_md": "The front end is holding its ground as the long end sells off\u2014a sign that markets still expect the Federal Reserve to stay put. The three-month bill stayed at 3.805%, with all 87.4 basis points of steepness in the 3m10y curve sitting beyond the front end. Inflation concerns are pushing yields higher further out: the five-year is at 4.426%, the 30-year at 5.162%. Next week's tension: does the front end eventually match the long end's inflation signal, or does the back end retrace once the oil-driven selling pressure fades?",
+      "sources_used": [],
+      "failed": false
+    },
+    "dollar-oil-shock-bid": {
+      "slug": "dollar-oil-shock-bid",
+      "headline": "The dollar's oil-shock bid",
+      "kicker": "FX \u00b7 THE DOLLAR",
+      "byline": "E. Castellano",
+      "body_md": "The dollar index has broken out of a month-long slump, posting a +0.71% weekly gain this week against just +0.04% over the prior three weeks. The surge, which lifts DXY to 101.47, coincides with crude climbing 25% over the past month and a steepening US Treasury curve. The question now is whether this marks a genuine reorientation toward dollar strength\u2014driven by real yields rising at the long end, or by a broader terms-of-trade tailwind for dollar holders as oil-importing currencies weaken\u2014or merely a one-week wobble fading with the oil move.",
+      "sources_used": [],
+      "failed": false
+    },
+    "bear-steepener-inflation": {
+      "slug": "bear-steepener-inflation",
+      "headline": "The long end is pricing an inflation problem, not a growth one",
+      "kicker": "RATES \u00b7 THE CURVE",
+      "byline": "G. Mehlman",
+      "body_md": "The bond market is pricing an inflation problem, not a growth scare. The 30-year yield hit 5.16% this week while the three-month bill remained anchored at 3.80%\u2014a spread of 87 basis points concentrated entirely at the long end. This pattern is textbook term-premium pricing: the front end unmoved, the back end climbing. Traders see renewed inflation risk, not recession. Oil's 25% monthly surge offers the most plausible trigger, suggesting markets are pricing in a price-push premium rather than expecting Fed easing. The shift signals markets backing away from a clean soft-landing scenario\u2014the question now whether that repricing holds.",
+      "sources_used": [],
+      "failed": false
+    },
+    "energy-sector-repricing": {
+      "slug": "energy-sector-repricing",
+      "headline": "Energy's quiet month is now impossible to ignore",
+      "kicker": "SECTORS \u00b7 ENERGY",
+      "byline": "I. Aresti",
+      "body_md": "Energy is the only stock sector leading on both a five-day and 20-day basis\u2014not a weekly blip, but a trend. XLE, the energy ETF, has gained 3.36% over five days and 10.22% over the past month, a cumulative move beginning to look like genuine crude repricing. The driver is clear: USO, the oil fund, has rallied 25% over the same 20-day window. Adding to the signal, utilities have climbed 2.48% in five days, suggesting investors are layering a defensive inflation hedge atop the core energy trade. What follows will depend on whether these gains can hold.",
+      "sources_used": [],
+      "failed": false
+    },
+    "oil-shock-repricing": {
+      "slug": "oil-shock-repricing",
+      "headline": "Oil's 25% surge is quietly repricing the rest of the tape",
+      "kicker": "EDITORIAL \u00b7 THE WEEK",
+      "byline": "The Editor",
+      "body_md": "A month-long crude oil rally is forcing broad repricing across markets. Oil has climbed 25% in four weeks\u2014with the sharpest moves this week alone\u2014and the surge is bleeding into bond yields, credit spreads, equities, and currency markets in ways that suggest inflation risk is moving back to center stage.\n\nLong-end yields are steepening, with 30-year rates near 5.16%. Investment-grade credit is repricing duration risk more sharply than high-yield, a signal that inflation expectation\u2014not credit stress\u2014is driving the move. Energy stocks rally while consumer-facing equities get hit hardest, down more than 5% this week. The dollar bounces after a quiet month.\n\nThis looks less like sector rotation and more like the early stages of a genuine regime shift in inflation expectations. Whether it holds depends on what crude does next.",
+      "sources_used": [],
+      "failed": false
+    },
+    "ig-duration-pain": {
+      "slug": "ig-duration-pain",
+      "headline": "Investment-grade bonds are the ones getting hurt, not junk",
+      "kicker": "CREDIT \u00b7 IG VS HY",
+      "byline": "T. Larch",
+      "body_md": "Investment-grade bonds posted sharper losses than high-yield peers this week\u2014bucking typical risk-off dynamics. LQD, the iShares investment-grade corporate ETF, fell 1.24% while HYG (high-yield) dropped 0.53%, a 71-basis-point gap that normally widens the other way. The culprit is duration, not credit deterioration: with 30-year yields near 5.16% and the curve steepening, longer-dated IG bonds took the brunt. High-yield spreads remain calm. But oil-driven inflation poses a second-order risk. If the Fed reprices higher, energy-linked high-yield issuers could face genuine credit stress\u2014moving from technical duration losses in IG to actual credit risk in HY. Watch whether HY spreads widen.",
+      "sources_used": [],
+      "failed": false
+    },
+    "consumer-sector-stress": {
+      "slug": "consumer-sector-stress",
+      "headline": "Consumer-facing sectors are absorbing the oil shock",
+      "kicker": "SECTORS \u00b7 CONSUMER STRESS",
+      "byline": "I. Aresti",
+      "body_md": "Consumer stocks are absorbing the oil shock. The consumer discretionary sector (XLY) fell 5.2% this week and communication services (XLC) slid 3.9%, marking the two worst sector performers of the summer. The pressure stems from two sources: rising energy costs are tightening consumer spending power, while climbing long-dated yields are repricing growth-adjacent names that dominate both sectors. The squeeze runs deeper than this week suggests. Technology is flat this week but down 4.7% over the past month, indicating the consumer and growth complex has been under pressure for weeks. Investors are watching whether energy costs stabilize or further yield climbs accelerate the unwind.",
+      "sources_used": [],
+      "failed": false
+    },
+    "us-energy-tax-consumer": {
+      "slug": "us-energy-tax-consumer",
+      "headline": "The US macro mix: hot energy, cooling consumer",
+      "kicker": "REGIONS \u00b7 UNITED STATES",
+      "byline": "P. Kanu",
+      "body_md": "U.S. households are confronting higher energy costs even as the broader economy shows resilience. Crude oil has jumped 25% this month, pushing up gasoline and heating bills. The yield curve backs a benign outlook: the 3-month-to-10-year spread at 87 basis points is non-inverted, arguing against near-term recession. Yet consumer discretionary stocks weaken\u2014the XLY sector fell 5.22% this week, the weakest U.S. equity group. The divergence reveals a pinched mix: energy inflation is tightening household finances while longer-term growth expectations hold. It's not a demand collapse but a different inflation risk, where energy costs perform the Fed's work\u2014tightening financial conditions without a rate move.",
+      "sources_used": [],
+      "failed": false
+    },
+    "oil-shock-regime-skepticism": {
+      "slug": "oil-shock-regime-skepticism",
+      "headline": "One rally doesn't make a regime \u2014 yet",
+      "kicker": "RISK \u00b7 TAIL WATCH",
+      "byline": "S. Vance",
+      "body_md": "Oil surged 25% in three weeks on inflation concerns, but the broader market response remains fragmented. Gold, the classic inflation hedge, rose just 0.95% over five days\u2014a tepid move for a regime shift. Natural gas fell 10.21% while crude rallied, signaling divergent drivers within energy rather than unified factor flow. Dollar strength (+0.71%) compounds the puzzle; currency weakness is the default in reflation trades. What would confirm an inflation regime: gold and the dollar diverging sharply over the next two weeks (gold up, dollar down). What would falsify it: oil giving back the gains.",
+      "sources_used": [],
+      "failed": false
+    },
+    "em-oil-import-shock": {
+      "slug": "em-oil-import-shock",
+      "headline": "Emerging markets face a fresh oil-import bill",
+      "kicker": "REGIONS \u00b7 EMERGING MARKETS",
+      "byline": "P. Kanu",
+      "body_md": "Emerging-market oil importers face tightening financial conditions this week. The dollar jumped 0.71%, breaking a month of calm, while crude oil has climbed 25% over three weeks. For non-producer economies, the combination raises both debt-service costs and energy import bills. Base metals and agricultural commodities have also firmed, adding imported-inflation pressure. The divergence widens: commodity exporters in the Gulf and Latin America benefit from higher prices, while oil importers absorb costs across their import baskets.",
+      "sources_used": [],
+      "failed": false
+    }
+  },
+  "articles": {
+    "dollar-oil-shock-bid": {
+      "slug": "dollar-oil-shock-bid",
+      "headline": "The dollar's oil-shock bid",
+      "kicker": "FX \u00b7 THE DOLLAR",
+      "byline": "E. Castellano",
+      "body_md": "For twenty straight trading days, the dollar did almost nothing. The ICE Dollar Index \u2014 a basket measure of the greenback against the euro, yen, pound and four other major currencies \u2014 drifted in a band so narrow that FX desks had taken to calling it dead money, up a grand total of 0.04% since late June. Then, in the space of five sessions, it moved more than it had in the entire month prior. The index closed the week at 101.47, up 0.71%, its sharpest weekly gain since February.\n\nThe timing is not a coincidence. Crude oil has surged roughly 25% over the past month, Brent trading near $97 a barrel after briefly topping $102, as a US-Iran military confrontation has put the Strait of Hormuz \u2014 the transit point for roughly a fifth of the world's seaborne oil \u2014 under the kind of stress traders have not priced since the tanker-war scares of the 1980s. The question the dollar's sudden pop raises is whether this is a durable regime shift in the currency or a one-week reaction to a geopolitical shock that could unwind as quickly as it arrived.\n\n## Two stories, one chart\n\nThere are two competing explanations for why a barrel of oil trading in Hormuz should move a currency index, and both have shown up in the data this week.\n\nThe first is a rates story. Oil at $95-plus has revived inflation fears that had been dormant for months, and the long end of the Treasury curve has done the repricing: the 10-year yield pushed to around 4.68-4.7%, its highest level since January 2025, while the 2-year has lagged, steepening the curve. When long-dated real yields \u2014 the return investors demand above expected inflation \u2014 rise faster than they do abroad, the dollar tends to benefit even if the Federal Reserve's policy rate hasn't moved an inch. That is the mechanism cross-linked in this edition's rates coverage: a bear steepener driven by an inflation scare, not a growth scare, with the front end of the curve still refusing to price a near-term Fed pivot.\n\n![The Marriner S. Eccles Federal Reserve Board Building in Washington, D.C.](https://upload.wikimedia.org/wikipedia/commons/8/8d/Marriner_S._Eccles_Federal_Reserve_Board_Building.jpg)\n\nThe second explanation is broader and more geopolitical: a risk and terms-of-trade bid. The dollar is one of the few genuine safe havens left when a Gulf shipping lane is under fire, and it draws flows on that basis alone, independent of what Treasury yields are doing. Layered onto that is a terms-of-trade effect that hits oil-importing economies asymmetrically. Currencies such as the Indian rupee, the Thai baht and the Turkish lira have all been pushed toward record or multi-year lows this month, not because their central banks are behind the curve on inflation, but because higher oil import bills widen current-account deficits and force local corporates to buy dollars to pay energy suppliers. Thailand imports something like 85% of its crude; India imports the large majority of its own. That dynamic doesn't need a single basis point of Fed repricing to push the dollar index up \u2014 it only needs the rest of the world's currencies to weaken against it.\n\n![Satellite map of the Strait of Hormuz, the oil chokepoint between Iran and the Arabian Peninsula](https://upload.wikimedia.org/wikipedia/commons/9/92/Strait_of_Hormuz.jpg)\n\nIn practice the two stories are reinforcing rather than competing. Higher oil pushes up US breakevens and term premium, which lifts real yields and pulls in dollar demand; the same oil spike simultaneously drags down the currencies of countries that have to pay for it. Both mechanisms point in the same direction, which is part of why the move showed up so cleanly across a full week rather than in a single session's noise.\n\n## What a flat month was hiding\n\nThe more interesting fact may be the twenty days of calm that preceded this. A dollar index sitting still for a month usually means opposing forces are in balance \u2014 in this case, likely a market that had priced in a soft landing, a patient Fed, and stable energy prices all at once. The oil shock broke exactly one leg of that stool. It did so abruptly, via an escalation that markets had treated as a tail risk rather than a base case; oil's month-long climb, chronicled elsewhere in this edition as a stealth repricing of the broader tape, only became undeniable to FX markets once Hormuz itself was in the headlines.\n\nThat abruptness cuts against reading too much directional conviction into a single week. Currency moves that track a geopolitical risk premium tend to be as reversible as the risk itself \u2014 if a diplomatic off-ramp materializes and tanker traffic through Hormuz normalizes, both the oil bid and the dollar bid it has fed could unwind together, and possibly just as fast as they appeared, an outcome one skeptical read of this rally has already flagged directly.\n\n## What to watch\n\nThe cleanest test of which story dominates is whether the dollar's strength survives an oil pullback. If crude gives back a meaningful share of its 25% gain and the DXY holds most of its 0.71% weekly advance, that would point to the real-yield channel \u2014 a Fed-and-Treasury-market story with more staying power \u2014 having taken over as the primary driver. If the dollar retraces in lockstep with oil, this week looks more like a geopolitical risk premium than a genuine turn.\n\nThe near-term catalysts are concrete: any further escalation or de-escalation around the Strait of Hormuz, the next Treasury refunding data on foreign demand at the long end, and incoming US CPI, which will show how much of the oil move has already fed into headline inflation. Until one of those breaks decisively, both explanations for the dollar's oil-shock bid remain live at once.",
+      "in_one_sentence": "A month of dead-calm trading in the dollar broke this week as crude's 25% surge lifted both US real yields and demand for the dollar as a safe haven against oil-importer currencies.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/00/USDnotesNew.png",
+      "image_caption": "US dollar banknotes \u2014 the greenback posted its sharpest weekly gain since February as oil-driven inflation fears lifted Treasury yields.",
+      "image_credit": "US Federal Reserve / Wikimedia Commons (public domain)",
+      "sources": [
+        {
+          "title": "US Dollar Gains Ground As Oil Prices Test New Highs \u2014 Yahoo Finance",
+          "url": "https://finance.yahoo.com/markets/currencies/articles/u-dollar-gains-ground-oil-164603715.html"
+        },
+        {
+          "title": "10-year Treasury yield rises to highest since January 2025 as surging oil rekindles inflation fear \u2014 CNBC",
+          "url": "https://www.cnbc.com/2026/07/23/treasury-yields-oil-prices-jobless-claims.html"
+        },
+        {
+          "title": "Treasury Yields Hit Two-Month High as Oil Sparks Inflation Risk \u2014 Bloomberg",
+          "url": "https://www.bloomberg.com/news/articles/2026-07-21/treasury-yields-hit-two-month-high-as-oil-sparks-inflation-risk"
+        },
+        {
+          "title": "Oil Rally Pressures Asian Currencies, Leaving Rupee and Baht Trailing \u2014 VT Markets",
+          "url": "https://www.vtmarkets.com/en-asia/live-updates/oil-rally-pressures-asian-currencies-leaving-rupee-and-baht-trailing-as-inflation-risks-persist/"
+        },
+        {
+          "title": "Oil Rebound Seen Pressuring Asian Currencies, MUFG Says \u2014 Investing Live",
+          "url": "https://investinglive.com/forex/oil-rebound-seen-pressuring-asian-currencies-mufg-says-indian-rupee-hit-hard"
+        },
+        {
+          "title": "FX Weekly \u2014 MUFG Research",
+          "url": "https://www.mufgresearch.com/fx/fx-weekly-24-july-2026/"
+        },
+        {
+          "title": "Treasury Yields Rise as Iran Rejects U.S. Plan for Strait of Hormuz \u2014 Investing.com",
+          "url": "https://www.investing.com/news/stock-market-news/treasury-yields-rise-as-iran-rejects-us-plan-for-strait-of-hormuz-93CH-4669881"
+        },
+        {
+          "title": "Oil surges past $95 as U.S. downplays Iran diplomacy \u2014 NBC News",
+          "url": "https://www.nbcnews.com/business/business-news/oil-prices-brent-gas-iran-war-trump-hormuz-red-sea-houthis-rcna588671"
+        }
+      ],
+      "related_slugs": [
+        "oil-shock-repricing",
+        "bear-steepener-inflation",
+        "front-end-policy-hold",
+        "em-oil-import-shock",
+        "oil-shock-regime-skepticism"
+      ],
+      "failed": false
+    },
+    "oil-shock-repricing": {
+      "slug": "oil-shock-repricing",
+      "headline": "Oil's 25% surge is quietly repricing the rest of the tape",
+      "kicker": "EDITORIAL \u00b7 THE WEEK",
+      "byline": "The Editor",
+      "body_md": "The tape has a new pacemaker, and it isn't the Federal Reserve. It's crude oil.\n\nOver the past month, the United States Oil Fund \u2014 the most widely watched proxy for West Texas Intermediate \u2014 has risen 25%, with 10 of those points arriving in just the last five trading sessions. That is the sharpest, fastest commodity move of the summer, and it is no longer content to stay in the energy section. It is bleeding into Treasury yields, into the dollar, into the relative pricing of credit risk, and into which sectors of the stock market get bid up versus sold down. A rally that started as a geopolitical shock is starting to look like something with its own momentum \u2014 a genuine, if young, inflation impulse working its way through every desk in the building.\n\nThe proximate cause is not mysterious. Fighting between the United States and Iran has escalated for a twelfth straight night, with U.S. strikes targeting Iranian command and missile sites and Iran hitting back at American bases in the Gulf. Tehran has effectively closed the Strait of Hormuz to U.S.-linked shipping, and Saudi and Qatari tankers have already been hit near the strait \u2014 a waterway that normally carries roughly a fifth of the world's seaborne oil. Brent has traded above $100 a barrel; U.S. gasoline has pushed back above $4 a gallon nationally, up from $3.87 a week earlier and $3.14 a year ago. This is not a supply scare priced in a futures curve somewhere \u2014 it is showing up at the pump.\n\n![Crude oil tanker at sea](https://upload.wikimedia.org/wikipedia/commons/0/05/Petroleum_Crude_Oil_tanker.jpg)\n\n## The curve is doing the talking\n\nBond markets read energy shocks differently than equity markets do, and this week the difference is stark. The 3-month/10-year Treasury spread has moved out to roughly +87 basis points, and the 30-year yield has pushed up to about 5.16% \u2014 a full bear-steepener, where long rates rise faster than short ones. That is the market's way of saying this isn't a growth story. A growth scare flattens or inverts the curve as investors flee to long-duration safety. A bear-steepener says the opposite: investors want compensation for holding money over a longer horizon because they now think inflation, not recession, is the more likely destination.\n\nThat suspicion has company. Inflation is already running near 3.7%, well above the Fed's 2% target, and traders have pushed the odds of a rate hike later this year from roughly 12% to about 38% in a single week, according to fixed-income pricing. The Federal Reserve is still expected to hold its benchmark rate steady at its July 29 meeting \u2014 its fifth straight hold \u2014 but Vice Chair Philip Jefferson and Governor Christopher Waller have both signaled the committee will reconsider that stance if energy-driven inflation doesn't cool. The front end of the curve isn't pricing a pivot. The long end is pricing the opposite.\n\n## Winners, losers, and a very clean split\n\nEquity sector performance this week reads almost like a textbook illustration of an oil shock, which is itself notable \u2014 real markets rarely cooperate this tidily. Energy (XLE) leads the S&P 500 sectors, up 3.36% on the week. Consumer Discretionary (XLY) is the worst performer, down 5.22%. That is not a rotation between similarly-situated cyclical sectors; it is a direct transmission mechanism. Every extra dollar spent filling a gas tank is a dollar not spent at a restaurant, a car dealership, or an online retailer. Goldman Sachs has already trimmed its 2026 consumption growth forecast to roughly 1.2% year-over-year, down from just over 2% before the latest escalation, citing exactly this squeeze on discretionary budgets.\n\nCommunications Services stocks are catching a similar downdraft, another sector whose earnings lean on discretionary attention and ad spending rather than anything energy-adjacent. Utilities, meanwhile, are trading with Energy rather than against it \u2014 a sector normally prized for defensiveness is instead benefiting from its correlation to power and fuel costs. The market is not treating this as noise to be arbitraged away; it is treating it as a structural repricing of which businesses face higher input costs and which face higher revenue.\n\n![NYSE trading floor](https://upload.wikimedia.org/wikipedia/commons/4/4e/NYSE_Advanced_Trading_Floor.jpg)\n\n## Credit and currency confirm the same story\n\nTwo more corners of the market are echoing the same signal, and both would look strange without the oil context. Investment-grade credit, tracked by LQD, has fallen 1.24% over five days \u2014 nearly triple the 0.53% decline in high-yield, tracked by HYG. That gap is unusual, because high-yield is supposed to be the riskier asset. What's happening instead is a duration story, not a credit-quality one: LQD carries roughly eight to nine years of duration against HYG's three to four, so when long rates back up on inflation fear, investment-grade bonds absorb the price damage first even though their underlying credit quality hasn't budged. It is the bond-market equivalent of Consumer Discretionary underperforming Energy \u2014 the instrument with the longer horizon takes the hit.\n\nThe dollar tells the same tale from a third angle. After roughly a month of unusual calm, the dollar index has broken higher, touching around 101.3 \u2014 its best level in about three weeks and within striking distance of a 15-month high set in late June. Traditionally, an oil shock centered on Gulf supply would be expected to weigh on the currency of the world's largest oil importer. Instead the dollar is rallying alongside crude, which suggests traders are treating this less as a terms-of-trade shock and more as a global risk-off, inflation-hedge event \u2014 the same instinct that is lifting long-end yields and hurting long-duration credit simultaneously.\n\n## What would confirm it \u2014 or break it\n\nThe honest caveat is that one month of a single commodity's price action, however sharp, is not yet a regime. Every piece of evidence here \u2014 the steepening curve, the sector split, the credit gap, the dollar bid \u2014 is consistent with a single underlying cause, which is unusually clean for markets that normally have multiple things happening at once. But clean correlation during an active war is also exactly what you'd expect from a shock that fades the moment the shooting stops. J.P. Morgan's own year-end oil forecast, penciled in before the latest escalation, still sits near $78 a barrel, well below where crude trades today, on the view that a de-escalation would send cyclicals and consumer names right back up.\n\nThe next real test arrives in two stages. The Fed's July 29 decision will show whether policymakers treat this as transitory or something requiring a rate response \u2014 a hold with hawkish language would validate the bear-steepener; a hold that shrugs off oil would undercut it. And any credible sign of a ceasefire or a reopened Strait of Hormuz would be the fastest way to find out whether this was a regime change or just a very loud four weeks.",
+      "in_one_sentence": "A month-long, Hormuz-crisis-driven oil surge is now bear-steepening the yield curve, splitting equity sectors, hurting IG credit, and lifting the dollar all at once.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/05/Petroleum_Crude_Oil_tanker.jpg",
+      "image_caption": "A crude oil tanker at sea \u2014 shipping through the Strait of Hormuz has been disrupted by the US-Iran conflict, driving the month's oil surge.",
+      "image_credit": "Wikimedia Commons",
+      "sources": [
+        {
+          "title": "2026 Strait of Hormuz crisis \u2014 Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/2026_Strait_of_Hormuz_crisis"
+        },
+        {
+          "title": "US strikes Iran after ship attack in Strait of Hormuz \u2014 CNN",
+          "url": "https://www.cnn.com/2026/07/11/world/live-news/iran-war-trump"
+        },
+        {
+          "title": "U.S. fires new wave of strikes on Iran, hits tanker skirting blockade \u2014 NPR",
+          "url": "https://www.npr.org/2026/07/15/nx-s1-5894582/us-iran-updates"
+        },
+        {
+          "title": "Markets price in rising odds of July Fed rate hike \u2014 Forbes",
+          "url": "https://www.forbes.com/sites/simonmoore/2026/07/23/markets-see-chance-fed-hikes-next-week-at-july-meeting/"
+        },
+        {
+          "title": "A July rate hike from the Fed? The odds are rising \u2014 CNBC",
+          "url": "https://www.cnbc.com/2026/07/13/-a-july-rate-hike-from-the-fed-the-odds-are-rising.html"
+        },
+        {
+          "title": "Dollar rallies on surging oil prices \u2014 Trading Economics",
+          "url": "https://tradingeconomics.com/united-states/currency/news/531540"
+        },
+        {
+          "title": "Corporate Bond Spreads Are Tightening Fast: What It Means for LQD \u2014 24/7 Wall St.",
+          "url": "https://247wallst.com/investing/2026/06/03/corporate-bond-spreads-are-tightening-fast-what-it-means-for-lqd-in-2026/"
+        },
+        {
+          "title": "Higher Gas and Diesel Prices Are Coming for Consumer Wallets \u2014 The Motley Fool",
+          "url": "https://www.fool.com/investing/2026/05/04/higher-gas-and-diesel-prices-are-coming-for-consum/"
+        },
+        {
+          "title": "Oil Shock Scenarios for 2026: What Investors Need to Watch \u2014 Morgan Stanley",
+          "url": "https://www.morganstanley.com/insights/podcasts/thoughts-on-the-market/oil-shock-reshaping-markets-serena-tang"
+        }
+      ],
+      "related_slugs": [
+        "bear-steepener-inflation",
+        "front-end-policy-hold",
+        "dollar-oil-shock-bid",
+        "ig-duration-pain",
+        "energy-sector-repricing",
+        "consumer-sector-stress"
+      ],
+      "failed": false
+    },
+    "energy-sector-repricing": {
+      "slug": "energy-sector-repricing",
+      "headline": "Energy's quiet month is now impossible to ignore",
+      "kicker": "SECTORS \u00b7 ENERGY",
+      "byline": "I. Aresti",
+      "body_md": "There is a version of this rally that reads as noise \u2014 a geopolitical scare, a few weeks of headline risk, the kind of thing that shows up in commodity markets every year or two and fades before the next earnings season. Energy stocks have had plenty of those false starts since 2022.\n\nThis is not shaping up to be one of them. The Energy Select Sector SPDR Fund (XLE) is up 3.36% over the past five trading days and 10.22% over the past twenty \u2014 the only S&P 500 sector posting gains on both the short and medium window at once. Everything else in the market is either fading on one horizon or the other. Energy is doing it on both, which is the statistical signature of a trend, not a bounce.\n\n![A pumpjack operates in the oil fields near Midland, Texas.](https://upload.wikimedia.org/wikipedia/commons/0/0b/West_Texas_Pumpjack.JPG)\n\n> **In one sentence:** XLE's 10% one-month gain, compounding with a 3.4% weekly pop, looks less like a rotation trade and more like the equity market catching up to a genuine crude repricing.\n\n## The crude math underneath the equity move\n\nThe fundamental driver is not subtle. The United States Oil Fund (USO) is up 25.05% over the same twenty-day stretch, and the price action behind it has been a straight line up since a Middle East ceasefire collapsed on July 8. WTI crude, trading in the high $70s and low $80s as recently as late June, briefly touched $100 a barrel this week for the first time in nearly two months before settling back near $92. Brent sat close to $94. Diesel markets have moved in sympathy \u2014 ICE Gasoil has held above $1,100 a tonne \u2014 which matters because it means refiners are not just riding a crude tailwind, they are capturing wider cracking margins on top of it.\n\nThat combination \u2014 a geopolitical risk premium in crude plus genuine tightness in refined products \u2014 is why the energy trade has legs that a pure headline spike would not have. It also arrives against a backdrop that should, in theory, be capping prices rather than igniting them: OPEC+ has spent months unwinding its 2023 production restraint, adding roughly 800,000 barrels a day of quota since April in a stated bid to reclaim market share, and forecasters as recently as this spring were penciling in a supply glut and Brent in the low $60s for 2026. The rally is overriding that oversupply narrative, not confirming it, which is precisely why it reads as a repricing of risk rather than a rotation into cheap energy names.\n\nVenezuela adds a smaller but real wrinkle. Independent producers have been moving faster than the majors to strike deals for access to the country's reserves following Nicol\u00e1s Maduro's fall from power earlier this year, but the realistic upside \u2014 analysts peg incremental Venezuelan output at 250,000\u2013300,000 barrels a day \u2014 is modest against global demand growth running at 750,000 barrels to 1.25 million barrels a day. It is a storyline that keeps traders' attention on the region without materially changing the supply math.\n\nThe majors are the clearest expression of the move. ExxonMobil is up 31% year-to-date, Chevron close behind at 29%, and both report second-quarter earnings on July 31 \u2014 consensus has Exxon's EPS up 136.6% year-on-year and Chevron's up more than 227%, numbers that would have looked implausible in a $60 crude world.\n\n## Utilities are quietly telling the same story\n\nThe part of this that elevates it from a single-sector story to a market signal is what is happening one column over. The Utilities Select Sector SPDR Fund (XLU) gained 2.48% over the past five days \u2014 not energy's pace, but a clear second-place finish, and utilities do not typically move alongside oil and gas stocks unless something broader is going on.\n\n![High-voltage transmission towers carry power across the grid.](https://upload.wikimedia.org/wikipedia/commons/b/b4/High_voltage_transmission_towers_and_lines.jpg)\n\nUtilities carry a beta near 0.5 and have outpaced both inflation and the 10-year Treasury in 13 of the past 20 years \u2014 the closest thing equities offer to a bond proxy with an inflation kicker. Money moving into that sector at the same time energy is running higher on a crude shock looks like investors positioning for the same outcome from two different angles: energy for direct exposure to higher oil and gas prices, utilities as a hedge against what a sustained crude shock does to the broader inflation picture. AI-driven power-demand optimism is doing some of the work in utilities too, but the timing of this week's move \u2014 arriving in lockstep with the oil breakout rather than on its own schedule \u2014 points to the inflation-hedge explanation carrying real weight.\n\n## What to watch\n\nExxon and Chevron's earnings on July 31 will be the first hard test of whether the crude move is translating into the cash-flow numbers the rally already assumes. Beyond that, the OPEC+ supply overhang has not gone away \u2014 it has simply been outrun by geopolitical risk \u2014 so the next monthly production decision, and whether the Middle East truce shows any sign of reforming, will determine whether energy's two-horizon lead extends into a third, or whether this settles back into the pattern of false starts the sector has produced since 2022.",
+      "in_one_sentence": "XLE is the only sector leading on both the 5-day and 20-day windows, and utilities' parallel strength suggests markets are hedging the same crude shock two ways.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/0b/West_Texas_Pumpjack.JPG",
+      "image_caption": "A pumpjack in the oil fields near Midland, Texas \u2014 energy is the only S&P sector leading on both the weekly and monthly horizon.",
+      "image_credit": "Eric Kounce (TexasRaiser) / Wikimedia Commons, public domain",
+      "sources": [
+        {
+          "title": "Oil At $90? Prediction Market Odds Jump, Bringing Energy ETFs Back in Focus \u2014 Benzinga",
+          "url": "https://www.benzinga.com/etfs/sector-etfs/26/07/60588081/oil-90-prediction-market-odds-jump-bringing-energy-etfs"
+        },
+        {
+          "title": "DAILY TRADING: Crude Oil Price Today, 23 July 2026 \u2013 Brent Near $94, WTI Above $89 \u2014 Vantage Markets",
+          "url": "https://www.vantagemarkets.com/en/market-analysis/crude-oil-price-today-brent-wti-23-july-2026/"
+        },
+        {
+          "title": "At $100 Per Barrel, Which Oil Stock Has Dominated in 2026: ExxonMobil, Chevron, or BP? \u2014 24/7 Wall St.",
+          "url": "https://247wallst.com/investing/2026/07/23/at-100-per-barrel-which-oil-stock-has-dominated-in-2026-exxonmobil-chevron-or-bp/"
+        },
+        {
+          "title": "Why Oil Wildcatters Are Pouring Into Venezuela After Maduro's Fall \u2014 Bloomberg",
+          "url": "https://www.bloomberg.com/news/features/2026-07-07/why-oil-wildcatters-are-pouring-into-venezuela-after-maduro-s-fall"
+        },
+        {
+          "title": "OPEC+ Production Boost Strips Oil's Geopolitical Cushion, Accelerating 2026 Supply Glut \u2014 Kavout",
+          "url": "https://www.kavout.com/market-lens/opec-production-boost-strips-oil-s-geopolitical-cushion-accelerating-2026-supply-glut"
+        },
+        {
+          "title": "The Sector Wall Street Calls 'Defensive' Has Quietly Outpaced Both Inflation and the 10-Year Treasury \u2014 24/7 Wall St.",
+          "url": "https://247wallst.com/investing/2026/05/19/the-sector-wall-street-calls-defensive-has-quietly-outpaced-both-inflation-and-the-10-year-treasury-for-almost-two-decades-running/"
+        },
+        {
+          "title": "Maduro overthrow in oil-rich Venezuela unlikely to shake energy markets in the near term \u2014 CNBC",
+          "url": "https://www.cnbc.com/2026/01/03/trump-venezuela-attack-oil-markets.html"
+        }
+      ],
+      "related_slugs": [
+        "oil-shock-repricing",
+        "us-energy-tax-consumer",
+        "dollar-oil-shock-bid",
+        "oil-shock-regime-skepticism",
+        "consumer-sector-stress"
+      ],
+      "failed": false
+    },
+    "front-end-policy-hold": {
+      "slug": "front-end-policy-hold",
+      "headline": "The front end isn't buying a pivot anytime soon",
+      "kicker": "RATES \u00b7 POLICY PATH",
+      "byline": "G. Mehlman",
+      "body_md": "The long end of the Treasury market has been in open revolt for a week. The short end has barely shrugged.\n\nThe 3-month bill sat at 3.805% on Friday \u2014 a hair above the top of the Federal Reserve's 3.50%-3.75% target range, and almost exactly where it has traded for weeks. Compare that with the rest of the curve: the 5-year at 4.426%, the 30-year at 5.162%, and a 3-month-to-10-year spread that has blown out to +87.4 basis points. Every bit of that steepening is happening beyond the front end. The market that prices what the Fed does next has not moved. The market that prices what inflation does for the next three decades has moved a great deal.\n\nThat split is itself the signal. Bills, unlike long bonds, are a direct read on near-term policy \u2014 money-market funds and short-duration buyers price them off where the Fed actually is and where it's about to be, not off term premium or growth stories. A 3-month bill bought this week matures in late October, spanning both this week's FOMC meeting and the September one, and it is still pricing a Fed that holds. That's a market telling Chair Kevin Warsh it doesn't expect a surprise.\n\n## A hold that isn't really in question\n\nThe Fed's committee meets Tuesday and Wednesday, with a decision due July 29 at 2 p.m. and Warsh's press conference to follow. Futures markets have priced a hold at close to certainty for months, and nothing in the bill market this week suggests that's changed, even as oil's surge toward $100 a barrel \u2014 Brent gained roughly 7% in a single session last week on Red Sea tanker attacks and renewed Iran tension \u2014 has been read elsewhere in the curve as an inflation problem. TD Securities' Gennadiy Goldberg has described the broader Treasury selloff as a rapid repricing of Fed expectations tied to oil; his colleague Prashant Newnaha has gone further, calling a sustained high oil price potentially \"the nail in the coffin for bonds.\" None of that has shown up yet in a 3-month bill.\n\n![Federal Reserve Chair Kevin Warsh](https://upload.wikimedia.org/wikipedia/commons/3/37/Official_portrait_of_Kevin_M._Warsh.jpg)\n\nFurther out the curve, fed funds futures tied to September have started drifting toward pricing some hike risk rather than cut risk \u2014 a notable shift from a week earlier. But that's a thin, futures-market signal next to the flat conviction sitting in cash bills, and the gap between the two is worth watching rather than trusting outright.\n\nThe question this sets up for next week is which side gives first: does the front end eventually catch up to the long end's inflation fright, or does the long end retrace once the oil spike cools and the term-premium story loses its urgency. Warsh's press conference Wednesday, and any language he uses \u2014 or pointedly avoids \u2014 about the long end, is the first place to look for an answer.",
+      "in_one_sentence": "The 3-month bill at 3.805% shows the front end still pricing a patient Fed, even as the long end blows out on oil-driven inflation fear.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/37/Official_portrait_of_Kevin_M._Warsh.jpg",
+      "image_caption": "Federal Reserve Chair Kevin Warsh, whose FOMC holds its July policy meeting this week",
+      "image_credit": "Federal Reserve (official portrait, 2026) / Wikimedia Commons",
+      "sources": [
+        {
+          "title": "10-year Treasury yield rises to highest since January 2025 as surging oil rekindles inflation fear \u2014 CNBC",
+          "url": "https://www.cnbc.com/2026/07/23/treasury-yields-oil-prices-jobless-claims.html"
+        },
+        {
+          "title": "Fed Chairman Warsh faces cruel summer as bond yields spike \u2014 Reuters via Yahoo Finance",
+          "url": "https://finance.yahoo.com/economy/policy/articles/fed-chairman-warsh-faces-cruel-110830200.html"
+        },
+        {
+          "title": "Global Bond Selloff Worsens as Rising Oil Prices Spook Investors \u2014 Advisor Perspectives",
+          "url": "https://www.advisorperspectives.com/articles/2026/05/15/global-bond-selloff-worsens-rising-oil-spook-investors"
+        },
+        {
+          "title": "Fed rate decision: Odds surge for hike as oil rips higher \u2014 CNBC",
+          "url": "https://www.cnbc.com/2026/07/23/fed-interest-rate-odds-oil-jobless-claims.html"
+        },
+        {
+          "title": "The Fed - Meeting calendars and information",
+          "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+        },
+        {
+          "title": "Kevin Warsh \u2014 Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kevin_Warsh"
+        }
+      ],
+      "related_slugs": [
+        "bear-steepener-inflation",
+        "oil-shock-repricing",
+        "oil-shock-regime-skepticism"
+      ],
+      "failed": false
+    },
+    "bear-steepener-inflation": {
+      "slug": "bear-steepener-inflation",
+      "headline": "The long end is pricing an inflation problem, not a growth one",
+      "kicker": "RATES \u00b7 THE CURVE",
+      "byline": "G. Mehlman",
+      "body_md": "The gap between short-term and long-term borrowing costs in the U.S. Treasury market has widened to its most since early last year \u2014 but the way it happened matters more than the number itself. The 3-month bill sits at 3.805%, barely different from where it was a month ago. The 10-year note has climbed to 4.679%. The 30-year bond, the part of the curve investors use to bet on the economy's distant future, is at 5.162% \u2014 the highest point on the whole curve and the highest it has been since before the 2025 easing cycle began.\n\nThat spread \u2014 3-month bills to 10-year notes \u2014 now stands at roughly 87 basis points. A steepening curve is often read as good news: it can mean the market expects the Federal Reserve to cut rates and growth to reaccelerate. This is not that. When the front end refuses to move and the back end does all the climbing, bond traders call it a bear steepener, and it typically means something less comfortable \u2014 the market is demanding more compensation to hold long-duration debt, not because it fears recession, but because it fears inflation won't behave.\n\n## The front end isn't going anywhere\n\nStart with what hasn't moved. The 3-month bill yield tracks where investors expect the Fed's policy rate to sit over the next quarter, and it has been anchored near 3.8%\u20133.9% for weeks. The Federal Open Market Committee, under Chair Kevin Warsh, meets again on July 29 and is widely expected to hold its benchmark rate at 3.5%\u20133.75% for a fifth consecutive meeting. June's FOMC statement described inflation as \"elevated relative to the Committee's 2 percent goal, in part reflecting supply shocks that have driven price increases in certain sectors, including energy\" \u2014 language that reads, in hindsight, like a preview of the month that followed.\n\n![Kevin Warsh, Chair of the Federal Reserve](https://upload.wikimedia.org/wikipedia/commons/3/30/Kevin_Warsh%2C_Federal_Reserve_photo_portrait.jpg)\n\nThe labor market gives Warsh little cover to move early in either direction. Jobless claims for the week ended July 18 came in at 187,000, well below the 212,000 economists had penciled in \u2014 a number that argues against the kind of growth scare that normally drags the whole curve lower. Options markets have pushed the odds of a rate hike later this year to roughly 38%, up from 12% just a week earlier, which is itself a tell: rising hike odds are not what a market pricing recession looks like.\n\n## What's dragging the long end up\n\nThe proximate cause sits in the Gulf. Iran's effective closure of the Strait of Hormuz since early March, followed by a collapsed ceasefire and renewed U.S. strikes in mid-July, has choked a waterway that normally carries close to a fifth of the world's seaborne oil. Brent crude has traded above $100 a barrel this month, and USO \u2014 the most widely held oil-tracking fund \u2014 posted a roughly 25% gain over the trailing month, one of its sharpest moves since the pandemic-era price collapse and rebound.\n\n![Crude oil tanker](https://upload.wikimedia.org/wikipedia/commons/0/05/Petroleum_Crude_Oil_tanker.jpg)\n\n\"The economy may be heating up today, but the path ahead for the employment markets could still be rockier with the escalation of the war in the Middle East causing a u-turn in energy prices virtually overnight this week,\" Chris Rupkey, chief economist at FWDBONDS, said as the 10-year yield pushed above 4.7% in the days after the strikes resumed. The 10-year yield touched its highest level since January 2025 in the same session, with Treasury desks pointing squarely at the oil move as the trigger.\n\nWhat's notable is what hasn't moved much alongside it. The 10-year breakeven inflation rate \u2014 the gap between nominal Treasurys and inflation-protected TIPS, and the market's cleanest read on expected inflation \u2014 sits at 2.28%, only modestly above where it has spent most of the year. That is a meaningful distinction. If investors genuinely expected a new inflationary regime, breakevens would be racing higher alongside yields. Instead, the move looks concentrated in what bond desks call term premium \u2014 the extra yield investors demand simply for the uncertainty of holding 10- or 30-year paper through a period when an energy shock could still cascade into stickier prices, a delayed Fed response, or both. Underlying inflation expectations have barely budged; the compensation for the risk of being wrong about them has gone up sharply.\n\n## Why the shape matters more than the level\n\nA bull steepener \u2014 front-end yields falling on rate-cut bets while the long end holds \u2014 is the curve of a market getting comfortable. A bear steepener with the front end pinned and the long end pushing to multi-year highs is the curve of a market getting nervous about a different thing entirely: not whether the economy slows, but whether the Fed can bring inflation back to target without the energy shock forcing its hand later than currently priced. The 30-year, as the maturity least tied to near-term Fed policy and most exposed to long-run inflation and fiscal risk, is doing almost all of the work \u2014 which is exactly what a term-premium repricing looks like on a chart.\n\n![United States Treasury Building](https://upload.wikimedia.org/wikipedia/commons/a/af/United_States_Treasury_Building.JPG)\n\nThe next data points worth watching arrive close together: the July 29 FOMC decision, where any hawkish shift in the Committee's language on energy-driven inflation would validate the long end's move, and whatever comes out of the Oman-brokered talks over managing traffic through the Strait of Hormuz, which is the one lever that could take the oil premium \u2014 and with it, some of the term premium \u2014 back out of the curve almost as quickly as it went in.",
+      "in_one_sentence": "A bear steepener \u2014 30Y at 5.16%, front-end bills flat near 3.8% \u2014 shows bond investors pricing an oil-driven inflation risk, not a growth scare.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/af/United_States_Treasury_Building.JPG",
+      "image_caption": "The U.S. Treasury Building in Washington, D.C.",
+      "image_credit": "Wikimedia Commons",
+      "sources": [
+        {
+          "title": "CNBC \u2014 10-year Treasury yield climbs as jumping oil prices reignite inflation fears",
+          "url": "https://www.cnbc.com/2026/07/08/treasury-yields-trump-iran-ceasefire.html"
+        },
+        {
+          "title": "CNBC \u2014 10-year Treasury yield rises to highest since January 2025 as surging oil rekindles inflation fear",
+          "url": "https://www.cnbc.com/2026/07/23/treasury-yields-oil-prices-jobless-claims.html"
+        },
+        {
+          "title": "Federal Reserve \u2014 FOMC statement, June 17, 2026",
+          "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260617a.htm"
+        },
+        {
+          "title": "FRED \u2014 10-Year Breakeven Inflation Rate (T10YIE)",
+          "url": "https://fred.stlouisfed.org/series/T10YIE"
+        },
+        {
+          "title": "Al Jazeera \u2014 Oil surges as US strikes Iran, reversing return to pre-war prices",
+          "url": "https://www.aljazeera.com/news/2026/7/8/oil-prices-surge-as-us-strikes-iran-reversing-fall-to-pre-war-levels"
+        },
+        {
+          "title": "Brookings \u2014 From chokepoint to crisis: The Strait of Hormuz and global oil markets",
+          "url": "https://www.brookings.edu/articles/from-chokepoint-to-crisis-the-strait-of-hormuz-and-global-oil-markets/"
+        },
+        {
+          "title": "IndexBox \u2014 Fed expected to hold rates steady in July but oil surge raises hike odds",
+          "url": "https://www.indexbox.io/blog/fed-expected-to-hold-rates-steady-in-july-but-oil-surge-raises-hike-odds/"
+        }
+      ],
+      "related_slugs": [
+        "oil-shock-repricing",
+        "front-end-policy-hold",
+        "ig-duration-pain",
+        "us-energy-tax-consumer",
+        "oil-shock-regime-skepticism"
+      ],
+      "failed": false
+    },
+    "ig-duration-pain": {
+      "slug": "ig-duration-pain",
+      "headline": "Investment-grade bonds are the ones getting hurt, not junk",
+      "kicker": "CREDIT \u00b7 IG VS HY",
+      "byline": "T. Larch",
+      "body_md": "Turn on a bond terminal this week and the screen reads backwards. Investment-grade corporate debt \u2014 the stuff issued by the likes of Johnson & Johnson and Apple, the paper that's supposed to be boring \u2014 has lost 1.24% over the past five sessions, measured by the iShares iBoxx Investment Grade Corporate Bond ETF (LQD). High-yield debt, the junk-rated bonds of weaker borrowers that are supposed to get hit first when markets turn skittish, is down a comparatively mild 0.53%, tracked by the iShares iBoxx High Yield Corporate Bond ETF (HYG). That's a 71-basis-point gap in IG's favor \u2014 for the worse.\n\nNormally it runs the other way. When something spooks a market \u2014 a growth scare, a liquidity squeeze, a credit event \u2014 junk bonds sell off harder than investment-grade, because that's what compensates holders for taking on default risk in the first place. This week inverted that pattern, and the explanation has less to do with credit quality than with a number that has nothing to do with either ETF's balance sheet: duration.\n\n## The mechanical explanation\n\n![New York Stock Exchange trading floor](https://upload.wikimedia.org/wikipedia/commons/0/01/NYSE-floor.jpg)\n\nLQD carries an effective duration of roughly 8 years. HYG's is closer to 2.9. That difference of nearly three times means LQD's price is close to three times as sensitive to a given move in interest rates as HYG's \u2014 a mechanical fact of bond math, not a judgment about which issuers are healthier.\n\nAnd rates moved hard this week. The 30-year Treasury yield touched 5.162%, according to Treasury market data, its highest level since May and part of what CNBC and Bloomberg both described as a two-month high across the long end, driven by a stretch of oil-fuelled inflation anxiety. The 10-year climbed alongside it \u2014 up to 4.679% in the week's data, from 4.541% previously \u2014 while the front end firmed too, with 3-month bills rising to 3.805%. That's a steepening move with the whole curve under pressure, not just the long end drifting on its own, and it's landing three to four days before the Federal Reserve's July 29\u201330 meeting, which will be read as a referendum on how much of this the Fed is willing to validate.\n\nInvestment-grade corporate debt, with its longer average maturities \u2014 LQD's weighted average maturity runs close to 13 years, versus a much shorter ladder for the average junk bond \u2014 simply has more coupon-years of exposure baked into every basis point of yield move. When the 30-year backs up, LQD absorbs more of the hit almost by construction. HYG, built from shorter-dated paper, shrugs off the same yield move more easily. None of that requires a single downgrade or a single missed coupon payment.\n\n## What the spread market is (and isn't) saying\n\nThe credit-specific evidence backs this reading. The ICE BofA US High Yield Index option-adjusted spread \u2014 the part of a junk bond's yield that compensates for default risk, stripped of the Treasury component \u2014 sat around 277 basis points as of July 23, up only modestly from roughly 269bp two weeks earlier. That's a tight spread by historical standards; readings north of 500bp are the traditional marker of genuine credit stress, and this week's print isn't within hailing distance of that. If investors were actually repricing default risk in junk debt, the OAS would be the place it would show up first and hardest \u2014 and it isn't moving.\n\nSo the two datasets tell a coherent story: yields backed up sharply across the curve, LQD's longer duration made it absorb more of that move in price terms, and HY spreads stayed calm, meaning the market isn't (yet) demanding extra compensation for the risk that weaker borrowers default. Duration pain, not credit repricing \u2014 for now.\n\n## The second-order risk sitting underneath\n\n![Pumpjacks in the Permian Basin oil field](https://upload.wikimedia.org/wikipedia/commons/6/6e/WV_banner_Permian_Basin_Pumpjacks.jpg)\n\nThe caveat is what's driving the yield backup in the first place. This isn't a generic growth scare or a Fed communication slip \u2014 it's an oil shock. Brent crude has surged roughly 25% on renewed Middle East tension, including reports of attacks near the Red Sea and the risk of a wider confrontation with Iran, and that move is what's pushing inflation breakevens and term premium higher across the Treasury curve. Prediction markets have shifted meaningfully toward pricing a 2026 rate hike rather than a cut, a repricing that would have been unthinkable in most 2026 forecasts written before the oil move.\n\nThat matters for high-yield specifically because energy issuers are not a footnote in the junk market \u2014 they make up something in the neighborhood of 14% of the HY index by weight, concentrated among exploration-and-production and oilfield-services names whose creditworthiness is itself sensitive to the price of oil, just pointed the other way. A supply-driven oil spike is, in the near term, a cash-flow tailwind for those issuers, which is part of why HY spreads haven't budged. But if the same oil shock forces the Fed into a genuinely more hawkish stance \u2014 not just a hold, but the kind of tightening repricing prediction markets are now flirting with \u2014 the transmission into weaker consumer- and industrial-facing borrowers within HY could turn a duration story on the IG side into an actual credit story on the junk side. Energy issuers benefit from higher oil; borrowers on the other side of the energy cost curve, which make up a much larger share of HY by number of names, do not.\n\n![Marriner S. Eccles Federal Reserve Board Building, Washington DC](https://upload.wikimedia.org/wikipedia/commons/8/8d/Marriner_S._Eccles_Federal_Reserve_Board_Building.jpg)\n\nThat's the distinction worth holding onto this week: IG's underperformance is a clean, explainable function of duration mismatch against a sharp curve move, not a signal that investment-grade credit quality has deteriorated. But the same oil shock that produced this week's yield backup is also the variable that could, on a longer horizon, turn into the kind of hawkish Fed repricing that stops being kind to energy-adjacent junk issuers and starts squeezing everyone else in the HY index. The duration story and the credit story are not the same story yet \u2014 but they share a common trigger.\n\nThe next real test lands with the FOMC decision on July 29\u201330. A hold that leans hawkish, or any signal that the committee is taking the oil-driven inflation impulse seriously, would likely extend the long-end selloff \u2014 and keep pressuring IG's duration-heavy book \u2014 while giving an early read on whether HY spreads stay this calm once the market has to price a Fed that's genuinely reconsidering its cutting path.",
+      "in_one_sentence": "IG bonds are underperforming junk this week not because credit quality slipped, but because LQD's ~8-year duration is absorbing a sharp Treasury selloff that HYG's ~3-year duration mostly avoids.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/8d/Marriner_S._Eccles_Federal_Reserve_Board_Building.jpg",
+      "image_caption": "The Marriner S. Eccles Federal Reserve Board Building in Washington, D.C. \u2014 the FOMC's July 29\u201330 decision is the next test of this week's yield backup.",
+      "image_credit": "Wikimedia Commons",
+      "sources": [
+        {
+          "title": "10-year Treasury yield climbs to highest level since January 2025 as $100 oil sparks inflation fears \u2014 Yahoo Finance",
+          "url": "https://finance.yahoo.com/markets/article/10-year-treasury-yield-climbs-to-highest-level-since-january-2025-as-100-oil-sparks-inflation-fears-162442976.html"
+        },
+        {
+          "title": "10-year Treasury yield rises to highest since January 2025 as surging oil rekindles inflation fear \u2014 CNBC",
+          "url": "https://www.cnbc.com/2026/07/23/treasury-yields-oil-prices-jobless-claims.html"
+        },
+        {
+          "title": "Treasury Yields Hit Two-Month High as Oil Sparks Inflation Risk \u2014 Bloomberg",
+          "url": "https://www.bloomberg.com/news/articles/2026-07-21/treasury-yields-hit-two-month-high-as-oil-sparks-inflation-risk"
+        },
+        {
+          "title": "HY Credit Spread (OAS): 269 bps (Jul 10, 2026) \u2014 Convex",
+          "url": "https://convextrade.com/metrics/bamlh0a0hym2"
+        },
+        {
+          "title": "High-Yield Credit Spread (OAS) \u2014 govspending.org",
+          "url": "https://govspending.org/series/BAMLH0A0HYM2/"
+        },
+        {
+          "title": "iShares iBoxx $ Investment Grade Corporate Bond ETF (LQD) fact sheet \u2014 iShares",
+          "url": "https://www.ishares.com/us/products/239566/ishares-iboxx-investment-grade-corporate-bond-etf"
+        },
+        {
+          "title": "iShares iBoxx $ High Yield Corporate Bond ETF (HYG) fact sheet \u2014 iShares",
+          "url": "https://www.ishares.com/us/products/239565/ishares-iboxx-high-yield-corporate-bond-etf"
+        },
+        {
+          "title": "6.7% yield with short duration gives HYG an edge over riskier bond funds \u2014 24/7 Wall St.",
+          "url": "https://247wallst.com/investing/2026/04/18/6-7-yield-with-short-duration-gives-hyg-an-edge-over-riskier-bond-funds/"
+        }
+      ],
+      "related_slugs": [
+        "oil-shock-repricing",
+        "bear-steepener-inflation",
+        "front-end-policy-hold",
+        "energy-sector-repricing",
+        "oil-shock-regime-skepticism"
+      ],
+      "failed": false
+    },
+    "consumer-sector-stress": {
+      "slug": "consumer-sector-stress",
+      "headline": "Consumer-facing sectors are absorbing the oil shock",
+      "kicker": "SECTORS \u00b7 CONSUMER STRESS",
+      "byline": "I. Aresti",
+      "body_md": "Consumer discretionary stocks just had their worst week of the summer, and the culprit is sitting at the gas pump. The S&P sector fund XLY fell 5.22% over five trading days \u2014 the sharpest weekly drop of any of the eleven S&P sectors \u2014 and is now down 3.48% over the past month. Communication services, home to Meta, Alphabet and Netflix, was close behind: XLC dropped 3.93% on the week. Between them, the two sectors capture a story that is really two stories wearing one trade: households squeezed by fuel costs, and growth stocks squeezed by the bond market.\n\nThe proximate trigger was Thursday. Brent crude pushed back above $100 a barrel as fighting around the Strait of Hormuz escalated, reviving a price level last seen in May. National average gasoline hit $4.09 a gallon that day, up 15 cents in a week, with analysts expecting further increases as the crude spike works through the supply chain. Diesel is running roughly 51% above its January\u2013February level; jet fuel is up 90% year-over-year. Grocery chain Albertsons cut its 2026 outlook the same day, citing a pullback in core grocery spending and margin pressure from higher input costs.\n\n![Gas prices displayed at a Speedway station](https://upload.wikimedia.org/wikipedia/commons/8/89/Speedway_Gas_Prices_%2851936331396%29_%28cropped%29.jpg)\n\n## A single earnings report did a lot of the damage\n\nMuch of XLY's weekly loss traces to one stock. Tesla fell 14.52% on Thursday after reporting quarterly results \u2014 its worst earnings-day reaction on record \u2014 putting the shares on pace for their worst week since March 2020. Revenue beat expectations; profitability did not, and investors read the miss against a backdrop where a car company already contending with softer demand is now facing higher input and shipping costs from the same oil spike hitting everyone else. Tesla's single-day move was large enough to skew the whole sector's weekly print, but it landed inside a broader pattern: consumer-facing companies flagging cost pass-through, from footwear makers warning of roughly 25% higher petroleum-based material costs, to airlines like American reporting falling net income despite record revenue on the back of surging jet fuel.\n\n![Tesla store with electric cars on display](https://upload.wikimedia.org/wikipedia/commons/2/28/Tesla_Store_with_Electric_Cars%2C_Model_X_-_Waikiki%2C_Honolulu_%2849539445881%29.jpg)\n\nThat is the consumer discretionary half of the story: an oil shock working directly through the household budget, arriving right as back-to-school shopping season begins and just as a stretched U.S. consumer \u2014 sitting on record household debt levels \u2014 has less room to absorb it.\n\n## Communication services is being squeezed from the other direction\n\nXLC's pain is a different mechanism wearing the same headline. The sector is dominated by Meta and Alphabet, both mid-way through enormous capital spending programs \u2014 Meta guiding to $115\u2013135 billion in 2026 capex, Alphabet to $175\u2013185 billion, close to $300 billion combined committed to AI infrastructure in a single year. Stocks with that kind of spending profile are valued on cash flows many years out, which makes them unusually sensitive to the discount rate applied to those cash flows. The 10-year Treasury yield climbed to roughly 4.69% this week, its highest point of 2026, as the same oil spike that is squeezing consumers is also pushing bond investors to price in a stickier inflation problem. That is a bear steepener \u2014 long yields rising on inflation fear rather than falling on growth optimism \u2014 and it is a specifically bad environment for richly-valued, long-duration growth stories, which is most of what XLC and XLK hold.\n\n## The month-long picture is the more important one\n\nThe headline week obscures a trend that predates it. XLK, the broader technology sector, was essentially flat this week (+0.17%) but is down 4.71% over the past 20 trading days \u2014 a far larger move than the week's news alone would explain. Read alongside XLY's own 20-day decline of 3.48%, the pattern suggests the growth-and-consumer complex has been leaking air for a month, with this week's oil-driven shock simply making the damage impossible to ignore rather than causing it outright. The University of Michigan's preliminary July consumer sentiment reading, released mid-month, actually rose to 54.4 on the back of easing gas prices \u2014 but the survey was collected largely before the July 7 resumption of U.S. strikes against Iran and the subsequent run-up in pump prices. Survey officials have already flagged that the reading is likely to reverse.\n\nWhat comes next is a stacked set of catalysts rather than a single data point: more hyperscaler earnings from Amazon and other AI-spending giants in the coming week will test whether XLC's capex story can still command a growth premium at these yields, gasoline futures will show whether $4-plus pump prices are a plateau or a staging post toward higher, and the next Michigan sentiment revision will be the first real read on how households are processing an oil shock that, this time, the preliminary survey mostly missed.",
+      "in_one_sentence": "XLY (-5.2%) and XLC (-3.9%) led all sectors lower this week as oil above $100 hit consumer wallets and higher long yields hit growth valuations \u2014 a pressure building for a month, not a week.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/89/Speedway_Gas_Prices_%2851936331396%29_%28cropped%29.jpg",
+      "image_caption": "Gasoline prices displayed at a U.S. filling station, as pump prices push toward $4 a gallon nationally.",
+      "image_credit": "Michael Hicks / Wikimedia Commons (CC BY 2.0)",
+      "sources": [
+        {
+          "title": "Oil at $100 is pushing up costs from gas pumps to grocery aisles | Fortune",
+          "url": "https://fortune.com/2026/07/24/oil-100-barrel-consumer-prices-iran-war/"
+        },
+        {
+          "title": "10-year Treasury yield rises to highest since January 2025 as surging oil rekindles inflation fear | CNBC",
+          "url": "https://www.cnbc.com/2026/07/23/treasury-yields-oil-prices-jobless-claims.html"
+        },
+        {
+          "title": "Tech Stocks Tumble: TSLA and GOOGL Weigh on Consumer Discretionary and Communication Services | GuruFocus",
+          "url": "https://www.gurufocus.com/news/8978471/tech-stocks-tumble-tsla-and-googl-weigh-on-consumer-discretionary-and-communication-services"
+        },
+        {
+          "title": "XLC Is Down 8.78% Year to Date and the Catalysts That Matter Most Are Still Ahead | 24/7 Wall St.",
+          "url": "https://247wallst.com/investing/2026/03/31/xlc-is-down-8-78-year-to-date-and-the-catalysts-that-matter-most-are-still-ahead/"
+        },
+        {
+          "title": "Consumer confidence rises as gas prices ease; remains below pre-Iran readings | University of Michigan News",
+          "url": "https://news.umich.edu/consumer-confidence-rises-as-gas-prices-ease-remains-below-pre-iran-readings/"
+        },
+        {
+          "title": "Weakness In Consumer Discretionary Stocks And The XLY ETF | Seeking Alpha",
+          "url": "https://seekingalpha.com/article/4907666-weakness-in-consumer-discretionary-stocks-and-the-xly-etf"
+        },
+        {
+          "title": "Gas, groceries and back-to-school items are where shoppers might see higher oil prices surface | AP via Bangor Daily News",
+          "url": "https://www.bangordailynews.com/2026/07/23/nation/gas-groceries-higher-oil-prices/"
+        }
+      ],
+      "related_slugs": [
+        "oil-shock-repricing",
+        "bear-steepener-inflation",
+        "us-energy-tax-consumer",
+        "energy-sector-repricing",
+        "oil-shock-regime-skepticism"
+      ],
+      "failed": false
+    },
+    "oil-shock-regime-skepticism": {
+      "slug": "oil-shock-regime-skepticism",
+      "headline": "One rally doesn't make a regime \u2014 yet",
+      "kicker": "RISK \u00b7 TAIL WATCH",
+      "byline": "S. Vance",
+      "body_md": "Vance flags the gap between a loud oil-and-rates move and thin cross-confirmation elsewhere before calling this a genuine regime shift.\n\nKey facts:\n- Gold (GLD) up just 0.95% 5d despite the inflation-shock narrative \u2014 a muted response for a classic inflation hedge\n- Natural gas (UNG) down 10.21% over 20 days even as crude (USO) is up 25.05% \u2014 the energy complex isn't moving as one\n- Dollar strength (+0.71% 5d) is atypical for a pure reflation/debasement trade, complicating the narrative\n- Falsifier: gold and dollar diverging further (gold up, dollar down) over the next two weeks would confirm the inflation-regime story; oil giving back the move would mark this as a one-month noise event",
+      "in_one_sentence": "Vance flags the gap between a loud oil-and-rates move and thin cross-confirmation elsewhere before calling this a genuine regime shift.",
+      "image_url": "",
+      "image_caption": "",
+      "image_credit": "",
+      "sources": [],
+      "related_slugs": [],
+      "failed": true
+    },
+    "em-oil-import-shock": {
+      "slug": "em-oil-import-shock",
+      "headline": "Emerging markets face a fresh oil-import bill",
+      "kicker": "REGIONS \u00b7 EMERGING MARKETS",
+      "byline": "P. Kanu",
+      "body_md": "For economies that buy their oil rather than pump it, the last two weeks have delivered a shock from both directions at once. The dollar, quiet for most of July, jumped 0.71% this week after a month of near-total calm \u2014 a 20-day move of just 0.04% gave way to a sharp break higher. At the same time, crude has climbed roughly 25% over 20 days, with Brent pushing back above $100 a barrel. For an oil producer, a stronger dollar and dearer crude can offset each other. For an oil importer, they compound.\n\n## A bill paid twice\n\nThe mechanism is simple enough to explain without jargon. Oil is priced and settled in dollars, so when crude rises, importing countries need more dollars to cover the same barrels. When the dollar also strengthens against local currencies, each of those dollars costs more in rupees, lira or rand. India, the world's third-largest oil importer, has felt both legs directly: the rupee has been trading near record lows around 96-97 to the dollar this month, a level it first touched in May, as Brent's move back above $100 widened the trade deficit and left traders watching how much intervention the Reserve Bank of India is willing to spend defending the currency.\n\n![Reserve Bank of India headquarters, Mumbai](https://upload.wikimedia.org/wikipedia/commons/3/36/Tower_and_building_of_Reserve_Bank_of_India%2C_Mumbai_04.jpg)\n\nS&P Global and Allianz Trade have both flagged a similar list of exposed economies \u2014 countries running fiscal deficits, current-account gaps and heavy energy-import dependence simultaneously. Egypt, Pakistan, Sri Lanka, Jordan and Morocco sit in the most exposed tier; Turkey, India, the Philippines, Thailand and Chile carry moderate but rising risk. The Egyptian pound has already depreciated more than 10% as one of the sharpest currency casualties, according to Allianz Trade's tracking of the current shock. Base metals, up 2.19% over 20 days, and agricultural commodities, up 4.90%, are layering a second round of imported inflation on top of energy \u2014 fertiliser and food costs move with the same dollar-denominated logic as crude.\n\n## Not every exporter is spared\n\nThe flip side of the trade looks cleaner than it is. Gulf producers are the straightforward winners: at Brent near $108, Saudi Arabia's budget would swing to a surplus in the $42-48 billion range, its largest since 2014, easing pressure on the sovereign wealth funds that have been drawing down reserves. But Latin America's oil exporters don't uniformly benefit. Mexico pumps crude but lacks refining capacity, and ran an oil trade deficit of roughly $25 billion in 2025 because it imports the refined products \u2014 gasoline, diesel \u2014 that its own refineries can't supply. Ecuador faces a similar mismatch. Crude export revenue and refined-product import bills move on different tracks, and a country can be a net oil exporter while still bleeding dollars at the pump.\n\nFor central banks in the exposed tier, the dilemma is now familiar: growth argues for rate cuts, energy-driven inflation and currency fragility argue against them. The next test comes with July trade-balance and inflation prints across South and Southeast Asia, alongside any further RBI intervention data \u2014 the numbers that will show whether this is a two-week spike or the start of a sustained squeeze on external accounts.",
+      "in_one_sentence": "A firmer dollar and a 25% crude rally are squeezing oil-importing emerging markets from both sides at once, while exporters split into clear winners and surprising losers.",
+      "image_url": "",
+      "image_caption": "",
+      "image_credit": "",
+      "sources": [
+        {
+          "title": "Not all Emerging Markets are equal: Hormuz, triple deficits, and the new energy risk premium \u2014 Allianz Trade",
+          "url": "https://www.allianz-trade.com/en_global/news-insights/economic-insights/middle-east-energy-price-premium-emerging-markets.html"
+        },
+        {
+          "title": "Not all oil-exporting countries are the cracking winners you think \u2014 Bond Vigilantes",
+          "url": "https://bondvigilantes.com/blog/2026/06/not-all-oil-exporting-countries-are-the-cracking-winners-you-think/"
+        },
+        {
+          "title": "Indian rupee on brink of record low after crude storms past $100 \u2014 Business Recorder",
+          "url": "https://www.brecorder.com/news/40431588/indian-rupee-on-brink-of-record-low-after-crude-storms-past-100-rbi-watched"
+        },
+        {
+          "title": "Emerging Market Currencies Erase 2026 Gains as Dollar Advances \u2014 Bloomberg",
+          "url": "https://www.bloomberg.com/news/articles/2026-07-01/emerging-market-currencies-erase-2026-gains-as-dollar-advances"
+        },
+        {
+          "title": "Gulf States Fiscal Breakeven: Which GCC Countries Win and Lose at $108 Oil \u2014 The Middle East Insider",
+          "url": "https://themiddleeastinsider.com/2026/03/19/gcc-fiscal-breakeven-oil-price-2026/"
+        },
+        {
+          "title": "Emerging Markets \u2014 S&P Global Ratings",
+          "url": "https://www.spglobal.com/ratings/en/research/emerging-markets"
+        }
+      ],
+      "related_slugs": [
+        "dollar-oil-shock-bid",
+        "oil-shock-repricing",
+        "us-energy-tax-consumer"
+      ],
+      "failed": false
+    },
+    "us-energy-tax-consumer": {
+      "slug": "us-energy-tax-consumer",
+      "headline": "The US macro mix: hot energy, cooling consumer",
+      "kicker": "REGIONS \u00b7 UNITED STATES",
+      "byline": "P. Kanu",
+      "body_md": "A steepening curve and a consumer-sector selloff point to an economy where energy costs are doing some of the Fed's tightening for it.\n\nKey facts:\n- 3m10y spread at +87bp \u2014 a healthy, non-inverted curve, arguing against near-term recession fears\n- XLY -5.22% this week, the weakest print of any US sector\n- Crude (USO) +25% over the month, a direct tax on US consumers via gasoline and energy bills",
+      "in_one_sentence": "A steepening curve and a consumer-sector selloff point to an economy where energy costs are doing some of the Fed's tightening for it.",
+      "image_url": "",
+      "image_caption": "",
+      "image_credit": "",
+      "sources": [],
+      "related_slugs": [],
+      "failed": true
+    }
+  },
+  "predictions": [
+    {
+      "id": "1ef83eab-304e-4ef7-a0c5-5471f572d028",
+      "source": "macro",
+      "made_at": "2026-07-26T17:06:39.608238+00:00",
+      "claim": "30Y Treasury yield holds at or above 5.00% through Aug 25 \u2014 no quick retreat from this week's inflation-risk pricing.",
+      "horizon": "this-month",
+      "target_date": "2026-08-25",
+      "falsification_criteria": "Disproved if the 30Y yield closes below 5.00% on any day before 2026-08-25.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W30-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "At 5.16% the long end is already pricing an inflation problem tied to the oil shock; reversing that in four weeks would need a fast oil retreat and dovish repricing not supported by current front-end levels."
+    },
+    {
+      "id": "4143135f-04ee-4707-9a87-816e661fe6f9",
+      "source": "macro",
+      "made_at": "2026-07-26T17:06:39.608238+00:00",
+      "claim": "Oil (USO) partially mean-reverts, closing below $130 at least once before Aug 25 after its 25% one-month spike.",
+      "horizon": "this-month",
+      "target_date": "2026-08-25",
+      "falsification_criteria": "Disproved if USO never closes below $130.00 between now and 2026-08-25.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W30-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "A 25% gain in 20 sessions is parabolic; even genuine supply-shock rallies typically see a partial retracement before continuing, and this is the contrarian case to the 'quiet repricing' narrative in this week's editorial."
+    },
+    {
+      "id": "12a444b0-806d-4351-846d-0c1f2ea527e0",
+      "source": "macro",
+      "made_at": "2026-07-26T17:06:39.608238+00:00",
+      "claim": "The dollar's oil-shock bid fades \u2014 DXY closes back below 100.80 at some point before Aug 25, undoing this week's +0.71% pop.",
+      "horizon": "this-month",
+      "target_date": "2026-08-25",
+      "falsification_criteria": "Disproved if DXY stays at or above 100.80 on every trading day through 2026-08-25.",
+      "conviction": "low",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W30-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "20-day DXY return is still flat (+0.04%) despite the 5-day spike, suggesting the move is a single-week reaction rather than an established trend, consistent with this week's Risk piece questioning cross-confirmation."
+    },
+    {
+      "id": "f34b5bf3-6388-41ef-95af-b0bf78e2d98a",
+      "source": "macro",
+      "made_at": "2026-07-26T17:06:39.608238+00:00",
+      "claim": "Energy keeps beating consumer discretionary \u2014 XLE outperforms XLY by at least 10 percentage points cumulative through Oct 24.",
+      "horizon": "this-quarter",
+      "target_date": "2026-10-24",
+      "falsification_criteria": "Disproved if (XLE cumulative return) minus (XLY cumulative return) is under 10 percentage points measured from 2026-07-24 to 2026-10-24.",
+      "conviction": "high",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W30-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "XLE is already +10.2% over 20 days while XLY is -3.5%; sustained crude strength mechanically squeezes discretionary margins and spending, making this a fairly direct pass-through rather than a rotation bet."
+    },
+    {
+      "id": "8bf6dacf-b10a-47d2-8eca-a8027a0d840f",
+      "source": "macro",
+      "made_at": "2026-07-26T17:06:39.608238+00:00",
+      "claim": "The curve bear-steepens further \u2014 the 3m10y spread widens to at least 1.00% (100bp) before Oct 24, up from 0.87% now.",
+      "horizon": "this-quarter",
+      "target_date": "2026-10-24",
+      "falsification_criteria": "Disproved if the 10Y-minus-3M Treasury spread never reaches 1.00% at any point before 2026-10-24.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W30-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "The front end is anchored near 3.8% by a Fed in no hurry to cut, while the long end is still absorbing an energy-driven inflation scare \u2014 a combination that mechanically pushes the spread wider before it can compress."
+    },
+    {
+      "id": "9fe97916-1953-4c41-a96d-c72962592dd1",
+      "source": "macro",
+      "made_at": "2026-07-26T17:06:39.608238+00:00",
+      "claim": "This week's IG-underperforms-HY pattern normalizes \u2014 LQD's cumulative total return beats HYG's over the next six months.",
+      "horizon": "this-half",
+      "target_date": "2027-01-22",
+      "falsification_criteria": "Disproved if HYG's cumulative total return from 2026-07-24 to 2027-01-22 exceeds LQD's.",
+      "conviction": "low",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W30-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "LQD's -1.24% vs HYG's -0.53% this week looks like a duration story tied to the long-end selloff rather than a credit-quality signal; duration-driven underperformance typically fades once long yields stabilize."
+    },
+    {
+      "id": "8ecb64fd-2211-4d15-9e09-e9f988844187",
+      "source": "macro",
+      "made_at": "2026-07-26T17:06:39.608238+00:00",
+      "claim": "The Fed stays on hold longer than consensus expects \u2014 the 3-month T-bill yield never drops below 3.25% before Jul 26, 2027.",
+      "horizon": "this-year",
+      "target_date": "2027-07-26",
+      "falsification_criteria": "Disproved if the 3-month T-bill yield closes below 3.25% on any date before 2027-07-26.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W30-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "A steady 3.805% bill already shows the market pricing no imminent pivot; an energy-cost-driven inflation overhang gives the Fed additional reason to stay cautious even if growth data softens."
+    },
+    {
+      "id": "2241f611-1303-4d76-872c-aaef1218c4cf",
+      "source": "macro",
+      "made_at": "2026-07-26T17:06:39.608238+00:00",
+      "claim": "Oil's spike doesn't hold multi-year \u2014 USO closes 2027 below today's $136.69, giving back the bulk of this month's 25% surge.",
+      "horizon": "multi-year",
+      "target_date": "2027-12-31",
+      "falsification_criteria": "Disproved if USO's closing price on 2027-12-31 is at or above $136.69.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W30-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "Single-month commodity spikes of this magnitude are usually shock-driven rather than structural; absent a persistent supply disruption, mean reversion over 18 months is the higher-probability path even if near-term momentum continues."
+    }
+  ],
+  "homework": [
+    {
+      "id": "1c3d22a0-b118-432f-aa7b-525b98e26d3b",
+      "source": "macro",
+      "made_at": "2026-06-21T17:13:56.337739+00:00",
+      "claim": "30Y U.S. Treasury yield closes above 4.85% on July 21, 2026 \u2014 term premium and fiscal supply prevent a bond rally despite commodity deflation.",
+      "horizon": "this-month",
+      "target_date": "2026-07-21",
+      "falsification_criteria": "The 30Y Treasury yield closes at or below 4.75% on July 21, 2026.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W25-calls",
+      "status": "proven",
+      "graded_at": "2026-07-22T05:02:44.161898+00:00",
+      "grading_note": "30Y Treasury yield closed at 5.13% on July 21, 2026 per Yahoo Finance; claim requires >4.85% (met) and falsifier requires \u22644.75% (not met) \u2014 proven."
+    },
+    {
+      "id": "129e7bbf-3368-4030-8427-4bd95b77a1e7",
+      "source": "macro",
+      "made_at": "2026-06-21T17:13:56.337739+00:00",
+      "claim": "USO closes below $106 on July 21, 2026 \u2014 oil extends its decline as OPEC+ fails to coordinate a cut and China demand data disappoints.",
+      "horizon": "this-month",
+      "target_date": "2026-07-21",
+      "falsification_criteria": "USO closes at or above $106 on July 21, 2026.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W25-calls",
+      "status": "falsified",
+      "graded_at": "2026-07-21T05:05:26.350058+00:00",
+      "grading_note": "USO closed $125.51 on July 20 per investing.com; crude oil fell only 0.06% to $82.43/bbl on July 21 per trading economics; even with this minimal decline, USO would close ~$125.43\u2013$125.50 on July 21, well above the $106 falsification threshold."
+    },
+    {
+      "id": "90b4b0ad-cb63-48e8-b3da-0b1ce26d12b1",
+      "source": "macro",
+      "made_at": "2026-06-21T17:13:56.337739+00:00",
+      "claim": "HYG delivers negative total return from June 21 to July 21, 2026, as energy credit stress surfaces with a 4\u20136 week lag behind oil's collapse.",
+      "horizon": "this-month",
+      "target_date": "2026-07-21",
+      "falsification_criteria": "HYG total return is positive on July 21 relative to its June 21 close.",
+      "conviction": "low",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W25-calls",
+      "status": "proven",
+      "graded_at": "2026-07-21T05:03:43.284506+00:00",
+      "grading_note": "HYG closed at $79.94 on June 21, 2026 and $79.68 on July 20, 2026 (final trading day before holiday on July 21) per stockanalysis.com; return of \u22120.33% is negative, so the falsifier (positive return) is not met\u2014claim proven."
+    },
+    {
+      "id": "7b9716b6-054b-45f6-b6b0-dc4946bde96a",
+      "source": "macro",
+      "made_at": "2026-06-14T17:12:38.261403+00:00",
+      "claim": "USO closes below $120 by July 14, extending the 20-day -12.3% rout as demand destruction outweighs any near-term OPEC supply-cut bounce.",
+      "horizon": "this-month",
+      "target_date": "2026-07-14",
+      "falsification_criteria": "USO closes above $133 (a >6% recovery from $125.43) at any point before July 14, 2026.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W24-calls",
+      "status": "falsified",
+      "graded_at": "2026-07-14T05:03:08.127520+00:00",
+      "grading_note": "Falsifier met: USO closed at $137.27 on June 2 and $136.61 high (June 8\u2013July 8 period), both well above the $133 threshold, before July 14 per trading data. The claim's directional accuracy (closes $117.79 on July 13, -12.3% monthly) does not override falsification."
+    },
+    {
+      "id": "785c4ae7-3502-4e9a-ba31-43a9887c5707",
+      "source": "macro",
+      "made_at": "2026-06-14T17:12:38.261403+00:00",
+      "claim": "The 10Y Treasury yield closes above 4.60% at least once before July 14, confirming the re-steepening is long-end led, not short-end compression.",
+      "horizon": "this-month",
+      "target_date": "2026-07-14",
+      "falsification_criteria": "The 10Y yield fails to close above 4.55% at any point before July 14, 2026.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W24-calls",
+      "status": "proven",
+      "graded_at": "2026-07-14T05:02:59.938847+00:00",
+      "grading_note": "10Y Treasury yield closed at 4.62% on July 13, 2026 per YCharts historical data; claim required above 4.60%, falsifier threshold at 4.55%\u2014both conditions met."
+    },
+    {
+      "id": "751d4801-196c-47c1-9bd6-8333881c7c26",
+      "source": "macro",
+      "made_at": "2026-05-24T17:11:54.686713+00:00",
+      "claim": "30Y Treasury yield closes above 4.90% on every trading day through the June 20, 2026 FOMC meeting.",
+      "horizon": "this-month",
+      "target_date": "2026-06-20",
+      "falsification_criteria": "30Y yield closes at or below 4.90% on any trading day at or before June 20, 2026.",
+      "conviction": "high",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W21-calls",
+      "status": "falsified",
+      "graded_at": "2026-06-20T05:05:30.071820+00:00",
+      "grading_note": "30Y Treasury yield closed at 4.90% on June 18, 2026 per YCharts; the prediction requires closes above 4.90%, so the falsification criteria (at or below 4.90%) is met."
+    },
+    {
+      "id": "1b861589-8482-4649-b2bc-d8216c66695b",
+      "source": "macro",
+      "made_at": "2026-05-24T17:11:54.686713+00:00",
+      "claim": "HYG closes below its May 22, 2026 closing level on June 19, 2026 \u2014 4-week HY credit return turns negative.",
+      "horizon": "this-month",
+      "target_date": "2026-06-19",
+      "falsification_criteria": "HYG closes at or above its May 22, 2026 closing price on June 19, 2026.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W21-calls",
+      "status": "falsified",
+      "graded_at": "2026-06-19T05:02:32.655078+00:00",
+      "grading_note": "HYG closed at $80.01 on June 19, 2026 per Investing.com, above the May 22, 2026 closing price of $79.91 per Investing.com; falsification criteria (\u2265 May 22 close) clearly met."
+    },
+    {
+      "id": "9bbb342a-dc73-4f70-b543-0612e8bf8344",
+      "source": "macro",
+      "made_at": "2026-05-18T22:35:06.298709+00:00",
+      "claim": "30Y Treasury yield closes at or above 5.25% at least once before June 17, 2026.",
+      "horizon": "this-month",
+      "target_date": "2026-06-17",
+      "falsification_criteria": "The 30Y yield closes below 5.25% on every trading session through June 17.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W21-calls",
+      "status": "falsified",
+      "graded_at": "2026-06-17T05:02:46.350388+00:00",
+      "grading_note": "30Y Treasury yield peaked at 5.197% on May 19, 2026 (per CNBC), falling short of the 5.25% threshold; declined to ~4.97% by June 12\u201315. The yield closed below 5.25% on every trading session through June 17, meeting the falsification criteria."
+    }
+  ],
+  "for_strategies_md": "**Bias for the week ahead:**\n\n- _Rates:_ Curve steep as 30Y yields price inflation over soft-landing. Duration headwinds persist; stay tactical on extension.\n- _FX:_ Dollar's oil-shock bid holding. Favor USD shorts against oil-importing EM currencies.\n- _Credit:_ IG duration drag outpaces HY resilience. Rotate down duration; rates risk uncompensated by spreads.\n- _Sectors:_ Energy repricing is real; consumer-facing sectors (XLY, XLC) are bleeding as oil costs bite. Rotate to defensives\u2014utilities, healthcare, staples.\n- _Regions:_ US consumer weakness is the yellow flag amid energy costs and tightening EM conditions.\n- _Risk:_ Thin cross-confirmation outside oil/rates. Watch consumer stabilization or crude rollover as potential reversal triggers.\n\n**Watchlist:** XLE, XLY, XLC, XLU, XLP, XLV, LQD, HYG, USO, DXY, EEM, XLK"
+}
