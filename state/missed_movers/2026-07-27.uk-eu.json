@@ -1,0 +1,124 @@
+{
+  "date": "2026-07-27",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 1 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 SAP.DE +9%, DSY.PA +8%, REL.L +5%, WKL.AS +5%, SGE.L +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 3 downside moves (CA.PA -5%, AAF.L -3%, STMPA.PA -2%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: SAP.DE (+9.26%) \u2014 SAP Q2 2026 results beat: EPS \u20ac1.59 vs \u20ac1.50 y/y, revenue \u20ac9.88B vs \u20ac9.03B, record cloud backlog \u20ac22.9B (+27%) \u2014 stock surged ~9.3% post-earnings. Why we passed: Outside any active strategy's universe \u2014 SAP.DE is a XETRA-listed DAX large-cap software name; uk-eu strategies likely scope to UK/LSE-listed or sector-specific tickers and don't cover German mega-cap tech, so no filter ever got a chance to evaluate the gap.",
+  "top_movers": [
+    {
+      "ticker": "SAP.DE",
+      "move_pct": 9.258,
+      "close": 140.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "SAP Q2 2026 results beat: EPS \u20ac1.59 vs \u20ac1.50 y/y, revenue \u20ac9.88B vs \u20ac9.03B, record cloud backlog \u20ac22.9B (+27%) \u2014 stock surged ~9.3% post-earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SAP.DE is a XETRA-listed DAX large-cap software name; uk-eu strategies likely scope to UK/LSE-listed or sector-specific tickers and don't cover German mega-cap tech, so no filter ever got a chance to evaluate the gap.",
+      "suggestion": "Extend uk-eu universe to include top DAX/EuroStoxx large-caps (e.g. add XETRA-listed names >\u20ac50B mcap) and add an earnings-gap release rule admitting names with post-results gap \u22657% within 60min of open even if outside the static watchlist.",
+      "failed": false
+    },
+    {
+      "ticker": "DSY.PA",
+      "move_pct": 7.897,
+      "close": 19.88,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 beat (rev +4.1% cc, near top of guidance) plus $1.8-2B ArisGlobal life-sciences AI acquisition (announced Jul 23); stock continued re-rating into today's session as analysts lifted estimates.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DSY.PA is a large-cap French software/industrial-tech name on Euronext Paris; uk-eu universe likely skews UK-listed or excludes continental European software megacaps, so it was never a candidate regardless of the move.",
+      "suggestion": "Add CAC 40 / large-cap continental European software-tech names (e.g. DSY.PA, SAP-peers) to the uk-eu universe, or add a post-earnings-drift gate that re-scans names with a \u22655% cumulative move in the 3 sessions following an earnings/M&A print.",
+      "failed": false
+    },
+    {
+      "ticker": "REL.L",
+      "move_pct": 4.774,
+      "close": 25.68,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued post-earnings drift: H1 results (23 Jul) showed 7% underlying revenue growth and reaffirmed FY26 guidance, followed by JPMorgan/Deutsche Bank/BofA price-target hikes on 25 Jul.",
+      "miss_reason": "Outside any active strategy's universe \u2014 REL.L is a large-cap, low-beta info-analytics/publishing compounder (FTSE100) that doesn't fall in the sector coverage lists uk-eu strategies track, and its rally built gradually via analyst re-rating rather than a single-day gap a gap-scanner would catch.",
+      "suggestion": "Add a quarterly 'analyst re-rating' scan to the uk-eu universe intake that flags FTSE100 names outside current sector coverage receiving \u22653 sell-side price-target hikes within 5 trading days of results.",
+      "failed": false
+    },
+    {
+      "ticker": "WKL.AS",
+      "move_pct": 4.518,
+      "close": 62.46,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "JPMorgan upgraded WKL.AS from Neutral to Overweight, raising price target from \u20ac73 to \u20ac87, citing AI-product moat and undervaluation after a ~1/3 YTD decline",
+      "miss_reason": "Outside any active strategy's universe \u2014 large-cap Dutch info-services/legal-tech name with no dedicated EU-listed coverage bucket, so no strategy was scanning it when the sell-side re-rating hit.",
+      "suggestion": "Add an analyst-upgrade trigger (e.g. major-bank rating change + >10% PT hike) that temporarily admits the ticker into a news-reactive strategy's universe for same-day evaluation, even if outside the static sector/cap list.",
+      "failed": false
+    },
+    {
+      "ticker": "SGE.L",
+      "move_pct": 4.455,
+      "close": 8.582,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-day news catalyst found; move looks like continued re-rating after Sage's Jul 8 H1 beat (rev +9%, ARR +11%, raised FY guidance) plus a broad FTSE 100 risk-on rally on easing Middle East tensions/falling oil.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SGE.L is a FTSE 100 large-cap UK enterprise software/SaaS name; the uk-eu universe likely excludes this sector bucket entirely rather than filtering it out on a technical signal.",
+      "suggestion": "Add a UK large-cap software/SaaS bucket (FTSE 100 constituents tagged 'enterprise software') to the uk-eu universe so post-earnings drift in names like SGE.L becomes visible to momentum strategies.",
+      "failed": false
+    },
+    {
+      "ticker": "CAP.PA",
+      "move_pct": 4.439,
+      "close": 89.88,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single dated news trigger found; move looks like pre-earnings positioning (H1 2026 results due 2026-07-30) layered on an active buyback program and an 'oversold rebound' narrative after a ~30% 12-month decline.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CAP.PA is a Euronext Paris-listed French IT-services/consulting large-cap, likely excluded because the bot's universe is scoped to US/ADR-listed or a narrower sector set rather than CAC40 IT services names.",
+      "suggestion": "Extend the uk-eu region universe to include CAC40 IT-services constituents (e.g. add CAP.PA, ATO.PA) and add a pre-earnings drift screen flagging names with scheduled earnings within 3 trading days plus active buyback disclosures.",
+      "failed": false
+    },
+    {
+      "ticker": "CA.PA",
+      "move_pct": -4.847,
+      "close": 15.705,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-H1'26 earnings 'sell-the-news': EPS/EBIT beat but gross margin fell 28bps and France hypermarket LFL was flat, extending the selloff from the July 23 print into July 27.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CA.PA is a French CAC 40 grocery/staples large-cap; the uk-eu book likely scopes to UK-listed or a narrower EU sector list that excludes French food retail, so no filter ever got a chance to evaluate it.",
+      "suggestion": "Expand the uk-eu universe to include top French CAC 40 consumer-staples names (e.g. CA.PA, TTE.PA peers in retail) so earnings-reaction filters can at least screen them, even if position sizing stays conservative.",
+      "failed": false
+    },
+    {
+      "ticker": "AAF.L",
+      "move_pct": -3.299,
+      "close": 3.342,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh July-27 headline; likely give-back after last week's strong Q1 FY27 results (23 Jul) and recent highs \u2014 profit-taking, not a new shock.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AAF.L is a London-listed frontier-market telecom with heavy Nigerian naira/FX exposure, a profile momentum/mean-reversion universes built around liquid US/EU large-caps typically screen out.",
+      "suggestion": "Add an EM-telecom/FX-sensitive bucket with its own vol-adjusted position sizing rather than expanding the core universe's cap/liquidity filter to include AAF.L-style names.",
+      "failed": false
+    },
+    {
+      "ticker": "KPN.AS",
+      "move_pct": -2.797,
+      "close": 4.101,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "mean-reverter"
+      ],
+      "catalyst": "No fresh news today; likely continued post-earnings drift after the Jul 22 Q2 report (slight EPS/rev beat but cautious FY revenue guidance ~1.5%) plus recent ex-dividend adjustment.",
+      "miss_reason": "Outside any active strategy's universe \u2014 KPN.AS is a Euronext Amsterdam-listed Dutch large-cap telecom, a non-US/EU-telecom sector-geography combo the momentum and news-reactive strategies simply don't scan; only mean-reverter has any ad-hoc coverage there.",
+      "suggestion": "Add EU large-cap telecom names (Euronext Amsterdam/Paris/Frankfurt, sector=telecom) to the momentum-trader universe config so cautious-guidance post-earnings drift gets picked up within a few sessions of the report.",
+      "failed": false
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": -2.461,
+      "close": 46.765,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Fallout from Jul 23 Q2 miss: core profit below est., weak Q3 guide (~$3.70B, ~2% light) plus $1.5B convertible bond dilution/arb shorting; stock still grinding lower days later.",
+      "miss_reason": "Outside any active strategy's universe \u2014 STMPA.PA is a Paris/Milan/NYSE cross-listed Franco-Italian semiconductor name, likely dropped by a fixed EU large-cap ticker list rather than screened out on signal.",
+      "suggestion": "Add STMPA.PA to the uk-eu universe's semiconductor/large-cap list (or map its Paris/Milan/NYSE cross-listings to one entity) so post-earnings-drift names aren't dropped purely on ticker-coverage gaps.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-27T15:04:27.200517+00:00"
+}
