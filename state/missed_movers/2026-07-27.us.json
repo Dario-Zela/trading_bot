@@ -1,0 +1,125 @@
+{
+  "date": "2026-07-27",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 1 of today's 10 biggest US movers.\n\n\u2022 5 upside misses \u2014 IP +11%, SW +11%, DLR +11%, PKG +9%, NOW +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (SNDK -11%, COHR -10%, CHRW -9%, LITE -8%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: IP (+11.21%) \u2014 Cluster of bullish sell-side moves ahead of Jul 30 earnings \u2014 RBC hiked PT to $48, Truist to $46 \u2014 citing tightening containerboard supply after mill outages/capacity cuts and rising linerboard prices. Why we passed: Outside any active strategy's universe \u2014 IP is a large-cap paper/packaging industrial, a sector the bot's momentum/tech-leaning universes typically exclude. Move was a multi-day analyst-target grind-up, not a single sharp gap/volume spike a news-reactive scanner would flag.",
+  "top_movers": [
+    {
+      "ticker": "IP",
+      "move_pct": 11.211,
+      "close": 42.16,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Cluster of bullish sell-side moves ahead of Jul 30 earnings \u2014 RBC hiked PT to $48, Truist to $46 \u2014 citing tightening containerboard supply after mill outages/capacity cuts and rising linerboard prices.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IP is a large-cap paper/packaging industrial, a sector the bot's momentum/tech-leaning universes typically exclude. Move was a multi-day analyst-target grind-up, not a single sharp gap/volume spike a news-reactive scanner would flag.",
+      "suggestion": "Add a paper/packaging & basic-materials bucket to universe inclusion rules, and add a signal for clustered sell-side PT hikes (\u22652 upgrades raising target >8% within 5 trading days) to catch pre-earnings analyst-driven runs.",
+      "failed": false
+    },
+    {
+      "ticker": "SW",
+      "move_pct": 11.096,
+      "close": 48.56,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Multiple analyst price-target hikes (JPMorgan to $65, Citi/RBC to $56, Truist to $55) plus bullish packaging-demand sentiment ahead of July 29 Q2 earnings drove a pre-print momentum run.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SW is a mid/large-cap industrial packaging name (Irish-domiciled NYSE plc), a sector/geography likely not covered by momentum or news-reactive universes tuned to tech/domestic large-caps.",
+      "suggestion": "Add industrials/materials packaging names above a market-cap floor (e.g. >$20B) to the momentum universe, with an analyst-revision trigger (\u22653 PT raises in 30 days) to catch pre-earnings drift like this.",
+      "failed": false
+    },
+    {
+      "ticker": "SLB",
+      "move_pct": 11.012,
+      "close": 52.42,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive-buzz-fade",
+        "news-reactive-sentiment-gate"
+      ],
+      "catalyst": "Q2 2026 earnings beat (EPS $0.55 vs $0.51 est, revenue $8.97B vs $8.76B est) with FCF surge and Q3 guidance for margin expansion; shares extended their post-earnings pop through Monday's close.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SLB is a mega-cap oilfield-services/energy name, a sector/cap bucket the bot's momentum and mean-reversion strategies aren't scoped to trade, so the earnings gap was never evaluated by them.",
+      "suggestion": "Add large-cap energy/oilfield-services names (e.g. SLB, HAL, BKR) to the momentum strategy's tradable universe, or add an earnings-gap release rule (post-results gap \u22658% within first 30min) that lets excluded-sector names in temporarily.",
+      "failed": false
+    },
+    {
+      "ticker": "DLR",
+      "move_pct": 11.007,
+      "close": 199.08,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 earnings crushed estimates (rev $1.92B vs $1.67B est, core FFO guide raised to $8.15-8.20) on 7/23; cascading analyst PT hikes (TD Cowen, JPMorgan, RBC, Deutsche Bank, Barclays) extended the AI/data-center-demand rally into 7/27.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DLR sits in the GICS Real Estate/data-center REIT bucket, which momentum and news-reactive equity strategies likely exclude via a sector filter (REITs trade on FFO/cap-rate dynamics, not EPS, so they're screened out of earnings-surprise scans).",
+      "suggestion": "Carve out a data-center REIT allowlist (DLR, EQIX, DBRG) inside the sector exclusion so post-earnings gap-ups \u22655% with FFO-beat + guidance raise still route to the earnings-momentum sleeve instead of being blocked outright.",
+      "failed": false
+    },
+    {
+      "ticker": "PKG",
+      "move_pct": 8.76,
+      "close": 254.39,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 EPS beat ($2.35 vs $2.31 est) on record corrugated shipments, plus a $140/ton containerboard price hike announced for Sep 2026 boosting the demand/pricing outlook.",
+      "miss_reason": "Outside any active strategy's universe \u2014 PKG is a large-cap industrial/paper-packaging name, a sector the bot's universes likely don't cover (no materials/packaging bucket configured), so no filter ever got a chance to evaluate it.",
+      "suggestion": "Add a materials/industrial-packaging sector bucket (or a generic S&P mid/large-cap earnings-gap scanner) to at least one strategy's universe so post-earnings gappers like PKG become visible pre-open.",
+      "failed": false
+    },
+    {
+      "ticker": "NOW",
+      "move_pct": 7.44,
+      "close": 98.78,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 earnings beat (rev +24% YoY) w/ raised FY guidance and AI ACV >$1B (reported 7/22); rally extended into 7/27 on follow-on analyst price-target hikes.",
+      "miss_reason": "Outside any active strategy's universe \u2014 NOW is a mega-cap enterprise-SaaS name outside sector/cap coverage; today's pop is day-3 post-earnings drift (earnings 7/22), not a fresh gap a day-of scanner would flag.",
+      "suggestion": "Add large-cap enterprise-software names to universe, or add a post-earnings-drift rescreen checking names 2-5 sessions after a beat+guide-raise, not just day-of gap-ups.",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": -10.791,
+      "close": 1436.5601,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single company-specific news; sector-wide memory/NAND selloff plus profit-taking ahead of Aug 5 earnings, amplified by Chinese rival ChangXin Technology's blowout IPO (+466%) stoking NAND/DRAM competition fears.",
+      "miss_reason": "Outside any active strategy's universe \u2014 likely excluded as a recent WDC spinoff with a still-short trading history and an unusually high nominal share price (~$1,436), traits that typically fail cap/liquidity or price-band universe screens.",
+      "suggestion": "Add a post-spinoff onboarding rule that admits names into the universe once they clear ~12 months of trading history and pass standard liquidity checks, rather than gating purely on price-per-share or ticker age.",
+      "failed": false
+    },
+    {
+      "ticker": "COHR",
+      "move_pct": -9.843,
+      "close": 282.39,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No firm-specific news; COHR fell with peers (Lumentum, Applied Optoelectronics, Ciena) in a broad profit-taking unwind of the crowded AI-optics/photonics trade ahead of its Aug 12 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 COHR sits in a niche photonics/optical-components sub-sector the bot's tech universes don't track, so no strategy had it on watch when the sector-wide de-rating hit.",
+      "suggestion": "Add a 'photonics/optical-components' watchlist (COHR, LITE, AAOI, CIEN, FN) to the sector-momentum universe so correlated AI-optics unwinds trigger a signal instead of being invisible.",
+      "failed": false
+    },
+    {
+      "ticker": "CHRW",
+      "move_pct": -9.245,
+      "close": 186.51,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide freight-broker selloff on AI-disruption fears (rival freight-matching tech claims ~70% cut in empty miles), not CHRW-specific news \u2014 RXO -18%, EXPD -13%, LSTR -10% moved in sympathy.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CHRW is a mid/large-cap logistics/freight-brokerage services name, a sector likely excluded from tech- or momentum-focused universes; also a thematic multi-name sector rotation rather than a single-stock gap/news event a catalyst scanner would key on.",
+      "suggestion": "Add a sector-rotation flag that screens for \u22653 same-subindustry peers moving >5% same session (e.g., transportation/logistics GICS group) and temporarily admits them to the tradable universe for mean-reversion/momentum evaluation.",
+      "failed": false
+    },
+    {
+      "ticker": "LITE",
+      "move_pct": -8.475,
+      "close": 762.99,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh company-specific news \u2014 LITE fell with the broader AI-photonics/optics complex (also hit Coherent, AOI) amid renewed AI-capex jitters after OpenAI IPO-delay reports, compounding recent Russell-index-removal selling pressure.",
+      "miss_reason": "Outside any active strategy's universe \u2014 LITE is a high-beta optical-components/photonics name only added to the S&P 500 in March 2026; the bot's universe list likely wasn't refreshed to include this recent index entrant or excludes the comms-equipment/photonics sector entirely.",
+      "suggestion": "Add a monthly S&P 500/Russell reconstitution sync job to auto-ingest new index additions (like LITE's March 2026 inclusion) into strategy universes instead of relying on a static ticker list.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-27T19:32:52.758699+00:00"
+}
