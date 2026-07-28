@@ -1,0 +1,124 @@
+{
+  "date": "2026-07-28",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 1 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 WKL.AS +10%, UNA.AS +7%, SAP.DE +7%, G24.DE +6%, CAP.PA +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 3 downside moves (BESI.AS -9%, PHIA.AS -9%, ASM.AS -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: WKL.AS (+9.57%) \u2014 No fresh same-day news found; move extends a multi-day rally from JPMorgan's early-July Overweight upgrade (PT \u20ac87) and circulating LBO/take-private speculation (17% IRR at 30% premium). Why we passed: Outside any active strategy's universe \u2014 WKL.AS is a Euronext Amsterdam-listed Dutch info-services/software mid-cap (~$15B); the uk-eu universe likely scopes to LSE-primary listings and excludes this exchange/sector combination.",
+  "top_movers": [
+    {
+      "ticker": "WKL.AS",
+      "move_pct": 9.574,
+      "close": 68.44,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh same-day news found; move extends a multi-day rally from JPMorgan's early-July Overweight upgrade (PT \u20ac87) and circulating LBO/take-private speculation (17% IRR at 30% premium).",
+      "miss_reason": "Outside any active strategy's universe \u2014 WKL.AS is a Euronext Amsterdam-listed Dutch info-services/software mid-cap (~$15B); the uk-eu universe likely scopes to LSE-primary listings and excludes this exchange/sector combination.",
+      "suggestion": "Extend the uk-eu universe to include Euronext Amsterdam/Paris large-caps (>$10B) in info-services/software rather than LSE-primary-only, so multi-day re-rating/takeover-speculation rallies like this aren't structurally invisible.",
+      "failed": false
+    },
+    {
+      "ticker": "UNA.AS",
+      "move_pct": 7.32,
+      "close": 57.47,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 underlying sales growth of 5.8% vs 4.3% est (strongest volume growth in a decade); raised FY2026 sales guidance toward top of 4-6% range",
+      "miss_reason": "Outside any active strategy's universe \u2014 UNA.AS is a large-cap European staples/consumer-defensive name, a sector/geography this bot's tradable universe doesn't cover (likely US-equity or momentum-tech focused).",
+      "suggestion": "Add a European large-cap staples bucket (e.g. AEX/FTSE consumer-defensive names \u2265\u20ac50B mcap) to the universe with an earnings-day gap-up gate (\u22655% post-results move at open) so post-earnings drift can be captured next quarter.",
+      "failed": false
+    },
+    {
+      "ticker": "SAP.DE",
+      "move_pct": 6.947,
+      "close": 149.94,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Extending post-Q2-earnings rally (reported Jul 23): cloud revenue/backlog beat + buyback launch drove multi-day gains, +6.95% today alone",
+      "miss_reason": "Outside any active strategy's universe \u2014 SAP.DE is a mega-cap DAX constituent (~\u20ac150-200B), and momentum/mean-reversion books here are scoped to small/mid-cap uk-eu names for edge, excluding large, heavily-covered mega-caps by design.",
+      "suggestion": "Add a mega-cap earnings-drift sleeve: admit top-of-index names into universe for 5 trading days post-earnings when cloud/revenue beats consensus by >2%, sized smaller than core small/mid-cap positions.",
+      "failed": false
+    },
+    {
+      "ticker": "G24.DE",
+      "move_pct": 6.213,
+      "close": 72.65,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious single-day news catalyst found \u2014 next earnings not until 2026-08-06; likely supported by ongoing \u20ac350M 2026 share buyback program and sector/technical tailwind.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Scout24 is a German MDAX-tier digital real-estate classifieds name (~\u20ac6-7B cap) on Xetra, not a large-cap constituent typically covered by uk-eu momentum/news-reactive universes.",
+      "suggestion": "Extend uk-eu universe beyond large-cap DAX names to include MDAX/TecDAX mid-caps with active buyback programs (>\u20ac200M/yr), which tend to show persistent upward drift worth tracking.",
+      "failed": false
+    },
+    {
+      "ticker": "CAP.PA",
+      "move_pct": 6.008,
+      "close": 95.28,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No firm-specific catalyst found; CAP.PA topped the CAC40 (+5.8%) in a global IT-services sector rally (Jefferies' Nifty IT upgrade, easing post-Accenture fears) 2 days before its Jul 30 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CAP.PA is a large-cap French IT-services/consulting name on Euronext Paris, a sector uk-eu strategies don't cover; also a broad sector rally, not a single-name signal.",
+      "suggestion": "Add CAC40 IT-services/consulting names (CAP.PA, Atos, Sopra Steria) to the uk-eu universe with a sector-momentum tag, so cross-market read-through rallies (like today's Nifty-IT move) get caught pre-earnings.",
+      "failed": false
+    },
+    {
+      "ticker": "ORA.PA",
+      "move_pct": 5.569,
+      "close": 17.06,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "H1 2026 results beat: revenue +3.5% to \u20ac20.9B (vs ~\u20ac20.76B est), EBITDAaL +2.4%; raised FY core profit growth target to >4% from >3%, driven by Africa/Middle East strength.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ORA.PA is a large-cap European telecom (CAC 40 constituent) but sits outside the uk-eu bot's tradable universe, likely scoped to tech/growth or a narrower sector/liquidity list that excludes telecoms.",
+      "suggestion": "Add CAC 40 / Euro Stoxx telecom large-caps (ORA.PA, DTE.DE peers) to the uk-eu universe screen, or add an earnings-day universe expansion rule that pulls in index constituents reporting pre-market beats \u2265 consensus by 0.5%+.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": -8.767,
+      "close": 207.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide chip-equipment selloff: reports of a China-made DUV lithography rival to ASML plus SK Hynix's ~15% plunge on AI/memory capex fears dragged BESI down alongside ASML, ASMI, STMicro, Infineon.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BESI.AS is a Euronext Amsterdam (Dutch) semiconductor capital-equipment name, likely excluded by a universe scoped to UK/major-index constituents rather than NL chip-equipment sub-sector peers.",
+      "suggestion": "Add AEX chip-equipment peers (BESI, ASMI) to the uk-eu universe and add a sector-shock trigger that flags names when a bellwether peer (ASML) or SOX proxy drops >=5% same/prior session.",
+      "failed": false
+    },
+    {
+      "ticker": "PHIA.AS",
+      "move_pct": -8.636,
+      "close": 21.16,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 EPS beat ($0.56 vs $0.40 est) but order intake fell 1% on delayed US contracts and China procurement weakness overshadowed a tariff-boosted profit beat",
+      "miss_reason": "Outside any active strategy's universe \u2014 PHIA.AS is an AEX-listed large-cap industrials/healthtech name not covered by the bot's tradable universe, likely due to non-US primary listing and sector focus elsewhere.",
+      "suggestion": "If euro-listed large caps are desired coverage, add an earnings-day universe expansion rule that pulls in major EU health-tech/industrial tickers (e.g. AEX/DAX components) with market cap > $15B ahead of scheduled earnings dates.",
+      "failed": false
+    },
+    {
+      "ticker": "ASML.AS",
+      "move_pct": -7.383,
+      "close": 1447.6,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive-buzz-fade"
+      ],
+      "catalyst": "Report that a Chinese state-backed group (Huawei/SiCarrier-linked) began producing immersion DUV lithography tools, plus an ex-dividend adjustment and fresh EU-China export-list tensions.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ASML.AS is a Euronext Amsterdam-primary mega-cap; bot's universe filters likely scope to US-listed tickers/ADRs, so this liquid, news-driven European name never entered the scan despite a clear geopolitical catalyst.",
+      "suggestion": "Add primary EU-listed mega-caps (e.g. AEX/DAX constituents above a liquidity floor) to the news-reactive-buzz-fade universe so cross-listed geopolitical-headline movers like ASML.AS get scanned, not just their US ADR counterparts.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": -5.236,
+      "close": 814.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide selloff: ASML (-8.5%) and Besi (-10%) plunged on reports China is mass-producing domestic DUV lithography tools, dragging peer ASM International down in sympathy; ASM's own Q2 print lands after today's close (6pm CET).",
+      "miss_reason": "Outside any active strategy's universe \u2014 a Euronext Amsterdam-listed semiconductor-equipment large-cap, likely excluded if the bot's universe skews toward US-listed/ADR names. Even if in-universe, this was a cross-name sector-contagion move (ASML's news, not ASM's) that single-name news/technical filters aren't built t",
+      "suggestion": "Add a sector-peer contagion rule: when a sub-industry bellwether (e.g. ASML) moves >5% intraday on a sector-specific catalyst, auto-flag same-sub-industry peers (Besi, ASM) for review even if outside the current universe.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-28T15:03:38.012287+00:00"
+}
