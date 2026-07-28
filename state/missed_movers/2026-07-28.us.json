@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-28",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 ADSK +8%, NOW +7%, EXPE +7%, PLTR +7%, CHTR +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (SNDK -10%, CHRW -6%, UPS -6%, TXT -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: SNDK (-9.96%) \u2014 Multi-day NAND/semiconductor rout plus WallStreetBets-fueled meme volatility; stock down ~31% since Thursday amid weak flash-memory pricing outlook ahead of Aug 5 earnings, no single company-specific news today. Why we passed: Outside any active strategy's universe \u2014 likely excluded as an extreme-price/low-float, meme-volatility memory-chip name (~$1,293/share, 38x earnings) that doesn't fit standard large-cap tech or semiconductor universe screens.",
+  "top_movers": [
+    {
+      "ticker": "ADSK",
+      "move_pct": 7.704,
+      "close": 225.91,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Multi-day analyst-driven rally: Guggenheim initiated ADSK at Buy w/ $245 PT (7/23) citing FY27 revenue upside; MaintainX acquisition and insider/institutional buying added momentum into 7/28.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ADSK is a large-cap design/engineering software name, a sector likely uncovered by the bot's current universes. Also the move built gradually over several sessions from sell-side coverage, not a single overnight gap a news-reactive gate would trigger on.",
+      "suggestion": "Add design/engineering software (ADSK, PTC, ANSS) to the relevant sector universe, and add a rolling 5-day cumulative-return + analyst-initiation-count trigger to catch grind-up momentum that lacks a single-day gap.",
+      "failed": false
+    },
+    {
+      "ticker": "NOW",
+      "move_pct": 7.279,
+      "close": 105.97,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "3rd/4th straight up day after Q2 beat (7/23): EPS $0.90 vs $0.86 est, raised FY26 guide, 50% of new biz now non-seat-based (eases AI-seat-erosion fear); broader SaaS 'AI rotation' rally lifted CRM/WDAY too.",
+      "miss_reason": "Outside any active strategy's universe \u2014 mega-cap enterprise SaaS name likely excluded by sector/category filters, and even if covered, a post-earnings-print cooldown window would have blocked entry on the initial gap day.",
+      "suggestion": "Add an earnings-drift override: names with 3+ consecutive up days \u22655% following an earnings beat get released into universe eligibility instead of being permanently excluded by sector/cap filters.",
+      "failed": false
+    },
+    {
+      "ticker": "EXPE",
+      "move_pct": 7.09,
+      "close": 278.37,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide travel rally as Strait of Hormuz reopening cut oil prices, plus a disclosed stake increase by Corient Private Wealth and lingering Q1 beat momentum.",
+      "miss_reason": "Outside any active strategy's universe \u2014 EXPE likely falls in a large-cap consumer-discretionary/travel bucket not covered by the bot's tradable list, so no filter ever got a chance to evaluate it.",
+      "suggestion": "Add large-cap travel/OTA names (EXPE, BKNG, ABNB) to the universe with a sector-momentum tag so macro-driven sector rallies (e.g., oil-supply unwinds) can be captured going forward.",
+      "failed": false
+    },
+    {
+      "ticker": "PLTR",
+      "move_pct": 6.866,
+      "close": 131.36,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued rally into Aug 3 earnings \u2014 DIA withdrew its contested ASTRA solicitation after Palantir's protest, plus Oppenheimer reiterated a $200 target citing upside to 79% guided growth.",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 PLTR is a mega-cap (~130x fwd earnings) AI/govt-software name that likely sits outside the sector/valuation buckets covered by the bot's static, periodically-refreshed universe lists.",
+      "suggestion": "Add a monthly universe-refresh screen (ADV > $500M, 3-month return > 30%) to surface high-momentum large caps like PLTR for inclusion review instead of relying solely on the fixed sector list.",
+      "failed": false
+    },
+    {
+      "ticker": "CHTR",
+      "move_pct": 6.731,
+      "close": 131.61,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued rebound after Q2 EPS beat ($10.66 vs $10.37 est, reported Jul 24) plus market pricing in nearing close of the $34.5B Charter-Cox merger (FCC-approved, targeted for August 2026).",
+      "miss_reason": "Outside any active strategy's universe: CHTR is a large-cap ($18-20B) legacy cable/telecom name whose price action is now dominated by a pending mega-merger (deal-completion/regulatory event risk), a profile most momentum/mean-reversion universes explicitly exclude via sector or M&A-overhang filters.",
+      "suggestion": "Add a merger-arb override that re-admits acquirer/target names to the universe once major deal contingencies clear (e.g., post-FCC approval), gated on realized volatility rather than a blanket telecom/M&A-pending exclusion.",
+      "failed": false
+    },
+    {
+      "ticker": "DASH",
+      "move_pct": 6.628,
+      "close": 184.37,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single dated news event found; DASH is up ahead of Aug 5 earnings amid a broad-market rotation out of sold-off chip/AI-infra names (Micron, AMD, Intel down 8-17%) into consumer-internet growth names.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DASH sits in the consumer-discretionary/gig-economy internet-services bucket, not the tech-hardware/index-constituent universes the bot's momentum and mean-reversion strategies currently scan.",
+      "suggestion": "Add a consumer-internet/gig-economy sector bucket (DASH, UBER, ABNB) to the momentum universe with a sector-rotation trigger: flag names up >5% same-day a correlated basket (semis) sells off >5%.",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": -9.957,
+      "close": 1293.52,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Multi-day NAND/semiconductor rout plus WallStreetBets-fueled meme volatility; stock down ~31% since Thursday amid weak flash-memory pricing outlook ahead of Aug 5 earnings, no single company-specific news today.",
+      "miss_reason": "Outside any active strategy's universe \u2014 likely excluded as an extreme-price/low-float, meme-volatility memory-chip name (~$1,293/share, 38x earnings) that doesn't fit standard large-cap tech or semiconductor universe screens.",
+      "suggestion": "Add a semiconductor/memory-sector watchlist tier that admits high-priced, high-volatility names ahead of scheduled earnings (SNDK reports Aug 5) rather than filtering purely on market-cap/price-level bands.",
+      "failed": false
+    },
+    {
+      "ticker": "CHRW",
+      "move_pct": -6.461,
+      "close": 174.46,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued fallout from $604M Dallas jury verdict (CHRW 23% liable, post-Montgomery broker-liability precedent); Baird cut PT $230\u2192$200 ahead of Q2 earnings due tomorrow.",
+      "miss_reason": "Outside any active strategy's universe (mid-cap logistics broker). Even if covered, this is a litigation/legal-verdict driven move continuing from a Friday ruling, not a technical or earnings signal a momentum/news bot screens for.",
+      "suggestion": "Add a litigation-headline gate flagging tickers tied to >$100M jury verdicts or precedent-setting liability rulings (e.g. 'Montgomery') for manual review, since verdict-driven selloffs often trend for multiple sessions.",
+      "failed": false
+    },
+    {
+      "ticker": "UPS",
+      "move_pct": -6.361,
+      "close": 105.765,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 EPS $1.76 beat $1.66 est. and FY guide raised, but stock fell on Q3 guidance: mid-single-digit domestic volume decline, Amazon volume glide-down, $891M transformation charges.",
+      "miss_reason": "Outside any active strategy's universe \u2014 UPS is a large-cap industrials/transport logistics name, a sector this bot's momentum/mean-reversion universes likely don't cover; also a scheduled-earnings gap-down, which favors pre-market positioning over post-close signals.",
+      "suggestion": "Add an earnings-calendar overlay that flags known large-cap reporters (transports/industrials) for a temporary universe inclusion around their print, gated on pre-market gap \u22655% at open.",
+      "failed": false
+    },
+    {
+      "ticker": "TXT",
+      "move_pct": -6.252,
+      "close": 90.12,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 EPS beat ($1.42 vs $1.33 est, rev $3.83B) but unchanged FY guidance, weak Aviation margins/cash flow, and MV-75 Cheyenne funding risk overshadowed the beat.",
+      "miss_reason": "Outside any active strategy's universe (mid-cap industrials/aerospace conglomerate, not in tracked sector lists); also a same-day post-earnings gap-down where pre-market EPS-vs-margin nuance beats any post-open technical signal.",
+      "suggestion": "Add an earnings-day EPS-beat/guidance-miss scanner covering industrials/aerospace names outside current sector universes, gating entry on post-results gap \u2264-5% within 30min of open.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-28T19:33:14.943757+00:00"
+}
