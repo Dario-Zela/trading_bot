@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-29",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 ADSK +8%, EXPE +7%, CHTR +7%, DASH +7%, CPRT +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (SNDK -14%, GLW -12%, LITE -9%, COHR -8%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: SNDK (-13.56%) \u2014 Third straight double-digit drop as NAND pricing/demand fears, Chinese memory competition, and AI-capex sustainability doubts unwind SNDK's parabolic run from >$2,350 in June. Why we passed: Outside any active strategy's universe \u2014 SNDK is a former Western Digital spinoff whose price (>$1,000/sh) and realized volatility (50%+ drawdown in a month, three consecutive double-digit-% sessions) sit far outside typical universe price/volatility screens.",
+  "top_movers": [
+    {
+      "ticker": "ADSK",
+      "move_pct": 7.704,
+      "close": 225.91,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Guggenheim initiated ADSK at Buy on billings/revenue upside and AI-resilience; also buoyed by its $3.6B MaintainX acquisition announcement.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ADSK is a large-cap AEC/software name not currently tracked, so no filter was ever exposed to today's gap; the move was analyst-upgrade + M&A driven rather than a pattern a technical scanner would catch.",
+      "suggestion": "Add a sell-side rating-change/initiation feed that auto-admits large-cap names into the tradable universe intraday when a >2-notch upgrade or >5% pre-market gap is detected.",
+      "failed": false
+    },
+    {
+      "ticker": "EXPE",
+      "move_pct": 7.09,
+      "close": 278.37,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued rally off Expedia's exclusive 12-month Allegiant Airlines distribution deal (566 routes, 124 cities) plus reaffirmed FY26 revenue guidance of $15.6-16.0B.",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 EXPE sits in travel/OTA, a sector the bot's current universes (tech/momentum-focused large caps) don't cover despite EXPE's large-cap liquidity.",
+      "suggestion": "Add large-cap travel/OTA names (EXPE, BKNG, ABNB) to the universe screen since they pass standard liquidity/market-cap filters; alternatively add a cross-sector partnership/M&A news scanner that flags >5% movers outside the current universe for manual review.",
+      "failed": false
+    },
+    {
+      "ticker": "CHTR",
+      "move_pct": 6.731,
+      "close": 131.61,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Multi-day recovery rally after Q2 EPS beat ($10.66 vs $10.37 est) despite revenue miss/broadband losses, fueled by Cox merger nearing Aug close and ongoing SpaceX/Starlink mobile-partnership speculation.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CHTR is legacy cable/telecom (Communication Services), a sector/category likely excluded from momentum and mean-reversion universes, and the move sits inside a post-earnings (7/24) event window bots typically blackout for gap risk.",
+      "suggestion": "Add a post-earnings gap-continuation gate: names reporting within the last 5 sessions become eligible if price holds \u22655% above pre-earnings close and above VWAP, instead of a blanket earnings-window exclusion.",
+      "failed": false
+    },
+    {
+      "ticker": "DASH",
+      "move_pct": 6.628,
+      "close": 184.37,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "DoorDash received FAA Part 135 air-carrier certification and launched 'DoorDash Air,' its in-house commercial drone delivery program.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DASH is a ~$91B consumer-internet/gig-delivery name; the bot's tracked lists likely exclude this sector bucket or haven't been refreshed to add a name that grew into large-cap status.",
+      "suggestion": "Add a periodic universe-refresh job that re-screens NASDAQ/NYSE names by market cap and includes consumer-internet/gig-economy tickers >$50B cap, rather than relying on a static sector-restricted list.",
+      "failed": false
+    },
+    {
+      "ticker": "CPRT",
+      "move_pct": 6.621,
+      "close": 29.79,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh news today; relief rally as Jay Adair's July 31 return as CEO (announced June 29) nears, with stock recovering off a post-announcement/YTD selloff low.",
+      "miss_reason": "Outside any active strategy's universe (large-cap auto-salvage/services name not covered by tradable sector list). Even if covered, this is a slow-burn sentiment recovery tied to a leadership-transition date, not a single-session earnings/news gap a catalyst-scanner would flag intraday.",
+      "suggestion": "Add a leadership-transition/8-K event tag that flags names within 5 trading days of an announced CEO change effective date for temporary universe inclusion, since sentiment repricing often clusters around the effective date rather than the announcement date.",
+      "failed": false
+    },
+    {
+      "ticker": "BKNG",
+      "move_pct": 5.997,
+      "close": 198.05,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-day news event; continuation of a multi-day pre-earnings run-up in travel/OTA stocks as Mideast ceasefire eased oil prices and a flagged 3pt demand headwind ahead of Aug 4 Q2 print.",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 BKNG is a consumer-discretionary/travel mega-cap, a sector the bot's universe construction apparently doesn't cover, so no filter ever got a chance to evaluate the multi-day momentum.",
+      "suggestion": "Rebuild universe inclusion from a market-cap/liquidity screen (e.g. top-N by ADV regardless of sector) rather than a static sector-limited list, so travel/consumer-discretionary mega-caps like BKNG aren't structurally excluded.",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": -13.565,
+      "close": 1118.0551,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Third straight double-digit drop as NAND pricing/demand fears, Chinese memory competition, and AI-capex sustainability doubts unwind SNDK's parabolic run from >$2,350 in June.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SNDK is a former Western Digital spinoff whose price (>$1,000/sh) and realized volatility (50%+ drawdown in a month, three consecutive double-digit-% sessions) sit far outside typical universe price/volatility screens.",
+      "suggestion": "Add a volatility-aware universe override: admit normally-excluded high-price/high-ATR names once realized 20-day vol exceeds a threshold (e.g. >80% annualized), so mean-reversion strategies can catch post-selloff bounces in ex-universe mega-movers.",
+      "failed": false
+    },
+    {
+      "ticker": "GLW",
+      "move_pct": -12.116,
+      "close": 125.12,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 beat (core EPS $0.78, sales +17%) but Q3 guidance underwhelmed vs AI-optical hype; stock sold off ~12% on 'sell the news' reaction.",
+      "miss_reason": "Outside any active strategy's universe \u2014 GLW is a large-cap industrials/specialty-glass name, likely excluded by sector filters tuned to tech/semis, or by a blanket earnings-day blackout that skips all reporters regardless of gap direction.",
+      "suggestion": "Add a post-earnings gap-release rule: names with a pre-market gap \u22658% on reported earnings get admitted to the momentum universe for that session instead of being blanket-excluded by the earnings blackout.",
+      "failed": false
+    },
+    {
+      "ticker": "LITE",
+      "move_pct": -8.831,
+      "close": 656.76,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news; sector-wide AI-photonics selloff (Coherent, AOI, LITE all down 9-12%) on profit-taking/OpenAI IPO-delay jitters after a 71% YTD run.",
+      "miss_reason": "Outside any active strategy's universe \u2014 LITE is a large-cap optical/photonics component name (AI-infra supplier), a sector/category the bot's universes don't cover, and its extreme historical volatility (52-wk range $101-$1085) likely falls outside typical universe volatility/beta caps anyway.",
+      "suggestion": "Add an AI-infrastructure/photonics sector bucket (LITE, COHR, AAOI) to at least one sector-rotation or mean-reversion universe with a volatility-adjusted position cap, so post-selloff bounces in this crowded trade are catchable.",
+      "failed": false
+    },
+    {
+      "ticker": "COHR",
+      "move_pct": -8.222,
+      "close": 245.525,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No firm-specific news; broad profit-taking/rotation across crowded AI-optics names (COHR, AOI, LITE) after a big 2026 rally, amplified by an insider share sale.",
+      "miss_reason": "Outside any active strategy's universe \u2014 COHR is a $61B photonics/optical-components supplier tied to AI-datacenter capex, a sector bucket the bot's universes don't currently cover.",
+      "suggestion": "Add an 'AI-infrastructure/photonics' sector tag (COHR, LITE, AOI, etc.) to at least one momentum or sector-rotation strategy's universe so crowded-trade unwinds like this become visible.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-29T19:32:50.705252+00:00"
+}
