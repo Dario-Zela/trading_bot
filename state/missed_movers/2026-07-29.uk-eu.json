@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-29",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 WKL.AS +10%, ULVR.L +8%, UNA.AS +7%, CAP.PA +6%, G24.DE +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (PHIA.AS -9%, IFX.DE -8%, BARC.L -7%, ENR.DE -7%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: WKL.AS (+9.57%) \u2014 No single fresh catalyst pinpointed for 2026-07-29; move looks like continuation/acceleration of a 3-week AI-re-rating rally sparked by JPMorgan's Jul 9 upgrade to Overweight (PT \u20ac87, 'AI moat' thesis) plus ongoing buyback support. Why we passed: Outside any active strategy's universe \u2014 WKL.AS is a large-cap Dutch info-services/software compounder (AEX-listed, historically low beta), a profile the uk-eu momentum universe likely screens out in favor of higher-beta, higher-volume names.",
+  "top_movers": [
+    {
+      "ticker": "WKL.AS",
+      "move_pct": 9.574,
+      "close": 68.44,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single fresh catalyst pinpointed for 2026-07-29; move looks like continuation/acceleration of a 3-week AI-re-rating rally sparked by JPMorgan's Jul 9 upgrade to Overweight (PT \u20ac87, 'AI moat' thesis) plus ongoing buyback support.",
+      "miss_reason": "Outside any active strategy's universe \u2014 WKL.AS is a large-cap Dutch info-services/software compounder (AEX-listed, historically low beta), a profile the uk-eu momentum universe likely screens out in favor of higher-beta, higher-volume names.",
+      "suggestion": "Add an analyst-rating-change trigger that admits EU large-caps into the universe for N days after a broker upgrade (e.g., JPM/GS/MS to Overweight/Buy) even if they fail the standard beta/volatility screen.",
+      "failed": false
+    },
+    {
+      "ticker": "ULVR.L",
+      "move_pct": 8.299,
+      "close": 50.24,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "H1/Q2 2026 earnings beat \u2014 5.8% Q2 sales growth, 4.8% H1 underlying sales growth, raised FY guidance; stock had its best day in years.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ULVR.L is a large-cap UK consumer-staples/household-goods name, a sector/category not covered by the bot's momentum/tech-tilted uk-eu tradable universe, so no filter ever got a chance to evaluate the earnings gap.",
+      "suggestion": "Add a consumer-staples/FTSE100-defensives sleeve to the uk-eu universe (or an earnings-day watchlist override) that admits large-cap names posting a post-results gap \u22655% at the open for same-day evaluation.",
+      "failed": false
+    },
+    {
+      "ticker": "UNA.AS",
+      "move_pct": 7.32,
+      "close": 57.47,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 earnings beat: underlying sales +5.8% (vs ~4.3% est.), strongest volume growth in a decade; raised FY26 guidance to top of 4-6% range.",
+      "miss_reason": "Outside any active strategy's universe \u2014 UNA.AS is a mega-cap (~\u20ac120B) consumer-staples multinational, cross-listed as ULVR.L/UL/UNA.AS; uk-eu universes here likely skew to mid-cap momentum names and/or dedupe to a single primary listing, excluding the Amsterdam line entirely.",
+      "suggestion": "Add UNA.AS (or its primary ULVR.L listing) to the uk-eu large-cap staples universe, and add an earnings-gate rule that admits any universe-eligible name with a pre-market gap \u22655% on a scheduled earnings day even if normally filtered by size/sector.",
+      "failed": false
+    },
+    {
+      "ticker": "CAP.PA",
+      "move_pct": 6.318,
+      "close": 101.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single discrete catalyst \u2014 2nd day of a multi-day rally (+5.83% Mon) into July 30 H1 earnings, riding a European IT-services re-rating after SAP's cloud beat and Randstad's staffing beat.",
+      "miss_reason": "Outside any active uk-eu strategy's universe \u2014 CAP.PA is a Euronext Paris/CAC40 large-cap IT-services name, and uk-eu universes are evidently scoped to UK-listed or specific sector lists, so even a 2-day, high-momentum breakout was never scanned.",
+      "suggestion": "Extend uk-eu universe to include CAC40/major Euronext Paris large-caps (or a pan-EU large-cap watchlist) alongside LSE names, so cross-border EU movers with multi-day momentum \u22655% get picked up pre-earnings.",
+      "failed": false
+    },
+    {
+      "ticker": "G24.DE",
+      "move_pct": 6.213,
+      "close": 72.65,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news catalyst found; move likely reflects pre-earnings positioning (Q2 results due Aug 6, 2026), an active \u20ac350m buyback, and carryover bullish sentiment from UBS's 'buy' upgrade (Feb 2026).",
+      "miss_reason": "Outside any active strategy's universe: G24.DE (Scout24 SE) is a ~\u20ac5B MDAX-listed mid-cap German property-classifieds name, not a DAX40/large-cap constituent, so it was never in scope for uk-eu strategies regardless of today's move.",
+      "suggestion": "Extend the uk-eu universe to admit MDAX/SDAX mid-caps above a liquidity floor (e.g., 20D ADV > \u20ac5M) so names like G24.DE enter the scoring pipeline instead of being screened out purely by market-cap/index tier.",
+      "failed": false
+    },
+    {
+      "ticker": "ORA.PA",
+      "move_pct": 5.569,
+      "close": 17.06,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "H1 2026 earnings beat: record revenue (+3.5%) and EBITDAaL (+5.0%); raised FY26 EBITDAaL growth guidance to >4% (from >3%) on MasOrange Spain deal and Africa growth.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ORA.PA is a large-cap, low-beta European telecom incumbent, a defensive sector typically excluded from momentum/mean-reversion universes tuned for higher-beta tech/growth names.",
+      "suggestion": "Add a region-wide post-earnings gap scanner (uk-eu, all sectors incl. telecom/utilities) that flags close-to-close moves \u22655% on earnings-report days, independent of existing sector/beta universe filters.",
+      "failed": false
+    },
+    {
+      "ticker": "PHIA.AS",
+      "move_pct": -8.636,
+      "close": 21.16,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 beat on EPS (+40% vs consensus) but shares fell as management guided Q3 margins below last year on cost inflation/mix, D&T segment margin weakness, and China procurement headwinds.",
+      "miss_reason": "Outside any active strategy's universe \u2014 PHIA.AS is a large-cap Dutch health-tech name on Euronext Amsterdam; likely excluded because uk-eu universes are scoped to specific sectors/indices or ADR-only coverage that doesn't pull in local-listing continental healthcare names.",
+      "suggestion": "Add Euronext Amsterdam (AEX) large-caps to the uk-eu universe filter, or specifically whitelist major EU health-tech names so an earnings-gate can catch post-results 'beat but guide-down' gaps like this one.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": -8.191,
+      "close": 57.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single fresh headline today; move extends a multi-week semiconductor sector de-rating (STMicro's cautious Q3 outlook, Samsung profit-taking, auto/industrial demand worries) ahead of Infineon's own Aug 5 earnings, on an already-rich P/E (~43x).",
+      "miss_reason": "Outside any active strategy's universe \u2014 IFX.DE is a EUR-denominated, Xetra-listed DAX large-cap semiconductor name. The uk-eu region's strategy universes appear scoped to UK/GBP tickers or a narrow EU large-cap list that doesn't include German chip/auto-supplier names.",
+      "suggestion": "Add DAX-40 large-caps (mkt cap > \u20ac10B, avg daily volume > 1M shares) to the uk-eu universe via a EUR ticker feed, or explicitly whitelist IFX.DE given its liquidity, analyst coverage, and sector-contagion volatility profile.",
+      "failed": false
+    },
+    {
+      "ticker": "BARC.L",
+      "move_pct": -7.418,
+      "close": 4.9485,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 FY26 results: profit beat (\u00a36.1B PBT vs \u00a35.94B est.) and raised 2026 income guidance, but EPS missed and IB/US consumer growth lagged US peers \u2014 shares fell despite the beat.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BARC.L (UK large-cap bank, LSE-listed) isn't covered by any current universe (no UK-bank/LSE sector bucket), so no strategy could react regardless of the gap.",
+      "suggestion": "Add an LSE/UK-bank sector bucket to the universe with an earnings-gate that releases names showing a post-results gap \u22655% within 30min of open, so cross-listed large caps like BARC.L aren't structurally excluded.",
+      "failed": false
+    },
+    {
+      "ticker": "ENR.DE",
+      "move_pct": -6.599,
+      "close": 139.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continuation of wind-sector selloff: GE Vernova's Jul-22 wind order/margin miss + Barclays 'peak-cycle' downgrade dragged ENR.DE through its 200-day MA into Aug-5 earnings quiet period.",
+      "miss_reason": "Outside any active strategy's universe \u2014 large-cap German industrial/power-equipment conglomerate (post-Siemens spin-off), a sector/geography the bot's uk-eu universe doesn't currently cover.",
+      "suggestion": "Add large-cap DAX industrials (incl. ENR.DE) to the uk-eu universe with a sector-contagion trigger: flag when a same-sector peer (e.g. GE Vernova) misses guidance and correlated names gap >5% within days.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-29T15:04:14.260682+00:00"
+}
