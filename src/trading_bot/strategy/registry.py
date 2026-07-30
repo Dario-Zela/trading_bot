@@ -71,6 +71,7 @@ def load_active_strategies(region: str | None = None) -> list[Strategy]:
     """
     from trading_bot.strategy.control_rule_based import ControlRuleBased
     from trading_bot.strategy.llm_strategy import LLMStrategy
+    from trading_bot.strategy.ml_challenger import MLChallengerStrategy
     from trading_bot.strategy.momentum_stub import MomentumTraderStub
 
     def _instantiate(cfg: StrategyConfig) -> Strategy:
@@ -80,6 +81,8 @@ def load_active_strategies(region: str | None = None) -> list[Strategy]:
             return MomentumTraderStub(cfg)
         if cfg.implementation == "llm":
             return LLMStrategy(cfg)
+        if cfg.implementation == "ml_challenger":
+            return MLChallengerStrategy(cfg)
         raise ValueError(f"Unknown strategy implementation: {cfg.implementation}")
 
     out: list[Strategy] = []
