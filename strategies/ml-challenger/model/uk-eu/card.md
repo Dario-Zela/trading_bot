@@ -1,6 +1,6 @@
 # Model card — ml-challenger · uk-eu (LightGBM, 5-class)
 
-*Generated 2026-07-30T16:36:18+00:00 by `python -m trading_bot.ml.train --region uk-eu` · seed 42 · data snapshot `b9d68a5efc4126fa`*
+*Generated 2026-07-30T19:58:13+00:00 by `python -m trading_bot.ml.train --region uk-eu` · seed 42 · data snapshot `b9d68a5efc4126fa`*
 
 Gradient-boosted trees predicting the same 5-class next-session
 open→close vocabulary the LLM strategies are graded on, trained on
@@ -11,9 +11,9 @@ sample.
 
 ## Data
 
-- Snapshot: `state/ml/train.db` — 1,541,954 bars, 466 tickers, 2023-06-06 → 2026-07-30
-- Training frame: **258,641 rows** × 466 tickers × 561 feature dates (2023-08-31 → 2026-05-01)
-- Universe: S&P 1500 ∩ t212_isa_us (~1.5k liquid US names the bot can trade)
+- Snapshot: `state/ml/train.db` — this region's slice: 370,840 bars, 466 tickers, 2023-06-06 → 2026-07-29
+- Training frame: **341,443 rows** × 466 tickers × 744 feature dates (2023-08-31 → 2026-07-28)
+- Universe: (FTSE 350 + DAX + CAC + AEX + UCITS ETFs) ∩ t212_isa_uk_eu (~470 UK/EU names)
 - Prices are unadjusted (auto_adjust=False), matching what tools.history writes
   into the runtime store the model is served from
 
@@ -28,17 +28,17 @@ downstream hit-rate comparison against the graded `actual_class` vocabulary.
 
 | class | support | share |
 |---|---|---|
-| strong_down | 5,391 | 2.1% |
-| mild_down | 50,619 | 19.6% |
-| flat | 146,859 | 56.8% |
-| mild_up | 50,848 | 19.7% |
-| strong_up | 4,924 | 1.9% |
+| strong_down | 6,859 | 2.0% |
+| mild_down | 66,674 | 19.5% |
+| flat | 193,444 | 56.7% |
+| mild_up | 67,751 | 19.8% |
+| strong_up | 6,715 | 2.0% |
 
 Class imbalance is why training uses balanced class weights and this card
 never quotes raw accuracy — predict-always-flat scores deceptively well.
 
 Class midpoints (within-class mean returns, fitted on the first training
-block only and frozen): strong_down=-5.521, mild_down=-1.899, flat=0.018, mild_up=1.871, strong_up=5.744
+block only and frozen): strong_down=-5.6, mild_down=-1.903, flat=0.017, mild_up=1.879, strong_up=5.724
 `predicted_return_pct = Σ_c p_c · m_c` — the continuous score `metrics.py`
 computes IC on; `predicted_class` = argmax; `conviction` = max probability.
 
@@ -81,7 +81,7 @@ train ──────────────────┤purge 1│ embarg
 ```
 
 Grid: 3 learning rates × 2 depths, selected on pooled OOS log-loss
-(winner: lr=0.1, depth=6, 1012 rounds). The label is intraday so labels never
+(winner: lr=0.1, depth=6, 1258 rounds). The label is intraday so labels never
 overlap across days; purge+embargo are kept anyway — 21/63-day rolling
 features decay slowly, so adjacent-day rows are heavily correlated.
 
@@ -94,47 +94,64 @@ unordered block combinations).
 
 | fold | train through | validation | n | log-loss | pooled IC | mean daily IC |
 |---|---|---|---|---|---|---|
-| 0 | 2024-12-31 | 2025-01-10 → 2025-02-07 | 9,755 | 1.2054 | -0.017 | -0.0068 |
-| 1 | 2025-01-30 | 2025-02-10 → 2025-03-10 | 9,764 | 1.2358 | 0.0533 | 0.021 |
-| 2 | 2025-02-28 | 2025-03-11 → 2025-04-08 | 9,764 | 1.5607 | 0.0218 | 0.004 |
-| 3 | 2025-03-31 | 2025-04-09 → 2025-08-04 | 9,662 | 1.6064 | 0.0132 | -0.0049 |
-| 4 | 2025-05-01 | 2025-08-05 → 2025-09-02 | 9,403 | 1.1389 | 0.0485 | 0.0279 |
-| 5 | 2025-08-25 | 2025-09-03 → 2025-10-01 | 9,765 | 1.1376 | 0.0767 | 0.0196 |
-| 6 | 2025-09-23 | 2025-10-02 → 2025-10-30 | 9,747 | 1.1595 | -0.0123 | -0.0003 |
-| 7 | 2025-10-22 | 2025-10-31 → 2025-11-28 | 9,786 | 1.2253 | 0.0013 | 0.0107 |
-| 8 | 2025-11-20 | 2025-12-01 → 2025-12-31 | 9,669 | 1.1148 | 0.0246 | 0.0282 |
-| 9 | 2025-12-19 | 2026-01-02 → 2026-01-30 | 9,786 | 1.1831 | 0.0109 | 0.0128 |
-| 10 | 2026-01-22 | 2026-02-02 → 2026-03-02 | 9,785 | 1.34 | -0.0262 | 0.0019 |
-| 11 | 2026-02-20 | 2026-03-03 → 2026-03-31 | 9,772 | 1.6112 | 0.0557 | 0.0173 |
-| 12 | 2026-03-23 | 2026-04-01 → 2026-05-01 | 9,682 | 1.3403 | 0.0097 | 0.0154 |
+| 0 | 2025-06-25 | 2025-07-04 → 2025-08-01 | 9,764 | 1.1335 | 0.0122 | 0.0099 |
+| 1 | 2025-07-24 | 2025-08-04 → 2025-09-01 | 9,403 | 1.1413 | 0.0387 | 0.0174 |
+| 2 | 2025-08-22 | 2025-09-02 → 2025-09-30 | 9,765 | 1.1422 | 0.0166 | 0.0077 |
+| 3 | 2025-09-22 | 2025-10-01 → 2025-10-29 | 9,746 | 1.1493 | 0.0061 | 0.0129 |
+| 4 | 2025-10-21 | 2025-10-30 → 2025-11-27 | 9,786 | 1.2382 | -0.0326 | 0.0082 |
+| 5 | 2025-11-19 | 2025-11-28 → 2025-12-30 | 9,708 | 1.1149 | 0.0295 | 0.0205 |
+| 6 | 2025-12-18 | 2025-12-31 → 2026-01-29 | 9,747 | 1.1654 | 0.0147 | 0.014 |
+| 7 | 2026-01-21 | 2026-01-30 → 2026-02-27 | 9,785 | 1.3075 | 0.0019 | 0.0291 |
+| 8 | 2026-02-19 | 2026-03-02 → 2026-03-30 | 9,772 | 1.6083 | 0.0525 | 0.0055 |
+| 9 | 2026-03-20 | 2026-03-31 → 2026-04-30 | 9,785 | 1.3637 | -0.0369 | -0.0232 |
+| 10 | 2026-04-22 | 2026-05-01 → 2026-05-29 | 8,957 | 1.3283 | 0.0041 | -0.0082 |
+| 11 | 2026-05-21 | 2026-06-01 → 2026-06-29 | 9,786 | 1.2872 | -0.0033 | -0.0201 |
+| 12 | 2026-06-19 | 2026-06-30 → 2026-07-28 | 9,785 | 1.2784 | -0.0154 | -0.0174 |
 
 ## Results vs baselines (pooled out-of-sample)
 
 | model | n | log-loss | pooled IC | mean daily IC (t-stat) | decile spread | non-flat hit rate |
 |---|---|---|---|---|---|---|
-| **LightGBM challenger** | 126,340 | 1.2972 | 0.0192 | 0.0113 (2.87) | 0.075 | 0.492 |
-| Logistic (same features) | 126,340 | 1.5194 | 0.017 | 0.0104 (1.67) | 0.123 | 0.492 |
-| MLP (PyTorch, v2 preview) | 126,340 | 1.4977 | 0.0289 | 0.0028 (0.48) | 0.263 | 0.498 |
-| Yesterday's-sign momentum | 126,340 | — | 0.0233 | 0.0231 (4.13) | 0.094 | — |
-| Uniform prior | 126,340 | 1.6094 | — | — | — | — |
+| **LightGBM challenger** | 125,789 | 1.2506 | 0.0031 | 0.0043 (1.19) | 0 | 0.489 |
+| Logistic (same features) | 125,789 | 1.486 | 0.0062 | -0.0001 (-0.01) | 0.182 | 0.492 |
+| MLP (PyTorch, v2 preview) | 125,789 | 1.4566 | 0.0151 | 0.0035 (0.6) | 0.277 | 0.494 |
+| Yesterday's-sign momentum | 125,789 | — | 0.0157 | 0.0246 (4.08) | 0.134 | — |
+| Uniform prior | 125,789 | 1.6094 | — | — | — | — |
 | control-rule-based (live record) | 111 | — | — | — | — | 0.081 |
 
 control-rule-based is the deactivated (2026-06-07) rule baseline. It predates
 prediction logging, so its frozen record is *trade-level* (ledger): 111 shadow trades, hit rate 0.081, avg P&L 0.319%/trade — no IC is computable,
 so compare it on hit rate and the toy portfolio, not on ranking metrics.
 
+## Ship gate — beat every baseline, pooled out-of-sample
+
+| baseline | baseline pooled IC | challenger pooled IC | verdict |
+|---|---|---|---|
+| Yesterday's-sign momentum | 0.0157 | 0.0031 | **LOSES** |
+| Logistic (same features) | 0.0062 | 0.0031 | **LOSES** |
+| MLP (PyTorch, v2 preview) | 0.0151 | 0.0031 | **LOSES** |
+| Uniform prior (log-loss basis) | — | 0.0031 | beats |
+
+**Verdict: FAILS the design gate** — the challenger loses to Yesterday's-sign momentum, Logistic (same features), MLP (PyTorch, v2 preview) on pooled OOS IC. It ships at shadow tier anyway,
+stated here rather than buried, because: (1) shadow risks nothing and the
+forward run on live grading — not this backtest — is the decisive test;
+(2) the challenger's advantages are on other axes (log-loss, calibration,
+per-day IC consistency) that the pooled-IC gate doesn't see; (3) a simple
+baseline being hard to beat is itself a finding worth publishing. If the
+forward record confirms the loss, the sleeve gets pulled.
+
 ## Significance — the evolution gate's own vocabulary
 
-- Pooled OOS rank IC: **0.0192** over 126,340 graded rows
-- Permutation noise floor (1000 shuffles, 95th pct, as `scripts/ic_noise_floor.py`): **0.0048**
-- Fisher-z 95% lower bound (`PROMOTION_IC_CI_Z = 1.96`): **0.0137**
-- The pooled IC clears the noise floor.
+- Pooled OOS rank IC: **0.0031** over 125,789 graded rows
+- Permutation noise floor (1000 shuffles, 95th pct, as `scripts/ic_noise_floor.py`): **0.005**
+- Fisher-z 95% lower bound (`PROMOTION_IC_CI_Z = 1.96`): **-0.0024**
+- The pooled IC does NOT clear the noise floor.
 
 | horizon | pooled IC | n |
 |---|---|---|
-| open(t+1)→close(t+1) | 0.0184 | 124,970 |
-| open(t+1)→close(t+2) | 0.0146 | 123,561 |
-| open(t+1)→close(t+3) | 0.0096 | 123,600 |
+| open(t+1)→close(t+1) | 0.0024 | 124,523 |
+| open(t+1)→close(t+2) | 0 | 122,752 |
+| open(t+1)→close(t+3) | -0.0063 | 122,325 |
 
 ## CPCV — combinatorial purged cross-validation
 
@@ -142,7 +159,7 @@ so compare it on hit rate and the toy portfolio, not on ranking metrics.
 winning params (grid re-selection inside CPCV would be circular). Where simple
 walk-forward gives one pooled IC, CPCV gives a distribution:
 
-mean **0.0138** · std 0.008 · range [-0.0032, 0.0261] · 0.933 of paths positive.
+mean **0.0173** · std 0.004 · range [0.0099, 0.0222] · 1 of paths positive.
 
 Caveat: CPCV trains on data that postdates some validation blocks — acceptable
 for a stationary-ish feature spec, and the reason promotion still keys on the
@@ -155,9 +172,9 @@ Repo precedent: momentum-trader-vix-gated.
 
 | regime | n | days | pooled IC | mean daily IC |
 |---|---|---|---|---|
-| calm (VIX ≤ 16.4) | 41,842 | 91 | 0.0241 | 0.0163 |
-| mid (16.4 – 19.6) | 40,863 | 88 | 0.0026 | 0.0094 |
-| stressed (VIX > 19.6) | 40,843 | 88 | 0.0267 | 0.0091 |
+| calm (VIX ≤ 16.4) | 41,396 | 90 | 0.0049 | 0.0134 |
+| mid (16.4 – 18.2) | 40,512 | 88 | 0.008 | -0.0025 |
+| stressed (VIX > 18.2) | 40,621 | 88 | -0.0122 | -0.0007 |
 
 ## Multi-horizon heads
 
@@ -170,14 +187,14 @@ balanced weights absorb.
 
 | horizon (sessions) | n OOS | pooled IC | mean daily IC | log-loss |
 |---|---|---|---|---|
-| 1 | 126,340 | 0.0192 | 0.0113 | 1.2972 |
-| 2 | 126,379 | 0.0127 | -0.0003 | 1.4746 |
-| 3 | 126,379 | 0.0173 | -0.0029 | 1.5357 |
-| 5 | 126,379 | 0.0346 | 0.001 | 1.5632 |
+| 1 | 125,789 | 0.0031 | 0.0043 | 1.2506 |
+| 2 | 125,827 | -0.0064 | -0.0034 | 1.4504 |
+| 3 | 125,826 | -0.0083 | -0.0108 | 1.5196 |
+| 5 | 125,824 | -0.0082 | -0.0048 | 1.5462 |
 
 ## Calibration
 
-Multiclass Brier **0.6855** · argmax-confidence ECE **0.0299**.
+Multiclass Brier **0.6701** · argmax-confidence ECE **0.0549**.
 LLM conviction values are famously uncalibrated; a demonstrably calibrated
 challenger is a headline result even where IC ties.
 
@@ -185,71 +202,75 @@ challenger is a headline result even where IC ties.
 
 | predicted prob | n | mean predicted | empirical freq |
 |---|---|---|---|
-| 0.0–0.1 | 88,003 | 0.018 | 0.016 |
-| 0.1–0.2 | 21,823 | 0.167 | 0.03 |
-| 0.2–0.3 | 14,049 | 0.222 | 0.054 |
-| 0.3–0.4 | 1,651 | 0.336 | 0.088 |
-| 0.4–0.5 | 390 | 0.444 | 0.095 |
-| 0.5–0.6 | 222 | 0.542 | 0.086 |
-| 0.6–0.7 | 119 | 0.641 | 0.092 |
-| 0.7–0.8 | 60 | 0.748 | 0.1 |
+| 0.0–0.1 | 104,388 | 0.017 | 0.016 |
+| 0.1–0.2 | 10,892 | 0.159 | 0.039 |
+| 0.2–0.3 | 8,223 | 0.219 | 0.058 |
+| 0.3–0.4 | 1,074 | 0.343 | 0.064 |
+| 0.4–0.5 | 566 | 0.445 | 0.065 |
+| 0.5–0.6 | 308 | 0.546 | 0.088 |
+| 0.6–0.7 | 179 | 0.647 | 0.061 |
+| 0.7–0.8 | 91 | 0.74 | 0.077 |
+| 0.8–0.9 | 51 | 0.839 | 0.157 |
 
 </details>
 <details><summary>Reliability — mild_down</summary>
 
 | predicted prob | n | mean predicted | empirical freq |
 |---|---|---|---|
-| 0.0–0.1 | 7,474 | 0.059 | 0.109 |
-| 0.1–0.2 | 33,722 | 0.167 | 0.193 |
-| 0.2–0.3 | 47,930 | 0.236 | 0.204 |
-| 0.3–0.4 | 22,302 | 0.345 | 0.219 |
-| 0.4–0.5 | 10,069 | 0.442 | 0.245 |
-| 0.5–0.6 | 3,490 | 0.541 | 0.246 |
-| 0.6–0.7 | 1,041 | 0.639 | 0.246 |
-| 0.7–0.8 | 263 | 0.739 | 0.224 |
+| 0.0–0.1 | 9,474 | 0.054 | 0.098 |
+| 0.1–0.2 | 27,801 | 0.162 | 0.195 |
+| 0.2–0.3 | 41,115 | 0.244 | 0.213 |
+| 0.3–0.4 | 27,564 | 0.346 | 0.22 |
+| 0.4–0.5 | 13,251 | 0.442 | 0.225 |
+| 0.5–0.6 | 4,641 | 0.541 | 0.237 |
+| 0.6–0.7 | 1,484 | 0.641 | 0.237 |
+| 0.7–0.8 | 385 | 0.741 | 0.244 |
+| 0.8–0.9 | 71 | 0.831 | 0.282 |
 
 </details>
 <details><summary>Reliability — flat</summary>
 
 | predicted prob | n | mean predicted | empirical freq |
 |---|---|---|---|
-| 0.0–0.1 | 4,261 | 0.072 | 0.316 |
-| 0.1–0.2 | 33,620 | 0.168 | 0.414 |
-| 0.2–0.3 | 27,355 | 0.242 | 0.515 |
-| 0.3–0.4 | 20,137 | 0.348 | 0.566 |
-| 0.4–0.5 | 16,220 | 0.448 | 0.625 |
-| 0.5–0.6 | 11,034 | 0.546 | 0.688 |
-| 0.6–0.7 | 6,211 | 0.646 | 0.741 |
-| 0.7–0.8 | 3,598 | 0.745 | 0.807 |
-| 0.8–0.9 | 2,176 | 0.847 | 0.874 |
-| 0.9–1.0 | 1,728 | 0.944 | 0.927 |
+| 0.0–0.1 | 5,406 | 0.069 | 0.31 |
+| 0.1–0.2 | 25,513 | 0.165 | 0.4 |
+| 0.2–0.3 | 27,464 | 0.246 | 0.481 |
+| 0.3–0.4 | 21,910 | 0.349 | 0.555 |
+| 0.4–0.5 | 17,220 | 0.447 | 0.616 |
+| 0.5–0.6 | 11,225 | 0.546 | 0.675 |
+| 0.6–0.7 | 6,754 | 0.646 | 0.738 |
+| 0.7–0.8 | 4,251 | 0.746 | 0.807 |
+| 0.8–0.9 | 2,835 | 0.848 | 0.864 |
+| 0.9–1.0 | 3,211 | 0.955 | 0.943 |
 
 </details>
 <details><summary>Reliability — mild_up</summary>
 
 | predicted prob | n | mean predicted | empirical freq |
 |---|---|---|---|
-| 0.0–0.1 | 6,641 | 0.06 | 0.1 |
-| 0.1–0.2 | 32,586 | 0.168 | 0.202 |
-| 0.2–0.3 | 49,439 | 0.238 | 0.201 |
-| 0.3–0.4 | 22,875 | 0.345 | 0.214 |
-| 0.4–0.5 | 10,017 | 0.442 | 0.228 |
-| 0.5–0.6 | 3,411 | 0.541 | 0.235 |
-| 0.6–0.7 | 1,049 | 0.64 | 0.256 |
-| 0.7–0.8 | 277 | 0.74 | 0.238 |
+| 0.0–0.1 | 10,002 | 0.053 | 0.1 |
+| 0.1–0.2 | 27,959 | 0.163 | 0.189 |
+| 0.2–0.3 | 42,605 | 0.244 | 0.207 |
+| 0.3–0.4 | 27,424 | 0.345 | 0.221 |
+| 0.4–0.5 | 12,105 | 0.442 | 0.231 |
+| 0.5–0.6 | 4,107 | 0.54 | 0.235 |
+| 0.6–0.7 | 1,171 | 0.64 | 0.254 |
+| 0.7–0.8 | 346 | 0.737 | 0.254 |
+| 0.8–0.9 | 65 | 0.831 | 0.169 |
 
 </details>
 <details><summary>Reliability — strong_up</summary>
 
 | predicted prob | n | mean predicted | empirical freq |
 |---|---|---|---|
-| 0.0–0.1 | 88,996 | 0.016 | 0.015 |
-| 0.1–0.2 | 20,685 | 0.166 | 0.021 |
-| 0.2–0.3 | 14,181 | 0.224 | 0.048 |
-| 0.3–0.4 | 1,719 | 0.335 | 0.073 |
-| 0.4–0.5 | 398 | 0.444 | 0.065 |
-| 0.5–0.6 | 202 | 0.546 | 0.084 |
-| 0.6–0.7 | 92 | 0.645 | 0.087 |
+| 0.0–0.1 | 105,084 | 0.015 | 0.017 |
+| 0.1–0.2 | 12,327 | 0.164 | 0.033 |
+| 0.2–0.3 | 6,374 | 0.223 | 0.057 |
+| 0.3–0.4 | 1,047 | 0.343 | 0.071 |
+| 0.4–0.5 | 510 | 0.442 | 0.076 |
+| 0.5–0.6 | 231 | 0.544 | 0.095 |
+| 0.6–0.7 | 126 | 0.646 | 0.119 |
+| 0.7–0.8 | 64 | 0.744 | 0.172 |
 
 </details>
 
@@ -257,19 +278,20 @@ challenger is a headline result even where IC ties.
 
 | class | support | predicted | precision | recall |
 |---|---|---|---|---|
-| strong_down | 3,053 | 7,301 | 0.068 | 0.162 |
-| mild_down | 25,657 | 27,668 | 0.243 | 0.262 |
-| flat | 69,501 | 53,923 | 0.677 | 0.525 |
-| mild_up | 25,497 | 28,006 | 0.23 | 0.253 |
-| strong_up | 2,632 | 9,442 | 0.053 | 0.191 |
+| strong_down | 2,749 | 4,083 | 0.072 | 0.107 |
+| mild_down | 25,724 | 33,865 | 0.238 | 0.313 |
+| flat | 69,340 | 54,440 | 0.678 | 0.532 |
+| mild_up | 25,301 | 28,870 | 0.237 | 0.27 |
+| strong_up | 2,675 | 4,531 | 0.062 | 0.104 |
 
 ## Toy top-5 long portfolio (net of costs)
 
 Equal-weight long the top-5 scores each validation day, net of 0.5% round-trip (~0.50% round-trip cost on £2,000 (stamp 0.5%)):
-mean daily net -0.6232% · hit rate 0.344 · cumulative -170.13% over 273 days · worst day -5.95%.
+mean daily net -0.6215% · hit rate 0.359 · cumulative -169.66% over 273 days · worst day -5.06%.
 A sanity harness, not a backtest — no slippage, no capacity, fills at the
-label's own open. UK-EU waits for v1.1 because 0.5% stamp duty moves this
-from marginal to negative.
+label's own open. The 0.5% LSE stamp duty dominates this region's cost
+estimate — which is why the live strategy also applies a pick-time cost
+gate (predicted move ≥ cost_gate_multiplier × estimated round-trip).
 
 ## Feature attribution — gain vs TreeSHAP
 
@@ -279,37 +301,36 @@ TreeSHAP for trees). The signed column is the mean push toward `strong_up`.
 
 | feature | gain | mean abs SHAP | signed → strong_up |
 |---|---|---|---|
-| `parkinson_10d` | 168,856 | 0.61527 | -0.19245 |
-| `overnight_gap` | 89,529 | 0.10689 | 0.011 |
-| `ret_1d` | 81,418 | 0.14983 | -0.02229 |
-| `dollar_volume_pctile` | 76,964 | 0.13264 | 0.00423 |
-| `volume_ratio` | 76,113 | 0.10708 | -0.00771 |
-| `ret_1d_rank` | 75,368 | 0.13484 | 0.03022 |
-| `close_vs_sma63` | 73,786 | 0.10991 | -0.00239 |
-| `vol_of_vol` | 72,283 | 0.13498 | 0.04355 |
-| `ret_21d_z` | 70,972 | 0.12409 | -0.01471 |
-| `ret_5d` | 69,753 | 0.09868 | 0.01806 |
-| `vol_21d` | 69,604 | 0.21043 | -0.12076 |
-| `ret_10d` | 68,339 | 0.11545 | -0.00463 |
-| `vol_10d` | 68,118 | 0.15801 | 0.03015 |
-| `ret_21d` | 65,269 | 0.11999 | 0.01915 |
-| `close_vs_sma10` | 61,886 | 0.1103 | 0.01914 |
-| `close_vs_sma21` | 55,196 | 0.09108 | 0.00487 |
-| `dow_thu` | 13,152 | 0.03548 | 0.00129 |
-| `dow_wed` | 10,051 | 0.02641 | 0.00033 |
-| `dow_mon` | 8,320 | 0.02723 | 0.00006 |
-| `dow_tue` | 7,918 | 0.04537 | 0.00036 |
+| `parkinson_10d` | 199,723 | 0.69577 | -0.22243 |
+| `overnight_gap` | 92,644 | 0.10654 | 0.00894 |
+| `dollar_volume_pctile` | 88,987 | 0.15519 | 0.00483 |
+| `vol_21d` | 83,299 | 0.29794 | -0.11981 |
+| `ret_1d` | 80,863 | 0.12459 | -0.00403 |
+| `volume_ratio` | 80,746 | 0.12709 | 0.0005 |
+| `vol_of_vol` | 77,999 | 0.16311 | 0.04768 |
+| `vol_10d` | 77,837 | 0.17962 | 0.07922 |
+| `ret_1d_rank` | 77,347 | 0.12694 | 0.00447 |
+| `close_vs_sma63` | 76,433 | 0.12372 | 0.08168 |
+| `ret_5d` | 75,548 | 0.13368 | 0.00605 |
+| `ret_21d_z` | 73,227 | 0.15675 | -0.00693 |
+| `ret_10d` | 71,022 | 0.13101 | 0.02955 |
+| `ret_21d` | 66,583 | 0.15537 | -0.05519 |
+| `close_vs_sma10` | 64,700 | 0.11572 | 0.00273 |
+| `close_vs_sma21` | 61,608 | 0.14063 | -0.03513 |
+| `dow_tue` | 8,766 | 0.05339 | -0.0008 |
+| `dow_fri` | 8,418 | 0.05368 | 0.00032 |
+| `dow_thu` | 7,916 | 0.05586 | -0.00134 |
+| `dow_mon` | 6,882 | 0.03495 | 0.00112 |
 
 ## Limitations
 
-- **Pooled IC (0.0192) exceeds the mean per-date IC (0.0113).** Part of the pooled ranking edge comes from
-  cross-date level effects rather than within-day stock selection. The
-  pooled number is quoted because it is what `metrics.py` computes at
-  runtime; the per-date IC and the toy portfolio are the sober view.
+- **Loses to Yesterday's-sign momentum, Logistic (same features), MLP (PyTorch, v2 preview) on pooled OOS IC** — the design's
+  ship gate fails for this sleeve; see the Ship gate section for the
+  numbers and the explicit case for running it forward anyway.
 - **Survivorship:** today's index membership applied historically omits
   delisted names and flatters the backtest slightly. The forward shadow run
   is immune — which is the argument for shadow deployment.
-- **Depth:** the snapshot spans 2023-08-31 → 2026-05-01 (~3 years — the deep-history stretch). Broader than v1's single year, still
+- **Depth:** the snapshot spans 2023-08-31 → 2026-07-28 (~3 years — the deep-history stretch). Broader than v1's single year, still
   far from a full cycle; the VIX-tercile table above is the regime lens.
   Deeper history also worsens survivorship slightly (more delistings missing).
 - **Grid selected on the same OOS folds it reports.** 6 combos — selection
@@ -324,4 +345,4 @@ python -m trading_bot.ml.data backfill --region uk-eu   # rebuild state/ml/train
 python -m trading_bot.ml.train --region uk-eu --seed 42  # card + model_h*.txt + manifest
 ```
 
-Data snapshot sha256[:16] `b9d68a5efc4126fa` · feature spec `98e07f46d8aeaeef` · LightGBM params: lr=0.1, depth=6, leaves=31, min_leaf=100, feature/bagging 0.8, balanced weights.
+Data snapshot sha256[:16] `b9d68a5efc4126fa` · feature spec `58bd0e3b705e8d26` · LightGBM params: lr=0.1, depth=6, leaves=31, min_leaf=100, feature/bagging 0.8, balanced weights.

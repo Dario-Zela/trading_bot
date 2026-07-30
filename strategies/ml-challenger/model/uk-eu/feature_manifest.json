@@ -22,8 +22,8 @@
     "dow_thu",
     "dow_fri"
   ],
-  "spec_hash": "98e07f46d8aeaeef",
-  "spec_version": 1,
+  "spec_hash": "58bd0e3b705e8d26",
+  "spec_version": 2,
   "classes": [
     "strong_down",
     "mild_down",
@@ -32,11 +32,11 @@
     "strong_up"
   ],
   "class_midpoints": {
-    "strong_down": -5.521,
-    "mild_down": -1.899,
-    "flat": 0.018,
-    "mild_up": 1.871,
-    "strong_up": 5.744
+    "strong_down": -5.6,
+    "mild_down": -1.903,
+    "flat": 0.017,
+    "mild_up": 1.879,
+    "strong_up": 5.724
   },
   "label": "next-session open\u2192close simple return %, classes per meta.reflection._classify_outcome",
   "region": "uk-eu",
@@ -48,45 +48,45 @@
   ],
   "midpoints_by_horizon": {
     "1": {
-      "strong_down": -5.521,
-      "mild_down": -1.899,
-      "flat": 0.018,
-      "mild_up": 1.871,
-      "strong_up": 5.744
+      "strong_down": -5.6,
+      "mild_down": -1.903,
+      "flat": 0.017,
+      "mild_up": 1.879,
+      "strong_up": 5.724
     },
     "2": {
-      "strong_down": -6.017,
-      "mild_down": -2.031,
+      "strong_down": -6.17,
+      "mild_down": -2.04,
       "flat": 0.022,
-      "mild_up": 2.017,
-      "strong_up": 6.21
+      "mild_up": 2.035,
+      "strong_up": 7.217
     },
     "3": {
-      "strong_down": -6.27,
-      "mild_down": -2.12,
-      "flat": 0.02,
-      "mild_up": 2.111,
-      "strong_up": 6.449
+      "strong_down": -6.439,
+      "mild_down": -2.13,
+      "flat": 0.021,
+      "mild_up": 2.129,
+      "strong_up": 7.737
     },
     "5": {
-      "strong_down": -6.626,
+      "strong_down": -6.909,
       "mild_down": -2.241,
-      "flat": 0.012,
-      "mild_up": 2.239,
-      "strong_up": 6.922
+      "flat": 0.016,
+      "mild_up": 2.255,
+      "strong_up": 8.548
     }
   },
-  "trained_at": "2026-07-30T16:36:18+00:00",
+  "trained_at": "2026-07-30T19:58:13+00:00",
   "seed": 42,
   "snapshot_hash": "b9d68a5efc4126fa",
   "train_window_sessions": 250,
   "train_date_range": [
     "2023-08-31",
-    "2026-05-01"
+    "2026-07-28"
   ],
   "best_params": {
     "learning_rate": 0.1,
     "max_depth": 6,
-    "num_boost_round": 1012
+    "num_boost_round": 1258
   }
 }
