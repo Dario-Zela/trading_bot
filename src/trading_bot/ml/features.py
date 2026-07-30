@@ -68,6 +68,31 @@ _CONTINUOUS_COLUMNS = [
 
 FEATURE_COLUMNS = _CONTINUOUS_COLUMNS + _DOW_COLUMNS
 
+# Human-readable definitions, rendered into the model card's feature table.
+FEATURE_DEFINITIONS = {
+    "ret_1d": "ln(C_t / C_{t−1})",
+    "ret_5d": "ln(C_t / C_{t−5})",
+    "ret_10d": "ln(C_t / C_{t−10})",
+    "ret_21d": "ln(C_t / C_{t−21})",
+    "overnight_gap": "ln(O_t / C_{t−1}) — the gap into the feature bar",
+    "close_vs_sma10": "C / SMA₁₀ − 1",
+    "close_vs_sma21": "C / SMA₂₁ − 1",
+    "close_vs_sma63": "C / SMA₆₃ − 1",
+    "ret_21d_z": "21-day return z-scored cross-sectionally per date",
+    "vol_10d": "10-day std of daily log returns, annualised (×√252)",
+    "vol_21d": "21-day std of daily log returns, annualised (×√252)",
+    "parkinson_10d": "√(mean₁₀(ln(H/L)²) / (4 ln 2))",
+    "vol_of_vol": "21-day std of the rolling 10-day vol",
+    "volume_ratio": "ln(mean(V,5) / mean(V,21))",
+    "dollar_volume_pctile": "percentile of C × mean(V,21) within that date's cross-section",
+    "ret_1d_rank": "previous-day return percentile rank within the universe that day",
+    "dow_mon": "day-of-week one-hot (Monday)",
+    "dow_tue": "day-of-week one-hot (Tuesday)",
+    "dow_wed": "day-of-week one-hot (Wednesday)",
+    "dow_thu": "day-of-week one-hot (Thursday)",
+    "dow_fri": "day-of-week one-hot (Friday)",
+}
+
 
 def spec_hash() -> str:
     """Hash of the feature spec — column order, parameters, version.
