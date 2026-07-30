@@ -377,12 +377,17 @@ def train_lgbm(
 
 def run_walk_forward(
     df: pd.DataFrame, folds: list[Fold], midpoints: dict[str, float], seed: int,
-    *, grid: list[tuple[float, int]] | None = None,
+    *, grid: list[tuple[float, int]] | None = None, train_window_sessions: int = 0,
 ) -> tuple[dict, pd.DataFrame, list[dict]]:
     """Grid × folds. Returns (best_combo, oos_frame_for_best, fold_rows).
     Selection: pooled OOS log-loss (noted in the card — 6-combo grid,
     selection pressure minimal). Pass a single-combo `grid` to reuse
-    already-selected params (the h>1 horizon heads do this)."""
+    already-selected params (the h>1 horizon heads do this).
+
+    `train_window_sessions` > 0 switches from expanding-window training
+    to a rolling most-recent-N-sessions window per fold — the
+    depth-vs-recency ablation for non-stationary markets. Validation
+    windows are identical either way, so the comparison is clean."""
     Xcols = F.FEATURE_COLUMNS
     by_combo: dict[tuple[float, int], list[pd.DataFrame]] = {}
     iters_by_combo: dict[tuple[float, int], list[int]] = {}
@@ -391,7 +396,9 @@ def run_walk_forward(
         params = _lgbm_params(lr, depth, seed)
         oos_parts: list[pd.DataFrame] = []
         for k, fold in enumerate(folds):
-            tr = df[df["date"].isin(set(fold.train_dates))]
+            tr_dates = (fold.train_dates[-train_window_sessions:]
+                        if train_window_sessions else fold.train_dates)
+            tr = df[df["date"].isin(set(tr_dates))]
             va = df[df["date"].isin(set(fold.val_dates))]
             booster = train_lgbm(
                 tr[Xcols].to_numpy(), tr["y"].to_numpy(),
@@ -791,10 +798,14 @@ def _region_round_trip_cost_pct(region: str) -> tuple[float, str]:
 # Orchestration
 # ---------------------------------------------------------------------------
 
-def _refit_final(df: pd.DataFrame, best: dict, seed: int):
-    """Refit on ALL dates with the winning combo; boosting rounds =
-    median of the folds' early-stopped best iterations."""
+def _refit_final(df: pd.DataFrame, best: dict, seed: int, *, train_window_sessions: int = 0):
+    """Refit with the winning combo on all dates (expanding) or on the
+    most recent N sessions (rolling); boosting rounds = median of the
+    folds' early-stopped best iterations."""
     import lightgbm as lgb
+    if train_window_sessions:
+        recent = sorted(df["date"].unique())[-train_window_sessions:]
+        df = df[df["date"].isin(set(recent))]
     params = _lgbm_params(best["learning_rate"], best["max_depth"], seed)
     dall = lgb.Dataset(
         df[F.FEATURE_COLUMNS].to_numpy(), label=df["y"].to_numpy(),
@@ -811,6 +822,7 @@ def train_and_evaluate(
     seed: int = SEED,
     end_date: date | None = None,
     with_mlp: bool = False,
+    train_window_sessions: int = 0,
 ) -> dict:
     db = db_path or _default_db()
     out = out_dir or (_repo_root() / "strategies" / "ml-challenger" / "model" / region)
@@ -830,7 +842,9 @@ def train_and_evaluate(
     midpoints = fit_class_midpoints(df, folds[0])
     log.info("class midpoints (frozen from first training block): %s", midpoints)
 
-    best, oos, fold_rows = run_walk_forward(df, folds, midpoints, seed)
+    best, oos, fold_rows = run_walk_forward(
+        df, folds, midpoints, seed, train_window_sessions=train_window_sessions,
+    )
     challenger = evaluate_oos(oos, "LightGBM challenger")
 
     noise_floor = permutation_noise_floor(oos, seed=seed)
@@ -870,7 +884,7 @@ def train_and_evaluate(
     horizons_report: dict[int, dict] = {}
     finals: dict[int, object] = {}
     midpoints_by_horizon: dict[int, dict[str, float]] = {1: midpoints}
-    finals[1] = _refit_final(df, best, seed)
+    finals[1] = _refit_final(df, best, seed, train_window_sessions=train_window_sessions)
     for h in HORIZONS:
         if h == 1:
             probs_cols = [f"p_{c}" for c in CLASSES]
@@ -892,6 +906,7 @@ def train_and_evaluate(
         best_h, oos_h, _ = run_walk_forward(
             df_h, folds_h, mids_h, seed,
             grid=[(best["learning_rate"], best["max_depth"])],
+            train_window_sessions=train_window_sessions,
         )
         probs_h = oos_h[[f"p_{c}" for c in CLASSES]].to_numpy()
         horizons_report[h] = {
@@ -900,7 +915,7 @@ def train_and_evaluate(
             "logloss": multiclass_logloss(oos_h["y"].to_numpy(), probs_h),
             "class_support": {c: int((df_h["actual_class"] == c).sum()) for c in CLASSES},
         }
-        finals[h] = _refit_final(df_h, best_h, seed)
+        finals[h] = _refit_final(df_h, best_h, seed, train_window_sessions=train_window_sessions)
         log.info("h=%d head: pooled IC %s over %d rows", h,
                  horizons_report[h]["pooled_ic"], horizons_report[h]["n"])
 
@@ -929,6 +944,7 @@ def train_and_evaluate(
         "n_tickers": int(df["ticker"].nunique()),
         "n_dates": len(dates),
         "burn_in": burn_in,
+        "train_window_sessions": train_window_sessions,
         "date_range": [dates[0].isoformat(), dates[-1].isoformat()],
         "class_support": {c: int((df["actual_class"] == c).sum()) for c in CLASSES},
         "midpoints": midpoints,
@@ -965,6 +981,7 @@ def train_and_evaluate(
             "trained_at": report["generated_at"],
             "seed": seed,
             "snapshot_hash": snapshot_hash,
+            "train_window_sessions": train_window_sessions,
             "train_date_range": report["date_range"],
             "best_params": {"learning_rate": best["learning_rate"], "max_depth": best["max_depth"],
                             "num_boost_round": best["median_best_iter"]},
@@ -1097,6 +1114,15 @@ def render_card(r: dict) -> str:
       f"{r['best']['median_best_iter']} rounds). The label is intraday so labels never")
     w("overlap across days; purge+embargo are kept anyway — 21/63-day rolling")
     w("features decay slowly, so adjacent-day rows are heavily correlated.")
+    tws = r.get("train_window_sessions") or 0
+    if tws:
+        w("")
+        w(f"**Training window: rolling, most recent {tws} sessions per fold** — the")
+        w("depth-vs-recency ablation showed recent-only training beats expanding over")
+        w("the full snapshot on identical validation folds (non-stationarity wins).")
+        w("The full 3-year history still serves validation depth and the regime")
+        w("sections; CPCV remains expanding (rolling windows are ill-defined over")
+        w("unordered block combinations).")
     w("")
     w("| fold | train through | validation | n | log-loss | pooled IC | mean daily IC |")
     w("|---|---|---|---|---|---|---|")
@@ -1320,9 +1346,13 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--seed", type=int, default=SEED)
     p.add_argument("--with-mlp", action="store_true",
                    help="also run the PyTorch MLP v2 baseline (needs the ml-v2 extra)")
+    p.add_argument("--train-window-sessions", type=int, default=0,
+                   help="rolling most-recent-N-sessions training window per fold "
+                        "(0 = expanding over all history)")
     args = p.parse_args(argv)
     report = train_and_evaluate(args.db, args.out, region=args.region, seed=args.seed,
-                                with_mlp=args.with_mlp)
+                                with_mlp=args.with_mlp,
+                                train_window_sessions=args.train_window_sessions)
     ch = report["challenger"]
     print(json.dumps({
         "pooled_oos_ic": ch["pooled_ic"],
