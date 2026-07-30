@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-30",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 GRMN +16%, GEHC +12%, CTSH +11%, SBAC +6%, INTU +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (LII -21%, VRT -17%, MAS -11%, KLAC -11%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: LII (-20.97%) \u2014 Q2 revenue missed ($1.55B vs $1.56B est) and FY2026 EPS guidance cut to $23-24 (mid $23.50, ~4.7% below consensus) on ~30% YoY residential new-construction revenue decline Why we passed: Outside any active strategy's universe \u2014 LII is a large-cap industrial/HVAC name whose earnings-day gap-down is a classic post-results catalyst move that pre-market/gap scanners could catch, but it likely sits outside the tradable universe's sector/cap screen entirely (not a typical tech/momentum-cohort ticker).",
+  "top_movers": [
+    {
+      "ticker": "GRMN",
+      "move_pct": 16.235,
+      "close": 294.83,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 revenue hit record $2.02B (+11% YoY), EPS $2.81 vs $2.27 est; raised FY2026 revenue/EPS guidance on wearables & marine strength",
+      "miss_reason": "Outside any active strategy's universe \u2014 GRMN is a Swiss-domiciled, NYSE-listed consumer-hardware/GPS large-cap, a sector/domicile bucket the bot's tracked universes don't cover; the +16% move was a pre-market earnings gap, so no intraday signal could have caught it anyway",
+      "suggestion": "Add an earnings-gate scanner that admits any name (regardless of static universe membership) showing a pre-market gap \u226515% on an earnings/guidance beat, sized small, rather than relying only on curated sector universes.",
+      "failed": false
+    },
+    {
+      "ticker": "GEHC",
+      "move_pct": 12.151,
+      "close": 71.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 earnings beat: EPS $1.24 vs ~$1.04-1.09 est, revenue $5.3B up 5.7%, record 11.1% organic orders growth and $23.9B backlog, plus $129M tariff refund boost.",
+      "miss_reason": "Outside any active strategy's universe \u2014 GEHC (mid-cap med-tech spinoff) isn't tracked by the bot's momentum/mean-reversion/news-reactive strategies, so no filter ever saw the pre-market earnings gap to act on.",
+      "suggestion": "Add mid-cap healthcare-equipment names with post-earnings gap \u226510% and volume \u22652x avg to the earnings-gate universe so a next-day reaction can be evaluated even if pre-market signals were missed.",
+      "failed": false
+    },
+    {
+      "ticker": "CTSH",
+      "move_pct": 11.25,
+      "close": 55.97,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 results (Jul 29 AMC): revenue $5.48B (+4.5% YoY, beat est.), raised FY26 adj. EPS guidance to $5.70-5.82 from prior lower range; large deal wins boosted sentiment.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CTSH (large-cap IT services/ADR-adjacent, NASDAQ) isn't in the tradable list, so the earnings gap-up on 7/30 was never evaluated by any filter; this was a pure catalyst move where pre-market positioning ahead of the print would've been required, not a post-move signal.",
+      "suggestion": "Add large-cap IT-services names with market cap >$30B (e.g. CTSH) to the momentum-trader universe, and enable an earnings-gate rule that flags names with confirmed post-earnings gap \u22655% within the first 30min of open for next-day inclusion.",
+      "failed": false
+    },
+    {
+      "ticker": "SBAC",
+      "move_pct": 6.494,
+      "close": 186.29,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single fresh catalyst; sector-wide tower REIT rally on improving sentiment (post debt offering, S&P upgrade, analyst upgrade) plus positioning ahead of Aug 3 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SBAC is a large-cap telecom-infrastructure REIT, a sector/asset class the bot's universes don't currently cover, so no filter ever saw it.",
+      "suggestion": "Add tower/infra REITs (SBAC, AMT, CCI) to a REIT-sector universe bucket so sector-driven rallies like this trigger a look even without a single-name catalyst.",
+      "failed": false
+    },
+    {
+      "ticker": "INTU",
+      "move_pct": 6.435,
+      "close": 333.13,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single dated catalyst; extends a multi-week relief rally (+25% in 30d) off H1's TurboTax-pricing selloff, aided by a 7/15 Zacks Buy upgrade on rising EPS estimates ahead of Aug earnings.",
+      "miss_reason": "Momentum-trader, the lens for continuation rallies, has been deactivated since 2026-05-30; news-reactive's prefilter explicitly drops trending names lacking a same-day catalyst; mean-reverter fades winners, not chases them.",
+      "suggestion": "Reactivate momentum-trader for region us, or add a news-reactive prefilter.md rule admitting >=15%-30d rebound names lacking a same-day headline, so continuation rallies aren't dropped by every active US strategy.",
+      "failed": false
+    },
+    {
+      "ticker": "IT",
+      "move_pct": 6.295,
+      "close": 165.65,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single headline catalyst \u2014 extension of a multi-day, sector-wide IT-services rally (Cognizant, EPAM also up) and short-covering ahead of Aug 4 Q2 earnings, despite an active fiduciary-duty probe overhang.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Gartner sits in research/advisory (professional services), not the software/IT-services sector codes the bot's tech universes scan, and its litigation/governance overhang (Bernstein Liebhard probe, -44% YTD) likely keeps it off watchlists as a 'special situation' rather than a t",
+      "suggestion": "Add a sector-code mapping so research & advisory firms (Gartner, Forrester-type names) are included wherever peer IT-services names are tracked, rather than excluded purely on GICS sub-industry.",
+      "failed": false
+    },
+    {
+      "ticker": "LII",
+      "move_pct": -20.968,
+      "close": 430.02,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 revenue missed ($1.55B vs $1.56B est) and FY2026 EPS guidance cut to $23-24 (mid $23.50, ~4.7% below consensus) on ~30% YoY residential new-construction revenue decline",
+      "miss_reason": "Outside any active strategy's universe \u2014 LII is a large-cap industrial/HVAC name whose earnings-day gap-down is a classic post-results catalyst move that pre-market/gap scanners could catch, but it likely sits outside the tradable universe's sector/cap screen entirely (not a typical tech/momentum-cohort ticker).",
+      "suggestion": "Add an earnings-day gap scanner that pulls in any S&P 400/500 industrial with a post-report gap \u2264 -15% within the first 30 minutes, regardless of existing sector/universe membership, so guidance-cut selloffs like this aren't structurally excluded.",
+      "failed": false
+    },
+    {
+      "ticker": "VRT",
+      "move_pct": -17.258,
+      "close": 223.04,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 EPS beat ($1.52 vs $1.43 est) but revenue missed ($3.27B vs $3.37B est) on supply-chain timing delays; guidance raised anyway, stock still fell 17.3%.",
+      "miss_reason": "Outside any active strategy's universe \u2014 VRT is a large-cap data-center/AI-infrastructure industrial name whose move was driven by a pre-market earnings gap; a name in this category likely isn't in scope for the bot's tradable list at all.",
+      "suggestion": "Add large-cap AI-infrastructure/data-center industrials (VRT, and peers) to universe with an earnings-gate that releases names showing a pre-market gap \u226510% within the first 15 minutes of open.",
+      "failed": false
+    },
+    {
+      "ticker": "MAS",
+      "move_pct": -11.089,
+      "close": 72.56,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 revenue missed ($1.99B vs $2.09B est, -4.6% surprise) on weak DIY paint & plumbing volumes; EPS beat was driven by a one-off $95M tariff refund, not raised guidance.",
+      "miss_reason": "Outside any active strategy's universe \u2014 MAS is a mid-cap building-products/industrials name with low-beta, dividend-payer characteristics, a profile that typically doesn't clear a momentum/news-reactive bot's sector or volatility filters.",
+      "suggestion": "Add a post-earnings-gap scanner that ingests all NYSE/NASDAQ reporters overnight (not just current-universe tickers) and flags any name with |gap| \u2265 8% at open for a one-day inclusion, regardless of sector/cap filters.",
+      "failed": false
+    },
+    {
+      "ticker": "KLAC",
+      "move_pct": -10.802,
+      "close": 170.19,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "KLA beat Q4 FY26 revenue/EPS estimates (record $3.66B revenue, released 7/28) and raised FY27 revenue guidance, but weaker gross-margin mix triggered a sharp sell-the-news drop.",
+      "miss_reason": "Outside any active strategy's universe \u2014 KLAC is a mega-cap semiconductor-equipment name; the bot's coverage list evidently isn't scoped to semi-cap-equipment tickers, so it was never eligible regardless of the move's size.",
+      "suggestion": "Add core semi-cap-equipment names (KLAC, LRCX, AMAT, ASML) to universe with an earnings-reactive gate that flags post-earnings gaps \u22657% for next-day mean-reversion eligibility.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-30T19:34:21.142076+00:00"
+}
