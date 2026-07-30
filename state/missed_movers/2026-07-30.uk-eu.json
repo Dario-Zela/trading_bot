@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-30",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 KER.PA +14%, CRDA.L +8%, UNA.AS +8%, WKL.AS +7%, RHM.DE +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (RMS.PA -12%, IFX.DE -6%, ASM.AS -5%, PHIA.AS -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: KER.PA (+14.31%) \u2014 Q2 2026 earnings beat: Gucci's sales decline slowed to -2% (vs -4% est), H1 revenue returned to growth after 12 quarters; sparked broker upgrades (HSBC to Buy, PT \u20ac340) and a two-day rally. Why we passed: Outside any active strategy's universe \u2014 KER.PA is a large-cap French luxury/consumer-discretionary conglomerate (CAC 40), likely excluded if uk-eu universe skews toward UK-listed or non-luxury sectors. Even if covered, the move was a pre-market earnings gap (results released before Paris open 7/28) that a post-open re",
+  "top_movers": [
+    {
+      "ticker": "KER.PA",
+      "move_pct": 14.311,
+      "close": 286.35,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 earnings beat: Gucci's sales decline slowed to -2% (vs -4% est), H1 revenue returned to growth after 12 quarters; sparked broker upgrades (HSBC to Buy, PT \u20ac340) and a two-day rally.",
+      "miss_reason": "Outside any active strategy's universe \u2014 KER.PA is a large-cap French luxury/consumer-discretionary conglomerate (CAC 40), likely excluded if uk-eu universe skews toward UK-listed or non-luxury sectors. Even if covered, the move was a pre-market earnings gap (results released before Paris open 7/28) that a post-open re",
+      "suggestion": "Expand uk-eu universe to include CAC 40/major Euronext Paris large-caps by market cap, and add an earnings-day gap rule that releases names with pre-open results showing post-print gap \u226510% for same-day entry consideration.",
+      "failed": false
+    },
+    {
+      "ticker": "CRDA.L",
+      "move_pct": 8.034,
+      "close": 31.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "JPMorgan upgraded CRDA to 'Overweight' on 7/30, capping a re-rating after H1 results beat (organic sales +4.6%, Beauty Actives +19%) and a Citi PT hike on 7/29.",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 CRDA.L is a UK specialty-chemicals large-cap (FTSE 100), a sector/cap bucket not covered by the uk-eu strategies' tradable lists.",
+      "suggestion": "Add FTSE 100 specialty-chemicals names to the uk-eu universe, or add a sell-side-upgrade scanner that pulls in any index constituent hit with a same-day broker upgrade + prior-week earnings beat.",
+      "failed": false
+    },
+    {
+      "ticker": "UNA.AS",
+      "move_pct": 7.93,
+      "close": 58.39,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 results beat (5.8% underlying sales growth vs 4.3% est, EPS \u20ac1.61 vs \u20ac1.59 est) + raised FY26 guidance, reported 2026-07-28; two sell-side price-target hikes (BofA, TD Cowen) extended the rally into 2026-07-30.",
+      "miss_reason": "UNA.AS is a mega-cap, low-beta EU consumer-staples name \u2014 outside any active strategy's universe, likely because those universes skew toward smaller/higher-beta liquid names or exclude defensive staples. The move was also a 2-day-old post-earnings drift, not a fresh same-day signal.",
+      "suggestion": "Add a post-earnings-drift scanner that flags large-caps with cumulative gap \u22655% over the 2 trading days following results, so late-drift continuation in mega-cap staples isn't missed just because the news broke pre-open two sessions ago.",
+      "failed": false
+    },
+    {
+      "ticker": "WKL.AS",
+      "move_pct": 6.681,
+      "close": 71.86,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No specific same-day news found; move likely reflects continued re-rating after JPMorgan's Jul 9 Overweight upgrade (PT raised to \u20ac87 on 'AI moat' thesis) ahead of Aug 5 HY results.",
+      "miss_reason": "Outside any active strategy's universe \u2014 WKL.AS is a large-cap (~\u20ac30-35B) Dutch info-services/publisher on Euronext Amsterdam. Likely excluded not by size but because universes are built from fixed sector/index constituent lists that don't cover diversified publishing/professional-info names.",
+      "suggestion": "Add AEX blue-chip / diversified-info-services constituents to the uk-eu universe build, or add a sector-agnostic mega-cap (>\u20ac20B) inclusion rule so names like WKL.AS aren't dropped purely for missing a sector tag.",
+      "failed": false
+    },
+    {
+      "ticker": "RHM.DE",
+      "move_pct": 6.386,
+      "close": 1156.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 earnings beat: core profit ~\u20ac562M (~2x YoY, +20% vs est), revenue +70% to \u20ac3.3B, order backlog surpassed \u20ac80B \u2014 shares jumped ~9% on the print.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RHM.DE is a German defense/arms manufacturer (DAX, ~\u20ac53B cap); likely screened out by a sector/ESG 'controversial weapons' exclusion rather than a cap or liquidity filter.",
+      "suggestion": "Audit the sector-exclusion list: if defense names are blanket-excluded on ESG grounds, add an explicit allowlist override for DAX/FTSE defense primes (RHM.DE, BA.L) so earnings-gate logic can still evaluate them.",
+      "failed": false
+    },
+    {
+      "ticker": "SGE.L",
+      "move_pct": 5.501,
+      "close": 9.398,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 trading update: revenue growth accelerated to +11% (\u00a32.06B), cloud-native +25%, AI/Sage Intacct momentum; FY guidance reiterated",
+      "miss_reason": "Outside any active strategy's universe \u2014 SGE.L is a FTSE 100 large-cap enterprise software name; uk-eu strategies appear scoped to smaller/mid-cap or non-software sectors, so a scheduled pre-market trading-update gap-up on a name never in the watchlist couldn't be caught regardless of signal quality.",
+      "suggestion": "Add FTSE 100 enterprise-software/SaaS constituents (SGE.L, and peers) to the uk-eu universe, or add an earnings-gate rule admitting any FTSE 100 name with a scheduled trading update showing accelerating YoY revenue growth \u226510% for same-day review.",
+      "failed": false
+    },
+    {
+      "ticker": "RMS.PA",
+      "move_pct": -12.474,
+      "close": 1484.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "H1/Q2 2026 results (Jul 29): revenue grew ~6-7% cc but FX cut ~\u20ac360m and operating margin fell ~40bps, disappointing a market pricing in more; shares fell ~10-12%.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RMS.PA is a EUR-denominated, ultra-high-priced (>\u20ac1,400/share) CAC40 luxury megacap; static uk-eu universe lists likely exclude it on price/sector screens even though it's highly liquid.",
+      "suggestion": "Add CAC40 luxury megacaps (RMS, MC, KER) to the uk-eu universe and wire an earnings-day gap-gate that flags any constituent with a post-results open gap \u22657% for same-day review, regardless of static list membership.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": -5.678,
+      "close": 54.49,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector contagion: STMicroelectronics plunged ~14% on disappointing guidance, dragging European chip peers; IFX also oversold (RSI ~29) into its Aug 5 Q3 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IFX.DE is a DAX-listed EUR semiconductor large-cap; the uk-eu book's universe likely excludes European chip names or names in an earnings quiet period, so a peer-driven sector cascade never entered scoring.",
+      "suggestion": "Add DAX semiconductor constituents (IFX.DE, plus peers) to the uk-eu universe and add a sector-contagion trigger: flag names moving >=5% same-day when a same-industry peer moves >=10% on an earnings reaction.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": -5.106,
+      "close": 717.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Record Q2 revenue (\u20ac1.003B) and raised FY guidance, but new orders/bookings missed estimates and AI-capex financing worries drove a sell-the-news drop into today's close, two sessions post-earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ASM.AS is an AEX-listed Dutch semicap (ALD/Epi) equipment maker not covered by uk-eu strategies, likely excluded via narrow sector/country coverage or an earnings-blackout filter around its Jul 28 report.",
+      "suggestion": "Add major Euronext Amsterdam semicap names (ASM.AS, BESI.AS) to the uk-eu universe, gated by a post-earnings drift rule that flags T+1/T+2 moves \u22655% when headline beats mask an orders/bookings miss.",
+      "failed": false
+    },
+    {
+      "ticker": "PHIA.AS",
+      "move_pct": -4.76,
+      "close": 22.41,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-earnings drift: Q2 report (Jul 28) beat EPS but showed -1% comparable order intake and China procurement weakness; analysts cut price targets Jul 29-30, extending the selloff.",
+      "miss_reason": "Outside any active strategy's universe \u2014 PHIA.AS is a large-cap Dutch medtech/healthcare name on Euronext Amsterdam, likely excluded if the uk-eu universe is scoped to UK-listed or a narrower EU sector list rather than all major Amsterdam bellwethers.",
+      "suggestion": "Add major Euronext Amsterdam/Paris healthcare large-caps (incl. PHIA.AS) to the uk-eu universe, and add a T+3 post-earnings-drift scanner flagging names with negative order/guidance surprises even after the initial report day.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-30T15:03:12.447285+00:00"
+}
