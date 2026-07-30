@@ -17,12 +17,22 @@ dependencies = [
     "markdown>=3.5",
     "duckdb>=1.1",
     "dbt-duckdb>=1.9",
+    # ml-challenger inference: the daily pipeline loads the committed
+    # LightGBM model. Training-only deps live in the `ml` extra.
+    "lightgbm>=4.0",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=8.0",
     "ruff>=0.5",
+    # the ml trainer's test surface (scipy Spearman, sklearn baseline)
+    "scikit-learn>=1.4",
+    "scipy>=1.11",
+]
+ml = [
+    "scikit-learn>=1.4",
+    "scipy>=1.11",
 ]
 
 [build-system]

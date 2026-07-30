@@ -44,6 +44,46 @@ Eight active strategies under `strategies/`:
 
 Each strategy has a `config.yaml` with `runs_in:` per-region entries (region, tier, slot, universe), plus prompts (`prefilter.md`, `deep_analysis.md`, `final_select.md`) for the LLM stages. Multiple UK-EU strategies share T212 slot 1 — their combined `capital_gbp` draws on the single £50k paper budget. The evolution agent can edit configs and prompts within safety bounds; human approval is needed only for tier-2 transitions.
 
+## ml-challenger: the learned strategy
+
+`ml-challenger` is the first strategy that predicts with **gradient-boosted
+trees instead of an LLM** — a LightGBM 5-class model over point-in-time
+OHLCV features, deployed at shadow tier (US) so the existing daily grading
+and weekly evolution machinery judges classical ML vs the LLM strategies
+head-to-head, forward, out of sample. It emits the same `PredictionRecord`s
+with the grader's exact class vocabulary, so `metrics.py`, the dashboards
+and evolution need zero new machinery.
+
+The training methodology is the credential — see the auto-generated
+[model card](strategies/ml-challenger/model/card.md):
+
+- **Point-in-time features** (`src/trading_bot/ml/features.py`): the loader
+  structurally truncates bars at t−1; a CI test proves features computed
+  from the full dataset equal features computed from truncated data.
+- **The grader defines the label**: next-session open→close return bucketed
+  by `meta.reflection._classify_outcome` itself (±1%/±4%), never a copy of
+  its constants.
+- **Purged walk-forward validation** (purge 1 + embargo 5 + 21-session
+  windows), permutation noise floor and Fisher-z lower bound — the same
+  significance vocabulary the weekly evolution promotion gate speaks.
+- **Four mandatory baselines** in the card: uniform prior, yesterday's-sign
+  momentum, logistic regression on the identical features, and
+  `control-rule-based`'s frozen live record.
+- **Frozen experiment control**: `evolution_frozen: true` — the evolution
+  agent may observe but never tune/demote/promote it; model hyperparameters
+  live outside `config.yaml` entirely.
+- **Monthly retrain** (`retrain-challenger.yml`) restores the OHLCV
+  actions/cache, retrains, and commits only if the pooled OOS rank-IC
+  Fisher-z lower bound holds up — otherwise it opens an issue with the diff.
+- **`mart_llm_vs_ml`** (dbt) rolls up daily per-strategy rank IC, non-flat
+  hit rate and the conviction-vs-realised calibration gap for the
+  head-to-head Metabase view.
+
+Training data is a separate ~1.5-year snapshot (`python -m
+trading_bot.ml.data backfill` → `state/ml/train.db`, S&P 1500 ∩ T212
+ISA-eligible US names) — the runtime OHLCV cache is never widened for
+training.
+
 ## Daily cycle
 
 GitHub Actions' built-in cron is unreliable (we observed silent dropped triggers during high-load windows). Scheduling is handled by **cron-job.org**, an independent service that calls each workflow via GitHub's REST API at the right local time. Each schedule runs in the market's local timezone, so DST is handled automatically.

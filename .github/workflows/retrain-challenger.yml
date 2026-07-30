@@ -1,0 +1,116 @@
+name: Retrain ml-challenger
+
+# Monthly walk-forward retrain of the ML challenger on the runtime
+# OHLCV cache (restored from actions/cache — the db is NOT in the
+# repo). Promotion gate: the fresh model is committed only if its
+# pooled OOS rank-IC Fisher-z lower bound is >= the current card's
+# value − tolerance; otherwise the old artifacts are restored and an
+# issue is opened with the metric diff. Mirrors the bot's human-gated
+# promotion philosophy.
+#
+# The GH Actions scheduler is unreliable for time-critical crons (the
+# dailies run via cron-job.org) but a monthly retrain has no deadline,
+# so `schedule` is fine here alongside manual dispatch.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 3 1 * *'   # 03:17 UTC on the 1st — off the :00 stampede
+
+concurrency:
+  group: retrain-challenger
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install Python package (+ml extras)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[ml]"
+
+      - name: Restore OHLCV cache
+        uses: actions/cache/restore@v5
+        with:
+          path: state/ohlcv.db
+          key: ohlcv-db-v1-${{ github.run_id }}
+          restore-keys: |
+            ohlcv-db-v1-
+
+      - name: Data audit
+        run: python -m trading_bot.ml.data audit
+
+      - name: Snapshot current metrics
+        run: |
+          cp strategies/ml-challenger/model/metrics.json /tmp/old_metrics.json 2>/dev/null \
+            || echo '{}' > /tmp/old_metrics.json
+
+      - name: Walk-forward train
+        run: python -m trading_bot.ml.train --db state/ohlcv.db
+
+      - name: Promotion gate
+        id: gate
+        run: |
+          set +e
+          python scripts/ml_retrain_gate.py \
+            --old /tmp/old_metrics.json \
+            --new strategies/ml-challenger/model/metrics.json | tee /tmp/gate.md
+          echo "promote=${PIPESTATUS[0]}" >> $GITHUB_OUTPUT
+          exit 0
+
+      - name: Restore old model on rejection
+        if: steps.gate.outputs.promote != '0'
+        run: git checkout -- strategies/ml-challenger/model
+
+      - name: Open issue on rejection
+        if: steps.gate.outputs.promote != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create \
+            --title "ml-challenger retrain rejected by promotion gate ($(date -u +%Y-%m-%d))" \
+            --body-file /tmp/gate.md
+
+      - name: Commit promoted model
+        if: steps.gate.outputs.promote == '0'
+        run: |
+          git config user.name "trading-bot[bot]"
+          git config user.email "trading-bot@users.noreply.github.com"
+          git add strategies/ml-challenger/model
+          if git diff --cached --quiet; then
+            echo "No model changes to commit"
+            exit 0
+          fi
+          MSG="ml-challenger monthly retrain — $(date -u +%Y-%m-%dT%H:%MZ)"
+          git commit -m "$MSG"
+          # Same rebase-retry loop the state-committing workflows use.
+          # No smart-merge fallback needed: nothing else writes to
+          # strategies/ml-challenger/model, so a rebase always succeeds
+          # unless the branch itself moved mid-push.
+          for i in 1 2 3; do
+            if git pull --rebase --autostash origin main && git push; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            echo "Push attempt $i failed; retrying..."
+            sleep 3
+          done
+          echo "Failed to push after 3 attempts" >&2
+          exit 1

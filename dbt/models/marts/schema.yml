@@ -73,3 +73,23 @@ models:
         tests: [unique, not_null]
       - name: strategy_id
         tests: [not_null]
+
+  - name: mart_llm_vs_ml
+    description: >
+      The ML-vs-LLM head-to-head: per (strategy, region, day) over
+      graded predictions — n_graded, cross-sectional Spearman rank IC,
+      non-flat directional hit rate, and the conviction-vs-realised
+      calibration gap (positive = overconfident). is_ml flags the
+      ml-challenger rows for one-query Metabase comparisons. Compare
+      on this prediction-grading path primarily; trade P&L
+      (mart_strategy_weekly) carries the overnight gap the prediction
+      doesn't.
+    columns:
+      - name: strategy_id
+        tests: [not_null]
+      - name: region
+        tests: [not_null]
+      - name: prediction_date
+        tests: [not_null]
+      - name: n_graded
+        tests: [not_null]
