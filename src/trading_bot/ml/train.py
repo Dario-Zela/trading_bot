@@ -491,78 +491,47 @@ def mlp_baseline(
     """Small PyTorch net on the identical features and folds — the v2
     preview that quantifies the data-volume conversation against a
     strong GBM. Returns None (card row says 'not run') without torch;
-    the CI retrain never installs it."""
-    try:
-        import torch
-        from torch import nn
-    except ImportError:
+    the CI retrain never installs it.
+
+    Runs in an ISOLATED subprocess (trading_bot.ml.mlp_worker): LightGBM
+    (Homebrew libomp) and torch (bundled libomp) deadlock when they
+    share one process on macOS, and KMP_DUPLICATE_LIB_OK does not
+    reliably clear it. The worker never imports lightgbm."""
+    import importlib.util
+    import pickle
+    import subprocess
+    import sys
+    import tempfile
+
+    if importlib.util.find_spec("torch") is None:
         log.warning("torch not installed — MLP v2 baseline skipped (pip install -e '.[ml-v2]')")
         return None
 
-    torch.manual_seed(seed)
-    torch.set_num_threads(4)
-    Xcols = F.FEATURE_COLUMNS
-    parts = []
-    for k, fold in enumerate(folds):
-        tr = df[df["date"].isin(set(fold.train_dates))]
-        va = df[df["date"].isin(set(fold.val_dates))]
-        mu = tr[Xcols].mean().to_numpy()
-        sd = tr[Xcols].std().replace(0, 1).to_numpy()
-        Xtr = torch.tensor((tr[Xcols].to_numpy() - mu) / sd, dtype=torch.float32)
-        ytr = torch.tensor(tr["y"].to_numpy(), dtype=torch.long)
-        Xva = torch.tensor((va[Xcols].to_numpy() - mu) / sd, dtype=torch.float32)
-        yva = torch.tensor(va["y"].to_numpy(), dtype=torch.long)
-
-        counts = np.bincount(tr["y"].to_numpy(), minlength=N_CLASSES).astype(float)
-        counts[counts == 0] = 1.0
-        weight = torch.tensor(len(tr) / (N_CLASSES * counts), dtype=torch.float32)
-
-        model = nn.Sequential(
-            nn.Linear(len(Xcols), 64), nn.ReLU(), nn.Dropout(0.2),
-            nn.Linear(64, 32), nn.ReLU(),
-            nn.Linear(32, N_CLASSES),
+    payload = {
+        "df": df,
+        "folds": [(list(f.train_dates), list(f.val_dates)) for f in folds],
+        "midpoints": midpoints,
+        "seed": seed,
+    }
+    with tempfile.TemporaryDirectory(prefix="mlp_worker_") as tmp:
+        in_path = f"{tmp}/in.pkl"
+        out_path = f"{tmp}/out.pkl"
+        with open(in_path, "wb") as f:
+            pickle.dump(payload, f)
+        result = subprocess.run(
+            [sys.executable, "-m", "trading_bot.ml.mlp_worker", in_path, out_path],
+            capture_output=True, text=True, timeout=3600,
         )
-        opt = torch.optim.Adam(model.parameters(), lr=1e-3)
-        loss_fn = nn.CrossEntropyLoss(weight=weight)
-
-        best_val = float("inf")
-        best_state = None
-        patience = 3
-        stale = 0
-        for epoch in range(30):
-            model.train()
-            perm = torch.randperm(len(Xtr))
-            for i in range(0, len(Xtr), 4096):
-                idx = perm[i : i + 4096]
-                opt.zero_grad()
-                loss = loss_fn(model(Xtr[idx]), ytr[idx])
-                loss.backward()
-                opt.step()
-            model.eval()
-            with torch.no_grad():
-                val_loss = float(loss_fn(model(Xva), yva))
-            if val_loss < best_val - 1e-4:
-                best_val = val_loss
-                best_state = {k2: v.clone() for k2, v in model.state_dict().items()}
-                stale = 0
-            else:
-                stale += 1
-                if stale >= patience:
-                    break
-        if best_state is not None:
-            model.load_state_dict(best_state)
-        model.eval()
-        with torch.no_grad():
-            probs = torch.softmax(model(Xva), dim=1).numpy()
-
-        part = va[["date", "ticker", "actual_return_pct", "y"]].copy()
-        for i, cls in enumerate(CLASSES):
-            part[f"p_{cls}"] = probs[:, i]
-        part["score"] = score_from_probs(probs, midpoints)
-        part["pred_class_idx"] = probs.argmax(axis=1)
-        parts.append(part)
-        log.info("mlp baseline fold %d/%d done (val loss %.4f)", k + 1, len(folds), best_val)
-    return evaluate_oos(pd.concat(parts, ignore_index=True), "MLP (PyTorch, v2 preview)")
+        if result.returncode != 0:
+            log.warning("mlp worker failed (rc=%d) — baseline skipped:\n%s",
+                        result.returncode, result.stderr[-2000:])
+            return None
+        for line in result.stderr.splitlines():
+            if line.strip():
+                log.info("%s", line.strip())
+        with open(out_path, "rb") as f:
+            oos = pickle.load(f)
+    return evaluate_oos(oos, "MLP (PyTorch, v2 preview)")
 
 
 def control_rule_based_record() -> dict:
