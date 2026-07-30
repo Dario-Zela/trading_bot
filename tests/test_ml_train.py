@@ -11,6 +11,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from trading_bot.ml import features as F
 from trading_bot.ml.splits import purged_walk_forward
 from trading_bot.ml.train import (
     CLASSES,
@@ -23,7 +24,6 @@ from trading_bot.ml.train import (
     score_from_probs,
     train_lgbm,
 )
-from trading_bot.ml import features as F
 
 
 def _tiny_matrix(n: int = 600, seed: int = 5):

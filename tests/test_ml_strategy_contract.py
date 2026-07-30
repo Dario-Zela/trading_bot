@@ -17,7 +17,6 @@ from trading_bot.ml.labels import compute_labels
 from trading_bot.ml.train import DEFAULT_MIDPOINTS, _lgbm_params, train_lgbm
 from trading_bot.state.predictions import PredictionRecord
 
-
 N_TICKERS = 10
 N_DAYS = 100
 
@@ -160,8 +159,9 @@ def test_manifest_drift_refuses_to_predict(ml_strategy_env, monkeypatch):
     """A model trained against a different feature spec must never be
     served — the load-time assert is the train/serve-skew fuse."""
     import json as _json
+
     from trading_bot.ml.features import ManifestMismatchError
-    from trading_bot.strategy.registry import load_active_strategies, _strategies_dir
+    from trading_bot.strategy.registry import _strategies_dir, load_active_strategies
 
     manifest_path = _strategies_dir() / "ml-challenger" / "model" / "feature_manifest.json"
     raw = _json.loads(manifest_path.read_text())

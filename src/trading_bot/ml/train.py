@@ -20,7 +20,7 @@ import hashlib
 import json
 import logging
 import math
-from datetime import date, datetime, timezone
+from datetime import UTC, date, datetime
 from pathlib import Path
 
 import numpy as np
@@ -31,7 +31,6 @@ from trading_bot.ml.data import depth_report, read_snapshot_bars, snapshot_path,
 from trading_bot.ml.labels import compute_labels
 from trading_bot.ml.splits import Fold, purged_walk_forward
 from trading_bot.state.paths import STATE_ROOT
-
 
 log = logging.getLogger(__name__)
 
@@ -238,7 +237,7 @@ def directional_hit_rate(oos: pd.DataFrame) -> dict:
         return {"n": 0, "hit_rate": None}
     up = nonflat["pred_class_idx"].isin(_UP)
     hits = np.where(up, nonflat["actual_return_pct"] > 0, nonflat["actual_return_pct"] < 0)
-    return {"n": int(len(nonflat)), "hit_rate": round(float(hits.mean()), 3)}
+    return {"n": len(nonflat), "hit_rate": round(float(hits.mean()), 3)}
 
 
 def decile_spread(oos: pd.DataFrame, score_col: str = "score") -> float | None:
@@ -488,7 +487,7 @@ def evaluate_oos(oos: pd.DataFrame, label: str, *, with_probs: bool = True) -> d
     y = oos["y"].to_numpy()
     out = {
         "label": label,
-        "n": int(len(oos)),
+        "n": len(oos),
         "pooled_ic": pooled_ic(oos),
         "daily_ic": per_date_ic(oos),
         "decile_spread": decile_spread(oos),
@@ -514,7 +513,7 @@ def ic_decay(oos: pd.DataFrame, panel: pd.DataFrame) -> list[dict]:
         merged = oos.merge(long, on=["date", "ticker"], how="inner").dropna(subset=["fwd"])
         rho = spearman(merged["score"].to_numpy(), merged["fwd"].to_numpy())
         out.append({"horizon_days": h, "pooled_ic": round(rho, 4) if rho is not None else None,
-                    "n": int(len(merged))})
+                    "n": len(merged)})
     return out
 
 
@@ -601,12 +600,12 @@ def train_and_evaluate(
     audit_row = depth_report(db, tickers)
 
     report = {
-        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "generated_at": datetime.now(UTC).isoformat(timespec="seconds"),
         "seed": seed,
         "db": str(db),
         "snapshot_hash": snapshot_hash,
         "audit": audit_row,
-        "n_rows": int(len(df)),
+        "n_rows": len(df),
         "n_tickers": int(df["ticker"].nunique()),
         "n_dates": len(dates),
         "date_range": [dates[0].isoformat(), dates[-1].isoformat()],
@@ -731,8 +730,8 @@ def render_card(r: dict) -> str:
     w("Class imbalance is why training uses balanced class weights and this card")
     w("never quotes raw accuracy — predict-always-flat scores deceptively well.")
     w("")
-    w(f"Class midpoints (within-class mean returns, fitted on the first training")
-    w(f"block only and frozen): "
+    w("Class midpoints (within-class mean returns, fitted on the first training")
+    w("block only and frozen): "
       + ", ".join(f"{c}={_fmt(v, 3)}" for c, v in r["midpoints"].items()))
     w("`predicted_return_pct = Σ_c p_c · m_c` — the continuous score `metrics.py`")
     w("computes IC on; `predicted_class` = argmax; `conviction` = max probability.")
@@ -758,7 +757,7 @@ def render_card(r: dict) -> str:
     w("train ──────────────────┤purge 1│ embargo 5 │ validate 21 │→ roll 21, expand")
     w("```")
     w("")
-    w(f"Grid: 3 learning rates × 2 depths, selected on pooled OOS log-loss")
+    w("Grid: 3 learning rates × 2 depths, selected on pooled OOS log-loss")
     w(f"(winner: lr={r['best']['learning_rate']}, depth={r['best']['max_depth']}, "
       f"{r['best']['median_best_iter']} rounds). The label is intraday so labels never")
     w("overlap across days; purge+embargo are kept anyway — 21/63-day rolling")

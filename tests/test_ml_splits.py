@@ -7,7 +7,6 @@ import random
 from datetime import date, timedelta
 
 import numpy as np
-import pytest
 
 from trading_bot.ml.splits import purged_walk_forward
 

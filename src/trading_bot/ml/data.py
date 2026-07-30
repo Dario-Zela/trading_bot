@@ -30,7 +30,6 @@ from pathlib import Path
 from trading_bot.state.paths import STATE_ROOT
 from trading_bot.tools.ohlcv_store import StoredBar
 
-
 log = logging.getLogger(__name__)
 
 # Median universe depth (sessions) below which the runtime store is too

@@ -30,7 +30,6 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-
 # Bump when the feature definitions below change in any way that would
 # make an old model's inputs incompatible. Part of the spec hash.
 FEATURE_SPEC_VERSION = 1

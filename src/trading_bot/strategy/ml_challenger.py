@@ -22,11 +22,10 @@ from datetime import date, timedelta
 import numpy as np
 
 from trading_bot.executor.base import TradeIntent
-from trading_bot.ml.features import build_features, load_manifest, ManifestMismatchError
+from trading_bot.ml.features import ManifestMismatchError, build_features, load_manifest
 from trading_bot.state.predictions import PredictionRecord, append_prediction
 from trading_bot.strategy.base import Strategy
 from trading_bot.tools import get_universe
-
 
 log = logging.getLogger(__name__)
 
