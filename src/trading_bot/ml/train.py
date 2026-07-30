@@ -925,6 +925,8 @@ def train_and_evaluate(
         "db": db_display,
         "snapshot_hash": snapshot_hash,
         "audit": audit_row,
+        "region_bars": len(panel),
+        "bar_range": [panel["date"].min().isoformat(), panel["date"].max().isoformat()],
         "n_rows": len(df),
         "n_tickers": int(df["ticker"].nunique()),
         "n_dates": len(dates),
@@ -1008,6 +1010,47 @@ def _repo_root() -> Path:
 # Model card
 # ---------------------------------------------------------------------------
 
+_REGION_UNIVERSE_DESC = {
+    "us": "S&P 1500 ∩ t212_isa_us (~1.5k liquid US names the bot can trade)",
+    "uk-eu": "(FTSE 350 + DAX + CAC + AEX + UCITS ETFs) ∩ t212_isa_uk_eu (~470 UK/EU names)",
+}
+
+
+def _ship_gate(r: dict) -> tuple[list[tuple[str, float | None, str]], list[str]]:
+    """§6 ship gate: the challenger must beat every baseline pooled OOS.
+    Returns (rows, losses) where rows are (label, baseline_ic, verdict)
+    and losses is the list of baseline labels the challenger loses to."""
+    ch_ic = r["challenger"]["pooled_ic"] or 0.0
+    base = r["baselines"]
+    rows: list[tuple[str, float | None, str]] = []
+    losses: list[str] = []
+    candidates = [
+        ("Yesterday's-sign momentum", base["momentum"].get("pooled_ic")),
+        ("Logistic (same features)", base["logistic"].get("pooled_ic")),
+    ]
+    if base.get("mlp"):
+        candidates.append(("MLP (PyTorch, v2 preview)", base["mlp"].get("pooled_ic")))
+    for label, ic in candidates:
+        if ic is None:
+            rows.append((label, None, "n/a"))
+            continue
+        if ch_ic > ic:
+            rows.append((label, ic, "beats"))
+        else:
+            rows.append((label, ic, "**LOSES**"))
+            losses.append(label)
+    # Uniform prior has no ranking — compared on log-loss.
+    u_ll = base["uniform"].get("logloss")
+    ch_ll = r["challenger"].get("logloss")
+    if u_ll is not None and ch_ll is not None:
+        if ch_ll < u_ll:
+            rows.append(("Uniform prior (log-loss basis)", None, "beats"))
+        else:
+            rows.append(("Uniform prior (log-loss basis)", None, "**LOSES**"))
+            losses.append("Uniform prior")
+    return rows, losses
+
+
 def _fmt(v, nd=4):
     if v is None:
         return "—"
@@ -1039,11 +1082,16 @@ def render_card(r: dict) -> str:
     w("## Data")
     w("")
     a = r["audit"]
-    w(f"- Snapshot: `{r['db']}` — {a['total_rows']:,} bars, {a['n_covered']:,} tickers, "
+    bars = r.get("region_bars")
+    brange = r.get("bar_range") or [a["date_min"], a["date_max"]]
+    w(f"- Snapshot: `{r['db']}` — this region's slice: "
+      f"{bars:,} bars, {a['n_covered']:,} tickers, {brange[0]} → {brange[1]}"
+      if bars else
+      f"- Snapshot: `{r['db']}` — {a['total_rows']:,} bars, {a['n_covered']:,} tickers, "
       f"{a['date_min']} → {a['date_max']}")
     w(f"- Training frame: **{r['n_rows']:,} rows** × {r['n_tickers']:,} tickers × "
       f"{r['n_dates']} feature dates ({r['date_range'][0]} → {r['date_range'][1]})")
-    w("- Universe: S&P 1500 ∩ t212_isa_us (~1.5k liquid US names the bot can trade)")
+    w(f"- Universe: {_REGION_UNIVERSE_DESC.get(region, region)}")
     w("- Prices are unadjusted (auto_adjust=False), matching what tools.history writes")
     w("  into the runtime store the model is served from")
     w("")
@@ -1159,6 +1207,29 @@ def render_card(r: dict) -> str:
         w("its own forward window), so compare direction not decimals.")
     w("")
 
+    gate_rows, gate_losses = _ship_gate(r)
+    w("## Ship gate — beat every baseline, pooled out-of-sample")
+    w("")
+    w("| baseline | baseline pooled IC | challenger pooled IC | verdict |")
+    w("|---|---|---|---|")
+    for label, ic, verdict in gate_rows:
+        w(f"| {label} | {_fmt(ic)} | {_fmt(ch['pooled_ic'])} | {verdict} |")
+    w("")
+    if gate_losses:
+        w(f"**Verdict: FAILS the design gate** — the challenger loses to "
+          f"{', '.join(gate_losses)} on pooled OOS IC. It ships at shadow tier anyway,")
+        w("stated here rather than buried, because: (1) shadow risks nothing and the")
+        w("forward run on live grading — not this backtest — is the decisive test;")
+        w("(2) the challenger's advantages are on other axes (log-loss, calibration,")
+        w("per-day IC consistency) that the pooled-IC gate doesn't see; (3) a simple")
+        w("baseline being hard to beat is itself a finding worth publishing. If the")
+        w("forward record confirms the loss, the sleeve gets pulled.")
+    else:
+        w("**Verdict: passes** — the challenger beats every comparable baseline pooled")
+        w("out-of-sample (control-rule-based's trade-level record has no IC basis and")
+        w("is compared in the toy-portfolio section instead).")
+    w("")
+
     w("## Significance — the evolution gate's own vocabulary")
     w("")
     w(f"- Pooled OOS rank IC: **{_fmt(ch['pooled_ic'])}** over {ch['n']:,} graded rows")
@@ -1261,8 +1332,13 @@ def render_card(r: dict) -> str:
           f"cumulative {_fmt(p['cumulative_net_pct'], 2)}% over {p['n_days']} days · "
           f"worst day {_fmt(p['worst_day_pct'], 2)}%.")
         w("A sanity harness, not a backtest — no slippage, no capacity, fills at the")
-        w("label's own open. UK-EU waits for v1.1 because 0.5% stamp duty moves this")
-        w("from marginal to negative.")
+        if region == "uk-eu":
+            w("label's own open. The 0.5% LSE stamp duty dominates this region's cost")
+            w("estimate — which is why the live strategy also applies a pick-time cost")
+            w("gate (predicted move ≥ cost_gate_multiplier × estimated round-trip).")
+        else:
+            w("label's own open. UK-EU runs as a separate sleeve with a stamp-duty-aware")
+            w("cost gate — see its own card.")
     else:
         w("(not enough validation days)")
     w("")
@@ -1284,6 +1360,10 @@ def render_card(r: dict) -> str:
 
     w("## Limitations")
     w("")
+    if gate_losses:
+        w(f"- **Loses to {', '.join(gate_losses)} on pooled OOS IC** — the design's")
+        w("  ship gate fails for this sleeve; see the Ship gate section for the")
+        w("  numbers and the explicit case for running it forward anyway.")
     daily_mean = ch["daily_ic"]["mean"]
     if (ch["pooled_ic"] or 0) > (daily_mean or 0) + 0.003:
         w(f"- **Pooled IC ({_fmt(ch['pooled_ic'])}) exceeds the mean per-date IC "

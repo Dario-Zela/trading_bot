@@ -150,3 +150,61 @@ def test_manifest_round_trip_and_drift_detection(tmp_path):
     p.write_text(json.dumps(raw))
     with pytest.raises(ManifestMismatchError):
         load_manifest(p)
+
+
+def test_interleaved_venue_holidays_do_not_drop_dates():
+    """Spec-v2 regression: a two-venue universe with interleaved
+    holidays (venue A closed while B trades, and vice versa) must not
+    lose whole dates — the grid-based rolling windows used to NaN out
+    every name's vol features after any venue holiday, cascading into
+    complete cross-section drops (the uk-eu May-2025/2026 holes)."""
+    panel = _synthetic_panel(n_tickers=8, n_days=120, seed=13)
+    dates = sorted(panel["date"].unique())
+    venue_a = {f"TK{i}" for i in range(4)}          # e.g. LSE names
+    holiday_a = {dates[70]}                          # A closed, B trades
+    holiday_b = {dates[75], dates[76]}               # B closed, A trades
+    mask_a = panel["ticker"].isin(venue_a) & panel["date"].isin(holiday_a)
+    mask_b = ~panel["ticker"].isin(venue_a) & panel["date"].isin(holiday_b)
+    panel = panel[~(mask_a | mask_b)]
+
+    feats = compute_feature_panel(panel)
+    feat_dates = set(feats["date"])
+    # Every date from the burn-in point onward survives.
+    for d in dates[MIN_HISTORY_SESSIONS + 5 :]:
+        assert d in feat_dates, f"date {d} was dropped by the holiday cascade"
+    # And every feature is populated (no NaN row survived).
+    assert feats[FEATURE_COLUMNS].notna().all().all()
+    # On venue A's holiday only venue B names appear — no fabricated bars.
+    on_holiday = set(feats.loc[feats["date"].isin(holiday_a), "ticker"])
+    assert on_holiday and on_holiday.isdisjoint(venue_a)
+
+
+def test_rolling_windows_span_a_tickers_own_sessions():
+    """After a name's own holiday, its 1-day return is measured from its
+    last *traded* session — not NaN'd against a grid date."""
+    # Wide cross-section, and the gap ticker gets a deterministic
+    # low-drift price path: a skipped session makes a name's return a
+    # two-session move, which for a normal-vol name is the day's extreme
+    # and gets winsorised — a tiny-drift name stays mid-pack, so the
+    # window mechanics are observable through the clip.
+    panel = _synthetic_panel(n_tickers=30, n_days=100, seed=15)
+    dates = sorted(panel["date"].unique())
+    flat_price = {d: 100.0 * (1.0001 ** i) for i, d in enumerate(dates)}
+    tk0 = panel["ticker"] == "TK0"
+    panel.loc[tk0, "close"] = panel.loc[tk0, "date"].map(flat_price)
+    panel.loc[tk0, "open"] = panel.loc[tk0, "close"] * 0.9999
+    panel.loc[tk0, "high"] = panel.loc[tk0, "close"] * 1.0002
+    panel.loc[tk0, "low"] = panel.loc[tk0, "close"] * 0.9998
+
+    gap_day = dates[80]
+    with_gap = panel[~(tk0 & (panel["date"] == gap_day))]
+    feats = compute_feature_panel(with_gap).set_index(["date", "ticker"])
+
+    after = dates[81]
+    row = feats.loc[(after, "TK0")]
+    expected = math.log(flat_price[after] / flat_price[dates[79]])   # skips the gap day
+    assert row["ret_1d"] == pytest.approx(expected, abs=1e-9)
+    # The old grid version left vol_10d NaN (then median-imputed) for 10
+    # sessions after the gap; own-session windows keep it defined and
+    # tiny for the flat name.
+    assert row["vol_10d"] < 0.05

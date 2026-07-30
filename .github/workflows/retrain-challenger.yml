@@ -1,10 +1,15 @@
 name: Retrain ml-challenger
 
-# Monthly walk-forward retrain of the ML challenger on the runtime
-# OHLCV cache (restored from actions/cache — the db is NOT in the
-# repo). Promotion gate: the fresh model is committed only if its
-# pooled OOS rank-IC Fisher-z lower bound is >= the current card's
-# value − tolerance; otherwise the old artifacts are restored and an
+# Monthly walk-forward retrain of the ML challenger using EXACTLY the
+# deployed data recipe: a fresh ~3-year training snapshot backfilled
+# per region (state/ml/train.db — the runtime OHLCV cache is never
+# used for training; it is capped at ~250 sessions with organic
+# coverage) and rolling-250-session training windows, matching the
+# committed models' cards and the depth-vs-recency ablation
+# (model/us/ablation.json). Promotion gate: the fresh model is
+# committed only if its pooled OOS rank-IC Fisher-z lower bound is >=
+# the current card's value − 0.002 (tolerance sized to the LB scale,
+# ~0.002–0.014); otherwise the old artifacts are restored and an
 # issue is opened with the metric diff. Mirrors the bot's human-gated
 # promotion philosophy.
 #
@@ -46,13 +51,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e ".[ml]"
 
-      - name: Restore OHLCV cache
-        uses: actions/cache/restore@v5
-        with:
-          path: state/ohlcv.db
-          key: ohlcv-db-v1-${{ github.run_id }}
-          restore-keys: |
-            ohlcv-db-v1-
+      - name: Backfill training snapshot (both regions + ^VIX)
+        run: |
+          python -m trading_bot.ml.data backfill --region us
+          python -m trading_bot.ml.data backfill --region uk-eu
 
       - name: Data audit
         run: python -m trading_bot.ml.data audit
@@ -76,15 +78,17 @@ jobs:
           any_promoted=1
           for region in us uk-eu; do
             echo "=== $region ==="
-            if ! python -m trading_bot.ml.train --db state/ohlcv.db --region "$region"; then
-              echo "$region: training failed (likely thin cache coverage) — skipping"
+            if ! python -m trading_bot.ml.train --db state/ml/train.db \
+                --region "$region" --train-window-sessions 250; then
+              echo "$region: training failed — skipping"
               git checkout -- "strategies/ml-challenger/model/$region" 2>/dev/null || true
               continue
             fi
             set +e
             python scripts/ml_retrain_gate.py \
               --old "/tmp/old_metrics_$region.json" \
-              --new "strategies/ml-challenger/model/$region/metrics.json" | tee "/tmp/gate_$region.md"
+              --new "strategies/ml-challenger/model/$region/metrics.json" \
+              --tolerance 0.002 | tee "/tmp/gate_$region.md"
             verdict=${PIPESTATUS[0]}
             set -e
             if [ "$verdict" != "0" ]; then

@@ -32,7 +32,11 @@ import pandas as pd
 
 # Bump when the feature definitions below change in any way that would
 # make an old model's inputs incompatible. Part of the spec hash.
-FEATURE_SPEC_VERSION = 1
+# v2: rolling windows compute over each ticker's OWN sessions rather
+# than a union-of-venues date grid — on mixed-calendar universes
+# (uk-eu) the grid approach NaN-poisoned every name's windows after
+# any interleaved venue holiday, cascading into whole-date drops.
+FEATURE_SPEC_VERSION = 2
 
 # Calendar-day read window handed to the bar loader. 400 calendar days
 # comfortably covers the 63-session SMA burn-in plus weekends/holidays.
@@ -128,81 +132,87 @@ def compute_feature_panel(panel: pd.DataFrame) -> pd.DataFrame:
     frame [date, ticker] + FEATURE_COLUMNS. Rows with < MIN_HISTORY_SESSIONS
     bars of history are dropped; remaining gaps are winsorised then
     median-imputed within each date's cross-section.
+
+    Rolling windows run over each ticker's OWN sessions ("the last 10
+    sessions this name actually traded") — not a union-of-venues date
+    grid. On mixed-calendar universes the grid version NaN-poisoned
+    every window that overlapped an interleaved venue holiday, which
+    cascaded into whole trading dates being dropped (spec v2 fix).
     """
     if panel.empty:
         return pd.DataFrame(columns=["date", "ticker", *FEATURE_COLUMNS])
 
-    def pivot(field: str) -> pd.DataFrame:
-        p = panel.pivot_table(index="date", columns="ticker", values=field, aggfunc="last")
-        return p.sort_index()
+    df = panel.drop_duplicates(subset=["ticker", "date"], keep="last")
+    df = df.sort_values(["ticker", "date"]).reset_index(drop=True)
+    df["close"] = df["close"].where(df["close"] > 0)
+    df["open"] = df["open"].where(df["open"] > 0)
+    df["logc"] = np.log(df["close"])
 
-    open_, high, low = pivot("open"), pivot("high"), pivot("low")
-    close, volume = pivot("close"), pivot("volume")
-    close = close.where(close > 0)
-    open_ = open_.where(open_ > 0)
+    g = df.groupby("ticker", sort=False)
 
-    logc = np.log(close)
-    ret_1d = logc.diff(1)
+    def roll(col: str, window: int, fn: str) -> pd.Series:
+        r = g[col].rolling(window, min_periods=window)
+        return getattr(r, fn)().reset_index(level=0, drop=True)
 
-    feats: dict[str, pd.DataFrame] = {}
-    feats["ret_1d"] = ret_1d
-    feats["ret_5d"] = logc.diff(5)
-    feats["ret_10d"] = logc.diff(10)
-    feats["ret_21d"] = logc.diff(21)
-    feats["overnight_gap"] = np.log(open_) - logc.shift(1)
+    df["ret_1d"] = g["logc"].diff(1)
+    df["ret_5d"] = g["logc"].diff(5)
+    df["ret_10d"] = g["logc"].diff(10)
+    df["ret_21d"] = g["logc"].diff(21)
+    df["overnight_gap"] = np.log(df["open"]) - g["logc"].shift(1)
 
     for k in (10, 21, 63):
-        feats[f"close_vs_sma{k}"] = close / close.rolling(k, min_periods=k).mean() - 1.0
+        df[f"close_vs_sma{k}"] = df["close"] / roll("close", k, "mean") - 1.0
 
-    r21 = feats["ret_21d"]
-    feats["ret_21d_z"] = r21.sub(r21.mean(axis=1), axis=0).div(r21.std(axis=1), axis=0)
+    df["vol_10d"] = roll("ret_1d", 10, "std") * math.sqrt(252)
+    df["vol_21d"] = roll("ret_1d", 21, "std") * math.sqrt(252)
+    df["hl2"] = np.log(df["high"].where(df["high"] > 0) / df["low"].where(df["low"] > 0)) ** 2
+    df["parkinson_10d"] = np.sqrt(roll("hl2", 10, "mean") / (4 * math.log(2)))
+    # vol_of_vol nests a rolling on a rolled column — recompute the group
+    # handle so the new vol_10d column is visible to it.
+    g = df.groupby("ticker", sort=False)
+    df["vol_of_vol"] = roll("vol_10d", 21, "std")
 
-    feats["vol_10d"] = ret_1d.rolling(10, min_periods=10).std() * math.sqrt(252)
-    feats["vol_21d"] = ret_1d.rolling(21, min_periods=21).std() * math.sqrt(252)
-    hl = np.log((high.where(high > 0)) / (low.where(low > 0))) ** 2
-    feats["parkinson_10d"] = np.sqrt(hl.rolling(10, min_periods=10).mean() / (4 * math.log(2)))
-    feats["vol_of_vol"] = feats["vol_10d"].rolling(21, min_periods=21).std()
+    v5 = roll("volume", 5, "mean")
+    v21 = roll("volume", 21, "mean")
+    df["volume_ratio"] = np.log(v5.where(v5 > 0) / v21.where(v21 > 0))
+    df["dollar_vol"] = df["close"] * v21
 
-    v5 = volume.rolling(5, min_periods=5).mean()
-    v21 = volume.rolling(21, min_periods=21).mean()
-    feats["volume_ratio"] = np.log(v5.where(v5 > 0) / v21.where(v21 > 0))
-    dollar_vol = close * v21
-    feats["dollar_volume_pctile"] = dollar_vol.rank(axis=1, pct=True)
+    # Cross-sectional context — within each date, over the names that
+    # traded that date.
+    by_date = df.groupby("date")
+    df["dollar_volume_pctile"] = by_date["dollar_vol"].rank(pct=True)
+    df["ret_1d_rank"] = by_date["ret_1d"].rank(pct=True)
+    r21_mean = by_date["ret_21d"].transform("mean")
+    r21_std = by_date["ret_21d"].transform("std")
+    df["ret_21d_z"] = (df["ret_21d"] - r21_mean) / r21_std
 
-    feats["ret_1d_rank"] = ret_1d.rank(axis=1, pct=True)
+    # Validity: enough history (bars up to and including this row, per
+    # ticker) and a real close on the date.
+    df["history_count"] = df.groupby("ticker", sort=False).cumcount() + 1
+    valid = df["close"].notna() & (df["history_count"] >= MIN_HISTORY_SESSIONS)
+    df = df[valid]
 
-    # Validity: enough history AND a bar on this date. History counts
-    # bars up to and including the row's date, per ticker.
-    history_count = close.notna().cumsum()
-    valid = close.notna() & (history_count >= MIN_HISTORY_SESSIONS)
+    # Winsorise at 1st/99th pct *per date cross-section* over surviving
+    # rows, then impute remaining gaps with that date's cross-sectional
+    # median.
+    df = df.replace([np.inf, -np.inf], np.nan)
+    by_date = df.groupby("date")
+    lo = by_date[_CONTINUOUS_COLUMNS].transform(lambda s: s.quantile(0.01))
+    hi = by_date[_CONTINUOUS_COLUMNS].transform(lambda s: s.quantile(0.99))
+    clipped = df[_CONTINUOUS_COLUMNS].clip(lower=lo, upper=hi, axis=0)
+    med = clipped.groupby(df["date"]).transform("median")
+    df = df.assign(**{c: clipped[c].fillna(med[c]) for c in _CONTINUOUS_COLUMNS})
 
-    # Winsorise at 1st/99th pct *per date cross-section*, over valid
-    # cells only, then impute missing with that date's cross-sectional
-    # median. Invalid rows never surface (masked out at melt time).
-    for name in _CONTINUOUS_COLUMNS:
-        f = feats[name].where(valid)
-        f = f.replace([np.inf, -np.inf], np.nan)
-        lo = f.quantile(0.01, axis=1)
-        hi = f.quantile(0.99, axis=1)
-        f = f.clip(lower=lo, upper=hi, axis=0)
-        med = f.median(axis=1)
-        f = f.T.fillna(med).T
-        feats[name] = f
-
-    long = pd.concat(
-        {name: feats[name].where(valid).stack() for name in _CONTINUOUS_COLUMNS},
-        axis=1,
-    )
-    long = long.dropna(how="any")
-    long.index.names = ["date", "ticker"]
-    long = long.reset_index()
+    long = df.dropna(subset=_CONTINUOUS_COLUMNS).copy()
 
     # Calendar: day-of-week one-hots (Mon/Fri effects — cheap, honest).
     dow = pd.to_datetime(long["date"]).dt.weekday
     for i, col in enumerate(_DOW_COLUMNS):
         long[col] = (dow == i).astype(float)
 
-    return long[["date", "ticker", *FEATURE_COLUMNS]]
+    return long.sort_values(["date", "ticker"])[["date", "ticker", *FEATURE_COLUMNS]].reset_index(
+        drop=True
+    )
 
 
 def build_features(

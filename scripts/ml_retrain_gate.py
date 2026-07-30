@@ -7,7 +7,7 @@ workflow restores the old artifacts and opens an issue with the diff.
 
 Usage (from .github/workflows/retrain-challenger.yml):
   python scripts/ml_retrain_gate.py --old /tmp/old_metrics.json \
-      --new strategies/ml-challenger/model/metrics.json [--tolerance 0.02]
+      --new strategies/ml-challenger/model/metrics.json [--tolerance 0.002]
 
 Exit 0 → promote (also appends one line to model/CHANGELOG.md).
 Exit 1 → reject (prints a markdown diff summary to stdout for the issue body).
@@ -34,7 +34,7 @@ def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--old", type=Path, required=True)
     p.add_argument("--new", type=Path, required=True)
-    p.add_argument("--tolerance", type=float, default=0.02)
+    p.add_argument("--tolerance", type=float, default=0.002)
     args = p.parse_args(argv)
 
     new = _load(args.new)

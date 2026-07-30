@@ -97,10 +97,10 @@ def test_render_card_complete():
     report["baselines"]["mlp"] = evaluate_oos(oos, "MLP (PyTorch, v2 preview)")
     card = render_card(report)
     for heading in ("# Model card", "## Data", "## Label", "## Features",
-                    "## Validation", "## Results vs baselines", "## Significance",
-                    "## CPCV", "## Regime-conditional IC", "## Multi-horizon heads",
-                    "## Calibration", "## Toy top-5", "## Feature attribution",
-                    "## Limitations", "## Reproduce"):
+                    "## Validation", "## Results vs baselines", "## Ship gate",
+                    "## Significance", "## CPCV", "## Regime-conditional IC",
+                    "## Multi-horizon heads", "## Calibration", "## Toy top-5",
+                    "## Feature attribution", "## Limitations", "## Reproduce"):
         assert heading in card
     for feature in FEATURE_COLUMNS:
         assert f"`{feature}`" in card
@@ -108,3 +108,12 @@ def test_render_card_complete():
     assert "MLP (PyTorch, v2 preview)" in card
     # The SHAP table must not contain a broken header (pipes inside cells)
     assert "mean abs SHAP" in card
+    # Logistic in this fixture shares the challenger's scores (a tie) —
+    # ties do not pass the gate, so the FAILS path must render loudly
+    # and echo into Limitations.
+    assert "FAILS the design gate" in card
+    assert "Loses to" in card
+    # Region-aware template text: a US card must never carry UK-EU copy
+    # and vice versa (the uk-eu card once shipped with the US universe
+    # line — that class of bug fails here now).
+    assert "t212_isa_us" in card and "own card" in card
