@@ -443,9 +443,13 @@ def logistic_baseline(df: pd.DataFrame, folds: list[Fold], midpoints: dict[str, 
 
 
 def control_rule_based_record() -> dict:
-    """The deactivated control-rule-based strategy's graded history — a
-    frozen yardstick from state/predictions.jsonl. Different sample
-    (its own forward window, ~100 movers/day), noted in the card."""
+    """The deactivated control-rule-based strategy's frozen live record.
+
+    It predates full prediction logging, so its history is *trade-level*
+    (state/ledger.jsonl): hit rate and avg P&L over its shadow trades —
+    no IC is computable. If prediction rows ever exist they're preferred;
+    otherwise the ledger fallback is the yardstick, flagged with
+    `source: ledger` so the card explains the comparison basis."""
     path = STATE_ROOT / "predictions.jsonl"
     preds, actuals = [], []
     n_hit = n_nonflat = 0
@@ -472,13 +476,46 @@ def control_rule_based_record() -> dict:
                     if (up and float(a) > 0) or (not up and float(a) < 0):
                         n_hit += 1
     if len(preds) < 4:
-        return {"n": len(preds), "pooled_ic": None, "hit_rate": None}
+        return _control_ledger_record()
     frame = pd.DataFrame({"score": preds, "actual_return_pct": actuals})
     return {
         "n": len(preds),
         "pooled_ic": pooled_ic(frame),
         "decile_spread": decile_spread(frame),
         "hit_rate": round(n_hit / n_nonflat, 3) if n_nonflat else None,
+    }
+
+
+def _control_ledger_record() -> dict:
+    """Trade-level fallback: control-rule-based's shadow trades from
+    state/ledger.jsonl (n, hit rate, avg pnl_pct)."""
+    path = STATE_ROOT / "ledger.jsonl"
+    n = wins = 0
+    pnl_pcts: list[float] = []
+    if path.exists():
+        with path.open() as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    r = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if r.get("strategy_id") != "control-rule-based":
+                    continue
+                if (r.get("region") or "us") != "us" or not r.get("exit_date"):
+                    continue
+                if r.get("exit_reason") in ("cancelled", "cleared"):
+                    continue
+                n += 1
+                if float(r.get("pnl_gbp") or 0) > 0:
+                    wins += 1
+                pnl_pcts.append(float(r.get("pnl_pct") or 0))
+    return {
+        "n": n, "source": "ledger", "pooled_ic": None, "decile_spread": None,
+        "hit_rate": round(wins / n, 3) if n else None,
+        "avg_pnl_pct": round(sum(pnl_pcts) / n, 3) if n else None,
     }
 
 
@@ -793,9 +830,17 @@ def render_card(r: dict) -> str:
     for label, n, ll, pic, dic, ds, hr in rows:
         w(f"| {label} | {n:,} | {_fmt(ll)} | {_fmt(pic)} | {dic} | {_fmt(ds, 3)} | {_fmt(hr, 3)} |")
     w("")
-    w("control-rule-based is the deactivated (2026-06-07) rule baseline's own live")
-    w("graded record — a frozen yardstick on a different sample (~100 movers/day,")
-    w("its own forward window), so compare direction not decimals.")
+    ctl = base["control_rule_based"]
+    if ctl.get("source") == "ledger":
+        w(f"control-rule-based is the deactivated (2026-06-07) rule baseline. It predates")
+        w(f"prediction logging, so its frozen record is *trade-level* (ledger): "
+          f"{ctl['n']} shadow trades, hit rate {_fmt(ctl['hit_rate'], 3)}, "
+          f"avg P&L {_fmt(ctl.get('avg_pnl_pct'), 3)}%/trade — no IC is computable,")
+        w("so compare it on hit rate and the toy portfolio, not on ranking metrics.")
+    else:
+        w("control-rule-based is the deactivated (2026-06-07) rule baseline's own live")
+        w("graded record — a frozen yardstick on a different sample (~100 movers/day,")
+        w("its own forward window), so compare direction not decimals.")
     w("")
 
     w("## Significance — the evolution gate's own vocabulary")

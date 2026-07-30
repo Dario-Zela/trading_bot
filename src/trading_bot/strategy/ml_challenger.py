@@ -170,17 +170,26 @@ def _rationales(booster, X: np.ndarray, pred_idx: np.ndarray, columns: list[str]
 
 
 def _previous_trading_day(on_date: date, region: str) -> date:
-    """The last completed session before `on_date` — the pipeline fires
-    pre-open, so bar t−1 is the freshest completed bar."""
-    try:
-        from trading_bot.tools.calendar import add_trading_days
-        return add_trading_days(on_date, -1, region)
-    except Exception as e:
-        log.warning("trading-calendar lookup failed (%s) — falling back to weekday walk", e)
-        d = on_date - timedelta(days=1)
-        while d.weekday() >= 5:
-            d -= timedelta(days=1)
-        return d
+    """The last completed session strictly before `on_date` — the
+    pipeline fires pre-open, so bar t−1 is the freshest completed bar.
+
+    Walks backwards with the exchange calendar. NOT
+    `tools.calendar.add_trading_days(on_date, -1, ...)`: that helper
+    clamps negative n to 0 and returns `on_date` itself, which would
+    let a same-day partial bar (intraday-refreshed cache) leak into
+    the features."""
+    from trading_bot.tools.calendar import is_market_open_on
+    d = on_date - timedelta(days=1)
+    for _ in range(30):
+        try:
+            if is_market_open_on(d, region):
+                return d
+        except Exception:
+            if d.weekday() < 5:
+                return d
+        d -= timedelta(days=1)
+    log.warning("no trading day found in the 30 days before %s (%s)?!", on_date, region)
+    return on_date - timedelta(days=1)
 
 
 def _earnings_within(ticker: str, on_date: date, window_days: int) -> bool:

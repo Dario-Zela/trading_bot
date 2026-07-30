@@ -232,6 +232,7 @@ def _shell(
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{html.escape(title)} — Trading Bot</title>
+  <link rel="icon" type="image/svg+xml" href="{up}assets/favicon.svg">
   {_FONTS_LINK}
   <link rel="stylesheet" href="{up}assets/style.css">
 </head>
@@ -471,6 +472,7 @@ def _ensure_latest_redirect(
         latest_path.write_text(
             '<!DOCTYPE html><html><head><meta charset="UTF-8">'
             f'<title>{kind.capitalize()} — no editions yet</title>'
+            '<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">'
             '<link rel="stylesheet" href="../assets/style.css"></head>'
             f'<body class="page-{kind}"><main class="paper">'
             '<header class="masthead">'
@@ -493,6 +495,7 @@ def _ensure_latest_redirect(
     latest_path.write_text(
         '<!DOCTYPE html><html><head>'
         f'<meta http-equiv="refresh" content="0; url={html.escape(target)}">'
+        '<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">'
         f'<link rel="canonical" href="{html.escape(target)}">'
         f'<title>Redirecting to latest {kind} edition…</title>'
         '</head><body>'

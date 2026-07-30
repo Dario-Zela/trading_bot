@@ -155,6 +155,48 @@ def test_select_picks_contract(ml_strategy_env, monkeypatch):
         assert rec.rationale                          # top-3 feature attribution
 
 
+def test_same_day_partial_bar_never_influences_predictions(ml_strategy_env, monkeypatch):
+    """Regression: an intraday-refreshed cache can contain a *partial*
+    bar dated on_date. Predictions must be byte-identical with and
+    without it — the strategy predicts strictly from t−1."""
+    from trading_bot.strategy import ml_challenger as mc
+    from trading_bot.strategy.registry import load_active_strategies
+    from trading_bot.tools.ohlcv_store import StoredBar, write_bars
+
+    monkeypatch.setattr(mc, "CONFIDENCE_FLOOR", -1.0)
+    strategy = load_active_strategies(region="us")[0]
+    on_date = ml_strategy_env["on_date"]
+    pred_path = ml_strategy_env["state"] / "predictions.jsonl"
+
+    strategy.select_picks(on_date)
+    baseline = pred_path.read_text()
+    pred_path.unlink()
+
+    # A wild same-day partial bar appears — a 40% crash on every name.
+    write_bars([
+        StoredBar(ticker=t, bar_date=on_date, open=30.0, high=31.0, low=29.0,
+                  close=30.0, volume=1)
+        for t in ml_strategy_env["tickers"]
+    ])
+    strategy.select_picks(on_date)
+    shocked = pred_path.read_text()
+
+    def _stable(text):  # created_at timestamps differ run-to-run
+        return [{k: v for k, v in json.loads(line).items() if k != "created_at"}
+                for line in text.splitlines() if line.strip()]
+
+    assert _stable(baseline) == _stable(shocked)
+
+
+def test_previous_trading_day_walks_backwards():
+    from trading_bot.strategy.ml_challenger import _previous_trading_day
+    # Monday → previous Friday; mid-week Thursday → Wednesday.
+    assert _previous_trading_day(date(2026, 7, 27), "us") == date(2026, 7, 24)
+    assert _previous_trading_day(date(2026, 7, 30), "us") == date(2026, 7, 29)
+    # Never on_date itself, even for a trading day.
+    assert _previous_trading_day(date(2026, 7, 30), "us") < date(2026, 7, 30)
+
+
 def test_manifest_drift_refuses_to_predict(ml_strategy_env, monkeypatch):
     """A model trained against a different feature spec must never be
     served — the load-time assert is the train/serve-skew fuse."""
