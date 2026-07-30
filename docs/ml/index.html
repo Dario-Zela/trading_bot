@@ -20,7 +20,7 @@
     
     <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
   </nav>
-  <main class="paper"><header class="masthead"><h1>The Bot Tribune<span class="sub">— ML lab</span></h1><div class="subtitle">The learned challenger: gradient-boosted trees vs the LLM desk, graded by the same machinery, forward, out of sample.</div></header><div class="masthead-strip"><span><strong>United States</strong> pooled OOS IC 0.0066 · n 406,260</span><span><strong>UK / Europe</strong> pooled OOS IC 0.0192 · n 126,340</span><span>Rendered 2026-07-30 19:51 UTC</span></div><p style="max-width:70ch"><code>ml-challenger</code> predicts the same 5-class open→close vocabulary the LLM strategies are graded on, from point-in-time OHLCV features with purged walk-forward validation. Model hyperparameters live outside the evolution agent's reach and the strategy is frozen as an experiment control — its forward record accumulates on the Dashboard tab like any other strategy. The full methodology, baselines and honest limitations are in the cards below, regenerated from the committed artifacts on every retrain.</p><section class="ml-region"><h2>United States <span class="sub">shadow tier · trained 2026-07-30 · horizon IC h1: 0.0066 / h2: 0.001 / h3: -0.0012 / h5: 0.0237</span></h2><div class="ml-tiles" style="display:flex;flex-wrap:wrap;gap:12px;margin:10px 0 14px"><div class="ml-tile"><div class="ml-tile-value">0.0066</div><div class="ml-tile-label">pooled OOS rank IC</div></div><div class="ml-tile"><div class="ml-tile-value">0.0035</div><div class="ml-tile-label">Fisher-z 95% lower bound</div></div><div class="ml-tile"><div class="ml-tile-value">0.0026</div><div class="ml-tile-label">permutation noise floor</div></div><div class="ml-tile"><div class="ml-tile-value">406,260</div><div class="ml-tile-label">graded OOS rows</div></div></div><details><summary>Full model card</summary><div class="ml-card-body"><h1>Model card — ml-challenger · us (LightGBM, 5-class)</h1>
+  <main class="paper"><header class="masthead"><h1>The Bot Tribune<span class="sub">— ML lab</span></h1><div class="subtitle">The learned challenger: gradient-boosted trees vs the LLM desk, graded by the same machinery, forward, out of sample.</div></header><div class="masthead-strip"><span><strong>United States</strong> pooled OOS IC 0.0066 · n 406,260</span><span><strong>UK / Europe</strong> pooled OOS IC 0.0031 · n 125,789</span><span>Rendered 2026-07-30 20:00 UTC</span></div><p style="max-width:70ch"><code>ml-challenger</code> predicts the same 5-class open→close vocabulary the LLM strategies are graded on, from point-in-time OHLCV features with purged walk-forward validation. Model hyperparameters live outside the evolution agent's reach and the strategy is frozen as an experiment control — its forward record accumulates on the Dashboard tab like any other strategy. The full methodology, baselines and honest limitations are in the cards below, regenerated from the committed artifacts on every retrain.</p><section class="ml-region"><h2>United States <span class="sub">shadow tier · trained 2026-07-30 · horizon IC h1: 0.0066 / h2: 0.001 / h3: -0.0012 / h5: 0.0237</span></h2><div class="ml-tiles" style="display:flex;flex-wrap:wrap;gap:12px;margin:10px 0 14px"><div class="ml-tile"><div class="ml-tile-value">0.0066</div><div class="ml-tile-label">pooled OOS rank IC</div></div><div class="ml-tile"><div class="ml-tile-value">0.0035</div><div class="ml-tile-label">Fisher-z 95% lower bound</div></div><div class="ml-tile"><div class="ml-tile-value">0.0026</div><div class="ml-tile-label">permutation noise floor</div></div><div class="ml-tile"><div class="ml-tile-value">406,260</div><div class="ml-tile-label">graded OOS rows</div></div></div><details><summary>Full model card</summary><div class="ml-card-body"><h1>Model card — ml-challenger · us (LightGBM, 5-class)</h1>
 <p><em>Generated 2026-07-30T19:13:20+00:00 by <code>python -m trading_bot.ml.train --region us</code> · seed 42 · data snapshot <code>b9d68a5efc4126fa</code></em></p>
 <p>Gradient-boosted trees predicting the same 5-class next-session<br />
 open→close vocabulary the LLM strategies are graded on, trained on<br />
@@ -859,8 +859,8 @@ TreeSHAP for trees). The signed column is the mean push toward <code>strong_up</
 <pre><code class="language-bash">python -m trading_bot.ml.data backfill --region us   # rebuild state/ml/train.db
 python -m trading_bot.ml.train --region us --seed 42  # card + model_h*.txt + manifest
 </code></pre>
-<p>Data snapshot sha256[:16] <code>b9d68a5efc4126fa</code> · feature spec <code>58bd0e3b705e8d26</code> · LightGBM params: lr=0.1, depth=6, leaves=31, min_leaf=100, feature/bagging 0.8, balanced weights.</p></div></details></section><section class="ml-region"><h2>UK / Europe <span class="sub">shadow tier · trained 2026-07-30 · horizon IC h1: 0.0192 / h2: 0.0127 / h3: 0.0173 / h5: 0.0346</span></h2><div class="ml-tiles" style="display:flex;flex-wrap:wrap;gap:12px;margin:10px 0 14px"><div class="ml-tile"><div class="ml-tile-value">0.0192</div><div class="ml-tile-label">pooled OOS rank IC</div></div><div class="ml-tile"><div class="ml-tile-value">0.0137</div><div class="ml-tile-label">Fisher-z 95% lower bound</div></div><div class="ml-tile"><div class="ml-tile-value">0.0048</div><div class="ml-tile-label">permutation noise floor</div></div><div class="ml-tile"><div class="ml-tile-value">126,340</div><div class="ml-tile-label">graded OOS rows</div></div></div><details><summary>Full model card</summary><div class="ml-card-body"><h1>Model card — ml-challenger · uk-eu (LightGBM, 5-class)</h1>
-<p><em>Generated 2026-07-30T16:36:18+00:00 by <code>python -m trading_bot.ml.train --region uk-eu</code> · seed 42 · data snapshot <code>b9d68a5efc4126fa</code></em></p>
+<p>Data snapshot sha256[:16] <code>b9d68a5efc4126fa</code> · feature spec <code>58bd0e3b705e8d26</code> · LightGBM params: lr=0.1, depth=6, leaves=31, min_leaf=100, feature/bagging 0.8, balanced weights.</p></div></details></section><section class="ml-region"><h2>UK / Europe <span class="sub">shadow tier · trained 2026-07-30 · horizon IC h1: 0.0031 / h2: -0.0064 / h3: -0.0083 / h5: -0.0082</span></h2><div class="ml-tiles" style="display:flex;flex-wrap:wrap;gap:12px;margin:10px 0 14px"><div class="ml-tile"><div class="ml-tile-value">0.0031</div><div class="ml-tile-label">pooled OOS rank IC</div></div><div class="ml-tile"><div class="ml-tile-value">-0.0024</div><div class="ml-tile-label">Fisher-z 95% lower bound</div></div><div class="ml-tile"><div class="ml-tile-value">0.005</div><div class="ml-tile-label">permutation noise floor</div></div><div class="ml-tile"><div class="ml-tile-value">125,789</div><div class="ml-tile-label">graded OOS rows</div></div></div><details><summary>Full model card</summary><div class="ml-card-body"><h1>Model card — ml-challenger · uk-eu (LightGBM, 5-class)</h1>
+<p><em>Generated 2026-07-30T19:58:13+00:00 by <code>python -m trading_bot.ml.train --region uk-eu</code> · seed 42 · data snapshot <code>b9d68a5efc4126fa</code></em></p>
 <p>Gradient-boosted trees predicting the same 5-class next-session<br />
 open→close vocabulary the LLM strategies are graded on, trained on<br />
 point-in-time OHLCV features with purged walk-forward validation.<br />
@@ -869,9 +869,9 @@ evolution machinery judges ML vs LLM head-to-head, forward, out of<br />
 sample.</p>
 <h2>Data</h2>
 <ul>
-<li>Snapshot: <code>state/ml/train.db</code> — 1,541,954 bars, 466 tickers, 2023-06-06 → 2026-07-30</li>
-<li>Training frame: <strong>258,641 rows</strong> × 466 tickers × 561 feature dates (2023-08-31 → 2026-05-01)</li>
-<li>Universe: S&amp;P 1500 ∩ t212_isa_us (~1.5k liquid US names the bot can trade)</li>
+<li>Snapshot: <code>state/ml/train.db</code> — this region's slice: 370,840 bars, 466 tickers, 2023-06-06 → 2026-07-29</li>
+<li>Training frame: <strong>341,443 rows</strong> × 466 tickers × 744 feature dates (2023-08-31 → 2026-07-28)</li>
+<li>Universe: (FTSE 350 + DAX + CAC + AEX + UCITS ETFs) ∩ t212_isa_uk_eu (~470 UK/EU names)</li>
 <li>Prices are unadjusted (auto_adjust=False), matching what tools.history writes<br />
   into the runtime store the model is served from</li>
 </ul>
@@ -893,35 +893,35 @@ downstream hit-rate comparison against the graded <code>actual_class</code> voca
 <tbody>
 <tr>
 <td>strong_down</td>
-<td>5,391</td>
-<td>2.1%</td>
+<td>6,859</td>
+<td>2.0%</td>
 </tr>
 <tr>
 <td>mild_down</td>
-<td>50,619</td>
-<td>19.6%</td>
+<td>66,674</td>
+<td>19.5%</td>
 </tr>
 <tr>
 <td>flat</td>
-<td>146,859</td>
-<td>56.8%</td>
+<td>193,444</td>
+<td>56.7%</td>
 </tr>
 <tr>
 <td>mild_up</td>
-<td>50,848</td>
-<td>19.7%</td>
+<td>67,751</td>
+<td>19.8%</td>
 </tr>
 <tr>
 <td>strong_up</td>
-<td>4,924</td>
-<td>1.9%</td>
+<td>6,715</td>
+<td>2.0%</td>
 </tr>
 </tbody>
 </table>
 <p>Class imbalance is why training uses balanced class weights and this card<br />
 never quotes raw accuracy — predict-always-flat scores deceptively well.</p>
 <p>Class midpoints (within-class mean returns, fitted on the first training<br />
-block only and frozen): strong_down=-5.521, mild_down=-1.899, flat=0.018, mild_up=1.871, strong_up=5.744<br />
+block only and frozen): strong_down=-5.6, mild_down=-1.903, flat=0.017, mild_up=1.879, strong_up=5.724<br />
 <code>predicted_return_pct = Σ_c p_c · m_c</code> — the continuous score <code>metrics.py</code><br />
 computes IC on; <code>predicted_class</code> = argmax; <code>conviction</code> = max probability.</p>
 <h2>Features</h2>
@@ -1028,7 +1028,7 @@ cache maps each ticker's <em>current</em> sector onto all history (look-ahead).<
 <pre><code>train ──────────────────┤purge 1│ embargo 5 │ validate 21 │→ roll 21, expand
 </code></pre>
 <p>Grid: 3 learning rates × 2 depths, selected on pooled OOS log-loss<br />
-(winner: lr=0.1, depth=6, 1012 rounds). The label is intraday so labels never<br />
+(winner: lr=0.1, depth=6, 1258 rounds). The label is intraday so labels never<br />
 overlap across days; purge+embargo are kept anyway — 21/63-day rolling<br />
 features decay slowly, so adjacent-day rows are heavily correlated.</p>
 <p><strong>Training window: rolling, most recent 250 sessions per fold</strong> — the<br />
@@ -1052,120 +1052,120 @@ unordered block combinations).</p>
 <tbody>
 <tr>
 <td>0</td>
-<td>2024-12-31</td>
-<td>2025-01-10 → 2025-02-07</td>
-<td>9,755</td>
-<td>1.2054</td>
-<td>-0.017</td>
-<td>-0.0068</td>
+<td>2025-06-25</td>
+<td>2025-07-04 → 2025-08-01</td>
+<td>9,764</td>
+<td>1.1335</td>
+<td>0.0122</td>
+<td>0.0099</td>
 </tr>
 <tr>
 <td>1</td>
-<td>2025-01-30</td>
-<td>2025-02-10 → 2025-03-10</td>
-<td>9,764</td>
-<td>1.2358</td>
-<td>0.0533</td>
-<td>0.021</td>
+<td>2025-07-24</td>
+<td>2025-08-04 → 2025-09-01</td>
+<td>9,403</td>
+<td>1.1413</td>
+<td>0.0387</td>
+<td>0.0174</td>
 </tr>
 <tr>
 <td>2</td>
-<td>2025-02-28</td>
-<td>2025-03-11 → 2025-04-08</td>
-<td>9,764</td>
-<td>1.5607</td>
-<td>0.0218</td>
-<td>0.004</td>
+<td>2025-08-22</td>
+<td>2025-09-02 → 2025-09-30</td>
+<td>9,765</td>
+<td>1.1422</td>
+<td>0.0166</td>
+<td>0.0077</td>
 </tr>
 <tr>
 <td>3</td>
-<td>2025-03-31</td>
-<td>2025-04-09 → 2025-08-04</td>
-<td>9,662</td>
-<td>1.6064</td>
-<td>0.0132</td>
-<td>-0.0049</td>
+<td>2025-09-22</td>
+<td>2025-10-01 → 2025-10-29</td>
+<td>9,746</td>
+<td>1.1493</td>
+<td>0.0061</td>
+<td>0.0129</td>
 </tr>
 <tr>
 <td>4</td>
-<td>2025-05-01</td>
-<td>2025-08-05 → 2025-09-02</td>
-<td>9,403</td>
-<td>1.1389</td>
-<td>0.0485</td>
-<td>0.0279</td>
+<td>2025-10-21</td>
+<td>2025-10-30 → 2025-11-27</td>
+<td>9,786</td>
+<td>1.2382</td>
+<td>-0.0326</td>
+<td>0.0082</td>
 </tr>
 <tr>
 <td>5</td>
-<td>2025-08-25</td>
-<td>2025-09-03 → 2025-10-01</td>
-<td>9,765</td>
-<td>1.1376</td>
-<td>0.0767</td>
-<td>0.0196</td>
+<td>2025-11-19</td>
+<td>2025-11-28 → 2025-12-30</td>
+<td>9,708</td>
+<td>1.1149</td>
+<td>0.0295</td>
+<td>0.0205</td>
 </tr>
 <tr>
 <td>6</td>
-<td>2025-09-23</td>
-<td>2025-10-02 → 2025-10-30</td>
+<td>2025-12-18</td>
+<td>2025-12-31 → 2026-01-29</td>
 <td>9,747</td>
-<td>1.1595</td>
-<td>-0.0123</td>
-<td>-0.0003</td>
+<td>1.1654</td>
+<td>0.0147</td>
+<td>0.014</td>
 </tr>
 <tr>
 <td>7</td>
-<td>2025-10-22</td>
-<td>2025-10-31 → 2025-11-28</td>
-<td>9,786</td>
-<td>1.2253</td>
-<td>0.0013</td>
-<td>0.0107</td>
+<td>2026-01-21</td>
+<td>2026-01-30 → 2026-02-27</td>
+<td>9,785</td>
+<td>1.3075</td>
+<td>0.0019</td>
+<td>0.0291</td>
 </tr>
 <tr>
 <td>8</td>
-<td>2025-11-20</td>
-<td>2025-12-01 → 2025-12-31</td>
-<td>9,669</td>
-<td>1.1148</td>
-<td>0.0246</td>
-<td>0.0282</td>
+<td>2026-02-19</td>
+<td>2026-03-02 → 2026-03-30</td>
+<td>9,772</td>
+<td>1.6083</td>
+<td>0.0525</td>
+<td>0.0055</td>
 </tr>
 <tr>
 <td>9</td>
-<td>2025-12-19</td>
-<td>2026-01-02 → 2026-01-30</td>
-<td>9,786</td>
-<td>1.1831</td>
-<td>0.0109</td>
-<td>0.0128</td>
+<td>2026-03-20</td>
+<td>2026-03-31 → 2026-04-30</td>
+<td>9,785</td>
+<td>1.3637</td>
+<td>-0.0369</td>
+<td>-0.0232</td>
 </tr>
 <tr>
 <td>10</td>
-<td>2026-01-22</td>
-<td>2026-02-02 → 2026-03-02</td>
-<td>9,785</td>
-<td>1.34</td>
-<td>-0.0262</td>
-<td>0.0019</td>
+<td>2026-04-22</td>
+<td>2026-05-01 → 2026-05-29</td>
+<td>8,957</td>
+<td>1.3283</td>
+<td>0.0041</td>
+<td>-0.0082</td>
 </tr>
 <tr>
 <td>11</td>
-<td>2026-02-20</td>
-<td>2026-03-03 → 2026-03-31</td>
-<td>9,772</td>
-<td>1.6112</td>
-<td>0.0557</td>
-<td>0.0173</td>
+<td>2026-05-21</td>
+<td>2026-06-01 → 2026-06-29</td>
+<td>9,786</td>
+<td>1.2872</td>
+<td>-0.0033</td>
+<td>-0.0201</td>
 </tr>
 <tr>
 <td>12</td>
-<td>2026-03-23</td>
-<td>2026-04-01 → 2026-05-01</td>
-<td>9,682</td>
-<td>1.3403</td>
-<td>0.0097</td>
-<td>0.0154</td>
+<td>2026-06-19</td>
+<td>2026-06-30 → 2026-07-28</td>
+<td>9,785</td>
+<td>1.2784</td>
+<td>-0.0154</td>
+<td>-0.0174</td>
 </tr>
 </tbody>
 </table>
@@ -1185,43 +1185,43 @@ unordered block combinations).</p>
 <tbody>
 <tr>
 <td><strong>LightGBM challenger</strong></td>
-<td>126,340</td>
-<td>1.2972</td>
-<td>0.0192</td>
-<td>0.0113 (2.87)</td>
-<td>0.075</td>
-<td>0.492</td>
+<td>125,789</td>
+<td>1.2506</td>
+<td>0.0031</td>
+<td>0.0043 (1.19)</td>
+<td>0</td>
+<td>0.489</td>
 </tr>
 <tr>
 <td>Logistic (same features)</td>
-<td>126,340</td>
-<td>1.5194</td>
-<td>0.017</td>
-<td>0.0104 (1.67)</td>
-<td>0.123</td>
+<td>125,789</td>
+<td>1.486</td>
+<td>0.0062</td>
+<td>-0.0001 (-0.01)</td>
+<td>0.182</td>
 <td>0.492</td>
 </tr>
 <tr>
 <td>MLP (PyTorch, v2 preview)</td>
-<td>126,340</td>
-<td>1.4977</td>
-<td>0.0289</td>
-<td>0.0028 (0.48)</td>
-<td>0.263</td>
-<td>0.498</td>
+<td>125,789</td>
+<td>1.4566</td>
+<td>0.0151</td>
+<td>0.0035 (0.6)</td>
+<td>0.277</td>
+<td>0.494</td>
 </tr>
 <tr>
 <td>Yesterday's-sign momentum</td>
-<td>126,340</td>
+<td>125,789</td>
 <td>—</td>
-<td>0.0233</td>
-<td>0.0231 (4.13)</td>
-<td>0.094</td>
+<td>0.0157</td>
+<td>0.0246 (4.08)</td>
+<td>0.134</td>
 <td>—</td>
 </tr>
 <tr>
 <td>Uniform prior</td>
-<td>126,340</td>
+<td>125,789</td>
 <td>1.6094</td>
 <td>—</td>
 <td>—</td>
@@ -1242,12 +1242,56 @@ unordered block combinations).</p>
 <p>control-rule-based is the deactivated (2026-06-07) rule baseline. It predates<br />
 prediction logging, so its frozen record is <em>trade-level</em> (ledger): 111 shadow trades, hit rate 0.081, avg P&amp;L 0.319%/trade — no IC is computable,<br />
 so compare it on hit rate and the toy portfolio, not on ranking metrics.</p>
+<h2>Ship gate — beat every baseline, pooled out-of-sample</h2>
+<table>
+<thead>
+<tr>
+<th>baseline</th>
+<th>baseline pooled IC</th>
+<th>challenger pooled IC</th>
+<th>verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Yesterday's-sign momentum</td>
+<td>0.0157</td>
+<td>0.0031</td>
+<td><strong>LOSES</strong></td>
+</tr>
+<tr>
+<td>Logistic (same features)</td>
+<td>0.0062</td>
+<td>0.0031</td>
+<td><strong>LOSES</strong></td>
+</tr>
+<tr>
+<td>MLP (PyTorch, v2 preview)</td>
+<td>0.0151</td>
+<td>0.0031</td>
+<td><strong>LOSES</strong></td>
+</tr>
+<tr>
+<td>Uniform prior (log-loss basis)</td>
+<td>—</td>
+<td>0.0031</td>
+<td>beats</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Verdict: FAILS the design gate</strong> — the challenger loses to Yesterday's-sign momentum, Logistic (same features), MLP (PyTorch, v2 preview) on pooled OOS IC. It ships at shadow tier anyway,<br />
+stated here rather than buried, because: (1) shadow risks nothing and the<br />
+forward run on live grading — not this backtest — is the decisive test;<br />
+(2) the challenger's advantages are on other axes (log-loss, calibration,<br />
+per-day IC consistency) that the pooled-IC gate doesn't see; (3) a simple<br />
+baseline being hard to beat is itself a finding worth publishing. If the<br />
+forward record confirms the loss, the sleeve gets pulled.</p>
 <h2>Significance — the evolution gate's own vocabulary</h2>
 <ul>
-<li>Pooled OOS rank IC: <strong>0.0192</strong> over 126,340 graded rows</li>
-<li>Permutation noise floor (1000 shuffles, 95th pct, as <code>scripts/ic_noise_floor.py</code>): <strong>0.0048</strong></li>
-<li>Fisher-z 95% lower bound (<code>PROMOTION_IC_CI_Z = 1.96</code>): <strong>0.0137</strong></li>
-<li>The pooled IC clears the noise floor.</li>
+<li>Pooled OOS rank IC: <strong>0.0031</strong> over 125,789 graded rows</li>
+<li>Permutation noise floor (1000 shuffles, 95th pct, as <code>scripts/ic_noise_floor.py</code>): <strong>0.005</strong></li>
+<li>Fisher-z 95% lower bound (<code>PROMOTION_IC_CI_Z = 1.96</code>): <strong>-0.0024</strong></li>
+<li>The pooled IC does NOT clear the noise floor.</li>
 </ul>
 <table>
 <thead>
@@ -1260,18 +1304,18 @@ so compare it on hit rate and the toy portfolio, not on ranking metrics.</p>
 <tbody>
 <tr>
 <td>open(t+1)→close(t+1)</td>
-<td>0.0184</td>
-<td>124,970</td>
+<td>0.0024</td>
+<td>124,523</td>
 </tr>
 <tr>
 <td>open(t+1)→close(t+2)</td>
-<td>0.0146</td>
-<td>123,561</td>
+<td>0</td>
+<td>122,752</td>
 </tr>
 <tr>
 <td>open(t+1)→close(t+3)</td>
-<td>0.0096</td>
-<td>123,600</td>
+<td>-0.0063</td>
+<td>122,325</td>
 </tr>
 </tbody>
 </table>
@@ -1279,7 +1323,7 @@ so compare it on hit rate and the toy portfolio, not on ranking metrics.</p>
 <p>6 blocks choose 2 = 15 OOS paths with the<br />
 winning params (grid re-selection inside CPCV would be circular). Where simple<br />
 walk-forward gives one pooled IC, CPCV gives a distribution:</p>
-<p>mean <strong>0.0138</strong> · std 0.008 · range [-0.0032, 0.0261] · 0.933 of paths positive.</p>
+<p>mean <strong>0.0173</strong> · std 0.004 · range [0.0099, 0.0222] · 1 of paths positive.</p>
 <p>Caveat: CPCV trains on data that postdates some validation blocks — acceptable<br />
 for a stationary-ish feature spec, and the reason promotion still keys on the<br />
 walk-forward number (the only one runtime evolution can observe).</p>
@@ -1299,24 +1343,24 @@ Repo precedent: momentum-trader-vix-gated.</p>
 <tbody>
 <tr>
 <td>calm (VIX ≤ 16.4)</td>
-<td>41,842</td>
-<td>91</td>
-<td>0.0241</td>
-<td>0.0163</td>
+<td>41,396</td>
+<td>90</td>
+<td>0.0049</td>
+<td>0.0134</td>
 </tr>
 <tr>
-<td>mid (16.4 – 19.6)</td>
-<td>40,863</td>
+<td>mid (16.4 – 18.2)</td>
+<td>40,512</td>
 <td>88</td>
-<td>0.0026</td>
-<td>0.0094</td>
+<td>0.008</td>
+<td>-0.0025</td>
 </tr>
 <tr>
-<td>stressed (VIX &gt; 19.6)</td>
-<td>40,843</td>
+<td>stressed (VIX &gt; 18.2)</td>
+<td>40,621</td>
 <td>88</td>
-<td>0.0267</td>
-<td>0.0091</td>
+<td>-0.0122</td>
+<td>-0.0007</td>
 </tr>
 </tbody>
 </table>
@@ -1340,107 +1384,111 @@ balanced weights absorb.</p>
 <tbody>
 <tr>
 <td>1</td>
-<td>126,340</td>
-<td>0.0192</td>
-<td>0.0113</td>
-<td>1.2972</td>
+<td>125,789</td>
+<td>0.0031</td>
+<td>0.0043</td>
+<td>1.2506</td>
 </tr>
 <tr>
 <td>2</td>
-<td>126,379</td>
-<td>0.0127</td>
-<td>-0.0003</td>
-<td>1.4746</td>
+<td>125,827</td>
+<td>-0.0064</td>
+<td>-0.0034</td>
+<td>1.4504</td>
 </tr>
 <tr>
 <td>3</td>
-<td>126,379</td>
-<td>0.0173</td>
-<td>-0.0029</td>
-<td>1.5357</td>
+<td>125,826</td>
+<td>-0.0083</td>
+<td>-0.0108</td>
+<td>1.5196</td>
 </tr>
 <tr>
 <td>5</td>
-<td>126,379</td>
-<td>0.0346</td>
-<td>0.001</td>
-<td>1.5632</td>
+<td>125,824</td>
+<td>-0.0082</td>
+<td>-0.0048</td>
+<td>1.5462</td>
 </tr>
 </tbody>
 </table>
 <h2>Calibration</h2>
-<p>Multiclass Brier <strong>0.6855</strong> · argmax-confidence ECE <strong>0.0299</strong>.<br />
+<p>Multiclass Brier <strong>0.6701</strong> · argmax-confidence ECE <strong>0.0549</strong>.<br />
 LLM conviction values are famously uncalibrated; a demonstrably calibrated<br />
 challenger is a headline result even where IC ties.</p>
 <details><summary>Reliability — strong_down</summary>
 
 | predicted prob | n | mean predicted | empirical freq |
 |---|---|---|---|
-| 0.0–0.1 | 88,003 | 0.018 | 0.016 |
-| 0.1–0.2 | 21,823 | 0.167 | 0.03 |
-| 0.2–0.3 | 14,049 | 0.222 | 0.054 |
-| 0.3–0.4 | 1,651 | 0.336 | 0.088 |
-| 0.4–0.5 | 390 | 0.444 | 0.095 |
-| 0.5–0.6 | 222 | 0.542 | 0.086 |
-| 0.6–0.7 | 119 | 0.641 | 0.092 |
-| 0.7–0.8 | 60 | 0.748 | 0.1 |
+| 0.0–0.1 | 104,388 | 0.017 | 0.016 |
+| 0.1–0.2 | 10,892 | 0.159 | 0.039 |
+| 0.2–0.3 | 8,223 | 0.219 | 0.058 |
+| 0.3–0.4 | 1,074 | 0.343 | 0.064 |
+| 0.4–0.5 | 566 | 0.445 | 0.065 |
+| 0.5–0.6 | 308 | 0.546 | 0.088 |
+| 0.6–0.7 | 179 | 0.647 | 0.061 |
+| 0.7–0.8 | 91 | 0.74 | 0.077 |
+| 0.8–0.9 | 51 | 0.839 | 0.157 |
 
 </details>
 <details><summary>Reliability — mild_down</summary>
 
 | predicted prob | n | mean predicted | empirical freq |
 |---|---|---|---|
-| 0.0–0.1 | 7,474 | 0.059 | 0.109 |
-| 0.1–0.2 | 33,722 | 0.167 | 0.193 |
-| 0.2–0.3 | 47,930 | 0.236 | 0.204 |
-| 0.3–0.4 | 22,302 | 0.345 | 0.219 |
-| 0.4–0.5 | 10,069 | 0.442 | 0.245 |
-| 0.5–0.6 | 3,490 | 0.541 | 0.246 |
-| 0.6–0.7 | 1,041 | 0.639 | 0.246 |
-| 0.7–0.8 | 263 | 0.739 | 0.224 |
+| 0.0–0.1 | 9,474 | 0.054 | 0.098 |
+| 0.1–0.2 | 27,801 | 0.162 | 0.195 |
+| 0.2–0.3 | 41,115 | 0.244 | 0.213 |
+| 0.3–0.4 | 27,564 | 0.346 | 0.22 |
+| 0.4–0.5 | 13,251 | 0.442 | 0.225 |
+| 0.5–0.6 | 4,641 | 0.541 | 0.237 |
+| 0.6–0.7 | 1,484 | 0.641 | 0.237 |
+| 0.7–0.8 | 385 | 0.741 | 0.244 |
+| 0.8–0.9 | 71 | 0.831 | 0.282 |
 
 </details>
 <details><summary>Reliability — flat</summary>
 
 | predicted prob | n | mean predicted | empirical freq |
 |---|---|---|---|
-| 0.0–0.1 | 4,261 | 0.072 | 0.316 |
-| 0.1–0.2 | 33,620 | 0.168 | 0.414 |
-| 0.2–0.3 | 27,355 | 0.242 | 0.515 |
-| 0.3–0.4 | 20,137 | 0.348 | 0.566 |
-| 0.4–0.5 | 16,220 | 0.448 | 0.625 |
-| 0.5–0.6 | 11,034 | 0.546 | 0.688 |
-| 0.6–0.7 | 6,211 | 0.646 | 0.741 |
-| 0.7–0.8 | 3,598 | 0.745 | 0.807 |
-| 0.8–0.9 | 2,176 | 0.847 | 0.874 |
-| 0.9–1.0 | 1,728 | 0.944 | 0.927 |
+| 0.0–0.1 | 5,406 | 0.069 | 0.31 |
+| 0.1–0.2 | 25,513 | 0.165 | 0.4 |
+| 0.2–0.3 | 27,464 | 0.246 | 0.481 |
+| 0.3–0.4 | 21,910 | 0.349 | 0.555 |
+| 0.4–0.5 | 17,220 | 0.447 | 0.616 |
+| 0.5–0.6 | 11,225 | 0.546 | 0.675 |
+| 0.6–0.7 | 6,754 | 0.646 | 0.738 |
+| 0.7–0.8 | 4,251 | 0.746 | 0.807 |
+| 0.8–0.9 | 2,835 | 0.848 | 0.864 |
+| 0.9–1.0 | 3,211 | 0.955 | 0.943 |
 
 </details>
 <details><summary>Reliability — mild_up</summary>
 
 | predicted prob | n | mean predicted | empirical freq |
 |---|---|---|---|
-| 0.0–0.1 | 6,641 | 0.06 | 0.1 |
-| 0.1–0.2 | 32,586 | 0.168 | 0.202 |
-| 0.2–0.3 | 49,439 | 0.238 | 0.201 |
-| 0.3–0.4 | 22,875 | 0.345 | 0.214 |
-| 0.4–0.5 | 10,017 | 0.442 | 0.228 |
-| 0.5–0.6 | 3,411 | 0.541 | 0.235 |
-| 0.6–0.7 | 1,049 | 0.64 | 0.256 |
-| 0.7–0.8 | 277 | 0.74 | 0.238 |
+| 0.0–0.1 | 10,002 | 0.053 | 0.1 |
+| 0.1–0.2 | 27,959 | 0.163 | 0.189 |
+| 0.2–0.3 | 42,605 | 0.244 | 0.207 |
+| 0.3–0.4 | 27,424 | 0.345 | 0.221 |
+| 0.4–0.5 | 12,105 | 0.442 | 0.231 |
+| 0.5–0.6 | 4,107 | 0.54 | 0.235 |
+| 0.6–0.7 | 1,171 | 0.64 | 0.254 |
+| 0.7–0.8 | 346 | 0.737 | 0.254 |
+| 0.8–0.9 | 65 | 0.831 | 0.169 |
 
 </details>
 <details><summary>Reliability — strong_up</summary>
 
 | predicted prob | n | mean predicted | empirical freq |
 |---|---|---|---|
-| 0.0–0.1 | 88,996 | 0.016 | 0.015 |
-| 0.1–0.2 | 20,685 | 0.166 | 0.021 |
-| 0.2–0.3 | 14,181 | 0.224 | 0.048 |
-| 0.3–0.4 | 1,719 | 0.335 | 0.073 |
-| 0.4–0.5 | 398 | 0.444 | 0.065 |
-| 0.5–0.6 | 202 | 0.546 | 0.084 |
-| 0.6–0.7 | 92 | 0.645 | 0.087 |
+| 0.0–0.1 | 105,084 | 0.015 | 0.017 |
+| 0.1–0.2 | 12,327 | 0.164 | 0.033 |
+| 0.2–0.3 | 6,374 | 0.223 | 0.057 |
+| 0.3–0.4 | 1,047 | 0.343 | 0.071 |
+| 0.4–0.5 | 510 | 0.442 | 0.076 |
+| 0.5–0.6 | 231 | 0.544 | 0.095 |
+| 0.6–0.7 | 126 | 0.646 | 0.119 |
+| 0.7–0.8 | 64 | 0.744 | 0.172 |
 
 </details>
 
@@ -1458,47 +1506,48 @@ challenger is a headline result even where IC ties.</p>
 <tbody>
 <tr>
 <td>strong_down</td>
-<td>3,053</td>
-<td>7,301</td>
-<td>0.068</td>
-<td>0.162</td>
+<td>2,749</td>
+<td>4,083</td>
+<td>0.072</td>
+<td>0.107</td>
 </tr>
 <tr>
 <td>mild_down</td>
-<td>25,657</td>
-<td>27,668</td>
-<td>0.243</td>
-<td>0.262</td>
+<td>25,724</td>
+<td>33,865</td>
+<td>0.238</td>
+<td>0.313</td>
 </tr>
 <tr>
 <td>flat</td>
-<td>69,501</td>
-<td>53,923</td>
-<td>0.677</td>
-<td>0.525</td>
+<td>69,340</td>
+<td>54,440</td>
+<td>0.678</td>
+<td>0.532</td>
 </tr>
 <tr>
 <td>mild_up</td>
-<td>25,497</td>
-<td>28,006</td>
-<td>0.23</td>
-<td>0.253</td>
+<td>25,301</td>
+<td>28,870</td>
+<td>0.237</td>
+<td>0.27</td>
 </tr>
 <tr>
 <td>strong_up</td>
-<td>2,632</td>
-<td>9,442</td>
-<td>0.053</td>
-<td>0.191</td>
+<td>2,675</td>
+<td>4,531</td>
+<td>0.062</td>
+<td>0.104</td>
 </tr>
 </tbody>
 </table>
 <h2>Toy top-5 long portfolio (net of costs)</h2>
 <p>Equal-weight long the top-5 scores each validation day, net of 0.5% round-trip (~0.50% round-trip cost on £2,000 (stamp 0.5%)):<br />
-mean daily net -0.6232% · hit rate 0.344 · cumulative -170.13% over 273 days · worst day -5.95%.<br />
+mean daily net -0.6215% · hit rate 0.359 · cumulative -169.66% over 273 days · worst day -5.06%.<br />
 A sanity harness, not a backtest — no slippage, no capacity, fills at the<br />
-label's own open. UK-EU waits for v1.1 because 0.5% stamp duty moves this<br />
-from marginal to negative.</p>
+label's own open. The 0.5% LSE stamp duty dominates this region's cost<br />
+estimate — which is why the live strategy also applies a pick-time cost<br />
+gate (predicted move ≥ cost_gate_multiplier × estimated round-trip).</p>
 <h2>Feature attribution — gain vs TreeSHAP</h2>
 <p>Gain importances (split quality) next to TreeSHAP mean-|contribution| on a<br />
 20k-row sample (consistent attributions — LightGBM's <code>pred_contrib</code> is exact<br />
@@ -1515,136 +1564,135 @@ TreeSHAP for trees). The signed column is the mean push toward <code>strong_up</
 <tbody>
 <tr>
 <td><code>parkinson_10d</code></td>
-<td>168,856</td>
-<td>0.61527</td>
-<td>-0.19245</td>
+<td>199,723</td>
+<td>0.69577</td>
+<td>-0.22243</td>
 </tr>
 <tr>
 <td><code>overnight_gap</code></td>
-<td>89,529</td>
-<td>0.10689</td>
-<td>0.011</td>
-</tr>
-<tr>
-<td><code>ret_1d</code></td>
-<td>81,418</td>
-<td>0.14983</td>
-<td>-0.02229</td>
+<td>92,644</td>
+<td>0.10654</td>
+<td>0.00894</td>
 </tr>
 <tr>
 <td><code>dollar_volume_pctile</code></td>
-<td>76,964</td>
-<td>0.13264</td>
-<td>0.00423</td>
-</tr>
-<tr>
-<td><code>volume_ratio</code></td>
-<td>76,113</td>
-<td>0.10708</td>
-<td>-0.00771</td>
-</tr>
-<tr>
-<td><code>ret_1d_rank</code></td>
-<td>75,368</td>
-<td>0.13484</td>
-<td>0.03022</td>
-</tr>
-<tr>
-<td><code>close_vs_sma63</code></td>
-<td>73,786</td>
-<td>0.10991</td>
-<td>-0.00239</td>
-</tr>
-<tr>
-<td><code>vol_of_vol</code></td>
-<td>72,283</td>
-<td>0.13498</td>
-<td>0.04355</td>
-</tr>
-<tr>
-<td><code>ret_21d_z</code></td>
-<td>70,972</td>
-<td>0.12409</td>
-<td>-0.01471</td>
-</tr>
-<tr>
-<td><code>ret_5d</code></td>
-<td>69,753</td>
-<td>0.09868</td>
-<td>0.01806</td>
+<td>88,987</td>
+<td>0.15519</td>
+<td>0.00483</td>
 </tr>
 <tr>
 <td><code>vol_21d</code></td>
-<td>69,604</td>
-<td>0.21043</td>
-<td>-0.12076</td>
+<td>83,299</td>
+<td>0.29794</td>
+<td>-0.11981</td>
 </tr>
 <tr>
-<td><code>ret_10d</code></td>
-<td>68,339</td>
-<td>0.11545</td>
-<td>-0.00463</td>
+<td><code>ret_1d</code></td>
+<td>80,863</td>
+<td>0.12459</td>
+<td>-0.00403</td>
+</tr>
+<tr>
+<td><code>volume_ratio</code></td>
+<td>80,746</td>
+<td>0.12709</td>
+<td>0.0005</td>
+</tr>
+<tr>
+<td><code>vol_of_vol</code></td>
+<td>77,999</td>
+<td>0.16311</td>
+<td>0.04768</td>
 </tr>
 <tr>
 <td><code>vol_10d</code></td>
-<td>68,118</td>
-<td>0.15801</td>
-<td>0.03015</td>
+<td>77,837</td>
+<td>0.17962</td>
+<td>0.07922</td>
+</tr>
+<tr>
+<td><code>ret_1d_rank</code></td>
+<td>77,347</td>
+<td>0.12694</td>
+<td>0.00447</td>
+</tr>
+<tr>
+<td><code>close_vs_sma63</code></td>
+<td>76,433</td>
+<td>0.12372</td>
+<td>0.08168</td>
+</tr>
+<tr>
+<td><code>ret_5d</code></td>
+<td>75,548</td>
+<td>0.13368</td>
+<td>0.00605</td>
+</tr>
+<tr>
+<td><code>ret_21d_z</code></td>
+<td>73,227</td>
+<td>0.15675</td>
+<td>-0.00693</td>
+</tr>
+<tr>
+<td><code>ret_10d</code></td>
+<td>71,022</td>
+<td>0.13101</td>
+<td>0.02955</td>
 </tr>
 <tr>
 <td><code>ret_21d</code></td>
-<td>65,269</td>
-<td>0.11999</td>
-<td>0.01915</td>
+<td>66,583</td>
+<td>0.15537</td>
+<td>-0.05519</td>
 </tr>
 <tr>
 <td><code>close_vs_sma10</code></td>
-<td>61,886</td>
-<td>0.1103</td>
-<td>0.01914</td>
+<td>64,700</td>
+<td>0.11572</td>
+<td>0.00273</td>
 </tr>
 <tr>
 <td><code>close_vs_sma21</code></td>
-<td>55,196</td>
-<td>0.09108</td>
-<td>0.00487</td>
-</tr>
-<tr>
-<td><code>dow_thu</code></td>
-<td>13,152</td>
-<td>0.03548</td>
-<td>0.00129</td>
-</tr>
-<tr>
-<td><code>dow_wed</code></td>
-<td>10,051</td>
-<td>0.02641</td>
-<td>0.00033</td>
-</tr>
-<tr>
-<td><code>dow_mon</code></td>
-<td>8,320</td>
-<td>0.02723</td>
-<td>0.00006</td>
+<td>61,608</td>
+<td>0.14063</td>
+<td>-0.03513</td>
 </tr>
 <tr>
 <td><code>dow_tue</code></td>
-<td>7,918</td>
-<td>0.04537</td>
-<td>0.00036</td>
+<td>8,766</td>
+<td>0.05339</td>
+<td>-0.0008</td>
+</tr>
+<tr>
+<td><code>dow_fri</code></td>
+<td>8,418</td>
+<td>0.05368</td>
+<td>0.00032</td>
+</tr>
+<tr>
+<td><code>dow_thu</code></td>
+<td>7,916</td>
+<td>0.05586</td>
+<td>-0.00134</td>
+</tr>
+<tr>
+<td><code>dow_mon</code></td>
+<td>6,882</td>
+<td>0.03495</td>
+<td>0.00112</td>
 </tr>
 </tbody>
 </table>
 <h2>Limitations</h2>
 <ul>
-<li><strong>Pooled IC (0.0192) exceeds the mean per-date IC (0.0113).</strong> Part of the pooled ranking edge comes from<br />
-  cross-date level effects rather than within-day stock selection. The<br />
-  pooled number is quoted because it is what <code>metrics.py</code> computes at<br />
-  runtime; the per-date IC and the toy portfolio are the sober view.</li>
+<li><strong>Loses to Yesterday's-sign momentum, Logistic (same features), MLP (PyTorch, v2 preview) on pooled OOS IC</strong> — the design's<br />
+  ship gate fails for this sleeve; see the Ship gate section for the<br />
+  numbers and the explicit case for running it forward anyway.</li>
 <li><strong>Survivorship:</strong> today's index membership applied historically omits<br />
   delisted names and flatters the backtest slightly. The forward shadow run<br />
   is immune — which is the argument for shadow deployment.</li>
-<li><strong>Depth:</strong> the snapshot spans 2023-08-31 → 2026-05-01 (~3 years — the deep-history stretch). Broader than v1's single year, still<br />
+<li><strong>Depth:</strong> the snapshot spans 2023-08-31 → 2026-07-28 (~3 years — the deep-history stretch). Broader than v1's single year, still<br />
   far from a full cycle; the VIX-tercile table above is the regime lens.<br />
   Deeper history also worsens survivorship slightly (more delistings missing).</li>
 <li><strong>Grid selected on the same OOS folds it reports.</strong> 6 combos — selection<br />
@@ -1656,7 +1704,7 @@ TreeSHAP for trees). The signed column is the mean push toward <code>strong_up</
 <pre><code class="language-bash">python -m trading_bot.ml.data backfill --region uk-eu   # rebuild state/ml/train.db
 python -m trading_bot.ml.train --region uk-eu --seed 42  # card + model_h*.txt + manifest
 </code></pre>
-<p>Data snapshot sha256[:16] <code>b9d68a5efc4126fa</code> · feature spec <code>98e07f46d8aeaeef</code> · LightGBM params: lr=0.1, depth=6, leaves=31, min_leaf=100, feature/bagging 0.8, balanced weights.</p></div></details></section><style>.ml-tile{border:1px solid var(--rule,#ccc);padding:8px 14px;min-width:10rem}.ml-tile-value{font-size:1.35rem;font-weight:700}.ml-tile-label{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;opacity:.7}.ml-region{margin:1.6rem 0}.ml-region h2 .sub{font-size:.8rem;opacity:.7;margin-left:.5rem}.ml-card-body{overflow-x:auto;margin-top:.8rem}.ml-card-body table{border-collapse:collapse}.ml-card-body td,.ml-card-body th{border:1px solid var(--rule,#ccc);padding:3px 9px;font-size:.85rem}</style></main>
+<p>Data snapshot sha256[:16] <code>b9d68a5efc4126fa</code> · feature spec <code>58bd0e3b705e8d26</code> · LightGBM params: lr=0.1, depth=6, leaves=31, min_leaf=100, feature/bagging 0.8, balanced weights.</p></div></details></section><style>.ml-tile{border:1px solid var(--rule,#ccc);padding:8px 14px;min-width:10rem}.ml-tile-value{font-size:1.35rem;font-weight:700}.ml-tile-label{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;opacity:.7}.ml-region{margin:1.6rem 0}.ml-region h2 .sub{font-size:.8rem;opacity:.7;margin-left:.5rem}.ml-card-body{overflow-x:auto;margin-top:.8rem}.ml-card-body table{border-collapse:collapse}.ml-card-body td,.ml-card-body th{border:1px solid var(--rule,#ccc);padding:3px 9px;font-size:.85rem}</style></main>
   
 <script>
 /* Edition-nav upgrade: on every news/macro page, find the .edition-nav
