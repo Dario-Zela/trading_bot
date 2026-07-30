@@ -71,6 +71,22 @@ Provision the cron-job.org schedules from `scripts/setup_cron_jobs.py` (one-shot
 
 GitHub Pages-hosted dashboard at the repo's Pages URL: per-strategy + per-region equity curves, recent trades table, prediction calibration. End-of-day email summary (Brevo) groups by strategy with a table of contents.
 
+## Analytics: DuckDB + dbt + Metabase
+
+The append-only JSONL state files (`ledger`, `predictions`, `decision_log`, `trail_exits`) double as the raw layer of a dbt project under `dbt/`:
+
+- **Staging** (`stg_*`, views): 1:1 typed reads of each JSONL source via DuckDB's `read_json_auto`, with the OHLCV SQLite store attached as a schema.
+- **Marts** (`mart_*`, tables): the business facts consumed by the dashboard, evolution agent, and LLM prompts — recent + weekly strategy performance, exit attribution, fee drag — each registered in `schema.yml` with column tests.
+
+```bash
+# Rebuild the analytics store (wraps `dbt run` with the right env)
+python -c "from trading_bot.analytics.dbt_runner import build; build()"
+```
+
+Consumers go through the typed accessors in `src/trading_bot/analytics/reader.py`, which open `dbt/analytics.duckdb` read-only.
+
+For interactive dashboards, `docker compose up -d` serves **Metabase** over the same DuckDB store — mounted read-only so dashboard tiles never contend with `dbt run` for DuckDB's exclusive write lock. Zero-install alternative: the repo's devcontainer boots the full stack in GitHub Codespaces (deps, DuckDB driver, `dbt run`, Metabase on port 3000). Details in [`dbt/README.md`](./dbt/README.md) and [`metabase/README.md`](./metabase/README.md).
+
 ## Local development
 
 ```bash
@@ -127,9 +143,12 @@ Repo secrets (GitHub Actions environment):
 │   ├── executor/             # ShadowExecutor, AlpacaPaperExecutor, Trading212DemoExecutor
 │   ├── state/                # ledger / predictions / paths
 │   ├── meta/                 # metrics, reflection, macro, evolution, grade_predictions, backtest
+│   ├── analytics/            # dbt runner + typed read-only accessors over the marts
 │   ├── notify/               # email rendering + send
 │   └── dashboard/            # static HTML build
 ├── strategies/               # per-strategy config.yaml + prompts (LLM-evolvable)
 ├── state/                    # runtime ledger, predictions, evolution log (committed by CI)
+├── dbt/                      # analytics layer: staging views + tested marts over state/*.jsonl
+├── metabase/                 # Metabase dashboards over dbt/analytics.duckdb (see docker-compose.yml)
 └── docs/                     # GitHub Pages dashboard output (committed by CI)
 ```
