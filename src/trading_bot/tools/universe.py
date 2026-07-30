@@ -469,7 +469,10 @@ def _fetch_ftse250() -> list[str]:
         if ticker_col is None:
             continue
         tickers = df[ticker_col].astype(str).str.strip().str.upper()
-        tickers = [t if t.endswith(".L") else f"{t}.L" for t in tickers if t and t.lower() != "nan"]
+        # isinstance guard: .str.upper() re-introduces float NaN for
+        # non-string cells (empty Wikipedia rows), and float.lower() dies
+        tickers = [t if t.endswith(".L") else f"{t}.L"
+                   for t in tickers if isinstance(t, str) and t and t.lower() != "nan"]
         seen = set()
         out = []
         for t in tickers:

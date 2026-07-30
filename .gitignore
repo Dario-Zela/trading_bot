@@ -31,6 +31,11 @@ Thumbs.db
 .idea/
 *.swp
 
+# ML training snapshot — regenerable via `python -m trading_bot.ml.data
+# backfill`; training-only, never read by the morning pipeline.
+state/ml/train.db
+state/ml/train.db-*
+
 # Local OHLCV cache — grows to ~50 MB over a year, regenerates on demand
 # via tools.history fall-through to yfinance. State is mutable and not
 # worth committing; the bot works without it (just slower for the first
@@ -43,6 +48,7 @@ state/ohlcv.db-*
 dbt/target/
 dbt/logs/
 dbt/dbt_packages/
+dbt/.user.yml
 dbt/analytics.duckdb
 dbt/analytics.duckdb-*
 

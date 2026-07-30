@@ -1,0 +1,15 @@
+{
+  "study": "depth-vs-recency training-window ablation",
+  "date": "2026-07-30",
+  "question": "the 3-year expanding-window grid scored pooled OOS IC ~ -0.01 where the 1-year v1 scored +0.007 — is that the extra history hurting, or a different OOS window?",
+  "method": "identical purged walk-forward validation folds (13 folds, ~406k pooled OOS rows), identical params (lr=0.1, depth=6, seed 42), only the per-fold training window varies",
+  "region": "us",
+  "results": {
+    "expanding_3y": {"pooled_ic": -0.0122, "mean_daily_ic": -0.0043, "logloss": 1.5181, "n": 406260},
+    "rolling_500_sessions": {"pooled_ic": -0.0085, "mean_daily_ic": -0.0021, "logloss": 1.5117, "n": 406260},
+    "rolling_250_sessions": {"pooled_ic": 0.0054, "mean_daily_ic": 0.0011, "logloss": 1.4629, "n": 406260}
+  },
+  "conclusion": "monotone in recency on every metric — stale history actively hurts; non-stationarity dominates. Deployed mode: rolling 250 sessions (train.py --train-window-sessions 250), for uk-eu too (no separate study; documented inheritance).",
+  "caveat": "mode chosen across 3 candidates on the same OOS folds — mild selection pressure, same order of magnitude as the 6-combo hyperparameter grid.",
+  "reproduce": "scratch script over trading_bot.ml.train.run_walk_forward(grid=[(0.1, 6)], train_window_sessions=N) for N in {0, 500, 250}"
+}

@@ -859,6 +859,14 @@ def _apply_action(
 
     cfg = configs[sid]
 
+    # Experiment controls (e.g. ml-challenger) are frozen: the agent may
+    # observe and `keep`, but never tune/promote/demote/deactivate —
+    # the ML-vs-LLM comparison is only meaningful if nothing moves.
+    if cfg.get("evolution_frozen") and action != "keep":
+        return ActionLog(sid, region, action, False,
+                         f"Strategy is evolution_frozen (experiment control) — '{action}' refused. "
+                         f"({reason})", {})
+
     # Strategy-wide actions — no region needed. Dispatch before the
     # region gate below so the LLM can omit `region` on these without
     # tripping the "requires a region" rejection.

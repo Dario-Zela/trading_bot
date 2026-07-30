@@ -1,0 +1,92 @@
+{
+  "columns": [
+    "ret_1d",
+    "ret_5d",
+    "ret_10d",
+    "ret_21d",
+    "overnight_gap",
+    "close_vs_sma10",
+    "close_vs_sma21",
+    "close_vs_sma63",
+    "ret_21d_z",
+    "vol_10d",
+    "vol_21d",
+    "parkinson_10d",
+    "vol_of_vol",
+    "volume_ratio",
+    "dollar_volume_pctile",
+    "ret_1d_rank",
+    "dow_mon",
+    "dow_tue",
+    "dow_wed",
+    "dow_thu",
+    "dow_fri"
+  ],
+  "spec_hash": "98e07f46d8aeaeef",
+  "spec_version": 1,
+  "classes": [
+    "strong_down",
+    "mild_down",
+    "flat",
+    "mild_up",
+    "strong_up"
+  ],
+  "class_midpoints": {
+    "strong_down": -5.521,
+    "mild_down": -1.899,
+    "flat": 0.018,
+    "mild_up": 1.871,
+    "strong_up": 5.744
+  },
+  "label": "next-session open\u2192close simple return %, classes per meta.reflection._classify_outcome",
+  "region": "uk-eu",
+  "horizons": [
+    1,
+    2,
+    3,
+    5
+  ],
+  "midpoints_by_horizon": {
+    "1": {
+      "strong_down": -5.521,
+      "mild_down": -1.899,
+      "flat": 0.018,
+      "mild_up": 1.871,
+      "strong_up": 5.744
+    },
+    "2": {
+      "strong_down": -6.017,
+      "mild_down": -2.031,
+      "flat": 0.022,
+      "mild_up": 2.017,
+      "strong_up": 6.21
+    },
+    "3": {
+      "strong_down": -6.27,
+      "mild_down": -2.12,
+      "flat": 0.02,
+      "mild_up": 2.111,
+      "strong_up": 6.449
+    },
+    "5": {
+      "strong_down": -6.626,
+      "mild_down": -2.241,
+      "flat": 0.012,
+      "mild_up": 2.239,
+      "strong_up": 6.922
+    }
+  },
+  "trained_at": "2026-07-30T16:36:18+00:00",
+  "seed": 42,
+  "snapshot_hash": "b9d68a5efc4126fa",
+  "train_window_sessions": 250,
+  "train_date_range": [
+    "2023-08-31",
+    "2026-05-01"
+  ],
+  "best_params": {
+    "learning_rate": 0.1,
+    "max_depth": 6,
+    "num_boost_round": 1012
+  }
+}
