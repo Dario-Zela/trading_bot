@@ -1,15 +1,15 @@
 # trading_bot
 
-Self-improving LLM-driven stock trading bot. Runs unattended on GitHub Actions, places paper-money orders on real brokers, evolves its own strategies week-over-week. Live (real-money) graduation is gated behind explicit human approval.
+Self-improving stock trading bot. Runs unattended on GitHub Actions, places paper-money orders on real brokers, evolves its own strategies week-over-week. Most strategies are LLM-driven (Claude); one — [`ml-challenger`](#ml-challenger-the-learned-strategy) — is a trained LightGBM model running against them as a controlled experiment. Live (real-money) graduation is gated behind explicit human approval.
 
-See [`sparknotes.md`](./sparknotes.md) for the full design rationale.
+**Live dashboard:** https://dario-zela.github.io/trading_bot/ · design rationale in [`sparknotes.md`](./sparknotes.md).
 
 ## What it does
 
 Every weekday morning, for each region (`us`, `uk-eu`), the entry cron:
-1. Pulls a candidate universe (S&P 1500 for US, FTSE 350 + DAX + CAC + AEX for UK-EU).
-2. Runs each active strategy: LLM (Claude) ranks and selects today's picks based on prices, news, filings, macro view, and the strategy's prompt.
-3. Records 5-class predictions (`strong_up` / `mild_up` / `flat` / `mild_down` / `strong_down`) on every candidate so we can score the LLM statistically beyond just the trades it took.
+1. Pulls a candidate universe (T212-ISA-tradeable US / UK-EU names).
+2. Runs each active strategy: the LLM ones rank and select picks from prices, news, filings, macro view, and the strategy's prompt; the ML one scores the full cross-section with a committed model.
+3. Records 5-class predictions (`strong_up` / `mild_up` / `flat` / `mild_down` / `strong_down`) on every candidate so strategies are scored statistically, beyond just the trades they took.
 4. Submits orders via the strategy's configured executor.
 
 Every weekday evening, the exit cron closes all positions opened today (or reads filled bracket children if Alpaca's stop / take-profit fired intraday), computes P&L from broker-reported fill prices, runs LLM reflection on each trade, rebuilds the dashboard, and emails a summary.
@@ -29,74 +29,50 @@ Recorded fill prices and P&L come exclusively from broker order endpoints — yf
 
 ## Strategies
 
-Eight active strategies under `strategies/`:
+The roster is **evolution-managed** — the weekly agent promotes, demotes, retires and spawns variants, so the set below is a snapshot (2026-07-30; the authoritative list is `strategies/*/config.yaml` with `active: true`, rendered live on the dashboard). Ten active:
 
 | ID | Style | Tier (US) | Tier (UK-EU) |
 |---|---|---|---|
-| `momentum-trader` | LLM trend-following | Alpaca slot 1 | T212 slot 1 |
+| `momentum-trader-vix-gated` | LLM trend-following, VIX-gated | Alpaca slot 1 | shadow |
 | `mean-reverter` | LLM counter-trend | Alpaca slot 2 | T212 slot 1 |
-| `news-reactive` | LLM event-driven | Alpaca slot 3 | T212 slot 1 |
-| `macro-aligned` | LLM top-down (sector + macro view) | shadow | T212 slot 1 |
-| `control-rule-based` | Deterministic baseline (top-N prior-day gainers) | shadow | shadow |
-| `commodity-momentum` | LLM commodity-ETF | shadow | shadow |
-| `sector-rotator` | LLM sector ETF rotation | shadow | T212 slot 1 |
-| `bond-cycle` | LLM rates / duration | shadow | shadow |
+| `news-reactive-disclosure` | LLM event-driven (filings) | Alpaca slot 3 | shadow |
+| `news-reactive` / `-buzz-fade` / `-sentiment-gate` | LLM event-driven family | shadow | shadow |
+| `macro-aligned` / `-hmm` / `-macro-attn` | LLM top-down family | shadow | shadow |
+| `ml-challenger` | **Learned (LightGBM)** — see below | shadow | shadow |
 
-Each strategy has a `config.yaml` with `runs_in:` per-region entries (region, tier, slot, universe), plus prompts (`prefilter.md`, `deep_analysis.md`, `final_select.md`) for the LLM stages. Multiple UK-EU strategies share T212 slot 1 — their combined `capital_gbp` draws on the single £50k paper budget. The evolution agent can edit configs and prompts within safety bounds; human approval is needed only for tier-2 transitions.
+Each strategy has a `config.yaml` with `runs_in:` per-region entries (region, tier, slot, universe); LLM strategies add prompts (`prefilter.md`, `deep_analysis.md`, `final_select.md`). Retired strategies (`momentum-trader`, `control-rule-based`, `sector-rotator`, …) keep their configs and history under `strategies/` as frozen yardsticks. The evolution agent edits configs and prompts within safety bounds; human approval is needed only for tier-2 transitions.
 
 ## ml-challenger: the learned strategy
 
-`ml-challenger` is the first strategy that predicts with **gradient-boosted
-trees instead of an LLM** — LightGBM 5-class models over point-in-time
-OHLCV features, deployed at shadow tier in both regions (a US model and a
-separate UK-EU model under `strategies/ml-challenger/model/<region>/`) so
-the existing daily grading and weekly evolution machinery judges classical
-ML vs the LLM strategies head-to-head, forward, out of sample. It emits the
-same `PredictionRecord`s with the grader's exact class vocabulary, so
-`metrics.py`, the dashboards and evolution need zero new machinery.
+The one strategy that predicts with **gradient-boosted trees instead of an
+LLM**: per-region LightGBM 5-class models over point-in-time OHLCV features,
+running at shadow tier in both regions as a frozen experiment control
+(`evolution_frozen: true` — the evolution agent observes but can't touch it).
+It emits the same `PredictionRecord`s in the grader's exact class
+vocabulary, so grading, metrics, dashboards and evolution needed zero new
+machinery — the ML-vs-LLM comparison falls out of the existing pipeline.
 
-The training methodology is the credential — see the auto-generated model
-cards ([us](strategies/ml-challenger/model/us/card.md),
-[uk-eu](strategies/ml-challenger/model/uk-eu/card.md)):
+The methodology is the point: structurally point-in-time features (leakage
+CI-tested), labels defined by the grader itself, purged walk-forward + CPCV
+validation, permutation noise floor and Fisher-z bounds, five baselines
+including a PyTorch MLP, TreeSHAP attributions, VIX-regime slices, a
+depth-vs-recency training-window ablation, multi-horizon heads driving
+`hold_days`, and a stamp-duty-aware cost gate for the UK-EU sleeve.
 
-- **Point-in-time features** (`src/trading_bot/ml/features.py`): the loader
-  structurally truncates bars at t−1; a CI test proves features computed
-  from the full dataset equal features computed from truncated data.
-- **The grader defines the label**: next-session open→close return bucketed
-  by `meta.reflection._classify_outcome` itself (±1%/±4%), never a copy of
-  its constants.
-- **Purged walk-forward validation** (purge scales with horizon + embargo 5
-  + 21-session windows), permutation noise floor and Fisher-z lower bound —
-  the same significance vocabulary the evolution promotion gate speaks —
-  plus **CPCV** (15 combinatorial purged paths) for an IC *distribution*.
-- **Baselines** in the card: uniform prior, yesterday's-sign momentum,
-  logistic regression on the identical features, `control-rule-based`'s
-  frozen live record, and a small **PyTorch MLP** (the v2 data-volume
-  conversation, quantified).
-- **Multi-horizon heads** (h ∈ {1, 2, 3, 5} sessions): h=1 stays the graded
-  head; the longer heads choose `TradeIntent.hold_days` per pick, driving
-  the Phase 12A multi-day machinery.
-- **TreeSHAP attributions** (per-prediction rationales + card summary) and
-  **VIX-tercile regime-conditional IC** — when does it work, not just does it.
-- **Stamp-duty-aware cost gate** at pick time: a pick must predict ≥
-  `cost_gate_multiplier` × its estimated round-trip cost (LSE names carry
-  the 0.5% stamp — the reason UK-EU is a separate, more selective sleeve).
-- **Frozen experiment control**: `evolution_frozen: true` — the evolution
-  agent may observe but never tune/demote/promote it; model hyperparameters
-  live outside `config.yaml` entirely.
-- **Monthly retrain** (`retrain-challenger.yml`) restores the OHLCV
-  actions/cache, retrains both regions, and commits each only if its pooled
-  OOS rank-IC Fisher-z lower bound holds up — otherwise it opens an issue
-  with the metric diff.
-- **`mart_llm_vs_ml`** (dbt) rolls up daily per-strategy rank IC, non-flat
-  hit rate and the conviction-vs-realised calibration gap for the
-  head-to-head Metabase view.
-
-Training data is a separate ~3-year snapshot (`python -m
-trading_bot.ml.data backfill --region us|uk-eu` → `state/ml/train.db`;
-S&P 1500 ∩ T212-ISA US names plus FTSE 350 + EU blue chips ∩ T212-ISA
-UK-EU, with ^VIX riding along for regime slicing) — the runtime OHLCV
-cache is never widened for training.
+- **Read the results**: the [ML lab dashboard page](https://dario-zela.github.io/trading_bot/ml/)
+  or the auto-generated model cards in the repo
+  ([us](strategies/ml-challenger/model/us/card.md) ·
+  [uk-eu](strategies/ml-challenger/model/uk-eu/card.md)).
+- **Retraining**: monthly via `retrain-challenger.yml`, gated per region on
+  the pooled OOS rank-IC Fisher-z lower bound; rejected retrains open an
+  issue with the metric diff instead of committing.
+- **Head-to-head tracking**: the `mart_llm_vs_ml` dbt mart rolls up daily
+  per-strategy rank IC, non-flat hit rate and conviction-vs-realised
+  calibration gap.
+- **Reproduce**: `python -m trading_bot.ml.data backfill --region us` then
+  `python -m trading_bot.ml.train --region us` (training snapshot is
+  separate from the runtime OHLCV cache, which is never widened for
+  training).
 
 ## Daily cycle
 
@@ -123,7 +99,7 @@ Provision the cron-job.org schedules from `scripts/setup_cron_jobs.py` (one-shot
 
 ## Dashboard + email
 
-GitHub Pages-hosted dashboard at the repo's Pages URL: per-strategy + per-region equity curves, recent trades table, prediction calibration. End-of-day email summary (Brevo) groups by strategy with a table of contents.
+GitHub Pages-hosted dashboard at https://dario-zela.github.io/trading_bot/: per-strategy + per-region equity curves, recent trades, prediction calibration, the daily Bot Tribune news brief, the weekly evolution log, and the [ML lab](https://dario-zela.github.io/trading_bot/ml/) (the ml-challenger model cards rendered from the committed artifacts). End-of-day email summary (Brevo) groups by strategy with a table of contents.
 
 ## Analytics: DuckDB + dbt + Metabase
 
@@ -194,6 +170,7 @@ Repo secrets (GitHub Actions environment):
 │   ├── pipeline.py           # CLI entry point (entry / exit / reflect / summary / weekly-* / grade-predictions / daily-news-brief / ohlcv-* / clear-slot)
 │   ├── tools/                # universes, history, news, filings, macro view, T212 instruments
 │   ├── strategy/             # base classes + registry + per-implementation strategies
+│   ├── ml/                   # ml-challenger: features, labels, splits, trainer, data snapshot
 │   ├── executor/             # ShadowExecutor, AlpacaPaperExecutor, Trading212DemoExecutor
 │   ├── state/                # ledger / predictions / paths
 │   ├── meta/                 # metrics, reflection, macro, evolution, grade_predictions, backtest

@@ -53,6 +53,7 @@ _NAV_ITEMS = (
     ("news",      "News",      "news/latest.html"),
     ("macro",     "Macro",     "macro/latest.html"),
     ("evolution", "Evolution", "evolution.html"),
+    ("ml",        "ML lab",    "ml/index.html"),
 )
 
 _FONTS_LINK = (
@@ -687,7 +688,116 @@ def rebuild_all_pages() -> dict:
         render_predictions_archive(docs_root(), _shell)
     except Exception as e:
         log.warning("Predictions archive render failed (non-fatal): %s", e)
-    return {"news": n_news, "macro": n_macro, "evolution": have_evolution}
+    try:
+        have_ml = render_ml_page()
+    except Exception as e:
+        log.warning("ML lab render failed (non-fatal): %s", e)
+        have_ml = False
+    return {"news": n_news, "macro": n_macro, "evolution": have_evolution, "ml": have_ml}
+
+
+# ---------------------------------------------------------------------------
+# ML lab — the ml-challenger model cards, rendered from the committed
+# artifacts under strategies/ml-challenger/model/<region>/. Regenerated on
+# every dashboard build so a monthly retrain's fresh card lands on the
+# site with the next pipeline run.
+# ---------------------------------------------------------------------------
+
+_ML_REGION_LABELS = {"us": "United States", "uk-eu": "UK / Europe"}
+
+
+def _ml_model_root() -> Path:
+    from trading_bot.strategy.registry import _strategies_dir
+    return _strategies_dir() / "ml-challenger" / "model"
+
+
+def render_ml_page() -> bool:
+    """Render docs/ml/index.html from the per-region model cards.
+    Returns False (and writes nothing) when no model artifacts exist —
+    e.g. a fork without the strategy."""
+    root = _ml_model_root()
+    regions = [r for r in ("us", "uk-eu") if (root / r / "card.md").exists()]
+    if not regions:
+        return False
+
+    sections: list[str] = []
+    strip_bits: list[str] = []
+    for region in regions:
+        rdir = root / region
+        try:
+            metrics = json.loads((rdir / "metrics.json").read_text())
+        except (OSError, json.JSONDecodeError):
+            metrics = {}
+        card_html = _md_to_html((rdir / "card.md").read_text())
+        label = _ML_REGION_LABELS.get(region, region)
+
+        ic = metrics.get("pooled_oos_ic")
+        lb = metrics.get("fisher_z_lower_bound")
+        floor = metrics.get("noise_floor")
+        n = metrics.get("n_oos")
+        trained = (metrics.get("generated_at") or "")[:10]
+        strip_bits.append(
+            f"<span><strong>{html.escape(label)}</strong> pooled OOS IC "
+            f"{ic if ic is not None else '—'} · n {n:,}</span>" if n else ""
+        )
+        tiles = "".join(
+            f'<div class="ml-tile"><div class="ml-tile-value">{v}</div>'
+            f'<div class="ml-tile-label">{k}</div></div>'
+            for k, v in (
+                ("pooled OOS rank IC", ic if ic is not None else "—"),
+                ("Fisher-z 95% lower bound", lb if lb is not None else "—"),
+                ("permutation noise floor", floor if floor is not None else "—"),
+                ("graded OOS rows", f"{n:,}" if n else "—"),
+            )
+        )
+        horizon = metrics.get("horizon_pooled_ic") or {}
+        horizon_note = (
+            " · horizon IC " + " / ".join(f"h{h}: {v}" for h, v in sorted(horizon.items()))
+            if horizon else ""
+        )
+        sections.append(
+            f'<section class="ml-region">'
+            f'<h2>{html.escape(label)} <span class="sub">shadow tier · trained {trained}'
+            f'{horizon_note}</span></h2>'
+            f'<div class="ml-tiles" style="display:flex;flex-wrap:wrap;gap:12px;margin:10px 0 14px">{tiles}</div>'
+            f"<details><summary>Full model card</summary>"
+            f'<div class="ml-card-body">{card_html}</div></details>'
+            f"</section>"
+        )
+
+    body = (
+        '<main class="paper">'
+        '<header class="masthead">'
+        '<h1>The Bot Tribune<span class="sub">— ML lab</span></h1>'
+        '<div class="subtitle">The learned challenger: gradient-boosted trees vs the LLM desk, '
+        "graded by the same machinery, forward, out of sample.</div>"
+        "</header>"
+        '<div class="masthead-strip">'
+        + "".join(b for b in strip_bits if b)
+        + f"<span>Rendered {html.escape(_generated_at())}</span></div>"
+        '<p style="max-width:70ch"><code>ml-challenger</code> predicts the same 5-class open→close '
+        "vocabulary the LLM strategies are graded on, from point-in-time OHLCV features "
+        "with purged walk-forward validation. Model hyperparameters live outside the "
+        "evolution agent's reach and the strategy is frozen as an experiment control — "
+        "its forward record accumulates on the Dashboard tab like any other strategy. "
+        "The full methodology, baselines and honest limitations are in the cards below, "
+        "regenerated from the committed artifacts on every retrain.</p>"
+        + "".join(sections)
+        + '<style>.ml-tile{border:1px solid var(--rule,#ccc);padding:8px 14px;min-width:10rem}'
+        ".ml-tile-value{font-size:1.35rem;font-weight:700}"
+        ".ml-tile-label{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;opacity:.7}"
+        ".ml-region{margin:1.6rem 0}.ml-region h2 .sub{font-size:.8rem;opacity:.7;margin-left:.5rem}"
+        ".ml-card-body{overflow-x:auto;margin-top:.8rem}"
+        ".ml-card-body table{border-collapse:collapse}.ml-card-body td,.ml-card-body th"
+        "{border:1px solid var(--rule,#ccc);padding:3px 9px;font-size:.85rem}</style>"
+        "</main>"
+    )
+    out_dir = docs_root() / "ml"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "index.html").write_text(
+        _shell(title="ML lab", body_html=body, current="ml", depth=1, page_class="ml")
+    )
+    return True
 
 
 def pages_url(path: str) -> str:
