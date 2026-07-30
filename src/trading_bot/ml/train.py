@@ -454,17 +454,24 @@ def run_walk_forward(
     )
 
 
-def logistic_baseline(df: pd.DataFrame, folds: list[Fold], midpoints: dict[str, float], seed: int) -> pd.DataFrame:
+def logistic_baseline(
+    df: pd.DataFrame, folds: list[Fold], midpoints: dict[str, float], seed: int,
+    *, train_window_sessions: int = 0,
+) -> pd.DataFrame:
     """Multinomial logistic on the identical feature matrix — does the
     GBM earn its nonlinearity? Standardisation is fit on each fold's
-    training window only (no global statistics)."""
+    training window only (no global statistics). The training window
+    mode (expanding/rolling) follows the challenger's, so the
+    comparison stays apples-to-apples."""
     from sklearn.linear_model import LogisticRegression
     from sklearn.preprocessing import StandardScaler
 
     Xcols = F.FEATURE_COLUMNS
     parts = []
     for k, fold in enumerate(folds):
-        tr = df[df["date"].isin(set(fold.train_dates))]
+        tr_dates = (fold.train_dates[-train_window_sessions:]
+                    if train_window_sessions else fold.train_dates)
+        tr = df[df["date"].isin(set(tr_dates))]
         va = df[df["date"].isin(set(fold.val_dates))]
         scaler = StandardScaler().fit(tr[Xcols].to_numpy())
         clf = LogisticRegression(
@@ -487,6 +494,7 @@ def logistic_baseline(df: pd.DataFrame, folds: list[Fold], midpoints: dict[str, 
 
 def mlp_baseline(
     df: pd.DataFrame, folds: list[Fold], midpoints: dict[str, float], seed: int,
+    *, train_window_sessions: int = 0,
 ) -> dict | None:
     """Small PyTorch net on the identical features and folds — the v2
     preview that quantifies the data-volume conversation against a
@@ -509,7 +517,12 @@ def mlp_baseline(
 
     payload = {
         "df": df,
-        "folds": [(list(f.train_dates), list(f.val_dates)) for f in folds],
+        # Same training-window mode as the challenger — fair comparison.
+        "folds": [
+            (list(f.train_dates[-train_window_sessions:] if train_window_sessions
+                  else f.train_dates), list(f.val_dates))
+            for f in folds
+        ],
         "midpoints": midpoints,
         "seed": seed,
     }
@@ -832,10 +845,13 @@ def train_and_evaluate(
     momentum_oos["score"] = oos["prev_intraday_ret"]
     momentum = evaluate_oos(momentum_oos.dropna(subset=["score"]), "Yesterday's-sign momentum",
                             with_probs=False)
-    logistic_oos = logistic_baseline(df, folds, midpoints, seed)
+    logistic_oos = logistic_baseline(df, folds, midpoints, seed,
+                                     train_window_sessions=train_window_sessions)
     logistic = evaluate_oos(logistic_oos, "Logistic (same features)")
     control = control_rule_based_record()
-    mlp = mlp_baseline(df, folds, midpoints, seed) if with_mlp else None
+    mlp = (mlp_baseline(df, folds, midpoints, seed,
+                        train_window_sessions=train_window_sessions)
+           if with_mlp else None)
 
     # Cost-aware toy portfolio — region-specific fee model
     cost_pct, cost_note = _region_round_trip_cost_pct(region)
