@@ -34,6 +34,11 @@ ml = [
     "scikit-learn>=1.4",
     "scipy>=1.11",
 ]
+# The PyTorch MLP v2 baseline — deliberately separate from `ml`: the CI
+# retrain never installs torch; the card row degrades to "not run".
+ml-v2 = [
+    "torch>=2.2",
+]
 
 [build-system]
 requires = ["hatchling"]

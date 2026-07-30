@@ -112,3 +112,44 @@ def test_no_validation_date_ever_in_training_across_folds():
     for f in folds:
         # Every training date strictly precedes every validation date.
         assert max(f.train_dates) < min(f.val_dates)
+
+
+def test_cpcv_path_count_and_coverage():
+    from trading_bot.ml.splits import cpcv
+    dates = _weekdays(300)
+    folds = cpcv(dates, n_groups=6, n_test_groups=2)
+    assert len(folds) == 15  # C(6,2)
+    # Every date is validated in exactly C(5,1)=5 paths
+    from collections import Counter
+    counts = Counter(d for f in folds for d in f.val_dates)
+    assert set(counts.values()) == {5}
+    assert len(counts) == 300
+
+
+def test_cpcv_purge_and_embargo_gap():
+    from trading_bot.ml.splits import cpcv
+    dates = _weekdays(300)
+    idx = {d: i for i, d in enumerate(dates)}
+    for f in cpcv(dates, n_groups=6, n_test_groups=2, purge=1, embargo=5):
+        train_idx = {idx[d] for d in f.train_dates}
+        val_idx = sorted(idx[d] for d in f.val_dates)
+        assert not (train_idx & set(val_idx))
+        # Contiguous test blocks: check boundaries of each block
+        blocks = []
+        start = val_idx[0]
+        for a, b in zip(val_idx, val_idx[1:]):
+            if b != a + 1:
+                blocks.append((start, a))
+                start = b
+        blocks.append((start, val_idx[-1]))
+        for first, last in blocks:
+            # purge before the block
+            assert first - 1 not in train_idx
+            # purge + embargo after the block
+            for j in range(last + 1, min(len(dates), last + 1 + 1 + 5)):
+                assert j not in train_idx
+
+
+def test_cpcv_too_few_dates_returns_empty():
+    from trading_bot.ml.splits import cpcv
+    assert cpcv(_weekdays(8), n_groups=6, n_test_groups=2) == []

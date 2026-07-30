@@ -57,36 +57,46 @@ jobs:
       - name: Data audit
         run: python -m trading_bot.ml.data audit
 
+      # Both regions retrain sequentially in one job — parallel matrix
+      # jobs would race each other on the push. Each region gates
+      # independently: a us promotion is never blocked by a uk-eu
+      # regression, and vice versa.
       - name: Snapshot current metrics
         run: |
-          cp strategies/ml-challenger/model/metrics.json /tmp/old_metrics.json 2>/dev/null \
-            || echo '{}' > /tmp/old_metrics.json
+          for region in us uk-eu; do
+            cp "strategies/ml-challenger/model/$region/metrics.json" "/tmp/old_metrics_$region.json" 2>/dev/null \
+              || echo '{}' > "/tmp/old_metrics_$region.json"
+          done
 
-      - name: Walk-forward train
-        run: python -m trading_bot.ml.train --db state/ohlcv.db
-
-      - name: Promotion gate
+      - name: Walk-forward train + promotion gate (per region)
         id: gate
-        run: |
-          set +e
-          python scripts/ml_retrain_gate.py \
-            --old /tmp/old_metrics.json \
-            --new strategies/ml-challenger/model/metrics.json | tee /tmp/gate.md
-          echo "promote=${PIPESTATUS[0]}" >> $GITHUB_OUTPUT
-          exit 0
-
-      - name: Restore old model on rejection
-        if: steps.gate.outputs.promote != '0'
-        run: git checkout -- strategies/ml-challenger/model
-
-      - name: Open issue on rejection
-        if: steps.gate.outputs.promote != '0'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh issue create \
-            --title "ml-challenger retrain rejected by promotion gate ($(date -u +%Y-%m-%d))" \
-            --body-file /tmp/gate.md
+          any_promoted=1
+          for region in us uk-eu; do
+            echo "=== $region ==="
+            if ! python -m trading_bot.ml.train --db state/ohlcv.db --region "$region"; then
+              echo "$region: training failed (likely thin cache coverage) — skipping"
+              git checkout -- "strategies/ml-challenger/model/$region" 2>/dev/null || true
+              continue
+            fi
+            set +e
+            python scripts/ml_retrain_gate.py \
+              --old "/tmp/old_metrics_$region.json" \
+              --new "strategies/ml-challenger/model/$region/metrics.json" | tee "/tmp/gate_$region.md"
+            verdict=${PIPESTATUS[0]}
+            set -e
+            if [ "$verdict" != "0" ]; then
+              git checkout -- "strategies/ml-challenger/model/$region"
+              gh issue create \
+                --title "ml-challenger $region retrain rejected by promotion gate ($(date -u +%Y-%m-%d))" \
+                --body-file "/tmp/gate_$region.md"
+            else
+              any_promoted=0
+            fi
+          done
+          echo "promote=$any_promoted" >> $GITHUB_OUTPUT
 
       - name: Commit promoted model
         if: steps.gate.outputs.promote == '0'

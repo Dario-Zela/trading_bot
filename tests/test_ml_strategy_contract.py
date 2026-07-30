@@ -63,24 +63,33 @@ def ml_strategy_env(tmp_path, monkeypatch):
     bars, days = _synthetic_bars()
     write_bars(bars)
 
-    # Train a tiny real model on the synthetic panel so the full
-    # load-model → assert-manifest → predict path runs for real.
+    # Train tiny real models (h=1 graded head + an h=2 hold_days head)
+    # on the synthetic panel so the full load-models → assert-manifest →
+    # predict path runs for real.
     panel = F.panel_from_bars({b.ticker: [x for x in bars if x.ticker == b.ticker]
                                for b in bars})
     feats = F.compute_feature_panel(panel)
-    labels = compute_labels(panel)
-    df = feats.merge(labels, on=["ticker", "date"], how="inner")
-    y = df["actual_class"].map(F.CLASSES.index).to_numpy()
-    X = df[F.FEATURE_COLUMNS].to_numpy()
+    sdir = tmp_path / "strategies" / "ml-challenger"
+    model_dir = sdir / "model" / "us"
+    model_dir.mkdir(parents=True)
     params = _lgbm_params(0.1, 4, seed=42)
     params["min_data_in_leaf"] = 5
-    booster = train_lgbm(X, y, X, y, params)
-
-    sdir = tmp_path / "strategies" / "ml-challenger"
-    model_dir = sdir / "model"
-    model_dir.mkdir(parents=True)
-    booster.save_model(str(model_dir / "model.txt"))
-    F.write_manifest(model_dir / "feature_manifest.json", class_midpoints=DEFAULT_MIDPOINTS)
+    for h in (1, 2):
+        labels = compute_labels(panel, horizon=h)
+        df = feats.merge(labels, on=["ticker", "date"], how="inner")
+        y = df["actual_class"].map(F.CLASSES.index).to_numpy()
+        X = df[F.FEATURE_COLUMNS].to_numpy()
+        booster = train_lgbm(X, y, X, y, params)
+        booster.save_model(str(model_dir / f"model_h{h}.txt"))
+    F.write_manifest(
+        model_dir / "feature_manifest.json",
+        class_midpoints=DEFAULT_MIDPOINTS,
+        extra={
+            "region": "us",
+            "horizons": [1, 2],
+            "midpoints_by_horizon": {"1": DEFAULT_MIDPOINTS, "2": DEFAULT_MIDPOINTS},
+        },
+    )
     (sdir / "config.yaml").write_text(
         "id: ml-challenger\n"
         "display_name: ML challenger\n"
@@ -93,6 +102,7 @@ def ml_strategy_env(tmp_path, monkeypatch):
         "use_take_profits: false\n"
         "prefilter_mode: 'off'\n"
         "skip_if_earnings_in_days: 0\n"   # hermetic — no yfinance earnings lookups
+        "cost_gate_multiplier: 0\n"       # hermetic — no fee/FX lookups
         "evolution_frozen: true\n"
         "runs_in:\n"
         "  - {region: us, tier: shadow, universe: t212_isa_us}\n"
@@ -132,7 +142,9 @@ def test_select_picks_contract(ml_strategy_env, monkeypatch):
     for i in intents:
         assert isinstance(i, TradeIntent)
         assert i.ticker in ml_strategy_env["tickers"]
-        assert i.hold_days == 1
+        # Multi-horizon: hold_days comes from whichever head (1 or 2)
+        # predicts the better per-day return for that name.
+        assert i.hold_days in (1, 2)
         assert i.allocation_pct == pytest.approx(100.0 / strategy.config.max_positions)
         assert "ML challenger" in i.thesis
 
@@ -197,6 +209,26 @@ def test_previous_trading_day_walks_backwards():
     assert _previous_trading_day(date(2026, 7, 30), "us") < date(2026, 7, 30)
 
 
+def test_cost_gate_drops_uneconomic_picks(ml_strategy_env, monkeypatch):
+    """With a huge estimated round-trip cost, every pick fails the
+    stamp-duty-aware gate — no trades, but predictions still logged
+    (grading stays free)."""
+    from trading_bot.strategy import ml_challenger as mc
+    from trading_bot.strategy.registry import load_active_strategies
+
+    monkeypatch.setattr(mc, "CONFIDENCE_FLOOR", -1.0)
+    monkeypatch.setattr(mc, "_round_trip_cost_pct_for", lambda t, notional_gbp=2000.0: 50.0)
+    strategy = load_active_strategies(region="us")[0]
+    strategy.config.cost_gate_multiplier = 1.0
+
+    intents = strategy.select_picks(ml_strategy_env["on_date"])
+    assert intents == []
+    pred_path = ml_strategy_env["state"] / "predictions.jsonl"
+    rows = [json.loads(line) for line in pred_path.read_text().splitlines() if line.strip()]
+    assert len(rows) == len(ml_strategy_env["tickers"])
+    assert not any(r["was_traded"] for r in rows)
+
+
 def test_manifest_drift_refuses_to_predict(ml_strategy_env, monkeypatch):
     """A model trained against a different feature spec must never be
     served — the load-time assert is the train/serve-skew fuse."""
@@ -205,7 +237,7 @@ def test_manifest_drift_refuses_to_predict(ml_strategy_env, monkeypatch):
     from trading_bot.ml.features import ManifestMismatchError
     from trading_bot.strategy.registry import _strategies_dir, load_active_strategies
 
-    manifest_path = _strategies_dir() / "ml-challenger" / "model" / "feature_manifest.json"
+    manifest_path = _strategies_dir() / "ml-challenger" / "model" / "us" / "feature_manifest.json"
     raw = _json.loads(manifest_path.read_text())
     raw["spec_hash"] = "0000000000000000"
     manifest_path.write_text(_json.dumps(raw))

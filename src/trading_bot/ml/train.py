@@ -47,6 +47,19 @@ GRID = [(lr, depth) for lr in (0.03, 0.05, 0.10) for depth in (4, 6)]
 MAX_ROUNDS = 1500
 EARLY_STOPPING_ROUNDS = 50
 
+# Multi-horizon stretch: h=1 is the graded head (grid-searched); the
+# longer heads reuse h=1's winning params and drive TradeIntent.hold_days.
+HORIZONS = [1, 2, 3, 5]
+
+# With ~3 years of snapshot the naive fold count balloons to ~28;
+# cap at the most recent MAX_FOLDS windows (~1 year of OOS) so early
+# history only ever trains — standard expanding-window practice.
+MAX_FOLDS = 12
+
+# CPCV (stretch): 6 blocks choose 2 test blocks = 15 OOS paths.
+CPCV_GROUPS = 6
+CPCV_TEST_GROUPS = 2
+
 # Fallback class midpoints if a class has < MIN_MIDPOINT_SUPPORT rows in
 # the first training block (§5 of the design doc).
 DEFAULT_MIDPOINTS = {
@@ -84,24 +97,33 @@ def _lgbm_params(learning_rate: float, max_depth: int, seed: int) -> dict:
 # Data assembly
 # ---------------------------------------------------------------------------
 
-def load_training_frame(db_path: Path, *, end_date: date | None = None) -> pd.DataFrame:
-    """Features ⋈ labels from the snapshot: one row per (ticker, feature
-    date) with FEATURE_COLUMNS, actual_return_pct, actual_class, and
-    prev_intraday_ret (the momentum baseline's score — not a feature).
+def load_region_panel(db_path: Path, *, region: str = "us", end_date: date | None = None) -> pd.DataFrame:
+    """Long bar frame for one region's trainable universe. Index tickers
+    (^VIX etc.) are excluded here and read separately for regime slicing.
 
     Bars dated today or later are dropped — a same-day bar fetched
     intraday is partial and would poison both features and labels.
     """
+    from trading_bot.ml.data import region_tickers
     end = end_date or date.today()
-    tickers = snapshot_tickers(db_path)
-    if not tickers:
+    snap = [t for t in snapshot_tickers(db_path) if not t.startswith("^")]
+    if not snap:
         raise SystemExit(f"No tickers in snapshot {db_path} — run `python -m trading_bot.ml.data backfill`")
-    bars = read_snapshot_bars(db_path, tickers, date(1970, 1, 1), end)
+    wanted = sorted(set(snap) & set(region_tickers(region)))
+    if not wanted:
+        raise SystemExit(f"No {region} tickers in snapshot — run "
+                         f"`python -m trading_bot.ml.data backfill --region {region}`")
+    bars = read_snapshot_bars(db_path, wanted, date(1970, 1, 1), end)
     panel = F.panel_from_bars(bars)
-    panel = panel[panel["date"] < date.today()]
+    return panel[panel["date"] < date.today()]
 
+
+def build_frame(panel: pd.DataFrame, *, horizon: int = 1) -> pd.DataFrame:
+    """Features ⋈ labels for one horizon: one row per (ticker, feature
+    date) with FEATURE_COLUMNS, actual_return_pct, actual_class, y, and
+    prev_intraday_ret (the momentum baseline's score — not a feature)."""
     feats = F.compute_feature_panel(panel)
-    labels = compute_labels(panel)
+    labels = compute_labels(panel, horizon=horizon)
     df = feats.merge(labels, on=["ticker", "date"], how="inner")
 
     # Baseline score: the feature date's own open→close intraday return
@@ -113,6 +135,18 @@ def load_training_frame(db_path: Path, *, end_date: date | None = None) -> pd.Da
 
     df["y"] = df["actual_class"].map(CLASSES.index)
     return df.sort_values(["date", "ticker"]).reset_index(drop=True)
+
+
+def load_training_frame(db_path: Path, *, region: str = "us", end_date: date | None = None) -> pd.DataFrame:
+    """Back-compat convenience: h=1 frame for one region."""
+    return build_frame(load_region_panel(db_path, region=region, end_date=end_date), horizon=1)
+
+
+def auto_burn_in(n_dates: int, *, step: int = 21, val_size: int = 21, embargo: int = 5) -> int:
+    """Cap the fold count at MAX_FOLDS by growing the burn-in: with ~3y
+    of history the most recent ~MAX_FOLDS×21 sessions validate and
+    everything earlier only ever trains."""
+    return max(100, n_dates - (MAX_FOLDS * step + embargo + val_size))
 
 
 def fit_class_midpoints(df: pd.DataFrame, first_fold: Fold) -> dict[str, float]:
@@ -343,15 +377,17 @@ def train_lgbm(
 
 def run_walk_forward(
     df: pd.DataFrame, folds: list[Fold], midpoints: dict[str, float], seed: int,
+    *, grid: list[tuple[float, int]] | None = None,
 ) -> tuple[dict, pd.DataFrame, list[dict]]:
     """Grid × folds. Returns (best_combo, oos_frame_for_best, fold_rows).
     Selection: pooled OOS log-loss (noted in the card — 6-combo grid,
-    selection pressure minimal)."""
+    selection pressure minimal). Pass a single-combo `grid` to reuse
+    already-selected params (the h>1 horizon heads do this)."""
     Xcols = F.FEATURE_COLUMNS
     by_combo: dict[tuple[float, int], list[pd.DataFrame]] = {}
     iters_by_combo: dict[tuple[float, int], list[int]] = {}
 
-    for lr, depth in GRID:
+    for lr, depth in (grid or GRID):
         params = _lgbm_params(lr, depth, seed)
         oos_parts: list[pd.DataFrame] = []
         for k, fold in enumerate(folds):
@@ -440,6 +476,86 @@ def logistic_baseline(df: pd.DataFrame, folds: list[Fold], midpoints: dict[str, 
         parts.append(part)
         log.info("logistic baseline fold %d/%d done", k + 1, len(folds))
     return pd.concat(parts, ignore_index=True)
+
+
+def mlp_baseline(
+    df: pd.DataFrame, folds: list[Fold], midpoints: dict[str, float], seed: int,
+) -> dict | None:
+    """Small PyTorch net on the identical features and folds — the v2
+    preview that quantifies the data-volume conversation against a
+    strong GBM. Returns None (card row says 'not run') without torch;
+    the CI retrain never installs it."""
+    try:
+        import torch
+        from torch import nn
+    except ImportError:
+        log.warning("torch not installed — MLP v2 baseline skipped (pip install -e '.[ml-v2]')")
+        return None
+
+    torch.manual_seed(seed)
+    torch.set_num_threads(4)
+    Xcols = F.FEATURE_COLUMNS
+    parts = []
+    for k, fold in enumerate(folds):
+        tr = df[df["date"].isin(set(fold.train_dates))]
+        va = df[df["date"].isin(set(fold.val_dates))]
+        mu = tr[Xcols].mean().to_numpy()
+        sd = tr[Xcols].std().replace(0, 1).to_numpy()
+        Xtr = torch.tensor((tr[Xcols].to_numpy() - mu) / sd, dtype=torch.float32)
+        ytr = torch.tensor(tr["y"].to_numpy(), dtype=torch.long)
+        Xva = torch.tensor((va[Xcols].to_numpy() - mu) / sd, dtype=torch.float32)
+        yva = torch.tensor(va["y"].to_numpy(), dtype=torch.long)
+
+        counts = np.bincount(tr["y"].to_numpy(), minlength=N_CLASSES).astype(float)
+        counts[counts == 0] = 1.0
+        weight = torch.tensor(len(tr) / (N_CLASSES * counts), dtype=torch.float32)
+
+        model = nn.Sequential(
+            nn.Linear(len(Xcols), 64), nn.ReLU(), nn.Dropout(0.2),
+            nn.Linear(64, 32), nn.ReLU(),
+            nn.Linear(32, N_CLASSES),
+        )
+        opt = torch.optim.Adam(model.parameters(), lr=1e-3)
+        loss_fn = nn.CrossEntropyLoss(weight=weight)
+
+        best_val = float("inf")
+        best_state = None
+        patience = 3
+        stale = 0
+        for epoch in range(30):
+            model.train()
+            perm = torch.randperm(len(Xtr))
+            for i in range(0, len(Xtr), 4096):
+                idx = perm[i : i + 4096]
+                opt.zero_grad()
+                loss = loss_fn(model(Xtr[idx]), ytr[idx])
+                loss.backward()
+                opt.step()
+            model.eval()
+            with torch.no_grad():
+                val_loss = float(loss_fn(model(Xva), yva))
+            if val_loss < best_val - 1e-4:
+                best_val = val_loss
+                best_state = {k2: v.clone() for k2, v in model.state_dict().items()}
+                stale = 0
+            else:
+                stale += 1
+                if stale >= patience:
+                    break
+        if best_state is not None:
+            model.load_state_dict(best_state)
+        model.eval()
+        with torch.no_grad():
+            probs = torch.softmax(model(Xva), dim=1).numpy()
+
+        part = va[["date", "ticker", "actual_return_pct", "y"]].copy()
+        for i, cls in enumerate(CLASSES):
+            part[f"p_{cls}"] = probs[:, i]
+        part["score"] = score_from_probs(probs, midpoints)
+        part["pred_class_idx"] = probs.argmax(axis=1)
+        parts.append(part)
+        log.info("mlp baseline fold %d/%d done (val loss %.4f)", k + 1, len(folds), best_val)
+    return evaluate_oos(pd.concat(parts, ignore_index=True), "MLP (PyTorch, v2 preview)")
 
 
 def control_rule_based_record() -> dict:
@@ -555,29 +671,160 @@ def ic_decay(oos: pd.DataFrame, panel: pd.DataFrame) -> list[dict]:
 
 
 # ---------------------------------------------------------------------------
+# Stretch analyses — SHAP, regime IC, CPCV
+# ---------------------------------------------------------------------------
+
+def shap_summary(booster, df: pd.DataFrame, *, sample: int = 20000, seed: int = SEED) -> list[dict]:
+    """TreeSHAP feature attributions (LightGBM's pred_contrib IS SHAP for
+    trees) on a row sample: mean |contribution| across all classes, plus
+    the mean signed push toward strong_up — consistent attributions the
+    gain table can't give."""
+    rows = df.sample(n=min(sample, len(df)), random_state=seed)
+    X = rows[F.FEATURE_COLUMNS].to_numpy()
+    contrib = booster.predict(X, pred_contrib=True)
+    n_feat = len(F.FEATURE_COLUMNS)
+    # contrib layout: per class, n_feat contributions + 1 bias term.
+    per_class = contrib.reshape(len(X), N_CLASSES, n_feat + 1)[:, :, :n_feat]
+    mean_abs = np.abs(per_class).mean(axis=(0, 1))
+    strong_up_signed = per_class[:, CLASSES.index("strong_up"), :].mean(axis=0)
+    order = np.argsort(-mean_abs)
+    return [
+        {"feature": F.FEATURE_COLUMNS[i],
+         "mean_abs_shap": round(float(mean_abs[i]), 5),
+         "mean_signed_strong_up": round(float(strong_up_signed[i]), 5)}
+        for i in order
+    ]
+
+
+def vix_regime_ic(oos: pd.DataFrame, db_path: Path) -> list[dict]:
+    """Regime-conditional IC: slice the OOS window by terciles of the
+    VIX close on the *feature* date (known at prediction time). Answers
+    'when does it work', not just 'does it'. Repo precedent:
+    momentum-trader-vix-gated."""
+    bars = read_snapshot_bars(db_path, ["^VIX"], date(1970, 1, 1), date.today())
+    vix = {b.bar_date: b.close for b in bars.get("^VIX", []) if b.close > 0}
+    if not vix:
+        return []
+    with_vix = oos.assign(vix=oos["date"].map(vix)).dropna(subset=["vix"])
+    if len(with_vix) < 100:
+        return []
+    lo, hi = with_vix["vix"].quantile([1 / 3, 2 / 3])
+    out = []
+    for name, sel in [
+        (f"calm (VIX ≤ {lo:.1f})", with_vix["vix"] <= lo),
+        (f"mid ({lo:.1f} – {hi:.1f})", (with_vix["vix"] > lo) & (with_vix["vix"] <= hi)),
+        (f"stressed (VIX > {hi:.1f})", with_vix["vix"] > hi),
+    ]:
+        part = with_vix[sel]
+        daily = per_date_ic(part)
+        out.append({
+            "regime": name, "n": int(len(part)), "n_days": daily["n_days"],
+            "pooled_ic": pooled_ic(part), "mean_daily_ic": daily["mean"],
+        })
+    return out
+
+
+def cpcv_report(
+    df: pd.DataFrame, best: dict, midpoints: dict[str, float], seed: int,
+) -> dict:
+    """CPCV with the winning params only (grid re-selection inside CPCV
+    would be circular and 6× the cost): pooled IC per path → the
+    distribution simple walk-forward can't give."""
+    from trading_bot.ml.splits import cpcv
+    dates = sorted(df["date"].unique())
+    folds = cpcv(dates, n_groups=CPCV_GROUPS, n_test_groups=CPCV_TEST_GROUPS)
+    if not folds:
+        return {"n_paths": 0}
+    params = _lgbm_params(best["learning_rate"], best["max_depth"], seed)
+    ics = []
+    for i, fold in enumerate(folds):
+        tr = df[df["date"].isin(set(fold.train_dates))]
+        va = df[df["date"].isin(set(fold.val_dates))]
+        booster = train_lgbm(
+            tr[F.FEATURE_COLUMNS].to_numpy(), tr["y"].to_numpy(),
+            va[F.FEATURE_COLUMNS].to_numpy(), va["y"].to_numpy(), params,
+        )
+        probs = booster.predict(va[F.FEATURE_COLUMNS].to_numpy(),
+                                num_iteration=booster.best_iteration)
+        part = va[["date", "actual_return_pct"]].copy()
+        part["score"] = score_from_probs(probs, midpoints)
+        ic = pooled_ic(part)
+        if ic is not None:
+            ics.append(ic)
+        log.info("cpcv path %d/%d: pooled IC %s", i + 1, len(folds), ic)
+    if not ics:
+        return {"n_paths": 0}
+    arr = np.array(ics)
+    return {
+        "n_paths": len(arr),
+        "mean": round(float(arr.mean()), 4),
+        "std": round(float(arr.std(ddof=1)), 4) if len(arr) > 1 else None,
+        "min": round(float(arr.min()), 4),
+        "max": round(float(arr.max()), 4),
+        "share_positive": round(float((arr > 0).mean()), 3),
+    }
+
+
+def _region_round_trip_cost_pct(region: str) -> tuple[float, str]:
+    """Round-trip cost for a representative shadow trade in the region.
+    UK-EU is stamp-duty-heavy (0.5% on LSE purchases) — the reason it
+    waited for v1.1 and gets a cost gate at pick time."""
+    try:
+        from trading_bot.tools.fees import estimate_round_trip_cost_pct
+        if region == "uk-eu":
+            est = estimate_round_trip_cost_pct(
+                tier="shadow", currency="GBP", exchange="LSE",
+                instrument_type="stock", notional_gbp=2000.0,
+            )
+        else:
+            est = estimate_round_trip_cost_pct(
+                tier="shadow", currency="USD", exchange="NASDAQ",
+                instrument_type="stock", notional_gbp=2000.0,
+            )
+        return round(float(est["total_pct"]) * 100.0, 4), est.get("note", "tools/fees.py estimate")
+    except Exception as e:
+        fallback = 0.55 if region == "uk-eu" else FALLBACK_ROUND_TRIP_COST_PCT
+        return fallback, f"fallback flat estimate ({e})"
+
+
+# ---------------------------------------------------------------------------
 # Orchestration
 # ---------------------------------------------------------------------------
+
+def _refit_final(df: pd.DataFrame, best: dict, seed: int):
+    """Refit on ALL dates with the winning combo; boosting rounds =
+    median of the folds' early-stopped best iterations."""
+    import lightgbm as lgb
+    params = _lgbm_params(best["learning_rate"], best["max_depth"], seed)
+    dall = lgb.Dataset(
+        df[F.FEATURE_COLUMNS].to_numpy(), label=df["y"].to_numpy(),
+        weight=_balanced_weights(df["y"].to_numpy()), feature_name=F.FEATURE_COLUMNS,
+    )
+    return lgb.train(params, dall, num_boost_round=best["median_best_iter"])
+
 
 def train_and_evaluate(
     db_path: Path | None = None,
     out_dir: Path | None = None,
     *,
+    region: str = "us",
     seed: int = SEED,
     end_date: date | None = None,
+    with_mlp: bool = False,
 ) -> dict:
-    import lightgbm as lgb
-
     db = db_path or _default_db()
-    out = out_dir or (_repo_root() / "strategies" / "ml-challenger" / "model")
+    out = out_dir or (_repo_root() / "strategies" / "ml-challenger" / "model" / region)
     out.mkdir(parents=True, exist_ok=True)
 
-    log.info("loading training frame from %s", db)
-    df = load_training_frame(db, end_date=end_date)
+    log.info("loading %s panel from %s", region, db)
+    panel = load_region_panel(db, region=region, end_date=end_date)
+    df = build_frame(panel, horizon=1)
     dates = sorted(df["date"].unique())
-    log.info("training frame: %d rows, %d tickers, %d feature dates (%s → %s)",
+    log.info("h=1 frame: %d rows, %d tickers, %d feature dates (%s → %s)",
              len(df), df["ticker"].nunique(), len(dates), dates[0], dates[-1])
 
-    folds = purged_walk_forward(dates)
+    burn_in = auto_burn_in(len(dates))
+    folds = purged_walk_forward(dates, burn_in=burn_in)
     if len(folds) < 3:
         raise SystemExit(f"Only {len(folds)} walk-forward folds — snapshot too shallow to train honestly")
     midpoints = fit_class_midpoints(df, folds[0])
@@ -605,46 +852,83 @@ def train_and_evaluate(
     logistic_oos = logistic_baseline(df, folds, midpoints, seed)
     logistic = evaluate_oos(logistic_oos, "Logistic (same features)")
     control = control_rule_based_record()
+    mlp = mlp_baseline(df, folds, midpoints, seed) if with_mlp else None
 
-    # Cost-aware toy portfolio
-    cost_pct, cost_note = _round_trip_cost_pct()
+    # Cost-aware toy portfolio — region-specific fee model
+    cost_pct, cost_note = _region_round_trip_cost_pct(region)
     portfolio = toy_portfolio(oos, cost_pct)
 
-    # IC decay needs raw bars again
-    tickers = snapshot_tickers(db)
-    bars = read_snapshot_bars(db, tickers, date(1970, 1, 1), end_date or date.today())
-    panel = F.panel_from_bars(bars)
-    panel = panel[panel["date"] < date.today()]
     decay = ic_decay(oos, panel)
 
-    # Final model: refit on ALL dates with the winning combo; boosting
-    # rounds = median of the folds' early-stopped best iterations.
-    log.info("refitting final model on all %d rows (lr=%s depth=%s rounds=%d)",
-             len(df), best["learning_rate"], best["max_depth"], best["median_best_iter"])
-    params = _lgbm_params(best["learning_rate"], best["max_depth"], seed)
-    dall = lgb.Dataset(
-        df[F.FEATURE_COLUMNS].to_numpy(), label=df["y"].to_numpy(),
-        weight=_balanced_weights(df["y"].to_numpy()), feature_name=F.FEATURE_COLUMNS,
-    )
-    final = lgb.train(params, dall, num_boost_round=best["median_best_iter"])
+    # Stretch analyses on the h=1 head
+    regime = vix_regime_ic(oos, db)
+    log.info("running CPCV (%d choose %d)", CPCV_GROUPS, CPCV_TEST_GROUPS)
+    cpcv_dist = cpcv_report(df, best, midpoints, seed)
 
+    # Multi-horizon heads: reuse h=1's winning params; purge scales with
+    # the horizon (h-day labels overlap h days across rows).
+    horizons_report: dict[int, dict] = {}
+    finals: dict[int, object] = {}
+    midpoints_by_horizon: dict[int, dict[str, float]] = {1: midpoints}
+    finals[1] = _refit_final(df, best, seed)
+    for h in HORIZONS:
+        if h == 1:
+            probs_cols = [f"p_{c}" for c in CLASSES]
+            horizons_report[1] = {
+                "n": challenger["n"], "pooled_ic": challenger["pooled_ic"],
+                "mean_daily_ic": challenger["daily_ic"]["mean"],
+                "logloss": challenger["logloss"],
+                "class_support": {c: int((df["actual_class"] == c).sum()) for c in CLASSES},
+            }
+            continue
+        df_h = build_frame(panel, horizon=h)
+        dates_h = sorted(df_h["date"].unique())
+        folds_h = purged_walk_forward(dates_h, burn_in=auto_burn_in(len(dates_h)), purge=h)
+        if len(folds_h) < 3:
+            log.warning("h=%d: only %d folds — skipping horizon", h, len(folds_h))
+            continue
+        mids_h = fit_class_midpoints(df_h, folds_h[0])
+        midpoints_by_horizon[h] = mids_h
+        best_h, oos_h, _ = run_walk_forward(
+            df_h, folds_h, mids_h, seed,
+            grid=[(best["learning_rate"], best["max_depth"])],
+        )
+        probs_h = oos_h[[f"p_{c}" for c in CLASSES]].to_numpy()
+        horizons_report[h] = {
+            "n": int(len(oos_h)), "pooled_ic": pooled_ic(oos_h),
+            "mean_daily_ic": per_date_ic(oos_h)["mean"],
+            "logloss": multiclass_logloss(oos_h["y"].to_numpy(), probs_h),
+            "class_support": {c: int((df_h["actual_class"] == c).sum()) for c in CLASSES},
+        }
+        finals[h] = _refit_final(df_h, best_h, seed)
+        log.info("h=%d head: pooled IC %s over %d rows", h,
+                 horizons_report[h]["pooled_ic"], horizons_report[h]["n"])
+
+    final = finals[1]
     importances = sorted(
         zip(F.FEATURE_COLUMNS, final.feature_importance(importance_type="gain")),
         key=lambda x: -x[1],
     )[:20]
+    shap = shap_summary(final, df, seed=seed)
 
     snapshot_hash = hashlib.sha256(db.read_bytes()).hexdigest()[:16]
-    audit_row = depth_report(db, tickers)
+    audit_row = depth_report(db, sorted(df["ticker"].unique()))
+    try:
+        db_display = str(db.resolve().relative_to(_repo_root()))
+    except ValueError:
+        db_display = str(db)
 
     report = {
         "generated_at": datetime.now(UTC).isoformat(timespec="seconds"),
         "seed": seed,
-        "db": str(db),
+        "region": region,
+        "db": db_display,
         "snapshot_hash": snapshot_hash,
         "audit": audit_row,
         "n_rows": len(df),
         "n_tickers": int(df["ticker"].nunique()),
         "n_dates": len(dates),
+        "burn_in": burn_in,
         "date_range": [dates[0].isoformat(), dates[-1].isoformat()],
         "class_support": {c: int((df["actual_class"] == c).sum()) for c in CLASSES},
         "midpoints": midpoints,
@@ -654,20 +938,30 @@ def train_and_evaluate(
         "noise_floor": noise_floor,
         "fisher_z_lower_bound": fisher_lb,
         "ic_decay": decay,
+        "regime_ic": regime,
+        "cpcv": cpcv_dist,
+        "horizons": horizons_report,
+        "shap": shap,
         "baselines": {"uniform": uniform, "momentum": momentum,
-                      "logistic": logistic, "control_rule_based": control},
+                      "logistic": logistic, "control_rule_based": control,
+                      "mlp": mlp},
         "portfolio": portfolio,
         "cost_note": cost_note,
         "importances": [[n, round(float(v), 1)] for n, v in importances],
     }
 
-    # Artifacts: model.txt (LightGBM native text), manifest, card,
+    # Artifacts: model_h*.txt (LightGBM native text), manifest, card,
     # machine-readable metrics for the retrain workflow's promotion gate.
-    final.save_model(str(out / "model.txt"))
+    for h, booster in finals.items():
+        booster.save_model(str(out / f"model_h{h}.txt"))
     F.write_manifest(
         out / "feature_manifest.json",
         class_midpoints=midpoints,
         extra={
+            "region": region,
+            "horizons": sorted(finals.keys()),
+            "midpoints_by_horizon": {str(h): m for h, m in midpoints_by_horizon.items()
+                                     if h in finals},
             "trained_at": report["generated_at"],
             "seed": seed,
             "snapshot_hash": snapshot_hash,
@@ -677,15 +971,18 @@ def train_and_evaluate(
         },
     )
     (out / "metrics.json").write_text(json.dumps({
+        "region": region,
         "pooled_oos_ic": challenger["pooled_ic"],
         "fisher_z_lower_bound": fisher_lb,
         "noise_floor": noise_floor,
         "n_oos": challenger["n"],
         "logloss": challenger["logloss"],
+        "cpcv_mean_ic": cpcv_dist.get("mean"),
+        "horizon_pooled_ic": {str(h): r["pooled_ic"] for h, r in horizons_report.items()},
         "generated_at": report["generated_at"],
     }, indent=2) + "\n")
     (out / "card.md").write_text(render_card(report))
-    log.info("wrote model.txt, feature_manifest.json, metrics.json, card.md → %s", out)
+    log.info("wrote %s → %s", ", ".join(f"model_h{h}.txt" for h in sorted(finals)), out)
     return report
 
 
@@ -723,10 +1020,11 @@ def render_card(r: dict) -> str:
     lines: list[str] = []
     w = lines.append
 
-    w("# Model card — ml-challenger v1 (LightGBM, 5-class)")
+    region = r.get("region", "us")
+    w(f"# Model card — ml-challenger · {region} (LightGBM, 5-class)")
     w("")
-    w(f"*Generated {r['generated_at']} by `python -m trading_bot.ml.train` · seed {r['seed']} · "
-      f"data snapshot `{r['snapshot_hash']}`*")
+    w(f"*Generated {r['generated_at']} by `python -m trading_bot.ml.train --region {region}` · "
+      f"seed {r['seed']} · data snapshot `{r['snapshot_hash']}`*")
     w("")
     w("Gradient-boosted trees predicting the same 5-class next-session")
     w("open→close vocabulary the LLM strategies are graded on, trained on")
@@ -827,6 +1125,13 @@ def render_card(r: dict) -> str:
          base["control_rule_based"]["pooled_ic"], "—",
          base["control_rule_based"].get("decile_spread"), base["control_rule_based"]["hit_rate"]),
     ]
+    mlp = base.get("mlp")
+    if mlp:
+        rows.insert(2, (
+            "MLP (PyTorch, v2 preview)", mlp["n"], mlp["logloss"], mlp["pooled_ic"],
+            f"{_fmt(mlp['daily_ic']['mean'])} ({_fmt(mlp['daily_ic']['t_stat'], 2)})",
+            mlp["decile_spread"], mlp["hit_rate_nonflat"]["hit_rate"],
+        ))
     for label, n, ll, pic, dic, ds, hr in rows:
         w(f"| {label} | {n:,} | {_fmt(ll)} | {_fmt(pic)} | {dic} | {_fmt(ds, 3)} | {_fmt(hr, 3)} |")
     w("")
@@ -857,6 +1162,54 @@ def render_card(r: dict) -> str:
     for d in r["ic_decay"]:
         w(f"| open(t+1)→close(t+{d['horizon_days']}) | {_fmt(d['pooled_ic'])} | {d['n']:,} |")
     w("")
+
+    cp = r.get("cpcv") or {}
+    if cp.get("n_paths"):
+        w("## CPCV — combinatorial purged cross-validation")
+        w("")
+        w(f"{CPCV_GROUPS} blocks choose {CPCV_TEST_GROUPS} = {cp['n_paths']} OOS paths with the")
+        w("winning params (grid re-selection inside CPCV would be circular). Where simple")
+        w("walk-forward gives one pooled IC, CPCV gives a distribution:")
+        w("")
+        w(f"mean **{_fmt(cp['mean'])}** · std {_fmt(cp['std'])} · range "
+          f"[{_fmt(cp['min'])}, {_fmt(cp['max'])}] · {_fmt(cp['share_positive'], 3)} of paths positive.")
+        w("")
+        w("Caveat: CPCV trains on data that postdates some validation blocks — acceptable")
+        w("for a stationary-ish feature spec, and the reason promotion still keys on the")
+        w("walk-forward number (the only one runtime evolution can observe).")
+        w("")
+
+    if r.get("regime_ic"):
+        w("## Regime-conditional IC (VIX terciles)")
+        w("")
+        w("Sliced by the VIX close on the *feature* date (known at prediction time).")
+        w("Repo precedent: momentum-trader-vix-gated.")
+        w("")
+        w("| regime | n | days | pooled IC | mean daily IC |")
+        w("|---|---|---|---|---|")
+        for row in r["regime_ic"]:
+            w(f"| {row['regime']} | {row['n']:,} | {row['n_days']} | "
+              f"{_fmt(row['pooled_ic'])} | {_fmt(row['mean_daily_ic'])} |")
+        w("")
+
+    hz = r.get("horizons") or {}
+    if len(hz) > 1:
+        w("## Multi-horizon heads")
+        w("")
+        w("Separate models per holding horizon, sharing h=1's winning params; purge")
+        w("scales with the horizon (h-day labels overlap h days). Only h=1 is graded at")
+        w("runtime — the longer heads drive `TradeIntent.hold_days` on picked names,")
+        w("exercising the Phase 12A multi-day machinery. One class vocabulary at every")
+        w("horizon (±1%/±4%); h-day moves are ~√h larger so class balance shifts, which")
+        w("balanced weights absorb.")
+        w("")
+        w("| horizon (sessions) | n OOS | pooled IC | mean daily IC | log-loss |")
+        w("|---|---|---|---|---|")
+        for h in sorted(hz):
+            row = hz[h]
+            w(f"| {h} | {row['n']:,} | {_fmt(row['pooled_ic'])} | "
+              f"{_fmt(row['mean_daily_ic'])} | {_fmt(row['logloss'])} |")
+        w("")
 
     w("## Calibration")
     w("")
@@ -903,24 +1256,37 @@ def render_card(r: dict) -> str:
         w("(not enough validation days)")
     w("")
 
-    w("## Top-20 gain importances")
+    w("## Feature attribution — gain vs TreeSHAP")
     w("")
-    w("| feature | gain |")
-    w("|---|---|")
+    w("Gain importances (split quality) next to TreeSHAP mean-|contribution| on a")
+    w("20k-row sample (consistent attributions — LightGBM's `pred_contrib` is exact")
+    w("TreeSHAP for trees). The signed column is the mean push toward `strong_up`.")
+    w("")
+    w("| feature | gain | mean abs SHAP | signed → strong_up |")
+    w("|---|---|---|---|")
+    shap_by_feat = {row["feature"]: row for row in r.get("shap", [])}
     for name, gain in r["importances"]:
-        w(f"| `{name}` | {gain:,.0f} |")
+        s = shap_by_feat.get(name, {})
+        w(f"| `{name}` | {gain:,.0f} | {_fmt(s.get('mean_abs_shap'), 5)} | "
+          f"{_fmt(s.get('mean_signed_strong_up'), 5)} |")
     w("")
 
     w("## Limitations")
     w("")
+    daily_mean = ch["daily_ic"]["mean"]
+    if (ch["pooled_ic"] or 0) > (daily_mean or 0) + 0.003:
+        w(f"- **Pooled IC ({_fmt(ch['pooled_ic'])}) exceeds the mean per-date IC "
+          f"({_fmt(daily_mean)}).** Part of the pooled ranking edge comes from")
+        w("  cross-date level effects rather than within-day stock selection. The")
+        w("  pooled number is quoted because it is what `metrics.py` computes at")
+        w("  runtime; the per-date IC and the toy portfolio are the sober view.")
     w("- **Survivorship:** today's index membership applied historically omits")
     w("  delisted names and flatters the backtest slightly. The forward shadow run")
     w("  is immune — which is the argument for shadow deployment.")
-    w("- **~1 year of depth ≈ one regime.** The snapshot spans "
-      f"{r['date_range'][0]} → {r['date_range'][1]}; nothing here says how the model")
-    w("  behaves in a regime it hasn't seen. Stooq deep-history backfill is the v1.1 fix.")
-    w("- **Single region.** US only; UK-EU needs a separate model and a")
-    w("  stamp-duty-aware cost gate.")
+    w(f"- **Depth:** the snapshot spans {r['date_range'][0]} → {r['date_range'][1]} "
+      f"(~3 years — the deep-history stretch). Broader than v1's single year, still")
+    w("  far from a full cycle; the VIX-tercile table above is the regime lens.")
+    w("  Deeper history also worsens survivorship slightly (more delistings missing).")
     w("- **Grid selected on the same OOS folds it reports.** 6 combos — selection")
     w("  pressure is minimal, but the pooled numbers carry that footnote.")
     w("- **No text/news features.** By design: if an LLM strategy beats this, the")
@@ -930,8 +1296,8 @@ def render_card(r: dict) -> str:
     w("## Reproduce")
     w("")
     w("```bash")
-    w("python -m trading_bot.ml.data backfill        # rebuild state/ml/train.db")
-    w(f"python -m trading_bot.ml.train --seed {r['seed']}   # this card, model.txt, manifest")
+    w(f"python -m trading_bot.ml.data backfill --region {region}   # rebuild state/ml/train.db")
+    w(f"python -m trading_bot.ml.train --region {region} --seed {r['seed']}  # card + model_h*.txt + manifest")
     w("```")
     w("")
     w(f"Data snapshot sha256[:16] `{r['snapshot_hash']}` · feature spec `{F.spec_hash()}` "
@@ -950,9 +1316,13 @@ def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--db", type=Path, default=None, help="bars db (default: snapshot, then runtime store)")
     p.add_argument("--out", type=Path, default=None, help="model output dir")
+    p.add_argument("--region", default="us", choices=["us", "uk-eu"])
     p.add_argument("--seed", type=int, default=SEED)
+    p.add_argument("--with-mlp", action="store_true",
+                   help="also run the PyTorch MLP v2 baseline (needs the ml-v2 extra)")
     args = p.parse_args(argv)
-    report = train_and_evaluate(args.db, args.out, seed=args.seed)
+    report = train_and_evaluate(args.db, args.out, region=args.region, seed=args.seed,
+                                with_mlp=args.with_mlp)
     ch = report["challenger"]
     print(json.dumps({
         "pooled_oos_ic": ch["pooled_ic"],

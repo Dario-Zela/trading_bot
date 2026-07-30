@@ -75,12 +75,36 @@ def test_render_card_complete():
                       "cost_pct_per_trade": 0.3},
         "cost_note": "fallback 2×0.15% FX legs",
         "importances": [[c, 100.0] for c in FEATURE_COLUMNS[:20]],
+        # Stretch sections
+        "region": "us",
+        "cpcv": {"n_paths": 15, "mean": 0.02, "std": 0.01, "min": -0.01, "max": 0.04,
+                 "share_positive": 0.8},
+        "regime_ic": [
+            {"regime": "calm (VIX ≤ 14.0)", "n": 400, "n_days": 10, "pooled_ic": 0.01,
+             "mean_daily_ic": 0.005},
+            {"regime": "stressed (VIX > 20.0)", "n": 400, "n_days": 10, "pooled_ic": 0.03,
+             "mean_daily_ic": 0.02},
+        ],
+        "horizons": {
+            1: {"n": 1200, "pooled_ic": 0.02, "mean_daily_ic": 0.01, "logloss": 1.5,
+                "class_support": {c: 100 for c in CLASSES}},
+            3: {"n": 1100, "pooled_ic": 0.03, "mean_daily_ic": 0.015, "logloss": 1.55,
+                "class_support": {c: 100 for c in CLASSES}},
+        },
+        "shap": [{"feature": c, "mean_abs_shap": 0.01, "mean_signed_strong_up": 0.001}
+                 for c in FEATURE_COLUMNS],
     }
+    report["baselines"]["mlp"] = evaluate_oos(oos, "MLP (PyTorch, v2 preview)")
     card = render_card(report)
     for heading in ("# Model card", "## Data", "## Label", "## Features",
                     "## Validation", "## Results vs baselines", "## Significance",
-                    "## Calibration", "## Toy top-5", "## Limitations", "## Reproduce"):
+                    "## CPCV", "## Regime-conditional IC", "## Multi-horizon heads",
+                    "## Calibration", "## Toy top-5", "## Feature attribution",
+                    "## Limitations", "## Reproduce"):
         assert heading in card
     for feature in FEATURE_COLUMNS:
         assert f"`{feature}`" in card
     assert "Fisher-z" in card and "noise floor" in card.lower()
+    assert "MLP (PyTorch, v2 preview)" in card
+    # The SHAP table must not contain a broken header (pipes inside cells)
+    assert "mean abs SHAP" in card

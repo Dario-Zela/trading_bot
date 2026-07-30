@@ -18,6 +18,11 @@ use_stops: false
 use_take_profits: false
 prefilter_mode: 'off'           # rank the full cross-section — a movers-biased shortlist would bias the ranking
 skip_if_earnings_in_days: 1
+# Cost gate: a pick must predict >= multiplier x its estimated
+# round-trip cost. On US names (~0.3%) this rarely binds; the uk-eu
+# entry overrides it lower because LSE stamp duty (0.5%) x the default
+# 4x would demand a ~2%+ predicted move and never trade.
+cost_gate_multiplier: 1.0
 # Experiment control: the weekly evolution agent may not tune, demote,
 # promote or deactivate this strategy — sizing tunes wouldn't alter the
 # score being measured, but the comparison must stay clean. Enforced in
@@ -26,5 +31,5 @@ skip_if_earnings_in_days: 1
 evolution_frozen: true
 runs_in:
   - {region: us, tier: shadow, universe: t212_isa_us}
-# UK-EU is deferred to v1.1: separate model, stamp-duty-heavy costs,
-# thinner OHLCV coverage.
+  # v1.1: separate model (model/uk-eu/), stamp-duty-aware cost gate.
+  - {region: uk-eu, tier: shadow, universe: t212_isa_uk_eu, cost_gate_multiplier: 1.5}

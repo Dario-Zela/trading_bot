@@ -96,3 +96,32 @@ def test_last_bar_has_no_label():
     labels = compute_labels(panel)
     # Only the first bar gets a label; the last bar's future is unknown.
     assert list(labels["date"]) == [date(2026, 1, 5)]
+
+
+def test_multi_horizon_label_opens_next_session_closes_h_out():
+    """h=3: opens at bar t+1's open, closes at bar t+3's close."""
+    rows = []
+    opens = [100.0, 102.0, 104.0, 106.0, 108.0]
+    closes = [101.0, 103.0, 105.0, 107.0, 110.0]
+    for i in range(5):
+        d = date(2026, 1, 5 + i)  # Mon..Fri
+        rows.append(("AAA", d, opens[i], closes[i] + 1, opens[i] - 1, closes[i], 1000))
+    labels = compute_labels(_panel(rows), horizon=3)
+    first = labels.iloc[0]
+    # Feature date Mon: open Tue @102 → close Thu @107 = +4.902%
+    assert first["date"] == date(2026, 1, 5)
+    assert first["label_date"] == date(2026, 1, 8)
+    assert first["actual_return_pct"] == pytest.approx((107.0 / 102.0 - 1) * 100, abs=0.01)
+    assert first["actual_class"] == "strong_up"
+    # Only Mon and Tue have 3 future bars
+    assert len(labels) == 2
+
+
+def test_horizon_one_unchanged_by_generalisation():
+    rows = [
+        ("AAA", date(2026, 1, 5), 95.0, 99.0, 94.0, 98.0, 1000),
+        ("AAA", date(2026, 1, 6), 100.0, 104.0, 99.0, 103.0, 1000),
+    ]
+    default = compute_labels(_panel(rows))
+    explicit = compute_labels(_panel(rows), horizon=1)
+    pd.testing.assert_frame_equal(default, explicit)

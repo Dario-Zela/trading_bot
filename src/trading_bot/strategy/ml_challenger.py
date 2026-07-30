@@ -49,12 +49,22 @@ class MLChallengerStrategy(Strategy):
 
         model_dir = self._model_dir()
         manifest = load_manifest(model_dir / "feature_manifest.json")
-        booster = lgb.Booster(model_file=str(model_dir / "model.txt"))
-        if booster.feature_name() != manifest["columns"]:
+        horizons = [int(h) for h in manifest.get("horizons", [1])]
+        boosters: dict[int, object] = {}
+        for h in horizons:
+            path = model_dir / f"model_h{h}.txt"
+            if path.exists():
+                boosters[h] = lgb.Booster(model_file=str(path))
+        if 1 not in boosters:
             raise ManifestMismatchError(
-                f"{cfg.id}: model.txt feature names differ from feature_manifest.json — "
-                f"the committed artifacts are out of sync"
+                f"{cfg.id}: no model_h1.txt in {model_dir} — the graded head is mandatory"
             )
+        for h, b in boosters.items():
+            if b.feature_name() != manifest["columns"]:
+                raise ManifestMismatchError(
+                    f"{cfg.id}: model_h{h}.txt feature names differ from feature_manifest.json — "
+                    f"the committed artifacts are out of sync"
+                )
 
         tickers = get_universe(cfg.universe)
         as_of = _previous_trading_day(on_date, cfg.region)
@@ -71,17 +81,29 @@ class MLChallengerStrategy(Strategy):
             return []
 
         X = feats[manifest["columns"]].to_numpy()
-        probs = booster.predict(X)
         classes: list[str] = manifest["classes"]
-        midpoints = np.array([manifest["class_midpoints"][c] for c in classes])
+        mids_by_h = manifest.get("midpoints_by_horizon") or {"1": manifest["class_midpoints"]}
         up = [i for i, c in enumerate(classes) if c.endswith("_up")]
         down = [i for i, c in enumerate(classes) if c.endswith("_down")]
 
+        # The h=1 head is what gets logged and graded (same-day
+        # open→close); the longer heads only choose hold_days on picks.
+        booster = boosters[1]
+        probs = booster.predict(X)
+        midpoints = np.array([mids_by_h["1"][c] for c in classes])
         scores = probs @ midpoints                       # predicted_return_pct
         edge = probs[:, up].sum(axis=1) - probs[:, down].sum(axis=1)
         pred_idx = probs.argmax(axis=1)
         conviction = probs.max(axis=1)
         rationales = _rationales(booster, X, pred_idx, manifest["columns"])
+
+        # Per-day expected return per horizon, for hold_days selection.
+        per_day_by_h: dict[int, np.ndarray] = {1: scores}
+        for h, b in boosters.items():
+            if h == 1:
+                continue
+            m_h = np.array([mids_by_h[str(h)][c] for c in classes])
+            per_day_by_h[h] = (b.predict(X) @ m_h) / h
 
         candidates = feats[["ticker"]].copy()
         candidates["score"] = scores
@@ -89,13 +111,16 @@ class MLChallengerStrategy(Strategy):
         candidates["pred_class"] = [classes[i] for i in pred_idx]
         candidates["conviction"] = conviction
         candidates["rationale"] = rationales
-        log.info("%s: scored %d candidates for %s (features from %s)",
-                 cfg.id, len(candidates), on_date.isoformat(), feature_date)
+        for h, pd_scores in per_day_by_h.items():
+            candidates[f"per_day_h{h}"] = pd_scores
+        log.info("%s: scored %d candidates for %s (features from %s, horizons %s)",
+                 cfg.id, len(candidates), on_date.isoformat(), feature_date,
+                 sorted(boosters))
 
         # Picks: top-N by long edge above the floor, equal weight like
-        # control-rule-based, hold_days=1. The earnings gate only prunes
-        # the tradeable shortlist — every scored name is still logged
-        # below, because grading is free and more graded rows = tighter IC.
+        # control-rule-based. The earnings and cost gates only prune the
+        # tradeable shortlist — every scored name is still logged below,
+        # because grading is free and more graded rows = tighter IC.
         shortlist = candidates[candidates["edge"] >= CONFIDENCE_FLOOR].nlargest(
             max(cfg.max_positions * 2, cfg.max_positions), "edge",
         )
@@ -103,11 +128,33 @@ class MLChallengerStrategy(Strategy):
             keep = [t for t in shortlist["ticker"]
                     if not _earnings_within(t, on_date, cfg.skip_if_earnings_in_days)]
             shortlist = shortlist[shortlist["ticker"].isin(keep)]
+
+        # Stamp-duty-aware cost gate (the reason UK-EU waited for v1.1):
+        # a pick must predict at least cost_gate_multiplier × its
+        # estimated round-trip cost. On US names the cost is ~0.3% and
+        # this rarely binds; on LSE names stamp duty alone is 0.5%.
+        if not shortlist.empty and cfg.cost_gate_multiplier > 0:
+            kept, dropped = [], []
+            for _, row in shortlist.iterrows():
+                cost = _round_trip_cost_pct_for(row["ticker"])
+                if cost is None or row["score"] >= cfg.cost_gate_multiplier * cost:
+                    kept.append(row["ticker"])
+                else:
+                    dropped.append((row["ticker"], row["score"], cost))
+            if dropped:
+                log.info("%s: cost gate dropped %d picks: %s", cfg.id, len(dropped),
+                         ", ".join(f"{t} ({s:+.2f}% vs {c:.2f}% cost)" for t, s, c in dropped))
+            shortlist = shortlist[shortlist["ticker"].isin(kept)]
+
         picks = shortlist.nlargest(cfg.max_positions, "edge")
 
         intents: list[TradeIntent] = []
         allocation_each = 100.0 / cfg.max_positions
         for _, row in picks.iterrows():
+            # hold_days = the horizon with the best per-day expected
+            # return for THIS name — exercises the Phase 12A multi-day
+            # machinery without touching what gets graded.
+            hold = max(per_day_by_h, key=lambda h: row[f"per_day_h{h}"])
             intents.append(TradeIntent(
                 ticker=row["ticker"],
                 allocation_pct=allocation_each,
@@ -115,10 +162,10 @@ class MLChallengerStrategy(Strategy):
                 take_profit_pct=None,
                 thesis=(
                     f"ML challenger: P(up)−P(down)={row['edge']:+.2f}, "
-                    f"predicted {row['pred_class']} ({row['score']:+.2f}%). "
-                    f"Top features: {row['rationale']}"
+                    f"predicted {row['pred_class']} ({row['score']:+.2f}%), "
+                    f"hold {hold}d. Top features: {row['rationale']}"
                 ),
-                hold_days=1,
+                hold_days=hold,
             ))
 
         self._log_predictions(candidates, picked={i.ticker for i in intents}, on_date=on_date)
@@ -128,7 +175,7 @@ class MLChallengerStrategy(Strategy):
 
     def _model_dir(self):
         from trading_bot.strategy.registry import _strategies_dir
-        return _strategies_dir() / self.config.id / "model"
+        return _strategies_dir() / self.config.id / "model" / self.config.region
 
     def _log_predictions(self, candidates, *, picked: set[str], on_date: date) -> None:
         """One PredictionRecord per scored candidate — prediction logging
@@ -190,6 +237,38 @@ def _previous_trading_day(on_date: date, region: str) -> date:
         d -= timedelta(days=1)
     log.warning("no trading day found in the 30 days before %s (%s)?!", on_date, region)
     return on_date - timedelta(days=1)
+
+
+# yfinance suffix → (exchange, currency) for the fee model. Bare
+# tickers are US. LSE names carry the 0.5% stamp; EU names carry FX
+# (and FTT for .PA/.MI purchases).
+_SUFFIX_VENUES = {
+    ".L": ("LSE", "GBP"), ".PA": ("PAR", "EUR"), ".DE": ("XETR", "EUR"),
+    ".AS": ("AMS", "EUR"), ".MI": ("MIL", "EUR"), ".MC": ("MAD", "EUR"),
+    ".SW": ("SWX", "CHF"), ".HE": ("HEL", "EUR"),
+}
+
+
+def _round_trip_cost_pct_for(ticker: str, notional_gbp: float = 2000.0) -> float | None:
+    """Estimated round-trip cost % for one name via tools/fees.py.
+    instrument_type='stock' is conservative for LSE-listed ETFs (they
+    are stamp-exempt) — overestimating cost only makes the gate
+    stricter. None (no gate) if the fee model can't run."""
+    exchange, currency = "NASDAQ", "USD"
+    for suffix, venue in _SUFFIX_VENUES.items():
+        if ticker.endswith(suffix):
+            exchange, currency = venue
+            break
+    try:
+        from trading_bot.tools.fees import estimate_round_trip_cost_pct
+        est = estimate_round_trip_cost_pct(
+            tier="shadow", currency=currency, exchange=exchange,
+            instrument_type="stock", notional_gbp=notional_gbp,
+        )
+        return float(est["total_pct"]) * 100.0
+    except Exception as e:
+        log.debug("fee estimate failed for %s (%s) — cost gate skipped", ticker, e)
+        return None
 
 
 def _earnings_within(ticker: str, on_date: date, window_days: int) -> bool:

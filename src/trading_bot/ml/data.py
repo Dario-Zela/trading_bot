@@ -36,11 +36,19 @@ log = logging.getLogger(__name__)
 # thin to train on and the separate snapshot is required.
 MIN_TRAIN_DEPTH_SESSIONS = 150
 
-# Backfill window. ~550 calendar days ≈ 380 sessions: the 63-session
-# feature burn-in still leaves a full year of labelled rows. The
-# runtime cache's 365-day prune ceiling doesn't apply here — this
-# snapshot is training-only and regenerable.
-DEFAULT_BACKFILL_CALENDAR_DAYS = 550
+# Backfill window. ~1150 calendar days ≈ 790 sessions (~3 years) —
+# the deep-history stretch goal: multi-regime training data, breaking
+# the runtime cache's 365-day ceiling (which never applied here — this
+# snapshot is training-only and regenerable). Deeper history worsens
+# the survivorship caveat slightly (more delistings missing), which
+# the card documents.
+DEFAULT_BACKFILL_CALENDAR_DAYS = 1150
+
+# Index tickers fetched into every backfill for regime slicing (VIX
+# terciles in the card's regime-conditional IC section). Never part of
+# the tradeable universe or the feature/label frame — the trainer
+# excludes anything starting with '^'.
+INDEX_TICKERS = ["^VIX"]
 
 
 def snapshot_path() -> Path:
@@ -185,24 +193,41 @@ def audit(universe_id: str = "t212_isa_us") -> dict:
 # Backfill — yfinance batch download into the snapshot
 # ---------------------------------------------------------------------------
 
-def default_backfill_tickers() -> list[str]:
-    """S&P 1500 ∩ t212_isa_us — liquid US names the bot can actually
-    trade, ~1.5k of them (the doc's realistic 1–3k band). Survivorship
-    caveat: applying *today's* index membership historically omits
-    delisted names and flatters the backtest slightly; documented in
-    the model card, and the forward shadow run is immune."""
+def region_tickers(region: str = "us") -> list[str]:
+    """The trainable universe per region — liquid names the bot can
+    actually trade, intersected with a stable index membership list.
+
+    us:    S&P 1500 ∩ t212_isa_us (~1.5k names)
+    uk-eu: (FTSE 350 + DAX + CAC + AEX + UCITS ETFs) ∩ t212_isa_uk_eu
+           (~400 names — thinner by nature; the card documents it)
+
+    Survivorship caveat: applying *today's* membership historically
+    omits delisted names and flatters the backtest slightly; documented
+    in the model card, and the forward shadow run is immune."""
     from trading_bot.tools.universe import get_universe
-    sp1500 = set(get_universe("sp1500"))
-    t212 = set(get_universe("t212_isa_us"))
-    both = sorted(sp1500 & t212)
+    if region == "us":
+        index = set(get_universe("sp1500"))
+        tradeable = set(get_universe("t212_isa_us"))
+    elif region == "uk-eu":
+        index = set(get_universe("uk_eu_extended"))
+        tradeable = set(get_universe("t212_isa_uk_eu"))
+    else:
+        raise ValueError(f"unknown region {region!r} — expected 'us' or 'uk-eu'")
+    both = sorted(index & tradeable)
     # If the T212 instrument cache is unavailable (fresh clone without
-    # state), fall back to plain S&P 1500 rather than dying.
-    return both if both else sorted(sp1500)
+    # state), fall back to the plain index list rather than dying.
+    return both if both else sorted(index)
+
+
+def default_backfill_tickers() -> list[str]:
+    """Backward-compatible alias for the US set."""
+    return region_tickers("us")
 
 
 def backfill(
     tickers: list[str] | None = None,
     *,
+    region: str = "us",
     days: int = DEFAULT_BACKFILL_CALENDAR_DAYS,
     batch_size: int = 200,
     db_path: Path | None = None,
@@ -211,10 +236,12 @@ def backfill(
     """Download `days` of daily OHLCV for `tickers` into the snapshot.
     auto_adjust=False to match tools.history's runtime-store writes.
     Failed tickers are skipped (reported), not retried via Stooq here —
-    the snapshot doesn't need 100% coverage, just bulk."""
+    the snapshot doesn't need 100% coverage, just bulk. INDEX_TICKERS
+    (^VIX) ride along in every backfill for regime slicing."""
     import yfinance as yf
 
-    tickers = tickers or default_backfill_tickers()
+    tickers = list(tickers or region_tickers(region))
+    tickers += [t for t in INDEX_TICKERS if t not in tickers]
     db = db_path or snapshot_path()
     end = end or date.today()
     start = end - timedelta(days=days)
@@ -284,6 +311,7 @@ def main(argv: list[str] | None = None) -> int:
     p_audit.add_argument("--universe", default="t212_isa_us")
 
     p_back = sub.add_parser("backfill", help="yfinance backfill into state/ml/train.db")
+    p_back.add_argument("--region", default="us", choices=["us", "uk-eu"])
     p_back.add_argument("--days", type=int, default=DEFAULT_BACKFILL_CALENDAR_DAYS)
     p_back.add_argument("--batch", type=int, default=200)
 
@@ -302,7 +330,7 @@ def main(argv: list[str] | None = None) -> int:
             )
         return 0
     if args.cmd == "backfill":
-        result = backfill(days=args.days, batch_size=args.batch)
+        result = backfill(region=args.region, days=args.days, batch_size=args.batch)
         import json as _json
         print(_json.dumps(result, indent=2))
         return 0
