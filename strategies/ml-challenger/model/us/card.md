@@ -1,6 +1,6 @@
 # Model card — ml-challenger · us (LightGBM, 5-class)
 
-*Generated 2026-07-30T16:07:58+00:00 by `python -m trading_bot.ml.train --region us` · seed 42 · data snapshot `b9d68a5efc4126fa`*
+*Generated 2026-07-30T19:13:20+00:00 by `python -m trading_bot.ml.train --region us` · seed 42 · data snapshot `b9d68a5efc4126fa`*
 
 Gradient-boosted trees predicting the same 5-class next-session
 open→close vocabulary the LLM strategies are graded on, trained on
@@ -11,7 +11,7 @@ sample.
 
 ## Data
 
-- Snapshot: `state/ml/train.db` — 1,541,954 bars, 1,491 tickers, 2023-06-06 → 2026-07-30
+- Snapshot: `state/ml/train.db` — this region's slice: 1,168,366 bars, 1,491 tickers, 2023-06-06 → 2026-07-29
 - Training frame: **1,074,433 rows** × 1,491 tickers × 726 feature dates (2023-09-05 → 2026-07-28)
 - Universe: S&P 1500 ∩ t212_isa_us (~1.5k liquid US names the bot can trade)
 - Prices are unadjusted (auto_adjust=False), matching what tools.history writes
@@ -81,7 +81,7 @@ train ──────────────────┤purge 1│ embarg
 ```
 
 Grid: 3 learning rates × 2 depths, selected on pooled OOS log-loss
-(winner: lr=0.1, depth=6, 74 rounds). The label is intraday so labels never
+(winner: lr=0.1, depth=6, 63 rounds). The label is intraday so labels never
 overlap across days; purge+embargo are kept anyway — 21/63-day rolling
 features decay slowly, so adjacent-day rows are heavily correlated.
 
@@ -98,23 +98,23 @@ unordered block combinations).
 | 1 | 2025-07-17 | 2025-07-28 → 2025-08-25 | 31,206 | 1.372 | 0.0614 | 0.0055 |
 | 2 | 2025-08-15 | 2025-08-26 → 2025-09-24 | 31,208 | 1.2924 | -0.036 | -0.0303 |
 | 3 | 2025-09-16 | 2025-09-25 → 2025-10-23 | 31,227 | 1.376 | 0.0507 | 0.0027 |
-| 4 | 2025-10-15 | 2025-10-24 → 2025-11-21 | 31,226 | 1.546 | -0.0017 | 0.0025 |
-| 5 | 2025-11-13 | 2025-11-24 → 2025-12-23 | 31,227 | 1.4474 | -0.0229 | 0.0232 |
-| 6 | 2025-12-15 | 2025-12-24 → 2026-01-26 | 31,232 | 1.3459 | -0.017 | -0.0032 |
-| 7 | 2026-01-15 | 2026-01-27 → 2026-02-25 | 31,269 | 1.5119 | 0.0242 | 0.0282 |
-| 8 | 2026-02-17 | 2026-02-26 → 2026-03-26 | 31,277 | 1.597 | 0.0772 | 0.0414 |
-| 9 | 2026-03-18 | 2026-03-27 → 2026-04-27 | 31,290 | 1.4211 | 0.0216 | 0.0297 |
-| 10 | 2026-04-17 | 2026-04-28 → 2026-05-27 | 31,290 | 1.5832 | -0.0211 | -0.0219 |
-| 11 | 2026-05-18 | 2026-05-28 → 2026-06-26 | 31,291 | 1.5676 | 0.0142 | -0.0301 |
-| 12 | 2026-06-17 | 2026-06-29 → 2026-07-28 | 31,311 | 1.5548 | 0.018 | 0.0012 |
+| 4 | 2025-10-15 | 2025-10-24 → 2025-11-21 | 31,226 | 1.5461 | -0.0019 | 0.0021 |
+| 5 | 2025-11-13 | 2025-11-24 → 2025-12-23 | 31,227 | 1.4497 | -0.0178 | 0.0273 |
+| 6 | 2025-12-15 | 2025-12-24 → 2026-01-26 | 31,232 | 1.3461 | -0.0107 | -0.0022 |
+| 7 | 2026-01-15 | 2026-01-27 → 2026-02-25 | 31,269 | 1.5108 | 0.0282 | 0.0329 |
+| 8 | 2026-02-17 | 2026-02-26 → 2026-03-26 | 31,277 | 1.5972 | 0.0759 | 0.0429 |
+| 9 | 2026-03-18 | 2026-03-27 → 2026-04-27 | 31,290 | 1.4244 | 0.0192 | 0.0277 |
+| 10 | 2026-04-17 | 2026-04-28 → 2026-05-27 | 31,290 | 1.5829 | -0.0188 | -0.0212 |
+| 11 | 2026-05-18 | 2026-05-28 → 2026-06-26 | 31,291 | 1.568 | 0.0147 | -0.0321 |
+| 12 | 2026-06-17 | 2026-06-29 → 2026-07-28 | 31,311 | 1.555 | 0.0202 | 0.0033 |
 
 ## Results vs baselines (pooled out-of-sample)
 
 | model | n | log-loss | pooled IC | mean daily IC (t-stat) | decile spread | non-flat hit rate |
 |---|---|---|---|---|---|---|
-| **LightGBM challenger** | 406,260 | 1.4629 | 0.0054 | 0.0011 (0.18) | 0.057 | 0.501 |
-| Logistic (same features) | 406,260 | 1.5214 | -0.003 | -0.0038 (-0.49) | 0.009 | 0.503 |
-| MLP (PyTorch, v2 preview) | 406,260 | 1.5066 | 0.0042 | 0.0024 (0.31) | 0.122 | 0.504 |
+| **LightGBM challenger** | 406,260 | 1.4633 | 0.0066 | 0.0018 (0.31) | 0.056 | 0.501 |
+| Logistic (same features) | 406,260 | 1.5215 | -0.0029 | -0.0038 (-0.49) | 0.01 | 0.503 |
+| MLP (PyTorch, v2 preview) | 406,260 | 1.5065 | 0.0043 | 0.0025 (0.31) | 0.126 | 0.504 |
 | Yesterday's-sign momentum | 406,260 | — | -0.0019 | 0.0028 (0.35) | 0.05 | — |
 | Uniform prior | 406,260 | 1.6094 | — | — | — | — |
 | control-rule-based (live record) | 111 | — | — | — | — | 0.081 |
@@ -123,18 +123,31 @@ control-rule-based is the deactivated (2026-06-07) rule baseline. It predates
 prediction logging, so its frozen record is *trade-level* (ledger): 111 shadow trades, hit rate 0.081, avg P&L 0.319%/trade — no IC is computable,
 so compare it on hit rate and the toy portfolio, not on ranking metrics.
 
+## Ship gate — beat every baseline, pooled out-of-sample
+
+| baseline | baseline pooled IC | challenger pooled IC | verdict |
+|---|---|---|---|
+| Yesterday's-sign momentum | -0.0019 | 0.0066 | beats |
+| Logistic (same features) | -0.0029 | 0.0066 | beats |
+| MLP (PyTorch, v2 preview) | 0.0043 | 0.0066 | beats |
+| Uniform prior (log-loss basis) | — | 0.0066 | beats |
+
+**Verdict: passes** — the challenger beats every comparable baseline pooled
+out-of-sample (control-rule-based's trade-level record has no IC basis and
+is compared in the toy-portfolio section instead).
+
 ## Significance — the evolution gate's own vocabulary
 
-- Pooled OOS rank IC: **0.0054** over 406,260 graded rows
+- Pooled OOS rank IC: **0.0066** over 406,260 graded rows
 - Permutation noise floor (1000 shuffles, 95th pct, as `scripts/ic_noise_floor.py`): **0.0026**
-- Fisher-z 95% lower bound (`PROMOTION_IC_CI_Z = 1.96`): **0.0023**
+- Fisher-z 95% lower bound (`PROMOTION_IC_CI_Z = 1.96`): **0.0035**
 - The pooled IC clears the noise floor.
 
 | horizon | pooled IC | n |
 |---|---|---|
-| open(t+1)→close(t+1) | 0.0054 | 406,259 |
-| open(t+1)→close(t+2) | 0.0051 | 404,767 |
-| open(t+1)→close(t+3) | 0.0109 | 403,276 |
+| open(t+1)→close(t+1) | 0.0066 | 406,259 |
+| open(t+1)→close(t+2) | 0.0055 | 404,767 |
+| open(t+1)→close(t+3) | 0.0102 | 403,276 |
 
 ## CPCV — combinatorial purged cross-validation
 
@@ -142,7 +155,7 @@ so compare it on hit rate and the toy portfolio, not on ranking metrics.
 winning params (grid re-selection inside CPCV would be circular). Where simple
 walk-forward gives one pooled IC, CPCV gives a distribution:
 
-mean **0.0005** · std 0.0101 · range [-0.0235, 0.0146] · 0.533 of paths positive.
+mean **-0.0001** · std 0.0098 · range [-0.0221, 0.0143] · 0.467 of paths positive.
 
 Caveat: CPCV trains on data that postdates some validation blocks — acceptable
 for a stationary-ish feature spec, and the reason promotion still keys on the
@@ -155,9 +168,9 @@ Repo precedent: momentum-trader-vix-gated.
 
 | regime | n | days | pooled IC | mean daily IC |
 |---|---|---|---|---|
-| calm (VIX ≤ 16.4) | 136,823 | 92 | -0.0272 | -0.0216 |
-| mid (16.4 – 18.2) | 135,421 | 91 | -0.003 | -0.0003 |
-| stressed (VIX > 18.2) | 134,016 | 90 | 0.0289 | 0.0257 |
+| calm (VIX ≤ 16.4) | 136,823 | 92 | -0.0243 | -0.0197 |
+| mid (16.4 – 18.2) | 135,421 | 91 | -0.0026 | -0.0006 |
+| stressed (VIX > 18.2) | 134,016 | 90 | 0.028 | 0.0263 |
 
 ## Multi-horizon heads
 
@@ -170,14 +183,14 @@ balanced weights absorb.
 
 | horizon (sessions) | n OOS | pooled IC | mean daily IC | log-loss |
 |---|---|---|---|---|
-| 1 | 406,260 | 0.0054 | 0.0011 | 1.4629 |
-| 2 | 406,255 | 0.0016 | 0.0075 | 1.5514 |
-| 3 | 406,250 | -0.0007 | 0.007 | 1.5633 |
-| 5 | 406,240 | 0.0281 | 0.0209 | 1.5721 |
+| 1 | 406,260 | 0.0066 | 0.0018 | 1.4633 |
+| 2 | 406,255 | 0.001 | 0.0057 | 1.5513 |
+| 3 | 406,250 | -0.0012 | 0.0047 | 1.5634 |
+| 5 | 406,240 | 0.0237 | 0.019 | 1.5722 |
 
 ## Calibration
 
-Multiclass Brier **0.7503** · argmax-confidence ECE **0.0172**.
+Multiclass Brier **0.7504** · argmax-confidence ECE **0.016**.
 LLM conviction values are famously uncalibrated; a demonstrably calibrated
 challenger is a headline result even where IC ties.
 
@@ -185,73 +198,73 @@ challenger is a headline result even where IC ties.
 
 | predicted prob | n | mean predicted | empirical freq |
 |---|---|---|---|
-| 0.0–0.1 | 151,335 | 0.045 | 0.014 |
-| 0.1–0.2 | 143,066 | 0.151 | 0.023 |
-| 0.2–0.3 | 88,089 | 0.24 | 0.055 |
-| 0.3–0.4 | 17,722 | 0.336 | 0.091 |
-| 0.4–0.5 | 3,868 | 0.44 | 0.101 |
-| 0.5–0.6 | 1,379 | 0.541 | 0.107 |
-| 0.6–0.7 | 511 | 0.643 | 0.104 |
-| 0.7–0.8 | 213 | 0.741 | 0.146 |
-| 0.8–0.9 | 68 | 0.838 | 0.147 |
+| 0.0–0.1 | 150,466 | 0.046 | 0.015 |
+| 0.1–0.2 | 143,649 | 0.151 | 0.023 |
+| 0.2–0.3 | 88,877 | 0.24 | 0.055 |
+| 0.3–0.4 | 17,271 | 0.336 | 0.093 |
+| 0.4–0.5 | 3,820 | 0.441 | 0.099 |
+| 0.5–0.6 | 1,326 | 0.542 | 0.104 |
+| 0.6–0.7 | 559 | 0.645 | 0.109 |
+| 0.7–0.8 | 213 | 0.739 | 0.155 |
+| 0.8–0.9 | 72 | 0.843 | 0.139 |
 
 </details>
 <details><summary>Reliability — mild_down</summary>
 
 | predicted prob | n | mean predicted | empirical freq |
 |---|---|---|---|
-| 0.0–0.1 | 6,744 | 0.076 | 0.207 |
-| 0.1–0.2 | 113,388 | 0.168 | 0.239 |
-| 0.2–0.3 | 222,839 | 0.24 | 0.228 |
-| 0.3–0.4 | 48,845 | 0.338 | 0.222 |
-| 0.4–0.5 | 11,139 | 0.439 | 0.242 |
-| 0.5–0.6 | 2,618 | 0.539 | 0.237 |
-| 0.6–0.7 | 570 | 0.638 | 0.247 |
-| 0.7–0.8 | 105 | 0.728 | 0.171 |
+| 0.0–0.1 | 6,640 | 0.076 | 0.211 |
+| 0.1–0.2 | 113,479 | 0.169 | 0.24 |
+| 0.2–0.3 | 223,342 | 0.24 | 0.227 |
+| 0.3–0.4 | 48,137 | 0.338 | 0.224 |
+| 0.4–0.5 | 11,276 | 0.439 | 0.242 |
+| 0.5–0.6 | 2,673 | 0.539 | 0.235 |
+| 0.6–0.7 | 596 | 0.637 | 0.237 |
+| 0.7–0.8 | 101 | 0.727 | 0.178 |
 
 </details>
 <details><summary>Reliability — flat</summary>
 
 | predicted prob | n | mean predicted | empirical freq |
 |---|---|---|---|
-| 0.0–0.1 | 26,125 | 0.072 | 0.269 |
-| 0.1–0.2 | 132,873 | 0.155 | 0.37 |
-| 0.2–0.3 | 117,140 | 0.246 | 0.489 |
-| 0.3–0.4 | 73,255 | 0.345 | 0.56 |
-| 0.4–0.5 | 38,572 | 0.443 | 0.609 |
-| 0.5–0.6 | 13,731 | 0.539 | 0.646 |
-| 0.6–0.7 | 3,637 | 0.639 | 0.664 |
-| 0.7–0.8 | 815 | 0.737 | 0.691 |
-| 0.8–0.9 | 107 | 0.833 | 0.822 |
+| 0.0–0.1 | 25,286 | 0.072 | 0.271 |
+| 0.1–0.2 | 134,107 | 0.155 | 0.369 |
+| 0.2–0.3 | 117,592 | 0.246 | 0.49 |
+| 0.3–0.4 | 72,803 | 0.345 | 0.561 |
+| 0.4–0.5 | 38,435 | 0.443 | 0.61 |
+| 0.5–0.6 | 13,563 | 0.54 | 0.64 |
+| 0.6–0.7 | 3,587 | 0.639 | 0.667 |
+| 0.7–0.8 | 786 | 0.736 | 0.701 |
+| 0.8–0.9 | 95 | 0.836 | 0.821 |
 
 </details>
 <details><summary>Reliability — mild_up</summary>
 
 | predicted prob | n | mean predicted | empirical freq |
 |---|---|---|---|
-| 0.0–0.1 | 8,638 | 0.076 | 0.242 |
-| 0.1–0.2 | 132,981 | 0.168 | 0.246 |
-| 0.2–0.3 | 214,122 | 0.237 | 0.23 |
-| 0.3–0.4 | 38,968 | 0.338 | 0.239 |
-| 0.4–0.5 | 8,904 | 0.438 | 0.256 |
-| 0.5–0.6 | 2,077 | 0.539 | 0.257 |
-| 0.6–0.7 | 473 | 0.637 | 0.249 |
-| 0.7–0.8 | 83 | 0.737 | 0.301 |
+| 0.0–0.1 | 8,528 | 0.076 | 0.239 |
+| 0.1–0.2 | 131,701 | 0.168 | 0.246 |
+| 0.2–0.3 | 215,933 | 0.236 | 0.23 |
+| 0.3–0.4 | 38,772 | 0.338 | 0.239 |
+| 0.4–0.5 | 8,694 | 0.438 | 0.26 |
+| 0.5–0.6 | 2,064 | 0.538 | 0.25 |
+| 0.6–0.7 | 459 | 0.638 | 0.275 |
+| 0.7–0.8 | 94 | 0.735 | 0.287 |
 
 </details>
 <details><summary>Reliability — strong_up</summary>
 
 | predicted prob | n | mean predicted | empirical freq |
 |---|---|---|---|
-| 0.0–0.1 | 171,973 | 0.041 | 0.016 |
-| 0.1–0.2 | 133,762 | 0.149 | 0.025 |
-| 0.2–0.3 | 73,105 | 0.241 | 0.064 |
-| 0.3–0.4 | 20,160 | 0.338 | 0.1 |
-| 0.4–0.5 | 4,748 | 0.44 | 0.122 |
-| 0.5–0.6 | 1,496 | 0.542 | 0.12 |
-| 0.6–0.7 | 626 | 0.643 | 0.147 |
-| 0.7–0.8 | 284 | 0.742 | 0.151 |
-| 0.8–0.9 | 89 | 0.839 | 0.157 |
+| 0.0–0.1 | 171,151 | 0.041 | 0.016 |
+| 0.1–0.2 | 134,784 | 0.15 | 0.025 |
+| 0.2–0.3 | 73,453 | 0.241 | 0.064 |
+| 0.3–0.4 | 19,843 | 0.338 | 0.103 |
+| 0.4–0.5 | 4,590 | 0.439 | 0.116 |
+| 0.5–0.6 | 1,438 | 0.542 | 0.121 |
+| 0.6–0.7 | 617 | 0.643 | 0.112 |
+| 0.7–0.8 | 267 | 0.744 | 0.18 |
+| 0.8–0.9 | 96 | 0.838 | 0.167 |
 
 </details>
 
@@ -259,19 +272,19 @@ challenger is a headline result even where IC ties.
 
 | class | support | predicted | precision | recall |
 |---|---|---|---|---|
-| strong_down | 12,546 | 52,066 | 0.061 | 0.255 |
-| mild_down | 93,576 | 87,249 | 0.248 | 0.232 |
-| flat | 190,013 | 144,328 | 0.582 | 0.442 |
-| mild_up | 96,416 | 69,013 | 0.257 | 0.184 |
-| strong_up | 13,709 | 53,604 | 0.081 | 0.315 |
+| strong_down | 12,546 | 51,802 | 0.063 | 0.26 |
+| mild_down | 93,576 | 87,207 | 0.248 | 0.231 |
+| flat | 190,013 | 144,378 | 0.582 | 0.442 |
+| mild_up | 96,416 | 68,968 | 0.258 | 0.184 |
+| strong_up | 13,709 | 53,905 | 0.081 | 0.318 |
 
 ## Toy top-5 long portfolio (net of costs)
 
 Equal-weight long the top-5 scores each validation day, net of 0.303% round-trip (~0.30% round-trip cost on £2,000 (FX 0.30% rt)):
-mean daily net -0.2365% · hit rate 0.487 · cumulative -64.57% over 273 days · worst day -11.66%.
+mean daily net -0.3764% · hit rate 0.443 · cumulative -102.76% over 273 days · worst day -11.66%.
 A sanity harness, not a backtest — no slippage, no capacity, fills at the
-label's own open. UK-EU waits for v1.1 because 0.5% stamp duty moves this
-from marginal to negative.
+label's own open. UK-EU runs as a separate sleeve with a stamp-duty-aware
+cost gate — see its own card.
 
 ## Feature attribution — gain vs TreeSHAP
 
@@ -281,30 +294,30 @@ TreeSHAP for trees). The signed column is the mean push toward `strong_up`.
 
 | feature | gain | mean abs SHAP | signed → strong_up |
 |---|---|---|---|
-| `parkinson_10d` | 285,772 | 0.30598 | -0.12477 |
-| `vol_21d` | 68,363 | 0.13051 | -0.06154 |
-| `overnight_gap` | 35,777 | 0.04425 | 0.0082 |
-| `ret_1d` | 31,809 | 0.05454 | -0.00803 |
-| `ret_1d_rank` | 22,276 | 0.04462 | 0.00276 |
-| `vol_10d` | 20,537 | 0.04842 | 0.01253 |
-| `volume_ratio` | 19,630 | 0.03289 | 0.00565 |
-| `ret_21d` | 16,996 | 0.04325 | 0.00239 |
-| `dollar_volume_pctile` | 16,659 | 0.02903 | 0.00048 |
-| `ret_5d` | 16,010 | 0.02373 | 0.00184 |
-| `close_vs_sma63` | 15,231 | 0.01998 | 0.00167 |
-| `ret_21d_z` | 14,612 | 0.02849 | -0.00036 |
-| `ret_10d` | 12,614 | 0.02768 | 0.00398 |
-| `vol_of_vol` | 12,424 | 0.02539 | 0.01103 |
-| `close_vs_sma10` | 11,359 | 0.0223 | -0.00161 |
-| `close_vs_sma21` | 10,815 | 0.02314 | -0.00322 |
-| `dow_mon` | 9,589 | 0.02784 | -0.0009 |
-| `dow_wed` | 8,849 | 0.02609 | -0.00014 |
-| `dow_thu` | 7,287 | 0.01062 | -0.00039 |
-| `dow_fri` | 6,792 | 0.02726 | -0.00071 |
+| `parkinson_10d` | 284,660 | 0.30263 | -0.12237 |
+| `vol_21d` | 66,569 | 0.12637 | -0.0583 |
+| `overnight_gap` | 32,606 | 0.04173 | 0.0071 |
+| `ret_1d` | 29,769 | 0.05043 | -0.00546 |
+| `ret_1d_rank` | 20,896 | 0.04073 | 0.00388 |
+| `vol_10d` | 18,630 | 0.04315 | 0.00422 |
+| `volume_ratio` | 17,047 | 0.02894 | 0.00433 |
+| `ret_21d` | 15,286 | 0.03804 | -0.00272 |
+| `dollar_volume_pctile` | 14,144 | 0.02781 | 0.00051 |
+| `ret_5d` | 13,812 | 0.02021 | 0.00463 |
+| `close_vs_sma63` | 13,085 | 0.01852 | 0.00241 |
+| `ret_21d_z` | 11,912 | 0.02471 | 0.00423 |
+| `vol_of_vol` | 11,154 | 0.02357 | 0.01048 |
+| `ret_10d` | 11,062 | 0.02273 | 0.00514 |
+| `close_vs_sma10` | 10,288 | 0.01942 | -0.00466 |
+| `close_vs_sma21` | 10,082 | 0.02135 | -0.00019 |
+| `dow_mon` | 9,012 | 0.02836 | -0.00045 |
+| `dow_wed` | 8,220 | 0.02369 | 0.00001 |
+| `dow_thu` | 6,358 | 0.00989 | -0.00056 |
+| `dow_fri` | 5,921 | 0.02693 | -0.00152 |
 
 ## Limitations
 
-- **Pooled IC (0.0054) exceeds the mean per-date IC (0.0011).** Part of the pooled ranking edge comes from
+- **Pooled IC (0.0066) exceeds the mean per-date IC (0.0018).** Part of the pooled ranking edge comes from
   cross-date level effects rather than within-day stock selection. The
   pooled number is quoted because it is what `metrics.py` computes at
   runtime; the per-date IC and the toy portfolio are the sober view.
@@ -326,4 +339,4 @@ python -m trading_bot.ml.data backfill --region us   # rebuild state/ml/train.db
 python -m trading_bot.ml.train --region us --seed 42  # card + model_h*.txt + manifest
 ```
 
-Data snapshot sha256[:16] `b9d68a5efc4126fa` · feature spec `98e07f46d8aeaeef` · LightGBM params: lr=0.1, depth=6, leaves=31, min_leaf=100, feature/bagging 0.8, balanced weights.
+Data snapshot sha256[:16] `b9d68a5efc4126fa` · feature spec `58bd0e3b705e8d26` · LightGBM params: lr=0.1, depth=6, leaves=31, min_leaf=100, feature/bagging 0.8, balanced weights.
