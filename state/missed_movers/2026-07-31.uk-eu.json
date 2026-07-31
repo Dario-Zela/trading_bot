@@ -1,0 +1,122 @@
+{
+  "date": "2026-07-31",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 DSFIR.AS +10%, ASM.AS +10%, RR.L +8%, GLE.PA +7%, HLMA.L +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (UMG.AS -25%, WKL.AS -9%, REN.AS -8%, MRO.L -8%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: UMG.AS (-24.57%) \u2014 Q2'26 earnings (Jul 30): subscription growth slowed to 6.7% from 7.9%, EBITDA margin fell to 20.5%; stock plunged ~25%, its biggest one-day drop ever, erasing ~\u20ac8.8B market cap. Why we passed: Outside any active strategy's universe \u2014 UMG.AS is a Euronext Amsterdam-listed large-cap media/entertainment name (Vivendi spinoff); uk-eu universe is likely built from national blue-chip indices (AEX/FTSE/DAX) or excludes the media sector, so it was never scanned.",
+  "top_movers": [
+    {
+      "ticker": "DSFIR.AS",
+      "move_pct": 10.338,
+      "close": 92.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 earnings beat (6% organic sales growth vs ~3.9% est, EBITDA \u20ac466M vs \u20ac452M est) driven by double-digit Fine/Consumer Fragrances growth; guidance nudged to upper end of 2-4% range.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DSM-Firmenich AG sits in specialty chemicals/flavors-fragrances, a sector the uk-eu universes likely don't cover, and its dual Amsterdam/SIX Swiss listing (since May 2026) may fall through country-code-based universe construction.",
+      "suggestion": "Add a market-cap/liquidity-based universe screen (independent of sector code) for uk-eu large caps, and an earnings-day override that pulls in any liquid regional name with a post-results gap \u22658% for next-day evaluation even if outside the static universe.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": 10.139,
+      "close": 793.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-earnings re-rating: Deutsche Bank/Kepler Cheuvreux upgraded to Buy, targets to \u20ac1,070-1,100, after Q2 revenue hit record \u20ac1.003B and 2026 guidance raised above \u20ac4B on AI chip-equipment demand.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ASM.AS is a large-cap (~\u20ac40B) Dutch semiconductor-equipment maker on Euronext Amsterdam. Move was a 3-day-delayed post-earnings analyst re-rating (results reported Jul 28, initial sell-off), not a same-day earnings gap a news-reactive gate would catch.",
+      "suggestion": "Add EU semiconductor-equipment large-caps (ASM.AS, BESI.AS) to the uk-eu universe, and add a T+1..T+5 post-earnings analyst-revision scanner that flags names with \u22652 target-price upgrades within a week of reporting.",
+      "failed": false
+    },
+    {
+      "ticker": "RR.L",
+      "move_pct": 8.043,
+      "close": 14.91,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "H1 2026 results beat: operating profit \u00a32.53bn vs \u00a32.37bn est, margin 22.5% (from 19.1%), FY profit guidance raised to \u00a34.7-4.9bn from \u00a34.0-4.2bn; Moody's/Fitch upgrades.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RR.L is a large-cap LSE-primary-listed UK aerospace/defence industrial; the uk-eu universe likely excludes it either as a legacy screen from its 2020-23 penny-stock/distressed era never refreshed, or a listing-currency (GBp) filter favoring US ADRs.",
+      "suggestion": "Re-run universe eligibility screens quarterly on market-cap/liquidity rather than a static list, so recovered large caps like RR.L (now ~FTSE top-10 by cap) re-enter after multi-year exclusion.",
+      "failed": false
+    },
+    {
+      "ticker": "GLE.PA",
+      "move_pct": 6.96,
+      "close": 82.06,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Record Q2 2026 profit (\u20ac1.8B, ROTE 12.2%), raised FY guidance, plus a new \u20ac1.5B buyback and 23% higher interim dividend announced 2026-07-30.",
+      "miss_reason": "Outside any active strategy's universe \u2014 GLE.PA is a large-cap EU bank not covered by the bot's tradable list, so no filter ever got a chance to evaluate the earnings gap.",
+      "suggestion": "Add EU banking large-caps (CAC40/Euro Stoxx constituents) to the universe with an earnings-gate that releases names showing post-results gap \u22655% within 30min of open.",
+      "failed": false
+    },
+    {
+      "ticker": "HLMA.L",
+      "move_pct": 6.862,
+      "close": 36.44,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No stock-specific news today; extends a multi-week rebound from June's photonics guidance cut, boosted by data-center capex optimism after strong Amazon earnings (echoes BofA's July Buy thesis).",
+      "miss_reason": "Outside any active strategy's universe: HLMA.L is a ~28bn GBP FTSE 100 industrial/health-tech conglomerate, a sector/cap bucket the uk-eu universe likely excludes; also a multi-day grind-up, not a single-session gap a scanner would flag.",
+      "suggestion": "Add data-center-capex-adjacent FTSE 100 industrials (HLMA.L, photonics suppliers) to the uk-eu universe, with a correlation trigger firing when mega-cap capex names like AMZN beat and rally.",
+      "failed": false
+    },
+    {
+      "ticker": "SGO.PA",
+      "move_pct": 6.829,
+      "close": 80.72,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "H1 2026 results beat: EBITDA \u20ac3.63B vs \u20ac3.49B consensus (+4-6% beat), margin 15.4% vs 15% est, FY margin guidance >15% confirmed.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Saint-Gobain is a large-cap French building-materials/industrial conglomerate; the bot's uk-eu coverage likely skews toward a narrower sector/cap list that excludes diversified industrials, so no pre-earnings signal was ever generated.",
+      "suggestion": "Add SGO.PA and peer EU industrials (market cap >\u20ac20B) to the uk-eu universe with an earnings-gate that flags names posting post-results EBITDA beats \u22653% vs consensus for next-day momentum entry.",
+      "failed": false
+    },
+    {
+      "ticker": "UMG.AS",
+      "move_pct": -24.565,
+      "close": 14.94,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2'26 earnings (Jul 30): subscription growth slowed to 6.7% from 7.9%, EBITDA margin fell to 20.5%; stock plunged ~25%, its biggest one-day drop ever, erasing ~\u20ac8.8B market cap.",
+      "miss_reason": "Outside any active strategy's universe \u2014 UMG.AS is a Euronext Amsterdam-listed large-cap media/entertainment name (Vivendi spinoff); uk-eu universe is likely built from national blue-chip indices (AEX/FTSE/DAX) or excludes the media sector, so it was never scanned.",
+      "suggestion": "Expand uk-eu universe construction to include full AEX constituent list (not just a top blue-chip subset), or add an earnings-day auto-include rule for covered-exchange names gapping >=15% on results day.",
+      "failed": false
+    },
+    {
+      "ticker": "WKL.AS",
+      "move_pct": -9.042,
+      "close": 67.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh single-day headline; extension of the ongoing 'AI-disruption' selloff in legal/info stocks (Anthropic legal tools vs RELX/WKL/Thomson Reuters), compounded by this week's broader AI-momentum stock rout ahead of Aug 5 H1 earnings.",
+      "miss_reason": "Outside any active strategy's universe: WKL.AS is a EUR large-cap (Euronext Amsterdam) professional-information name, not a US tech/semis ticker, so it sits outside sector-scoped momentum/mean-reversion books even though its driver (AI disruption fear) mirrors names those books do cover.",
+      "suggestion": "Create a cross-listing 'AI-disruption theme' watchlist (WKL.AS, RELX.L, TRI, THMO) alongside US AI-momentum names so sector-driven mean-reversion/momentum strategies can screen EU-listed peers sharing the same catalyst.",
+      "failed": false
+    },
+    {
+      "ticker": "REN.AS",
+      "move_pct": -8.328,
+      "close": 30.82,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed single-day headline; likely continued de-rating on AI-competition/valuation concerns for Legal & Risk units (echoing Morgan Stanley's downgrade thesis) after a volatile post-earnings month.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RELX is a large-cap, historically low-beta info/analytics stock, so uk-eu universes built on trailing volatility/ATR percentile screen it out even though today's move dwarfed its normal range.",
+      "suggestion": "Add an intraday override to universe construction: admit a name for one session if realized move exceeds 2x its 20-day ATR%, so reactive strategies can catch outsized gaps in normally low-vol large caps like REN.AS.",
+      "failed": false
+    },
+    {
+      "ticker": "MRO.L",
+      "move_pct": -7.924,
+      "close": 4.427,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "H1 2026 results day: profit +16%/margin 18.5% beat, but \u00a325-30m extra exceptional costs from Garden Grove chemical incident and paused \u00a3175m buyback spooked holders \u2014 top FTSE 100 loser.",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 MRO.L is a large-cap UK aerospace/industrial conglomerate (GKN Aerospace owner) on the LSE, a sector/geography the bot's tradable universes don't currently cover.",
+      "suggestion": "Add a UK large-cap industrials/aerospace bucket (e.g. FTSE 100 ex-financials) to the universe with an earnings-day gate that flags names with intraday moves \u22657% on results day for next-session review.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-07-31T15:09:08.252686+00:00"
+}
