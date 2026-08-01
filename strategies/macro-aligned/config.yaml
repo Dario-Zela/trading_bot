@@ -5,7 +5,7 @@ description: "LLM-driven. Reads the weekly macro view first; only buys stocks in
   \ Region-agnostic \u2014 the macro view is global, just the candidate\nuniverse\
   \ differs per region.\n"
 implementation: llm
-active: true
+active: false
 capital_gbp: 10000
 max_positions: 5
 max_position_pct: 30
@@ -40,3 +40,4 @@ prefilter_mode: python
 prefilter_top_n: 100
 prefilter_sort_key: dollar_volume_desc
 last_tune_date: '2026-05-27'
+deactivated_at: '2026-08-01'

@@ -8,7 +8,7 @@ description: "Auto-spawned variant of macro-aligned on 2026-06-20 by the weekly 
   \ \u2014 the execution edge suggests latent macro awareness; making it explicit\
   \ and learnable targets the IC gap without changing universe or rebalance cadence."
 implementation: llm
-active: true
+active: false
 capital_gbp: 10000
 max_positions: 3
 max_position_pct: 35.0
@@ -45,3 +45,4 @@ prefilter_top_n: 80
 prefilter_sort_key: dollar_volume_desc
 last_tune_date: '2026-05-27'
 cost_gate_multiplier: 4.0
+deactivated_at: '2026-08-01'

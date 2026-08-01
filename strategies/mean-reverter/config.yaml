@@ -25,18 +25,20 @@ model_assignment:
 runs_in:
 - region: us
   tier: alpaca-paper
-  alpaca_slot: 2
+  alpaca_slot: 1
   universe: t212_isa_us
-  tier2_candidate: true
-  tier2_marked_at: '2026-07-18'
-  tier2_thesis: "Still the sole positive-IC paper-tier strategy: IC 0.098 (flat vs\
-    \ last week's 0.096), hit_rate 57.1% (n=14), +\xA337.92 P&L, drawdown -0.97%.\
-    \ Leader by default \u2014 hasn't cleared its own IC\u22650.15/60%-hit bar two\
-    \ weeks running."
+  tier2_candidate: false
+  tier2_marked_at: null
+  tier2_thesis: ''
 - region: uk-eu
   tier: trading212-paper
   t212_slot: 1
   universe: t212_isa_uk_eu
+  tier2_candidate: true
+  tier2_marked_at: '2026-08-01'
+  tier2_thesis: 'New leader for the live slot: IC 0.08 is the best positive IC of
+    any paper-tier sleeve, hit_rate 57.1%, already producing live T212 fee-net data.
+    Ahead of its now-demoted us sibling and news-reactive-disclosure@us (IC ~0.001).'
 skip_if_earnings_in_days: 1
 tier2_candidate: false
 tier2_marked_at: null

@@ -299,3 +299,38 @@
   - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 1, "enforcement": true, "slot_kind": "alpaca"}`
 - **news-reactive-disclosure@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=-0.001, n=499) → Alpaca slot 3
   - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 3, "enforcement": true, "slot_kind": "alpaca"}`
+
+## Weekly evolution — 2026-08-01
+
+- **momentum-trader-vix-gated@us** · `demote` · ✅ applied — meets_demotion_criteria=true: 0 trades executed across 416 graded predictions (n_predictions_graded>=150 AND n_trades<=5 dormant-execution case), IC -0.03. Predicting daily but never engaging the market — slot is wasted.
+  - details: `{"from_tier": "alpaca-paper", "slot_cleared": true, "previous_slot": 1, "slot_kind": "alpaca"}`
+- **momentum-trader-vix-gated@uk-eu** · `keep` · ✅ applied — Shadow tier, IC -0.08 on n=872 graded / 3 trades — too thin to act on, watch for continued dormancy.
+- **mean-reverter@us** · `demote` · ✅ applied — meets_demotion_criteria=true: IC declined 0.098->0.057 week-over-week, hit_rate 35.3%, total_pnl -£196.07. No longer earning its Alpaca slot.
+  - details: `{"from_tier": "alpaca-paper", "slot_cleared": true, "previous_slot": 2, "slot_kind": "alpaca"}`
+- **mean-reverter@us** · `unmark-tier2-candidate` · ✅ applied — Was leader by default on a flat/declining IC; this week IC dropped further to 0.057 with negative P&L. Outcompeted by its own uk-eu sibling, which is now the stronger sleeve.
+- **mean-reverter@uk-eu** · `mark-tier2-candidate` · ✅ applied — Sole remaining paper-tier strategy with positive IC + hit-rate + P&L this week; promoting it to leader now that mean-reverter@us has been unmarked.
+  - details: `{"tier2_marked_at": "2026-08-01", "thesis_present": true}`
+- **macro-aligned-hmm@us** · `keep` · ✅ applied — Weak (IC -0.018, hit 22.2%, n=9) but least-bad of the macro-aligned family; small positive pnl +£12.17. Kept one more week as the base for a regime-gating fix.
+- **macro-aligned-hmm@uk-eu** · `keep` · ✅ applied — IC 0.015, hit 26.3%, pnl -£52.34 on n=19 — not strong but not deactivate-worthy like its siblings.
+- **macro-aligned** · `deactivate` · ✅ applied — uk-eu sleeve is the worst performer in the entire slate (hit_rate 8% on 25 trades, pnl -£547.40, drawdown -5.63%, IC -0.02); us sleeve also weak (12.5% hit, -£62.96). Per the cited Minimum Regime Performance framework, this looks like a regime-fragile strategy whose aggregate IC masks a badly-decaying realized signal.
+  - details: `{"deactivated_at": "2026-08-01"}`
+- **macro-aligned-macro-attn** · `deactivate` · ✅ applied — 0% hit rate us (0/9 trades) and 15.4% hit rate uk-eu (4/26), pnl -£114.64/-£439.53 on decent sample sizes. Redundant attention-gated variant of the same underperforming macro-aligned family — not adding a distinct edge.
+  - details: `{"deactivated_at": "2026-08-01"}`
+- **macro-aligned-hmm** · `spawn-variant` · ✅ applied — Breaks the exposure axis (regime-gated defensive, mostly-cash vs the slate's always-on deployment norm) and directly targets the macro-aligned family's identified bleeder — deployment during low-confidence regimes — rather than re-running the same always-on template. Anchored to arXiv:2607.06117 (relief-gated rotation) and arXiv:2604.08356 (MRP durability metric).
+  - details: `{"variant_id": "macro-aligned-hmm-regime-gated", "addendum_applied": true}`
+- **news-reactive-disclosure@us** · `keep` · ✅ applied — Holds its Alpaca slot without earning demotion: ic 0.001, hit 50%, pnl +£13.0, not dormant. Weak but stable, no reason to disturb.
+- **news-reactive-disclosure@uk-eu** · `keep` · ✅ applied — Shadow tier, decent realized pnl +£498.48 on 17 trades despite modest IC 0.049 — below the 0.25 shadow-eligibility bar for tier2 marking, just keep watching.
+- **news-reactive-buzz-fade@us** · `keep` · ✅ applied — IC slightly negative (-0.011) but hit_rate 53.8% and pnl +£373.37 on n=13 — promising realized numbers, too early to act either way.
+- **news-reactive-buzz-fade@uk-eu** · `keep` · ✅ applied — Similar pattern to us sleeve: IC -0.017 but hit 50%, pnl +£280.77 on n=22. Watch as a potential future contender.
+- **ml-challenger@us** · `keep` · ✅ applied — n_predictions_graded=0 — no data yet to evaluate, too early for any action.
+- **ml-challenger@uk-eu** · `keep` · ✅ applied — Only 3 trades graded so far (n_predictions_graded=249) — insufficient sample, keep collecting data.
+- **news-reactive@us** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 21, "hit_rate": 0.619, "total_pnl_gbp": 1397.1, "avg_pnl_pct": 3.177, "max_drawdown_pct": -0.6, "n_predictions_graded": 448, "ic": 0.011, "decile_spread": 0.428}}`
+- **news-reactive@uk-eu** · `keep` · ✅ applied — Shadow tier, hit 55.6% pnl +£784.17 on n=18, IC only 0.007 — strong realized numbers but not yet evidence-grade for tier2.
+- **news-reactive-sentiment-gate@us** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 16, "hit_rate": 0.375, "total_pnl_gbp": 453.76, "avg_pnl_pct": 1.644, "max_drawdown_pct": -1.32, "n_predictions_graded": 449, "ic": 0.052, "decile_spread": -0.139}}`
+- **news-reactive-sentiment-gate@uk-eu** · `keep` · ✅ applied — Shadow tier, IC 0.033, hit 50%, pnl +£426.22 on n=16 — solid but not yet separated enough to mark.
+- **mean-reverter@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.057, n=832) → Alpaca slot 1
+  - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 1, "enforcement": true, "slot_kind": "alpaca"}`
+- **news-reactive-sentiment-gate@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.052, n=449) → Alpaca slot 2
+  - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 2, "enforcement": true, "slot_kind": "alpaca"}`
