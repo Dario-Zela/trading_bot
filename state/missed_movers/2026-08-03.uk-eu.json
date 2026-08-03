@@ -1,0 +1,122 @@
+{
+  "date": "2026-08-03",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 IFX.DE +7%, SGO.PA +6%, ENGI.PA +4%, STMPA.PA +4%, ENR.DE +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (UMG.AS -23%, IGG.L -14%, MRO.L -4%, JD.L -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: UMG.AS (-22.79%) \u2014 Q2 2026 earnings: revenue +13.3% YoY to \u20ac3.3B but EBITDA margin fell to 20.5% from 22.7%, H1 FCF -85%, and streaming subscription growth disappointed/pushed to H2. Why we passed: Outside any active strategy's universe \u2014 UMG.AS is a mega-cap Euronext Amsterdam media/entertainment listing, a sector/exchange combo the uk-eu strategies likely don't cover, so no filter ever got a chance to evaluate the earnings gap.",
+  "top_movers": [
+    {
+      "ticker": "IFX.DE",
+      "move_pct": 6.575,
+      "close": 63.38,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sympathy rally: blockbuster Q2/Q3 beats from Samsung, SK Hynix and Micron (AI-driven DRAM/NAND demand) sparked a global chip rally that lifted Infineon ahead of its own Aug 5 earnings.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IFX.DE is a XETRA-listed DAX semiconductor name; the bot's coverage likely excludes EU-listed chip stocks or treats them as sector-adjacent rather than core holdings, so peer-earnings spillover from Asian chipmakers wasn't mapped to it.",
+      "suggestion": "Add a cross-market peer-spillover rule: when major semis (Samsung, SK Hynix, Micron) beat estimates overnight, auto-include correlated EU/UK chip names (Infineon, STMicro, ASML, BE Semiconductor) in next-session universe for review.",
+      "failed": false
+    },
+    {
+      "ticker": "SGO.PA",
+      "move_pct": 6.155,
+      "close": 80.72,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "H1 2026 results (reported 2026-07-31) beat consensus: EBITDA \u20ac3.63bn vs ~\u20ac3.49bn est, 15.4% margin, broad Q2 organic rebound (+3.5%); FY >15% margin guidance reaffirmed.",
+      "miss_reason": "Outside any active strategy's universe \u2014 SGO.PA is a large-cap CAC40 French building-materials/industrials name. The earnings gap hit at Friday's open (7/31), pre-dating today's session, so a static universe excluding this sector/name never had a chance to react.",
+      "suggestion": "Add CAC40 industrials/building-materials large-caps (incl. SGO.PA) to the uk-eu universe, or add an earnings-gate that admits any name with a post-results gap \u22655% within 2 sessions of its report date regardless of static universe membership.",
+      "failed": false
+    },
+    {
+      "ticker": "ENGI.PA",
+      "move_pct": 4.143,
+      "close": 27.15,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "H1 2026 results beat: EBIT ex-nuclear +3% to \u20ac5.3B on strong gas trading & higher power transmission tariffs; FY26 net recurring income guidance raised to \u20ac4.9-5.5B from \u20ac4.6-5.2B.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ENGI.PA is a large-cap regulated French utility/energy conglomerate, a sector typically excluded from momentum/news-reactive universes that focus on higher-beta tech/consumer names.",
+      "suggestion": "Add a regulated-utilities earnings-day watchlist gated on scheduled H1/FY report dates so post-print gaps \u22653% on guidance raises get flagged for same-day entry, without permanently adding low-beta utilities to the core universe.",
+      "failed": false
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": 4.077,
+      "close": 47.485,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Chip-sector rally (SOXX +3% on AI-capex optimism) plus analyst upgrades (Morgan Stanley to Overweight, PT \u20ac78; JPMorgan PT to \u20ac71.50) lifted STM as it rebounds from its post-Q2-earnings margin-guidance selloff.",
+      "miss_reason": "Outside any active strategy's universe: STMPA.PA is the Euronext Paris line of STMicroelectronics; uk-eu strategies likely track only the US-listed STM ADR/NYSE line, so this ticker was never scanned despite the same underlying's post-earnings rebound.",
+      "suggestion": "Add STMPA.PA and other EU-primary dual-listed semis to the uk-eu universe, gated on a post-earnings-rebound rule: flag names down >10% on results day then up >3% within 5 sessions vs. sector ETF.",
+      "failed": false
+    },
+    {
+      "ticker": "ENR.DE",
+      "move_pct": 3.476,
+      "close": 151.24,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single Aug-3 headline; pre-earnings momentum from stacked analyst upgrades (UBS/JPM/BofA to \u20ac260 PT) and a record \u20ac154B order backlog, 2 days ahead of Aug-5 Q3 results.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ENR.DE is a DAX-listed power-equipment/grid large-cap (~\u20ac124B); uk-eu universes likely exclude German industrials or gate entries within T-3 of earnings (Aug 5).",
+      "suggestion": "Add top DAX industrials/power-equipment names (incl. ENR.DE) to the uk-eu universe, and let an analyst-upgrade-cluster signal (\u22652 upgrades same week) override the pre-earnings blackout for gap-up entries \u22653%.",
+      "failed": false
+    },
+    {
+      "ticker": "LR.PA",
+      "move_pct": 3.443,
+      "close": 135.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "RBC upgraded LR.PA today (PT to \u20ac160) on accelerating datacenter-led growth, extending the pop from Legrand's July 29 H1 earnings beat/guidance raise.",
+      "miss_reason": "Outside any active strategy's universe \u2014 LR.PA is a French CAC40 electrical-equipment large-cap; uk-eu strategies likely scope to a narrower sector/index list and don't ingest sell-side rating-change/PT-revision feeds for continental European industrials.",
+      "suggestion": "Expand uk-eu universe to include CAC40/major EU industrials and add a sell-side rating-change signal (upgrade + PT hike \u2265X%) as a catalyst trigger, not just earnings-day gaps.",
+      "failed": false
+    },
+    {
+      "ticker": "UMG.AS",
+      "move_pct": -22.791,
+      "close": 14.94,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 earnings: revenue +13.3% YoY to \u20ac3.3B but EBITDA margin fell to 20.5% from 22.7%, H1 FCF -85%, and streaming subscription growth disappointed/pushed to H2.",
+      "miss_reason": "Outside any active strategy's universe \u2014 UMG.AS is a mega-cap Euronext Amsterdam media/entertainment listing, a sector/exchange combo the uk-eu strategies likely don't cover, so no filter ever got a chance to evaluate the earnings gap.",
+      "suggestion": "Add a sector-agnostic earnings-day scanner that admits any uk-eu mega-cap (mkt cap > \u20ac10B) posting a post-earnings gap \u226515% into a temporary watchlist, regardless of static universe membership.",
+      "failed": false
+    },
+    {
+      "ticker": "IGG.L",
+      "move_pct": -14.42,
+      "close": 14.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "IG Group unveiled a $1.1-1.3bn deal to acquire US prediction-market platform Underdog alongside strong H1 results (revenue +18%); market punished financing/integration/regulatory risk despite the earnings beat.",
+      "miss_reason": "Outside any active strategy's universe \u2014 IGG.L is a UK diversified-financials/broker name, a sector often excluded since M&A-driven gap moves reflect deal risk rather than the clean momentum/mean-reversion setups the bot screens for.",
+      "suggestion": "Add a sector carve-out so large-cap UK financials enter the universe when they gap \u22658% on same-day M&A announcements, catching genuine deal-risk repricings instead of blanket sector exclusion.",
+      "failed": false
+    },
+    {
+      "ticker": "MRO.L",
+      "move_pct": -4.398,
+      "close": 4.543,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued fallout from Jul 31 H1 results: pre-tax profit fell to \u00a389m from \u00a3379m, Garden Grove chemical-tank incident costs (\u00a325-30m), buyback suspended; BNP Paribas cut to Underperform/470p today, extending the selloff.",
+      "miss_reason": "Outside any active strategy's universe \u2014 MRO.L is a UK FTSE-100 aerospace/industrial conglomerate (GKN Aerospace parent) currently under 30+ US litigation suits; likely excluded as a single-name binary legal-risk name rather than by market cap.",
+      "suggestion": "No actionable change \u2014 this is event/litigation-driven downside on a name with no short capability; adding it long-only into the universe would just accumulate legal-tail risk, not alpha.",
+      "failed": false
+    },
+    {
+      "ticker": "JD.L",
+      "move_pct": -4.136,
+      "close": 0.8946,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single dated catalyst found for 8/3 \u2014 JD.L continues a multi-year structural decline (sub-\u00a31, down ~62% from 2021 peak) on weak consumer discretionary spending and Nike-linked margin pressure; today's buyback tranche news was a positive, not the driver.",
+      "miss_reason": "Outside any active strategy's universe \u2014 at a 0.89 GBP close it likely sits below a minimum absolute share-price/penny-stock floor common to UK-EU momentum filters, even though it's a FTSE 100/350 large-cap by market value, so it never entered the tradable set to be evaluated.",
+      "suggestion": "Lower or remove the minimum-price floor (e.g., replace a flat 'price \u2265 \u00a31' cutoff with a market-cap or ADV-based liquidity filter) so large-cap constituents like JD.L aren't excluded purely for trading in low pence.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-08-03T15:03:28.290742+00:00"
+}
