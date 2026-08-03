@@ -1,0 +1,122 @@
+{
+  "date": "2026-08-03",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 AMZN +15%, DXCM +12%, MPWR +8%, ETN +7%, GOOG +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (GDDY -17%, CTVA -12%, COIN -11%, AAPL -7%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: GDDY (-16.70%) \u2014 Q2 2026 EPS/revenue beat estimates, but FY guidance ($5.22-5.26B) came in below consensus on slower uptake of new AI product Airo, triggering a post-earnings selloff. Why we passed: Outside any active strategy's universe \u2014 GDDY is a mid-cap ($15B) domain-registrar/web-services name, likely excluded by sector classification (internet infrastructure vs. core tech) or a market-cap floor rather than any technical filter.",
+  "top_movers": [
+    {
+      "ticker": "AMZN",
+      "move_pct": 15.321,
+      "close": 271.58,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "AMZN completed 3-day post-Q2-earnings surge (AWS revenue +36.7% YoY, $496B backlog) to hit $3T market cap; extended by a wave of price-target hikes (Morgan Stanley, Barclays, BofA, Goldman).",
+      "miss_reason": "Outside any active strategy's universe \u2014 AMZN is a mega-cap (~$3T) name likely excluded by a market-cap/liquidity screen or a post-earnings blackout window (reported 2026-07-30), so no filter was even watching it on day 3 of the drift.",
+      "suggestion": "Add a post-earnings-drift re-entry rule: names still gapping \u22655% on day 2-4 after reporting with rising analyst price-target revisions get temporarily added to the universe instead of staying blacklisted through the blackout window.",
+      "failed": false
+    },
+    {
+      "ticker": "DXCM",
+      "move_pct": 11.953,
+      "close": 83.45,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 earnings beat (EPS $0.70 vs $0.61 est, rev +13% YoY) plus raised FY26 guidance and FDA TEMPO pilot selection triggered a multi-day wave of price-target hikes into Aug 3.",
+      "miss_reason": "Outside any active strategy's universe \u2014 DXCM is a mid/large-cap medtech (CGM/diabetes devices, ~$30B+ mcap) name, a sector the bot's universes likely don't cover, so no filter ever got a chance to evaluate the post-earnings gap.",
+      "suggestion": "Add a sector-agnostic post-earnings-gap scanner (e.g., any S&P 500/Nasdaq-100 name with cumulative gap \u22658% within 3 trading days of reporting) that feeds a watchlist bypassing static sector universe lists.",
+      "failed": false
+    },
+    {
+      "ticker": "MPWR",
+      "move_pct": 8.346,
+      "close": 1426.03,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2'26 earnings beat (EPS $6.50 vs $5.98 est, rev +47.6% YoY) plus Q3 guide of $1.15B vs $987M est; move is follow-through/analyst target hikes after the initial Jul-31 pop.",
+      "miss_reason": "Outside any active strategy's universe \u2014 MPWR is a specialty analog/power-semiconductor name not covered by the bot's tracked sector/cap list, so no filter ever saw it; the earnings-driven gap happened pre-market Jul 31 and Monday's follow-through was untradeable by a universe-gated bot.",
+      "suggestion": "Add MPWR (and power-management semis generally) to the AI-infrastructure/semiconductor universe list, and add an earnings-gate rule releasing names with post-results gap \u22657% within 30min of open for next-session momentum entry.",
+      "failed": false
+    },
+    {
+      "ticker": "ETN",
+      "move_pct": 7.317,
+      "close": 415.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 record revenue ($8.5B, +21% YoY) and adjusted EPS of $3.15 beat estimates; FY26 EPS guidance raised to $13.40-$13.60, plus Dana Reverse Morris Trust spin-off news.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ETN is a mega-cap industrial/electrical-equipment name, a sector likely excluded from the bot's tradable coverage, and the move was an overnight earnings gap that pre-market/post-earnings signals would need to catch, not intraday momentum.",
+      "suggestion": "Add an earnings-gate rule that admits any name (regardless of sector universe) posting a pre-market gap \u22655% on an earnings/guidance beat within 30 minutes of open, sized at reduced conviction.",
+      "failed": false
+    },
+    {
+      "ticker": "GOOG",
+      "move_pct": 6.884,
+      "close": 356.65,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Morgan Stanley note eased AI-capex fears from last week's Q2 beat (EPS $9.11 vs $2.88 est, Cloud +82% YoY), reigniting the post-earnings rally.",
+      "miss_reason": "Outside any active strategy's universe \u2014 GOOG is a mega-cap AI/tech name likely excluded by market-cap or Mag-7 concentration caps. Also this was a delayed analyst-reassurance drift, not fresh news, so catalyst filters wouldn't fire anyway.",
+      "suggestion": "Add a post-earnings-drift watchlist that re-scans mega-caps for sell-side upgrades/reassurance notes within 2 weeks of earnings, sized separately from the concentration-capped core universe.",
+      "failed": false
+    },
+    {
+      "ticker": "GOOGL",
+      "move_pct": 6.734,
+      "close": 356.13,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Analyst reassurance (Morgan Stanley) on AI capex plans plus AI Mode/Cloud growth details drove a delayed recovery rally, now +14% off the post-Q2-earnings (Jul 22) selloff low.",
+      "miss_reason": "Outside any active strategy's universe \u2014 GOOGL is a mega-cap name likely excluded by a market-cap/liquidity-concentration filter or simply not curated into the tradable list, so no signal path could ever trigger on it regardless of the move.",
+      "suggestion": "Add a mega-cap watchlist tier (top-20 by market cap) with a lightweight analyst-reassurance/post-earnings-drift trigger so multi-day recoveries like this aren't structurally unreachable.",
+      "failed": false
+    },
+    {
+      "ticker": "GDDY",
+      "move_pct": -16.702,
+      "close": 82.74,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 EPS/revenue beat estimates, but FY guidance ($5.22-5.26B) came in below consensus on slower uptake of new AI product Airo, triggering a post-earnings selloff.",
+      "miss_reason": "Outside any active strategy's universe \u2014 GDDY is a mid-cap ($15B) domain-registrar/web-services name, likely excluded by sector classification (internet infrastructure vs. core tech) or a market-cap floor rather than any technical filter.",
+      "suggestion": "Add an earnings-gate scanner that ingests all mid/large-cap tickers (mkt cap > $10B) with post-earnings gaps \u226510% regardless of current universe membership, so guidance-driven movers aren't missed purely on universe exclusion.",
+      "failed": false
+    },
+    {
+      "ticker": "CTVA",
+      "move_pct": -11.898,
+      "close": 78.71,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 2026 earnings (reported ~7/31): EPS beat ($2.30 vs $2.22 est) but revenue missed ($6.38B vs $6.57B est); Brazil crop-protection pricing pressure and cautious 2H tone drove the gap-down despite raised FY guidance.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CTVA is a large-cap Materials/Agriculture name (seeds & crop chemicals), a sector likely excluded from universes built around tech/consumer/momentum names rather than ag-chem cyclicals.",
+      "suggestion": "Add a daily post-earnings gap scanner (any S&P 500 name gapping \u22658% on earnings day) that temporarily admits the ticker into a mean-reversion sleeve for that session, independent of the static sector-filtered universe.",
+      "failed": false
+    },
+    {
+      "ticker": "COIN",
+      "move_pct": -10.588,
+      "close": 146.26,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Broad crypto-equity selloff: BTC fell below $63K, MS downgraded peer CRCL, and the CLARITY Act stalled pre-recess; compounds still-fresh Q2 earnings-miss overhang from Jul 30 ($359M net loss, revenue miss).",
+      "miss_reason": "Outside any active strategy's universe \u2014 COIN is a crypto-native exchange/fintech equity, a sector class likely excluded wholesale (not by cap, it's large-cap) due to regulatory-headline and BTC-correlated volatility that breaks normal equity risk assumptions.",
+      "suggestion": "Add a capped-size crypto-equity sleeve (COIN, CRCL, MSTR) with vol-scaled position limits so momentum/news strategies can express BTC- and regulatory-driven moves without full sector exposure.",
+      "failed": false
+    },
+    {
+      "ticker": "AAPL",
+      "move_pct": -7.354,
+      "close": 308.91,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 EPS/revenue beat, but ~85% of the EPS beat was tariff refunds; Sept-qtr guidance of 9-11% growth missed ~12% est. amid iPhone/Mac supply shortage warnings \u2014 shares gapped down ~8.6%.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AAPL, a mega-cap, was likely excluded by an earnings-blackout filter that removes names with imminent/just-reported earnings to avoid overnight gap risk, so no strategy could react to the guidance-driven drop.",
+      "suggestion": "Add an earnings-blackout expiry rule: re-admit a name into the universe within 1 session of its print if opening gap \u22655%, so news-reactive/mean-reversion strategies can trade the post-earnings move.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-08-03T19:32:35.910102+00:00"
+}
