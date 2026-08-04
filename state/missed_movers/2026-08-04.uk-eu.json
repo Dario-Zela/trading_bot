@@ -1,0 +1,122 @@
+{
+  "date": "2026-08-04",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 BESI.AS +9%, ANTO.L +7%, ADYEN.AS +7%, BTRW.L +7%, DSY.PA +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (ZAL.DE -14%, AZN.L -8%, FME.DE -8%, CCEP.L -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: ZAL.DE (-13.77%) \u2014 Q2 revenue of \u20ac3.42B missed ~\u20ac3.51B consensus; FY26 GMV/revenue guidance narrowed to low end of 12-17% range, EBIT range also narrowed Why we passed: Outside any active strategy's universe \u2014 ZAL.DE is a mid-cap DAX name not covered by current uk-eu strategies; this was a pre-market earnings gap (~-15% at open) that post-market signal-based filters can't react to in time.",
+  "top_movers": [
+    {
+      "ticker": "BESI.AS",
+      "move_pct": 9.105,
+      "close": 216.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Berenberg upgraded BESI.AS to Buy from Neutral today, amplifying momentum from its blowout Q2-26 report (revenue +69% YoY, orders +129% YoY) and ASML's raised FY guidance lifting chip-equipment peers.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BESI.AS is an AEX-listed Dutch semiconductor-equipment name (~\u20ac216 close, mid/large-cap on Euronext Amsterdam), likely excluded because uk-eu strategies are scoped to broader indices/ADRs rather than single-country AEX small/mid caps or because sell-side rating-change events are",
+      "suggestion": "Add Euronext Amsterdam (AEX) constituents to the uk-eu universe and add an analyst-rating-change feed (e.g., broker upgrade to Buy on a stock already up post-earnings) as a news-reactive trigger alongside existing gap/volume filters.",
+      "failed": false
+    },
+    {
+      "ticker": "ANTO.L",
+      "move_pct": 7.196,
+      "close": 39.18,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Copper prices surged toward $14,000/ton (2-month high) on US import-tariff stockpiling fears; ANTO is a pure-play copper miner, no company-specific news today.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ANTO.L is a UK/LSE-listed, Chile-focused copper mining large-cap; bot's universes appear to exclude LSE commodity/mining equities, so a sector-wide commodity rally never generated a signal.",
+      "suggestion": "Add LSE-listed metals miners (e.g. ANTO.L, GLEN.L, RIO.L) to a commodity-linked universe with a rule to flag names when the underlying commodity (LME copper) moves >=3% intraday, since equities can't be caught by price-only equity filters.",
+      "failed": false
+    },
+    {
+      "ticker": "ADYEN.AS",
+      "move_pct": 7.116,
+      "close": 939.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single confirmed headline for 08/04; move looks like a continuation of a short-covering/recovery rally off 52-week lows (\u20ac772) ahead of the Aug 13 H1 print, following July's Xiaomi processing-deal news and broadly bullish analyst coverage (27 buys, 0 sells).",
+      "miss_reason": "Outside any active strategy's universe \u2014 ADYEN.AS is a Euronext Amsterdam-only large-cap payments name with a very high per-share price (~\u20ac900+), which likely falls outside the uk-eu universe's exchange coverage or trips a position-sizing/notional cap tuned for lower-priced names.",
+      "suggestion": "Add AEX/Euronext Amsterdam large-caps (incl. ADYEN.AS) to the uk-eu universe and confirm the position-sizing logic scales to sub-share/fractional notionals so high-price-per-share stocks aren't implicitly excluded.",
+      "failed": false
+    },
+    {
+      "ticker": "BTRW.L",
+      "move_pct": 6.853,
+      "close": 3.134,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No same-day news found; likely oversold-sector rebound in UK housebuilders (-26% YTD) amid BTRW's live \u00a3386m buyback and ~36% discount to NAV flagged by recent broker upgrades.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BTRW.L is a UK domestic-cyclical homebuilder, a sector/geography the uk-eu universe doesn't cover, likely scoped away from housing-sector cyclicals exposed to mortgage-rate and fiscal policy risk.",
+      "suggestion": "Add FTSE 100 housebuilders/construction to the uk-eu universe, or add a deep-value screen flagging large-caps trading >30% below NAV with active buybacks for manual review.",
+      "failed": false
+    },
+    {
+      "ticker": "DSY.PA",
+      "move_pct": 6.035,
+      "close": 21.26,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single same-day news item found; DSY.PA extended its post-Q2-earnings (7/23 beat + reaffirmed FY26 guidance) and ArisGlobal AI-acquisition re-rating amid a broad European tech rally (CAC 40 at record highs, AI-selloff fears easing).",
+      "miss_reason": "Outside any active strategy's universe \u2014 DSY.PA is a large-cap (~\u20ac25-30B) Euronext Paris industrial/engineering-software name; the uk-eu region's tradable universe apparently doesn't cover this sector/exchange segment, so no filter ever saw the name to include or exclude it.",
+      "suggestion": "Add CAC40/Euronext Paris large-cap tech & industrial-software names (mkt cap > \u20ac20B, ADV sufficient) to the uk-eu universe so post-earnings momentum names like DSY.PA are at least visible to existing gap/momentum filters.",
+      "failed": false
+    },
+    {
+      "ticker": "ABDN.L",
+      "move_pct": 5.569,
+      "close": 2.54,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "H1 2026 results beat: adjusted operating profit \u00a3128m vs \u00a3118m consensus, net inflows +\u00a30.8bn vs forecast -\u00a30.9bn, cost-income ratio 81% vs 82.2% est.",
+      "miss_reason": "Outside any active strategy's universe \u2014 abrdn is a mid-cap UK asset manager (FTSE 250-tier financial), a sector/cap bucket the bot's uk-eu universes don't currently track, so no filter ever got a chance to evaluate the earnings gap.",
+      "suggestion": "Add FTSE250 asset-management names to the uk-eu universe with an earnings-day gate that releases positions on a post-results gap \u22654% with a net-flow or profit beat vs consensus.",
+      "failed": false
+    },
+    {
+      "ticker": "ZAL.DE",
+      "move_pct": -13.765,
+      "close": 24.37,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2 revenue of \u20ac3.42B missed ~\u20ac3.51B consensus; FY26 GMV/revenue guidance narrowed to low end of 12-17% range, EBIT range also narrowed",
+      "miss_reason": "Outside any active strategy's universe \u2014 ZAL.DE is a mid-cap DAX name not covered by current uk-eu strategies; this was a pre-market earnings gap (~-15% at open) that post-market signal-based filters can't react to in time.",
+      "suggestion": "Add an earnings-day watchlist for major uk-eu/DAX mid-caps with scheduled reports, gated to release names with a pre-market gap \u22658% vs prior close for review at open.",
+      "failed": false
+    },
+    {
+      "ticker": "AZN.L",
+      "move_pct": -8.043,
+      "close": 116.16,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FT/Reuters reported preliminary ~$400B merger talks between AstraZeneca and Bristol Myers Squibb; stock fell ~8% as investors called the deal strategically unnecessary given AZN's strong standalone pipeline.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AZN.L is a mega-cap ($264B) defensive pharma blue-chip, a profile typically excluded from momentum/small-cap universes; also this was an unconfirmed M&A-rumor gap (both firms declined comment), which reactive/momentum signals structurally lag.",
+      "suggestion": "Add a Tier-1-source M&A-rumor override that temporarily whitelists large-caps for a 1-day reactive window when Reuters/FT report deal talks driving a \u22655% gap, even if outside the standard universe filter.",
+      "failed": false
+    },
+    {
+      "ticker": "FME.DE",
+      "move_pct": -7.717,
+      "close": 41.02,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q2'26 revenue/EBIT beat consensus (\u20ac4.86B/\u20ac569m EBIT vs ~\u20ac4.79B/\u20ac515m est) but US same-market treatment growth was -0.9% and flat FY26 guidance was reiterated, triggering a 'beat-but-sell' reaction.",
+      "miss_reason": "Outside any active strategy's universe \u2014 FME.DE is a German large-cap dialysis/healthcare name not on the bot's tradable list, so no filter ever evaluated today's earnings-driven gap down.",
+      "suggestion": "Add EU healthcare large caps (incl. FME.DE) to the universe with an earnings-day gate that releases names on post-results gaps \u22655% within 30 minutes of open.",
+      "failed": false
+    },
+    {
+      "ticker": "CCEP.L",
+      "move_pct": -5.617,
+      "close": 77.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "H1/Q2 results beat on revenue (\u20ac10,724m, +4.4%) and EPS (\u20ac2.20, +10.6%), but FY26 guidance was only reaffirmed (not raised), triggering a sell-the-news drop; shares fell in premarket and closed -5.62%.",
+      "miss_reason": "Outside any active strategy's universe \u2014 CCEP.L is a large-cap UK-listed consumer staples/beverages name, likely excluded because current strategies focus on other sectors/cap bands; even if included, the gap was driven by an overnight earnings release, so pre-market positioning would beat any post-open signal-based en",
+      "suggestion": "Add an earnings-day gate that scans the region's large-cap staples/beverage names for post-results premarket gaps \u22653% and routes qualifying names into a news-reactive strategy regardless of standard universe filters.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-08-04T15:04:22.128417+00:00"
+}
