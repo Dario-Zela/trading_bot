@@ -31,20 +31,18 @@ runs_in:
   tier2_marked_at: null
   tier2_thesis: ''
 - region: uk-eu
-  tier: trading212-paper
-  t212_slot: 1
+  tier: shadow
+  t212_slot: null
   universe: t212_isa_uk_eu
-  tier2_candidate: true
-  tier2_marked_at: '2026-08-01'
-  tier2_thesis: 'New leader for the live slot: IC 0.08 is the best positive IC of
-    any paper-tier sleeve, hit_rate 57.1%, already producing live T212 fee-net data.
-    Ahead of its now-demoted us sibling and news-reactive-disclosure@us (IC ~0.001).'
+  tier2_candidate: false
+  tier2_marked_at: null
+  tier2_thesis: ''
 skip_if_earnings_in_days: 1
 tier2_candidate: false
 tier2_marked_at: null
 tier2_thesis: ''
-prefilter_mode: llm
+prefilter_mode: python
 prefilter_top_n: 100
 cost_gate_multiplier: 4.0
-last_tune_date: '2026-06-13'
+last_tune_date: '2026-08-08'
 prefilter_sort_key: rsi_14_asc

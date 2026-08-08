@@ -1,35 +1,29 @@
 id: ml-challenger
 display_name: ML challenger
-description: "The bot's first *learned* strategy: LightGBM 5-class over
-  point-in-time OHLCV features, trained with purged walk-forward
-  validation (see model/card.md). Scores the full US cross-section
-  daily at shadow tier so the existing grading + weekly evolution
-  machinery judges classical ML vs the LLM strategies head-to-head,
-  forward, out of sample. No LLM calls, no news, no tools — if an LLM
-  strategy beats this, the interesting ablation is exactly the text
-  features the GBM can't see.
-"
-implementation: ml_challenger   # dispatched in strategy/registry.py::_instantiate
+description: "The bot's first *learned* strategy: LightGBM 5-class over point-in-time\
+  \ OHLCV features, trained with purged walk-forward validation (see model/card.md).\
+  \ Scores the full US cross-section daily at shadow tier so the existing grading\
+  \ + weekly evolution machinery judges classical ML vs the LLM strategies head-to-head,\
+  \ forward, out of sample. No LLM calls, no news, no tools \u2014 if an LLM strategy\
+  \ beats this, the interesting ablation is exactly the text features the GBM can't\
+  \ see. "
+implementation: ml_challenger
 active: true
 capital_gbp: 10000
 max_positions: 5
 max_position_pct: 30
 use_stops: false
 use_take_profits: false
-prefilter_mode: 'off'           # rank the full cross-section — a movers-biased shortlist would bias the ranking
+prefilter_mode: 'off'
 skip_if_earnings_in_days: 1
-# Cost gate: a pick must predict >= multiplier x its estimated
-# round-trip cost. On US names (~0.3%) this rarely binds; the uk-eu
-# entry overrides it lower because LSE stamp duty (0.5%) x the default
-# 4x would demand a ~2%+ predicted move and never trade.
 cost_gate_multiplier: 1.0
-# Experiment control: the weekly evolution agent may not tune, demote,
-# promote or deactivate this strategy — sizing tunes wouldn't alter the
-# score being measured, but the comparison must stay clean. Enforced in
-# meta.evolution._apply_action. Model hyperparameters live in model/,
-# outside this file, so they're untouchable by construction.
 evolution_frozen: true
 runs_in:
-  - {region: us, tier: shadow, universe: t212_isa_us}
-  # v1.1: separate model (model/uk-eu/), stamp-duty-aware cost gate.
-  - {region: uk-eu, tier: shadow, universe: t212_isa_uk_eu, cost_gate_multiplier: 1.5}
+- region: us
+  tier: shadow
+  universe: t212_isa_us
+- region: uk-eu
+  tier: trading212-paper
+  universe: t212_isa_uk_eu
+  cost_gate_multiplier: 1.5
+  t212_slot: 1

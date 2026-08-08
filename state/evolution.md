@@ -334,3 +334,31 @@
   - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 1, "enforcement": true, "slot_kind": "alpaca"}`
 - **news-reactive-sentiment-gate@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.052, n=449) → Alpaca slot 2
   - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 2, "enforcement": true, "slot_kind": "alpaca"}`
+
+## Weekly evolution — 2026-08-08
+
+- **mean-reverter@uk-eu** · `demote` · ✅ applied — Dormant-execution demotion criteria met: n_predictions_graded=528 (>=150) but n_trades=4 (<=5) — the strategy predicts daily but its llm prefilter almost never lets it trade. A held-but-unearned T212 slot blocks better candidates.
+  - details: `{"from_tier": "trading212-paper", "slot_cleared": false, "previous_slot": 1, "slot_kind": "t212"}`
+- **ml-challenger@uk-eu** · `promote` · ⏭️ skipped — Strategy is evolution_frozen (experiment control) — 'promote' refused. (empty-slot backstop: refills the T212 slot freed by mean-reverter's demotion in the same run. Also happens to be the highest-IC active UK-EU shadow strategy (0.148) — every other active UK-EU sleeve is IC-negative.)
+- **mean-reverter** · `tune` · ✅ applied — Pre-filter comparison shows python mode at IC +0.110 (n=291) vs llm mode at IC -0.092 (n=6316) — the llm filter is both worse and almost certainly the cause of the uk-eu dormancy (few names ever clear it to become trades).
+  - details: `{"applied": {"prefilter_mode": "python"}, "rejected": {}}`
+- **mean-reverter@uk-eu** · `unmark-tier2-candidate` · ✅ applied — Last week's thesis bet on IC 0.058 translating into live paper reps; instead it produced only 4 trades against 528 graded predictions. Retracting pending the prefilter_mode fix proving out before it re-earns a leaderboard spot.
+- **ml-challenger@uk-eu** · `mark-tier2-candidate` · ⏭️ skipped — Strategy is evolution_frozen (experiment control) — 'mark-tier2-candidate' refused. (Best available IC in the UK-EU shadow bench, promoted this run, and the only region-active strategy with IC clearly above the noise band the rest of the slate sits in.)
+- **momentum-trader-vix-gated@us** · `keep` · ✅ applied — IC 0.035 on only 1 trade is noise either way; nothing actionable yet at n_predictions_graded=218.
+- **momentum-trader-vix-gated@uk-eu** · `keep` · ✅ applied — IC -0.114 (n=524) is a real negative signal but no specific bleeder identified this week; continue monitoring.
+- **mean-reverter@us** · `keep` · ✅ applied — Positive pnl (+192.78) and hit-rate 54.5% with healthy trade count (11); benefits from the strategy-wide prefilter_mode tune without needing its own action.
+- **macro-aligned-hmm@us** · `keep` · ✅ applied — IC -0.127 on a solid n=443 is a real negative but sort_key (dollar_volume_desc) is already correctly matched to the archetype — no clear lever to tune this week.
+- **macro-aligned-hmm@uk-eu** · `keep` · ✅ applied — IC -0.016 (n=538) is basically flat/noise; not a demotion or deactivation case.
+- **news-reactive-disclosure@us** · `keep` · ✅ applied — On alpaca-paper with meets_demotion_criteria=false; hit-rate 66.7% and positive pnl (+136.52) despite negative IC — holding its slot.
+- **news-reactive-disclosure@uk-eu** · `keep` · ✅ applied — Shadow tier, IC -0.038 (n=335); weak but not actionable without a paper slot to compete for.
+- **news-reactive-buzz-fade@us** · `keep` · ✅ applied — Hit-rate 62.5% and pnl +348.52 on n=288 despite negative IC — one of the stronger practical performers in the slate, worth continued shadow tracking.
+- **news-reactive-buzz-fade@uk-eu** · `keep` · ✅ applied — Hit-rate 63.2% and pnl +658.23 (largest positive pnl among UK-EU shadow rows) on n=384 despite negative IC; watching for a future paper-slot opportunity.
+- **macro-aligned-hmm-regime-gated@us** · `keep` · ✅ applied — n_predictions_graded=96 is still under the 150-200 threshold needed to judge the regime-gate fix vs its parent; too early to act.
+- **macro-aligned-hmm-regime-gated@uk-eu** · `keep` · ✅ applied — n=99, same reasoning — gathering data before comparing against the macro-aligned-hmm parent.
+- **ml-challenger@us** · `keep` · ✅ applied — Best US shadow IC (0.136) on by far the largest sample in the slate (n=5714) and hit-rate 60%, but no promotion path this week — Alpaca bench is full and none of its 3 occupants meet demotion criteria.
+- **news-reactive@us** · `keep` · ✅ applied — Hit-rate 68.8% and pnl +955.32 — the single best P&L in the entire snapshot — despite negative IC (-0.134); a genuine execution-vs-universe-rank divergence worth watching, not yet a tier2 mark given IC is the stated gate.
+- **news-reactive@uk-eu** · `keep` · ✅ applied — Hit-rate 63.6% and pnl +453.61 on n=336, same pattern as the US sleeve — strong trade-level quality despite negative broad-universe IC.
+- **news-reactive-sentiment-gate@us** · `keep` · ✅ applied — On alpaca-paper, meets_demotion_criteria=false; pnl +477.68 is strong despite negative IC.
+- **news-reactive-sentiment-gate@uk-eu** · `keep` · ✅ applied — Shadow tier, hit-rate 30% and negative pnl (-96.54) on n=336 — weak, but shadow tier has no forced-demotion consequence; monitoring.
+- **ml-challenger@uk-eu** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow UK-EU candidate (IC=+0.148, n=406) → trading212-paper
+  - details: `{"target_tier": "trading212-paper", "t212_slot": 1, "enforcement": true, "slot_kind": "trading212"}`
