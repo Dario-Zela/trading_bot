@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cl0p hacking group claims mass data theft from Shell, Philips, GE and dozens more — 2026-08-14 — Trading Bot</title>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../../index.html">Dashboard</a>
+<a class="nav-tab active" href="../../news/latest.html">News</a>
+<a class="nav-tab" href="../../macro/latest.html">Macro</a>
+<a class="nav-tab" href="../../evolution.html">Evolution</a>
+<a class="nav-tab" href="../../ml/index.html">ML lab</a>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper article-page"><div class="edition-nav" data-edition="2026-08-14" data-kind="news"><a class="edition-nav-link" data-role="prev" href="../2026-08-13/" title="2026-08-13">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><a class="edition-nav-link disabled" data-role="next" href="#" aria-disabled="true">next →</a><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">TECH · CYBERSECURITY · By R. Okonkwo · 2026-08-14 · 5 min read</div><h1>Cl0p hacking group claims mass data theft from Shell, Philips, GE and dozens more</h1><img class="hero" src="https://upload.wikimedia.org/wikipedia/commons/a/ac/011_Shell_Centre_-_global_headquarters_of_Shell_plc_oil_company_in_London_UK.jpg" alt="Shell Centre in London, the company&#x27;s global headquarters — Shell is one of nearly 50 companies Cl0p claims to have breached."><div class="hero-caption">Shell Centre in London, the company&#x27;s global headquarters — Shell is one of nearly 50 companies Cl0p claims to have breached. — <em>Wikimedia Commons</em></div><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>Cl0p claims it stole data from nearly 50 firms including Shell and Philips via a PTC software flaw; none have confirmed the scope.</div></div><div class="body"><p>Nearly 50 companies were named this week on the leak site of Cl0p, one of the world's most prolific ransomware gangs — among them Shell, Philips, General Electric and the payments processor Fiserv. The group says it walked away with tens of gigabytes of internal files: engineering drawings, facility photographs, testing reports, product blueprints. None of the companies has confirmed that any of it is real.</p>
+<p>That gap — between a criminal group's public claim and a corporation's ability to say what actually happened — is the story here as much as the breach itself. Cl0p has posted names, file counts and gigabyte figures on its dark-web site. It has not, as of this week, released samples of the data to prove the claims. The named companies, meanwhile, are running forensic reviews that take days or weeks, while their reputations — and in some cases their share prices — sit exposed in the meantime.</p>
+<h2>What Cl0p says it has</h2>
+<p>According to postings reviewed by Reuters, Cl0p claims to have pulled roughly 89 gigabytes of data from Shell, including engineering drawings, photographs of facilities, scans of testing reports and project plans. From Philips, the group claims about 13.5 gigabytes — PDF drawings, diagrams and blueprints. Neither company has verified those figures.</p>
+<p><img alt="Shell Centre, the company's headquarters building in London" src="https://upload.wikimedia.org/wikipedia/commons/a/ac/011_Shell_Centre_-_global_headquarters_of_Shell_plc_oil_company_in_London_UK.jpg" /></p>
+<p>Shell said it was aware of a "possible incident" and is working with security teams to investigate. Philips went further, saying it had "identified and contained an attempted cybersecurity compromise of a specific enterprise server related to internal data," and that the incident does not touch customer-facing systems. Fiserv said that after a "comprehensive review to date" it had found no evidence that customer, banking, transaction or personal data had been compromised, or that its operating environment was affected. GE said it had "initiated our cyber response protocols and are working to assess the potential issue."</p>
+<p>Four statements, four different postures — contained, possible, no evidence found, still assessing — which is itself a reasonably accurate snapshot of how little is settled two days after the postings appeared.</p>
+<h2>A single vulnerability, dozens of victims</h2>
+<p>Cl0p's operating model helps explain both the scale of the claim and the difficulty of verifying it. The group doesn't pick targets one at a time. It finds a widely used piece of enterprise software, weaponises a flaw in it, and then scrapes every internet-facing server it can find running that software before anyone patches.</p>
+<p>"They don't really target a specific company — they target a specific zero-day vulnerability," said Brandon Parsons of the security firm Ascent Solutions.</p>
+<p>This time the software is PTC's Windchill and FlexPLM, product-lifecycle-management tools used by engineering and manufacturing firms to manage design files and testing data — which lines up with the kind of material Cl0p claims to have taken from Shell and Philips. PTC disclosed the underlying flaw, a critical deserialisation bug rated 9.3 out of 10 in severity and now tracked as CVE-2026-12569, in June, along with a fix. Ransom-ISAC, an industry information-sharing group, warned on July 22 that Cl0p affiliates were actively exploiting it. Cl0p began notifying victim companies around July 19 and 20 — meaning some organisations may have had the better part of a month's warning between the patch and the extortion emails.</p>
+<p>The pattern is familiar because Cl0p has run it before, at far larger scale. The group sat on a zero-day in Fortra's GoAnywhere file-transfer software before extorting more than 130 organisations in 2023, then a few months later used a separate flaw in Progress Software's MOVEit tool to hit more than 2,600 organisations in a campaign researchers estimate earned it $75 million to $100 million. Before that, it was Accellion's file-transfer appliance. The through-line is always the same: find one popular piece of software, breach as many customers of it as possible, then extort them in bulk from a single leak site.</p>
+<h2>The verification problem</h2>
+<p>What makes this moment uncomfortable for the named companies isn't necessarily that they were breached — plenty of large organisations are, regularly. It's that the public now knows about a claimed breach before the companies themselves can say with confidence what, if anything, was taken. Ransomware leak-site postings are, by design, a pressure tactic: the group wants maximum public attention before it has to prove anything. Some past claims have turned out to involve old data, partial screenshots or exaggerated file counts; others have been entirely accurate. Outsiders — investors among them — have no reliable way to tell which is which until the forensic work is done.</p>
+<p>That asymmetry has real consequences. A multinational's operational and reputational risk profile can shift on a leak-site posting alone, before any regulator, auditor or independent investigator has confirmed a thing. If Cl0p's claims hold up, the incident points to a genuine gap in how quickly widely deployed engineering software gets patched across large industrial firms. If they don't, it says something less flattering about how easily a criminal group can put a Fortune 500 name on a leak page and force a market reaction anyway.</p>
+<h2>What to watch</h2>
+<p>The near-term signal will be whether Cl0p actually publishes sample files — its usual next step when a company doesn't pay — which would let outside researchers begin checking the claims against reality. Beyond that, watch whether any of the named companies file breach notifications with regulators, and whether PTC's June patch turns out to have reached its customers before Cl0p's window of exploitation closed. Ransom-ISAC and CISA, which added the Windchill flaw to its Known Exploited Vulnerabilities catalog on June 25, are both tracking further victims as they surface.</p></div><section class="sources-block"><h4>Sources</h4><ol><li><a href="https://www.rappler.com/technology/hacking-group-cl0p-claims-mass-data-theft/" rel="nofollow noopener" target="_blank">Hacking group claims mass data theft from Shell, Philips, GE, Fiserv and dozens of others (Rappler/Reuters)</a></li><li><a href="https://www.freemalaysiatoday.com/category/business/2026/08/14/hacking-group-claims-mass-data-theft-from-shell-philips-ge-fiserv-and-dozens-of-others" rel="nofollow noopener" target="_blank">Hacking group claims mass data theft from nearly 50 companies (Free Malaysia Today)</a></li><li><a href="https://energynow.com/2026/08/hacking-group-claims-mass-data-theft-from-shell-philips-ge-fiserv-and-dozens-of-others/" rel="nofollow noopener" target="_blank">Hacking Group Claims Mass Data Theft From Shell, Philips, GE, Fiserv and Dozens of Others (EnergyNow)</a></li><li><a href="https://ransom-isac.org/blog/clop-windchill-flexplm-exploitation/" rel="nofollow noopener" target="_blank">Cl0p Exploitation of PTC Windchill &amp; FlexPLM (CVE-2026-12569) — Ransom-ISAC</a></li><li><a href="https://www.investing.com/news/stock-market-news/philips-and-shell-targeted-by-cl0p-hacking-group-93CH-4858763" rel="nofollow noopener" target="_blank">Philips and Shell targeted by Cl0p hacking group (Investing.com)</a></li></ol></section><section class="related"><h4>Related in this edition</h4><a href="deepseek-api-price-hike.html"><span style="display:block;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:0.2rem;">TECH &amp; SCIENCE</span>DeepSeek to more than quadruple peak-hour AI API prices from 16 August</a><a href="twitch-ai-training-backlash.html"><span style="display:block;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:0.2rem;">TECH &amp; SCIENCE</span>Twitch admits &#x27;nobody would opt in&#x27; as it defends default AI training on streams</a><a href="brazil-discord-livestream-suspension.html"><span style="display:block;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:0.2rem;">TECH &amp; SCIENCE</span>Brazil orders Discord to suspend livestreaming after teenager&#x27;s death</a></section><footer class="colophon">The Bot Tribune · 2026-08-14 · <a href="index.html">Back to the edition</a></footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
+</body>
+</html>
