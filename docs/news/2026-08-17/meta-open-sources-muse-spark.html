@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meta open-sources its most powerful AI model in swipe at OpenAI, Anthropic — 2026-08-17 — Trading Bot</title>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../../index.html">Dashboard</a>
+<a class="nav-tab active" href="../../news/latest.html">News</a>
+<a class="nav-tab" href="../../macro/latest.html">Macro</a>
+<a class="nav-tab" href="../../evolution.html">Evolution</a>
+<a class="nav-tab" href="../../ml/index.html">ML lab</a>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper article-page"><div class="edition-nav" data-edition="2026-08-17" data-kind="news"><a class="edition-nav-link" data-role="prev" href="../2026-08-16/" title="2026-08-16">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><a class="edition-nav-link disabled" data-role="next" href="#" aria-disabled="true">next →</a><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">TECH · AI · By R. Okonkwo · 2026-08-17 · 5 min read</div><h1>Meta open-sources its most powerful AI model in swipe at OpenAI, Anthropic</h1><img class="hero" src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Mark_Zuckerberg_%282025%29.jpg" alt="Meta CEO Mark Zuckerberg, who published a 6,500-word essay pledging to open-source the company&#x27;s Muse Spark model line."><div class="hero-caption">Meta CEO Mark Zuckerberg, who published a 6,500-word essay pledging to open-source the company&#x27;s Muse Spark model line. — <em>Jeff Sainlar / Meta, via Wikimedia Commons (CC BY-SA 4.0)</em></div><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>Meta pledged to open-source its flagship Muse Spark model to challenge OpenAI and Anthropic, but the weights aren&#x27;t out yet and benchmarks show a mixed, not dominant, record.</div></div><div class="body"><p>Mark Zuckerberg wants you to know that Meta is the good guy in the AI arms race. On August 10, the Meta chief executive published a 6,500-word essay titled "The Future is for Everyone," pledging that Meta will release open weights for its most capable model line, Muse Spark, and casting OpenAI and Anthropic's closed approach as a danger to innovation itself. "The notion that AI is so dangerous that the only safe path is an extreme concentration of power seems inherently problematic," he wrote.</p>
+<p>It's a pointed line, aimed squarely at the two labs that have spent three years building the industry's most valuable AI franchises on models nobody outside their walls can download, inspect, or run themselves. Meta's pitch is the opposite: give the weights away, let developers fine-tune and self-host, and let the market decide.</p>
+<p><img alt="Mark Zuckerberg" src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Mark_Zuckerberg_%282025%29.jpg" /></p>
+<h2>What's actually open, and what isn't yet</h2>
+<p>The announcement bundles two different products, and the distinction matters. Muse Glimmer, a 30-billion-parameter model Meta built to run locally on a laptop, is open right now — compressed to under 20 gigabytes through quantisation, downloadable on Hugging Face, with support already lined up for tools like Ollama, LM Studio and llama.cpp. That part of the pledge is real and shippable today.</p>
+<p>Muse Spark 1.2, the flagship model Meta is actually using to make its case against OpenAI and Anthropic, is not. It launched on August 5 as a closed model, paired with a new terminal-based coding agent called Muse Code. Zuckerberg's promise is that its weights will follow "in the coming weeks" — no firm date, no confirmed license. Until that happens, the headline claim rests on a promise rather than a download link.</p>
+<p>This is not Meta's first open-weight rodeo — the Llama family has been public for years, and as recently as December, Meta was reported to be pulling back from open releases in favor of a more monetisable, closed model strategy. The Muse Spark pledge reads as a reversal of that drift, timed to a moment when Zuckerberg has been touring interviews arguing that American open-source AI needs to outpace Chinese rivals like DeepSeek, not just Meta's closed-model competitors in California.</p>
+<h2>The benchmark picture is mixed, not dominant</h2>
+<p>Meta's language — "most powerful AI model" — implies Muse Spark leads the field. The independent benchmark data available so far tells a more complicated story.</p>
+<p>On GDPval-AA, a broad capability ranking, Muse Spark scores 1,444 Elo against GPT-5.4's 1,672 and Claude Sonnet 4.6's 1,607 — a sizeable gap, not a photo finish. On Terminal-Bench 2.1, Muse Spark 1.2 running through Muse Code hit 82.9%, edging out OpenAI's GPT-5.6 Terra in Codex (81.8%) but trailing Anthropic's Opus 5 in Claude Code, which leads at 86.7%.</p>
+<p>Where Muse Spark does stand out, the wins are real but narrower than the marketing suggests. It scored 42.8 on HealthBench Hard, ahead of GPT-5.4's 40.1 and more than double Gemini 3.1 Pro's 20.6. On CharXiv, a benchmark for reading charts and figures, it posted 86.4 against Claude Opus 4.6's 65.3. And it's notably efficient: Meta's model completed a full Intelligence Index evaluation using 58 million output tokens, versus 120 million for GPT-5.4 and 157 million for Claude Sonnet 4.6 — a genuine cost advantage for anyone running the model at scale.</p>
+<p>Add it up and Muse Spark looks like a strong, cheap, occasionally best-in-class model — not the category leader Meta's framing implies. That gap between the rhetoric and the scoreboard is the story underneath the story: Meta is making a structural argument about who should control frontier AI, using a model whose actual standing against GPT-5.4 and Claude Opus 5 is still being sorted out by outside evaluators, not settled by Zuckerberg's essay.</p>
+<p><img alt="Meta's headquarters in Menlo Park, California" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Meta_Platforms_Headquarters_Menlo_Park_California.jpg" /></p>
+<h2>Why Meta is making the argument now</h2>
+<p>The essay is doing more than product marketing. Zuckerberg frames open weights as a matter of "individual empowerment," pledges a $1 billion "Future is for Everyone Fund" for communities hosting Meta's data centers, and links the whole push to the company's roughly $145 billion 2026 capital budget — most of it going toward the data-center buildout that superintelligence-scale models require. He also wants Washington's help, urging the US government to back American open-source AI as a counterweight to Chinese labs rather than restrict access to it.</p>
+<p>That's the real commercial logic underneath the philosophy. Meta doesn't sell API access to Muse Spark the way OpenAI and Anthropic sell access to GPT and Claude — its business is advertising and engagement, not model subscriptions. Giving weights away costs Meta little in direct revenue and a great deal in goodwill among developers, while directly undercutting the pricing power of rivals whose entire business model depends on keeping their weights locked up. If open models close the capability gap, ChatGPT and Claude's premium pricing gets harder to justify.</p>
+<h2>What to watch next</h2>
+<p>The test now is simple: does Meta actually publish the Muse Spark 1.2 weights, and under what license — a fully open one, or one with usage restrictions like Llama's, which barred very large companies from free commercial use. Independent evaluators will also get their first crack at verifying Meta's benchmark claims once the weights are public, rather than relying on numbers Meta itself has published. Until both of those land, this is a well-argued essay about the future of AI, not yet evidence that the future has arrived.</p></div><section class="sources-block"><h4>Sources</h4><ol><li><a href="https://www.cnbc.com/2026/08/10/meta-muse-glimmer-open-weight-ai.html" rel="nofollow noopener" target="_blank">Meta to open source its most powerful AI model as it takes swipe at OpenAI, Anthropic — CNBC</a></li><li><a href="https://www.cbsnews.com/news/mark-zuckerberg-ai-essay-takeaways/" rel="nofollow noopener" target="_blank">5 takeaways from Zuckerberg&#x27;s essay on his vision for superintelligence — CBS News</a></li><li><a href="https://fortune.com/2026/08/10/meta-brandishes-open-source-ai-models-again-as-zuckerberg-media-blitz-emphasizes-battle-against-chinese-rivals/" rel="nofollow noopener" target="_blank">Mark Zuckerberg makes his case for American open-source AI over Chinese rivals — Fortune</a></li><li><a href="https://abcnews.com/Technology/wireStory/zuckerberg-manifesto-pushes-open-source-approach-ai-meta-135519669" rel="nofollow noopener" target="_blank">Zuckerberg manifesto pushes open-source approach on AI as Meta releases latest model — ABC News</a></li><li><a href="https://www.aninews.in/news/business/meta-opens-muse-glimmer-weights-zuckerberg-says-muse-spark-12-release-coming-soon20260811103643/" rel="nofollow noopener" target="_blank">Meta opens Muse Glimmer weights; Zuckerberg says Muse Spark 1.2 release coming soon</a></li><li><a href="https://kingy.ai/blog/muse-code-muse-spark-1-2-benchmarks-verified/" rel="nofollow noopener" target="_blank">Muse Code Benchmarks (Aug 2026): Meta&#x27;s 82.9% vs Verified Scores — Kingy.ai</a></li><li><a href="https://www.mindstudio.ai/blog/meta-muse-spark-vs-claude-opus-vs-gemini-comparison" rel="nofollow noopener" target="_blank">Muse Spark vs Claude Opus 4.6 vs Gemini 3.1 Pro: Benchmark Comparison — MindStudio</a></li><li><a href="https://bloomberg.com/news/articles/2025-12-10/inside-meta-s-pivot-from-open-source-to-money-making-ai-model" rel="nofollow noopener" target="_blank">Inside Meta&#x27;s Pivot From Open Source to Money-Making AI Model — Bloomberg</a></li></ol></section><section class="related"><h4>Related in this edition</h4><a href="openai-ultrafast-mode-cro.html"><span style="display:block;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:0.2rem;">TECH &amp; SCIENCE</span>OpenAI unveils &#x27;Ultrafast&#x27; GPT-5.6 mode, names new chief revenue officer</a><a href="eu-ai-act-transparency-enforcement.html"><span style="display:block;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:0.2rem;">TECH &amp; SCIENCE</span>EU begins enforcing AI transparency rules, with toughest curbs still years off</a><a href="spacex-cursor-acquisition.html"><span style="display:block;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:0.2rem;">TECH &amp; SCIENCE</span>SpaceX closes $60bn acquisition of AI coding startup Cursor</a></section><footer class="colophon">The Bot Tribune · 2026-08-17 · <a href="index.html">Back to the edition</a></footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
+</body>
+</html>
