@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monzo suffers UK-wide outage, activates backup system for first time — 2026-08-20 — Trading Bot</title>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../../index.html">Dashboard</a>
+<a class="nav-tab active" href="../../news/latest.html">News</a>
+<a class="nav-tab" href="../../macro/latest.html">Macro</a>
+<a class="nav-tab" href="../../evolution.html">Evolution</a>
+<a class="nav-tab" href="../../ml/index.html">ML lab</a>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper article-page"><div class="edition-nav" data-edition="2026-08-20" data-kind="news"><a class="edition-nav-link" data-role="prev" href="../2026-08-19/" title="2026-08-19">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><a class="edition-nav-link disabled" data-role="next" href="#" aria-disabled="true">next →</a><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">TECH · FINTECH · By R. Okonkwo · 2026-08-20 · 3 min read</div><h1>Monzo suffers UK-wide outage, activates backup system for first time</h1><img class="hero" src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Monzo_2022_logo.svg" alt="Monzo&#x27;s current wordmark, adopted in 2022."><div class="hero-caption">Monzo&#x27;s current wordmark, adopted in 2022. — <em>Monzo Bank Limited / Wikimedia Commons</em></div><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>Monzo&#x27;s independent backup bank kept card payments and transfers running through a near-four-and-a-half-hour outage — its second live activation in seven months.</div></div><div class="body"><p>Monzo customers spent the middle of Wednesday afternoon staring at a holding screen reading "we're experiencing issues — we'll let you know when they're resolved." Behind that message, the digital bank was doing something it has only had to do once before in a live emergency: handing the whole country's worth of card payments and transfers to a second, entirely separate bank it built for exactly this moment.</p>
+<p>The fault surfaced shortly before midday and knocked out money transfers, investment access and in-app discounts, with balances and live transaction feeds also affected. Downdetector reports spiked to around 3,195 shortly after 1pm. Monzo posted on X that it had "identified some issues affecting Monzo" and activated Monzo Stand-in — its "fully independent backup bank" — so that customers could keep making card payments, withdrawing cash, freezing cards and sending transfers while engineers worked on the underlying problem. The outage ran nearly four and a half hours before Monzo said, in a statement to the BBC, that services were back to normal.</p>
+<p><img alt="Monzo's wordmark logo" src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Monzo_2022_logo.svg" /></p>
+<h2>What Stand-in actually is</h2>
+<p>Stand-in is not a failover server sitting idle in a cupboard. It's a second bank, in the plainest sense: a replica set of 18 independent services running on Google Cloud Platform, written in different code to Monzo's roughly 3,000-service Primary Platform on Amazon Web Services, so a bug or outage in one has no way of propagating into the other. It handles only the essentials — Mastercard card payments, Faster Payments transfers, Bacs direct debits — reconciling what it processes back to the main system afterwards via what Monzo calls "advice" messages, once the primary platform is healthy again. Monzo has said the whole setup costs roughly 1% of what the Primary Platform does to run, precisely because it does so much less. It went into production in March 2025 after roughly two years of build and shadow-testing against live traffic.</p>
+<h2>Not actually its first outing</h2>
+<p>That's the part worth being precise about. Stand-in has already had a live outing this year: a two-hour outage on 13 January saw Monzo switch customers onto the backup bank so they could keep moving money while engineers chased the fault. And Monzo customers were caught up in a third incident just three weeks before this one, when a Faster Payments System fault on 28 July disrupted transfers at Lloyds, Barclays, HSBC, Halifax and Monzo simultaneously — an outage traced back to Lloyds' own infrastructure, not Monzo's, a reminder that even banks with their own backups still sit on shared national payment rails they don't control.</p>
+<p>So the system worked, again. What's less reassuring is the frequency: three incidents touching a 15.2-million-customer bank inside seven months, two of them serious enough to need the spare bank switched on. Monzo has not said what caused Wednesday's fault, and its status updates — as with January's — offered no root cause.</p>
+<h2>What's next</h2>
+<p>Regulators are already tightening the screws on exactly this kind of disclosure gap. The FCA, PRA and Bank of England published a joint policy statement in March setting new rules on operational incident and third-party reporting, prompted partly by cloud-provider outages that rippled across the sector last year. Firms have until 18 March 2027 to comply. Whether Monzo eventually publishes a fuller post-mortem on Wednesday's fault — as some peers have done after high-profile incidents — will be one early test of how seriously that new disclosure culture is being taken before the rules formally bite.</p></div><section class="sources-block"><h4>Sources</h4><ol><li><a href="https://www.cityam.com/monzo-faces-outage-as-thousands-of-users-unable-to-make-payments-or-transfers/" rel="nofollow noopener" target="_blank">Monzo faces outage as thousands of users unable to make payments or transfers — CityAM</a></li><li><a href="https://www.fstech.co.uk/fst/Monzo_Customers_Hit_By_Multi_Hour_Outage.php" rel="nofollow noopener" target="_blank">Monzo customers hit by multi-hour outage — FStech</a></li><li><a href="https://www.aol.com/news/thousands-monzo-bank-customers-report-164839240.html" rel="nofollow noopener" target="_blank">Monzo bank says issue affecting its mobile app resolved — AOL/BBC</a></li><li><a href="https://monzo.com/blog/processing-payments-in-monzo-stand-in" rel="nofollow noopener" target="_blank">Processing payments in Monzo Stand-in — Monzo Blog</a></li><li><a href="https://www.infoq.com/news/2025/02/monzo-stand-in/" rel="nofollow noopener" target="_blank">How Monzo Bank Built a Cost-Effective, Unorthodox Backup System to Ensure Resilient Banking — InfoQ</a></li><li><a href="https://www.americanbanker.com/news/two-hour-outage-hits-monzo-banking-services" rel="nofollow noopener" target="_blank">Two-hour outage hits Monzo banking services — American Banker</a></li><li><a href="https://startupfortune.com/faster-payments-outage-hits-lloyds-barclays-hsbc-and-monzo-at-once/" rel="nofollow noopener" target="_blank">Faster Payments Outage Hits Lloyds, Barclays, HSBC and Monzo at Once — Startup Fortune</a></li><li><a href="https://www.bankofengland.co.uk/prudential-regulation/publication/2026/march/operational-incident-and-third-party-reporting-policy-statement" rel="nofollow noopener" target="_blank">PS7/26 – Operational resilience: Operational incident and third-party reporting — Bank of England</a></li></ol></section><footer class="colophon">The Bot Tribune · 2026-08-20 · <a href="index.html">Back to the edition</a></footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
+</body>
+</html>
