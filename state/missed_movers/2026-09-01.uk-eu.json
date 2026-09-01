@@ -1,0 +1,122 @@
+{
+  "date": "2026-09-01",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 RKT.L +5%, AI.PA +3%, BP.L +3%, TTE.PA +3%, BNZL.L +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (RHM.DE -6%, ENR.DE -5%, ADYEN.AS -5%, EDV.L -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: RHM.DE (-5.54%) \u2014 No single-day headline \u2014 fell amid ongoing 2026 defense-sector de-rating/profit-taking, despite a same-day Deutsche Bank buy reiteration (PT \u20ac1,800) and LUNA NG drone type-approval news. Why we passed: Outside any active strategy's universe \u2014 RHM.DE is a German XETRA large-cap defense/industrials name, a sector not covered by uk-eu equity universes, so no filter ever saw the drop to react to.",
+  "top_movers": [
+    {
+      "ticker": "RKT.L",
+      "move_pct": 5.162,
+      "close": 53.9689,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Mead Johnson (Reckitt unit) won first federal Enfamil baby-formula NEC lawsuit; JPMorgan also upgraded RKT to 'overweight' same day.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RKT.L is a large-cap UK consumer-staples name (FTSE 100), a sector/cap bucket the bot's momentum/news strategies don't currently cover.",
+      "suggestion": "Add a FTSE 100 consumer-staples sleeve with an event-driven overlay that flags litigation-outcome/RNS headlines and analyst rating changes, not just earnings surprises.",
+      "failed": false
+    },
+    {
+      "ticker": "AI.PA",
+      "move_pct": 3.145,
+      "close": 175.14,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Elliott disclosed an activist stake pushing for margin improvements vs. Linde, plus Mizuho initiated at Outperform (\u20ac200 PT) \u2014 stock +3.3% while CAC 40 fell.",
+      "miss_reason": "Outside any active strategy's universe \u2014 AI.PA is a large-cap French industrial gas name, likely excluded because uk-eu strategies are scoped to a narrower sector/index list that doesn't cover industrials on Euronext Paris.",
+      "suggestion": "Add a news-driven activist/13D-style watch layer that flags large-cap EU names on stake-disclosure headlines, so the universe temporarily includes them for next-day evaluation even if outside the core sector list.",
+      "failed": false
+    },
+    {
+      "ticker": "BP.L",
+      "move_pct": 2.974,
+      "close": 5.298,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Brent crude spiked above $90/bbl after US and Iran exchanged strikes near the Strait of Hormuz, lifting oil majors like BP.L on supply-disruption fears.",
+      "miss_reason": "Outside any active strategy's universe \u2014 BP.L (UK-listed integrated oil major) is likely excluded via a sector/commodity carve-out; the move was a macro geopolitical oil-price spike, not a stock-specific signal, so no filter ever evaluated it.",
+      "suggestion": "Add a commodity-linked equity bucket (major integrated oils incl. BP.L, Shell) to the uk-eu universe, gated on a Brent %-move trigger (e.g. >=3% in a session) so geopolitical oil spikes route to a macro-news strategy.",
+      "failed": false
+    },
+    {
+      "ticker": "TTE.PA",
+      "move_pct": 2.96,
+      "close": 76.88,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Brent crude jumped >2% (~$90-92/bbl) on renewed US-Iran clashes near Strait of Hormuz, lifting European oil majors incl. TTE, Orlen, OMV in sympathy.",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 TTE.PA is a large-cap European energy name, so no momentum/mean-reversion strategy tracks it; the move was a sector-wide beta reaction to a geopolitical oil shock, not a stock-specific signal any in-universe filter would have flagged.",
+      "suggestion": "Add a small EU energy-majors basket (TTE.PA, SHEL, BP, OMV) to the universe gated on a Brent-crude \u22651.5% intraday move, so geopolitical oil shocks get captured via a sector proxy rather than requiring name-by-name coverage.",
+      "failed": false
+    },
+    {
+      "ticker": "BNZL.L",
+      "move_pct": 2.794,
+      "close": 28.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "H1 2026 results beat (rev +2.9% cc, adj. EPS +11% YoY), raised FY guidance, and new \u00a3500m buyback amid Elliott activist pressure for more capital return.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Bunzl is a FTSE 100 UK business-services/distribution large-cap, a sector/geography bucket the bot's uk-eu strategies don't currently scan, so no technical filter ever saw the earnings gap.",
+      "suggestion": "Add FTSE 100 industrials/distribution constituents to the uk-eu universe, or add a sector-agnostic earnings-day gap scanner flagging FTSE 100 names with post-results moves \u22652% at open.",
+      "failed": false
+    },
+    {
+      "ticker": "ZAL.DE",
+      "move_pct": 2.699,
+      "close": 24.73,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single Sep-1 headline; move extends a rebound (+8.6% in 7 sessions) off the M&S pan-European fulfilment-partnership news and an oversold bounce from the Aug 4 guidance cut.",
+      "miss_reason": "Outside any active strategy's universe \u2014 Zalando is a ~\u20ac6.5B German SDAX/MDAX online-fashion retailer, a mid-cap EU consumer-discretionary name likely excluded by market-cap/sector scope rather than any technical filter.",
+      "suggestion": "Widen uk-eu universe inclusion to MDAX/SDAX consumer-discretionary names above a \u20ac5B cap floor, or add an explicit e-commerce/retail sector bucket, so multi-day recovery rallies like this become visible to momentum strategies.",
+      "failed": false
+    },
+    {
+      "ticker": "RHM.DE",
+      "move_pct": -5.543,
+      "close": 1090.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single-day headline \u2014 fell amid ongoing 2026 defense-sector de-rating/profit-taking, despite a same-day Deutsche Bank buy reiteration (PT \u20ac1,800) and LUNA NG drone type-approval news.",
+      "miss_reason": "Outside any active strategy's universe \u2014 RHM.DE is a German XETRA large-cap defense/industrials name, a sector not covered by uk-eu equity universes, so no filter ever saw the drop to react to.",
+      "suggestion": "Add a defense/industrials sector bucket (XETRA large-caps incl. RHM.DE) to the uk-eu universe with a crowded-trade-unwind filter (e.g. flag \u22655% single-day drop after >20% 6-month run-up).",
+      "failed": false
+    },
+    {
+      "ticker": "ENR.DE",
+      "move_pct": -5.17,
+      "close": 141.96,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh firm-specific news; extension of sector-wide wind/power-equipment de-rating (GE Vernova's weak wind margins) and profit-taking that followed ENR's Aug 31 record Q3 orders/earnings beat.",
+      "miss_reason": "Outside any active strategy's universe \u2014 ENR.DE is a XETRA-listed, ~\u20ac120B German industrial/power-equipment large-cap; bot's universe is likely US-equity/ADR-focused and doesn't cover EU exchange-listed names, so no filter ever saw it.",
+      "suggestion": "Add EU large-cap XETRA/Frankfurt listings (mkt cap >\u20ac50B) to the tradable universe, tagged by sector, so cross-name contagion moves in the wind/power-equipment complex (ENR.DE, GE Vernova, Nordex) become visible to momentum filters.",
+      "failed": false
+    },
+    {
+      "ticker": "ADYEN.AS",
+      "move_pct": -5.062,
+      "close": 1035.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single clear news trigger found for 09-01; move looks like continuation of Adyen's 2026 downtrend (stock ~34% YTD lower on EU payments-competition worries), landing the same day a new EMEA president (Nicole Olbe) took over \u2014 likely technical/sector drift, not a fresh headline.",
+      "miss_reason": "Outside any active strategy's universe entirely \u2014 ADYEN.AS is a large-cap Euronext Amsterdam fintech/payments name; a 'uk-eu' universe likely scopes to UK indices plus select EU blue-chips or excludes names with extreme trailing volatility/drawdown, and Adyen's multi-quarter -70%-from-highs profile probably trips a max",
+      "suggestion": "Add an EU large-cap (e.g. AEX/Euronext top-40) bucket to the uk-eu universe, or if excluded by a volatility/drawdown filter, add a carve-out that re-admits mega-cap (>\u20ac20B) names regardless of trailing drawdown so structurally-battered blue chips aren't permanently locked out.",
+      "failed": false
+    },
+    {
+      "ticker": "EDV.L",
+      "move_pct": -4.892,
+      "close": 45.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Gold pulled back near $4,450/oz after Fed's Warsh signaled more tightening may be needed, dragging LSE gold miners incl. Endeavour Mining lower sector-wide.",
+      "miss_reason": "Outside any active strategy's universe \u2014 EDV.L is a UK-listed pure-play gold miner (materials/commodity sector), a category the bot's equity strategies likely exclude given no direct commodity-price signal input.",
+      "suggestion": "Add a gold-miner basket (e.g. EDV.L, FRES.L) gated on a spot-gold/DXY proxy signal so sector-wide moves driven by rate expectations are catchable without new single-name coverage.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-09-01T15:03:30.056928+00:00"
+}
