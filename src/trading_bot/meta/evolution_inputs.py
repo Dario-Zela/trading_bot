@@ -27,6 +27,7 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 from trading_bot.state.paths import STATE_ROOT, ledger_path
+from trading_bot.state.predictions_archive import iter_predictions
 
 log = logging.getLogger(__name__)
 
@@ -283,32 +284,23 @@ def ic_noise_floor(sid: str, *, n_iter: int = 500, quantile: float = 0.95) -> di
     and the per-strategy evolution prompt — so the agent sees the
     sample-size-adjusted picture, not just the raw point estimate."""
     import random as _random
-    p = STATE_ROOT / "predictions.jsonl"
-    if not p.exists():
-        return {"n": 0, "verdict": "too_few"}
     preds: list[float] = []
     actuals: list[float] = []
     try:
-        with p.open() as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                try:
-                    rec = json.loads(line)
-                except json.JSONDecodeError:
-                    continue
-                if rec.get("strategy_id") != sid:
-                    continue
-                pr = rec.get("predicted_return_pct")
-                ac = rec.get("actual_return_pct")
-                if pr is None or ac is None:
-                    continue
-                try:
-                    preds.append(float(pr))
-                    actuals.append(float(ac))
-                except (TypeError, ValueError):
-                    continue
+        # Whole-history read: spans the gzipped archive shards, so trimming
+        # the hot ledger doesn't shrink the sample the noise floor is built on.
+        for rec in iter_predictions():
+            if rec.get("strategy_id") != sid:
+                continue
+            pr = rec.get("predicted_return_pct")
+            ac = rec.get("actual_return_pct")
+            if pr is None or ac is None:
+                continue
+            try:
+                preds.append(float(pr))
+                actuals.append(float(ac))
+            except (TypeError, ValueError):
+                continue
     except OSError:
         return {"n": 0, "verdict": "too_few"}
     n = len(preds)

@@ -24,14 +24,13 @@ meantime.
 """
 from __future__ import annotations
 
-import json
 import logging
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import date, timedelta
 from typing import Iterator
 
-from trading_bot.state.paths import predictions_path
+from trading_bot.state.predictions_archive import iter_predictions
 
 
 log = logging.getLogger(__name__)
@@ -78,35 +77,26 @@ def _iter_graded_predictions(
     that pre-date the `tools_used` field (missing or empty list) are
     skipped — necessary for tool-attribution math so legacy rows don't
     pollute the per-tool baselines."""
-    p = predictions_path()
-    if not p.exists():
-        return
     end = end_date or date.today()
     cutoff = (end - timedelta(days=window_days)).isoformat()
-    with p.open() as f:
-        for line in f:
-            line = line.strip()
-            if not line:
+    # Spans the gzipped archive shards as well as the hot ledger, so the
+    # 60-day window still resolves after a trim.
+    for rec in iter_predictions(since=cutoff):
+        if strategy_id is not None and rec.get("strategy_id") != strategy_id:
+            continue
+        if rec.get("actual_return_pct") is None:
+            continue
+        pdate = rec.get("prediction_date") or ""
+        if not pdate or pdate < cutoff:
+            continue
+        if require_tools_used:
+            tu = rec.get("tools_used")
+            if not isinstance(tu, list) or not tu:
+                # Pre-tools_used row — exclude from attribution
+                # math so legacy rows don't end up in the "without"
+                # baseline for every tool the strategy uses today.
                 continue
-            try:
-                rec = json.loads(line)
-            except json.JSONDecodeError:
-                continue
-            if strategy_id is not None and rec.get("strategy_id") != strategy_id:
-                continue
-            if rec.get("actual_return_pct") is None:
-                continue
-            pdate = rec.get("prediction_date") or ""
-            if not pdate or pdate < cutoff:
-                continue
-            if require_tools_used:
-                tu = rec.get("tools_used")
-                if not isinstance(tu, list) or not tu:
-                    # Pre-tools_used row — exclude from attribution
-                    # math so legacy rows don't end up in the "without"
-                    # baseline for every tool the strategy uses today.
-                    continue
-            yield rec
+        yield rec
 
 
 def _pearson(xs: list[float], ys: list[float]) -> float | None:

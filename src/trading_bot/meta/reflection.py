@@ -33,6 +33,11 @@ def grade_predictions(on_date: date, region: str | None = None) -> int:
     CLAUDE_CODE_OAUTH_TOKEN is missing.
     """
     target = on_date.isoformat()
+    # Reads the hot ledger ONLY, on purpose: this function rewrites
+    # predictions.jsonl in place, so pulling rows in from the cold-storage
+    # shards (see trading_bot.state.predictions_archive) would write every
+    # archived row back into the hot file and undo the size trim. Rows it
+    # targets are days old at most, so they are always still hot.
     path = predictions_path()
     if not path.exists():
         return 0
@@ -241,6 +246,11 @@ def reflect_predictions_on_day(on_date: date, region: str | None = None) -> int:
         return 0
 
     target = on_date.isoformat()
+    # Reads the hot ledger ONLY, on purpose: this function rewrites
+    # predictions.jsonl in place, so pulling rows in from the cold-storage
+    # shards (see trading_bot.state.predictions_archive) would write every
+    # archived row back into the hot file and undo the size trim. Rows it
+    # targets are days old at most, so they are always still hot.
     path = predictions_path()
     if not path.exists():
         return 0

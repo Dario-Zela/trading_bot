@@ -17,6 +17,7 @@ from datetime import date, datetime, timedelta
 from pathlib import Path
 
 from trading_bot.state.paths import ledger_path, predictions_path
+from trading_bot.state.predictions_archive import iter_predictions
 
 
 log = logging.getLogger(__name__)
@@ -111,7 +112,7 @@ def compute_all_metrics(
         region = rec.get("region") or "us"
         if sid and _in_window(rec.get("entry_date"), start, end):
             keys.add((sid, region))
-    for rec in _iter_lines(predictions_path()):
+    for rec in iter_predictions(since=start.isoformat()):
         sid = rec.get("strategy_id")
         region = rec.get("region") or "us"
         if sid and _in_window(rec.get("prediction_date"), start, end):
@@ -182,7 +183,7 @@ def _read_trades(strategy_id: str, region: str, start: date, end: date) -> list[
 
 def _read_predictions(strategy_id: str, region: str, start: date, end: date) -> list[dict]:
     out = []
-    for rec in _iter_lines(predictions_path()):
+    for rec in iter_predictions(since=start.isoformat()):
         if rec.get("strategy_id") != strategy_id:
             continue
         if (rec.get("region") or "us") != region:

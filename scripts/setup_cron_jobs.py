@@ -128,16 +128,20 @@ SCHEDULES: list[dict] = [
         "hour": 17, "minute": 0,
         "wdays": [0],  # Sunday
     },
-    # Phase 7 — Archive trim. Runs Sunday 04:00 UTC, before grade-predictions
+    # Archive trim. Runs daily 04:00 UTC, before grade-predictions
     # (05:00) and the daily-news-brief (06:30 UK = 06:30 UTC in winter).
-    # Compresses news/macro editions older than 90 days into state/archive/*.tar.gz.
+    # Compresses news/macro editions older than 90 days into
+    # state/archive/*.tar.gz and shards the prediction ledger into
+    # state/predictions_archive/. Daily rather than weekly: the ledger
+    # grows ~2 MB/day and must never reach GitHub's 100 MB file limit,
+    # which silently blocked every pipeline push for 11 days in Aug 2026.
     {
         "name": "archive-trim",
         "workflow": "archive-trim.yml",
         "inputs": {},
         "tz": "UTC",
         "hour": 4, "minute": 0,
-        "wdays": [0],  # Sunday
+        "wdays": [1, 2, 3, 4, 5, 6, 0],  # every day
     },
     # Phase 8D — midday trailing-stop pass. Split by region because the
     # mid-sessions are hours apart. UK-EU mid-LSE-session is around

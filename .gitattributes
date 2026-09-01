@@ -3,3 +3,7 @@
 # them toward language statistics.
 state/archive/*.tar.gz binary linguist-generated=true
 state/archive/*.tar.gz -diff
+
+# Prediction ledger cold-storage shards — gzipped JSONL, not diffable.
+state/predictions_archive/*.jsonl.gz binary linguist-generated=true
+state/predictions_archive/*.jsonl.gz -diff

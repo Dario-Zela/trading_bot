@@ -55,6 +55,10 @@ def main() -> int:
     args = p.parse_args()
 
     since = date.fromisoformat(args.since)
+    # Hot ledger only — this script rewrites predictions.jsonl in place, so
+    # reading through the cold-storage shards would write archived rows back
+    # into it. To regrade archived history, expand the shard for the month
+    # first (see trading_bot.state.predictions_archive).
     path = Path(predictions_path())
     if not path.exists():
         log.error("predictions.jsonl not found at %s", path)

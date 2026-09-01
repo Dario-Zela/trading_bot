@@ -171,7 +171,8 @@ This gives the system **two time-scale learning loops**: daily ticker prediction
 
 - `strategies/<id>/config.yaml` + `strategies/<id>/prompts/*.md` — strategy definition (evolvable by meta-agent)
 - `ledger.jsonl` — every paper trade, tagged by strategy_id, with entry/exit/P&L
-- `predictions.jsonl` — every graded daily prediction, tagged by strategy_id, with predicted vs actual
+- `predictions.jsonl` — recent graded daily predictions, tagged by strategy_id, with predicted vs actual. Hot window only (~30 days); older rows are trimmed nightly into cold storage.
+- `predictions_archive/YYYY-MM.jsonl.gz` — cold-storage shards of the prediction ledger, plus a `watermark.json` marking the cutoff. Keeps any single file under GitHub's 100 MB push limit, which the un-trimmed ledger crossed in Aug 2026 and silently blocked every pipeline push for 11 days. Read both halves transparently with `trading_bot.state.iter_predictions()` — never open `predictions.jsonl` directly unless you specifically mean "hot rows only".
 - `decisions/<date>/<strategy_id>.json` — full Claude reasoning chain per day, per strategy
 - `lessons.md` — strategy-level: what's been tried and why it failed (consulted by the meta-agent before proposing changes)
 - `evolution.md` — every meta-agent change with rationale

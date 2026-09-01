@@ -773,32 +773,21 @@ def _strategy_prediction_reflections_lines(
     import json as _json
     from datetime import date, timedelta
 
-    from trading_bot.state.paths import predictions_path
+    from trading_bot.state.predictions_archive import iter_predictions
 
-    p = predictions_path()
-    if not p.exists():
-        return "_(no predictions file)_"
     cutoff = (date.today() - timedelta(days=lookback_days)).isoformat()
 
     rows: list[dict] = []
     try:
-        with p.open() as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                try:
-                    rec = _json.loads(line)
-                except _json.JSONDecodeError:
-                    continue
-                if rec.get("strategy_id") != sid:
-                    continue
-                pd_ = rec.get("prediction_date") or ""
-                if not pd_ or pd_ < cutoff:
-                    continue
-                if not (rec.get("reflection") or "").strip():
-                    continue
-                rows.append(rec)
+        for rec in iter_predictions(since=cutoff):
+            if rec.get("strategy_id") != sid:
+                continue
+            pd_ = rec.get("prediction_date") or ""
+            if not pd_ or pd_ < cutoff:
+                continue
+            if not (rec.get("reflection") or "").strip():
+                continue
+            rows.append(rec)
     except OSError:
         return "_(could not read predictions)_"
 

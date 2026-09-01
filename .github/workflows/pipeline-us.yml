@@ -145,12 +145,15 @@ jobs:
           cp -r state /tmp/save/ 2>/dev/null || true
           # Capture the non-JSONL state files THIS run changed (vs the base it
           # committed on). The 3 line-unioned JSONL files are excluded —
-          # smart_merge_state.py merges those with remote. Restoring only our
+          # smart_merge_state.py merges those with remote. state/predictions_archive/
+          # is excluded too: only the archive-trim job writes cold storage, so the
+          # remote copy always wins and a stale local watermark can never be
+          # restored over a newer one. Restoring only our
           # changed files (local-wins) preserves e.g. kill-switch/halt state
           # and the currency cache through the hard reset, while files a
           # concurrent run changed stay at the remote version (no clobber).
           CHANGED_STATE=$(git diff --name-only HEAD~1 HEAD -- state \
-            | grep -vE 'state/(ledger|predictions|macro/predictions|trail_exits)\.jsonl$|state/pick_adjustments/.*\.jsonl$' || true)
+            | grep -vE 'state/(ledger|predictions|macro/predictions|trail_exits)\.jsonl$|state/pick_adjustments/.*\.jsonl$|state/predictions_archive/' || true)
           git fetch origin main
           git reset --hard origin/main
           python3 .github/scripts/smart_merge_state.py "$PWD" /tmp/save

@@ -16,9 +16,11 @@ Run by `.github/workflows/health-check.yml` daily.
 from __future__ import annotations
 
 import argparse
+import gzip
 import json
 import logging
 import os
+import subprocess
 import sys
 from dataclasses import dataclass, field
 from datetime import date, datetime, timedelta, timezone
@@ -63,6 +65,8 @@ def main(argv: list[str] | None = None) -> int:
     findings.extend(_check_predictions_corruption())
     findings.extend(_check_halt_state())
     findings.extend(_check_state_growth())
+    findings.extend(_check_git_file_sizes())
+    findings.extend(_check_prediction_archive())
 
     if not findings:
         print("All clear — no health findings.")
@@ -237,6 +241,100 @@ def _check_state_growth() -> list[HealthFinding]:
                 "warning", "archive",
                 f"docs/macro has {n_dirs} edition dirs — archive-trim may need attention",
             ))
+    return out
+
+
+# GitHub hard-rejects any pushed file over 100 MB and warns at 50 MB.
+# When state/predictions.jsonl and docs/data.json crossed that line in
+# August 2026, every pipeline push was rejected for 11 days — the runs
+# looked like they worked, then silently threw their state away, and the
+# only symptom was the dashboard going stale. Catch it at 60 MB, while
+# there is still a week of headroom to act.
+_GH_HARD_LIMIT_BYTES = 100 * 1000 * 1000
+_SIZE_WARN_BYTES = 60 * 1000 * 1000
+_SIZE_ERROR_BYTES = 90 * 1000 * 1000
+
+
+def _check_git_file_sizes() -> list[HealthFinding]:
+    """Flag tracked files approaching GitHub's 100 MB per-file push limit."""
+    out: list[HealthFinding] = []
+    try:
+        tracked = subprocess.run(
+            ["git", "ls-files", "-z"],
+            capture_output=True, text=True, timeout=60, check=True,
+        ).stdout.split("\0")
+    except (OSError, subprocess.SubprocessError) as e:
+        log.warning("could not list tracked files: %s", e)
+        return out
+
+    for rel in tracked:
+        if not rel:
+            continue
+        try:
+            size = Path(rel).stat().st_size
+        except OSError:
+            continue
+        if size < _SIZE_WARN_BYTES:
+            continue
+        mb = size / 1e6
+        if size >= _SIZE_ERROR_BYTES:
+            out.append(HealthFinding(
+                "error", "file-size",
+                f"{rel} is {mb:.0f} MB — at or near GitHub's 100 MB limit; "
+                f"pushes will start being rejected. Run "
+                f"scripts/trim_predictions_ledger.py / check the archive-trim job.",
+            ))
+        else:
+            out.append(HealthFinding(
+                "warning", "file-size",
+                f"{rel} is {mb:.0f} MB — approaching GitHub's 100 MB push limit",
+            ))
+    return out
+
+
+def _check_prediction_archive() -> list[HealthFinding]:
+    """Verify every cold-storage shard is readable and internally valid.
+    A corrupt shard is silent data loss — nothing else reads far enough
+    back to notice."""
+    out: list[HealthFinding] = []
+    try:
+        from trading_bot.state import predictions_archive as pa
+    except ImportError:
+        return out
+
+    months = pa.shard_months()
+    if not months:
+        return out
+
+    total = 0
+    for month in months:
+        try:
+            n = sum(1 for _ in pa.iter_shard(month))
+        except (OSError, EOFError, gzip.BadGzipFile) as e:
+            out.append(HealthFinding(
+                "error", "predictions-archive",
+                f"shard {month} is unreadable ({e.__class__.__name__}) — archived history is at risk",
+            ))
+            continue
+        if n == 0:
+            out.append(HealthFinding(
+                "warning", "predictions-archive",
+                f"shard {month} decompressed to 0 rows",
+            ))
+        total += n
+
+    watermark = pa.read_watermark()
+    if months and not watermark:
+        out.append(HealthFinding(
+            "warning", "predictions-archive",
+            f"{len(months)} shard(s) on disk but no watermark — smart-merge cannot "
+            "reject resurrected rows, so the hot ledger may re-inflate",
+        ))
+    else:
+        out.append(HealthFinding(
+            "info", "predictions-archive",
+            f"{len(months)} shard(s), {total} archived rows, watermark {watermark}",
+        ))
     return out
 
 

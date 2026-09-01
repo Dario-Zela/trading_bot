@@ -8,6 +8,8 @@ import pytest
 
 # Make the workflow helper at .github/scripts importable.
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / ".github" / "scripts"))
+# ...and the maintenance scripts at scripts/.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 
 @pytest.fixture

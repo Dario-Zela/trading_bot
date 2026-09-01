@@ -31,6 +31,7 @@ from trading_bot.ml.data import depth_report, read_snapshot_bars, snapshot_path,
 from trading_bot.ml.labels import compute_labels
 from trading_bot.ml.splits import Fold, purged_walk_forward
 from trading_bot.state.paths import STATE_ROOT
+from trading_bot.state.predictions_archive import iter_predictions
 
 log = logging.getLogger(__name__)
 
@@ -555,31 +556,21 @@ def control_rule_based_record() -> dict:
     no IC is computable. If prediction rows ever exist they're preferred;
     otherwise the ledger fallback is the yardstick, flagged with
     `source: ledger` so the card explains the comparison basis."""
-    path = STATE_ROOT / "predictions.jsonl"
     preds, actuals = [], []
     n_hit = n_nonflat = 0
-    if path.exists():
-        with path.open() as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                try:
-                    r = json.loads(line)
-                except json.JSONDecodeError:
-                    continue
-                if r.get("strategy_id") != "control-rule-based" or r.get("region") != "us":
-                    continue
-                p, a = r.get("predicted_return_pct"), r.get("actual_return_pct")
-                if p is None or a is None:
-                    continue
-                preds.append(float(p))
-                actuals.append(float(a))
-                if r.get("predicted_class") != "flat":
-                    n_nonflat += 1
-                    up = r.get("predicted_class") in ("mild_up", "strong_up")
-                    if (up and float(a) > 0) or (not up and float(a) < 0):
-                        n_hit += 1
+    for r in iter_predictions():
+        if r.get("strategy_id") != "control-rule-based" or r.get("region") != "us":
+            continue
+        p, a = r.get("predicted_return_pct"), r.get("actual_return_pct")
+        if p is None or a is None:
+            continue
+        preds.append(float(p))
+        actuals.append(float(a))
+        if r.get("predicted_class") != "flat":
+            n_nonflat += 1
+            up = r.get("predicted_class") in ("mild_up", "strong_up")
+            if (up and float(a) > 0) or (not up and float(a) < 0):
+                n_hit += 1
     if len(preds) < 4:
         return _control_ledger_record()
     frame = pd.DataFrame({"score": preds, "actual_return_pct": actuals})

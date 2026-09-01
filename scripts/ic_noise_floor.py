@@ -21,7 +21,6 @@ so the evolution agent reads the same numbers this script reports.
 from __future__ import annotations
 
 import argparse
-import json
 import logging
 import random
 import sys
@@ -29,6 +28,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from trading_bot.state.paths import STATE_ROOT
+from trading_bot.state.predictions_archive import iter_predictions
 
 
 log = logging.getLogger("ic_noise_floor")
@@ -50,28 +50,17 @@ def _pearson(xs: list[float], ys: list[float]) -> float | None:
 
 def _read_predictions() -> dict[str, list[tuple[float, float]]]:
     """Returns {strategy_id: [(predicted_pct, actual_pct), ...]}."""
-    p = STATE_ROOT / "predictions.jsonl"
     out: dict[str, list[tuple[float, float]]] = defaultdict(list)
-    if not p.exists():
-        return out
-    with p.open() as f:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            try:
-                rec = json.loads(line)
-            except json.JSONDecodeError:
-                continue
-            sid = rec.get("strategy_id") or ""
-            pred = rec.get("predicted_return_pct")
-            actual = rec.get("actual_return_pct")
-            if not sid or pred is None or actual is None:
-                continue
-            try:
-                out[sid].append((float(pred), float(actual)))
-            except (TypeError, ValueError):
-                continue
+    for rec in iter_predictions():
+        sid = rec.get("strategy_id") or ""
+        pred = rec.get("predicted_return_pct")
+        actual = rec.get("actual_return_pct")
+        if not sid or pred is None or actual is None:
+            continue
+        try:
+            out[sid].append((float(pred), float(actual)))
+        except (TypeError, ValueError):
+            continue
     return out
 
 

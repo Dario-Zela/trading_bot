@@ -407,7 +407,7 @@
           </button>
           <button class="sub-tab" :class="{ active: subtab === 'uncommitted' }"
                   @click="subtab = 'uncommitted'; expanded = null">
-            Uncommitted candidates (<span x-text="current.uncommitted.length"></span>)
+            Uncommitted candidates (<span x-text="current.uncommitted_total ?? current.uncommitted.length"></span>)
           </button>
         </div>
 
@@ -532,6 +532,12 @@
                   </tbody>
                 </template>
               </table>
+              <div x-show="(current.uncommitted_total ?? current.uncommitted.length) > Math.min(30, current.uncommitted.length)"
+                   style="padding: 0.7rem 0 0.2rem; font-family: var(--sans); font-size: 0.75rem; color: var(--ink-muted);">
+                Showing the <span x-text="Math.min(30, current.uncommitted.length)"></span> most recent of
+                <span x-text="current.uncommitted_total ?? current.uncommitted.length"></span> ungraded predictions.
+                Full history lives in the prediction ledger.
+              </div>
             </template>
           </div>
         </template>

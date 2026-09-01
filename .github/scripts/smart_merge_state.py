@@ -17,6 +17,16 @@ import sys
 from pathlib import Path
 
 
+# state/predictions.jsonl is trimmed into gzipped monthly shards under
+# state/predictions_archive/ once rows age out of the hot window (see
+# scripts/trim_predictions_ledger.py). A runner that started before a trim
+# still holds the pre-trim ledger locally, so a naive union would re-add
+# every archived row and re-inflate the file straight back over GitHub's
+# 100 MB limit. The archive watermark says "everything before this date is
+# already in a shard" — local rows older than it are dropped, not merged.
+_WATERMARK_REL = "state/predictions_archive/watermark.json"
+_ARCHIVED_LEDGERS = {"state/predictions.jsonl": "prediction_date"}
+
 # (path, primary-key for dedup):
 #   str            → dedup on a single field
 #   tuple[str,...] → composite key built from named fields
@@ -58,9 +68,33 @@ def _composite_key(rec: dict, key_spec):
     return None
 
 
-def merge_file(repo_root: Path, save_root: Path, rel_path: str, key) -> int:
+def read_archive_watermark(repo_root: Path) -> str | None:
+    """The `archived_before` cutoff from the just-reset (i.e. remote) tree.
+    None when nothing has been archived yet."""
+    p = repo_root / _WATERMARK_REL
+    if not p.exists():
+        return None
+    try:
+        return json.loads(p.read_text()).get("archived_before") or None
+    except (json.JSONDecodeError, OSError):
+        return None
+
+
+def merge_file(
+    repo_root: Path,
+    save_root: Path,
+    rel_path: str,
+    key,
+    *,
+    drop_before: str | None = None,
+    date_field: str = "prediction_date",
+) -> int:
     """Merge the saved local copy into the repo's (just-reset) version.
-    Returns the number of new lines added from local."""
+    Returns the number of new lines added from local.
+
+    `drop_before` discards local rows whose `date_field` is older than the
+    cutoff — they live in a cold-storage shard now and must not come back.
+    """
     repo_file = repo_root / rel_path
     save_file = save_root / rel_path
     if not save_file.exists():
@@ -74,10 +108,22 @@ def merge_file(repo_root: Path, save_root: Path, rel_path: str, key) -> int:
                 remote_lines.append(line)
 
     local_lines: list[str] = []
+    dropped = 0
     for line in save_file.read_text().splitlines():
         line = line.strip()
-        if line:
-            local_lines.append(line)
+        if not line:
+            continue
+        if drop_before:
+            try:
+                d = json.loads(line).get(date_field) or ""
+            except json.JSONDecodeError:
+                d = ""
+            if d and d < drop_before:
+                dropped += 1
+                continue
+        local_lines.append(line)
+    if dropped:
+        print(f"  {rel_path}: dropped {dropped} local row(s) already archived before {drop_before}")
 
     if key is None:
         merged = remote_lines + local_lines
@@ -122,9 +168,17 @@ def main(repo_root_str: str, save_root_str: str) -> int:
     repo_root = Path(repo_root_str)
     save_root = Path(save_root_str)
     total_added = 0
+    watermark = read_archive_watermark(repo_root)
+    if watermark:
+        print(f"Archive watermark: rows before {watermark} are in cold storage")
     for rel_path, key in TARGETS:
         for actual in _expand(save_root, rel_path):
-            added = merge_file(repo_root, save_root, actual, key)
+            date_field = _ARCHIVED_LEDGERS.get(rel_path)
+            added = merge_file(
+                repo_root, save_root, actual, key,
+                drop_before=watermark if date_field else None,
+                date_field=date_field or "prediction_date",
+            )
             print(f"  {actual}: +{added} from local")
             total_added += added
     print(f"Total new rows merged: {total_added}")

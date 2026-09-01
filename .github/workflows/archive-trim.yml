@@ -1,9 +1,15 @@
 name: Archive trim
 
-# Phase 7 — bundles old news / macro editions into compressed tarballs
-# at state/archive/*.tar.gz, removing the originals from docs/. Runs
-# weekly on Sunday 04:00 UTC, well before the news brief (05:00) and
-# the morning entry pipelines.
+# Bundles old news / macro editions into compressed tarballs at
+# state/archive/*.tar.gz, removing the originals from docs/, and trims
+# state/predictions.jsonl into gzipped monthly shards under
+# state/predictions_archive/. Runs daily at 04:00 UTC, well before the
+# news brief (05:00) and the morning entry pipelines.
+#
+# The ledger trim is why this went from weekly to daily: predictions
+# accrue ~60 MB/month and the file crossing GitHub's 100 MB limit in
+# August 2026 caused every pipeline push to be rejected for 11 days.
+# A daily trim keeps the hot file bounded no matter how volume grows.
 #
 # Idempotent: if nothing is old enough, the workflow is a no-op.
 
@@ -14,6 +20,10 @@ on:
         description: "Keep editions younger than this many days"
         required: false
         default: "90"
+      predictions_keep_days:
+        description: "Keep prediction rows younger than this many days in the hot ledger"
+        required: false
+        default: "30"
       dry_run:
         description: "Set to 'true' to preview without writing"
         required: false
@@ -50,12 +60,24 @@ jobs:
           fi
           python scripts/archive_old_editions.py --keep-days "$KEEP_DAYS" $DRY_RUN_FLAG
 
+      - name: Trim prediction ledger into cold storage
+        run: |
+          DRY_RUN_FLAG=""
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            DRY_RUN_FLAG="--dry-run"
+          fi
+          # No `pip install -e .` needed — the script puts src/ on sys.path
+          # and the modules it touches are stdlib-only.
+          python scripts/trim_predictions_ledger.py \
+            --keep-days "${{ github.event.inputs.predictions_keep_days || '30' }}" $DRY_RUN_FLAG
+
       - name: Commit + push archive deltas
         if: github.event.inputs.dry_run != 'true'
         run: |
           git config user.name "trading-bot[bot]"
           git config user.email "trading-bot@users.noreply.github.com"
-          git add state/archive docs/news docs/macro .gitattributes || true
+          git add state/archive state/predictions_archive state/predictions.jsonl \
+                  docs/news docs/macro .gitattributes || true
           if git diff --cached --quiet; then
             echo "No archive deltas to commit"
             exit 0

@@ -11,11 +11,21 @@ from typing import Iterator
 
 import yaml
 
-from trading_bot.state.paths import STATE_ROOT, ledger_path, predictions_path
+from trading_bot.state.paths import STATE_ROOT, ledger_path
+from trading_bot.state.predictions_archive import iter_predictions
 from trading_bot.strategy.registry import _strategies_dir
 
 
 log = logging.getLogger(__name__)
+
+# The dashboard renders at most 30 uncommitted rows per strategy
+# (docs/index.html: `current.uncommitted.slice(0, 30)`), but the payload
+# used to carry every ungraded prediction ever made — 4,033 rows for a
+# single strategy, ~54 MB of `active` alone. That pushed docs/data.json to
+# 143 MB, over GitHub's 100 MB file limit, and every pipeline push was
+# rejected. Ship a small buffer above what the UI draws and pass the true
+# count separately as `uncommitted_total` for the tab badge.
+_UNCOMMITTED_LIMIT = 50
 
 
 def _docs_dir() -> Path:
@@ -121,7 +131,7 @@ def build_dashboard_data() -> dict:
     """
     configs = _load_strategy_configs()
     all_trades = list(_iter_jsonl(ledger_path()))
-    all_predictions = list(_iter_jsonl(predictions_path()))
+    all_predictions = list(iter_predictions())
 
     # Group trades and predictions by (strategy_id, region) — region is the
     # primary axis for the dashboard now that strategies are multi-region.
@@ -171,7 +181,8 @@ def build_dashboard_data() -> dict:
                 "summary": _summary_stats(trades, preds),
                 "equity_curve": _equity_curve(trades, starting_capital),
                 "executed": sorted(trades, key=lambda t: t.get("entry_date", ""), reverse=True),
-                "uncommitted": sorted(preds, key=lambda p: p.get("prediction_date", ""), reverse=True),
+                "uncommitted": sorted(preds, key=lambda p: p.get("prediction_date", ""), reverse=True)[:_UNCOMMITTED_LIMIT],
+                "uncommitted_total": len(preds),
             }
 
             if raw_config.get("active"):
@@ -200,7 +211,8 @@ def build_dashboard_data() -> dict:
             "summary": _summary_stats(trades, preds),
             "equity_curve": _equity_curve(trades, 10000),
             "executed": sorted(trades, key=lambda t: t.get("entry_date", ""), reverse=True),
-            "uncommitted": sorted(preds, key=lambda p: p.get("prediction_date", ""), reverse=True),
+            "uncommitted": sorted(preds, key=lambda p: p.get("prediction_date", ""), reverse=True)[:_UNCOMMITTED_LIMIT],
+            "uncommitted_total": len(preds),
         })
 
     # Global overview: roll up real-broker P&L (alpaca-paper, trading212-paper)
@@ -528,7 +540,7 @@ def main(argv: list[str] | None = None) -> int:
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
     data = build_dashboard_data()
-    out_path.write_text(json.dumps(data, indent=2))
+    out_path.write_text(json.dumps(data, separators=(",", ":")))
     log.info("Wrote %s (%d active, %d archived)", out_path, len(data["active"]), len(data["archived"]))
 
     # Render the static markdown-driven pages alongside the dashboard JSON.
