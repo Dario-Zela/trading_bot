@@ -1,0 +1,1067 @@
+{
+  "week_id": "2026-W36",
+  "generated_at": "2026-09-06T17:09:24.405067+00:00",
+  "snapshot": {
+    "yield_curve": {
+      "as_of": "2026-09-04",
+      "3M": 3.756999969482422,
+      "5Y": 4.550000190734863,
+      "10Y": 4.783999919891357,
+      "30Y": 5.245999813079834,
+      "spread_3m10y": 1.0269999504089355
+    },
+    "credit_spreads": {
+      "as_of": "2026-09-04",
+      "hyg_5d_return_pct": -0.7273566807100229,
+      "lqd_5d_return_pct": -0.818049017085043,
+      "hy_vs_ig_5d_diff": 0.09069233637502006
+    },
+    "dollar_index": {
+      "as_of": "2026-09-04",
+      "level": 99.16000366210938,
+      "return_5d_pct": -0.5416181571330836,
+      "return_20d_pct": -0.4417618662173384
+    },
+    "sector_strength": [
+      {
+        "ticker": "XLE",
+        "label": "Energy",
+        "5d": 2.2016548288114945,
+        "20d": 11.408691406250004
+      },
+      {
+        "ticker": "XLK",
+        "label": "Technology",
+        "5d": 0.8562638359554953,
+        "20d": -0.36708114961179206
+      },
+      {
+        "ticker": "XLU",
+        "label": "Utilities",
+        "5d": 0.8191020186471221,
+        "20d": -1.2153147715642798
+      },
+      {
+        "ticker": "XLV",
+        "label": "Health Care",
+        "5d": 0.16942818411320726,
+        "20d": 3.4826198258906427
+      },
+      {
+        "ticker": "XLF",
+        "label": "Financials",
+        "5d": 0.0,
+        "20d": 0.8680555785511856
+      },
+      {
+        "ticker": "XLC",
+        "label": "Communication Services",
+        "5d": -0.8496319166499289,
+        "20d": 0.7011224982443887
+      },
+      {
+        "ticker": "XLP",
+        "label": "Consumer Staples",
+        "5d": -1.0181335848548523,
+        "20d": -0.6343995513428569
+      },
+      {
+        "ticker": "XLI",
+        "label": "Industrials",
+        "5d": -1.0556594352663096,
+        "20d": -5.351543792676905
+      },
+      {
+        "ticker": "XLRE",
+        "label": "Real Estate",
+        "5d": -1.2365090888508012,
+        "20d": -2.334369159062788
+      },
+      {
+        "ticker": "XLB",
+        "label": "Materials",
+        "5d": -1.391503712335962,
+        "20d": -0.7945553893170532
+      },
+      {
+        "ticker": "XLY",
+        "label": "Consumer Discretionary",
+        "5d": -1.9622860168317935,
+        "20d": -4.129815554009508
+      }
+    ],
+    "commodities": [
+      {
+        "name": "Gold",
+        "ticker": "GLD",
+        "close": 406.7699890136719,
+        "5d": -0.5184831027454706,
+        "20d": 2.082964280257471
+      },
+      {
+        "name": "Silver",
+        "ticker": "SLV",
+        "close": 59.81999969482422,
+        "5d": -0.33322352784751486,
+        "20d": 4.034782077955157
+      },
+      {
+        "name": "Oil (USO)",
+        "ticker": "USO",
+        "close": 141.9600067138672,
+        "5d": 9.452590635385638,
+        "20d": 20.325481161739866
+      },
+      {
+        "name": "Natural gas (UNG)",
+        "ticker": "UNG",
+        "close": 10.5600004196167,
+        "5d": 2.2265295025106546,
+        "20d": 8.418898026364108
+      },
+      {
+        "name": "Agriculture (DBA)",
+        "ticker": "DBA",
+        "close": 28.850000381469727,
+        "5d": -1.164782961176014,
+        "20d": 4.453292921299079
+      },
+      {
+        "name": "Base metals (DBB)",
+        "ticker": "DBB",
+        "close": 25.75,
+        "5d": 1.0596564466812897,
+        "20d": 1.497828727616568
+      }
+    ]
+  },
+  "plan": {
+    "edition_date": "2026-09-06",
+    "masthead_subtitle": "Long-end yields, a weak dollar and surging oil steepen the curve with a stagflation tint, not a growth one.",
+    "todays_question": "",
+    "front_lead_slug": "editorial-long-end",
+    "notes": "Thesis anchored on back-end-led curve steepening + weak dollar + oil surge as a term-premium/stagflation read rather than growth-driven steepener; credit and gold pieces chosen as falsifiers/complacency checks against that thesis; sectors split into energy breakout vs defensive r",
+    "pieces": [
+      {
+        "slug": "editorial-long-end",
+        "section": "Editorial",
+        "headline": "The long end is where the story is",
+        "kicker": "EDITORIAL \u00b7 WEEKLY THESIS",
+        "byline": "The Editor",
+        "one_line": "A back-end-led steepening, a soft dollar, and surging oil are pricing a fiscal-and-inflation premium that front-end cut hopes can't offset.",
+        "tier": "lead",
+        "triage_index": 0,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "rates-term-premium",
+        "section": "Rates",
+        "headline": "Long bond breaks 5.25% as term premium reasserts itself",
+        "kicker": "RATES \u00b7 TERM PREMIUM",
+        "byline": "G. Mehlman",
+        "one_line": "The 30-year's climb past 5.25% while the front end anchors near 3.75% marks a steepening led by the back end, not by Fed optimism.",
+        "tier": "feature",
+        "triage_index": 1,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "rates-front-end-cuts",
+        "section": "Rates",
+        "headline": "Front end still banks on cuts the long end doesn't buy",
+        "kicker": "RATES \u00b7 FED PRICING",
+        "byline": "G. Mehlman",
+        "one_line": "A 3.76% three-month bill against a 5.25% thirty-year shows the front end still leaning on cuts the back end's inflation math resists.",
+        "tier": "brief",
+        "triage_index": 2,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "fx-dollar-divergence",
+        "section": "FX",
+        "headline": "Dollar slips as yields climb \u2014 a decoupling worth watching",
+        "kicker": "FX \u00b7 DOLLAR DIVERGENCE",
+        "byline": "E. Castellano",
+        "one_line": "The dollar index fell to 99.16 even as US long yields pushed higher, breaking the usual playbook where rising yields support the currency.",
+        "tier": "feature",
+        "triage_index": 3,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "credit-spreads-shrug",
+        "section": "Credit",
+        "headline": "Spreads shrug off the bond selloff \u2014 for now",
+        "kicker": "CREDIT \u00b7 COMPLACENCY WATCH",
+        "byline": "T. Larch",
+        "one_line": "HY and IG both fell alongside Treasuries this week, but high yield actually outperformed investment grade \u2014 a sign spreads aren't yet pricing long-end stress.",
+        "tier": "feature",
+        "triage_index": 4,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "sectors-energy-breakout",
+        "section": "Sectors",
+        "headline": "Energy runs away with the tape as oil rips",
+        "kicker": "SECTORS \u00b7 ENERGY BREAKOUT",
+        "byline": "I. Aresti",
+        "one_line": "XLE's 11.4% twenty-day gain, backed by a 9.45% one-week oil surge, is the standout sector story as the summer turns.",
+        "tier": "feature",
+        "triage_index": 5,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "sectors-defensive-rotation",
+        "section": "Sectors",
+        "headline": "Defensives quietly outperform as cyclicals fade",
+        "kicker": "SECTORS \u00b7 ROTATION",
+        "byline": "I. Aresti",
+        "one_line": "Utilities and health care led the week's gainers outside energy, while industrials, discretionary and materials all fell \u2014 a defensive tilt worth noting.",
+        "tier": "brief",
+        "triage_index": 6,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "regions-us-term-premium",
+        "section": "Regions",
+        "headline": "Washington's term-premium problem becomes everyone's problem",
+        "kicker": "REGIONS \u00b7 US",
+        "byline": "P. Kanu",
+        "one_line": "A US long bond over 5.25% and a softening dollar are a US-originated story, but the spillover runs through every region that prices dollars or duration.",
+        "tier": "feature",
+        "triage_index": 7,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "regions-em-oil-windfall",
+        "section": "Regions",
+        "headline": "Oil's surge splits emerging markets into winners and losers",
+        "kicker": "REGIONS \u00b7 EM",
+        "byline": "P. Kanu",
+        "one_line": "A 9.45% weekly jump in crude is a terms-of-trade windfall for exporters and a fresh headache for oil-importing EM currencies already navigating a weaker dollar.",
+        "tier": "brief",
+        "triage_index": 8,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "regions-china-metals-lag",
+        "section": "Regions",
+        "headline": "Base metals' muted response says China demand isn't the story",
+        "kicker": "REGIONS \u00b7 CHINA",
+        "byline": "P. Kanu",
+        "one_line": "Base metals crept up just 1.1% on the week while oil surged 9.5%, a gap that argues against reading this as a China-led industrial demand rebound.",
+        "tier": "brief",
+        "triage_index": 9,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "risk-gold-stumble",
+        "section": "Risk",
+        "headline": "Gold's stumble is the tell",
+        "kicker": "RISK \u00b7 SAFE-HAVEN CRACKS",
+        "byline": "S. Vance",
+        "one_line": "Gold fell 0.52% on the week despite a weaker dollar and a rising inflation impulse from oil \u2014 precisely the conditions that should have helped it.",
+        "tier": "feature",
+        "triage_index": 10,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      }
+    ]
+  },
+  "briefs": {
+    "rates-front-end-cuts": {
+      "slug": "rates-front-end-cuts",
+      "headline": "Front end still banks on cuts the long end doesn't buy",
+      "kicker": "RATES \u00b7 FED PRICING",
+      "byline": "G. Mehlman",
+      "body_md": "Treasury investors are showing conflicting views on the path ahead. The three-month bill sits at 3.76%, pricing in substantial rate cuts, while the thirty-year yield holds at 5.25%\u2014a gap reflecting the front end's optimism and the long end's inflation concerns. Oil surged 9.5% this week, with natural gas also climbing, raising the inflation risk the back end has been pricing in. If energy pressures continue, the front end's rate-cut bets look vulnerable to repricing, potentially flattening the curve from the belly rather than steepening.",
+      "sources_used": [],
+      "failed": false
+    },
+    "sectors-energy-breakout": {
+      "slug": "sectors-energy-breakout",
+      "headline": "Energy runs away with the tape as oil rips",
+      "kicker": "SECTORS \u00b7 ENERGY BREAKOUT",
+      "byline": "I. Aresti",
+      "body_md": "Energy is the only sector posting broad gains as crude oil surges. The Energy Select Sector SPDR (XLE) has climbed 11.4% over the past 20 days, riding a 9.45% spike in crude prices over five days. Over the same 20-day window, cyclical sectors have stumbled: industrials down 5.35%, discretionary off 4.13%.\n\nThe divergence raises a key question about durability. Energy's rally is commodity-driven\u2014a pure oil story\u2014not yet evidence of the broader reflation trade that would pull in cyclicals more generally. The direction of crude prices will be the key test for whether energy's outperformance extends.",
+      "sources_used": [],
+      "failed": false
+    },
+    "credit-spreads-shrug": {
+      "slug": "credit-spreads-shrug",
+      "headline": "Spreads shrug off the bond selloff \u2014 for now",
+      "kicker": "CREDIT \u00b7 COMPLACENCY WATCH",
+      "byline": "T. Larch",
+      "body_md": "High-yield bonds outperformed investment-grade debt this week despite both falling alongside Treasuries\u2014a pattern that may not account for mounting refinancing costs. HYG declined 0.73% over five days while LQD fell 0.82%, leaving high yield 0.09 percentage points ahead. The backdrop: the 30-year Treasury's climb past 5.25% is raising costs for the leveraged issuers that dominate high-yield indices. Energy stocks have rallied sharply, but industrials and consumer shares have both declined over two weeks\u2014a divergence that could pressure margins for non-energy credits. Credit spreads remain tight despite these structural pressures, a dynamic that may not prove sustainable.",
+      "sources_used": [],
+      "failed": false
+    },
+    "editorial-long-end": {
+      "slug": "editorial-long-end",
+      "headline": "The long end is where the story is",
+      "kicker": "EDITORIAL \u00b7 WEEKLY THESIS",
+      "byline": "The Editor",
+      "body_md": "Long-dated Treasury yields are rising sharply even as the dollar weakens and oil prices surge\u2014a combination that signals investors are pricing in persistent inflation and fiscal pressures rather than betting on near-term rate relief. The 30-year yield has broken 5.25% while the 3-month bill remains at 3.76%, creating a spread that widens dramatically past the 10-year point. Yet credit markets are shrugging it off: high-yield spreads barely moved as the long end sold off. The disconnect suggests two competing narratives: the front end betting on eventual Fed cuts, the back end pricing a term premium and imported-inflation story that cyclical traders are still treating as noise rather than risk. Watch whether credit follows equities higher or whether the long end's signal gains traction.",
+      "sources_used": [],
+      "failed": false
+    },
+    "rates-term-premium": {
+      "slug": "rates-term-premium",
+      "headline": "Long bond breaks 5.25% as term premium reasserts itself",
+      "kicker": "RATES \u00b7 TERM PREMIUM",
+      "byline": "G. Mehlman",
+      "body_md": "The thirty-year Treasury broke through 5.25% this week, but the curve's true shape matters most. With three-month bills at 3.757%, the steepening between front and back has been sharp\u2014yet doesn't read as purely hawkish. The ten-year sits at 4.784%, and the ten-to-thirty spread near 46 basis points means the long end has sold off disproportionately. That pattern signals rising term premium: investors demanding extra compensation to hold duration. The concurrent dollar weakness\u2014typically inconsistent with hawkish repricing\u2014suggests Treasury supply and U.S. fiscal trajectory are weighing more on long-bond prices than the Fed's next move.",
+      "sources_used": [
+        "Story briefing"
+      ],
+      "failed": false
+    },
+    "regions-em-oil-windfall": {
+      "slug": "regions-em-oil-windfall",
+      "headline": "Oil's surge splits emerging markets into winners and losers",
+      "kicker": "REGIONS \u00b7 EM",
+      "byline": "P. Kanu",
+      "body_md": "Crude's 9.45% surge this week has split emerging markets into opposing camps. Oil exporters are benefiting from both rising prices and a weakening dollar, while oil-importing nations face imported inflation pressures despite the typically-bullish currency tailwind from dollar weakness. The selective commodity rally\u2014base metals up just 1.06%\u2014confirms this is an oil-driven story. Watch how currency traders navigate the divergence: dollar softness should aid EM broadly, but oil importers may struggle to attract capital amid rising input costs.",
+      "sources_used": [],
+      "failed": false
+    },
+    "sectors-defensive-rotation": {
+      "slug": "sectors-defensive-rotation",
+      "headline": "Defensives quietly outperform as cyclicals fade",
+      "kicker": "SECTORS \u00b7 ROTATION",
+      "byline": "I. Aresti",
+      "body_md": "Defensive sectors found favor this week as growth stocks retreated\u2014a rotation reflecting investor positioning for slower economic expansion. Utilities advanced 0.82% and health care 0.17% over five days, while industrials fell 1.06%, materials 1.39%, and real estate 1.24%. The tilt toward stability, coupled with elevated long-end rates, points to market expectations of weaker growth ahead, even as broader equity indices remain supported.",
+      "sources_used": [],
+      "failed": false
+    },
+    "regions-china-metals-lag": {
+      "slug": "regions-china-metals-lag",
+      "headline": "Base metals' muted response says China demand isn't the story",
+      "kicker": "REGIONS \u00b7 CHINA",
+      "byline": "P. Kanu",
+      "body_md": "Oil surged nearly 10% this week while base metals languished, a divergence that undermines the China-stimulus narrative. The Invesco DB Commodity Index gained just 1.1% over five days and 1.5% over twenty, while crude climbed 9.5% and 20% respectively. Materials stocks fell alongside metals, reinforcing weak industrial demand. The gap suggests oil's recent strength reflects geopolitical risk or supply tightness rather than broad reflation in global industrial activity \u2014 a distinction that matters for how long this rally holds.",
+      "sources_used": [],
+      "failed": false
+    },
+    "fx-dollar-divergence": {
+      "slug": "fx-dollar-divergence",
+      "headline": "Dollar slips as yields climb \u2014 a decoupling worth watching",
+      "kicker": "FX \u00b7 DOLLAR DIVERGENCE",
+      "byline": "E. Castellano",
+      "body_md": "The dollar index fell to 99.16 over the past five days even as US long-end yields climbed to 5.246%, a divergence from the typical carry-trade relationship where higher duration yields are expected to draw capital and support the currency.\n\nMarkets are reading this move as a fiscal and inflation concern rather than a signal of hawkish economic growth\u2014a distinction that matters significantly for which strategies attract foreign capital.\n\nCrude oil gained 9.45% over the same window, complicating terms-of-trade dynamics for import-heavy economies. Traders will be watching whether this dollar-yield decoupling proves structural or merely a temporary reprieve.",
+      "sources_used": [],
+      "failed": false
+    },
+    "regions-us-term-premium": {
+      "slug": "regions-us-term-premium",
+      "headline": "Washington's term-premium problem becomes everyone's problem",
+      "kicker": "REGIONS \u00b7 US",
+      "byline": "P. Kanu",
+      "body_md": "The 30-year US Treasury yield has climbed above 5.2%, but the dollar is weakening\u2014a pairing that fractures the usual template for regional markets. Normally, rising US yields and dollar strength reinforce each other. The 3m10y curve sits at +1.027pp, normally shaped but steep. Yet the dollar index has fallen to 99.16, down 0.54% over five days. Oil is up 9.45% in the same window, importing an inflation dimension the rest of the world inherits. For dollar debtors, the weaker greenback offers relief. For anyone who priced growth or yield on the assumption of steady dollar support, the regime has shifted. Watch how emerging markets and commodity exporters respond; it tests whether the old relationship holds.",
+      "sources_used": [],
+      "failed": false
+    },
+    "risk-gold-stumble": {
+      "slug": "risk-gold-stumble",
+      "headline": "Gold's stumble is the tell",
+      "kicker": "RISK \u00b7 SAFE-HAVEN CRACKS",
+      "byline": "S. Vance",
+      "body_md": "Gold fell 0.52% over the past five days despite textbook safe-haven conditions: a weakening dollar down 0.54% and inflation concerns from rising oil. The move reverses gold's 2.08% gain over the prior 20 days, with silver holding marginally firmer at down 0.33%.\n\nRising real yields appear to be the culprit. The 30-year Treasury at 5.246% creates a steep opportunity cost for a non-yielding asset. This headwind is overwhelming the traditional safe-haven appeal of a weaker dollar and inflation fears. The key watch is whether this represents a temporary pause or signals market skepticism about the broader reflation narrative.",
+      "sources_used": [],
+      "failed": false
+    }
+  },
+  "articles": {
+    "fx-dollar-divergence": {
+      "slug": "fx-dollar-divergence",
+      "headline": "Dollar slips as yields climb \u2014 a decoupling worth watching",
+      "kicker": "FX \u00b7 DOLLAR DIVERGENCE",
+      "byline": "E. Castellano",
+      "body_md": "The dollar index fell to 99.16 even as US long yields pushed higher, breaking the usual playbook where rising yields support the currency.\n\nKey facts:\n- DXY at 99.16, -0.54% 5d, -0.44% 20d\n- 30Y yield at 5.246% during the same window\n- Oil +9.45% 5d complicates the picture for oil-importing currencies\n- Divergence between rising duration yields and a falling dollar is the week's key FX anomaly",
+      "in_one_sentence": "The dollar index fell to 99.16 even as US long yields pushed higher, breaking the usual playbook where rising yields support the currency.",
+      "image_url": "",
+      "image_caption": "",
+      "image_credit": "",
+      "sources": [],
+      "related_slugs": [],
+      "failed": true
+    },
+    "credit-spreads-shrug": {
+      "slug": "credit-spreads-shrug",
+      "headline": "Spreads shrug off the bond selloff \u2014 for now",
+      "kicker": "CREDIT \u00b7 COMPLACENCY WATCH",
+      "byline": "T. Larch",
+      "body_md": "HY and IG both fell alongside Treasuries this week, but high yield actually outperformed investment grade \u2014 a sign spreads aren't yet pricing long-end stress.\n\nKey facts:\n- HYG -0.73% 5d, LQD -0.82% 5d\n- HY vs IG 5-day differential of +0.09pp (HY relatively resilient)\n- 30Y yield at 5.246% raises the cost of refinancing for leveraged issuers\n- Energy sector strength (XLE +11.4% 20d) masks broader cyclical softness (XLI, XLY both down 20d) that could pressure non-energy HY credits",
+      "in_one_sentence": "HY and IG both fell alongside Treasuries this week, but high yield actually outperformed investment grade \u2014 a sign spreads aren't yet pricing long-end stress.",
+      "image_url": "",
+      "image_caption": "",
+      "image_credit": "",
+      "sources": [],
+      "related_slugs": [],
+      "failed": true
+    },
+    "sectors-energy-breakout": {
+      "slug": "sectors-energy-breakout",
+      "headline": "Energy runs away with the tape as oil rips",
+      "kicker": "SECTORS \u00b7 ENERGY BREAKOUT",
+      "byline": "I. Aresti",
+      "body_md": "XLE's 11.4% twenty-day gain, backed by a 9.45% one-week oil surge, is the standout sector story as the summer turns.\n\nKey facts:\n- XLE +2.20% 5d, +11.41% 20d\n- USO (oil) +9.45% 5d, +20.33% 20d\n- XLI (industrials) -1.06% 5d, -5.35% 20d\n- XLY (discretionary) -1.96% 5d, -4.13% 20d",
+      "in_one_sentence": "XLE's 11.4% twenty-day gain, backed by a 9.45% one-week oil surge, is the standout sector story as the summer turns.",
+      "image_url": "",
+      "image_caption": "",
+      "image_credit": "",
+      "sources": [],
+      "related_slugs": [],
+      "failed": true
+    },
+    "rates-front-end-cuts": {
+      "slug": "rates-front-end-cuts",
+      "headline": "Front end still banks on cuts the long end doesn't buy",
+      "kicker": "RATES \u00b7 FED PRICING",
+      "byline": "G. Mehlman",
+      "body_md": "The three-month Treasury bill is telling a different story than the thirty-year bond, and this week the gap between them widened rather than closed.\n\nThe bill yields 3.757%, just above the effective federal funds rate of roughly 3.63% and the top of the Fed's 3.50%\u20133.75% target range. The thirty-year, by contrast, has pushed out to 5.246%, and the ten-year sits at 4.784%. That is a curve built on two different forecasts: the front end pricing a central bank still inclined to ease, the long end pricing a central bank that may not get the chance.\n\n![Marriner S. Eccles Federal Reserve Board Building, Washington, D.C.](https://upload.wikimedia.org/wikipedia/commons/7/73/Eccles_Building_south_side.jpg)\n\n## A cutting bias, on paper\n\n The FOMC held rates steady in January by a 10-2 vote, with Governors Christopher Waller and Stephen Miran dissenting in favor of a cut. Miran has been explicit about why: labor-market softness, in his view, \"requires the central bank to slash at least four additional 25 basis-point cuts\" this year. He has also been explicit about dismissing the counter-argument \u2014 calling oil-driven inflation a typical \"one-off shock,\" not a reason to hold the line. Waller has echoed the dovish lean, signaling support for no hike even as hawks inside the building push back. Futures markets, per CME's FedWatch tracking, are not pricing a cut before the October meeting, but the front end's proximity to the top of the current range still reflects a market that expects the next move to be down, not up, once that meeting arrives.\n\n## The energy problem the doves are betting against\n\n Set against that is a 9.45% five-day surge in USO, the oil tracking fund, and a 20.3% gain over twenty trading days \u2014 a move tied directly to the resumption of U.S.-Iran strikes for the first time in roughly a month, according to reporting on the escalation. WTI has traded near $91 a barrel, within reach of levels last seen during the 2022 energy shock. It is not an isolated move: natural gas, via the UNG fund, is up 2.23% over five days and 8.42% over twenty, suggesting the inflation impulse is broadening across the energy complex rather than sitting in crude alone. Fund manager surveys have picked this up quickly \u2014 one recent poll found 45% now expect higher global inflation over the next year, up from just 9% a month earlier.\n\nThat is precisely the scenario Miran's \"one-off shock\" framing is betting will not matter. If it is wrong \u2014 if the energy move sits in headline inflation and then in expectations long enough to shift consumer and business behavior \u2014 the case for four more cuts gets harder to make, and the front end has further to reprice than the long end does.\n\n## Why this would flatten, not steepen\n\nThis week's selloff has been a long-end story: the thirty-year breaking 5.25% on term-premium concerns, not on a repricing of near-term Fed policy. A front-end repricing would work differently. If three-month and six-month yields climb toward \u2014 or through \u2014 the belly of the curve as cut expectations get pared back, the curve flattens from the middle rather than steepening from the long end. That is a distinct mechanism from what has driven yields this week, and it would arrive for a different reason: not a bigger term premium, but a smaller rate-cut discount.\n\nThe next real test is the October FOMC meeting, where futures currently price the first plausible cut. Between now and then, the relevant data is less the jobs report than the energy tape \u2014 how long oil holds above $90, whether the natural-gas move keeps broadening, and whether breakevens follow. Miran's bet is that they won't. The thirty-year yield says the bond market isn't so sure.",
+      "in_one_sentence": "A 3.76% three-month bill still bets on Fed cuts that a 5.25% thirty-year \u2014 and a 9.5% weekly oil surge \u2014 increasingly resist.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/73/Eccles_Building_south_side.jpg",
+      "image_caption": "The Marriner S. Eccles Federal Reserve Board Building in Washington, D.C.",
+      "image_credit": "Wikimedia Commons",
+      "sources": [
+        {
+          "title": "U.S-Iran strikes send oil, yields surging as Fed turns hawkish \u2014 CNBC",
+          "url": "https://www.cnbc.com/2026/09/02/us-iran-trump-war-escalation-latest-fed-rate-g20-bessent-yen-.html"
+        },
+        {
+          "title": "Traders revamp Fed interest-rate cut bets as jobs dip, oil rises in Iran war \u2014 Yahoo Finance",
+          "url": "https://finance.yahoo.com/news/traders-revamp-fed-interest-rate-184700134.html"
+        },
+        {
+          "title": "Treasury yields fall after Fed's Waller signals support for no rate hike \u2014 CNBC",
+          "url": "https://www.cnbc.com/2026/09/03/us-treasury-yields-bonds.html"
+        },
+        {
+          "title": "United States 30 Year Bond Yield \u2014 Trading Economics",
+          "url": "https://tradingeconomics.com/united-states/30-year-bond-yield"
+        },
+        {
+          "title": "Federal Funds Target Range - Upper Limit (DFEDTARU) \u2014 FRED",
+          "url": "https://fred.stlouisfed.org/series/DFEDTARU"
+        },
+        {
+          "title": "Effective Federal Funds Rate (EFFR) \u2014 Federal Reserve Bank of New York",
+          "url": "https://www.newyorkfed.org/markets/reference-rates/effr"
+        },
+        {
+          "title": "Federal Reserve Board - H.15 - Selected Interest Rates (Daily)",
+          "url": "https://www.federalreserve.gov/releases/h15/"
+        }
+      ],
+      "related_slugs": [
+        "editorial-long-end",
+        "rates-term-premium",
+        "regions-us-term-premium",
+        "sectors-energy-breakout",
+        "risk-gold-stumble"
+      ],
+      "failed": false
+    },
+    "editorial-long-end": {
+      "slug": "editorial-long-end",
+      "headline": "The long end is where the story is",
+      "kicker": "EDITORIAL \u00b7 WEEKLY THESIS",
+      "byline": "The Editor",
+      "body_md": "Look at the front end of the Treasury curve and the week looks orderly. The 3-month bill sits at 3.757%, the 10-year at roughly 4.79%, and the spread between them \u2014 the textbook recession-and-cuts gauge \u2014 is a healthy +1.03 percentage points, wider than it's been in years. By that measure alone, a reasonable person could conclude the bond market has settled into a comfortable story: the Federal Reserve is easing, the curve has un-inverted, and normalcy is returning.\n\nThat reading misses where the actual news is. Push out past the 10-year and the curve keeps steepening, hard, culminating in a 30-year bond that closed the week above 5.25% \u2014 a level the long bond hadn't touched since 2007 until this summer, and one it has now revisited with more conviction. At the same time, the dollar index has slipped 0.54% on the week and 0.44% over twenty days, moving in the wrong direction for a currency that's supposedly being offered a higher yield. And crude oil, measured through the USO tracking fund, has ripped 9.45% in five trading days and is up 20.3% over the past month.\n\nThree moves, one direction each, and none of them fit together under the theory that markets are simply pricing rate cuts. A cuts story steepens the curve by pulling the front end down while the back end holds still \u2014 it doesn't usually come with a weaker dollar and a surging oil price at the same time. What's on the table this week looks more like a term-premium and imported-inflation story: investors demanding more compensation to hold long-dated government debt, at the exact moment that energy costs are pushing back into the inflation conversation. Credit markets, so far, are acting as though none of it is real.\n\n## The back end is telling a fiscal story, not a cuts story\n\nThe distinction matters because it changes what the yield curve is supposed to mean. A front-end-led steepener \u2014 short rates falling faster than long ones \u2014 is the market pricing in a Fed that's cutting because growth is slowing or inflation is beaten. That's the benign version, and it's the one embedded in the 3-month/10-year spread. A back-end-led steepener, where the 30-year does the work by rising rather than the 3-month by falling, is a different animal. It says investors want more yield to own duration, independent of what the Fed does next.\n\nThe New York Fed's own decomposition of Treasury yields backs this up. Its ACM term-premium model \u2014 the standard academic-grade measure of the extra compensation investors demand for holding long bonds beyond expected short-rate paths \u2014 has climbed back into clearly positive territory this year after spending much of the post-financial-crisis era near or below zero. That is the signature of a market re-pricing risk in the debt itself, not just the growth outlook. Treasury's own financing calendar has done nothing to help: interest payments on the national debt topped $857 billion over the first nine months of the fiscal year, up 13% from a year earlier, and July's deficit was the largest monthly total since March 2021. Every refinancing of maturing debt at today's rates adds to the bill, and the market is starting to ask who absorbs the next leg of issuance.\n\n![U.S. Treasury Department building in Washington, D.C.](https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/U.S._Treasury_Department_Building%2C_Washington%2C_D.C_LCCN2011635063.jpg/1280px-U.S._Treasury_Department_Building%2C_Washington%2C_D.C_LCCN2011635063.jpg)\n\n## A weaker dollar breaks the old script\n\nIn the version of the world where long yields rise because growth is strong or the Fed is hawkish, the dollar goes up with them \u2014 foreign capital chases the higher return. That relationship has been breaking down in stretches this year, and this week is another data point for the break. Currency strategists have been flagging exactly this: the dollar's failure to firm alongside a multi-decade-high in long yields suggests its usual yield advantage isn't doing the work it once did, because the story behind the higher yields has shifted from growth optimism to fiscal anxiety and energy-driven inflation risk. A currency doesn't reward a government for borrowing more expensively; it asks harder questions about who's going to hold the debt and what it will be worth.\n\nPut differently: when yields rise because the world wants a bigger risk premium to lend to Washington, that isn't obviously dollar-positive. It can be dollar-negative, especially if the inflation embedded in that premium is the kind a rate hike doesn't fix \u2014 the kind that starts at the wellhead.\n\n## Oil supplies the inflation half of the story\n\nWhich is where crude comes in. The rally isn't a demand story \u2014 nobody is arguing the global economy suddenly accelerated 9% in a week. It's a supply-and-geopolitics story: renewed U.S.-Iran tension around the Strait of Hormuz, through which roughly a fifth of the world's oil transits, plus U.S. commercial inventories running below their five-year average through the rest of 2026. Crude has traded above $91 a barrel, up as much as 9% on the week at the highs, with Brent pushing toward $96.\n\n![Oil tanker docked, taking on fuel cargo](https://upload.wikimedia.org/wikipedia/commons/b/bf/Oil_tanker_MV_Houston.JPG)\n\nThat combination \u2014 a chokepoint risk premium layered on top of already-tight inventories \u2014 is precisely the kind of inflation impulse that doesn't respond to a Fed funds cut. It shows up in headline CPI within a month or two regardless of what short-term interest rates do, and it's a plausible piece of why long-duration investors are demanding more term premium: the inflation risk they're being asked to hold for thirty years just got a fresh, geopolitically-sourced tailwind.\n\n## Credit hasn't gotten the memo\n\nThe part of the market that should be most sensitive to a fiscal-and-inflation repricing \u2014 corporate credit \u2014 has barely moved. High-yield spreads have actually outperformed investment-grade by 0.09 percentage points this week, and they remain compressed to levels reached only about 5% of the time since 2000, with the high-yield index option-adjusted spread sitting in the richest decile of its own history. Analysts have been warning for months that this is a market priced for a uniformly benign outcome \u2014 limited upside, asymmetric downside \u2014 even as speculative-grade default rates run above their twenty-year median.\n\n![New York Stock Exchange signage on Wall Street](https://upload.wikimedia.org/wikipedia/commons/4/4e/NYSE_Advanced_Trading_Floor.jpg)\n\nThat's not necessarily wrong on any given day \u2014 credit can stay tight for a long time, and nothing this week is a default-cycle trigger. But it does mean credit is, for now, treating the term-premium story as background noise: a rates phenomenon that doesn't touch spreads, rather than a repricing of the same fiscal and inflation risk that corporate borrowers ultimately share with the sovereign that backstops them.\n\n## What the pieces add up to\n\nNone of these four moves \u2014 the long bond, the dollar, oil, credit's calm \u2014 is dramatic in isolation. Together they describe a market where the long end is doing the actual work of repricing risk, while the front end, the currency desk, and the credit desk are each, for their own reasons, still trading last quarter's script. The 3-month/10-year spread says cuts are coming and everything is fine. The 30-year, the dollar, and oil together say the price of long-duration risk and imported inflation is going up regardless of what the Fed does next meeting. Those two stories can coexist for a while. They cannot both be right indefinitely.\n\nThe next test is straightforward: watch whether high-yield spreads start moving if the 30-year holds above 5.25% into the next Treasury refunding announcement, and watch whether oil's geopolitical premium fades or hardens as U.S.-Iran tensions around the Strait either de-escalate or don't. If credit stays this quiet while the back end keeps climbing, it will mean one side is about to catch up to the other \u2014 and it is unlikely to be the long bond that moves first.",
+      "in_one_sentence": "The 30-year's break above 5.25%, a softer dollar, and a 9.5% oil spike are pricing fiscal and inflation risk that credit markets are still ignoring.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/U.S._Treasury_Department_Building%2C_Washington%2C_D.C_LCCN2011635063.jpg/1280px-U.S._Treasury_Department_Building%2C_Washington%2C_D.C_LCCN2011635063.jpg",
+      "image_caption": "The U.S. Treasury Department building in Washington, D.C. \u2014 where the fiscal math behind the term-premium story originates.",
+      "image_credit": "Carol M. Highsmith / Library of Congress, via Wikimedia Commons",
+      "sources": [
+        {
+          "title": "U.S. government debt yields are surging at a bad time \u2014 CNBC",
+          "url": "https://www.cnbc.com/2026/08/18/us-government-debt-yields-are-surging-at-a-bad-time-heres-whats-behind-the-move.html"
+        },
+        {
+          "title": "30-year Treasury yield tops 5.33%, new 19-year high \u2014 CNBC",
+          "url": "https://www.cnbc.com/2026/08/18/treasury-yields-.html"
+        },
+        {
+          "title": "Oil Prices Surge Past $91 on Strait of Hormuz Tensions and Inventory Draws",
+          "url": "https://www.interactivecrypto.com/oil-prices-surge-past-91-on-strait-of-hormuz-tensions-and-inventory-draws-sep-2026"
+        },
+        {
+          "title": "Dollar Weakness Linked to Rising Long-dated Bond Yields: Analysts",
+          "url": "https://www.poundsterlinglive.com/eurusd/23571-dollar-weighed-by-long-bond-yield-concerns"
+        },
+        {
+          "title": "US Dollar Index Trends Show Decoupling From Treasury Yields and Gold",
+          "url": "https://www.investing.com/analysis/us-dollar-index-trends-show-decoupling-from-treasury-yields-and-gold-200668670"
+        },
+        {
+          "title": "Credit Spreads at Historic Tights: What Now? \u2014 ETF Trends",
+          "url": "https://www.etftrends.com/credit-spreads-historic-tights-now/"
+        },
+        {
+          "title": "Looking beyond tight credit spreads: The opportunity in high yield bonds \u2014 T. Rowe Price",
+          "url": "https://www.troweprice.com/institutional/ca/en/insights/articles/2026/q3/looking-beyond-tight-credit-spreads-the-opportunity-in-high-yield-bonds-na.html"
+        },
+        {
+          "title": "10Y Term Premium 1961\u20132026: Decomposed Yield Data",
+          "url": "https://eco3min.fr/en/term-premium-decomposition-1961-2026/"
+        }
+      ],
+      "related_slugs": [
+        "rates-term-premium",
+        "rates-front-end-cuts",
+        "fx-dollar-divergence",
+        "credit-spreads-shrug",
+        "sectors-energy-breakout",
+        "regions-us-term-premium"
+      ],
+      "failed": false
+    },
+    "sectors-defensive-rotation": {
+      "slug": "sectors-defensive-rotation",
+      "headline": "Defensives quietly outperform as cyclicals fade",
+      "kicker": "SECTORS \u00b7 ROTATION",
+      "byline": "I. Aresti",
+      "body_md": "The headline number this week belonged to energy, which ripped higher alongside crude. But scroll down the sector-performance table and a quieter story sits beneath it: the two classic defensive sectors, utilities and health care, were the only groups outside energy to post gains over the past five trading days, while the sectors most tied to economic growth \u2014 industrials, real estate, materials and consumer discretionary \u2014 all fell.\n\nUtilities (XLU) rose 0.82% over five days, and health care (XLV) added 0.17%, extending a steadier 20-day gain of 3.48% that makes it the most consistent non-energy performer on the board. Set against that, industrials (XLI) dropped 1.06% on the week and are down 5.35% over 20 days; materials (XLB) fell 1.39%; real estate (XLRE) lost 1.24%. Financials (XLF) were dead flat on the week, treading water even as long-end yields climbed \u2014 a sector that would ordinarily welcome a steeper curve.\n\n![Transmission lines carrying power between substations](https://upload.wikimedia.org/wikipedia/commons/3/36/Electric_power_transmission_line.JPG)\n\n## A tell, not a headline\n\nUtilities is up on the week despite being down 1.22% over the past month, which suggests the move is fresh rather than a continuation of an existing trend \u2014 the kind of rotation that shows up when investors start trimming exposure to rate-sensitive cyclicals rather than chasing a story. Health care's steadier climb points the same direction: it is a sector that tends to hold up when investors expect earnings growth elsewhere to slow, since hospital visits and drug prescriptions don't move much with the economic cycle.\n\nThe pattern lines up with what's happening at the long end of the bond market this week, where the 30-year yield pushed through 5.25% as term premium reasserted itself \u2014 a move that raises the cost of capital for exactly the sectors now lagging. Industrials and real estate are both capital-intensive and rate-sensitive; materials depends on global industrial demand. None of the three needs a recession to underperform. They only need investors to price in slower growth and higher financing costs at the same time, which is roughly what the rates market did this week.\n\n## Reading the divergence\n\nWhat makes the rotation notable is that it's happening beneath a headline equity tape that isn't obviously stressed. Energy's rally is masking the defensive tilt in the rest of the market \u2014 a reminder that a single sector story can flatter an index while the internals point somewhere more cautious. Financials sitting flat despite higher long yields is worth watching too: a steeper curve is usually a net positive for bank margins, so a lack of follow-through there hints the market isn't yet convinced the move is durable, or is more worried about credit demand than net interest margin.\n\nThe next real test comes with earnings season and any data that firms up or dents the growth outlook \u2014 a soft print would likely deepen the gap between defensives and cyclicals rather than close it. Until then, the utilities-and-health-care bid looks less like a rush to safety and more like quiet positioning against the same slower-growth story the bond market is already pricing.",
+      "in_one_sentence": "Utilities and health care led the week's gainers outside energy while industrials, materials and real estate fell \u2014 a defensive tilt echoing the long-end rate story.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/36/Electric_power_transmission_line.JPG",
+      "image_caption": "Power transmission lines: utilities were among the only sectors outside energy to post gains this week.",
+      "image_credit": "123df / Wikimedia Commons (CC BY-SA 3.0)",
+      "sources": [
+        {
+          "title": "State Street Utilities Select Sector SPDR ETF (XLU) \u2014 stockanalysis.com",
+          "url": "https://stockanalysis.com/etf/xlu/"
+        },
+        {
+          "title": "State Street Industrial Select Sector SPDR ETF (XLI) \u2014 stockanalysis.com",
+          "url": "https://stockanalysis.com/etf/xli/"
+        },
+        {
+          "title": "The odd couple of 2026: cyclicals and defensives \u2014 BlackRock",
+          "url": "https://www.blackrock.com/us/individual/insights/cyclicals-vs-defensive"
+        },
+        {
+          "title": "Defensive Sectors: Are Utilities, Staples, and Health Care Signaling Trouble? \u2014 Investing.com",
+          "url": "https://www.investing.com/analysis/defensive-sectors-are-utilities-staples-and-health-care-signaling-trouble-200676749"
+        }
+      ],
+      "related_slugs": [
+        "sectors-energy-breakout",
+        "rates-term-premium",
+        "editorial-long-end",
+        "credit-spreads-shrug"
+      ],
+      "failed": false
+    },
+    "rates-term-premium": {
+      "slug": "rates-term-premium",
+      "headline": "Long bond breaks 5.25% as term premium reasserts itself",
+      "kicker": "RATES \u00b7 TERM PREMIUM",
+      "byline": "G. Mehlman",
+      "body_md": "The bond market delivered a clean, legible signal this week, and it wasn't the one the Federal Reserve was hoping to send. The 30-year Treasury yield pushed through 5.25%, a level that would have seemed exotic before 2007 and has become almost routine since midsummer. What makes this move worth stopping for isn't the round number \u2014 it's the shape of the curve underneath it.\n\nLine up the four points and the story tells itself: a three-month bill at 3.757%, a five-year note at 4.550%, a ten-year at 4.784%, and the long bond at 5.246%. The front end has barely budged in recent weeks. The back end has not stopped moving. The 3-month/10-year spread now sits at roughly 1.03 percentage points, and \u2014 more tellingly \u2014 the gap between the ten-year and the thirty-year has widened to around 46 basis points, meaning more of the curve's steepening is happening *beyond* ten years than within it.\n\n![U.S. Treasury yield curves showing the shift over time](https://upload.wikimedia.org/wikipedia/commons/8/85/U.S._Treasury_Yield_Curves_-_v1.png)\n\n## Not a Fed story\n\nThe textbook version of a steepening curve is a bear steepener driven by growth optimism or a hawkish Fed: short rates anchored near policy, long rates rising because the market expects the economy \u2014 and eventually the funds rate \u2014 to run hotter. Fed Chair Kevin Warsh gave that narrative some fuel at Jackson Hole in late August, warning that inflation progress had stalled and that the central bank might have \"work to do,\" language that pushed the market-implied odds of a September rate hike from roughly one-in-three to better than even. A stronger-than-expected August payrolls report \u2014 162,000 jobs against forecasts near 56,000 \u2014 added to the hawkish repricing on Friday.\n\nIf that were the whole story, the dollar should be rising with yields: higher expected policy rates typically pull in foreign capital and strengthen the currency. Instead, the dollar has been sliding through the same stretch that the long end sold off, a divergence that shows up clearly on the DXY charts of the past week. That combination \u2014 long yields up, dollar down \u2014 is not the fingerprint of a market repricing Fed hawkishness. It is closer to the fingerprint of a market demanding more compensation to hold duration, full stop, regardless of what the Fed does next.\n\n## Term premium, not growth premium\n\nStrip out inflation expectations and the expected path of short rates, and what's left in a long bond's yield is the term premium \u2014 the extra return investors require simply for the risk of holding a security decades from maturity. Estimates of the ten-year term premium have risen from below 0.50% earlier this year to a range closer to 0.80%\u20131.35%, according to strategist estimates circulating this week, a level not seen in roughly a decade. The proximate cause is supply. Interest payments on the national debt reached $857 billion in the first nine months of fiscal 2026, up 13% year-over-year and now exceeding both Medicare and defense outlays, while the Treasury continues issuing at a pace the market has to absorb without a correspondingly deep bid from price-insensitive buyers \u2014 foreign central banks and, until recently, the Fed itself, have both stepped back.\n\nTreasury's own actions this week underline the point. The department announced it would double the size of its liquidity-support buybacks in the 10-to-30-year sector, from a maximum of $2 billion to at least $4 billion per operation, effective September 9 and running through the November refunding announcement. Treasury framed the move as a response to \"strong sponsorship\" in prior operations \u2014 official language for a long end that needs propping up. That's a debt manager treating the back of the curve as a standalone liquidity problem, separate from whatever the Fed does with overnight rates.\n\n![Marriner S. Eccles Federal Reserve Board building, Washington D.C.](https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Eccles_Building_%2826088200676%29.jpg/330px-Eccles_Building_%2826088200676%29.jpg)\n\n## A self-reinforcing loop\n\nThe uncomfortable feature of a supply-driven term premium is that it feeds itself. Higher long yields raise the government's own borrowing costs, which widens the deficit, which requires more issuance, which \u2014 absent a matching increase in demand \u2014 presses yields higher still. Economists have taken to calling this dynamic \"fiscal primacy\": a regime in which the trajectory of government debt, not the central bank's reaction function, becomes the dominant force setting long-term borrowing costs. Insurance companies and pension funds, which need long-dated assets to match long-dated liabilities, have reportedly begun stepping in as buyers near 5.25% \u2014 a sign the market is finding a clearing price, but also a reminder that it's structural hedgers, not momentum buyers, doing the work of putting a floor under the market.\n\nNone of this makes a near-term Fed decision irrelevant. A September rate move, whichever direction, will still shift the front end and could nudge the 3-month/10-year spread. But it would do comparatively little to the ten-year/thirty-year gap, which is the part of the curve currently doing the most work \u2014 and the part that has the least to do with the Fed. The more useful things to watch from here are the November quarterly refunding statement, where Treasury will signal whether coupon auction sizes finally rise after holding steady through 2026, and whether foreign official buyers show up in the next few 30-year auctions' indirect-bidder statistics. Both will say more about where 5.25% goes next than anything coming out of the FOMC.",
+      "in_one_sentence": "The 30-year yield's break above 5.25% while bills sit near 3.75% and the dollar softens points to rising term premium and Treasury supply, not a hawkish Fed repricing.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/U.S._Treasury_Building_and_Albert_Gallatin_Statue.jpg/800px-U.S._Treasury_Building_and_Albert_Gallatin_Statue.jpg",
+      "image_caption": "The U.S. Treasury Building in Washington, D.C. \u2014 where debt-management decisions now shape the long end of the curve as much as Fed policy does.",
+      "image_credit": "Wikimedia Commons",
+      "sources": [
+        {
+          "title": "30-Year Treasury Yield Today \u2014 MacroRadar",
+          "url": "https://www.macroradar.io/30-year-treasury-yield"
+        },
+        {
+          "title": "Morning Bid: Bonds flashing red, 'term premium' at 10y high \u2014 Yahoo Finance",
+          "url": "https://finance.yahoo.com/news/morning-bid-bonds-flashing-red-110809179.html"
+        },
+        {
+          "title": "The 30-Year Treasury Yield Hit Levels Not Seen Since 2007 \u2014 Chase",
+          "url": "https://www.chase.com/personal/investments/learning-and-insights/article/30-year-treasury-yields-in-2026-considerations-for-investors"
+        },
+        {
+          "title": "Fed's Warsh Warns Inflation May Force September Rate Hike \u2014 Bloomberg",
+          "url": "https://www.bloomberg.com/news/articles/2026-08-28/warsh-s-inflation-warning-sets-up-september-showdown-for-the-fed"
+        },
+        {
+          "title": "2-year yield rises to highest since January 2025 after hot jobs report \u2014 CNBC",
+          "url": "https://www.cnbc.com/2026/09/04/treasurys-bonds-nonfarm-payrolls-unemployment-data.html"
+        },
+        {
+          "title": "Treasury Announces Increased Sizes of Nominal Long-End Liquidity Support Buybacks \u2014 U.S. Department of the Treasury",
+          "url": "https://home.treasury.gov/news/press-releases/sb0607"
+        },
+        {
+          "title": "United States Dollar Index weakens as yields ease \u2014 FXStreet",
+          "url": "https://www.fxstreet.com/news/united-states-dollar-index-weakens-below-9950-as-yields-ease-202609030510"
+        }
+      ],
+      "related_slugs": [
+        "editorial-long-end",
+        "rates-front-end-cuts",
+        "fx-dollar-divergence",
+        "regions-us-term-premium",
+        "risk-gold-stumble"
+      ],
+      "failed": false
+    },
+    "regions-china-metals-lag": {
+      "slug": "regions-china-metals-lag",
+      "headline": "Base metals' muted response says China demand isn't the story",
+      "kicker": "REGIONS \u00b7 CHINA",
+      "byline": "P. Kanu",
+      "body_md": "Oil is having the kind of week that usually drags the rest of the commodity complex along with it. Crude jumped roughly 9.5% as US-Iran tensions flared over the Strait of Hormuz, with reported strikes on tankers cutting the waterway's throughput by nearly half. That is the sort of move that, in a China-reflation story, would show up everywhere \u2014 in copper, in steel, in the mining equities that live and die by Chinese construction cycles. It hasn't.\n\nThe Invesco DB Base Metals Fund (DBB), a proxy for copper, aluminum and zinc, is up just 1.06% over five days and 1.5% over twenty. Materials-sector equities, tracked by the XLB, are actually down \u2014 off 1.39% on the week and 0.79% over the month. If oil's surge were a signal that global industrial demand is reaccelerating, base metals would be the confirming witness. Instead they are sitting this one out, and that gap is the more interesting story than the oil headline itself.\n\n## A supply story, not a demand story\n\nThe distinction matters because oil and copper respond to different things. Oil this week moved on a geography problem: roughly a fifth of the world's seaborne crude passes through the Strait of Hormuz, and renewed US-Iran hostilities put a chokepoint at risk, not a demand forecast. Copper, by contrast, is the more reliable industrial-demand bellwether precisely because it has no equivalent chokepoint story \u2014 it responds to what factories, grids and builders are actually ordering.\n\n![Chuquicamata copper mine in Chile's Atacama Desert, photographed from the International Space Station](https://upload.wikimedia.org/wikipedia/commons/d/d6/Chuquicamata_copper_mine_-_Chuquicamata-Kupfermine.jpg)\n\nAnd what factories are ordering, in China at least, remains ambiguous. The official NBS manufacturing PMI came in at 49.8 in August, its second straight month below the 50 expansion line, even as the privately compiled Caixin index \u2014 which skews toward smaller, export-oriented firms \u2014 climbed to 51.5. Copper's own price action tells a similarly split story: prices are still about 47% higher than a year ago, but have drifted down roughly 1.6% over the past month even as LME warehouse stocks swung sharply, first collapsing on a supply squeeze earlier in the year, then jumping by more than 35,000 tonnes in mid-August as metal flowed back into exchange warehouses. Some of that stock movement reflects US tariff positioning on refined copper rather than anything about end demand in China.\n\n## Why the gap matters for reading the tape\n\nThe temptation, when oil rips, is to fold it into a broader narrative \u2014 global growth is reaccelerating, China stimulus is finally landing, reflation is back. Base metals are the natural cross-check for that story, because they have no direct exposure to Middle East shipping lanes and a very direct exposure to Chinese construction and manufacturing output. Their muted response argues that this week's move belongs to the supply-and-geopolitics column, not the global-demand column. Materials equities underperforming even as headline commodity indices climb reinforces the same read: investors pricing mining and chemicals stocks are not treating the oil spike as good news for their order books.\n\nNone of this rules out a genuine China-led industrial rebound later in the year \u2014 the Caixin PMI's strength and structural copper demand from grid buildout and EVs are real countervailing forces. But for now, anyone using this week's oil rally as evidence of a broad reflation trade should note that the metal most sensitive to that exact thesis barely moved. The next test comes with China's September PMI prints in early October, and with whatever the Strait of Hormuz situation looks like by then \u2014 if tensions ease and oil gives back its gains while copper holds steady, that will confirm the supply-driven read rather than undercut it.",
+      "in_one_sentence": "Base metals rose just 1.1% while oil surged 9.5% on Hormuz tensions \u2014 a gap that says this is a supply shock, not a China demand rebound.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/d6/Chuquicamata_copper_mine_-_Chuquicamata-Kupfermine.jpg",
+      "image_caption": "Chuquicamata, one of the world's largest copper mines, seen from the International Space Station.",
+      "image_credit": "Alexander Gerst / ESA, via Wikimedia Commons (CC BY-SA 2.0)",
+      "sources": [
+        {
+          "title": "Oil Prices Surge Past $91 on Strait of Hormuz Tensions and Inventory Draws",
+          "url": "https://www.interactivecrypto.com/oil-prices-surge-past-91-on-strait-of-hormuz-tensions-and-inventory-draws-sep-2026"
+        },
+        {
+          "title": "Crude Oil - Price - Chart - Historical Data - News",
+          "url": "https://tradingeconomics.com/commodity/crude-oil"
+        },
+        {
+          "title": "China PMI August 2026 - FocusEconomics",
+          "url": "https://www.focus-economics.com/countries/china/news/pmi/china-pmi-02-09-2026-manufacturing-and-non-manufacturing-pmis-stay-soft-in-august/"
+        },
+        {
+          "title": "China Manufacturing PMI August 2026: Expansion Accelerates to 51.5 | S&P Global Survey",
+          "url": "https://www.indexbox.io/blog/china-manufacturing-pmi-rises-to-515-in-august-beating-expectations/"
+        },
+        {
+          "title": "Copper - Price - Chart - Historical Data - News",
+          "url": "https://tradingeconomics.com/commodity/copper"
+        },
+        {
+          "title": "Copper Traders Rush Metal Into LME Warehouses to Ease Squeeze - Bloomberg",
+          "url": "https://www.bloomberg.com/news/articles/2026-08-19/copper-holds-loss-as-deliveries-to-lme-mitigate-supply-crunch"
+        },
+        {
+          "title": "LME - Copper Warehouse Stock | Series | MacroMicro",
+          "url": "https://en.macromicro.me/series/3613/copper-lme-warehouse-stock"
+        },
+        {
+          "title": "XLB's Tough Year: Weak Momentum, Rising Risks, And No Clear Turnaround (NYSEARCA:XLB) | Seeking Alpha",
+          "url": "https://seekingalpha.com/article/4844035-xlbs-tough-year-weak-momentum-rising-risks-and-no-clear-turnaround"
+        },
+        {
+          "title": "Copper Demand Set to Slide as Rising Prices Bite in 2026",
+          "url": "https://discoveryalert.com.au/copper-demand-slide-price-rise-surplus-china-cy26/"
+        }
+      ],
+      "related_slugs": [
+        "sectors-energy-breakout",
+        "risk-gold-stumble",
+        "regions-em-oil-windfall",
+        "sectors-defensive-rotation"
+      ],
+      "failed": false
+    },
+    "regions-us-term-premium": {
+      "slug": "regions-us-term-premium",
+      "headline": "Washington's term-premium problem becomes everyone's problem",
+      "kicker": "REGIONS \u00b7 US",
+      "byline": "P. Kanu",
+      "body_md": "A US long bond over 5.25% and a softening dollar are a US-originated story, but the spillover runs through every region that prices dollars or duration.\n\nKey facts:\n- 30Y US yield at 5.246%, up against a DXY of 99.16 (-0.54% 5d)\n- 3m10y spread +1.027pp \u2014 a normally-shaped but steep curve\n- Oil +9.45% 5d adds an imported-inflation dimension to the US story that other regions inherit",
+      "in_one_sentence": "A US long bond over 5.25% and a softening dollar are a US-originated story, but the spillover runs through every region that prices dollars or duration.",
+      "image_url": "",
+      "image_caption": "",
+      "image_credit": "",
+      "sources": [],
+      "related_slugs": [],
+      "failed": true
+    },
+    "regions-em-oil-windfall": {
+      "slug": "regions-em-oil-windfall",
+      "headline": "Oil's surge splits emerging markets into winners and losers",
+      "kicker": "REGIONS \u00b7 EM",
+      "byline": "P. Kanu",
+      "body_md": "Crude oil's sharpest weekly rally since July is doing something a simple dollar chart cannot: splitting emerging markets into two camps that are having completely different weeks.\n\nThe US dollar index slipped 0.54% over five sessions, the kind of move that normally lifts every emerging-market currency at once by easing the cost of dollar debt and making local assets more attractive. But this dollar move is arriving alongside a 9.45% surge in crude \u2014 WTI's biggest weekly gain since mid-July \u2014 after Iran fired on Kuwait on September 3 in retaliation for earlier US strikes, and fighting along the Strait of Hormuz cut into tanker traffic. Commercial US crude stocks fell to 424.5 million barrels and refinery runs hit 98% utilization, the highest since 2018, while diesel touched a record $5.82 a gallon. For oil producers, that is a windfall. For importers, it's an inflation problem arriving at the worst possible moment.\n\n![The AbQaiq, an ultra-large crude carrier, under aerial escort in the Persian Gulf](https://upload.wikimedia.org/wikipedia/commons/7/75/Supertanker_AbQaiq.jpg)\n\n## The exporters are having a good week\n\nColombia's peso strengthened 1.22% to around 3,169 per dollar this week alone, extending a run that has it up roughly 19% for the year \u2014 one of the best performances of any currency globally \u2014 on the back of oil and coal export earnings, record remittances, and a central bank holding its policy rate at 12%. Mexico's peso touched 16.89 per dollar, its strongest level since May 2024, helped by a hefty interest-rate differential with the Federal Reserve as well as firmer crude. Nigeria's naira is on pace for its best annual performance since 2018, up close to 12% this year, as Bonny Light crude jumped more than 11% and foreign reserves climbed past $54 billion, an 18-year high, on the back of hydrocarbon revenue and remittance inflows.\n\nThese are the textbook beneficiaries of a terms-of-trade shock: countries that sell oil abroad get paid more for the same barrels, their current accounts improve, and their currencies catch a bid even before the weaker-dollar tailwind is added on top.\n\n## The importers are not\n\nThe same rally that cushions Bogot\u00e1 and Lagos is squeezing Mumbai, Ankara and Jakarta. The Indian rupee has been pinned near record lows around 95.4 per dollar, with traders pointing directly at renewed US-Iran hostilities and India's dependence on imports for more than 85% of its crude needs. Turkey's annual inflation, already running above 31%, is being kept there in part by energy costs tied to the Strait of Hormuz conflict, even as the lira remains under structural pressure. Indonesia's rupiah has slipped toward 17,780 per dollar, with a jump in fuel imports and accelerating core inflation \u2014 the highest since March 2023 \u2014 doing the damage. For all three, a softer dollar should be arriving as relief; instead it's being overwhelmed by a bigger, oil-shaped headwind pointed the other way.\n\n## A supply story, not a demand story\n\nWhat makes this an oil story specifically, rather than a broader emerging-market commodity boom, is the base-metals numbers. DBB, a proxy for industrial metals like copper and aluminum, is up just 1.06% over five days and 1.50% over the month \u2014 barely moving while crude has spiked nearly 10% in a week. If this were a story about surging Chinese or global industrial demand, metals would be moving with oil, not lagging far behind it. Instead, the gap points to a supply shock centered on the Strait of Hormuz, a chokepoint through which roughly a fifth of the world's oil transits, rather than a strengthening growth outlook that would lift commodity-sensitive EM currencies broadly.\n\nThat distinction matters for how long the split lasts. A demand-driven commodity boom tends to lift exporters and, eventually, importers too, as global growth broadens out. A war-premium supply shock does the opposite: it transfers income from importers to exporters with no offsetting growth benefit, and it can reverse just as fast as it arrived if the Strait reopens or a ceasefire holds. Traders have already seen that pattern once this year, when a fragile truce briefly knocked Brent back toward $72 before the latest escalation reversed it.\n\nThe next test is whether the US-Iran exchanges keep escalating or find another lull. A durable ceasefire would unwind the oil premium quickly and hand the dollar-weakness tailwind back to importers like India, Turkey and Indonesia in full. A prolonged shutdown of Hormuz shipping lanes would do the opposite, deepening the divide and forcing central banks in oil-importing EMs to choose between defending their currencies and supporting growth already showing signs of softening.",
+      "in_one_sentence": "A 9.45% weekly oil spike from the Iran conflict is enriching exporters like Colombia, Mexico and Nigeria while punishing importers like India, Turkey and Indonesia \u2014 even as a weaker dollar should help both.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/75/Supertanker_AbQaiq.jpg",
+      "image_caption": "An ultra-large crude carrier moves through the Persian Gulf \u2014 the kind of tanker traffic now snarled by the US-Iran conflict near the Strait of Hormuz.",
+      "image_credit": "Photographer's Mate 1st Class Kevin H. Tierney, U.S. Navy / Wikimedia Commons (public domain)",
+      "sources": [
+        {
+          "title": "Oil Posts Biggest Weekly Gain Since July as U.S.-Iran Conflict Rebuilds War Premium",
+          "url": "https://energynow.com/2026/09/oil-posts-biggest-weekly-gain-since-july-as-u-s-iran-conflict-rebuilds-war-premium/"
+        },
+        {
+          "title": "Crude heads for 5% weekly gain as US-Iran fighting continues",
+          "url": "https://www.thenationalnews.com/business/2026/09/04/crude-heads-for-5-weekly-gain-after-us-iran-fighting-continues/"
+        },
+        {
+          "title": "Colombia Markets: COLCAP & the Peso \u2014 September 4, 2026",
+          "url": "https://www.riotimesonline.com/colombia-markets-colcap-peso-friday-september-4-2026/"
+        },
+        {
+          "title": "Mexico Markets: IPC & the Peso \u2014 September 2, 2026",
+          "url": "https://www.riotimesonline.com/mexico-markets-ipc-peso-wednesday-september-2-2026/"
+        },
+        {
+          "title": "Nigerian Naira Heads for Best Annual Gain Since 2018",
+          "url": "https://allafrica.com/stories/202609040137.html"
+        },
+        {
+          "title": "Indian Rupee opens lower as renewed US-Iran tensions lift oil prices",
+          "url": "https://www.fxstreet.com/news/indian-rupee-opens-lower-as-renewed-us-iran-tensions-lift-oil-prices-202608310525"
+        },
+        {
+          "title": "Rupiah Nears 17,000 as Strong Dollar, Oil Risks Weigh",
+          "url": "https://tradingeconomics.com/indonesia/currency/news/537288"
+        },
+        {
+          "title": "Turkey Inflation Rate",
+          "url": "https://tradingeconomics.com/turkey/inflation-cpi"
+        }
+      ],
+      "related_slugs": [
+        "sectors-energy-breakout",
+        "fx-dollar-divergence",
+        "regions-china-metals-lag",
+        "risk-gold-stumble"
+      ],
+      "failed": false
+    },
+    "risk-gold-stumble": {
+      "slug": "risk-gold-stumble",
+      "headline": "Gold's stumble is the tell",
+      "kicker": "RISK \u00b7 SAFE-HAVEN CRACKS",
+      "byline": "S. Vance",
+      "body_md": "Gold had every reason to rally this week. The dollar was falling. Oil was ripping on Middle East supply fears, stoking exactly the kind of inflation scare that traditionally sends investors toward bullion. Instead, GLD slipped 0.52% over five trading days \u2014 a small move, but a conspicuous one, because almost nothing about the week's macro backdrop should have produced it.\n\n![400 oz gold bars](https://upload.wikimedia.org/wikipedia/commons/3/34/400-oz-Gold-Bars-AB-01.jpg)\n\n## The setup that should have worked\n\nStart with what did happen. The dollar index fell 0.54% on the week, a sizable move driven in large part by Federal Reserve Governor Christopher Waller's dovish remarks on Thursday, in which he said he'd prefer to hold rates steady if inflation keeps easing. Traders trimmed the odds of a September hike to roughly 50%, down from 63% the day before. A softer dollar is supposed to be a tailwind for gold, since bullion is priced in dollars and becomes cheaper for foreign buyers when the greenback weakens.\n\nMeanwhile oil was having its best week in months, pushed higher by ongoing hostilities in the Middle East and renewed uncertainty over shipping through the Strait of Hormuz. Energy-driven inflation scares are the other classic gold trigger \u2014 the metal's entire modern investment case rests on its reputation as a hedge against exactly this kind of shock. Gold did catch a bid late in the week, climbing back toward $4,500 an ounce on Thursday and Friday as yields retreated from their highs. But that bounce wasn't enough to erase the losses from earlier in the week, and the net result was still red.\n\n![Federal Reserve Governor Christopher Waller](https://upload.wikimedia.org/wikipedia/commons/5/52/Christopher_J._Waller%2C_Federal_Reserve_Governor_2.jpg)\n\n## Real yields are doing the talking\n\nThe more persuasive explanation sits at the long end of the Treasury curve. The 30-year yield has been parked above 5.2% \u2014 it touched 5.246% this week before easing modestly \u2014 as term premium reasserts itself after years of suppression. That matters more to gold than the dollar does, because gold pays no coupon. Every basis point added to real yields raises the opportunity cost of holding an asset that generates no income, while every basis point of dollar weakness only affects gold's price for buyers transacting in other currencies.\n\nThis is the dynamic UBS flagged back in May when it cut its year-end gold target from $5,900 to $5,500, citing what the bank called markets \"rediscovering the concept of opportunity cost.\" It's a dry phrase for what amounts to a real cost: with 10-year real yields sitting near 2.3-2.4% for much of this year and the long bond now pricing a stiffer term premium on top, government debt is once again competing directly with bullion for a slice of safe-money portfolios \u2014 and government debt pays.\n\nSilver's slightly better showing this week \u2014 SLV down just 0.33% versus GLD's 0.52%, and up 4.03% over 20 days against gold's 2.08% \u2014 is consistent with this read. Silver has a larger industrial-demand component that's less sensitive to real rates and more exposed to the same reflationary impulse coming from oil, which may explain why it held up better even as gold's safe-haven bid faltered.\n\n## The reflation question underneath\n\nThere's a structural counterweight worth noting: central banks are still buying gold at a pace of roughly 850 tonnes this year, according to World Gold Council estimates, more than double the pre-2022 average and a form of demand that doesn't care what real yields are doing. That buying has helped gold shrug off rate pressure before \u2014 it's part of why gold and real yields diverged so sharply over 2024-2026, with bullion rallying even as real rates stayed elevated. This week's stumble suggests that floor, while real, isn't infinite, and that at the margin, rate-sensitive money is still setting the price on any given week.\n\nThe more interesting question is what this says about the inflation story itself. If markets genuinely believed oil-driven price pressure was becoming durable, gold should be outperforming regardless of what the 30-year is doing. That it isn't \u2014 that gold priced this week more like a rate-sensitive asset than an inflation hedge \u2014 hints that traders see the oil spike as a supply shock rather than the start of a broader reflation. The next test comes with August CPI, due out in the coming weeks: a hot print that gold fails to rally on would be a much louder signal than one soft week already is.",
+      "in_one_sentence": "Gold fell 0.52% this week despite a weaker dollar and an oil-driven inflation scare \u2014 the setup that should have helped it most.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/34/400-oz-Gold-Bars-AB-01.jpg",
+      "image_caption": "400 oz gold bars \u2014 bullion that pays no coupon becomes more expensive to hold as real yields rise.",
+      "image_credit": "Andrzej Barabasz / Wikimedia Commons",
+      "sources": [
+        {
+          "title": "Gold Pressured by Rising Inflation Risks \u2014 Trading Economics",
+          "url": "https://tradingeconomics.com/commodity/gold/news/532737"
+        },
+        {
+          "title": "Gold rebounds towards 10-week high as markets brace for US CPI data \u2014 CNBC",
+          "url": "https://www.cnbc.com/2026/08/12/gold-rebounds-towards-10-week-high-as-markets-brace-for-us-cpi-data.html"
+        },
+        {
+          "title": "United States 30 Year Bond Yield \u2014 Trading Economics",
+          "url": "https://tradingeconomics.com/united-states/30-year-bond-yield"
+        },
+        {
+          "title": "Gold Prices and Real Interest Rates: What Every Investor Must Know \u2014 GoldSilver",
+          "url": "https://goldsilver.com/industry-news/article/gold-prices-and-real-interest-rates-what-every-investor-must-know/"
+        },
+        {
+          "title": "Gold Price Forecast 2026: What the Major Banks Are Predicting Now \u2014 GoldSilver",
+          "url": "https://goldsilver.com/industry-news/article/gold-price-forecast-2026-2027-key-predictions-from-top-analysts/"
+        },
+        {
+          "title": "Central bank gold statistics: Central banks remain committed to gold \u2014 World Gold Council",
+          "url": "https://www.gold.org/goldhub/gold-focus/2026/07/central-bank-gold-statistics-central-banks-remain-committed-gold"
+        },
+        {
+          "title": "Christopher Waller \u2014 Federal Reserve Board biography",
+          "url": "https://www.federalreserve.gov/aboutthefed/bios/board/waller.htm"
+        }
+      ],
+      "related_slugs": [
+        "rates-term-premium",
+        "fx-dollar-divergence",
+        "sectors-energy-breakout",
+        "regions-us-term-premium",
+        "regions-china-metals-lag"
+      ],
+      "failed": false
+    }
+  },
+  "predictions": [
+    {
+      "id": "1e0ddfda-5b43-472a-932f-e0dea0a19fc5",
+      "source": "macro",
+      "made_at": "2026-09-06T17:06:32.664706+00:00",
+      "claim": "30-year Treasury yield holds above 5.15% on every close through Oct 6, 2026, confirming the break above 5.25% wasn't a one-day spike.",
+      "horizon": "this-month",
+      "target_date": "2026-10-06",
+      "falsification_criteria": "Disproved if the 30Y closes below 5.15% on any trading day before or on Oct 6, 2026.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W36-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "Term-premium repricing tied to fiscal and inflation concerns tends to persist for weeks, not days, once it breaks a psychological level like 5.25%."
+    },
+    {
+      "id": "cc25ff88-e09a-461f-acfe-4ff7afd0139a",
+      "source": "macro",
+      "made_at": "2026-09-06T17:06:32.664706+00:00",
+      "claim": "Dollar index (DXY) closes below 98.50 on Oct 6, 2026, extending the yields-up/dollar-down decoupling seen this week.",
+      "horizon": "this-month",
+      "target_date": "2026-10-06",
+      "falsification_criteria": "Disproved if DXY closes at or above 98.50 on Oct 6, 2026.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W36-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "A dollar that can't rally on higher long yields signals investors are pricing US fiscal/inflation risk rather than a growth premium, and that dynamic rarely reverses in days."
+    },
+    {
+      "id": "e3099031-d4bd-4b64-aa2e-6267425f98ca",
+      "source": "macro",
+      "made_at": "2026-09-06T17:06:32.664706+00:00",
+      "claim": "Oil (USO) pulls back at least 5% from its Sept 4 close of $141.96 (i.e., trades below $134.86) at some point before Oct 6, 2026.",
+      "horizon": "this-month",
+      "target_date": "2026-10-06",
+      "falsification_criteria": "Disproved if USO never trades below $134.86 intraday or on close between Sept 5 and Oct 6, 2026.",
+      "conviction": "low",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W36-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "A 9.45% one-week, 20.3% one-month move is parabolic; some mean reversion is the base rate even within a genuine uptrend."
+    },
+    {
+      "id": "a9fc095d-d98d-48c8-a1cd-cb86f8c322e1",
+      "source": "macro",
+      "made_at": "2026-09-06T17:06:32.664706+00:00",
+      "claim": "HY-IG relative performance flips negative (IG outperforms HY on a rolling 20-day basis) at least once before Dec 5, 2026, showing credit finally cracks under long-end stress.",
+      "horizon": "this-quarter",
+      "target_date": "2026-12-05",
+      "falsification_criteria": "Disproved if HYG's 20-day return stays equal to or above LQD's 20-day return on every trading day through Dec 5, 2026.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W36-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "Credit has so far shrugged off the bond selloff, but a 30Y above 5.25% sustained for a quarter typically pressures leveraged-balance-sheet spreads with a lag."
+    },
+    {
+      "id": "d190ffcb-21fa-45b7-b4f6-1c0ab87af0ab",
+      "source": "macro",
+      "made_at": "2026-09-06T17:06:32.664706+00:00",
+      "claim": "3-month T-bill yield stays above 3.50% through Dec 5, 2026, meaning the Fed delivers fewer/smaller cuts than the front end currently prices.",
+      "horizon": "this-quarter",
+      "target_date": "2026-12-05",
+      "falsification_criteria": "Disproved if the 3M T-bill yield closes below 3.50% on any day before or on Dec 5, 2026.",
+      "conviction": "low",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W36-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "Oil's 20% one-month surge is an inflation impulse the Fed can't ignore, making the market's currently-priced cut path (3.76% to well below 3.50%) look too aggressive."
+    },
+    {
+      "id": "f9cde61d-65fe-479f-84b6-41d40a428836",
+      "source": "macro",
+      "made_at": "2026-09-06T17:06:32.664706+00:00",
+      "claim": "XLE (Energy) outperforms XLK (Technology) by at least 8 percentage points cumulatively from Sept 4, 2026 through Dec 5, 2026.",
+      "horizon": "this-quarter",
+      "target_date": "2026-12-05",
+      "falsification_criteria": "Disproved if XLE's cumulative total return over the period trails XLK's by less than 8 points, or underperforms outright.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W36-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "Energy's 20-day outperformance gap (~11.8pp) is already large; sustained crude strength and capex/earnings catch-up should keep the sector leading, even if the pace cools."
+    },
+    {
+      "id": "d79ff622-4b21-49ed-b476-d7648cfe6861",
+      "source": "macro",
+      "made_at": "2026-09-06T17:06:32.664706+00:00",
+      "claim": "Silver (SLV) outperforms Gold (GLD) by at least 5 percentage points cumulatively from Sept 4, 2026 through Mar 5, 2027.",
+      "horizon": "this-half",
+      "target_date": "2027-03-05",
+      "falsification_criteria": "Disproved if SLV's cumulative return over the period is less than 5 points above GLD's, or gold outperforms silver outright.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W36-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "Gold's failure to rally on a weaker dollar and rising oil-driven inflation this week suggests the metals trade is being led by industrial/inflation-beta silver rather than a pure safe-haven bid."
+    },
+    {
+      "id": "ede9ee41-d1c0-49a4-bf1c-7a24c459a867",
+      "source": "macro",
+      "made_at": "2026-09-06T17:06:32.664706+00:00",
+      "claim": "The 10Y-3M Treasury spread widens beyond 1.50 percentage points by Sept 6, 2027, as the curve keeps steepening from the back end even as the Fed cuts the front.",
+      "horizon": "this-year",
+      "target_date": "2027-09-06",
+      "falsification_criteria": "Disproved if the 10Y-3M spread (10Y yield minus 3M yield) closes at or below 1.50pp on Sept 6, 2027.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W36-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "A fiscal/term-premium-driven steepening (current spread 1.03pp) should keep widening as cuts pull the front end down faster than deficits and inflation let the long end fall."
+    },
+    {
+      "id": "fec51e2f-017a-4f54-9921-c9b90a70dcde",
+      "source": "macro",
+      "made_at": "2026-09-06T17:06:32.664706+00:00",
+      "claim": "The 30-year Treasury yield ends calendar year 2027 above 5.00%, i.e., this year's breakout reflects a structural repricing, not transient supply indigestion.",
+      "horizon": "multi-year",
+      "target_date": "2027-12-31",
+      "falsification_criteria": "Disproved if the 30Y Treasury yield closes calendar year 2027 (last trading day) at or below 5.00%.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W36-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "A term-premium move driven by persistent fiscal deficits and sticky inflation expectations tends to take years, not quarters, to fully unwind, even through a Fed cutting cycle."
+    }
+  ],
+  "homework": [
+    {
+      "id": "10fbd73a-6ea0-479e-9648-930a7db94686",
+      "source": "macro",
+      "made_at": "2026-08-02T17:07:10.546197+00:00",
+      "claim": "XLY gives back at least half of this week's 6.1% five-day gain (a >3% five-day decline) before Sept 1, 2026.",
+      "horizon": "this-month",
+      "target_date": "2026-09-01",
+      "falsification_criteria": "False if XLY never posts a five-trading-day decline exceeding 3% before Sept 1, 2026.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W31-calls",
+      "status": "falsified",
+      "graded_at": "2026-09-01T05:05:35.511851+00:00",
+      "grading_note": "XLY never posted a 5-trading-day decline exceeding 3% between Aug 2-Sept 1, 2026; maximum decline was -2.08% (Aug 11-17). July 24-31 baseline confirmed at 6.11% gain per Investing.com and StockAnalysis.com; Sept 1 close at $116.59 per Investing.com."
+    },
+    {
+      "id": "73f5ca5b-a463-44ac-8f46-23f58fa16d2e",
+      "source": "macro",
+      "made_at": "2026-08-02T17:07:10.546197+00:00",
+      "claim": "The 30-year Treasury yield holds above 5.15% through Sept 1, 2026, keeping the fiscal/term-premium story intact even as front-end cuts continue.",
+      "horizon": "this-month",
+      "target_date": "2026-09-01",
+      "falsification_criteria": "False if the 30Y yield closes below 5.15% on any day before Sept 1, 2026.",
+      "conviction": "high",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W31-calls",
+      "status": "proven",
+      "graded_at": "2026-09-01T05:04:25.991637+00:00",
+      "grading_note": "30-year Treasury yield closed at 5.28% on September 1, 2026 per Trading Economics, remaining above the 5.15% threshold throughout the period; previous readings showed 5.19% (Aug 31) and 5.22% (Aug 28), never crossing below 5.15%."
+    },
+    {
+      "id": "6c70bac3-8fa2-4072-be36-4f9771f7daf3",
+      "source": "macro",
+      "made_at": "2026-08-02T17:07:10.546197+00:00",
+      "claim": "DXY reclaims a 100.00+ close before Sept 1, 2026, as this week's break below 100 proves a short-term overshoot rather than a durable trend change.",
+      "horizon": "this-month",
+      "target_date": "2026-09-01",
+      "falsification_criteria": "False if DXY does not close at or above 100.00 on any trading day between now and Sept 1, 2026.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W31-calls",
+      "status": "proven",
+      "graded_at": "2026-09-01T05:04:00.133514+00:00",
+      "grading_note": "DXY closed at 100.01 on August 12, 2026 per Investing.com historical data; claim threshold of 100.00+ was met, falsifier not satisfied."
+    },
+    {
+      "id": "0bb41079-9200-4a80-b1d8-fe4887f49711",
+      "source": "macro",
+      "made_at": "2026-05-24T17:11:54.686713+00:00",
+      "claim": "XLK total return from May 22 to August 22, 2026 is negative \u2014 tech gives back the 20-day parabola.",
+      "horizon": "this-quarter",
+      "target_date": "2026-08-22",
+      "falsification_criteria": "XLK closes above its May 22, 2026 closing price on August 22, 2026.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W21-calls",
+      "status": "partial",
+      "graded_at": "2026-08-25T05:06:35.438931+00:00",
+      "grading_note": "August 22, 2026 close was $180.27 per StockAnalysis; May 22, 2026 close cannot be definitively confirmed via web search, but circumstantial evidence (May 29 175 calls, July 9 at $185.35, YTD +33% context) suggests ~$175-176 baseline, which would indicate falsification (+2.4-2.9% return)"
+    },
+    {
+      "id": "1ef83eab-304e-4ef7-a0c5-5471f572d028",
+      "source": "macro",
+      "made_at": "2026-07-26T17:06:39.608238+00:00",
+      "claim": "30Y Treasury yield holds at or above 5.00% through Aug 25 \u2014 no quick retreat from this week's inflation-risk pricing.",
+      "horizon": "this-month",
+      "target_date": "2026-08-25",
+      "falsification_criteria": "Disproved if the 30Y yield closes below 5.00% on any day before 2026-08-25.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W30-calls",
+      "status": "proven",
+      "graded_at": "2026-08-25T05:02:45.303576+00:00",
+      "grading_note": "30Y Treasury yield closed at 5.24% on August 25, 2026 per Trading Economics; threshold of 5.00% was clearly exceeded \u2014 proven."
+    },
+    {
+      "id": "4143135f-04ee-4707-9a87-816e661fe6f9",
+      "source": "macro",
+      "made_at": "2026-07-26T17:06:39.608238+00:00",
+      "claim": "Oil (USO) partially mean-reverts, closing below $130 at least once before Aug 25 after its 25% one-month spike.",
+      "horizon": "this-month",
+      "target_date": "2026-08-25",
+      "falsification_criteria": "Disproved if USO never closes below $130.00 between now and 2026-08-25.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W30-calls",
+      "status": "proven",
+      "graded_at": "2026-08-25T05:02:34.813615+00:00",
+      "grading_note": "USO closed below $130 multiple times between Jul 26 and Aug 25, 2026, with a low of $114.88 on Aug 5 per Stock Analysis; mean-reversion claim validated."
+    },
+    {
+      "id": "12a444b0-806d-4351-846d-0c1f2ea527e0",
+      "source": "macro",
+      "made_at": "2026-07-26T17:06:39.608238+00:00",
+      "claim": "The dollar's oil-shock bid fades \u2014 DXY closes back below 100.80 at some point before Aug 25, undoing this week's +0.71% pop.",
+      "horizon": "this-month",
+      "target_date": "2026-08-25",
+      "falsification_criteria": "Disproved if DXY stays at or above 100.80 on every trading day through 2026-08-25.",
+      "conviction": "low",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W30-calls",
+      "status": "proven",
+      "graded_at": "2026-08-25T05:02:30.496094+00:00",
+      "grading_note": "DXY closed at 99.86 on July 30, 2026 per Investing.com historical data, below the 100.80 threshold; falsification criterion (staying \u2265100.80 every day through Aug 25) was not met."
+    },
+    {
+      "id": "4216bfe6-b6ba-4885-94c3-4d222faa3614",
+      "source": "macro",
+      "made_at": "2026-05-24T17:11:54.686713+00:00",
+      "claim": "GLD closes above 430.00 at least once before August 22, 2026, as fiscal risk reignites the safe-haven bid.",
+      "horizon": "this-quarter",
+      "target_date": "2026-08-22",
+      "falsification_criteria": "GLD does not close above 430.00 at any point through August 22, 2026.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W21-calls",
+      "status": "falsified",
+      "graded_at": "2026-08-22T05:04:35.116695+00:00",
+      "grading_note": "GLD closed at $423.36 on August 21, 2026, the highest close in the May 24 - August 21 period per Investing.com; the intraday high reached only $424.88, both well below the $430.00 threshold required by the claim \u2014 falsifier clearly met."
+    }
+  ],
+  "for_strategies_md": "**Bias for the week ahead:**\n\n- _Rates:_ Curve steep on term-premium reassertion. Long end pricing fiscal/inflation; 30Y over 5.25% resists front-end cut hopes.\n- _FX:_ Dollar softer despite rising yields\u2014decoupling worth watching as rate premium tests its limits.\n- _Credit:_ Spreads haven't repriced long-end stress yet. HY outperforming IG; both down. Watch for widening if duration reprices.\n- _Sectors:_ Energy dominates (XLE +11% 20d). Defensives (utilities, health care) hold; cyclicals fade. Overweight energy and staples.\n- _Regions:_ Oil surge benefits EM exporters, pressures importers. Base metals muted vs. oil\u2014no China demand rebound signal.\n- _Risk:_ Gold's stumble (\u22120.52%) despite dollar weakness and inflation impulse signals crowded long unwind or deflationary repricing.\n\n**Watchlist:** XLE, USO, XLU, XLV, XLP, HYG, LQD, UNG, GLD, DBC, UUP, TLT"
+}
