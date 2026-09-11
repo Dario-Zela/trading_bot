@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenAI opens public beta of Agents API and finance workspace — 2026-09-11 — Trading Bot</title>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../../index.html">Dashboard</a>
+<a class="nav-tab active" href="../../news/latest.html">News</a>
+<a class="nav-tab" href="../../macro/latest.html">Macro</a>
+<a class="nav-tab" href="../../evolution.html">Evolution</a>
+<a class="nav-tab" href="../../ml/index.html">ML lab</a>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper article-page"><div class="edition-nav" data-edition="2026-09-11" data-kind="news"><a class="edition-nav-link" data-role="prev" href="../2026-09-10/" title="2026-09-10">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><a class="edition-nav-link disabled" data-role="next" href="#" aria-disabled="true">next →</a><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">TECH · OPENAI · By R. Okonkwo · 2026-09-11 · 4 min read</div><h1>OpenAI opens public beta of Agents API and finance workspace</h1><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>OpenAI&#x27;s new Agents API and finance template ship with accounting features like invoice triage — not the market-data links or compliance trails trading desks need.</div></div><div class="body"><p>OpenAI opened its Agents API to the public on Wednesday, offering developers direct access to the orchestration engine that powers Codex, its coding-agent product. Alongside it came something aimed at a different audience: a finance-themed template for "workspace agents," the company's tool for building AI helpers that live inside ChatGPT or Slack.</p>
+<p>The pairing invites an obvious question — has OpenAI built something for algorithmic trading desks, or just given a general-purpose product a finance-flavoured coat of paint? The details available so far point mostly to the latter.</p>
+<h2>What actually shipped</h2>
+<p>The Agents API is a managed version of the "Codex harness" — the scaffolding that decides how an AI agent uses tools, holds onto context over a long task, and hands off work to subagents. OpenAI says there's no extra fee beyond the usual charges for tokens, tool calls and the compute time of whatever sandbox the agent runs in. Developers can host the sandbox themselves, use one of nine partner providers including Cloudflare, Modal and Vercel, or let OpenAI run it. Agents can call out to Model Context Protocol servers, search the web, execute code and produce files.</p>
+<p>None of that is new in kind — Codex has offered agentic coding since 2025, and rival orchestration layers exist from Anthropic, Google and a swarm of startups. What's new is that OpenAI is renting out the plumbing behind its own flagship agent product, rather than keeping it in-house.</p>
+<p><img alt="Blue LED data-wall installation at the New York Stock Exchange's advanced trading floor" src="https://upload.wikimedia.org/wikipedia/commons/4/4e/NYSE_Advanced_Trading_Floor.jpg" /></p>
+<h2>Where finance comes in — and where it doesn't</h2>
+<p>The "finance workspace" is not a bespoke trading product. It is a template inside workspace agents — a starting point that comes pre-loaded with skills for variance analysis, invoice triage and reconciliation prompts. That is back-office accounting work: the kind of thing a finance team does closing the books, not the kind of thing a quant desk does hedging delta at market open. OpenAI has a separate, older initiative — ChatGPT for Financial Services, built with design partners including Morgan Stanley and Evercore — aimed at research and deal work, and licensed data feeds from providers such as LSEG and PitchBook. That, too, is about analysts reading documents faster, not agents placing orders.</p>
+<p>Nothing in Wednesday's announcement mentions market-data latency, order-management-system integrations, or the compliance audit trails that regulated trading firms require before letting software touch an execution venue. The gap matters because it's precisely where the hard engineering lives. Quant researchers who have tested LLM-driven trading agents report a consistent pattern: reasoning takes time, and time is the one thing live markets don't give you back. One recent analysis of decision-time reasoning in trading agents found that in fast-moving conditions, agents that stopped to "think" more actually lost money to stale quotes and mistimed fills, while simpler, faster logic held up better. Separately, of a dozen large language models benchmarked on trading tasks earlier this year, the best performer returned roughly 2.5% — a result that undercuts any pitch built on AI judgment replacing systematic strategy.</p>
+<h2>The reliability question</h2>
+<p>There's also the black-box problem. A firm's risk desk, and eventually its regulator, will want to know why an agent did what it did — not just the final trade, but the chain of tool calls and model reasoning that led there. OpenAI's pitch for the Agents API leans on manageability — automatic context compaction, tool-search optimisation, reliable long-running execution — which is the right vocabulary for infrastructure, but says nothing about explainability under audit. Data residency is currently US-only, and OpenAI does not support zero data retention on the new API, a detail that will matter to any institution with data-handling obligations before this gets anywhere near a live book.</p>
+<p>None of this means the tooling is useless to trading firms. A managed agent harness that handles multi-step tasks reliably could still save a quant shop real engineering time on research, backtesting scaffolding or ops automation — just not, on current evidence, on the execution path itself. The distance between "agent that reconciles invoices" and "agent that trades" is not a rebrand away from closing.</p>
+<p>What happens next is the tell: whether OpenAI's finance template gains genuine trading-specific integrations — market-data connectors, broker APIs, audit logging built for regulators — or whether it stays scoped to the accounting tasks it launched with. Enterprise customers evaluating the Agents API for anything market-facing will be watching for exactly that expansion, or its absence, over the coming months.</p></div><section class="sources-block"><h4>Sources</h4><ol><li><a href="https://openai.com/index/introducing-the-agents-api/" rel="nofollow noopener" target="_blank">Introducing the Agents API — OpenAI</a></li><li><a href="https://www.marktechpost.com/2026/09/10/openai-launches-the-agents-api-in-public-beta-putting-the-codex-harness-behind-one-api-call/" rel="nofollow noopener" target="_blank">OpenAI Launches the Agents API in Public Beta — MarkTechPost</a></li><li><a href="https://openai.com/index/introducing-workspace-agents-in-chatgpt/" rel="nofollow noopener" target="_blank">Introducing workspace agents in ChatGPT — OpenAI</a></li><li><a href="https://help.openai.com/en/articles/20001143-chatgpt-workspace-agents-for-enterprise-and-business" rel="nofollow noopener" target="_blank">ChatGPT Workspace Agents for Enterprise and Business — OpenAI Help Center</a></li><li><a href="https://openai.com/index/introducing-chatgpt-financial-services/" rel="nofollow noopener" target="_blank">Introducing ChatGPT for Financial Services — OpenAI</a></li><li><a href="https://mlquants.substack.com/p/agents-are-not-algorithms-the-tradeoffs" rel="nofollow noopener" target="_blank">Agents Are Not Algorithms: The Tradeoffs of Decision-Time Reasoning in AI Trading</a></li></ol></section><section class="related"><h4>Related in this edition</h4><a href="fitch-ai-bust-scenario.html"><span style="display:block;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:0.2rem;">MARKETS</span>Fitch models AI-bust scenario that could crash US stocks 35%</a><a href="google-finland-ai-datacentres.html"><span style="display:block;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:0.2rem;">TECH &amp; SCIENCE</span>Google to invest €13bn in Finland AI data centres, backed by 22-year nuclear deal</a><a href="lawmakers-ai-safety-warning.html"><span style="display:block;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:0.2rem;">TECH &amp; SCIENCE</span>Lawmakers call for new AI rules after Anthropic researcher&#x27;s safety warning</a></section><footer class="colophon">The Bot Tribune · 2026-09-11 · <a href="index.html">Back to the edition</a></footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
+</body>
+</html>
