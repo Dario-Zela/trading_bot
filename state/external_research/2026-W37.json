@@ -1,0 +1,40 @@
+{
+  "week_iso": "2026-W37",
+  "generated_at": "2026-09-12T09:03:27.735243+00:00",
+  "headline": "Backtest hygiene and factor-crowding evidence dominate the last two months, alongside fresh doubts about LLM-generated signals, a repriced earnings-day edge, and finer-grained regime detection.",
+  "themes": [
+    {
+      "theme": "Point-in-time universe bias inflates backtest Sharpes",
+      "summary": "Dead Signals Lab reconstructed true point-in-time S&P 500 membership and re-ran a standard backtest: net Sharpe collapsed from 0.63 to 0.06 once survivorship/look-ahead in index constituents was corrected \u2014 a bigger effect than any signal choice in the study.",
+      "implication": "fits existing: applies to all seven strategies' validation pipeline, not one strategy \u2014 audit whether our backtests use point-in-time (not current) constituent lists before trusting reported Sharpes"
+    },
+    {
+      "theme": "Earnings-day reaction beats classic post-earnings drift",
+      "summary": "Quanter Lab tested nine profitability/predictability cohorts across 20 sealed one-year windows (2006-2025): the classic quarterly-surprise PEAD book nets -0.5%/yr in large caps, but entering on the earnings-announcement day itself nets +2.2%/yr, peaking at a 10-day hold before fading.",
+      "implication": "spawn-candidate: earnings-day event entry variant for news-reactive \u2014 trigger on same-day earnings releases with a ~10-day hold instead of drift-chasing after the fact"
+    },
+    {
+      "theme": "Momentum crowds differently (and more safely) than reversal factors",
+      "summary": "\"Not All Factors Crowd Equally\" (arXiv 2512.11913) models crowding via ETF-flow proxies and finds momentum crowding accelerated sharply post-2015, but out-of-sample (2001-2024) crowded momentum shows lower crash risk than crowded reversal strategies.",
+      "implication": "fits existing: momentum-trader and mean-reverter \u2014 add a crowding/ETF-flow filter to momentum-trader as a minor tune, but treat mean-reverter's reversal signal as the higher crash-risk one warranting a tighter stop"
+    },
+    {
+      "theme": "LLM-generated consensus signals may be echo chambers, not new information",
+      "summary": "Quantpedia's write-up of \"Do LLM 'Crowds' Produce Investment Signals? An Empirical Test\" queries 100 distinct LLM investor personas and finds the aggregated consensus largely reproduces existing factor exposures rather than adding independent cross-sectional predictability.",
+      "implication": "fits existing: news-reactive \u2014 before trusting brief-derived picks as edge, check they aren't just restating consensus sentiment already priced in"
+    },
+    {
+      "theme": "Finer-grained multivariate regime detection outperforms simple regime splits",
+      "summary": "A 2025/26 Gaussian HMM study (ResearchGate) using PCA-preprocessed multivariate inputs over 2010-2025 identifies nine distinct market regimes rather than the usual two or three, with expansion regimes showing ~20-30% annualized returns at ~12% vol and contraction regimes flagged well ahead of drawdowns.",
+      "implication": "fits existing: macro-aligned \u2014 tune the regime layer from a coarse yield-curve/DXY split toward a multivariate HMM with more granular states"
+    }
+  ],
+  "body_md": "## Backtest hygiene and factor-crowding evidence dominate the last two months, alongside fresh doubts about LLM-generated signals, a repriced earnings-day edge, and finer-grained regime detection.\n\n### Point-in-time universe bias inflates backtest Sharpes\n\nDead Signals Lab reconstructed true point-in-time S&P 500 membership and re-ran a standard backtest: net Sharpe collapsed from 0.63 to 0.06 once survivorship/look-ahead in index constituents was corrected \u2014 a bigger effect than any signal choice in the study.\n\n**Implication:** fits existing: applies to all seven strategies' validation pipeline, not one strategy \u2014 audit whether our backtests use point-in-time (not current) constituent lists before trusting reported Sharpes\n\n### Earnings-day reaction beats classic post-earnings drift\n\nQuanter Lab tested nine profitability/predictability cohorts across 20 sealed one-year windows (2006-2025): the classic quarterly-surprise PEAD book nets -0.5%/yr in large caps, but entering on the earnings-announcement day itself nets +2.2%/yr, peaking at a 10-day hold before fading.\n\n**Implication:** spawn-candidate: earnings-day event entry variant for news-reactive \u2014 trigger on same-day earnings releases with a ~10-day hold instead of drift-chasing after the fact\n\n### Momentum crowds differently (and more safely) than reversal factors\n\n\"Not All Factors Crowd Equally\" (arXiv 2512.11913) models crowding via ETF-flow proxies and finds momentum crowding accelerated sharply post-2015, but out-of-sample (2001-2024) crowded momentum shows lower crash risk than crowded reversal strategies.\n\n**Implication:** fits existing: momentum-trader and mean-reverter \u2014 add a crowding/ETF-flow filter to momentum-trader as a minor tune, but treat mean-reverter's reversal signal as the higher crash-risk one warranting a tighter stop\n\n### LLM-generated consensus signals may be echo chambers, not new information\n\nQuantpedia's write-up of \"Do LLM 'Crowds' Produce Investment Signals? An Empirical Test\" queries 100 distinct LLM investor personas and finds the aggregated consensus largely reproduces existing factor exposures rather than adding independent cross-sectional predictability.\n\n**Implication:** fits existing: news-reactive \u2014 before trusting brief-derived picks as edge, check they aren't just restating consensus sentiment already priced in\n\n### Finer-grained multivariate regime detection outperforms simple regime splits\n\nA 2025/26 Gaussian HMM study (ResearchGate) using PCA-preprocessed multivariate inputs over 2010-2025 identifies nine distinct market regimes rather than the usual two or three, with expansion regimes showing ~20-30% annualized returns at ~12% vol and contraction regimes flagged well ahead of drawdowns.\n\n**Implication:** fits existing: macro-aligned \u2014 tune the regime layer from a coarse yield-curve/DXY split toward a multivariate HMM with more granular states\n\n### Sources\n\n- https://quantocracy.com/recent-quant-links-from-quantocracy-as-of-09062026/\n- https://arxiv.org/pdf/2512.11913\n- https://quantpedia.com/do-llm-crowds-produce-investment-signals-an-empirical-test/\n- https://www.researchgate.net/publication/398722347_Machine_Learning-Driven_Market_Regime_Analysis_in_Equity_Markets_A_Gaussian_Hidden_Markov_Model_Approach\n- https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3986499",
+  "sources": [
+    "https://quantocracy.com/recent-quant-links-from-quantocracy-as-of-09062026/",
+    "https://arxiv.org/pdf/2512.11913",
+    "https://quantpedia.com/do-llm-crowds-produce-investment-signals-an-empirical-test/",
+    "https://www.researchgate.net/publication/398722347_Machine_Learning-Driven_Market_Regime_Analysis_in_Equity_Markets_A_Gaussian_Hidden_Markov_Model_Approach",
+    "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3986499"
+  ]
+}

@@ -362,3 +362,34 @@
 - **news-reactive-sentiment-gate@uk-eu** · `keep` · ✅ applied — Shadow tier, hit-rate 30% and negative pnl (-96.54) on n=336 — weak, but shadow tier has no forced-demotion consequence; monitoring.
 - **ml-challenger@uk-eu** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow UK-EU candidate (IC=+0.148, n=406) → trading212-paper
   - details: `{"target_tier": "trading212-paper", "t212_slot": 1, "enforcement": true, "slot_kind": "trading212"}`
+
+## Weekly evolution — 2026-09-12
+
+- **macro-aligned-hmm@us** · `keep` · ✅ applied — 0 trades in 14 days but n_predictions_graded=0 (no grading yet) and meets_demotion_criteria=false — too early to act, held pending the cost-gate loosen applied strategy-wide.
+- **macro-aligned-hmm@uk-eu** · `keep` · ✅ applied — Only 1 trade (100% hit, +£46.37) — directionally fine but n too small to promote or flag; monitor after the cost-gate tune.
+- **macro-aligned-hmm** · `tune` · ✅ applied — cost_gate_multiplier=4.0 is the highest-restriction setting in the safety range and this strategy has logged only 1 trade across both regions in 14 days; loosening it is the most direct lever to get it actually engaging the market so we can grade its signal.
+  - details: `{"applied": {"cost_gate_multiplier": 2.5}, "rejected": {}}`
+- **news-reactive-sentiment-gate@us** · `keep` · ✅ applied — Alpaca-paper slot, 0 trades in 14 days, but no demotion criteria met (n_predictions_graded=0, not the ≥150-graded/≤5-trades dormant case) — too early to pull the slot.
+- **news-reactive-sentiment-gate@uk-eu** · `keep` · ✅ applied — 2 trades, 100% hit, +£86.01 — solid early shadow signal, hold for more n before any tier move.
+- **momentum-trader-vix-gated@us** · `keep` · ✅ applied — 0 trades in 14 days on the US side while uk-eu is the strongest per-trade performer on the slate — regional asymmetry noted, not yet actionable without a config lever for VIX-gate calibration.
+- **momentum-trader-vix-gated@uk-eu** · `mark-tier2-candidate` · ✅ applied — avg_pnl_pct of 8.99% is nearly double any other sleeve's — worth flagging now even though n=3 is thin, so next week's run grades whether it holds up.
+  - details: `{"tier2_marked_at": "2026-09-12", "thesis_present": true}`
+- **ml-challenger** · `tune` · ⏭️ skipped — Strategy is evolution_frozen (experiment control) — 'tune' refused. (prefilter_mode='off' is only guidance-sanctioned for rule-based strategies whose own logic IS the filter, but ml-challenger is not control-rule-based — and it is fully dormant (0 trades) in BOTH regions, including the single trading212-paper slot. Switching to a real prefilter is the most likely fix for the total lack of engagement burning our only UK-EU paper slot.)
+- **ml-challenger@us** · `keep` · ✅ applied — Covered by the prefilter_mode tune this cycle; re-assess engagement next week.
+- **ml-challenger@uk-eu** · `keep` · ✅ applied — Holds the only trading212-paper slot with 0 trades in 14 days; kept (not demoted) because meets_demotion_criteria=false, but the prefilter tune directly targets this dormancy.
+- **news-reactive-disclosure@us** · `keep` · ✅ applied — Alpaca-paper, 0 trades in 14 days, demotion criteria not met — hold, and this strategy is the parent of this week's earnings-day spawn so it stays intact as the control.
+- **news-reactive-disclosure@uk-eu** · `keep` · ✅ applied — 1 trade, 100% hit, +£76.86 — thin but positive, hold.
+- **macro-aligned-hmm-regime-gated** · `deactivate` · ✅ applied — Zero trades in BOTH regions over the full 14-day window, while its ungated sibling macro-aligned-hmm (same HMM thesis, same universes) at least logged a trade — this is redundant, over-restrictive capacity duplicating a thesis already covered elsewhere on the slate. Freeing this pair of slots funds a genuinely new axis (earnings-day event entry) rather than holding two overlapping, mostly-idle macro-regime shadows against the 18-strategy cap.
+  - details: `{"deactivated_at": "2026-09-12"}`
+- **news-reactive-buzz-fade@us** · `mark-tier2-candidate` · ✅ applied — Largest n_trades (6) and largest total P&L (£515.77) of any sleeve on the slate — the clearest signal-plus-volume combination so far.
+  - details: `{"tier2_marked_at": "2026-09-12", "thesis_present": true}`
+- **news-reactive-buzz-fade@uk-eu** · `mark-tier2-candidate` · ✅ applied — Consistent (100% hit) but roughly half the us sleeve's avg return — tracking it separately since regions are independent exposures.
+  - details: `{"tier2_marked_at": "2026-09-12", "thesis_present": true}`
+- **mean-reverter** · `tune` · ✅ applied — arXiv 2512.11913 finds crowded reversal factors carry materially higher crash risk than crowded momentum out-of-sample (2001-2024); tightening mean-reverter's stop from -3.0% to -2.0% is the direct risk-adjusted response while both regions are still at 0 trades and can't yet demonstrate the reversal edge is worth the extra tail risk.
+  - details: `{"applied": {"stop_loss_pct": -2.0}, "rejected": {}}`
+- **mean-reverter@us** · `keep` · ✅ applied — Alpaca-paper, 0 trades in 14 days, demotion criteria not met — hold with the tighter stop just applied.
+- **mean-reverter@uk-eu** · `keep` · ✅ applied — 0 trades, same as us side — monitor after the stop-loss tune.
+- **news-reactive@us** · `keep` · ✅ applied — 0 trades in 14 days, no criteria met — hold.
+- **news-reactive@uk-eu** · `keep` · ✅ applied — 3 trades, 100% hit, +£203.90 — solid but not separated enough from buzz-fade@uk-eu to displace it on the leaderboard.
+- **news-reactive-disclosure** · `spawn-variant` · ✅ applied — Directly anchored to this week's external-research brief (earnings-day entry beating classic PEAD by ~2.7pp/yr net), and breaks two axes vs the existing slate (event trigger instead of daily rebalance; short event-window time-slice instead of always-on) rather than being a parameter tweak of an existing strategy.
+  - details: `{"variant_id": "news-reactive-earnings-day", "addendum_applied": true}`

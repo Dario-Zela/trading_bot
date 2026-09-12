@@ -7,7 +7,7 @@ description: "Auto-spawned variant of macro-aligned-hmm on 2026-08-01 by the wee
   \ rather than re-running the same always-on template. Anchored to arXiv:2607.06117\
   \ (relief-gated rotation) and arXiv:2604.08356 (MRP durability metric)."
 implementation: llm
-active: true
+active: false
 capital_gbp: 8000.0
 max_positions: 2
 max_position_pct: 45.0
@@ -47,3 +47,4 @@ prefilter_top_n: 100
 prefilter_sort_key: dollar_volume_desc
 last_tune_date: '2026-05-27'
 cost_gate_multiplier: 4.0
+deactivated_at: '2026-09-12'

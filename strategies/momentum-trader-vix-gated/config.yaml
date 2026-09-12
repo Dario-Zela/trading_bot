@@ -35,6 +35,11 @@ runs_in:
   t212_slot: null
   universe: t212_isa_uk_eu
   alpaca_slot: null
+  tier2_candidate: true
+  tier2_marked_at: '2026-09-12'
+  tier2_thesis: "#2 on the leaderboard: highest per-trade edge on the slate (3 trades,\
+    \ 100% hit, avg +8.99%, \xA3344.18 total). Behind buzz-fade@us on sample size\
+    \ (n=3 vs 6); need 5+ more trades to separate from noise."
 skip_if_earnings_in_days: 1
 prefilter_mode: python
 prefilter_top_n: 100

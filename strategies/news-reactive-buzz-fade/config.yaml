@@ -35,14 +35,22 @@ runs_in:
   tier: shadow
   alpaca_slot: null
   universe: t212_isa_us
-  tier2_candidate: false
-  tier2_marked_at: null
-  tier2_thesis: ''
+  tier2_candidate: true
+  tier2_marked_at: '2026-09-12'
+  tier2_thesis: "#1 on the leaderboard: strongest sample size AND performance combo\
+    \ on the slate \u2014 6 trades, 100% hit rate, avg +4.67%, \xA3515.77 total. Leads\
+    \ buzz-fade@uk-eu and momentum-trader-vix-gated@uk-eu on trade count; watch for\
+    \ hit-rate decay as n grows."
 - region: uk-eu
   tier: shadow
   t212_slot: null
   universe: t212_isa_uk_eu
   alpaca_slot: null
+  tier2_candidate: true
+  tier2_marked_at: '2026-09-12'
+  tier2_thesis: "#3 on the leaderboard: same strategy as the us leader, weaker per-trade\
+    \ edge (3 trades, 100% hit, avg +2.49%, \xA3181.75). Kept as a candidate to see\
+    \ if it converges toward the us sleeve's numbers or lags structurally."
 prefilter_mode: llm
 prefilter_top_n: 60
 cost_gate_multiplier: 4.0
