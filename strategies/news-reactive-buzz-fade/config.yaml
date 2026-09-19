@@ -36,21 +36,22 @@ runs_in:
   alpaca_slot: null
   universe: t212_isa_us
   tier2_candidate: true
-  tier2_marked_at: '2026-09-12'
-  tier2_thesis: "#1 on the leaderboard: strongest sample size AND performance combo\
-    \ on the slate \u2014 6 trades, 100% hit rate, avg +4.67%, \xA3515.77 total. Leads\
-    \ buzz-fade@uk-eu and momentum-trader-vix-gated@uk-eu on trade count; watch for\
-    \ hit-rate decay as n grows."
+  tier2_marked_at: '2026-09-19'
+  tier2_thesis: "#2: still leads on avg pnl/trade (3.98% vs 2.85%) but now trails\
+    \ uk-eu on n_trades (4 vs 5) and total P&L (\xA3285.74 vs \xA3330.34). Same underlying\
+    \ edge, two regions converging \u2014 promoted to alpaca-paper to see which holds\
+    \ up net of fees."
 - region: uk-eu
   tier: shadow
   t212_slot: null
   universe: t212_isa_uk_eu
   alpaca_slot: null
   tier2_candidate: true
-  tier2_marked_at: '2026-09-12'
-  tier2_thesis: "#3 on the leaderboard: same strategy as the us leader, weaker per-trade\
-    \ edge (3 trades, 100% hit, avg +2.49%, \xA3181.75). Kept as a candidate to see\
-    \ if it converges toward the us sleeve's numbers or lags structurally."
+  tier2_marked_at: '2026-09-19'
+  tier2_thesis: "Now #1: leads on n_trades (5) and total P&L (\xA3330.34), narrowly\
+    \ behind the us sleeve on avg %/trade (2.85% vs 3.98%). Converged past last week's\
+    \ gap as predicted. Promoted to trading212-paper this week \u2014 watch for hit-rate\
+    \ decay past n=5."
 prefilter_mode: llm
 prefilter_top_n: 60
 cost_gate_multiplier: 4.0

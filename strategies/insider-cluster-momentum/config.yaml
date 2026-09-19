@@ -1,0 +1,48 @@
+id: insider-cluster-momentum
+display_name: News reactive (variant) (variant)
+description: "Auto-spawned variant of news-reactive-disclosure on 2026-09-19 by the\
+  \ weekly evolution agent. Reason: Parent (news-reactive-disclosure) is fully dormant\
+  \ in both regions \u2014 its daily general-disclosure scan isn't finding tradeable\
+  \ setups. Insider cluster buying is a structurally distinct, slower-cadence signal\
+  \ source the slate doesn't otherwise cover, giving genuine diversification rather\
+  \ than a re-tuned clone."
+implementation: llm
+active: true
+capital_gbp: 10000.0
+max_positions: 3
+max_position_pct: 25.0
+min_position_gbp: 50
+use_stops: true
+use_take_profits: true
+stop_loss_pct: -5.0
+take_profit_pct: 8.0
+last_tune_date: '2026-05-30'
+tools:
+- get_universe
+- get_history
+- get_recent_news
+- get_earnings_info
+- get_filing_summary
+- get_insider_trades
+- get_daily_news_brief
+model_assignment:
+  wide_scoring: haiku
+  deep_analysis: sonnet
+  final_select: sonnet
+runs_in:
+- region: us
+  tier: shadow
+  alpaca_slot: null
+  universe: t212_isa_us
+  tier2_candidate: false
+  tier2_marked_at: null
+  tier2_thesis: ''
+- region: uk-eu
+  tier: shadow
+  t212_slot: null
+  universe: t212_isa_uk_eu
+  alpaca_slot: null
+prefilter_mode: llm
+prefilter_top_n: 40
+cost_gate_multiplier: 3.0
+deactivated_at: '2026-09-19'

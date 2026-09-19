@@ -393,3 +393,32 @@
 - **news-reactive@uk-eu** · `keep` · ✅ applied — 3 trades, 100% hit, +£203.90 — solid but not separated enough from buzz-fade@uk-eu to displace it on the leaderboard.
 - **news-reactive-disclosure** · `spawn-variant` · ✅ applied — Directly anchored to this week's external-research brief (earnings-day entry beating classic PEAD by ~2.7pp/yr net), and breaks two axes vs the existing slate (event trigger instead of daily rebalance; short event-window time-slice instead of always-on) rather than being a parameter tweak of an existing strategy.
   - details: `{"variant_id": "news-reactive-earnings-day", "addendum_applied": true}`
+
+## Weekly evolution — 2026-09-19
+
+- **news-reactive-disclosure** · `deactivate` · ✅ applied — 0 trades in both us (alpaca-paper) and uk-eu (shadow) over 14 days despite daily LLM prefilter calls with insider/filing tool access — the daily disclosure-scan approach isn't clearing its own cost gate. Retiring in favor of a slower, cluster-focused successor rather than keeping a redundant dormant control.
+  - details: `{"deactivated_at": "2026-09-19"}`
+- **ml-challenger** · `deactivate` · ⏭️ skipped — Strategy is evolution_frozen (experiment control) — 'deactivate' refused. (0 trades across both shadow (us) and paper (uk-eu) over 14 days despite prefilter_mode=off and cost_gate_multiplier=1.0 — the loosest settings on the slate — meaning the model isn't producing actionable signals at all, not a gating problem. Occupying the sole T212 slot while our leaderboard leader sits blocked in shadow is the wrong trade for the tournament.)
+- **news-reactive-disclosure** · `spawn-variant` · ✅ applied — Parent (news-reactive-disclosure) is fully dormant in both regions — its daily general-disclosure scan isn't finding tradeable setups. Insider cluster buying is a structurally distinct, slower-cadence signal source the slate doesn't otherwise cover, giving genuine diversification rather than a re-tuned clone.
+  - details: `{"variant_id": "insider-cluster-momentum", "addendum_applied": true}`
+- **news-reactive-buzz-fade@us** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 4, "hit_rate": 1.0, "total_pnl_gbp": 285.74, "avg_pnl_pct": 3.983, "max_drawdown_pct": 0.0, "n_predictions_graded": 0, "ic": null, "decile_spread": null}}`
+- **news-reactive-buzz-fade@uk-eu** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 5, "hit_rate": 1.0, "total_pnl_gbp": 330.34, "avg_pnl_pct": 2.852, "max_drawdown_pct": 0.0, "n_predictions_graded": 0, "ic": null, "decile_spread": null}}`
+- **news-reactive-buzz-fade@uk-eu** · `mark-tier2-candidate` · ✅ applied — Sample grew from 3→5 trades and £182→£330 this week, overtaking buzz-fade@us on two of three leaderboard dimensions.
+  - details: `{"tier2_marked_at": "2026-09-19", "thesis_present": true}`
+- **news-reactive-buzz-fade@us** · `mark-tier2-candidate` · ✅ applied — Sample aged from 6→4 trades and £516→£286 this week (rolling window), while uk-eu grew — relative ranking flipped.
+  - details: `{"tier2_marked_at": "2026-09-19", "thesis_present": true}`
+- **news-reactive@uk-eu** · `mark-tier2-candidate` · ✅ applied — First week this sleeve's sample (3 trades, 100% hit) is large enough to compare credibly against the standing leaderboard.
+  - details: `{"tier2_marked_at": "2026-09-19", "thesis_present": true}`
+- **momentum-trader-vix-gated@uk-eu** · `unmark-tier2-candidate` · ✅ applied — Dropped from #2 to #4: sample shrank from 3 trades/£344 to 2 trades/£216 as an older trade aged out rather than new evidence accumulating, while both buzz-fade sleeves and news-reactive@uk-eu grew past it on trade count and total P&L. Out-competed — retracting until it shows renewed trade flow.
+- **macro-aligned-hmm@us** · `keep` · ✅ applied — 0 trades in 14 days but only 1 week of data; not yet distinguishable from a low-frequency signal working as designed.
+- **macro-aligned-hmm@uk-eu** · `keep` · ✅ applied — Same as us sleeve — 0 trades, too early to call.
+- **news-reactive-sentiment-gate@us** · `keep` · ✅ applied — 0 trades on alpaca-paper; n_predictions_graded still 0 so the dormant-execution demote threshold (≥150 graded) isn't reachable yet — holding for more data.
+- **news-reactive-sentiment-gate@uk-eu** · `keep` · ✅ applied — 1/1 winning trade, +2.82%, £49.93 — thin but positive; not enough sample to rank against the leaderboard yet.
+- **news-reactive-earnings-day@us** · `keep` · ✅ applied — 0 trades over 14 days, but earnings-day is inherently event-gated and low-frequency by design — not comparable to the dormancy seen in disclosure/ml-challenger.
+- **news-reactive-earnings-day@uk-eu** · `keep` · ✅ applied — Same event-gated low-frequency reasoning as the us sleeve.
+- **momentum-trader-vix-gated@us** · `keep` · ✅ applied — 0 trades on the us side while uk-eu is the active candidate sleeve — regional divergence is normal, no action warranted on us yet.
+- **mean-reverter@us** · `keep` · ✅ applied — 0 trades on alpaca-paper over 14 days — a watch item structurally similar to the two strategies just deactivated, but held back this week pending a second consecutive dormant reading before acting on the paper slot.
+- **mean-reverter@uk-eu** · `keep` · ✅ applied — 0 trades in shadow too — whole strategy is dormant across both regions; if still zero next week this becomes the next deactivation candidate.
+- **news-reactive@us** · `keep` · ✅ applied — 1/1 winning trade, +2.43%, £51.45 — positive but too thin to rank yet; the uk-eu sleeve of the same strategy is the one with enough sample to flag this week.

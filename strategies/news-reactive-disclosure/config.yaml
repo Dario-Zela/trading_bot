@@ -8,7 +8,7 @@ description: "Auto-spawned variant of news-reactive on 2026-06-07 by the weekly 
   \ trigger \u2014 this variant treats regime-specific sentiment as the structural\
   \ flaw to fix."
 implementation: llm
-active: true
+active: false
 capital_gbp: 10000
 max_positions: 3
 max_position_pct: 30
@@ -46,3 +46,4 @@ runs_in:
 prefilter_mode: llm
 prefilter_top_n: 50
 cost_gate_multiplier: 4.0
+deactivated_at: '2026-09-19'
