@@ -35,23 +35,20 @@ runs_in:
   tier: shadow
   alpaca_slot: null
   universe: t212_isa_us
-  tier2_candidate: true
-  tier2_marked_at: '2026-09-19'
-  tier2_thesis: "#2: still leads on avg pnl/trade (3.98% vs 2.85%) but now trails\
-    \ uk-eu on n_trades (4 vs 5) and total P&L (\xA3285.74 vs \xA3330.34). Same underlying\
-    \ edge, two regions converging \u2014 promoted to alpaca-paper to see which holds\
-    \ up net of fees."
+  tier2_candidate: false
+  tier2_marked_at: null
+  tier2_thesis: ''
 - region: uk-eu
   tier: shadow
   t212_slot: null
   universe: t212_isa_uk_eu
   alpaca_slot: null
   tier2_candidate: true
-  tier2_marked_at: '2026-09-19'
-  tier2_thesis: "Now #1: leads on n_trades (5) and total P&L (\xA3330.34), narrowly\
-    \ behind the us sleeve on avg %/trade (2.85% vs 3.98%). Converged past last week's\
-    \ gap as predicted. Promoted to trading212-paper this week \u2014 watch for hit-rate\
-    \ decay past n=5."
+  tier2_marked_at: '2026-09-26'
+  tier2_thesis: "#3 now: still 100% hit rate across two straight tracked weeks, but\
+    \ this week's \xA3127.91/n=2 trails both momentum-trader-vix-gated@uk-eu (\xA3\
+    200.07) and news-reactive@us (\xA3156.23). Needs a bigger week to reclaim the\
+    \ top spot before the newer entrants pull further ahead."
 prefilter_mode: llm
 prefilter_top_n: 60
 cost_gate_multiplier: 4.0

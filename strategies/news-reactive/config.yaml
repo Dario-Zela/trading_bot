@@ -31,19 +31,18 @@ runs_in:
   tier: shadow
   alpaca_slot: null
   universe: t212_isa_us
-  tier2_candidate: false
-  tier2_marked_at: null
-  tier2_thesis: ''
+  tier2_candidate: true
+  tier2_marked_at: '2026-09-26'
+  tier2_thesis: "#2 this cycle: \xA3156.23 on 2/2 trades (100% hit, 2.96% avg), and\
+    \ now backed by a fresh promotion to alpaca-paper this same run \u2014 will start\
+    \ generating fee-net broker data instead of shadow-only signal."
 - region: uk-eu
   tier: shadow
   t212_slot: null
   universe: t212_isa_uk_eu
-  tier2_candidate: true
-  tier2_marked_at: '2026-09-19'
-  tier2_thesis: "New #3: 3/3 winning trades, \xA3282.28 total \u2014 within \xA33\
-    \ of buzz-fade@us's total on fewer trades, not just noise. A structurally distinct\
-    \ prompt from buzz-fade, so a win here would diversify the eventual live pick\
-    \ beyond one news-momentum thesis."
+  tier2_candidate: false
+  tier2_marked_at: null
+  tier2_thesis: ''
 prefilter_mode: llm
 prefilter_top_n: 50
 cost_gate_multiplier: 4.0

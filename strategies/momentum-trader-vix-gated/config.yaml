@@ -35,9 +35,13 @@ runs_in:
   t212_slot: null
   universe: t212_isa_uk_eu
   alpaca_slot: null
-  tier2_candidate: false
-  tier2_marked_at: null
-  tier2_thesis: ''
+  tier2_candidate: true
+  tier2_marked_at: '2026-09-26'
+  tier2_thesis: "#1 this cycle: \xA3200.07 total P&L on 2/2 winning trades, 4.13%\
+    \ avg \u2014 best absolute showing of anything with n\u22652 this week, ahead\
+    \ of news-reactive@us (\xA3156.23) and buzz-fade@uk-eu (\xA3127.91). Fresh debut\
+    \ with no track record yet; needs a second good week before it's more than a hot\
+    \ hand."
 skip_if_earnings_in_days: 1
 prefilter_mode: python
 prefilter_top_n: 100

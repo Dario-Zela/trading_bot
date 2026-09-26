@@ -422,3 +422,21 @@
 - **mean-reverter@us** · `keep` · ✅ applied — 0 trades on alpaca-paper over 14 days — a watch item structurally similar to the two strategies just deactivated, but held back this week pending a second consecutive dormant reading before acting on the paper slot.
 - **mean-reverter@uk-eu** · `keep` · ✅ applied — 0 trades in shadow too — whole strategy is dormant across both regions; if still zero next week this becomes the next deactivation candidate.
 - **news-reactive@us** · `keep` · ✅ applied — 1/1 winning trade, +2.43%, £51.45 — positive but too thin to rank yet; the uk-eu sleeve of the same strategy is the one with enough sample to flag this week.
+
+## Weekly evolution — 2026-09-26
+
+- **news-reactive-disclosure@us** · `demote` · ⏭️ skipped — Does not meet demotion criteria
+  - details: `{"metrics": {"n_trades": 0, "hit_rate": 0.0, "total_pnl_gbp": 0.0, "avg_pnl_pct": 0.0, "max_drawdown_pct": 0.0, "n_predictions_graded": 0, "ic": null, "decile_spread": null}}`
+- **news-reactive@us** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 2, "hit_rate": 1.0, "total_pnl_gbp": 156.23, "avg_pnl_pct": 2.959, "max_drawdown_pct": 0.0, "n_predictions_graded": 0, "ic": null, "decile_spread": null}}`
+- **news-reactive@uk-eu** · `unmark-tier2-candidate` · ✅ applied — Last week's thesis was built on '3/3 winning trades, £282.28 total' — that evidence has now rolled out of the 14-day window, leaving 0 trades and 0 graded predictions this cycle. No fresh evidence to sustain candidacy; weakest of the tracked names right now.
+- **news-reactive-buzz-fade@us** · `unmark-tier2-candidate` · ✅ applied — Weakest of this week's four active contenders (£58.50 total P&L, n=1, 3.35% avg) — out-competed by news-reactive@us (£156.23, n=2) and momentum-trader-vix-gated@uk-eu (£200.07, n=2). Also never actually reached alpaca-paper despite last week's stated intent, so it's accrued no fee-net paper evidence. Redundant with buzz-fade@uk-eu, which already carries this thesis on the leaderboard.
+- **momentum-trader-vix-gated@uk-eu** · `mark-tier2-candidate` · ✅ applied — Highest total P&L and avg %/trade of any strategy this cycle earns it a leaderboard slot on first strong showing, especially notable given its us sibling shows 0 trades — a regional divergence worth watching.
+  - details: `{"tier2_marked_at": "2026-09-26", "thesis_present": true}`
+- **news-reactive@us** · `mark-tier2-candidate` · ✅ applied — Strongest real evidence among US shadow names, and the strategy chosen to fill the freed Alpaca slot — worth tracking on the leaderboard now that it's paper-tier.
+  - details: `{"tier2_marked_at": "2026-09-26", "thesis_present": true}`
+- **news-reactive-buzz-fade@uk-eu** · `mark-tier2-candidate` · ✅ applied — Re-affirming with updated rank — still clears the bar on 2-week continuity, but has been overtaken by two stronger single-week showings; kept on the list for consistency rather than a one-off number.
+  - details: `{"tier2_marked_at": "2026-09-26", "thesis_present": true}`
+- **ml-challenger@uk-eu** · `keep` · ✅ applied — Sole occupant of the single T212-paper slot with 0 trades and 0 graded predictions — doesn't literally clear the dormant-execution demotion bar (needs n_predictions_graded≥150) yet, but flagging for next week: if still 0/0 then, this becomes the strongest demote-and-refill candidate to also free a slot for spawning a genuinely new variant.
+- **news-reactive-sentiment-gate@us** · `keep` · ✅ applied — 0 trades, 0 graded predictions on alpaca-paper — below the strict dormant-execution threshold (needs n_predictions_graded≥150) so not yet actionable, but on watch alongside mean-reverter@us as the other quiet Alpaca occupant.
+- **mean-reverter@us** · `keep` · ✅ applied — 0 trades, 0 graded predictions on alpaca-paper — same watch status as news-reactive-sentiment-gate@us; no demotion criteria met yet.
