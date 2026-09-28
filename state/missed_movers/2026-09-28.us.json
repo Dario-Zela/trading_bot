@@ -1,0 +1,122 @@
+{
+  "date": "2026-09-28",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 BE +8%, ON +6%, MCHP +5%, GNRC +5%, DELL +5%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (GEN -6%, CHTR -4%, PANW -4%, DVN -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: BE (+8.27%) \u2014 No confirmed driver for the +8.27% move. Search results conflict: they report BE down ~8% to $265.12 on 9/28, blaming Oracle Project Jupiter force majeure and profit-taking, which contradicts the +8.27% close of $288.7. Why we passed: Outside any active strategy's universe: BE is a volatile mid/large-cap fuel-cell and AI-power name that has rallied several-fold this year, so it likely fails price, volatility or RSI screens. Nothing pre-market pointed to a catalyst.",
+  "top_movers": [
+    {
+      "ticker": "BE",
+      "move_pct": 8.269,
+      "close": 288.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed driver for the +8.27% move. Search results conflict: they report BE down ~8% to $265.12 on 9/28, blaming Oracle Project Jupiter force majeure and profit-taking, which contradicts the +8.27% close of $288.7.",
+      "miss_reason": "Outside any active strategy's universe: BE is a volatile mid/large-cap fuel-cell and AI-power name that has rallied several-fold this year, so it likely fails price, volatility or RSI screens. Nothing pre-market pointed to a catalyst.",
+      "suggestion": "Add a small 'AI-power/energy-infrastructure' watchlist (BE, VRT, OKLO, etc.) to the momentum universe, with ATR-scaled position sizing rather than a fixed volatility cap. Verify the 9/28 price data first, since sources disagree on direction.",
+      "failed": false
+    },
+    {
+      "ticker": "ON",
+      "move_pct": 5.537,
+      "close": 77.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day catalyst. Search results were stale or conflicting (one showed ON down 1.9% near $75.74), so this is likely a sector-wide semiconductor and AI-power rebound.",
+      "miss_reason": "Outside any active strategy's universe: ON is a mid/large-cap analog/power semiconductor that no strategy lists. A +5.5% move with no news also wouldn't trigger a news-reactive strategy, and the gap was probably too small for a gap-up filter.",
+      "suggestion": "Add a sector-relative momentum screen to the momentum universe: admit semis (SOXX constituents) when the close is \u2265+5% on \u22651.5\u00d7 20-day average volume, so sector-driven movers like ON are evaluated even when they aren't listed.",
+      "failed": false
+    },
+    {
+      "ticker": "MCHP",
+      "move_pct": 5.355,
+      "close": 78.69,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single confirmed catalyst; the searches turned up only product news (48V power monitors, completed Hailo deal) and a StockStory 'stock is up' note. Likely a broad semiconductor rally or rebound.",
+      "miss_reason": "Outside any active strategy's universe: MCHP is a mid-cap (~$42B) analog/MCU semiconductor name that no strategy includes. With no discrete news event, a news-reactive bot had no trigger either.",
+      "suggestion": "Add a semis/analog sector-momentum sleeve (e.g. MCHP, ON, NXPI, TXN) to the momentum universe, entered when the sector ETF (SOXX) and the name both close up more than 3% on 1.5x or greater average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "GNRC",
+      "move_pct": 5.095,
+      "close": 208.14,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear same-day news found. Likely continued momentum after the Sept 16 Amazon investment-rights news (+40% that day) and recent analyst support (JPM PT raised to $265, UBS Buy reaffirmed).",
+      "miss_reason": "Outside any active strategy's universe: GNRC is a mid-cap industrial/power-equipment name that no strategy includes. The move also had no fresh catalyst, and the stock was already extended after the September spike, so RSI and gap filters would likely have excluded it anyway.",
+      "suggestion": "Add a dynamic 'recent catalyst' watchlist to the momentum universe. It would admit mid-caps that gained \u226525% over the last 10 sessions on volume \u22652\u00d7 the 20-day average, and hold them for 15 sessions to catch continuation moves like this one.",
+      "failed": false
+    },
+    {
+      "ticker": "DELL",
+      "move_pct": 5.013,
+      "close": 562.89,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No same-day catalyst found. Search shows 562.89 was the Sept 25 close, and DELL fell ~3% on Sep 28. The rally follows Q2 results: $47B sales, $60.9B AI server orders, $95B backlog, raised guidance.",
+      "miss_reason": "Outside any active strategy's universe: DELL is a large-cap (~$350B+) AI-hardware name that no strategy lists. The move was also driven by the AI-server backlog and guidance raise, so a post-move signal would enter late. The +5.01% may also be a stale-date artifact.",
+      "suggestion": "Add DELL (and peers such as SMCI and HPE) to the momentum universe, and check that the mover job's close-to-close window uses the correct session, since 562.89 matches the Sept 25 close, not Sept 28.",
+      "failed": false
+    },
+    {
+      "ticker": "CVS",
+      "move_pct": 4.797,
+      "close": 89.13,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day catalyst. Coverage points to a technical rebound after an 8-session losing streak, plus Aetna oncology-bundle news and a strong Q2 with raised FY26 EPS guidance ($7.90-8.10). The $89.13 close is dated Sep 25 in one source, so the date is uncertain.",
+      "miss_reason": "Outside any active strategy's universe: CVS is a large-cap managed-care/pharmacy-retail name that no strategy lists. The move was a diffuse rebound with no fresh catalyst, so momentum and news-reactive filters had no trigger, and the prior 8-day slide would also block momentum entries.",
+      "suggestion": "Add large-cap healthcare (CVS, UNH, CI, ELV) to the mean-reversion universe, with an entry when a \u22657-session losing streak is followed by a \u2265+3% up day on \u22651.3\u00d7 20-day average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "GEN",
+      "move_pct": -6.285,
+      "close": 21.62,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued selling after reports of Gen's roughly $12B preliminary approach to buy GoDaddy. Investors worry about leverage (about $8B existing net debt) and a deal outside its core consumer-security business.",
+      "miss_reason": "Outside any active strategy's universe: GEN (Gen Digital) is a mid-cap software/cybersecurity name that no strategy covers. The drop was also a multi-day, deal-driven slide that began around Sep 24-25, so a one-day gap or momentum trigger would have fired late or not at all.",
+      "suggestion": "Add mid-cap US software names like GEN to the mean-reversion or news-reactive universe, with an M&A-acquirer flag: for a large-debt acquirer down more than 5% for 2 or more sessions, block long entries and allow watch-only.",
+      "failed": false
+    },
+    {
+      "ticker": "CHTR",
+      "move_pct": -3.947,
+      "close": 112.91,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued cable/broadband selloff: 8-day losing streak (~-20%) and a new 52-week low. Drivers are Comcast's sector-wide broadband warning, a Wolfe downgrade to Underperform, a CFO transition and Cox-deal leverage worries.",
+      "miss_reason": "Outside any active strategy's universe (no strategy includes it). It is a mid-cap cable name in a persistent downtrend with no single-day catalyst, and a long-only momentum or mean-reversion bot has no way to short a slow grind lower.",
+      "suggestion": "No actionable change for long-only: a fall-off-a-cliff drift with no gap. If wanted, add a 'consecutive down days \u22657 and at 52-week low' exclusion flag so mean-reversion doesn't buy this falling knife.",
+      "failed": false
+    },
+    {
+      "ticker": "PANW",
+      "move_pct": -3.893,
+      "close": 374.74,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed company-specific news. Search results only point to a broad cybersecurity-sector selloff, with a wide intraday range (365\u2013394.5). I couldn't verify a specific driver.",
+      "miss_reason": "Outside any active strategy's universe: PANW is a large-cap cybersecurity name that no strategy's universe includes. A sector-wide drift with no earnings or gap catalyst would also give a news-reactive or gap filter little to trigger on.",
+      "suggestion": "No change for this one, since the bot has no short capability. To catch similar moves, add a sector-breadth signal (e.g. CIBR/HACK down \u22652% with \u226560% of constituents red) that flags software/security names for the watchlist.",
+      "failed": false
+    },
+    {
+      "ticker": "DVN",
+      "move_pct": -3.783,
+      "close": 47.05,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear company-specific catalyst found. It looks like an energy-sector move, with only a minor Wells Fargo target trim ($65 to $64, still Overweight). The search results conflict on dates: a 3.8% drop to $47.05 is dated Sep 25, and Sep 28 is described as up 0.71%.",
+      "miss_reason": "Outside any active strategy's universe: DVN is a mid-cap E&P energy name that no strategy includes. A sector-driven, oil-tracking drop with no news event would also have been unlikely to trigger a momentum or news-reactive signal.",
+      "suggestion": "Add an energy-sector basket (DVN, COP, EOG, OXY) to the mean-reversion universe with a sector-relative drawdown trigger (e.g. -3% vs XLE). Only apply it if the bot has a long-side dip-buy rule, since it can't short.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-09-28T19:32:08.942965+00:00"
+}
