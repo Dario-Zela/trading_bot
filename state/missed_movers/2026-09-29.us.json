@@ -1,0 +1,122 @@
+{
+  "date": "2026-09-29",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 PANW +5%, PSKY +3%, CRWD +3%, P +3%, VTRS +2%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (BE -9%, DASH -8%, QCOM -7%, CVNA -7%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: BE (-8.95%) \u2014 Profit-taking after a steep AI-power rally, plus Oracle's force majeure notice on Project Jupiter reviving customer-concentration and financing worries, and rising Treasury yields hitting growth names. Sources date the -8.9% drop to 9/28, so the timing is uncertain. Why we passed: Outside any active strategy's universe: BE is a high-beta, roughly $60B mid/large-cap fuel-cell/AI-power name that the universe filters excluded. The drop was also a sharp one-day unwind after a +270% run, and a long-only momentum bot has no short leg to use on it.",
+  "top_movers": [
+    {
+      "ticker": "PANW",
+      "move_pct": 4.63,
+      "close": 392.09,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "BTIG raised its PANW price target from $404 to $425 (Buy), and shares rose about 4.6%. No earnings or M&A news was found; the move may also reflect broader cybersecurity strength.",
+      "miss_reason": "Outside any active strategy's universe. PANW is a roughly $250B+ large-cap cybersecurity software name that no strategy lists. The catalyst was a soft analyst PT raise with no gap or volume spike, so a news-reactive filter would not have triggered.",
+      "suggestion": "Add large-cap US software/cybersecurity names such as PANW, CRWD and FTNT to the momentum-trader universe. Alternatively, add a dynamic 'top-decile 5-day relative-strength' screen so sector-rotation leaders enter without hand-listing.",
+      "failed": false
+    },
+    {
+      "ticker": "PSKY",
+      "move_pct": 3.213,
+      "close": 10.28,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single clear driver. The stock rose alongside the Warner Bros. deal financing news ($44B bond sale) and a Morgan Stanley target raise to $11.50 (overweight). The NYSE listing move, announced 9/25, was a background factor.",
+      "miss_reason": "Outside any active strategy's universe. PSKY is a roughly $10 mid-cap media name with heavy deal leverage, and no strategy includes it. A +3.2% move with no earnings or gap event also wouldn't trip a momentum or news-reactive trigger.",
+      "suggestion": "No actionable change. A +3% drift on analyst and financing news is inside normal noise. If media M&A names are wanted, add PSKY to the universe only with a \u22651.5\u00d7 volume confirmation rule, not a looser gap filter.",
+      "failed": false
+    },
+    {
+      "ticker": "CRWD",
+      "move_pct": 2.824,
+      "close": 259.25,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single confirmed driver found. Likely a mix of analyst target raises (Morgan Stanley to $254, Stephens to $280), a DOJ probe closing without charges, and broad cybersecurity strength.",
+      "miss_reason": "Outside any active strategy's universe: CRWD is a large-cap software/cybersecurity name that no strategy covers. The +2.82% move was also modest and had no earnings gap, so a gap or news-reactive trigger would not have fired even if it were covered.",
+      "suggestion": "Add large-cap software/cybersecurity names such as CRWD, PANW and ZS to the momentum-trader universe, gated on a 20-day relative-strength rank of at least the 80th percentile, rather than only on single-day % move.",
+      "failed": false
+    },
+    {
+      "ticker": "P",
+      "move_pct": 2.698,
+      "close": 129.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single news event found. P (Everpure, formerly Pure Storage) rose on follow-through from analyst upgrades: CFRA to Buy on 9/26 and Barclays raising its target to $132 from $110 on 9/25. Tech also gained.",
+      "miss_reason": "Outside any active strategy's universe. P is a mid/large-cap enterprise storage/tech name, and it looks like a recent ticker change may have left it off the universe lists. The +2.7% move on analyst upgrades gave no earnings-gap or news-spike signal for a reactive bot.",
+      "suggestion": "Refresh the universe file to include the renamed Everpure (P) ticker, and add a universe-membership check that flags tickers changed by rename or rebrand. Also consider a momentum-trader rule for names with 2+ analyst upgrades in 5 days and price above the 50-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "VTRS",
+      "move_pct": 2.468,
+      "close": 18.27,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single news item today. VTRS hit a 52-week high of $18.43 on continued momentum from the Q2 beat and raised FY26 guidance, the Oppenheimer Outperform initiation ($25 target, Sep 23), and the Tyrvaya sale to Harrow.",
+      "miss_reason": "Outside any active strategy's universe: VTRS is a ~$21B-cap generic pharma priced under $20, and no strategy includes it. A +2.5% grind to a 52-week high with no gap or earnings event also wouldn't trip a gap-up or news-reactive trigger.",
+      "suggestion": "Add a 52-week-high breakout screen (close \u2265 52w high, volume \u2265 1.2\u00d7 20-day avg) over the mid/large-cap healthcare universe, so steady re-rating names like VTRS get picked up without needing a gap or headline trigger.",
+      "failed": false
+    },
+    {
+      "ticker": "ISRG",
+      "move_pct": 2.372,
+      "close": 414.79,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear same-day catalyst found. Likely an oversold rebound (stock down ~29% YTD, analysts call the sell-off overdone), possibly helped by the recent CE mark for da Vinci SP in gynecologic procedures.",
+      "miss_reason": "Outside any active strategy's universe: ISRG is a ~$150B large-cap medtech name that no strategy lists. A +2.4% drift with no gap or volume spike also wouldn't trip a momentum or news-reactive trigger, and a stock in a long downtrend would fail trend filters.",
+      "suggestion": "Add large-cap healthcare/medtech names such as ISRG to the mean-reversion universe, gated on RSI(14) < 35 and price > 25% below its 52-week high, so oversold rebounds like this are caught.",
+      "failed": false
+    },
+    {
+      "ticker": "BE",
+      "move_pct": -8.947,
+      "close": 262.87,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Profit-taking after a steep AI-power rally, plus Oracle's force majeure notice on Project Jupiter reviving customer-concentration and financing worries, and rising Treasury yields hitting growth names. Sources date the -8.9% drop to 9/28, so the timing is uncertain.",
+      "miss_reason": "Outside any active strategy's universe: BE is a high-beta, roughly $60B mid/large-cap fuel-cell/AI-power name that the universe filters excluded. The drop was also a sharp one-day unwind after a +270% run, and a long-only momentum bot has no short leg to use on it.",
+      "suggestion": "Add a high-beta AI-power/energy-infrastructure basket (BE, PLUG, VRT) to the mean-reversion universe. Enter only on a \u22658% one-day drop with the 50-day trend still intact, to catch the next rebound (BE recovered toward $292).",
+      "failed": false
+    },
+    {
+      "ticker": "DASH",
+      "move_pct": -7.742,
+      "close": 178.39,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single event found. Sector-wide selling on fears that AI ordering agents bypass delivery marketplaces, plus overhang from a $131.5M NYC delivery-worker settlement. The stock is down about 16% in a month.",
+      "miss_reason": "Outside any active strategy's universe: DASH is a large-cap consumer-internet name that no strategy includes. The drop was a slow theme-driven slide with no gap or earnings event, so news-reactive filters had no trigger. The bot likely can't short either.",
+      "suggestion": "Add large-cap consumer-internet names like DASH to the mean-reversion universe, with an entry gated on a \u22657% one-day drop after a \u226515% 1-month decline. The stock rebounded about 5% the next day, so this would have caught it. Sources: gurufocus.com, fxleaders.com, marketbeat.com.",
+      "failed": false
+    },
+    {
+      "ticker": "QCOM",
+      "move_pct": -7.174,
+      "close": 187.48,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Profit-taking after a ~15% monthly rally, a Samsung 2nm pricing standoff pushing foundry talks toward 2027, a rising-yield tech selloff, and CEO Amon selling ~$4M of stock. Sources date the drop to 9/28.",
+      "miss_reason": "Outside any active strategy's universe (large-cap semiconductor). The move was a sector pullback and profit-taking with no single hard catalyst, and a momentum or news-reactive bot would have had no clean long entry. Shorting isn't available.",
+      "suggestion": "Add large-cap semis like QCOM to the mean-reversion universe, and gate entries on a next-day stabilisation signal (RSI<35 plus a reclaim of the prior-day low). Also check the ledger's date alignment, since the drop was reported on 9/28.",
+      "failed": false
+    },
+    {
+      "ticker": "CVNA",
+      "move_pct": -7.055,
+      "close": 60.47,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single news catalyst found. CVNA fell 7.1% to about $60.47, extending a 1-month slide of roughly 18%, near its 52-week low of $54.46. Persistent insider selling and weak guidance since Q2 earnings are the backdrop.",
+      "miss_reason": "Outside any active strategy's universe: CVNA is a mid/large-cap online used-car retailer with high volatility. With no catalyst gap, a steady downtrend gives a long-only momentum or news bot no entry signal, and it can't short.",
+      "suggestion": "No actionable change: this is a grinding downtrend with no discrete catalyst, and the bot lacks short capability. If wanted, add high-beta consumer-discretionary names to the mean-reversion universe with an RSI<30 entry filter.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-09-29T19:31:51.889785+00:00"
+}
