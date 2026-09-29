@@ -1,0 +1,122 @@
+{
+  "date": "2026-09-29",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 BTRW.L +13%, HWDN.L +4%, AAF.L +3%, SHL.DE +3%, KGF.L +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (FRES.L -5%, EDV.L -4%, EXPN.L -3%, SGE.L -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: BTRW.L (+13.40%) \u2014 UK housebuilders rallied sector-wide after the government's weekend 'Your First Home' scheme (2.5% deposit, equity loan up to 20%). Barratt Redrow rose ~14%, Persimmon and Taylor Wimpey ~15%. Why we passed: Outside any active strategy's universe: BTRW.L is a UK FTSE 100 housebuilder that no strategy covers. The policy news came over the weekend, so the move was a single opening gap that a post-open momentum or news signal would enter too late.",
+  "top_movers": [
+    {
+      "ticker": "BTRW.L",
+      "move_pct": 13.398,
+      "close": 3.504,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "UK housebuilders rallied sector-wide after the government's weekend 'Your First Home' scheme (2.5% deposit, equity loan up to 20%). Barratt Redrow rose ~14%, Persimmon and Taylor Wimpey ~15%.",
+      "miss_reason": "Outside any active strategy's universe: BTRW.L is a UK FTSE 100 housebuilder that no strategy covers. The policy news came over the weekend, so the move was a single opening gap that a post-open momentum or news signal would enter too late.",
+      "suggestion": "Add UK housebuilders (BTRW.L, PSN.L, TW.L, VTY.L) as a sector basket to the uk-eu universe. Let a gap-up rule of \u2265+5% on \u22653 basket names at open override the RSI and gap-size filters for a policy-driven sector move.",
+      "failed": false
+    },
+    {
+      "ticker": "HWDN.L",
+      "move_pct": 3.557,
+      "close": 7.86,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "UK first-time-buyer housing incentive scheme sparked a housebuilder rally (Barratt Redrow +11.7%) that spread to housing-supply-chain names like Howdens, which added about 3-4%.",
+      "miss_reason": "Outside any active strategy's universe: HWDN.L is a mid-cap FTSE 100/250 kitchen-trade supplier, not a core large-cap name. The move was a policy-headline sector sympathy move that a momentum or mean-reversion filter would only catch late, after the gap.",
+      "suggestion": "Add a UK housing/construction sector-basket rule to the news-reactive universe: when \u22653 housebuilders gap up \u22655% on a policy headline, admit second-derivative names (HWDN.L, KGF.L) at a \u22651.5\u00d7 volume floor.",
+      "failed": false
+    },
+    {
+      "ticker": "AAF.L",
+      "move_pct": 2.804,
+      "close": 3.08,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for Airtel Africa (AAF.L); the +2.8% move looks technical or sector-driven, and no same-day announcement turned up in search.",
+      "miss_reason": "Outside any active strategy's universe: AAF.L is a FTSE 100 London-listed telecom, and none of the strategies' universes include it. With no news catalyst, a news-reactive bot had nothing to trigger on, and a +2.8% drift is too small for momentum gap filters.",
+      "suggestion": "Add FTSE 100 constituents (LSE .L large caps such as AAF.L) to the momentum-trader universe, and require a minimum +2% close-to-close move with volume \u22651.5\u00d7 20-day average before entry.",
+      "failed": false
+    },
+    {
+      "ticker": "SHL.DE",
+      "move_pct": 2.699,
+      "close": 38.81,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. Siemens Healthineers is in a steady rebound: up 2.3% the prior session and about 3.9% over the week, with ongoing buybacks. This looks like a technical or sector move.",
+      "miss_reason": "Outside any active strategy's universe. SHL.DE is a large-cap (~\u20ac44B) German healthcare/medtech name on Xetra, and no strategy covers it. A +2.7% drift with no gap or volume spike would also fail gap-up and news-reactive filters.",
+      "suggestion": "Add large-cap DAX/Xetra healthcare names such as SHL.DE to the momentum-trader universe. Also test a rule that triggers on consecutive up-days (2 days of +2% or more) without needing a news or volume-gap trigger.",
+      "failed": false
+    },
+    {
+      "ticker": "KGF.L",
+      "move_pct": 2.619,
+      "close": 3.37,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear same-day driver found. The move looks like continued follow-through from the Sept 22 results and buyback announcement, plus Berenberg's target raise to 320p on Sept 23. The CEO also sold shares on Sept 29.",
+      "miss_reason": "Outside any active strategy's universe. KGF.L is a FTSE 100 mid-cap UK retailer, and no strategy lists it. The +2.62% move is modest and a post-earnings drift, so no gap or news trigger would have fired on the day.",
+      "suggestion": "Add FTSE 100 constituents such as KGF.L to the uk-eu momentum universe. Add a post-earnings-drift rule that enters names up >10% over 5 days after a results or buyback catalyst, if they still sit above the 20-day MA.",
+      "failed": false
+    },
+    {
+      "ticker": "MRK.DE",
+      "move_pct": 2.593,
+      "close": 138.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious Merck KGaA-specific news catalyst found. Search results mostly covered US Merck & Co. (KRAS license, BLA withdrawal), so this is likely a technical or sector rebound.",
+      "miss_reason": "Outside any active strategy's universe: MRK.DE is a large-cap German pharma/life-science name (DAX/MDAX) that no strategy includes. A +2.59% move with no catalyst also wouldn't trip a news-reactive or gap-up trigger.",
+      "suggestion": "Add MRK.DE and other liquid DAX healthcare names to the uk-eu universe of the momentum strategy, keeping the existing volume floor and gap filters. Alternatively, accept this as a no-op, since there was no catalyst.",
+      "failed": false
+    },
+    {
+      "ticker": "FRES.L",
+      "move_pct": -4.602,
+      "close": 27.57,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found; Fresnillo fell with a precious-metals selloff. Spot silver is about 20% below its H1 realised price, and gold is well off its January record.",
+      "miss_reason": "Outside any active strategy's universe: FRES.L is a FTSE 100 silver/gold miner, and the bot's universe evidently lacks LSE precious-metals miners. The move looks like a commodity-beta drift with no gap or event trigger, and the bot can't short.",
+      "suggestion": "Add FRES.L and other LSE miners (AAL.L, ANTO.L, ENT.L) to the commodity strategy universe, gated on a gold/silver 5-day momentum filter. That would let the bot skip or exit them when metals fall. Shorting is not needed.",
+      "failed": false
+    },
+    {
+      "ticker": "EDV.L",
+      "move_pct": -3.978,
+      "close": 43.45,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. Search returned no Endeavour Mining-specific news for 2026-09-29, so this is likely a gold-price or gold-miner sector move.",
+      "miss_reason": "Outside any active strategy's universe: EDV.L is a FTSE 100 gold miner (C\u00f4te d'Ivoire, Burkina Faso, Senegal) that no strategy lists. A -3.98% drop with no news also gives a news-reactive bot nothing to trigger on, and the bot can't short.",
+      "suggestion": "No actionable change for this name. If gold-miner exposure is wanted, add EDV.L to the commodity strategy's universe, then gate entries on a gold-price drop of X% so sector-driven selloffs aren't bought blindly.",
+      "failed": false
+    },
+    {
+      "ticker": "EXPN.L",
+      "move_pct": -2.605,
+      "close": 25.42,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. Searches only showed a multi-day slide in Experian (about -3.6% on 28 Sep to ~2,517p), so this looks like a continued technical or sector derating, not a company-specific event.",
+      "miss_reason": "Outside any active strategy's universe: EXPN.L is a FTSE 100 large-cap data/credit-bureau name that no strategy includes. With no news catalyst, a steady drift lower would also not trip gap or volume filters, and the bot has no short capability.",
+      "suggestion": "Add large-cap UK data/analytics names such as EXPN.L to the mean-reversion universe only if a 3-day drawdown \u22658% with RSI(14)<30 is required. Otherwise make no change, since this is a long-only bot and the move has no catalyst.",
+      "failed": false
+    },
+    {
+      "ticker": "SGE.L",
+      "move_pct": -2.544,
+      "close": 9.77,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found. Search returned only generic quote pages with inconsistent prices and nothing dated today. Likely a software/AI-disruption sector move or technical weakness.",
+      "miss_reason": "Outside any active strategy's universe. SGE.L is a UK FTSE 100 large-cap software name and no strategy's universe includes it. A -2.5% drift with no catalyst also wouldn't trip gap or volume filters.",
+      "suggestion": "No actionable change for this single miss. If UK large-cap coverage is wanted, add FTSE 100 software/tech names like SGE.L to the mean-reversion universe, gated by an RSI<30 or z-score\u2264-2 entry filter.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-09-29T15:02:30.804200+00:00"
+}
