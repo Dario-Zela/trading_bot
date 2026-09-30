@@ -1,0 +1,122 @@
+{
+  "date": "2026-09-30",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 CCL +14%, BE +11%, RCL +8%, LITE +5%, CVNA +5%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (FICO -28%, URI -4%, SLB -4%, STLD -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: FICO (-27.73%) \u2014 FHFA director Pulte put VantageScore 4.0 on the same Fannie/Freddie pricing grid as Classic FICO. That ends FICO's mortgage-score monopoly, and BofA downgraded the stock to Neutral with a PT cut from $1,400 to $700. Why we passed: Outside any active strategy's universe: FICO is a mid/large-cap software and analytics name that no strategy includes. The move was also a policy-headline gap-down, so a long-only bot would have had no entry even if the name were in scope.",
+  "top_movers": [
+    {
+      "ticker": "CCL",
+      "move_pct": 13.618,
+      "close": 25.155,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 FY26 earnings beat (EPS $1.43 vs $1.35 est, record revenue $8.44B) with FY26 EPS guidance raised to $2.24 and record 2027 bookings, despite higher fuel costs.",
+      "miss_reason": "Outside any active strategy's universe: CCL is a mid/large-cap cruise operator that no strategy lists. The move was an earnings gap at the open, so a post-open momentum or news-reactive filter would see a gap too large to chase.",
+      "suggestion": "Add a post-earnings-gap sleeve: admit any liquid US name with a same-day earnings beat, guidance raise and gap \u2265 +8% to the news-reactive universe, and enter 15\u201330 minutes after the open if price holds above the opening range.",
+      "failed": false
+    },
+    {
+      "ticker": "BE",
+      "move_pct": 10.635,
+      "close": 290.8251,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "AI data-center power demand rally: Bloom Energy's record Q2 revenue ($1.07B, +165% y/y), raised FY26 guidance ($3.9\u20134.2B) and the expanded Brookfield deal, plus a Jefferies price-target raise to $264. Search results disagreed on whether the jump was Sep 29 or 30.",
+      "miss_reason": "Outside any active strategy's universe: BE is a mid/large-cap fuel-cell and clean-energy name that no strategy lists. The move was also a multi-day, news-driven AI-power momentum run, so a gap or volume filter would likely have excluded it even if it were listed.",
+      "suggestion": "Add a dynamic momentum-universe rule that admits any US name with market cap above $5B, 20-day return of +30% or more, and volume at least 2x its 20-day average. Add an AI-power/energy theme basket (BE, VST, CEG, OKLO) as a sector tag.",
+      "failed": false
+    },
+    {
+      "ticker": "RCL",
+      "move_pct": 7.696,
+      "close": 261.26,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "BofA and Deutsche Bank upgraded RCL to Buy after a ~26% pullback. Carnival's Q3 beat and raised guide lifted cruise stocks. The $3B Sandals 50% stake deal added support.",
+      "miss_reason": "Outside any active strategy's universe: RCL is a large-cap consumer-discretionary cruise name that no strategy lists. The gap-up came from analyst upgrades and a peer's earnings, so a momentum filter that needs prior-session volume or trend would also have passed.",
+      "suggestion": "Add large-cap consumer-discretionary names like RCL, CCL and NCLH to the momentum-trader universe. Add a peer-earnings trigger so a Carnival beat with a gap of +3% or more releases the cruise basket.",
+      "failed": false
+    },
+    {
+      "ticker": "LITE",
+      "move_pct": 5.469,
+      "close": 971.705,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found for today. LITE rose about 5.5% to roughly $972 in what looks like continued AI optical-networking momentum, with no earnings or M&A driver.",
+      "miss_reason": "Outside any active strategy's universe: LITE is an optical/photonic components name that has run from about $148 to about $972 in 52 weeks (market cap about $87B). Its extreme run-up and volatility would also trip RSI and extension filters.",
+      "suggestion": "Add a dynamic-universe rule that admits US names with 20-day relative strength in the top 2% and dollar volume above $500M, gated by an ATR-based position size cap so parabolic names enter at reduced weight.",
+      "failed": false
+    },
+    {
+      "ticker": "CVNA",
+      "move_pct": 4.763,
+      "close": 63.35,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "",
+      "miss_reason": "",
+      "suggestion": "",
+      "failed": true
+    },
+    {
+      "ticker": "AMAT",
+      "move_pct": 4.732,
+      "close": 509.795,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single company-specific news found; semi-equipment sector strength on AI-capex demand plus analyst target raises (e.g. Morgan Stanley), continuing the Sep 29 gap-up (+4% open).",
+      "miss_reason": "Outside any active strategy's universe: AMAT is a ~$400B+ large-cap semiconductor-equipment name that no strategy's universe includes. It was also a second day of a sector-momentum run with no discrete catalyst, so a news-reactive filter had nothing to trigger on.",
+      "suggestion": "Add large-cap semis (AMAT, LRCX, KLAC) to the momentum-trader universe, with an entry rule of 2 consecutive closes >+3% and sector-ETF (SOXX) confirmation, to catch sector-wide runs without a headline.",
+      "failed": false
+    },
+    {
+      "ticker": "FICO",
+      "move_pct": -27.734,
+      "close": 607.675,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FHFA director Pulte put VantageScore 4.0 on the same Fannie/Freddie pricing grid as Classic FICO. That ends FICO's mortgage-score monopoly, and BofA downgraded the stock to Neutral with a PT cut from $1,400 to $700.",
+      "miss_reason": "Outside any active strategy's universe: FICO is a mid/large-cap software and analytics name that no strategy includes. The move was also a policy-headline gap-down, so a long-only bot would have had no entry even if the name were in scope.",
+      "suggestion": "Add a news-reactive short-avoid/watchlist rule: when a name in the wider universe gaps \u2264-15% on \u22653\u00d7 average volume, flag it for a next-day mean-reversion review instead of ignoring it. Shorting isn't available, so no other change is actionable.",
+      "failed": false
+    },
+    {
+      "ticker": "URI",
+      "move_pct": -4.477,
+      "close": 997.18,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single news catalyst found for 9/30. Continued sell-off in cyclical industrials after a 5% drop on 9/29 (break below $1,000), following an analyst downgrade, rising yields and margin worries.",
+      "miss_reason": "Outside any active strategy's universe: URI is a ~$65B mid/large-cap industrial equipment renter, and no strategy covers it. The drop was a slow multi-day grind with no gap or single catalyst, so the gap and news filters would not have fired.",
+      "suggestion": "Add a cyclical-industrials sleeve, for example URI, CAT and HRI, to the mean-reversion universe. Require a \u226510% 20-day drawdown and RSI<35. Alternatively, no action if the bot is long-only and avoids falling knives.",
+      "failed": false
+    },
+    {
+      "ticker": "SLB",
+      "move_pct": -3.797,
+      "close": 49.535,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found; likely oil-services sector weakness continuing a ~14% monthly slide ahead of Q3 results on Oct 23. A subsea contract announcement the day before did not help the stock.",
+      "miss_reason": "Outside any active strategy's universe: SLB is a large-cap oilfield-services name that no strategy covers. The decline was a gradual, news-light drift, so a news-reactive or gap filter would not have flagged it either.",
+      "suggestion": "Add large-cap energy services (SLB, HAL, BKR) to the mean-reversion universe, gated by an RSI(14) < 30 oversold trigger. Skip the entry if earnings fall within 5 sessions, which here means Oct 23.",
+      "failed": false
+    },
+    {
+      "ticker": "STLD",
+      "move_pct": -3.648,
+      "close": 221.985,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh same-day news found. Likely continued digestion of Q3 guidance (EPS $5.34-5.38 vs ~$5.60 consensus) plus a steel-sector slide. Sources conflict on the day's move, and the $0.53 dividend record date is 9/30.",
+      "miss_reason": "Outside any active strategy's universe: STLD is a mid-cap steel/materials name that none of the strategies include. The move was a modest -3.65% drift after a days-old guidance miss, not a fresh gap or volume spike that a news-reactive filter would catch.",
+      "suggestion": "Add a small cyclicals/metals sleeve (STLD, NUE, CLF) to the mean-reversion universe. Alternatively, add a post-guidance-miss watchlist that flags names still down more than 3% within 10 trading days of a miss, with a liquidity floor such as 1M ADV.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-09-30T19:31:56.341724+00:00"
+}
