@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-01",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 ANTO.L +4%, ZAL.DE +3%, RKT.L +3%, IHG.L +2%, SSE.L +2%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (CBK.DE -4%, AAF.L -4%, TTE.PA -3%, CS.PA -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: CBK.DE (-4.00%) \u2014 Deutsche Bank downgraded Commerzbank to Hold, citing strategy uncertainty. An FT report said UniCredit may replace the supervisory board from January. No single clear driver was found for the -4% close on 1 Oct. Why we passed: Outside any active strategy's universe: Commerzbank is a large-cap German bank (DAX/MDAX-type) that no strategy includes. The drop was an analyst-downgrade and takeover-headline move, which a technical or momentum filter wouldn't flag in advance.",
+  "top_movers": [
+    {
+      "ticker": "ANTO.L",
+      "move_pct": 3.836,
+      "close": 37.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No stock-specific catalyst found. The copper miner rose with the sector, likely on copper prices. Centinela strike-vote risk and the cut 2026 guidance (625-655kt) were background items, not same-day news.",
+      "miss_reason": "Outside any active strategy's universe: a FTSE 100 large-cap copper/materials miner that no strategy lists. The move looks sector/commodity-driven with no gap or news trigger, so a news-reactive screen wouldn't have flagged it.",
+      "suggestion": "Add a LSE mining basket (ANTO.L, GLEN.L, RIO.L) to the commodity strategy universe, gated on a copper-futures +2% day-over-day trigger, so it can express copper strength via UK miners on long-only constraints.",
+      "failed": false
+    },
+    {
+      "ticker": "ZAL.DE",
+      "move_pct": 3.338,
+      "close": 22.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed Oct 1 news catalyst. Searches show a +4% DAX-leading rebound on Sep 30 (reclaimed SMA20, Deutsche Bank Buy/\u20ac35 target reiterated), so this looks like technical follow-through or a sector bounce.",
+      "miss_reason": "Outside any active strategy's universe: ZAL.DE is a mid-cap German consumer-discretionary e-commerce name, and no strategy's universe includes it. With no news catalyst, a news-reactive filter would not have fired either.",
+      "suggestion": "Add DAX/MDAX mid-caps such as ZAL.DE to the momentum universe, gated by a \u2265+3% close with volume \u22651.5\u00d7 the 20-day average. Alternatively, treat a top-DAX-gainer day as a signal to watch the name the next day.",
+      "failed": false
+    },
+    {
+      "ticker": "RKT.L",
+      "move_pct": 2.986,
+      "close": 50.36,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single hard catalyst found; Reckitt (FTSE 100 consumer health) rose ~3% on a rebound in a stock down ~21% YTD, helped by buy ratings (UBS, Jefferies), Q3 growth hopes, a buyback and its Russia hygiene exit.",
+      "miss_reason": "Outside any active strategy's universe: RKT.L is a large-cap, low-beta consumer staples/health name on the LSE. A ~3% drift on soft news doesn't trip gap-up or volume-spike filters, and no earnings or M&A event triggered the news-reactive logic.",
+      "suggestion": "Add a small mean-reversion sleeve for FTSE 100 defensives, entered on a \u22652.5% up-day when the stock is \u226520% below its 52-week high. Otherwise no change, since the move was low-conviction and below the existing gap thresholds.",
+      "failed": false
+    },
+    {
+      "ticker": "IHG.L",
+      "move_pct": 2.082,
+      "close": 161.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious company-specific catalyst found; only routine buyback filings (US$950m programme) on the day. Likely a sector or market rebound in UK travel and leisure stocks.",
+      "miss_reason": "Outside any active strategy's universe: IHG.L is a FTSE 100 large-cap hotel operator that no strategy lists. A +2.08% drift with no news also gives a news-reactive or gap-up filter nothing to trigger on.",
+      "suggestion": "Add FTSE 100 consumer-discretionary names such as IHG.L to the momentum-trader universe config. Keep the existing gap \u2265 X% and volume \u2265 1.5\u00d7 filters, so a quiet +2% move still wouldn't trade.",
+      "failed": false
+    },
+    {
+      "ticker": "SSE.L",
+      "move_pct": 1.929,
+      "close": 24.84,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "SSE trading update: networks investment up ~70% y/y, renewables output up ~20%, H1 EPS guided 64-68p, FY guidance reiterated. Caveat: one report had shares down 1.9% in the morning, so the +1.93% close is unverified.",
+      "miss_reason": "Outside any active strategy's universe: SSE is a large-cap UK utility that no strategy covers. The move was also a modest +1.9% on a reiterated-guidance update, with no gap or volume spike for a momentum or news filter to trigger on.",
+      "suggestion": "No actionable change: a ~2% large-cap utility move on reiterated guidance is below any sensible gap or volume threshold. If UK utilities were wanted, add them to a defensive-sector universe list, not a momentum filter.",
+      "failed": false
+    },
+    {
+      "ticker": "BMW.DE",
+      "move_pct": 1.835,
+      "close": 55.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single catalyst found. BMW is bouncing near six-year lows after its Capital Markets Day plan (8,000 job cuts, 3-5% auto margin target by 2028), with Q3 deliveries due ~Oct 12 (unconfirmed).",
+      "miss_reason": "Outside any active strategy's universe: BMW.DE is a German large-cap auto stock, and no strategy's universe includes it. The +1.83% move was also modest, with no gap (pre-market was -0.22%), so a gap or momentum filter would not have fired anyway.",
+      "suggestion": "No actionable change. A +1.8% drift in a downtrending stock with no gap or news spike is noise. If EU autos are wanted, add large-cap DAX names to the mean-reversion universe with an RSI<30 entry filter.",
+      "failed": false
+    },
+    {
+      "ticker": "CBK.DE",
+      "move_pct": -4.001,
+      "close": 40.31,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Deutsche Bank downgraded Commerzbank to Hold, citing strategy uncertainty. An FT report said UniCredit may replace the supervisory board from January. No single clear driver was found for the -4% close on 1 Oct.",
+      "miss_reason": "Outside any active strategy's universe: Commerzbank is a large-cap German bank (DAX/MDAX-type) that no strategy includes. The drop was an analyst-downgrade and takeover-headline move, which a technical or momentum filter wouldn't flag in advance.",
+      "suggestion": "Add large-cap EU financials (CBK.DE, etc.) to the news-reactive universe, with a trigger for a downgrade or M&A headline plus a gap of at least 3% on volume of at least 1.5x average. Otherwise, no change: shorting isn't available.",
+      "failed": false
+    },
+    {
+      "ticker": "AAF.L",
+      "move_pct": -3.857,
+      "close": 2.9901,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Airtel Money IPO priced at \u00a31.96/share (\u00a35.3bn market cap) on Oct 1. Airtel Africa is the majority holder and sells nothing. The -3.9% drop is probably parent-stock selling around the spin-out. The search didn't confirm this as the cause.",
+      "miss_reason": "Outside any active strategy's universe: AAF.L is a mid/large-cap FTSE 100 telecom with emerging-market exposure, and no strategy lists it. The drop looks like an IPO-pricing or sum-of-the-parts event, with no gap or momentum signal for the filters to catch.",
+      "suggestion": "No actionable change. This was a moderate, event-driven decline in a name outside the universe, and the bot has no short capability. If coverage is wanted, add UK telecom and large-cap names to the mean-reversion universe, gated on RSI < 30.",
+      "failed": false
+    },
+    {
+      "ticker": "TTE.PA",
+      "move_pct": -3.047,
+      "close": 75.72,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear single driver found. Searches showed Brent up about $1.30 to ~$103.9 intraday while TTE fell, and a Q4 buyback raise to $2.5B (announced Sep 28) didn't help. Likely a sector or technical move.",
+      "miss_reason": "Outside any active strategy's universe: TTE.PA is a Euronext Paris large-cap energy name that no strategy covers. With no identifiable news catalyst, a news-reactive filter would have had nothing to trigger on anyway.",
+      "suggestion": "No actionable change from this one move. If European energy should be covered, add a liquid CAC40/Stoxx energy sleeve (TTE.PA, SHEL.L, BP.L) to the mean-reversion universe, gated on a \u22653% drop with no company-specific news.",
+      "failed": false
+    },
+    {
+      "ticker": "CS.PA",
+      "move_pct": -2.759,
+      "close": 42.29,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No stock-specific news found for AXA (CS.PA). The -2.76% looks like part of a broad risk-off day, since global markets fell sharply on 2026-10-01 (the ASX lost about 2%), so likely a sector or market move.",
+      "miss_reason": "Outside any active strategy's universe: CS.PA is a large-cap French insurer on Euronext Paris that no strategy includes. With no company-specific catalyst, a news-reactive filter would also have had nothing to trigger on.",
+      "suggestion": "No actionable change. This was a beta-driven drop with no catalyst, and the bot has no short capability. Optionally, add large-cap EU financials to the mean-reversion universe and gate entries on a market-wide drawdown flag.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-01T15:02:34.735907+00:00"
+}
