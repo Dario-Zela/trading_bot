@@ -1,0 +1,124 @@
+{
+  "date": "2026-10-01",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 1 of today's 10 biggest US movers.\n\n\u2022 5 upside misses \u2014 GEN +6%, CBOE +5%, SNPS +5%, FDS +4%, INTC +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (JBL -10%, MRNA -5%, APP -5%, GIS -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: JBL (-10.03%) \u2014 Sell-the-news after FQ4/FY26 results (rev ~$10.6B, +29% y/y, core EPS $4.40) and FY27 guide; profit-taking after a big run-up, plus worries about back-loaded margins and AI-capex durability. Why we passed: Outside any active strategy's universe (mid/large-cap EMS/AI-hardware name). It was an earnings-gap move that happened at the open, and a long-only bot can't short a gap-down.",
+  "top_movers": [
+    {
+      "ticker": "GEN",
+      "move_pct": 5.612,
+      "close": 22.02,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day catalyst. Search shows only background news: a reported GoDaddy takeover approach, a new Agent Trust Hub AI feature, and an RBC price-target cut to $26. The move may be a rebound or sector bounce.",
+      "miss_reason": "Outside any active strategy's universe: GEN is a ~$12B mid-cap consumer cybersecurity software name that no strategy lists. With no clear catalyst, a news-reactive trigger would not have fired either.",
+      "suggestion": "Add mid-cap US software and cybersecurity names (market cap $5-20B, avg dollar volume above $50M) to the momentum universe. Alternatively, add an M&A-headline watchlist so acquirer names like GEN get flagged.",
+      "failed": false
+    },
+    {
+      "ticker": "CBOE",
+      "move_pct": 5.173,
+      "close": 275.29,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Cboe announced on Sep 30 that it will launch KPI-linked binary contracts in October 2026, with Robinhood as the first retail broker and fees waived through year-end. Search results don't confirm this drove the +5.2% move.",
+      "miss_reason": "Outside any active strategy's universe: CBOE is a ~$30B mid-cap exchange operator in financials, not in any strategy's universe. The move was also a news-driven re-rating with no earnings gap or momentum signature, so a technical filter would not have flagged it.",
+      "suggestion": "Add a small 'market-structure/exchanges' watchlist (CBOE, CME, ICE, NDAQ) to the news-reactive strategy's universe, gated on a product-launch or partnership headline plus a gap of at least +3% on volume of at least 1.5x average.",
+      "failed": false
+    },
+    {
+      "ticker": "SNPS",
+      "move_pct": 4.782,
+      "close": 434.94,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Investor Day announcements: OpenAI partnership (GPT-Synopsys), a >$1B multi-year AWS silicon IP/EDA licensing deal, and FY27 revenue guidance of ~$11.15B (~15% growth).",
+      "miss_reason": "Outside any active strategy's universe: SNPS is a large-cap EDA software name, and no strategy's universe includes it. The move was also a pre-announced, event-driven gap on Investor Day news, which a momentum or mean-reversion filter would not catch intraday.",
+      "suggestion": "Add large-cap US tech/semiconductor-software names (SNPS, CDNS) to the momentum universe, and add a news-reactive rule that admits any name gapping \u2265+4% on a same-day corporate-event headline, regardless of universe membership.",
+      "failed": false
+    },
+    {
+      "ticker": "HPE",
+      "move_pct": 3.903,
+      "close": 63.89,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "macro-aligned-hmm"
+      ],
+      "catalyst": "AI-server momentum: $1.2B Vultr order for AMD Helios AI racks (announced the prior session) plus Citi PT raise to $92 and Morgan Stanley PT raise to $72 pushed HPE toward its 52-week high.",
+      "miss_reason": "Outside any active strategy's universe: HPE is a large-cap IT hardware name that no strategy lists (only macro-aligned-hmm traded it). The order news broke the prior session, so the +3.9% was a continuation move with no fresh gap for a news-reactive filter.",
+      "suggestion": "Add a dynamic momentum-universe expansion rule: add any US large-cap (market cap > $20B) closing within 3% of its 52-week high on volume \u22651.5\u00d7 its 20-day average, so AI-hardware names like HPE enter the momentum-trader candidate list.",
+      "failed": false
+    },
+    {
+      "ticker": "FDS",
+      "move_pct": 3.839,
+      "close": 269.95,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FactSet beat Q4 FY26 estimates: adj. EPS $4.52 vs $4.32 expected, revenue $634.7M (+6.3%), record $86M organic ASV added. It also issued FY27 EPS guidance of $19.25\u201319.65.",
+      "miss_reason": "Outside any active strategy's universe: FDS is a mid-cap financial-data/software name that no strategy lists. The move was an earnings-gap reaction, so a momentum or news bot would have needed a pre-market position or an earnings-gate release.",
+      "suggestion": "Add mid-cap US names with an earnings release in the last 24h to the news-reactive universe, and let the earnings-gate release them when the post-results gap is \u2265 +3% on volume \u2265 1.5\u00d7 average.",
+      "failed": false
+    },
+    {
+      "ticker": "INTC",
+      "move_pct": 3.709,
+      "close": 120.23,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide chip rally after Micron's fiscal Q4 results lifted AI/memory sentiment. Agentic-AI CPU-demand speculation added to it. No Intel-specific news was found.",
+      "miss_reason": "Outside any active strategy's universe: INTC is a large-cap semiconductor name that no strategy includes. The move was a modest +3.7% sector-beta move with no gap or earnings trigger, so a news-reactive or gap filter would not have flagged it anyway.",
+      "suggestion": "Add large-cap semis (INTC, AMD, AVGO, NVDA) to the momentum-trader universe, with a sector-confirmation rule: enter when \u22653 peers are up >2% on a major peer's earnings day (e.g. MU), instead of requiring a stock-specific catalyst.",
+      "failed": false
+    },
+    {
+      "ticker": "JBL",
+      "move_pct": -10.03,
+      "close": 286.86,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sell-the-news after FQ4/FY26 results (rev ~$10.6B, +29% y/y, core EPS $4.40) and FY27 guide; profit-taking after a big run-up, plus worries about back-loaded margins and AI-capex durability.",
+      "miss_reason": "Outside any active strategy's universe (mid/large-cap EMS/AI-hardware name). It was an earnings-gap move that happened at the open, and a long-only bot can't short a gap-down.",
+      "suggestion": "Add JBL and similar AI-supply-chain earnings reporters to the news-reactive universe, with an earnings-gate rule that flags a gap \u2264 -8% on a beat as a watch/avoid signal, or a rebound candidate only after day-2 stabilisation.",
+      "failed": false
+    },
+    {
+      "ticker": "MRNA",
+      "move_pct": -5.352,
+      "close": 192.57,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Citi downgraded MRNA to Sell from Neutral (PT $80, up from $60), saying the ~222% rally since the August Phase 3 INTerpath-001 melanoma readout leaves the ~$80B market cap stretched.",
+      "miss_reason": "Outside any active strategy's universe. MRNA is a high-volatility mid/large-cap biotech with no strategy tracking it. The move was an analyst downgrade that showed up premarket, and a long-only bot can't express a bearish call anyway.",
+      "suggestion": "No change to the universe. If a short or exit capability is ever added, flag names up >100% over 60 days that get a sell-side downgrade, using a 'parabolic_rally_downgrade' rule. Otherwise this is a no-op, because it needs shorting.",
+      "failed": false
+    },
+    {
+      "ticker": "APP",
+      "move_pct": -4.983,
+      "close": 290.43,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Wells Fargo note called AppLovin's spike in merchant Pixel installs a 'false start' (no traffic-weighted pickup), pushing APP to a 52-week low, down about 5% on the day.",
+      "miss_reason": "Outside any active strategy's universe: APP is a large-cap ad-tech name in a long downtrend (about -58% YTD) and no strategy's universe includes it. The drop was an analyst-note move, not a gap or earnings event.",
+      "suggestion": "Add APP and similar high-beta large-cap ad-tech names to the news-reactive universe, with an analyst-downgrade/note trigger (\u22653% intraday drop on \u22651.5\u00d7 average volume). The bot is long-only, so use it only as an exit or avoid signal.",
+      "failed": false
+    },
+    {
+      "ticker": "GIS",
+      "move_pct": -4.908,
+      "close": 32.16,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single catalyst found. GIS fell to a new 52-week low (~$31.74) after weak fiscal results and guidance for lower operating profit, with analyst price-target cuts. The slide continues a 10% weekly drop.",
+      "miss_reason": "Outside any active strategy's universe: GIS is a large-cap consumer-staples name that no strategy includes. The drop was also a slow, multi-week slide to new lows with no gap or volume spike, so momentum and news-reactive filters would not have fired. A long-only bot can't short it.",
+      "suggestion": "No actionable change for shorting, since the bot is long-only. For a mean-reversion strategy, add staples (GIS, CAG, KHC) to the universe with a filter on 52-week low and dividend yield \u22656%, but only after the downtrend stabilises (e.g. RSI(14)<30 turning up).",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-01T19:31:57.336298+00:00"
+}
