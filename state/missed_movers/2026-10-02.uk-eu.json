@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-02",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 CAP.PA +9%, HEI.DE +3%, WPP.L +2%, IHG.L +2%, BP.L +2%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (GAW.L -7%, NWG.L -6%, BAYN.DE -5%, BGEO.L -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: CAP.PA (+8.81%) \u2014 Accenture's beat (Q4 FY26 revenue +7% cc, orders $22.2B; ADR ~+17%) lifted IT-services peers. Capgemini hit an 8-month high, though sources date the main +7% jump to Oct 1, not Oct 2. Why we passed: Outside any active strategy's universe: CAP.PA is a CAC 40 large-cap IT-services name that no strategy covers. The move was a peer-earnings read-through that gapped at the open, so a post-open momentum signal would have come too late.",
+  "top_movers": [
+    {
+      "ticker": "CAP.PA",
+      "move_pct": 8.812,
+      "close": 113.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Accenture's beat (Q4 FY26 revenue +7% cc, orders $22.2B; ADR ~+17%) lifted IT-services peers. Capgemini hit an 8-month high, though sources date the main +7% jump to Oct 1, not Oct 2.",
+      "miss_reason": "Outside any active strategy's universe: CAP.PA is a CAC 40 large-cap IT-services name that no strategy covers. The move was a peer-earnings read-through that gapped at the open, so a post-open momentum signal would have come too late.",
+      "suggestion": "Add a peer-earnings read-through trigger: when a mapped US peer (e.g. ACN) gaps \u2265+5% after results, add its European comps (CAP.PA, etc.) to the news-reactive universe at the next EU open with a gap-chase cap of ~+3%.",
+      "failed": false
+    },
+    {
+      "ticker": "HEI.DE",
+      "move_pct": 2.646,
+      "close": 145.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst. Only routine buyback disclosures and analyst notes (e.g. a UBS target cut) turned up, so this looks like a technical or sector move in European building materials/cyclicals.",
+      "miss_reason": "Outside any active strategy's universe: HEI.DE is a large-cap German (DAX) building-materials name that no strategy's universe includes. With no discrete catalyst, a news-reactive filter would also have had nothing to trigger on.",
+      "suggestion": "Add DAX/Stoxx 600 large-cap cyclicals (HEI.DE, etc.) to the momentum universe, gated by a \u2265+2% close-to-close move with volume \u22651.5\u00d7 its 20-day average, so sector-driven moves without news are caught.",
+      "failed": false
+    },
+    {
+      "ticker": "WPP.L",
+      "move_pct": 2.18,
+      "close": 3.843,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear same-day catalyst found. Search turned up only a BlackRock 5.16% major-holdings filing, a CFO departure (to Diageo) and FTSE index reshuffle chatter. Likely a rebound or technical move.",
+      "miss_reason": "Outside any active strategy's universe: WPP is a UK mid/large-cap advertising stock that no strategy lists. With no earnings or M&A trigger, a +2.18% drift also wouldn't pass a news-reactive or gap-up filter.",
+      "suggestion": "Add a low-priority 'broad-liquidity' scan that admits FTSE 100/250 names into the momentum universe when the daily move is \u2265 +2% on volume \u2265 1.5\u00d7 the 20-day average, so unlisted mid-caps can qualify without a hand-maintained list.",
+      "failed": false
+    },
+    {
+      "ticker": "IHG.L",
+      "move_pct": 2.082,
+      "close": 161.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst. The only IHG item found was routine buyback disclosures (1,000 shares repurchased 1 Oct), so this looks like a sector or technical move in UK travel and leisure.",
+      "miss_reason": "Outside any active strategy's universe. IHG.L is a FTSE 100 large-cap hotel operator that no strategy lists. A +2.08% drift with no news and no volume spike would also likely fail momentum, gap and news-reactive triggers.",
+      "suggestion": "Add FTSE 100 consumer-discretionary and travel names such as IHG.L to the uk-eu mean-reversion/momentum universe, and keep the existing gap \u2265 X% and volume \u2265 1.5\u00d7 average filters so no-news drifts are still skipped.",
+      "failed": false
+    },
+    {
+      "ticker": "BP.L",
+      "move_pct": 1.711,
+      "close": 5.588,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Follow-through from the Wells Fargo upgrade to Overweight (target raised to $57) on deleveraging and rising EPS estimates ahead of Oct 30 results. BP rose despite Brent falling ~2.6%, so it looks like a stock-specific re-rating.",
+      "miss_reason": "Outside any active strategy's universe: BP.L is a UK large-cap integrated oil major that no strategy includes. The +1.7% move was a modest analyst-upgrade drift against falling crude, so it would not have tripped a gap or momentum trigger.",
+      "suggestion": "Add large-cap LSE energy names (BP.L, SHEL.L) to the news-reactive universe, with a trigger on broker upgrades that lift a name \u22651.5% while Brent is down. Alternatively, no action: the move was small and the signal weak.",
+      "failed": false
+    },
+    {
+      "ticker": "SGE.L",
+      "move_pct": 1.565,
+      "close": 9.866,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. Search returned only generic quote pages, nothing specific to 2026-10-02. Likely a technical or sector rebound in UK software/large-cap names.",
+      "miss_reason": "Outside any active strategy's universe: SGE.L is a FTSE 100 large-cap software/accounting name that no strategy includes. A +1.56% move with no catalyst is also too small for gap-up or momentum triggers.",
+      "suggestion": "(no actionable change \u2014 a +1.56% move without a catalyst is below typical momentum thresholds; adding FTSE 100 software names to the universe isn't justified by a single day's move.)",
+      "failed": false
+    },
+    {
+      "ticker": "GAW.L",
+      "move_pct": -6.615,
+      "close": 168.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed driver. Searches show GAW.L gapping down about 5.8% at the open, with a headline 'falls despite record year' that I couldn't tie to today. One source shows a partial intraday recovery.",
+      "miss_reason": "Outside any active strategy's universe: GAW.L is a UK mid/large-cap consumer discretionary name that no strategy lists. A gap-down at the open would also fail gap and RSI filters, and the bot has no short capability.",
+      "suggestion": "Add FTSE 100/250 consumer-discretionary names like GAW.L to the uk-eu mean-reversion universe, with a gap-down \u22655% watch rule that requires volume \u22651.5\u00d7 the 20-day average before entry.",
+      "failed": false
+    },
+    {
+      "ticker": "NWG.L",
+      "move_pct": -6.072,
+      "close": 6.466,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sell-off in UK bank shares as global bond yields rose, plus profit-taking after a strong run. No NWG-specific news was found. Sources dated the drop to Oct 1, so the match to the Oct 2 close is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: NWG.L is a large-cap UK bank that no strategy lists. The drop was a macro, rates-driven sector move with no stock-specific catalyst. A long-only momentum or news-reactive bot has no signal to buy it and cannot short it.",
+      "suggestion": "Add a sector-level 'UK banks drawdown' flag (e.g. NWG.L, LLOY.L, BARC.L down >4% together) to a mean-reversion strategy's universe, gated on no company-specific news. Alternatively accept this as a no-op, since the bot is long-only.",
+      "failed": false
+    },
+    {
+      "ticker": "BAYN.DE",
+      "move_pct": -5.026,
+      "close": 45.54,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Bayer fell ~5% on a JPMorgan note saying Q3 consensus (results due 3 Nov) is too high, plus a new Roundup/glyphosate trial and mRNA patent claims. Some of the search results may refer to 1 Oct.",
+      "miss_reason": "Outside any active strategy's universe: BAYN.DE is a German large-cap pharma/agro name that no strategy includes. The drop was a gradual analyst-downgrade and litigation sell-off, not a clean gap or momentum signal, so the filters wouldn't have flagged it anyway.",
+      "suggestion": "Add large-cap DAX/EuroStoxx names like BAYN.DE to the news-reactive strategy's watch universe, with a trigger on analyst-cut or litigation headlines plus a \u2264-4% daily move; the bot has no short capability, so this would only be a signal.",
+      "failed": false
+    },
+    {
+      "ticker": "BGEO.L",
+      "move_pct": -5.01,
+      "close": 136.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found. Lion Finance Group (ex-Bank of Georgia) fell in a broad UK bank sell-off on bond-market worries. Search showed -2.5% against the -5.01% close, so the cause is only partly explained.",
+      "miss_reason": "Outside any active strategy's universe. It is a Georgia-focused frontier-market bank, mid-cap on the LSE, that falls outside the large-cap UK/EU lists. A sector or rates-driven drop with no stock-specific signal would not trigger news-reactive filters anyway.",
+      "suggestion": "(no actionable change) The drop looks sector or rates-driven and the bot is long-only. If wanted, add a UK-banks sector-drawdown flag using a \u22653% one-day basket move, rather than adding frontier-market names to the universe.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-02T15:02:33.924026+00:00"
+}
