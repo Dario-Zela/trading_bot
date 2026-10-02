@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-02",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 ACN +16%, SNPS +13%, FICO +12%, COHR +11%, CIEN +8%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (CTVA -84%, PSKY -10%, MKC -5%, DHR -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: CTVA (-83.81%) \u2014 Not a real loss: Corteva completed the spin-off of its seed business as Vylor (VYLR) on Oct 1, 2026, one share per CTVA share. The -83.81% is the ex-distribution price reset, not an adjusted price drop. Why we passed: Outside any active strategy's universe. CTVA is a mid/large-cap ag-chemicals name that no strategy includes. Even if it had been included, a corporate-action price drop with no adjustment looks like a gap that gap/RSI filters would reject.",
+  "top_movers": [
+    {
+      "ticker": "ACN",
+      "move_pct": 15.777,
+      "close": 212.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FQ4 earnings beat (EPS $3.29 vs $3.18, revenue $18.68B vs $18.03B est.), record bookings, a higher dividend and a $1B Anthropic AI partnership eased AI-disruption fears. Stock peaked above +22% intraday.",
+      "miss_reason": "Outside any active strategy's universe. ACN is a large-cap IT-services name that no strategy lists. The jump was a pre-market earnings gap, so a post-open momentum or news-reactive entry would have been late and chasing a ~16\u201322% gap.",
+      "suggestion": "Add large-cap IT-services/consulting names (ACN, IBM, CTSH) to the news-reactive universe, and let the earnings-gate release names that gap up \u2265+8% on record-bookings or beat-and-raise results within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "SNPS",
+      "move_pct": 12.783,
+      "close": 490.54,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Investor Day: >$1B multiyear Amazon deal, OpenAI 'GPT-Synopsys' partnership, FY27 guidance (~$11.1-11.2B rev, EPS ~$19.1) above consensus, plus HSBC upgrade to Buy (PT $700).",
+      "miss_reason": "Outside any active strategy's universe: SNPS is a large-cap software/EDA name that no strategy lists. The move was also a single-session event-driven gap from an Investor Day, so a post-event momentum signal would have come too late.",
+      "suggestion": "Add a gap-scanner sleeve that admits any S&P 500 / Nasdaq-100 name gapping \u2265+5% on \u22652\u00d7 average volume at the open, bypassing the static universe list, with a stop at the open-gap low.",
+      "failed": false
+    },
+    {
+      "ticker": "FICO",
+      "move_pct": 11.693,
+      "close": 661.75,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FICO rebounded ~12% after FHFA Director Pulte approved its Direct License Program, which lets it sell mortgage credit scores directly to lenders. This followed a ~27% drop earlier in the week on VantageScore competition.",
+      "miss_reason": "Outside any active strategy's universe: FICO is a ~$16B mid/large-cap data/analytics name that no strategy lists. It was also a policy-headline rebound after a crash, so a gap-up or RSI filter would likely have excluded it even if it were in the universe.",
+      "suggestion": "Add a dynamic 'extreme-mover' watchlist that admits any name with a \u2265\u00b110% close-to-close move on \u22652\u00d7 20-day average volume into the news-reactive strategy's universe for the next session, with a reduced position size cap.",
+      "failed": false
+    },
+    {
+      "ticker": "COHR",
+      "move_pct": 10.903,
+      "close": 319.19,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Bernstein initiated coverage with Outperform and a $350 target, calling optical networking a structural AI winner. Lumentum and Ciena also rallied, and PhotonLink got attention. Coverage dates the ~10-11% jump to Oct 1, so the date is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: COHR is a ~$50B mid/large-cap AI-optics name that no strategy lists. The move was an analyst-initiation and sector rerating that built intraday, so no pre-market gap or earnings signal would have triggered a news-reactive bot.",
+      "suggestion": "Add an 'ai_optics' basket (COHR, LITE, CIEN, GLW) to the momentum-trader universe, or let it admit any S&P 500/400 name with 1-day return \u2265 +5% and volume \u2265 2\u00d7 its 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "CIEN",
+      "move_pct": 7.765,
+      "close": 379.14,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "AI optical-networking rally: Evercore ISI Outperform and bullish sector research, on top of strong fiscal Q3 results (revenue +37%, $8.5B backlog, cloud customers 53% of revenue). No fresh company-specific event found.",
+      "miss_reason": "Outside any active strategy's universe: CIEN is a mid/large-cap optical-networking name (about $379 a share) that no strategy's universe list includes. The move was a gradual analyst and sector re-rating, with no earnings gap for a news-reactive filter to catch.",
+      "suggestion": "Add a dynamic universe slot that admits any US stock with a \u22655% daily gain and above-average volume (e.g. 1.5\u00d7 the 20-day average) for the next session, so momentum-trader can evaluate AI-infrastructure names like CIEN without a hand-curated list.",
+      "failed": false
+    },
+    {
+      "ticker": "LITE",
+      "move_pct": 7.673,
+      "close": 1045.78,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "AI-optics rally: Lumentum showed AI optical hardware ahead of ECOC 2026 and speaks at OCP Summit, and sell-side notes (Barclays) cite faster co-packaged optics/OCS deployment. Stock is up about 170% YTD.",
+      "miss_reason": "Outside any active strategy's universe: LITE is a roughly $70B+ AI-optical-networking mid/large-cap with a ~$1,000 share price. It probably failed a price or market-cap filter, and after a 170% YTD run an RSI/extension filter would exclude it anyway.",
+      "suggestion": "Add a 'high-priced AI-infrastructure momentum' sleeve (optical/networking names like LITE, COHR, CIEN) and drop any max share price cap. Use fractional or notional sizing and raise the RSI ceiling to about 85 when the sector's 20-day relative strength is positive.",
+      "failed": false
+    },
+    {
+      "ticker": "CTVA",
+      "move_pct": -83.812,
+      "close": 12.57,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Not a real loss: Corteva completed the spin-off of its seed business as Vylor (VYLR) on Oct 1, 2026, one share per CTVA share. The -83.81% is the ex-distribution price reset, not an adjusted price drop.",
+      "miss_reason": "Outside any active strategy's universe. CTVA is a mid/large-cap ag-chemicals name that no strategy includes. Even if it had been included, a corporate-action price drop with no adjustment looks like a gap that gap/RSI filters would reject.",
+      "suggestion": "Add a corporate-action guard to the mover/screening pipeline. Flag any single-day |move| > 40% with no news, or an 8-K spin-off or ex-date, as 'distribution artifact' and exclude it from loser lists and signals. Use split/dividend-adjusted closes.",
+      "failed": false
+    },
+    {
+      "ticker": "PSKY",
+      "move_pct": -9.584,
+      "close": 9.34,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Paramount priced a $41.4B debt package (secured notes plus an $8.5B term loan) to fund its Warner Bros. Discovery buyout. S&P cut its rating to BB, and some bond yields are above 10%. The stock fell despite antitrust clearance.",
+      "miss_reason": "Outside any active strategy's universe: PSKY is a roughly $10B-cap, low-priced media stock. The move came from a deal-financing and credit-downgrade event, not a technical setup. A long-only momentum or mean-reversion bot has no short entry for it.",
+      "suggestion": "No actionable change. This is a deal-financing and credit event on a stock outside the universe, and it needs short capability the bot lacks. Optionally, log M&A-financing losers (-8% or worse on 3x volume) to a watchlist, but don't trade them.",
+      "failed": false
+    },
+    {
+      "ticker": "MKC",
+      "move_pct": -4.871,
+      "close": 44.14,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "MKC fell 4.9% to a new 52-week low (~$44) after the Q3 results, with weak 2% organic growth, flat Consumer Americas and margin pressure. TD Cowen cut its price target from $55 to $48.",
+      "miss_reason": "Outside any active strategy's universe: MKC is a mid-cap consumer-staples name. The drop was a post-earnings fundamental de-rating and a slow slide to 52-week lows, so a momentum or news-reactive entry would have had no pre-market signal. The bot is also probably long-only.",
+      "suggestion": "(no actionable change; this is a long-only bot and a staples de-rating would need short capability.) If a tweak is wanted, add S&P 500 staples to the mean-reversion universe, gated by a 'no entry within 3 days of a post-earnings gap \u2264 -4%' rule.",
+      "failed": false
+    },
+    {
+      "ticker": "DHR",
+      "move_pct": -4.419,
+      "close": 211.76,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "CEO transition took effect: Julie Sawyer Montgomery replaced Rainer Blair as CEO. The stock fell 4.4% to 211.76 amid worries about execution risk and weak biopharma capex before Q3 results. No fresh fundamental news.",
+      "miss_reason": "Outside any active strategy's universe. DHR is a large-cap life-sciences tools name that no strategy's universe includes. The move was a slow, sentiment-driven drift down (about -5% on the week) with no gap or volume spike, so momentum and news filters would not have flagged it either.",
+      "suggestion": "No actionable change: a long-only bot can't express a downside move in a name outside its universe. Optionally add large-cap healthcare tools (DHR, TMO, A) to the mean-reversion universe, gated on RSI<30 near the 52-week low.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-02T19:31:57.575746+00:00"
+}
