@@ -440,3 +440,32 @@
 - **ml-challenger@uk-eu** · `keep` · ✅ applied — Sole occupant of the single T212-paper slot with 0 trades and 0 graded predictions — doesn't literally clear the dormant-execution demotion bar (needs n_predictions_graded≥150) yet, but flagging for next week: if still 0/0 then, this becomes the strongest demote-and-refill candidate to also free a slot for spawning a genuinely new variant.
 - **news-reactive-sentiment-gate@us** · `keep` · ✅ applied — 0 trades, 0 graded predictions on alpaca-paper — below the strict dormant-execution threshold (needs n_predictions_graded≥150) so not yet actionable, but on watch alongside mean-reverter@us as the other quiet Alpaca occupant.
 - **mean-reverter@us** · `keep` · ✅ applied — 0 trades, 0 graded predictions on alpaca-paper — same watch status as news-reactive-sentiment-gate@us; no demotion criteria met yet.
+
+## Weekly evolution — 2026-10-03
+
+- **mean-reverter@us** · `demote` · ✅ applied — Alpaca slot 1: hit rate 25%, P&L -£131.19, IC -0.009 and decile spread -3.47 — meets demotion criteria.
+  - details: `{"from_tier": "alpaca-paper", "slot_cleared": true, "previous_slot": 1, "slot_kind": "alpaca"}`
+- **macro-aligned-hmm@us** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 5, "hit_rate": 0.6, "total_pnl_gbp": 111.46, "avg_pnl_pct": 1.171, "max_drawdown_pct": -0.47, "n_predictions_graded": 496, "ic": 0.113, "decile_spread": 0.21}}`
+- **news-reactive-sentiment-gate@us** · `demote` · ✅ applied — Dormant-execution rule: 249 predictions graded but only 1 trade. It is holding Alpaca slot 2 without being earned.
+  - details: `{"from_tier": "alpaca-paper", "slot_cleared": true, "previous_slot": 2, "slot_kind": "alpaca"}`
+- **insider-cluster-momentum@us** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 3, "hit_rate": 0.667, "total_pnl_gbp": 36.21, "avg_pnl_pct": 0.945, "max_drawdown_pct": -0.06, "n_predictions_graded": 200, "ic": 0.081, "decile_spread": 0.609}}`
+- **ml-challenger@uk-eu** · `demote` · ⏭️ skipped — Strategy is evolution_frozen (experiment control) — 'demote' refused. (T212 slot: 26,733 predictions graded but 0 trades (dormant), and IC is -0.055 — meets demotion criteria.)
+- **momentum-trader-vix-gated@uk-eu** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 4, "hit_rate": 0.75, "total_pnl_gbp": 255.83, "avg_pnl_pct": 4.096, "max_drawdown_pct": -0.68, "n_predictions_graded": 370, "ic": 0.031, "decile_spread": 1.43}}`
+- **ml-challenger** · `deactivate` · ⏭️ skipped — Strategy is evolution_frozen (experiment control) — 'deactivate' refused. (Signal is negative in both regions on large samples (IC -0.071 US, -0.055 UK-EU). It has a 0% hit rate in the US and no trades in the UK-EU. Deactivating frees 2 sleeve slots under the 18 cap for a new contender.)
+- **news-reactive** · `spawn-variant` · ✅ applied — Anchored to arXiv 2601.11958, where agent-ranked top-20 longs earned 18.4bp/day with costs under 10% of gross alpha, concentrated in the top tier. Concentrating news-reactive into a ranked top-3 with a low-turnover hold is meant to fix the parent's diluted signal (IC 0.002 US, -0.198 UK-EU).
+  - details: `{"variant_id": "news-reactive-agent-top-n", "addendum_applied": true}`
+- **news-reactive@us** · `unmark-tier2-candidate` · ✅ applied — IC 0.002 and 50% hit rate on 4 trades. It has been out-competed by sleeves with real IC, and the shortlist needs to narrow.
+- **news-reactive-buzz-fade@uk-eu** · `unmark-tier2-candidate` · ✅ applied — IC is -0.14 on n=230 and only 1 trade this week, so the 100% hit rate rests on almost no data. It has been out-competed.
+- **momentum-trader-vix-gated@uk-eu** · `mark-tier2-candidate` · ✅ applied — Re-affirming the leader after promotion. It has the best P&L and hit rate on the slate, but its IC is still below the 0.20 evidence bar.
+  - details: `{"tier2_marked_at": "2026-10-03", "thesis_present": true}`
+- **macro-aligned-hmm@us** · `mark-tier2-candidate` · ✅ applied — It has the best IC and the largest prediction sample among the profitable sleeves, and the Alpaca promotion will add fee-net data.
+  - details: `{"tier2_marked_at": "2026-10-03", "thesis_present": true}`
+- **insider-cluster-momentum@uk-eu** · `keep` · ✅ applied — IC is -0.237 but on n=154, below the 200 needed to deactivate. Revisit next week.
+- **news-reactive-disclosure@us** · `keep` · ✅ applied — Inactive and has no metrics, so no demotion criteria apply. Revisit its Alpaca slot 3 next week.
+- **macro-aligned-hmm@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.113, n=496) → Alpaca slot 1
+  - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 1, "enforcement": true, "slot_kind": "alpaca"}`
+- **news-reactive-sentiment-gate@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.094, n=249) → Alpaca slot 2
+  - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 2, "enforcement": true, "slot_kind": "alpaca"}`

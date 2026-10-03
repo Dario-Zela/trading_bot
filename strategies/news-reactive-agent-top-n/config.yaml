@@ -1,0 +1,51 @@
+id: news-reactive-agent-top-n
+display_name: News reactive (variant)
+description: 'Auto-spawned variant of news-reactive on 2026-10-03 by the weekly evolution
+  agent. Reason: Anchored to arXiv 2601.11958, where agent-ranked top-20 longs earned
+  18.4bp/day with costs under 10% of gross alpha, concentrated in the top tier. Concentrating
+  news-reactive into a ranked top-3 with a low-turnover hold is meant to fix the parent''s
+  diluted signal (IC 0.002 US, -0.198 UK-EU).'
+implementation: llm
+active: true
+capital_gbp: 10000
+max_positions: 3
+max_position_pct: 30.0
+min_position_gbp: 50
+use_stops: true
+use_take_profits: true
+stop_loss_pct: -3.0
+take_profit_pct: 5.0
+last_tune_date: '2026-06-20'
+tools:
+- get_universe
+- get_history
+- get_recent_news
+- get_earnings_info
+- get_filing_summary
+- get_insider_trades
+- get_daily_news_brief
+model_assignment:
+  wide_scoring: haiku
+  deep_analysis: sonnet
+  final_select: sonnet
+runs_in:
+- region: us
+  tier: shadow
+  alpaca_slot: null
+  universe: t212_isa_us
+  tier2_candidate: true
+  tier2_marked_at: '2026-09-26'
+  tier2_thesis: "#2 this cycle: \xA3156.23 on 2/2 trades (100% hit, 2.96% avg), and\
+    \ now backed by a fresh promotion to alpaca-paper this same run \u2014 will start\
+    \ generating fee-net broker data instead of shadow-only signal."
+- region: uk-eu
+  tier: shadow
+  t212_slot: null
+  universe: t212_isa_uk_eu
+  tier2_candidate: false
+  tier2_marked_at: null
+  tier2_thesis: ''
+  alpaca_slot: null
+prefilter_mode: llm
+prefilter_top_n: 30
+cost_gate_multiplier: 3.0

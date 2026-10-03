@@ -43,12 +43,9 @@ runs_in:
   t212_slot: null
   universe: t212_isa_uk_eu
   alpaca_slot: null
-  tier2_candidate: true
-  tier2_marked_at: '2026-09-26'
-  tier2_thesis: "#3 now: still 100% hit rate across two straight tracked weeks, but\
-    \ this week's \xA3127.91/n=2 trails both momentum-trader-vix-gated@uk-eu (\xA3\
-    200.07) and news-reactive@us (\xA3156.23). Needs a bigger week to reclaim the\
-    \ top spot before the newer entrants pull further ahead."
+  tier2_candidate: false
+  tier2_marked_at: null
+  tier2_thesis: ''
 prefilter_mode: llm
 prefilter_top_n: 60
 cost_gate_multiplier: 4.0
