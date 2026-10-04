@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UK carmakers face a &#x27;difficult trade-off&#x27; between Chinese and EU markets — 2026-10-04 — Trading Bot</title>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../../index.html">Dashboard</a>
+<a class="nav-tab active" href="../../news/latest.html">News</a>
+<a class="nav-tab" href="../../macro/latest.html">Macro</a>
+<a class="nav-tab" href="../../evolution.html">Evolution</a>
+<a class="nav-tab" href="../../ml/index.html">ML lab</a>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper article-page"><div class="edition-nav" data-edition="2026-10-04" data-kind="news"><a class="edition-nav-link" data-role="prev" href="../2026-10-03/" title="2026-10-03">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><a class="edition-nav-link disabled" data-role="next" href="#" aria-disabled="true">next →</a><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">WORLD · UK TRADE · By C. Tanaka · 2026-10-04 · 3 min read</div><h1>UK carmakers face a &#x27;difficult trade-off&#x27; between Chinese and EU markets</h1><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>Industry voices warn that deeper UK ties with Chinese carmakers and investors could jeopardise tariff-free access to EU markets, though no policy or EU threat has yet been announced.</div></div><div class="body"><p>Britain's carmakers are being asked to choose, or at least warned that a choice may be coming. Industry voices say that if the government courts Chinese industrial investment more openly, it risks provoking the European Union, which remains by far the most important export market for cars built in the UK.</p>
+<p>The warning appeared in Guardian Politics commentary. It is analysis of a tension that has been building, not the report of a decision. No policy has been announced. No timetable has been set, and no EU tariff threat has been put on the table. The quoted concern is about what might follow.</p>
+<h2>Why the trade-off exists</h2>
+<p>The logic runs through the rules that govern tariff-free trade between Britain and the EU. Under the post-Brexit trade agreement, cars cross the Channel without duties only if enough of their value originates in the UK or the EU. For electric vehicles, that test increasingly turns on where the battery is made. A UK factory that leans on Chinese cells, or on Chinese capital that brings Chinese supply chains with it, is exposed to those origin rules.</p>
+<p>That is the underlying exposure. Chinese investment can bring batteries, technology and jobs to British plants at a time when the sector wants all three. But the same investment can make a British-built car look less like a British product to an EU customs officer. A government that welcomes the first without managing the second may find that the tariff-free access its manufacturers rely on is harder to defend.</p>
+<p>Brussels has its own reasons for watching closely. The EU has spent the past two years in a running dispute with Beijing over subsidised Chinese electric vehicles, and has imposed extra duties on imports from China. It has little appetite for a back door through a neighbouring market with which it has a preferential deal.</p>
+<h2>What is not yet known</h2>
+<p>The piece offers no figures for current UK–China automotive investment. It names no company at risk and cites no specific EU measure under consideration. That limits how much weight it can bear. It reads as industry positioning ahead of a policy debate: a signal to ministers that the sector's priority is preserving access to the continent.</p>
+<p>There is also a counter-argument the warning does not dispose of. The UK has had years of difficulty attracting large-scale vehicle and battery investment, and some in government will argue that turning away Chinese capital carries its own cost. The trade-off, in other words, is real in both directions. That is why industry groups are speaking now, before anything is settled.</p>
+<h2>What to watch</h2>
+<p>Three things would move this from argument to event. The first is any ministerial statement on Chinese investment in the automotive sector. The second is any signal from Brussels on how it would treat UK-built vehicles with significant Chinese content under the origin rules. The third is any review of those rules in the wider EU–UK trade relationship, where disputes have been hardening. Until one of those appears, the exposure for UK and EU auto stocks is prospective rather than priced in.</p></div><section class="sources-block"><h4>Sources</h4><ol><li><a href="https://www.theguardian.com/politics" rel="nofollow noopener" target="_blank">Guardian Politics</a></li></ol></section><footer class="colophon">The Bot Tribune · 2026-10-04 · <a href="index.html">Back to the edition</a></footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
+</body>
+</html>
