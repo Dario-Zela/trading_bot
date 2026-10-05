@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-05",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 IFX.DE +9%, BESI.AS +7%, STMPA.PA +7%, QIA.DE +6%, ASM.AS +5%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (IGG.L -23%, KER.PA -3%, SAN.PA -3%, RNO.PA -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: IGG.L (-22.60%) \u2014 IG Group profit warning: 2026 revenue growth cut to mid-single-digit from 10-15%, Q3 revenue down ~14% y/y on weak OTC retention, EBITDA margin guided to low-40s%. Sources date the plunge to last Thursday. Why we passed: Outside any active strategy's universe: IGG.L is a UK mid-cap online broker. The drop was a pre-market profit-warning gap, so a long-only momentum or mean-reversion bot had no entry, and it can't short. Any post-gap bounce would also have failed oversold filters.",
+  "top_movers": [
+    {
+      "ticker": "IFX.DE",
+      "move_pct": 8.785,
+      "close": 64.64,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "AI data-centre optimism: Infineon\u2013Eaton collaboration on SiC for 800 VDC solid-state transformers, on top of strong Q3 FY26 results (AI revenue ~$1.6B vs $0.7B). Note: the source dates the +8.78% move to Oct 2.",
+      "miss_reason": "Outside any active strategy's universe: IFX.DE is a large-cap (~\u20ac84B) German semiconductor listed on Xetra, and no strategy covers it. The move was also a news-driven gap-up on an AI-theme announcement, which a post-open momentum filter would likely read as overextended.",
+      "suggestion": "Add large-cap EU semis (IFX.DE, STM, ASML) to the momentum-trader universe, and let a news-reactive rule enter on gap \u2265 +5% with \u22651.5\u00d7 average volume when the headline matches an 'AI infrastructure' keyword.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": 7.001,
+      "close": 204.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear same-day catalyst found. Likely AI-semicap sector momentum, plus follow-through from the Oct 1 Applied Materials/Besi EPIC Center partnership. Q3 results are due Oct 22. Search data conflicted on timing.",
+      "miss_reason": "Outside any active strategy's universe: Besi is a mid/large-cap Dutch semicap name on Euronext Amsterdam that no strategy lists. With no discrete news catalyst, a news-reactive filter had nothing to trigger on, and a momentum screen would have been blind to it.",
+      "suggestion": "Add a sector-momentum scan that auto-adds AMS/EU semicap names (BESI, ASML, ASMI) to the momentum-trader universe when the group's 5-day relative strength is top-decile and ADV exceeds a set floor (e.g. \u20ac50M).",
+      "failed": false
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": 6.54,
+      "close": 50.34,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear single catalyst found. The +6.54% move to \u20ac50.34 was on Oct 2. Coverage cites only the ongoing buyback (310k shares) and strong Q2 revenue (+26% YoY), likely a semiconductor sector rebound ahead of Q3 earnings on Oct 29.",
+      "miss_reason": "Outside any active strategy's universe: STMPA.PA is a large-cap Euronext Paris semiconductor listing, and no strategy includes it. With no discrete news event, a momentum or news-reactive filter would also not have flagged it.",
+      "suggestion": "Add large-cap Euronext Paris/EU semis (STMPA.PA, ASML.AS) to the momentum universe, gated on sector-relative strength (e.g. a \u2265+5% day with volume \u22651.5\u00d7 20-day average).",
+      "failed": false
+    },
+    {
+      "ticker": "QIA.DE",
+      "move_pct": 5.8,
+      "close": 40.405,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear single driver found. QIA.DE was flat near \u20ac40 at midday, then rallied late in the session. Nearby news was only minor: a Bank of America 4.95% stake disclosure and recent FDA clearance and product launches.",
+      "miss_reason": "Outside any active strategy's universe (mid-cap German diagnostics/life-science name, not in any strategy's list). The move came late in the day from a flat open, so a gap-up or pre-market momentum filter would not have fired anyway.",
+      "suggestion": "Add a dynamic universe expansion: admit uk-eu names from the DAX/MDAX/STOXX 600 whose intraday return reaches \u2265+3% on \u22651.5\u00d7 average volume after 12:00 CET, instead of using only the static strategy lists.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": 5.446,
+      "close": 944.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found; likely a sector-wide semi-equipment rally. Deutsche Bank's PT raise to \u20ac1,100 (Buy) is the only recent item, and Q3 results aren't due until Oct 27.",
+      "miss_reason": "Outside any active strategy's universe: ASM is a ~\u20ac46B Dutch semiconductor-equipment large cap that no strategy includes. With no discrete news catalyst, a news-reactive filter had nothing to trigger on.",
+      "suggestion": "Add Euronext Amsterdam semicap names (ASM.AS, BESI.AS, ASML.AS) to the momentum universe, with a sector-relative-strength rule that fires when \u22653 peers gap up \u22653% on the same day.",
+      "failed": false
+    },
+    {
+      "ticker": "HLMA.L",
+      "move_pct": 3.926,
+      "close": 36.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Reports point to Halma lifting adjusted EBIT margin guidance to 23.5-24.0%. Sources conflict on the day's move and the evidence is thin, so a rebound in quality UK large caps may also be a factor.",
+      "miss_reason": "Outside any active strategy's universe: Halma is a FTSE 100 industrial-tech large cap that no strategy's universe includes. A steady +3.9% move on guidance news in a stock well below its 52-week high also wouldn't trip a typical gap or volume filter.",
+      "suggestion": "Add FTSE 100 constituents to the news-reactive strategy's uk-eu universe, with a trigger on guidance-raise headlines plus a close of at least +3% on 1.5x average volume. Don't loosen the momentum RSI or gap filters.",
+      "failed": false
+    },
+    {
+      "ticker": "IGG.L",
+      "move_pct": -22.596,
+      "close": 9.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "IG Group profit warning: 2026 revenue growth cut to mid-single-digit from 10-15%, Q3 revenue down ~14% y/y on weak OTC retention, EBITDA margin guided to low-40s%. Sources date the plunge to last Thursday.",
+      "miss_reason": "Outside any active strategy's universe: IGG.L is a UK mid-cap online broker. The drop was a pre-market profit-warning gap, so a long-only momentum or mean-reversion bot had no entry, and it can't short. Any post-gap bounce would also have failed oversold filters.",
+      "suggestion": "Check the price feed for a stale or multi-day comparison, since sources show only -2.5% on 5 Oct. Otherwise no actionable change: this is a short-only event, so at most add FTSE 250 financials to the universe as a watchlist.",
+      "failed": false
+    },
+    {
+      "ticker": "KER.PA",
+      "move_pct": -3.221,
+      "close": 210.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Pre-Q3 (Oct 22) sell-side call: management more cautious than at H1, citing summer sector softness and a slower luxury recovery; Citi cut PT to \u20ac243 from \u20ac282. Reports date this -3.22% move to Fri Oct 2.",
+      "miss_reason": "Outside any active strategy's universe: Kering is a large-cap Euronext Paris luxury name that no strategy covers. The move was an intraday tone-driven drop (down ~5% at the low, then pared) with no hard catalyst, so gap and volume filters wouldn't fire.",
+      "suggestion": "Add large-cap EU luxury (KER.PA, MC.PA, RMS.PA) to the mean-reversion universe, and treat analyst PT cuts or sector-wide drops of \u22653% as a news-reactive entry signal. Also check the pipeline's date, since the move matches Oct 2.",
+      "failed": false
+    },
+    {
+      "ticker": "SAN.PA",
+      "move_pct": -3.133,
+      "close": 70.81,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sanofi fell about 3% to near a 52-week low after expanding its Regeneron alliance: $1B upfront and up to $7B in milestones for four long-acting antibodies. Investors worried about R&D cost and pipeline risk.",
+      "miss_reason": "Outside any active strategy's universe: SAN.PA is a large-cap European pharma name that no strategy includes. The move was a deal-driven drift to a 52-week low, which momentum or gap-up filters wouldn't flag, and the bot can't short.",
+      "suggestion": "No actionable change: this is a long-only bot, so a large-cap pharma decline can't be expressed. If coverage is wanted, add SAN.PA to the news-reactive universe and flag an M&A/licensing headline with a drop of at least 3% as a skip-long signal.",
+      "failed": false
+    },
+    {
+      "ticker": "RNO.PA",
+      "move_pct": -2.949,
+      "close": 24.68,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. Searches turned up nothing specific to 2026-10-05, so this is likely a pullback after Renault rose in 8 of the prior 10 days (about +7% over two weeks), or a sector move.",
+      "miss_reason": "Outside any active strategy's universe: RNO.PA is a mid-cap French auto manufacturer listed on Euronext Paris, and no strategy covers it. A -2.95% move without a catalyst is also too small for a news-reactive filter.",
+      "suggestion": "No actionable change. A -2.95% non-catalyst pullback in an out-of-universe name doesn't justify widening the universe, and the bot has no short capability to trade it. Optionally add large Euronext Paris autos to the mean-reversion universe.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-05T15:02:37.152061+00:00"
+}
