@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-06",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 DSY.PA +4%, RNO.PA +3%, STAN.L +3%, STLAP.PA +3%, PRX.AS +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (SU.PA -10%, III.L -6%, BTRW.L -3%, BBY.L -2%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: SU.PA (-9.97%) \u2014 Schneider Electric agreed to buy US software maker PTC for $22.6B cash (42% premium, funded by \u20ac5-6B new equity plus heavy debt); investors sold on price, leverage and a ~5-year payback. Articles date the drop to Oct 5. Why we passed: Outside any active strategy's universe: SU.PA is a large-cap Euronext Paris industrial and the universe does not cover it. It was also an M&A-announcement gap-down, which momentum and mean-reversion filters would reject.",
+  "top_movers": [
+    {
+      "ticker": "DSY.PA",
+      "move_pct": 4.363,
+      "close": 21.53,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear company news catalyst found; likely a continued oversold software rebound (+3.7% on Oct 5 too), stock ~29% below its 52-week high, ahead of Q3 results on Oct 28.",
+      "miss_reason": "Outside any active strategy's universe: DSY.PA is a Paris-listed large-cap software name that no strategy includes. With no news catalyst, a news-reactive bot had nothing to trigger on, and the move looks like a sector rebound.",
+      "suggestion": "Add a liquid EU large-cap tech/software basket (DSY.PA, SAP.DE, CAP.PA) to the mean-reversion universe, using a trigger such as \u226525% below the 52-week high plus two consecutive up days.",
+      "failed": false
+    },
+    {
+      "ticker": "RNO.PA",
+      "move_pct": 3.079,
+      "close": 25.44,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear driver found. Renault named Michelin's Carine Damois as CFO and talked up \u20ac10B+ of French EV investment, but one source had the stock down ~1% midday, so the +3.08% close is unexplained.",
+      "miss_reason": "Outside any active strategy's universe: Renault is a mid-cap (~\u20ac7.3B) French autos name that no strategy includes. With no hard catalyst, a late-session drift up would not trip a news-reactive or gap-up trigger anyway.",
+      "suggestion": "No actionable change. Adding a mid-cap EU autos sleeve to the momentum universe for a one-day move with no catalyst isn't justified. The conflicting price data (prior close 25.42 vs. close 25.44) should be checked first.",
+      "failed": false
+    },
+    {
+      "ticker": "STAN.L",
+      "move_pct": 2.831,
+      "close": 22.52,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear news catalyst: only routine items (VCC wealth fund launch, ongoing buyback). Stock was ~+0.2% at 15:50 London, so the +2.83% close likely came from a late-session rally in banks or the FTSE.",
+      "miss_reason": "Outside any active strategy's universe: STAN.L is a FTSE 100 large-cap bank that no strategy includes. With no news catalyst and a late-day move, a gap-up or news-reactive filter would not have triggered even if it were included.",
+      "suggestion": "Add FTSE 100 financials like STAN.L to the momentum-trader universe, with an intraday relative-strength trigger (e.g. +2% vs sector by 15:00 UK on \u22651.2\u00d7 average volume). Alternatively accept this as a no-op: it was a sector move with no news catalyst.",
+      "failed": false
+    },
+    {
+      "ticker": "STLAP.PA",
+      "move_pct": 2.769,
+      "close": 3.99,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Stellantis rebounded from record lows after the CEO reaffirmed 2026 guidance and Q3 US sales came in roughly flat with YTD up 3%. No fresh same-day news found; this looks like a relief bounce.",
+      "miss_reason": "Outside any active strategy's universe. It is a large-cap, but a low-priced (~\u20ac4) auto name near all-time lows, so a price floor or downtrend/quality filter likely excluded it. The +2.77% move was a modest bounce with no gap or volume signal.",
+      "suggestion": "No actionable change. A bounce off record lows in a downtrending stock is a poor momentum fit. If wanted, add a mean-reversion watchlist rule for large-caps down >50% from the 52-week high that rise \u22652.5% on volume \u22651.5\u00d7 average.",
+      "failed": false
+    },
+    {
+      "ticker": "PRX.AS",
+      "move_pct": 2.754,
+      "close": 35.45,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear company-specific catalyst found; Prosus rose 2.75% to 35.45 on routine buyback updates and a broad Dutch market rise. Search results didn't confirm the daily move.",
+      "miss_reason": "Outside any active strategy's universe: PRX.AS is a large-cap Amsterdam-listed internet/tech holding company (Tencent proxy) that no strategy includes. A +2.75% drift with no news would also fail gap, volume and news filters.",
+      "suggestion": "(No actionable change.) A diffuse +2.75% move with no catalyst doesn't justify widening the universe. If wanted, add large-cap AEX/Euro Stoxx names like PRX.AS to the momentum universe, but only with a \u22651.5\u00d7 volume gate.",
+      "failed": false
+    },
+    {
+      "ticker": "ITH.L",
+      "move_pct": 2.397,
+      "close": 2.82,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely Ithaca Energy's deal to buy Suncor's Terra Nova and White Rose stakes offshore Canada ($860M upfront, up to $250M contingent). A search snippet put the shares near 283.8p, close to today's 282p close, but the article date wasn't confirmed.",
+      "miss_reason": "Outside any active strategy's universe: ITH.L is a mid-cap UK North Sea oil & gas producer that no strategy lists. The +2.4% move was a modest, announcement-driven gap, so a news-reactive or momentum filter wouldn't have fired even if the name were in scope.",
+      "suggestion": "Add mid-cap LSE energy producers (e.g. ITH.L) to the news-reactive strategy's universe, with an M&A-announcement trigger that enters on a \u2265+2% gap with volume \u22651.5\u00d7 average. Don't loosen the global momentum filters.",
+      "failed": false
+    },
+    {
+      "ticker": "SU.PA",
+      "move_pct": -9.967,
+      "close": 272.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Schneider Electric agreed to buy US software maker PTC for $22.6B cash (42% premium, funded by \u20ac5-6B new equity plus heavy debt); investors sold on price, leverage and a ~5-year payback. Articles date the drop to Oct 5.",
+      "miss_reason": "Outside any active strategy's universe: SU.PA is a large-cap Euronext Paris industrial and the universe does not cover it. It was also an M&A-announcement gap-down, which momentum and mean-reversion filters would reject.",
+      "suggestion": "Add a liquid-large-cap EU watchlist (e.g. market cap >\u20ac50B) to the news-reactive strategy, with an acquirer-gap rule: flag gap-downs \u2264-7% on volume \u22652\u00d7 average that coincide with an M&A headline. Run it as a long-only mean-reversion check, since we have no short capability.",
+      "failed": false
+    },
+    {
+      "ticker": "III.L",
+      "move_pct": -5.988,
+      "close": 24.02,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely continued de-rating on worries about softening growth at Action, 3i's largest holding (France like-for-like +0.9%, recent LFL about 3%). I found no specific 2026-10-06 headline, so this is partly inferred.",
+      "miss_reason": "Outside any active strategy's universe: III.L is a FTSE 100 listed private-equity/investment trust whose value is driven by one holding (Action). It is probably excluded as a financial or investment-trust name, and the bot has no short capability for a -6% drop.",
+      "suggestion": "No actionable change for the long-only bot. If coverage of UK-listed holding companies is wanted, add III.L to a news-reactive universe and flag single-asset NAV names when a >5% down-gap comes with elevated volume.",
+      "failed": false
+    },
+    {
+      "ticker": "BTRW.L",
+      "move_pct": -3.017,
+      "close": 3.086,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear company-specific catalyst found. Today's only news was routine (new CEO share award, ongoing \u00a3386m buyback). Likely a UK housebuilder sector move on margin and rate worries, not confirmed.",
+      "miss_reason": "Outside any active strategy's universe: BTRW.L is a FTSE 100 UK housebuilder (large cap) that no strategy includes. A -3% sector-driven drift with no news or gap would also fail news-reactive and gap filters.",
+      "suggestion": "Add a UK housebuilders/cyclicals basket (BTRW.L, PSN.L, TW.L) to the mean-reversion universe, entered when the sector drops \u22652.5% on no stock-specific RNS.",
+      "failed": false
+    },
+    {
+      "ticker": "BBY.L",
+      "move_pct": -2.347,
+      "close": 9.155,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst. Search found only routine buyback disclosures for Balfour Beatty, and a German quote showed it flat intraday. The -2.35% looks like a technical or sector move.",
+      "miss_reason": "Outside any active strategy's universe: BBY.L is a UK mid-cap (FTSE 250-class) construction and infrastructure name. A -2.35% drift on no news is too small for gap or news-reactive triggers, and it would be a long-only bot's short or avoid case.",
+      "suggestion": "No actionable change. This was a small, news-free drift in an out-of-universe mid-cap, so widening the uk-eu universe to catch it would add noise. If wanted, add a UK mid-cap infrastructure watchlist with a \u22653% move and \u22651.5\u00d7 volume gate.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-06T15:02:47.444934+00:00"
+}
