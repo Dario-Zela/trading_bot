@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-06",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 PTC +33%, ILMN +8%, CRL +7%, MRNA +7%, WDC +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (CHRW -11%, LEN -7%, CMG -5%, BMY -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: PTC (+33.49%) \u2014 Schneider Electric agreed to buy PTC in an all-cash deal at about $205/share (~$20B). The stock jumped on the reported takeover talks and closed at 192.26. Why we passed: Outside any active strategy's universe: PTC is a ~$21B large-cap industrial software name that no strategy's universe includes. It was also a gap-driven M&A pop, so a post-open signal would arrive late, and the stock sits just below the deal price.",
+  "top_movers": [
+    {
+      "ticker": "PTC",
+      "move_pct": 33.486,
+      "close": 192.26,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Schneider Electric agreed to buy PTC in an all-cash deal at about $205/share (~$20B). The stock jumped on the reported takeover talks and closed at 192.26.",
+      "miss_reason": "Outside any active strategy's universe: PTC is a ~$21B large-cap industrial software name that no strategy's universe includes. It was also a gap-driven M&A pop, so a post-open signal would arrive late, and the stock sits just below the deal price.",
+      "suggestion": "Add a news-reactive M&A rule that admits any US name with a \u2265+15% gap and a headline containing 'acquire' or 'takeover' to the universe, but only as a merger-arb hold capped below the offer price, with a small position size.",
+      "failed": false
+    },
+    {
+      "ticker": "ILMN",
+      "move_pct": 7.563,
+      "close": 293.69,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Analysts raised price targets on expected clinical-sales improvement and new catalysts. Gene sequencing is increasingly seen as AI infrastructure. The stock hit a new 52-week high near $294 after FY EPS guidance was raised.",
+      "miss_reason": "Outside any active strategy's universe: ILMN is a mid/large-cap life-science tools name, and no strategy includes it. The move was a gradual analyst/narrative re-rating, not an earnings gap. The stock was already up about 119% YTD, so RSI-style filters would likely have excluded it anyway.",
+      "suggestion": "Add a dynamic momentum-universe rule that admits any US stock making a new 52-week high with \u2265+5% on \u22651.5\u00d7 20-day average volume, even if it isn't in the static universe. Also consider adding healthcare/life-science tools names to the static list.",
+      "failed": false
+    },
+    {
+      "ticker": "CRL",
+      "move_pct": 7.092,
+      "close": 310.77,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Investor Day: CRL set 2030 targets (low-double-digit adj. EPS growth, multi-year cost savings via automation) and guided 2026 EPS/revenue to the top of its ranges on biopharma demand recovery. Sources date the move Oct 5.",
+      "miss_reason": "Outside any active strategy's universe: CRL is a mid-cap life-science CRO/tools name. It was also a scheduled-event gap-and-run, and the +7% move came mostly in the afternoon after the Investor Day, so pre-market and open signals gave no entry.",
+      "suggestion": "Add mid-cap healthcare tools/CRO names (CRL, MEDP, ICLR) to the news-reactive universe. Add an Investor Day/guidance-raise trigger that enters on an intraday gain of \u2265+4% on \u22651.5\u00d7 average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "MRNA",
+      "move_pct": 6.947,
+      "close": 203.21,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Rally continued ahead of Moderna's Nasdaq-100 entry (replacing WBD, effective Oct 9) and its Oct 24 ESMO Phase 3 cancer-vaccine data with Merck; the stock is up ~500% YTD.",
+      "miss_reason": "Outside any active strategy's universe: a ~$75B large-cap biotech that rose ~500% YTD, so it was likely excluded by sector or universe rules. A parabolic run-up with extreme RSI would also fail mean-reversion and overbought filters.",
+      "suggestion": "Add a 'pending index inclusion / binary catalyst' watchlist (e.g. Nasdaq-100 adds within 5 days) to the momentum universe, with a capped position size and an RSI>85 override. Skip it if the sector is deliberately excluded.",
+      "failed": false
+    },
+    {
+      "ticker": "WDC",
+      "move_pct": 6.345,
+      "close": 441.64,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed Oct 6 catalyst. The +6.34% to $441.64 matches MarketBeat's 'jumps 6.3%' note dated Oct 5 (rebound after the Oct 2 selloff). Oct 6 coverage has WDC down ~6% on Toshiba/Seagate HDD news, so the date may be misaligned.",
+      "miss_reason": "Outside any active strategy's universe: WDC is a ~$150B+ mega-cap storage/AI-hardware name that no strategy lists. The move was a sector rebound after a sharp drop, with no gap-up or earnings signal for a momentum or news bot to trigger on.",
+      "suggestion": "Add a high-beta AI-hardware group (WDC, STX, MU, SNDK) to the momentum universe, and check that the mover feed's close-to-close date matches the session; Oct 6 reports show WDC falling, not rising.",
+      "failed": false
+    },
+    {
+      "ticker": "APP",
+      "move_pct": 5.126,
+      "close": 281.97,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No fresh news found for Oct 6. Search results point to a rebound after a 9-day losing streak, with AXON/e-commerce growth narrative and analyst support. Stock is still down ~58% YTD.",
+      "miss_reason": "Outside any active strategy's universe: APP is a large-cap, high-beta ad-tech name that no strategy includes. It was also in a months-long downtrend, so a momentum filter would have excluded it, and the +5% bounce looks like a dip-buy rather than a breakout.",
+      "suggestion": "Add high-beta mega/large-cap tech like APP to the mean-reversion universe, with a trigger such as a \u22655% up day after \u22658 consecutive down days, and cap position size for its volatility.",
+      "failed": false
+    },
+    {
+      "ticker": "CHRW",
+      "move_pct": -10.848,
+      "close": 140.61,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Announced a $5.8B cash-and-stock acquisition of RXO (~43% stock, rest new debt). Investors worried about dilution, leverage and integration, and the stock fell ~11% to 140.61.",
+      "miss_reason": "Outside any active strategy's universe (no strategy includes it): a mid/large-cap NASDAQ logistics name. It was also an M&A-announcement gap-down, which a long-only momentum or mean-reversion bot would skip or couldn't short. Sources date the drop to Oct 5, so the move was already priced in.",
+      "suggestion": "Add a news-reactive watchlist rule that admits any S&P 400/500 name with an acquirer-side M&A headline and a gap \u2264 -8% on \u22652\u00d7 avg volume, for post-deal-drop mean-reversion longs only after a 2-day stabilization check.",
+      "failed": false
+    },
+    {
+      "ticker": "LEN",
+      "move_pct": -6.728,
+      "close": 74.44,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Hunterbrook short report alleged Lennar hit quarterly targets by selling ~700 finished homes (~$200M) to its spinoff Millrose; the stock fell to a 52-week low on top of a weak housing backdrop.",
+      "miss_reason": "Outside any active strategy's universe (mid/large-cap homebuilder, not in any universe list). It was also a sudden short-report event, and a long-only momentum or mean-reversion bot has no way to profit from a gap down.",
+      "suggestion": "Add a news-reactive 'short-report/governance' flag that blocks new longs and raises alerts on names gapping \u2264-5% on a short-seller headline; no universe change is needed, since short-selling isn't supported.",
+      "failed": false
+    },
+    {
+      "ticker": "CMG",
+      "move_pct": -4.666,
+      "close": 30.85,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single hard catalyst found: renewed food-safety (produce-linked illness) headlines, beef/freight margin worries and caution before Q3 earnings on Oct 28 drove a ~4.7% drop.",
+      "miss_reason": "Outside any active strategy's universe: CMG is a mid-priced (~$31) large-cap restaurant name that no strategy includes. The drop was a gradual headline-driven slide with no earnings gap or volume spike for a momentum or news filter to catch.",
+      "suggestion": "No actionable change: this was a sentiment-driven drop in a name outside the universe, and expressing it needs short capability the bot lacks. If wanted, add consumer-discretionary large caps to the mean-reversion universe, but with an earnings-proximity block (skip within ~14 days of results).",
+      "failed": false
+    },
+    {
+      "ticker": "BMY",
+      "move_pct": -3.827,
+      "close": 58.81,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Leerink Partners downgraded BMY from Outperform to Market Perform and cut its price target to $59 from $73, citing pipeline doubts (milvexian, admilparant) ahead of upcoming clinical readouts. Some sources date the drop to Oct 5.",
+      "miss_reason": "Outside any active strategy's universe: BMY is a large-cap pharma name that no strategy includes. The drop was a single-analyst downgrade with a modest -3.8% move on a low-beta defensive stock, so it likely wouldn't clear gap or volume-spike filters anyway.",
+      "suggestion": "Add large-cap healthcare names such as BMY to the news-reactive universe, and treat analyst downgrades with a price-target cut of 15% or more as an entry trigger or a no-buy veto for the following session.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-06T19:31:44.819188+00:00"
+}
