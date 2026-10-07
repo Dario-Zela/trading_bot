@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-07",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 INF.L +6%, WTB.L +4%, WEIR.L +4%, BNP.PA +3%, INVP.L +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (BA.L -4%, SU.PA -4%, HO.PA -4%, BESI.AS -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: INF.L (+5.62%) \u2014 No obvious news catalyst found for 2026-10-07. Searches only returned routine buyback RNS filings, so this is likely a technical or sector rebound in UK events/media, or a continuation of the buyback bid. Why we passed: Outside any active strategy's universe. INF.L is a FTSE 100 events and publishing name that no strategy lists. With no news trigger, a news-reactive bot had no signal, and a +5.6% move on a large-cap is below typical gap or momentum thresholds.",
+  "top_movers": [
+    {
+      "ticker": "INF.L",
+      "move_pct": 5.623,
+      "close": 9.092,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-07. Searches only returned routine buyback RNS filings, so this is likely a technical or sector rebound in UK events/media, or a continuation of the buyback bid.",
+      "miss_reason": "Outside any active strategy's universe. INF.L is a FTSE 100 events and publishing name that no strategy lists. With no news trigger, a news-reactive bot had no signal, and a +5.6% move on a large-cap is below typical gap or momentum thresholds.",
+      "suggestion": "Add a UK large-cap 'unexplained mover' watchlist to the momentum strategy's universe. Admit FTSE 100 names with a \u2265+4% close and \u22651.5\u00d7 20-day average volume, with no news gate, for next-day continuation entries.",
+      "failed": false
+    },
+    {
+      "ticker": "WTB.L",
+      "move_pct": 4.051,
+      "close": 25.17,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-07. Searches returned only older Whitbread items, so this is likely a sector or technical rebound in UK hospitality/consumer names.",
+      "miss_reason": "Outside any active strategy's universe: WTB.L is a UK FTSE 100 mid/large-cap consumer-discretionary stock (Premier Inn/Costa), and no strategy lists it. A +4% move with no news also suggests no earnings or gap signal would have fired.",
+      "suggestion": "Add a UK/EU consumer-discretionary sleeve (e.g. WTB.L, IHG.L, MKS.L) to the momentum universe. Gate entry on a \u2265+3% close with \u22651.5\u00d7 20-day average volume, which would have flagged this move.",
+      "failed": false
+    },
+    {
+      "ticker": "WEIR.L",
+      "move_pct": 3.727,
+      "close": 26.72,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for Weir Group on 2026-10-07; the search returned only stale April data, so likely a sector or technical move (mining-equipment/industrials strength).",
+      "miss_reason": "Outside any active strategy's universe: Weir is a ~\u00a37B FTSE 100 mining-equipment maker, and no strategy's universe includes it. With no company-specific news, a news-reactive bot had nothing to trigger on, and a +3.7% sector drift is too small to pass a gap or volume filter.",
+      "suggestion": "Add FTSE 100 industrials/mining-capex names like WEIR.L to the momentum-trader universe, and test a relative-strength entry (+3% on \u22651.2\u00d7 average volume, no news required) in paper mode before going live.",
+      "failed": false
+    },
+    {
+      "ticker": "BNP.PA",
+      "move_pct": 3.264,
+      "close": 95.22,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No stock-specific news found; likely a sector-wide French/European bank rebound (possibly political or rate-driven). The Q3 results aren't due until 2026-10-28, so earnings didn't drive it.",
+      "miss_reason": "Outside any active strategy's universe: BNP.PA is a large-cap euro-zone bank listed on Euronext Paris, and no strategy covers it. A sector-beta move with no stock-specific headline also gives a news-reactive bot nothing to trigger on.",
+      "suggestion": "Add large-cap Euronext Paris financials (BNP.PA, GLE.PA, ACA.PA) to the momentum strategy's universe. Add a sector-breadth trigger (e.g. \u226560% of Stoxx banks up >1.5%) so sector rallies can qualify without a headline.",
+      "failed": false
+    },
+    {
+      "ticker": "INVP.L",
+      "move_pct": 3.003,
+      "close": 6.175,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious company-specific catalyst found for 2026-10-07. The only recent news is the pending Rathbones/Investec Wealth merger, which has slowed regulatory checks. The +3% looks like a UK financials sector move.",
+      "miss_reason": "Outside any active strategy's universe. INVP.L is a mid/large-cap LSE-listed bank and wealth manager (Investec plc), and no strategy's universe includes UK financials. With no news catalyst, a +3% move wouldn't trip a news-reactive filter either.",
+      "suggestion": "Add UK-listed financials (INVP.L, plus peers such as NWG.L and BARC.L) to the mean-reversion/momentum universe, with a sector-relative strength rule such as a +2.5% day on above-average volume. Check backtests first, since this is a sector move rather than a catalyst.",
+      "failed": false
+    },
+    {
+      "ticker": "BNR.DE",
+      "move_pct": 2.917,
+      "close": 60.68,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found \u2014 likely technical / sector move. Search returned only stale analyst notes and a price (\u20ac46.26, -0.67%) that contradicts the +2.92% / 60.68 close, so I don't trust it.",
+      "miss_reason": "Outside any active strategy's universe: BNR.DE is Brenntag, a German mid-cap chemicals distributor that no strategy includes. A ~3% move with no identifiable catalyst also probably wouldn't clear a gap or volume-surge filter.",
+      "suggestion": "Add a DAX/MDAX mid-cap cyclical sleeve (chemicals/industrial distributors) to the uk-eu universe, gated by a \u22652.5% move on \u22651.5\u00d7 20-day average volume, so sector-rotation days like this are screened.",
+      "failed": false
+    },
+    {
+      "ticker": "BA.L",
+      "move_pct": -4.078,
+      "close": 18.58,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst for 2026-10-07. Searches returned only undated or mismatched defence-sector items (older Ukraine-peace and valuation sell-offs), so this is likely a sector-wide defence de-rating.",
+      "miss_reason": "Outside any active strategy's universe: BA.L is a FTSE 100 large-cap defence prime listed on the LSE, and no strategy includes it. A -4% sector-driven drop with no company-specific news also gives a news-reactive bot nothing to trigger on.",
+      "suggestion": "Add a sector-breadth rule to the mean-reversion universe: admit large-cap LSE/EU names (e.g. market cap > \u00a320B) when a sector basket falls \u22653% on above-average volume, so these sell-offs enter the candidate pool.",
+      "failed": false
+    },
+    {
+      "ticker": "SU.PA",
+      "move_pct": -3.886,
+      "close": 262.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-07. Searches returned no Schneider Electric-specific event for the day, so this is likely a sector move (European electrical/AI-infrastructure names sold off) or profit-taking.",
+      "miss_reason": "Outside any active strategy's universe: SU.PA is a large-cap French industrial (electrical equipment / data-centre power) listed on Euronext Paris, and no strategy covers it. With no clear news driver, a news-reactive bot would also have had no signal.",
+      "suggestion": "Add large-cap Euronext Paris industrials (SU.PA, SIE.DE, ABBN.SW) to the mean-reversion universe, gated on a -3% close-to-close drop with no earnings or news flag, so sector-driven dips like this are tested.",
+      "failed": false
+    },
+    {
+      "ticker": "HO.PA",
+      "move_pct": -3.556,
+      "close": 219.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed company-specific news for 2026-10-07. Searches found no same-day story, so this is most likely part of the 2026 European defence-sector selloff (peace-talk hopes, spending scrutiny).",
+      "miss_reason": "Outside any active strategy's universe: HO.PA (Thales) is a ~\u20ac45-50B French large-cap defence name that no strategy's universe includes. A -3.6% sector-driven drift also gives no clear gap or volume signal.",
+      "suggestion": "Add a European defence basket (HO.PA, RHM.DE, LDO.MI, BA.L, SAAB-B.ST) to the universe of the sector-rotation or mean-reversion strategy, with a sector-wide drawdown trigger such as basket average \u2264 -3% in one day.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": -3.531,
+      "close": 194.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed stock-specific news found for 2026-10-07. The -3.5% move looks like a European semiconductor-equipment sector selloff; BESI is also down about 13.6% over the past week.",
+      "miss_reason": "Outside any active strategy's universe. BESI is an Amsterdam-listed mid/large-cap semiconductor-equipment name that no strategy includes. A sector-driven drift of -3.5% on no company news also wouldn't trigger a news-reactive or gap filter.",
+      "suggestion": "Add European semi-equipment names (BESI.AS, ASML.AS, ASM.AS) to the momentum/mean-reversion universe as a sector basket, with a sector-relative-weakness trigger (e.g. basket down \u22653% on the day) rather than a single-name gap filter.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-07T15:02:46.626311+00:00"
+}
