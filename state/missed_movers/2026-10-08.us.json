@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-08",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 PTC +33%, VST +15%, NRG +12%, CEG +12%, ILMN +8%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (CHRW -11%, LEN -7%, CAT -6%, CRWD -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: PTC (+33.49%) \u2014 Schneider Electric agreed to buy PTC for $205/share in cash (~$22.6B, 42% premium to the $144.03 prior close). The +33.49% close-to-close move matches that jump. Sources dated it Oct 5, not Oct 8. Why we passed: Outside any active strategy's universe: PTC is a mid/large-cap US industrial software name that no strategy lists. The gap was a pre-market M&A jump, and the stock then pinned below the $205 offer. Momentum and news filters see no tradable follow-through.",
+  "top_movers": [
+    {
+      "ticker": "PTC",
+      "move_pct": 33.486,
+      "close": 192.26,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Schneider Electric agreed to buy PTC for $205/share in cash (~$22.6B, 42% premium to the $144.03 prior close). The +33.49% close-to-close move matches that jump. Sources dated it Oct 5, not Oct 8.",
+      "miss_reason": "Outside any active strategy's universe: PTC is a mid/large-cap US industrial software name that no strategy lists. The gap was a pre-market M&A jump, and the stock then pinned below the $205 offer. Momentum and news filters see no tradable follow-through.",
+      "suggestion": "Add an M&A-target detector (news keywords like 'to acquire'/'definitive agreement' plus a gap \u2265 +25%) that auto-adds the ticker to the news-reactive universe. Cap it at merger-arb sizing and skip chasing the gap.",
+      "failed": false
+    },
+    {
+      "ticker": "VST",
+      "move_pct": 15.384,
+      "close": 167.18,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No Oct 8 article found. Likely continued IPP/nuclear rally: Oct 6 Google\u2013Constellation 890 MW deal and DOE's $4.2B conditional loan for Vistra nuclear uprates, with VST up ~10% that day.",
+      "miss_reason": "Outside any active strategy's universe: VST is a ~$55B+ independent power producer (utilities/IPP), not in the universe of any strategy. The move followed a multi-day news-driven run, so a gap or RSI filter would also likely have blocked a late entry.",
+      "suggestion": "Add a utilities/IPP and AI-power basket (VST, CEG, TLN, NRG) to the momentum universe, with an entry rule on a sector-peer gap of \u2265 +8% on \u22652.5\u00d7 average volume. A ~$55B cap would pass the liquidity floor.",
+      "failed": false
+    },
+    {
+      "ticker": "NRG",
+      "move_pct": 12.04,
+      "close": 108.455,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No Oct 8 headline found; likely continuation of the Oct 6 rebound: independent power producers (CEG, VST) rallying on AI data-center power demand, plus renewed activist pressure at NRG, after a ~35% YTD drawdown.",
+      "miss_reason": "Outside any active strategy's universe: NRG is a mid/large-cap independent power producer (utilities/IPP) that no strategy covers. It was also a sector-wide rebound with no single-name earnings or M&A event, so news-reactive filters had nothing to trigger on.",
+      "suggestion": "Add an IPP/power-demand basket (NRG, VST, CEG, TLN) to the momentum universe, entering when the sector is up 2+ days in a row with volume \u22651.5\u00d7 the 20-day average, so a sector move catches laggards too.",
+      "failed": false
+    },
+    {
+      "ticker": "CEG",
+      "move_pct": 11.6,
+      "close": 298.665,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely continued nuclear/IPP rally from Google's 20-year, 890 MW reactor-uprate deal with Constellation (announced Oct 6). I couldn't confirm a separate Oct 8 trigger, and press prices for Oct 6 don't line up cleanly with today's close.",
+      "miss_reason": "Outside any active strategy's universe: CEG is a large-cap utility/IPP, likely excluded by sector or defensive-utility screens. The news-driven jump started two days earlier, so any gap or volume trigger had already fired or been missed by Oct 8.",
+      "suggestion": "Add a 'power_ai_nuclear' basket (CEG, VST, TLN, OKLO, LEU) to the news-reactive universe, and let it enter on a sympathy move of at least +5% in a peer within 2 sessions of a hyperscaler power-deal headline.",
+      "failed": false
+    },
+    {
+      "ticker": "ILMN",
+      "move_pct": 7.563,
+      "close": 293.69,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-08. Searches turned up no same-day Illumina news. The stock has run from ~$190 in July to $293, so this looks like momentum or sector-driven (genomics/tools).",
+      "miss_reason": "Outside any active strategy's universe: ILMN is a mid-cap life-science tools name that no strategy's universe includes. With no pre-market news trigger, a news-reactive bot had nothing to key on, and a +7.6% close-to-close move with no catalyst would only show up after the fact.",
+      "suggestion": "Add a dynamic universe-expansion rule so any Nasdaq/NYSE name above ~$10B market cap with a \u2265+5% close and \u22651.5\u00d7 20-day average volume is added to the momentum-trader watchlist for the next session.",
+      "failed": false
+    },
+    {
+      "ticker": "CRL",
+      "move_pct": 7.092,
+      "close": 310.77,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely tied to CRL's 2026 Investor Day: >$300M cumulative savings (2027-30), 5-7% organic growth target, 2026 results at upper end of guidance. Search could not confirm the date matches today's +7.09%.",
+      "miss_reason": "Outside any active strategy's universe: CRL is a mid-cap life-sciences/CRO name that no strategy covers. The move was also a scheduled-event gap, which a post-open momentum signal would see too late.",
+      "suggestion": "Add mid-cap healthcare/CRO names such as CRL to the momentum universe, and add an event-day entry rule for \u2265+5% gaps on \u22651.5\u00d7 average volume within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "CHRW",
+      "move_pct": -10.848,
+      "close": 140.61,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely the Oct 5 announcement that CHRW will buy RXO for $5.8B (57% cash, 43% stock, ~$3B new debt, buybacks paused). I found no distinct Oct 8 news, so today's -10.85% may be a stale or multi-day move.",
+      "miss_reason": "Outside any active strategy's universe (mid-cap transport/logistics broker). The move was also M&A-driven, so the gap came at the Oct 5 open and the bot's post-gap signals came too late. The long-only bot also can't short an acquirer sell-off.",
+      "suggestion": "Add an M&A-acquirer watch rule: when a universe-adjacent name gaps \u2264-8% on deal news, flag it for a mean-reversion long only after 2 stabilising closes. Also add mid-cap transports like CHRW to the mean-reversion universe.",
+      "failed": false
+    },
+    {
+      "ticker": "LEN",
+      "move_pct": -6.728,
+      "close": 74.44,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No same-day news found for LEN on 2026-10-08. A -6.7% drop with no company-specific event fits a homebuilder sector selloff, likely from rising Treasury yields or mortgage rates. This is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: LEN is a mid/large-cap homebuilder (consumer-cyclical, rate-sensitive) that no strategy includes. A sector-wide, non-earnings drop also gives a momentum or news-reactive bot no single-name trigger.",
+      "suggestion": "Add a rate-sensitive sector basket (LEN, DHI, PHM, TOL, or the XHB ETF) to the mean-reversion universe, gated on a \u22655% one-day drop with \u22651.5\u00d7 average volume. Otherwise treat this as a no-op, since we can't short.",
+      "failed": false
+    },
+    {
+      "ticker": "CAT",
+      "move_pct": -5.84,
+      "close": 814.51,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Truist cut its CAT price target from $1,225 to $1,100 (Buy kept), citing doubts about AI/data-center power-generation spending, high rates and rising diesel costs. CAT is about 30% below its peak.",
+      "miss_reason": "Outside any active strategy's universe: CAT is a very large-cap industrial (~$800+/share) that none of the strategies include. The drop was an analyst-driven AI-capex derating, which a long-only momentum or mean-reversion bot would not buy into. Dip-buying also looks unattractive with CAT near its 200-day EMA.",
+      "suggestion": "Add mega-cap AI-infrastructure industrials (CAT, GEV, FTAI) to the mean-reversion universe, gated to enter only after price holds above the 200-day EMA. Alternatively, use a cluster-selloff flag to skip these names.",
+      "failed": false
+    },
+    {
+      "ticker": "CRWD",
+      "move_pct": -4.71,
+      "close": 265.42,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-08; searches turned up no CRWD-specific story, so this looks like a sector-wide cybersecurity/software selloff or technical move.",
+      "miss_reason": "Outside any active strategy's universe: CRWD is a large-cap cybersecurity software name that none of the strategies list. With no news catalyst, a -4.7% drift would also not trigger a news-reactive entry, and a long-only bot gains nothing from a loser.",
+      "suggestion": "Add large-cap software/cybersecurity names (CRWD, PANW, ZS) to the mean-reversion universe, with an entry gate of a sector-wide drop of 4% or more on no stock-specific news, so the next sector flush is tradable.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-08T19:32:23.863733+00:00"
+}
