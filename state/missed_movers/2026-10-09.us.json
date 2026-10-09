@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-09",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 CSGP +8%, CMG +6%, GDDY +6%, SKYD +6%, MPC +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (COHR -10%, GLW -8%, BE -7%, LITE -7%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: COHR (-10.47%) \u2014 No company-specific news found for 2026-10-09; the -10.5% drop looks like another AI-optics/photonics valuation selloff, like the Jun 23 (-9%) and Jul 2 (-10%) drops that hit COHR, LITE and AAOI. Why we passed: Outside any active strategy's universe: COHR is a large-cap (~$47B) photonics/AI-optics name that no strategy includes. With no news catalyst, the move was a sector-wide momentum unwind, which a long-only bot has nothing to trade.",
+  "top_movers": [
+    {
+      "ticker": "CSGP",
+      "move_pct": 8.007,
+      "close": 29.81,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found; CSGP extended a rebound (+7.7% on Oct 8, then +8% on Oct 9) off 52-week lows near $26-28, apparently on a real-estate sector rally ahead of Oct 27 Q3 earnings.",
+      "miss_reason": "Outside any active strategy's universe: CSGP is a mid-cap real-estate data/software name, and no strategy lists it. With no catalyst, a momentum or news bot would also see no signal, and the stock trades near its lows, which trend filters would reject.",
+      "suggestion": "Add a mean-reversion/oversold-bounce screen that admits mid-caps within ~10% of their 52-week low after a 2-day gain of at least +8% on volume of 1.5x average or more, rather than only adding CSGP to a universe.",
+      "failed": false
+    },
+    {
+      "ticker": "CMG",
+      "move_pct": 6.207,
+      "close": 32.68,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-09. A search surfaced nothing dated today (latest was the July 30 Q2 earnings jump). Likely a sector or restaurant rebound, or a technical bounce.",
+      "miss_reason": "Outside any active strategy's universe. CMG is a mid/large-cap restaurant name that no strategy lists, so no momentum or news filter ever evaluated it. With no company-specific news, a news-reactive bot would not have triggered either.",
+      "suggestion": "Add a daily 'top-gainers scan' feeder that appends any US name with a gain of 5% or more and dollar volume above $50M to the momentum-trader's candidate list, so it passes the usual RSI and gap filters even outside the static universe.",
+      "failed": false
+    },
+    {
+      "ticker": "GDDY",
+      "move_pct": 6.152,
+      "close": 103.19,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed Oct 9 driver. Oct 8\u20139 coverage points to Gen Digital takeover chatter plus a broad software-sector rebound and a Baird target raise to $120. The takeover rumor is unverified.",
+      "miss_reason": "Outside any active strategy's universe: GDDY is a mid-cap software name that no strategy lists. The move also looks like a rumor/sector-driven continuation after a +3\u20136% gain on Oct 8, so a gap or RSI filter would likely have excluded it anyway.",
+      "suggestion": "Add mid-cap US software/internet names (market cap above roughly $10B) to the momentum strategy's universe. Gate entries on a 2-day cumulative gain cap, for example under +8%, so rumor-driven chases are skipped.",
+      "failed": false
+    },
+    {
+      "ticker": "SKYD",
+      "move_pct": 5.849,
+      "close": 9.41,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found. SKYD (Paramount Skydance, ~$10.7B cap) is up 5.85% to 9.41, likely a rebound after a recent drop and a roughly 48% one-year decline, not a news-driven move.",
+      "miss_reason": "Outside any active strategy's universe: a ~$10B mid-cap media name trading under $10 after a heavy drawdown. A price or quality filter probably excludes it, and with no news catalyst a news-reactive strategy had nothing to trigger on.",
+      "suggestion": "No actionable change. Widening the universe to sub-$10 mid-cap media names for an unexplained +5% bounce adds noise. If wanted, add a mean-reversion watchlist entry for mid-caps more than 40% below their 52-week high.",
+      "failed": false
+    },
+    {
+      "ticker": "MPC",
+      "move_pct": 5.762,
+      "close": 465.2911,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No MPC-specific news found for 10/9. The move looks like a refiner sector rally on record crack spreads (3-2-1 near $55-69/bbl) tied to Iran/Hormuz supply disruption. I couldn't confirm a same-day trigger.",
+      "miss_reason": "Outside any active strategy's universe: MPC is a ~$140B+ large-cap energy refiner, and no strategy includes it. The move was a sector/macro-driven run with no earnings or company catalyst for a news-reactive filter to catch.",
+      "suggestion": "Add a refiners/energy-margin sleeve (MPC, VLO, PSX) to the momentum universe, gated on sector-relative strength such as the XLE or refining sub-industry 20-day return above a set threshold, so sector rallies get captured.",
+      "failed": false
+    },
+    {
+      "ticker": "ACN",
+      "move_pct": 5.536,
+      "close": 208.19,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear same-day news found. Likely continued follow-through after ACN's ~23% FQ4 earnings surge on Oct 1 (record bookings, easing AI-disruption fears for IT services).",
+      "miss_reason": "Outside any active strategy's universe: ACN is a large-cap IT-services name that no strategy includes. The big earnings gap came on Oct 1, so today's +5.5% was a post-event drift that news-reactive filters would not flag.",
+      "suggestion": "Add a post-earnings-drift rule to the momentum universe. Include any large-cap with a \u2265+10% earnings gap in the last 10 sessions and let it enter on a \u2265+3% day with \u22651.5\u00d7 average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "COHR",
+      "move_pct": -10.469,
+      "close": 300.355,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found for 2026-10-09; the -10.5% drop looks like another AI-optics/photonics valuation selloff, like the Jun 23 (-9%) and Jul 2 (-10%) drops that hit COHR, LITE and AAOI.",
+      "miss_reason": "Outside any active strategy's universe: COHR is a large-cap (~$47B) photonics/AI-optics name that no strategy includes. With no news catalyst, the move was a sector-wide momentum unwind, which a long-only bot has nothing to trade.",
+      "suggestion": "Add a 'sector_drawdown' watchlist (COHR, LITE, AAOI, CIEN) to the mean-reversion universe. Flag a name when 3+ peers fall \u22658% in one session with no news, and consider a rebound entry after a 1-day stabilization filter.",
+      "failed": false
+    },
+    {
+      "ticker": "GLW",
+      "move_pct": -7.759,
+      "close": 151.05,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for Oct 9. Corning had no dated headline today, so this looks like a sector-wide AI/optical-fiber selloff or profit-taking after a rich run (~50x forward P/E).",
+      "miss_reason": "Outside any active strategy's universe: GLW is a large-cap industrial/optical-networking name that no strategy's universe includes. The bot also appears to be long-only, so it couldn't act on a -7.8% drop with no catalyst to react to.",
+      "suggestion": "Add large-cap AI-infrastructure names like GLW to the mean-reversion universe, gated on a \u2265-6% one-day drop with no earnings in the prior 3 days. Or add a sector-drawdown alert for the AI-hardware group.",
+      "failed": false
+    },
+    {
+      "ticker": "BE",
+      "move_pct": -7.096,
+      "close": 268.01,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed company-specific news found for 2026-10-09. Likely a high-beta AI-power/data-center sell-off or profit-taking in BE, which has moved more than 5% on many days.",
+      "miss_reason": "Outside any active strategy's universe: BE (Bloom Energy) is a volatile mid-cap fuel-cell and clean-energy name that no strategy includes. A -7% drop with no catalyst would also fail news-reactive filters, and the bot can't short.",
+      "suggestion": "Add a high-beta AI-power/clean-energy basket (BE, VRT, OKLO, etc.) to the mean-reversion universe, gated on a -6% day with no news and RSI(2) < 10, so non-catalyst flushes get bought.",
+      "failed": false
+    },
+    {
+      "ticker": "LITE",
+      "move_pct": -7.008,
+      "close": 1036.525,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. Likely profit-taking in AI optical-networking names after a big run; LITE closed near $1,036 after trading around $760 in July.",
+      "miss_reason": "Outside any active strategy's universe. LITE is a high-priced, high-volatility mid/large-cap AI optical name that no strategy lists. A sector-wide pullback with no company-specific news also gives a news-reactive bot nothing to trigger on.",
+      "suggestion": "Add high-beta AI-infrastructure names (LITE, COHR, CIEN) to the mean-reversion universe, with a sector-level trigger such as a \u22655% one-day drop in 3+ peers. Cap position size by ATR, since the share price is above $1,000.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-09T19:31:49.160907+00:00"
+}
