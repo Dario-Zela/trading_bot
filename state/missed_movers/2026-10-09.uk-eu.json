@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-09",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 TSCO.L +7%, IMB.L +6%, AUTO.L +5%, BP.L +4%, G24.DE +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (FME.DE -12%, FRE.DE -6%, SDLF.L -5%, VOW3.DE -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: FME.DE (-11.89%) \u2014 No confirmed driver found for 2026-10-09. An -11.9% single-day drop in dialysis provider Fresenius Medical Care looks like a guidance cut or pre-announcement, but searches returned nothing dated today. Why we passed: Outside any active strategy's universe: FME.DE is a mid/large-cap German healthcare name on Xetra, and no strategy covers it. A sudden unscheduled gap-down also gives a long-only momentum or mean-reversion bot no entry signal.",
+  "top_movers": [
+    {
+      "ticker": "TSCO.L",
+      "move_pct": 7.38,
+      "close": 5.078,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst: searches found no Oct 9 news. Tesco's H1 results were reportedly due around Oct 8, so this may be a delayed reaction to them or a sector move, but I couldn't verify either.",
+      "miss_reason": "Outside any active strategy's universe: TSCO.L is a UK large-cap FTSE 100 consumer-staples stock, and no strategy includes it. A +7.4% day in a defensive grocer is also unusual and likely looked like a one-off event to the bot.",
+      "suggestion": "Add FTSE 100 staples such as TSCO.L to the momentum/news-reactive universe, and gate entries on a gap \u2265 +3% on volume \u2265 1.5\u00d7 the 20-day average. That would catch names making large moves after results.",
+      "failed": false
+    },
+    {
+      "ticker": "IMB.L",
+      "move_pct": 5.576,
+      "close": 26.13,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Pre-close trading update: Imperial Brands on track for FY26 targets on all key metrics, plus a new \u00a31.5bn FY27 buyback. Tobacco and defensives rallied while London fell on Brent above $105.",
+      "miss_reason": "Outside any active strategy's universe: IMB.L is a FTSE 100 large-cap defensive tobacco name, apparently not in any strategy's list. The move was a scheduled-update catalyst, so a post-announcement gap-up filter would also have been late.",
+      "suggestion": "Add FTSE 100 consumer-staples/tobacco (IMB.L, BATS.L) to the news-reactive universe, and let it enter on a trading update or buyback headline with a gap \u2265 +3% on \u22651.5\u00d7 average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "AUTO.L",
+      "move_pct": 4.888,
+      "close": 4.925,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day catalyst found. Likely a rebound in a heavily sold-off FTSE 100 stock (down about 38% over 1 year), possibly helped by buybacks or activist (Palliser) stake reports; none are dated today.",
+      "miss_reason": "Outside any active strategy's universe: AUTO.L is a FTSE 100 online-marketplace large cap that no strategy lists. A +4.9% rebound in a downtrending name with no clear news would also fail momentum and news-reactive filters.",
+      "suggestion": "Add FTSE 100 constituents to the momentum-trader universe, gated by a minimum 20-day-high or relative-strength rule. That would let oversold rebounds in large caps through only when a trend filter confirms them.",
+      "failed": false
+    },
+    {
+      "ticker": "BP.L",
+      "move_pct": 4.377,
+      "close": 5.843,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No BP-specific news found for 2026-10-09; likely an oil-price-driven sector move, since BP has been trading on Brent swings tied to Iran/Middle East headlines.",
+      "miss_reason": "Outside any active strategy's universe: BP.L is a UK large-cap integrated oil major, and no strategy's universe includes UK/EU energy names. A +4.4% sector-beta move on oil would not have triggered a single-name news filter anyway.",
+      "suggestion": "Add a UK energy basket (BP.L, SHEL.L) to the momentum universe and gate entry on Brent move \u2265 +2% with BP.L volume \u2265 1.5\u00d7 its 20-day average, so oil-driven sector gaps get caught.",
+      "failed": false
+    },
+    {
+      "ticker": "G24.DE",
+      "move_pct": 3.855,
+      "close": 71.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. G24.DE is Scout24 (German property portal), about 71, with no Oct 9 news. Likely a sector rebound in AI-disrupted internet/software names, or buyback support (up to \u20ac350M).",
+      "miss_reason": "Outside any active strategy's universe: a mid-cap Xetra/MDAX internet stock that no strategy lists. With no news catalyst, a +3.85% drift or rebound would also fail news-reactive and gap/volume filters.",
+      "suggestion": "Add a liquid-mid-cap DE/EU screen (e.g. MDAX names with ADV > \u20ac20M) to the momentum universe, requiring close-to-close \u2265 +3% and volume \u2265 1.5\u00d7 the 20-day average, so unflagged sector rebounds like this are caught.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": 3.779,
+      "close": 181.25,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed stock-specific news found; likely a sector-wide semiconductor-equipment bounce on the AI-capex theme ahead of ASML's Q3 results (~Oct 14).",
+      "miss_reason": "Outside any active strategy's universe: BESI is a mid-cap Dutch semiconductor-equipment name on Euronext Amsterdam. A sector-beta move with no company news gives a news-reactive bot no trigger, and a momentum filter likely ignored a +3.8% move on a volatile stock.",
+      "suggestion": "Add BESI.AS, ASM International and other AEX/AMX semi-equipment names to the momentum universe, and add a sector-relative trigger that fires when the ASML/ASMI basket gaps up \u22652% on above-average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "FME.DE",
+      "move_pct": -11.888,
+      "close": 36.91,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed driver found for 2026-10-09. An -11.9% single-day drop in dialysis provider Fresenius Medical Care looks like a guidance cut or pre-announcement, but searches returned nothing dated today.",
+      "miss_reason": "Outside any active strategy's universe: FME.DE is a mid/large-cap German healthcare name on Xetra, and no strategy covers it. A sudden unscheduled gap-down also gives a long-only momentum or mean-reversion bot no entry signal.",
+      "suggestion": "Add DAX/MDAX healthcare constituents (FME.DE, etc.) to the news-reactive universe, with a watchlist rule that flags any name dropping more than 8% on 2x average volume for manual or reversal-candidate review.",
+      "failed": false
+    },
+    {
+      "ticker": "FRE.DE",
+      "move_pct": -5.722,
+      "close": 41.605,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed company-specific driver found. Likely a continuation of the DAX sell-off (high yields and oil) and weakness in Fresenius Medical Care, in which Fresenius holds a stake; the Oct 9 date is unverified.",
+      "miss_reason": "Outside any active strategy's universe: Fresenius is a large-cap German healthcare name that no strategy's universe includes. The drop also looks macro or sector-driven with no discrete catalyst, so a news-reactive bot would have had no trigger.",
+      "suggestion": "Add DAX-40 healthcare large caps (FRE.DE, FME.DE) to the mean-reversion universe, with a sector-wide-selloff flag (e.g. index down \u22651% and name down \u22654%). Shorting is not available, so this only helps on the rebound.",
+      "failed": false
+    },
+    {
+      "ticker": "SDLF.L",
+      "move_pct": -4.951,
+      "close": 8.3073,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 9 Oct. Searches returned no SDLF.L announcement that day, and I couldn't confirm the issuer or ticker mapping, so this is likely a technical or sector move.",
+      "miss_reason": "Outside any active strategy's universe. It is probably a small or mid-cap, or a niche or ETF-type London listing, that none of the strategies screen. A -4.95% drift with no news also wouldn't trip a news-reactive or gap trigger.",
+      "suggestion": "Add a daily 'unmapped mover' check that logs any uk-eu ticker moving \u22654% outside all strategy universes, so we can see whether widening the LSE universe (e.g. a min ADV \u00a31m floor) would be worthwhile.",
+      "failed": false
+    },
+    {
+      "ticker": "VOW3.DE",
+      "move_pct": -4.755,
+      "close": 66.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found. Likely continued selling after VW's mid-Sept 2026 profit warning (2026 margin guided to \u22641%, ~\u20ac10bn Porsche-led charges, weak China) and sector weakness.",
+      "miss_reason": "Outside any active strategy's universe: VOW3.DE is a large-cap German auto name on Xetra that no strategy includes. It was also a slow-bleed downtrend after a warning three weeks ago, not a fresh gap, so event-driven filters had no trigger.",
+      "suggestion": "Add large-cap DAX/Euro Stoxx 50 names to the mean-reversion/momentum universe, with a 'post-profit-warning downtrend' flag (e.g. 20-day return below -10%). The flag would block long entries and could drive a short or avoid list.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-09T15:02:41.977829+00:00"
+}
