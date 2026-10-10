@@ -1,0 +1,47 @@
+id: momentum-trader-vix-gated-crowd-cap
+display_name: Momentum trader (variant) (variant)
+description: 'Auto-spawned variant of momentum-trader-vix-gated on 2026-10-10 by the
+  weekly evolution agent. Reason: Breaks the exposure axis, using regime-gated defensive
+  sizing. It is anchored to Lee (arXiv 2512.11913), which finds crowding predicts
+  crash risk rather than alpha, so it should be uncorrelated with the always-on slate.
+  It builds on the strongest current momentum sleeve (UK-EU vix-gated).'
+implementation: llm
+active: true
+capital_gbp: 10000.0
+max_positions: 3
+max_position_pct: 20.0
+min_position_gbp: 50
+use_stops: true
+use_take_profits: true
+stop_loss_pct: -3.0
+take_profit_pct: 4.0
+tools:
+- get_universe
+- get_history
+- get_technicals
+- get_recent_news
+- get_macro_view
+model_assignment:
+  wide_scoring: haiku
+  deep_analysis: sonnet
+  final_select: sonnet
+runs_in:
+- region: us
+  tier: shadow
+  alpaca_slot: null
+  universe: t212_isa_us
+- region: uk-eu
+  tier: shadow
+  t212_slot: null
+  universe: t212_isa_uk_eu
+  alpaca_slot: null
+  tier2_candidate: true
+  tier2_marked_at: '2026-10-03'
+  tier2_thesis: "#1: 75% hit, \xA3255.83 net on 4 trades, IC +0.031, now on T212 paper\
+    \ so it will produce fee-net data. Leads macro-aligned-hmm@us on P&L and hit rate\
+    \ but trails it on IC; it needs positive IC above 0.10 to separate."
+skip_if_earnings_in_days: 1
+prefilter_mode: python
+prefilter_top_n: 100
+last_tune_date: '2026-06-07'
+prefilter_sort_key: abs_return_5d

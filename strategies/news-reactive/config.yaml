@@ -4,7 +4,7 @@ description: "LLM-driven. Weights earnings surprises, M&A, guidance changes, and
   catalysts. News routing per ticker: Alpaca News for US-listed names,\nyfinance fallback\
   \ for UK/EU listings \u2014 coverage is decent everywhere.\n"
 implementation: llm
-active: true
+active: false
 capital_gbp: 10000
 max_positions: 5
 max_position_pct: 30
@@ -44,3 +44,4 @@ runs_in:
 prefilter_mode: llm
 prefilter_top_n: 50
 cost_gate_multiplier: 4.0
+deactivated_at: '2026-10-10'

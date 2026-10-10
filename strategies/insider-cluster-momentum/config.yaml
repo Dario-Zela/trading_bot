@@ -31,12 +31,14 @@ model_assignment:
   final_select: sonnet
 runs_in:
 - region: us
-  tier: shadow
-  alpaca_slot: null
+  tier: alpaca-paper
+  alpaca_slot: 1
   universe: t212_isa_us
-  tier2_candidate: false
-  tier2_marked_at: null
-  tier2_thesis: ''
+  tier2_candidate: true
+  tier2_marked_at: '2026-10-10'
+  tier2_thesis: '#1 on IC (0.128, n=360, decile spread +0.60), ahead of vix-gated
+    (0.034). Now on Alpaca paper. Needs 10+ trades and a hit rate of 55% or better,
+    with IC held above 0.10, to separate.'
 - region: uk-eu
   tier: shadow
   t212_slot: null

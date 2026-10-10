@@ -31,15 +31,12 @@ model_assignment:
   final_select: sonnet
 runs_in:
 - region: us
-  tier: alpaca-paper
+  tier: shadow
   universe: t212_isa_us
-  alpaca_slot: 1
-  tier2_candidate: true
-  tier2_marked_at: '2026-10-03'
-  tier2_thesis: "#2: highest IC on the slate (0.113) on n=496, 60% hit, +\xA3111.46\
-    \ on 5 trades with a -0.47% max drawdown. The best IC evidence of any contender,\
-    \ now on Alpaca paper. It closes on the leader if IC holds above 0.10 and hit\
-    \ rate stays at 60% or better."
+  alpaca_slot: null
+  tier2_candidate: false
+  tier2_marked_at: null
+  tier2_thesis: ''
 - region: uk-eu
   tier: shadow
   t212_slot: null
