@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-12",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 MT.AS +6%, REN.AS +5%, REL.L +5%, ANTO.L +5%, WKL.AS +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (DTE.DE -8%, AAF.L -6%, VOD.L -5%, STMPA.PA -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: DTE.DE (-7.94%) \u2014 No obvious news catalyst found. Searches returned no Oct-12-2026 reports on Deutsche Telekom, so the -7.94% move is unexplained and could be a sector or T-Mobile US-related move. Why we passed: Outside any active strategy's universe: DTE.DE is a large-cap German telecom (DAX, defensive sector) that no strategy includes. A -7.9% drop on a low-volatility utility-like name also looks like a long-only bot's falling knife.",
+  "top_movers": [
+    {
+      "ticker": "MT.AS",
+      "move_pct": 5.644,
+      "close": 57.28,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day company announcement; a UBS upgrade to Buy (EUR 71 target) appears to have lifted the stock, though the search results don't date it clearly. Kryvyi Rih shutdown news was also out.",
+      "miss_reason": "Outside any active strategy's universe: MT.AS is a large-cap Amsterdam-listed steel/materials name that no strategy covers. An analyst-upgrade move of about 5% with below-average volume also wouldn't trip a volume-gated gap-up filter.",
+      "suggestion": "Add cyclical large-caps like MT.AS to the momentum universe, and add a news-reactive trigger on broker upgrades (e.g. a rating change plus a gap of at least +3%) that doesn't require volume of 1.5x average or more.",
+      "failed": false
+    },
+    {
+      "ticker": "REN.AS",
+      "move_pct": 5.153,
+      "close": 32.24,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found; searches returned nothing dated 2026-10-12. REN.AS is probably RELX on Euronext Amsterdam (unconfirmed), so this is likely a technical rebound or a sector move in data/analytics stocks.",
+      "miss_reason": "Outside any active strategy's universe: a large-cap Dutch-listed information-services stock, not in any strategy's list. With no identifiable news, a news-reactive bot would have had no trigger, and a +5% move on a low-volatility large-cap is unlikely to have passed a gap or volume screen.",
+      "suggestion": "Add a daily scan that flags universe-external large-caps (market cap above roughly \u20ac10B) with a close-to-close move of +4% or more and volume of at least 1.5x the 20-day average. Log them as watchlist candidates, with no auto-trading.",
+      "failed": false
+    },
+    {
+      "ticker": "REL.L",
+      "move_pct": 4.817,
+      "close": 27.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for RELX (REL.L) on 2026-10-12. Searches returned nothing dated today, so this is likely a sector rebound or technical move after a deep 2026 drawdown (52-week low about 27.6).",
+      "miss_reason": "Outside any active strategy's universe: REL.L is a FTSE 100 large-cap in information services/data analytics, and no strategy lists it. With no clear catalyst, a news-reactive bot had no trigger, and a +4.8% move for a low-volatility large-cap is unlikely to hit a momentum gap or volume filter.",
+      "suggestion": "Add a dynamic-universe rule that admits any FTSE 100 / STOXX 600 constituent closing \u2265 +4% on \u22651.5\u00d7 20-day average volume to the momentum-trader watchlist the next session, instead of a static ticker list.",
+      "failed": false
+    },
+    {
+      "ticker": "ANTO.L",
+      "move_pct": 4.577,
+      "close": 37.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No same-day news found; likely a sector-wide copper/miners rally lifting ANTO.L (a high-beta copper proxy). This is unconfirmed, because searches returned nothing dated 2026-10-12.",
+      "miss_reason": "Outside any active strategy's universe: ANTO.L is a FTSE 100 large-cap copper miner that none of the bot's strategies list. With no identifiable stock-specific catalyst, a +4.58% commodity-beta move wouldn't have tripped news-reactive signals either.",
+      "suggestion": "Add FTSE 100 miners (ANTO.L, AAL.L, RIO.L, GLEN.L) to the momentum universe, or add a copper-price trigger (e.g. HG=F up \u22652% on the day) that admits them for the session.",
+      "failed": false
+    },
+    {
+      "ticker": "WKL.AS",
+      "move_pct": 4.486,
+      "close": 75.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-12. Searches turned up no company-specific news that day, so this looks like a rebound in the beaten-down European info-services/legal-software group.",
+      "miss_reason": "Outside any active strategy's universe: WKL.AS is an Amsterdam-listed large-cap information-services/software name, and no strategy's universe includes it. With no news catalyst, a news-reactive filter would also have had nothing to trigger on.",
+      "suggestion": "Add a Euronext Amsterdam large-cap (AEX/Stoxx 600 software and info-services) sleeve to the momentum-trader universe, then require a \u2265+3% gap with \u22651.5\u00d7 average volume before entry.",
+      "failed": false
+    },
+    {
+      "ticker": "ZAL.DE",
+      "move_pct": 4.34,
+      "close": 23.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No dated news found for 2026-10-12. The +4.34% move looks like a rebound or sector move in a beaten-down name (about \u20ac23.8 after a 2026 guidance cut and the Erfurt layoff lawsuits), not a confirmed event.",
+      "miss_reason": "Outside any active strategy's universe: ZAL.DE is a mid-cap (~\u20ac6bn) German e-commerce name, and no strategy's universe includes it. With no identifiable catalyst, a news-reactive filter would also have had nothing to trigger on.",
+      "suggestion": "Add DAX/MDAX mid-caps such as ZAL.DE to the momentum universe, gated on a +3% day with volume \u22651.5\u00d7 the 20-day average. This is a hypothesis only, since no catalyst was confirmed and the move could be noise.",
+      "failed": false
+    },
+    {
+      "ticker": "DTE.DE",
+      "move_pct": -7.939,
+      "close": 24.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. Searches returned no Oct-12-2026 reports on Deutsche Telekom, so the -7.94% move is unexplained and could be a sector or T-Mobile US-related move.",
+      "miss_reason": "Outside any active strategy's universe: DTE.DE is a large-cap German telecom (DAX, defensive sector) that no strategy includes. A -7.9% drop on a low-volatility utility-like name also looks like a long-only bot's falling knife.",
+      "suggestion": "Add large-cap DAX/Euro Stoxx 50 defensives to the mean-reversion universe, with a rule that only buys a one-day drop of \u22655% after a news check finds no fundamental catalyst. Otherwise make no change, since the cause is unverified.",
+      "failed": false
+    },
+    {
+      "ticker": "AAF.L",
+      "move_pct": -6.266,
+      "close": 2.902,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst for 2026-10-12. Searches found no same-day news on AAF.L (Airtel Africa). It may be extended weakness after May's Bharti Airtel stake-swap discount, but that link is unverified.",
+      "miss_reason": "Outside any active strategy's universe: AAF.L is a UK mid-cap (FTSE 100/250 fringe) emerging-markets telecom, with no strategy universe covering it. A -6.3% move with no visible news also looks like a technical or flow move, which news-reactive filters would not trigger on.",
+      "suggestion": "Add a UK mid-cap liquidity-screened slice (e.g. 20-day avg turnover \u2265 \u00a35M) to the mean-reversion universe, so large no-news drops of 5% or more are evaluated by the RSI and volume filters rather than ignored.",
+      "failed": false
+    },
+    {
+      "ticker": "VOD.L",
+      "move_pct": -4.863,
+      "close": 1.1835,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-12. Searches turned up no Vodafone-specific news that day, so this is likely a sector or technical move, possibly a UK telecom or market-wide selloff.",
+      "miss_reason": "Outside any active strategy's universe: VOD.L is a large-cap UK telecom that no strategy includes. With no gap-up catalyst or earnings event, a news-reactive or momentum filter had nothing to trigger on, and the bot likely can't short anyway.",
+      "suggestion": "Add large-cap FTSE 100 defensives such as VOD.L to the mean-reversion universe, so a -4.9% move with no news (RSI < 30) can trigger a long entry. Otherwise no actionable change, since shorting isn't supported.",
+      "failed": false
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": -3.001,
+      "close": 46.545,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found for 2026-10-12; likely a sector-wide European semiconductor sell-off (profit-taking and energy/rate worries), not a STMicro-specific event.",
+      "miss_reason": "Outside any active strategy's universe: STMPA.PA is a Paris-listed large-cap European chip name that no strategy includes. A -3% sector-beta move with no catalyst would also fail a news-reactive filter, and a long-only bot can't short it.",
+      "suggestion": "Add large-cap EU semis (STMPA.PA, IFX.DE, ASML.AS) to the mean-reversion universe, gated on a sector-wide drop (e.g. SX8P \u2264 -2%) with no company-specific news, so sector-beta dips can be bought.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-12T15:02:30.475297+00:00"
+}
