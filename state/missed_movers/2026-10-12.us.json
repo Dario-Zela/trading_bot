@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-12",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 CCI +16%, MRNA +14%, HUM +12%, AMT +9%, SBAC +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (TMUS -13%, T -11%, VZ -10%, HPQ -7%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: CCI (+15.61%) \u2014 SpaceX agreed to buy ~$8B of 800 MHz spectrum from Grain Management (WSJ). Investors read it as a possible new tower tenant, and CCI, AMT and SBAC rallied. Reports date the jump to Fri Oct 9, so the Oct 12 date is unverified. Why we passed: Outside any active strategy's universe: CCI is a mid/large-cap tower REIT, a rate-sensitive real-estate name the strategies don't cover. It was also a headline-driven gap-up, so premarket positioning would beat any post-open momentum signal.",
+  "top_movers": [
+    {
+      "ticker": "CCI",
+      "move_pct": 15.605,
+      "close": 79.64,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "SpaceX agreed to buy ~$8B of 800 MHz spectrum from Grain Management (WSJ). Investors read it as a possible new tower tenant, and CCI, AMT and SBAC rallied. Reports date the jump to Fri Oct 9, so the Oct 12 date is unverified.",
+      "miss_reason": "Outside any active strategy's universe: CCI is a mid/large-cap tower REIT, a rate-sensitive real-estate name the strategies don't cover. It was also a headline-driven gap-up, so premarket positioning would beat any post-open momentum signal.",
+      "suggestion": "No change to the existing strategies. Optionally add a news-reactive watchlist that admits any REIT or large-cap name gapping \u2265+8% on \u22653\u00d7 average volume with a sector-wide peer move, capped at small position size.",
+      "failed": false
+    },
+    {
+      "ticker": "MRNA",
+      "move_pct": 14.213,
+      "close": 225.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed single catalyst found for Oct 12. Likely continued momentum after the August Phase 3 intismeran melanoma win, the Nasdaq-100 entry run-up, and intismeran launch/COO news from the prior week.",
+      "miss_reason": "Outside any active strategy's universe: MRNA is a volatile, news-driven biotech that no strategy lists. It had also already rallied several hundred percent since August, so RSI and extension filters would likely have rejected it even if it were in a universe.",
+      "suggestion": "Add a dynamic 'top-gainer scan' universe extension that admits any name with a \u226510% gap and \u22652\u00d7 20-day average volume, with a cap on RSI(14) (e.g. <80) and a half-size position, instead of relying on static strategy universes.",
+      "failed": false
+    },
+    {
+      "ticker": "HUM",
+      "move_pct": 11.56,
+      "close": 431.87,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continuation of the CMS 2027 Medicare Advantage star-ratings rally (released Oct 9): 95% of members now in 4+ star plans, with a Barclays upgrade to Overweight, $515 target. I found no separate Oct 12 news.",
+      "miss_reason": "Outside any active strategy's universe: HUM is a large-cap managed-care name that no strategy lists. The catalyst also hit on Oct 9, so by Oct 12 it was a day-3 follow-through gap after a 13-15% jump and 52-week highs, which RSI or extension filters would likely reject.",
+      "suggestion": "Add large-cap healthcare/managed-care to the news-reactive universe, and let the post-catalyst gate admit names with an analyst upgrade plus a \u2265+10% prior-session gap, using a relaxed RSI cap for 2-3 days.",
+      "failed": false
+    },
+    {
+      "ticker": "AMT",
+      "move_pct": 9.302,
+      "close": 182.24,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Tower REITs rallied (AMT +9.3% to 182.24) after SpaceX agreed to buy ~$8B of 800-MHz spectrum, seen as raising demand for tower sites; Goldman called it a positive for towers, and a Barclays upgrade came just before.",
+      "miss_reason": "Outside any active strategy's universe: AMT is a large-cap tower REIT, and the bot's universes apparently exclude REITs. The jump came from a sector-wide news gap, so a momentum filter would only have seen it after the move.",
+      "suggestion": "Add a REIT/communications-infrastructure sleeve (AMT, CCI, SBAC) to the news-reactive universe, and release names that gap up \u2265+5% together with their sector peers on a shared catalyst.",
+      "failed": false
+    },
+    {
+      "ticker": "SBAC",
+      "move_pct": 7.341,
+      "close": 182.49,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found. Likely a tower-sector rally (a possible spectrum/carrier-related deal) or renewed takeover interest. SBAC reportedly explored a sale in April 2026.",
+      "miss_reason": "Outside any active strategy's universe: SBAC is a mid/large-cap tower REIT, a defensive, rate-sensitive sector the momentum and news-reactive universes likely exclude. A +7% REIT gap without an earnings trigger also wouldn't pass catalyst filters.",
+      "suggestion": "Add a sector-breadth rule to the universe builder: admit REITs/utilities into the dynamic universe when \u22652 same-industry peers (AMT, CCI, SBAC) gap \u2265+4% on \u22651.5\u00d7 average volume at the open.",
+      "failed": false
+    },
+    {
+      "ticker": "DDOG",
+      "move_pct": 7.107,
+      "close": 293.26,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Software-sector rally extended as analyst upgrades eased AI-disruption fears; DDOG hit a new 52-week high after a CIBC price-target raise. Searches found no company-specific news.",
+      "miss_reason": "Outside any active strategy's universe: DDOG is a mid/large-cap software name that no strategy's universe includes. It was also overbought (RSI flagged, +32% in a month, +118% YTD), so an RSI or extension filter would likely have rejected it anyway.",
+      "suggestion": "Add a sector-ETF-driven candidate feed (e.g. IGV constituents) to momentum-trader's universe, keeping the RSI cap so overbought names like DDOG are only taken on a pullback.",
+      "failed": false
+    },
+    {
+      "ticker": "TMUS",
+      "move_pct": -13.268,
+      "close": 148.58,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "SpaceX agreed to buy ~$8B of nationwide low-band spectrum for Starlink Mobile, hitting TMUS (-13% to a 52-week low), AT&T and Verizon. Reports date the drop to Fri Oct 9, so this may be a stale-dated move.",
+      "miss_reason": "Outside any active strategy's universe (TMUS is a large-cap telecom, not in any strategy's list). It was also a gap-down on a sector-wide news shock, which a long-only momentum or mean-reversion bot would skip or not short.",
+      "suggestion": "Add large-cap telecoms/defensives to the mean-reversion universe, with a news-gate that holds entries for 1-2 sessions after a \u226510% single-day gap-down on a structural catalyst. Also check the mover feed's date alignment, since the drop was Oct 9.",
+      "failed": false
+    },
+    {
+      "ticker": "T",
+      "move_pct": -10.816,
+      "close": 22.18,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "SpaceX's ~$8B nationwide spectrum purchase (Starlink mobile) hit AT&T, Verizon and T-Mobile. One source puts T at -10.82% to $22.18, but it dates the drop to Oct 9, not today.",
+      "miss_reason": "Outside any active strategy's universe: T is a large-cap, low-beta, high-dividend telecom that the universe filters likely exclude. The sector-wide gap on a headline would also have hit any gap-size or RSI filter.",
+      "suggestion": "Add large-cap defensive/dividend telecoms (T, VZ, TMUS) to the mean-reversion universe, gated by a rule that fires when a sector peer group falls \u22658% on one headline and stays above a volume floor.",
+      "failed": false
+    },
+    {
+      "ticker": "VZ",
+      "move_pct": -10.14,
+      "close": 41.65,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued telecom selloff after SpaceX's ~$8B low-band spectrum deal (Starlink Mobile) raised fears of a new subscriber competitor. VZ fell 8.75% on Oct 9 and another ~10% today.",
+      "miss_reason": "Outside any active strategy's universe: VZ is a large-cap defensive telecom/dividend name that the momentum and news strategies don't screen. The move was also a two-day sector gap-down on a structural thesis shock, with no technical setup to trigger on.",
+      "suggestion": "Add a sector-contagion rule: when 2 or more large-cap names in one GICS industry each drop \u22658% in a session, add the sector to the news-reactive universe for 3 days. Only if a short or inverse-ETF capability exists; otherwise no-op.",
+      "failed": false
+    },
+    {
+      "ticker": "HPQ",
+      "move_pct": -6.905,
+      "close": 30.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed Oct 12 headline found. Likely continued selling after weak IDC Q3 PC data (HP shipments about -31%) and memory-cost margin pressure, following a ~7% drop on Oct 9.",
+      "miss_reason": "Outside any active strategy's universe: HPQ is a mid-cap hardware name that no strategy lists. The drop was a downside move, probably from a sector/fundamental de-rating, and a long-only momentum or mean-reversion bot has no way to trade it.",
+      "suggestion": "(no actionable change) The move is a downside drift in a name outside the universe, and the bot has no short capability. If shorts are ever added, include large-cap hardware names that fall 5%+ on two days within 3 days.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-12T19:32:07.063546+00:00"
+}
