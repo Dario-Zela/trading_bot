@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-13",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 CTEC.L +4%, ADYEN.AS +3%, BGEO.L +3%, RMS.PA +3%, WKL.AS +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (AD.AS -2%, IFX.DE -2%, BESI.AS -2%, STMPA.PA -2%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: CTEC.L (+4.27%) \u2014 No obvious news catalyst found for 2026-10-13. Search returned no same-day Convatec (FTSE 100 medical devices) announcement, so likely a technical rebound or sector move after a weak 2026. Why we passed: Outside any active strategy's universe. CTEC.L is a UK large-cap healthcare name (FTSE 100) that no strategy lists. A +4.3% move with no news is also too small and unexplained for a news-reactive or gap-up momentum trigger.",
+  "top_movers": [
+    {
+      "ticker": "CTEC.L",
+      "move_pct": 4.273,
+      "close": 2.294,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-13. Search returned no same-day Convatec (FTSE 100 medical devices) announcement, so likely a technical rebound or sector move after a weak 2026.",
+      "miss_reason": "Outside any active strategy's universe. CTEC.L is a UK large-cap healthcare name (FTSE 100) that no strategy lists. A +4.3% move with no news is also too small and unexplained for a news-reactive or gap-up momentum trigger.",
+      "suggestion": "Add FTSE 100 healthcare/medtech constituents (e.g. CTEC.L, SN.L, SMT.L) to the uk-eu mean-reversion universe. Keep an RSI(14) < 40 pre-condition so a rebound off depressed levels, like this one, qualifies without loosening momentum filters.",
+      "failed": false
+    },
+    {
+      "ticker": "ADYEN.AS",
+      "move_pct": 3.363,
+      "close": 915.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed news catalyst for 13 Oct. Likely a rebound in a beaten-down stock (down about 42% YTD after a CFO exit and downgrades), possibly a sector move in European payments or fintech.",
+      "miss_reason": "Outside any active strategy's universe: Adyen is a large-cap Euronext Amsterdam fintech that no strategy lists. A +3.4% move with no catalyst also wouldn't trip a news-reactive or gap-up filter. Mean-reversion logic may reject a name that sits near its 52-week low.",
+      "suggestion": "Add large-cap Euronext/AEX fintech names such as ADYEN.AS to the uk-eu mean-reversion universe, with an oversold-bounce rule (e.g. price within 5% of the 52-week low and a +3% day on above-average volume).",
+      "failed": false
+    },
+    {
+      "ticker": "BGEO.L",
+      "move_pct": 2.989,
+      "close": 127.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-13. BGEO.L is now Lion Finance Group (ex-Bank of Georgia), and the +2.99% looks like a technical or sector move, possibly with buyback support.",
+      "miss_reason": "Outside any active strategy's universe: this is a mid/large-cap Georgian bank listed in London, a frontier-market financial. A +3% move with no news is also too small and unexplained to trip a gap-up or news-reactive trigger. The quoted 127.5 close also doesn't match the ~4,700p quotes I found, so the price data may be",
+      "suggestion": "Check the BGEO.L price feed and ticker mapping first, since the close disagrees with the web quotes. Then consider adding Lion Finance Group to the uk-eu momentum universe, and trigger on a daily move \u2265 +3% only when volume is \u2265 1.5\u00d7 the 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "RMS.PA",
+      "move_pct": 2.884,
+      "close": 1320.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found for 2026-10-13; the +2.9% looks like a luxury-sector rebound ahead of LVMH's Q3 sales (typically mid-October), not a Herm\u00e8s event.",
+      "miss_reason": "Outside any active strategy's universe: RMS.PA is a ~\u20ac140B+ Paris large-cap luxury name with a high share price that no strategy covers. A sector-wide drift without a stock-specific catalyst also wouldn't trip gap or news triggers.",
+      "suggestion": "Add CAC 40 / Euro Stoxx luxury constituents (RMS.PA, MC.PA, KER.PA) to the uk-eu momentum universe, with a sector-relative-strength trigger such as +2% on the day and \u22651.2\u00d7 20-day average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "WKL.AS",
+      "move_pct": 2.8,
+      "close": 77.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for Wolters Kluwer (WKL.AS) today. Likely a rebound in AI-disrupted information-services and software names, or a pre-Q3-update bounce.",
+      "miss_reason": "Outside any active strategy's universe: WKL.AS is a Dutch large-cap in professional information software, and no strategy's universe includes Euronext Amsterdam names. A +2.8% move with no news also wouldn't pass a gap-up or news-reactive filter.",
+      "suggestion": "Add the AEX/Euronext Amsterdam large-caps (e.g. AEX top 25) to the uk-eu momentum universe, with the existing volume floor and RSI gates, so sector-rebound days like this can be screened.",
+      "failed": false
+    },
+    {
+      "ticker": "RHM.DE",
+      "move_pct": 2.311,
+      "close": 960.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-13. Likely a +2.3% defence-sector rebound or technical bounce. The stock closed at 960.8, well below the roughly 1,600-1,900 levels cited in earlier 2026 coverage.",
+      "miss_reason": "Outside any active strategy's universe: RHM.DE is a large-cap German defence name (Xetra) that no strategy's universe includes. A +2.3% move with no catalyst would also likely fail momentum gap and volume filters, even if it were in a universe.",
+      "suggestion": "Add RHM.DE and other liquid DAX defence names (e.g. HAG.DE, R3NK.DE) to the momentum-trader universe, and require a gap of at least +2% on at least 1.5x average volume before entry, so unconfirmed sector bounces are skipped.",
+      "failed": false
+    },
+    {
+      "ticker": "AD.AS",
+      "move_pct": -2.385,
+      "close": 31.51,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for Ahold Delhaize on 2026-10-13. Searches turned up no same-day company news, so the -2.4% looks like a technical or sector move, possibly a defensive/staples rotation.",
+      "miss_reason": "Outside any active strategy's universe: AD.AS is a large-cap Dutch grocery retailer, a low-beta defensive staple. A -2.4% drift with no gap or volume spike also wouldn't trigger momentum or news-reactive filters.",
+      "suggestion": "No actionable change. If European staples exposure is wanted, add AD.AS to the mean-reversion universe with a drawdown trigger (e.g. 1-day drop \u22652% on no news), but this is a low-conviction, no-catalyst move.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": -2.192,
+      "close": 57.57,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for Oct 13, 2026; search turned up no Infineon-specific news. Likely a technical or sector move (semis/European tech weakness).",
+      "miss_reason": "Outside any active strategy's universe: IFX.DE is a large-cap German semiconductor listed on Xetra, and no strategy's universe includes it. A -2.19% move on no news is also too small to trip typical gap or momentum filters.",
+      "suggestion": "No actionable change: a -2.19% drift with no catalyst is within normal noise. If European semis matter, add IFX.DE to the mean-reversion universe with an RSI<30 entry gate rather than a move-size trigger.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": -2.118,
+      "close": 175.65,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for BESI.AS on 2026-10-13 \u2014 likely a sector-wide move in European semiconductor equipment stocks (ASML and peers). Searches turned up no company-specific news.",
+      "miss_reason": "Outside any active strategy's universe: BESI is a Dutch mid/large-cap semiconductor-equipment name listed on Euronext Amsterdam, which the bot's universes don't cover. A -2.12% sector drift is also too small for a news or gap trigger to fire.",
+      "suggestion": "Add BESI.AS (and ASML.AS, ASMI.AS) as a semis-equipment basket in the uk-eu mean-reversion universe, entering only when the basket drops at least 2% on above-average volume with no company-specific headline.",
+      "failed": false
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": -1.987,
+      "close": 45.62,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for STMicroelectronics on 2026-10-13; a -1.99% move into the Q3 earnings window (likely mid/late Oct) looks like a sector or technical move in European semis.",
+      "miss_reason": "Outside any active strategy's universe: STMPA.PA is a Paris-listed large-cap European semiconductor, and no strategy covers it. A -2% move is also too small to trip typical gap or momentum entry thresholds, and there was no news for a news-reactive strategy to act on.",
+      "suggestion": "Add Euronext Paris large caps such as STMPA.PA to the mean-reversion universe, with an entry filter of a \u22653% drop on \u22651.5\u00d7 average volume, so ordinary sector pullbacks of this size don't trigger.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-13T15:02:37.119926+00:00"
+}
