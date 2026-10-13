@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-13",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 FICO +10%, MDT +4%, META +3%, ZBH +3%, PODD +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (CIEN -10%, LITE -10%, COHR -7%, BE -7%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: CIEN (-10.37%) \u2014 No company-specific news found. CIEN fell with a broad AI-optical selloff (LITE, COHR, GLW also down ~6-10%), likely profit-taking and de-risking of crowded high-beta names. Sources dated the drop Oct 12, so the date is unconfirmed. Why we passed: Outside any active strategy's universe: CIEN is a ~$57B mid/large-cap optical-networking name that no strategy includes. It also has no earnings catalyst for a news-reactive bot, and a long-only bot would not short a sector-wide momentum unwind.",
+  "top_movers": [
+    {
+      "ticker": "FICO",
+      "move_pct": 10.328,
+      "close": 736.53,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Oversold rebound after the ~22% FHFA/VantageScore mortgage-scoring selloff; support came from UWM sticking with FICO scores and analysts keeping Buy ratings (Money Morning, 10/13).",
+      "miss_reason": "Outside any active strategy's universe: FICO is a mid/large-cap software and analytics name that no strategy lists. It was also a headline-driven rebound after a crash, so momentum and gap filters would likely have rejected it anyway.",
+      "suggestion": "Add a 'post-crash rebound' scan to the universe builder: admit any S&P 500 name that fell \u226515% within 10 days and then gaps up \u22655% on volume \u22652\u00d7 its 20-day average, as a candidate list for the news-reactive strategy.",
+      "failed": false
+    },
+    {
+      "ticker": "MDT",
+      "move_pct": 3.656,
+      "close": 91.715,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-13. Searches turned up no dated MDT story for today, so this is likely a sector or medtech rotation move, or a technical bounce.",
+      "miss_reason": "Outside any active strategy's universe: MDT is a ~$115B large-cap medtech/healthcare name, and no strategy's universe includes it. A +3.66% move with no catalyst also gives a news-reactive bot nothing to trigger on.",
+      "suggestion": "Add a large-cap defensive healthcare/medtech sleeve (MDT, ABT, SYK, BSX) to the momentum universe, gated on a +3% close-to-close move with volume \u22651.5\u00d7 the 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "META",
+      "move_pct": 3.248,
+      "close": 742.01,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Second straight day of gains as Meta's new Muse AI model family impressed; Truist set a Street-high $1,000 price target on Muse adoption, lifting social-media peers too.",
+      "miss_reason": "Outside any active strategy's universe: META is a mega-cap that no strategy lists. It was also a two-day, analyst- and product-driven grind with no gap or earnings spike, so gap-up and volume-surge filters would not have fired.",
+      "suggestion": "Add mega-cap tech names such as META to the momentum universe, and add a 2-day cumulative-return trigger (\u2265 +6% with an analyst PT upgrade) that doesn't need a single-session gap or volume spike.",
+      "failed": false
+    },
+    {
+      "ticker": "ZBH",
+      "move_pct": 3.208,
+      "close": 92.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-10-13 \u2014 likely a medtech/orthopedics sector rebound or pre-Q3-earnings positioning. Searches found no dated company news.",
+      "miss_reason": "Outside any active strategy's universe: ZBH is a ~$19B mid/large-cap medical-device name, and no strategy's universe covers it. A +3.2% move on no clear news is also too small and unremarkable for a news-reactive or gap-momentum filter.",
+      "suggestion": "Add a healthcare/medtech sleeve (e.g. ZBH, SYK, BSX, EW) to the momentum-trader universe, gated by a relative-strength rule such as +3% on \u22651.5\u00d7 20-day average volume, so the next sector-driven move is eligible.",
+      "failed": false
+    },
+    {
+      "ticker": "PODD",
+      "move_pct": 3.149,
+      "close": 139.54,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-13. Likely a technical bounce or medtech/diabetes-device sector move. PODD is near its 52-week low (~$140) after a steep fall from ~$355.",
+      "miss_reason": "Outside any active strategy's universe: PODD is a mid-cap healthcare/medical-device name, and no strategy covers that category. A +3.15% move with no news also wouldn't trip a news-reactive or gap-up filter.",
+      "suggestion": "No actionable change. If wanted, add a mid-cap healthcare sleeve to the mean-reversion universe to catch oversold bounces near 52-week lows, but one +3% day doesn't justify it.",
+      "failed": false
+    },
+    {
+      "ticker": "CF",
+      "move_pct": 3.057,
+      "close": 114.95,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for CF on 2026-10-13. Searches returned no dated driver, so this is likely a sector move in fertilizer/nitrogen or natural gas, not company news.",
+      "miss_reason": "Outside any active strategy's universe. CF is a mid-cap fertilizer/materials name that none of the strategies cover. A +3% move with no news or gap would also not have tripped a gap-up or news-reactive trigger.",
+      "suggestion": "Add a small fertilizer/ag-materials sector basket (CF, MOS, NTR, CTVA) to the momentum universe, gated on a sector-relative strength rule such as 5-day return above the sector median.",
+      "failed": false
+    },
+    {
+      "ticker": "CIEN",
+      "move_pct": -10.365,
+      "close": 403.15,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found. CIEN fell with a broad AI-optical selloff (LITE, COHR, GLW also down ~6-10%), likely profit-taking and de-risking of crowded high-beta names. Sources dated the drop Oct 12, so the date is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: CIEN is a ~$57B mid/large-cap optical-networking name that no strategy includes. It also has no earnings catalyst for a news-reactive bot, and a long-only bot would not short a sector-wide momentum unwind.",
+      "suggestion": "Add an AI-optical/networking basket (CIEN, LITE, COHR, GLW, MRVL) to the momentum universe, plus a sector-breadth exit rule: cut exposure when \u22653 members drop \u22655% in one session.",
+      "failed": false
+    },
+    {
+      "ticker": "LITE",
+      "move_pct": -10.072,
+      "close": 992.23,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide optical/AI-networking selloff (LITE, Ciena, Coherent, Corning each down ~7-10%) on profit-taking after a huge rally. No LITE-specific news found; sources date the drop to Oct 12-13, so timing is uncertain.",
+      "miss_reason": "Outside any active strategy's universe: LITE is a ~$1,000/share, high-volatility mid/large-cap AI-optics name. The move was a non-catalyst sector drawdown, so a news-reactive bot had no trigger, and a long-only bot can't short it.",
+      "suggestion": "Add a thematic basket (LITE, COHR, CIEN, GLW, AAOI) to the mean-reversion universe, with an entry rule on a sector-wide drop \u22657% in 2+ members after a >30-day rally, sized down for the high share price.",
+      "failed": false
+    },
+    {
+      "ticker": "COHR",
+      "move_pct": -7.392,
+      "close": 289.51,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found; COHR fell with the AI optical-networking group (LITE, AAOI, CIEN) on profit-taking and AI-capex funding worries after a big multi-week rally.",
+      "miss_reason": "Outside any active strategy's universe: COHR is a mid/large-cap photonics name that no strategy lists. The move was a sector de-rating with no single-stock catalyst, and a long-only bot has no way to profit from a drop.",
+      "suggestion": "No change to the universe. If the bot ever adds a sector-breadth signal, flag when 3+ of COHR/LITE/AAOI/CIEN fall more than 5% in one session and use it to cut AI-hardware exposure.",
+      "failed": false
+    },
+    {
+      "ticker": "BE",
+      "move_pct": -6.804,
+      "close": 261.415,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for BE on 2026-10-13. My search returned no coverage of that day, so this is likely a technical or AI-power/fuel-cell sector pullback after a big run (close 261).",
+      "miss_reason": "Outside any active strategy's universe: BE (Bloom Energy) is a high-beta, mid/large-cap fuel-cell and AI-power name that no strategy includes. A -6.8% drop with no catalyst also gives a news-reactive bot nothing to trigger on, and the bot can't short.",
+      "suggestion": "Add BE to the momentum-trader universe as a high-beta AI-power name, and add a mean-reversion entry for no-news drops of 6% or more with RSI(14) below 35 on 1.5x average volume. Verify the catalyst first.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-13T19:32:04.210416+00:00"
+}
