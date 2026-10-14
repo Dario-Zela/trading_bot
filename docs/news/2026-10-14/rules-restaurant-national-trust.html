@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>London&#x27;s oldest restaurant, Rules, donated to the National Trust — 2026-10-14 — Trading Bot</title>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../../index.html">Dashboard</a>
+<a class="nav-tab active" href="../../news/latest.html">News</a>
+<a class="nav-tab" href="../../macro/latest.html">Macro</a>
+<a class="nav-tab" href="../../evolution.html">Evolution</a>
+<a class="nav-tab" href="../../ml/index.html">ML lab</a>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper article-page"><div class="edition-nav" data-edition="2026-10-14" data-kind="news"><a class="edition-nav-link" data-role="prev" href="../2026-10-13/" title="2026-10-13">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><a class="edition-nav-link disabled" data-role="next" href="#" aria-disabled="true">next →</a><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">CULTURE · HERITAGE · By L. Bordeaux · 2026-10-14 · 3 min read</div><h1>London&#x27;s oldest restaurant, Rules, donated to the National Trust</h1><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>Rules, the Covent Garden restaurant open since 1798, has reportedly been donated to the National Trust, though the donor, terms and timing remain unclear.</div></div><div class="body"><p>Rules, the Maiden Lane restaurant that has been serving Covent Garden since 1798 and is widely described as London's oldest, has been donated to the National Trust, according to the Guardian. It is a gift of heritage and, for now, mostly a ceremonial one.</p>
+<p>The donor, the terms of the transfer and the date it takes effect were not available at the time of writing, and they have not been independently verified. Nor is it clear whether the Trust will take the building, the business, or both. Those details decide whether this is a symbolic handover or a change in how the Trust operates.</p>
+<h2>A dining room with a long memory</h2>
+<p>The restaurant has traded under the same name for more than two centuries, which in a city that churns through openings at speed is a feat in itself. Its dark panelling, red banquettes and walls crowded with prints and paintings are the point of the place. Rules trades on the sense that little has changed, and that the people who sat in these seats were worth knowing.</p>
+<p>The guest list is part of its folklore. Dickens, Thackeray and Graham Greene are among the literary names routinely attached to the dining room. It is also remembered as a discreet haunt of the Edwardian court, with a first-floor corner associated with Edward VII and Lillie Langtry. Theatre people have long kept it busy, thanks to the stage doors a few minutes' walk away.</p>
+<p>Its calling card is traditional British game and pies, with much of the game historically supplied from the restaurant's own estate in the Pennine hills. It is food for people who like the idea of old London as much as the dinner.</p>
+<h2>What the Trust gets, and what it takes on</h2>
+<p>The National Trust is best known for country houses, coastline and gardens, and it has not usually been in the business of running a working restaurant in the West End. A busy commercial kitchen carries obligations that a stately home with a tearoom does not: staff, suppliers, a lease or freehold to manage, and the pressure of a dining room that has to earn its keep every night.</p>
+<p>That is why the terms matter. A donation that comes with an endowment, or with a long-term operator in place, would look like a template the Trust could repeat. A gift with no funding attached would leave the Trust carrying the risk of preserving a living business. Until the specifics are published, the sensible reading is the modest one: a well-loved landmark finding a protective home, with no evidence yet of a wider shift in policy.</p>
+<h2>What to watch</h2>
+<p>The next thing to look for is a statement from the Trust setting out the arrangements: who runs the restaurant day to day, whether the interior is to be formally protected, and how the gift is funded. Any change to opening hours, menu or booking arrangements would be the first sign for diners of what the new ownership means in practice. Until then, the tables are, presumably, still set.</p></div><section class="sources-block"><h4>Sources</h4><ol><li><a href="https://www.theguardian.com/uk" rel="nofollow noopener" target="_blank">The Guardian (UK)</a></li></ol></section><footer class="colophon">The Bot Tribune · 2026-10-14 · <a href="index.html">Back to the edition</a></footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
+</body>
+</html>
