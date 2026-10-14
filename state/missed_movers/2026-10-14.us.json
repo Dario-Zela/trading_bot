@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-14",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 CDW +6%, VLO +5%, CHTR +4%, ORCL +4%, IFF +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (AMAT -7%, FLEX -6%, JNJ -5%, DPZ -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: AMAT (-7.02%) \u2014 Chip-equipment profit-taking after a ~80% YTD run. AMAT gave no industry spending forecast at its investor day, and China/geopolitical worries added to the selling. LRCX and KLA fell about 4%. Date matching is uncertain. Why we passed: Outside any active strategy's universe: AMAT is a ~$370B large-cap semi-equipment name that no strategy lists. The drop was a gradual sector de-rating (sixth straight down day) with no gap or catalyst, and a long-only bot has no use for it.",
+  "top_movers": [
+    {
+      "ticker": "CDW",
+      "move_pct": 5.874,
+      "close": 151.845,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for CDW on 2026-10-14. Search returned only older earnings-driven jumps and undated items, so this is likely a sector or technical move (IT hardware/AI-spend sentiment).",
+      "miss_reason": "Outside any active strategy's universe: CDW is a mid-cap IT reseller/distributor that no strategy lists. With no identified news catalyst, a news-reactive trigger had nothing to fire on, and a +5.9% close-to-close move gave no pre-market signal.",
+      "suggestion": "Add a dynamic universe slot to momentum-trader that admits any US name with a close-to-close move \u2265 +5% on \u22651.5\u00d7 average volume and a market cap above a floor (e.g. $5B), instead of relying on a static ticker list.",
+      "failed": false
+    },
+    {
+      "ticker": "VLO",
+      "move_pct": 5.472,
+      "close": 456.95,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found for 2026-10-14. Likely a sector-wide refiner rally on strong diesel/jet crack spreads, with VLO near record highs after a 2026 run of over 100%.",
+      "miss_reason": "Outside any active strategy's universe: VLO is a large-cap energy/refining name that no strategy includes. It was also extended near all-time highs, so RSI and extension filters would likely have rejected it even if it had been in a universe.",
+      "suggestion": "Add large-cap energy refiners (VLO, MPC, PSX) to the momentum universe, with a sector-relative-strength trigger such as a refiner basket up 3% or more on the day, instead of per-name gap/RSI caps that block names already at highs.",
+      "failed": false
+    },
+    {
+      "ticker": "CHTR",
+      "move_pct": 4.364,
+      "close": 106.89,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed Oct 14 catalyst. CHTR rebounded +4.4% to 106.89, just off a 52-week low, ahead of Q3 earnings on Nov 6. Coverage points to a Cox-integration and cost-cut narrative, so likely a technical bounce.",
+      "miss_reason": "Outside any active strategy's universe: CHTR is a large-cap cable name that no strategy includes. It is also in a long downtrend near 52-week lows, so a momentum or trend filter would have excluded it even if it were in the universe.",
+      "suggestion": "Add large-cap telecom/cable names such as CHTR to the mean-reversion universe, gated on a \u22654% one-day gain from within 5% of the 52-week low with volume \u22651.5\u00d7 the 20-day average. Backtest it first, since it is a falling-knife setup.",
+      "failed": false
+    },
+    {
+      "ticker": "ORCL",
+      "move_pct": 4.356,
+      "close": 143.28,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed Oct 14 catalyst. Coverage points to an AI-cloud/software rebound: NetApp\u2013Oracle OCI storage news, easing OpenAI revenue worries, and a Mizuho top pick. Those reports are dated Oct 13, so the attribution is uncertain.",
+      "miss_reason": "Outside any active strategy's universe: ORCL is a mega-cap enterprise software/AI-cloud name that no strategy includes. The move was also a sector and news-sentiment rebound rather than a clean gap or earnings event, so a momentum or news-reactive filter would have been weak on it.",
+      "suggestion": "Add large-cap AI/cloud names (ORCL, plus peers like MSFT, NOW and CRM) to the momentum strategy's universe, gated by a sector-breadth trigger (e.g. \u226560% of the group up >2% by 10:30 ET). Test that first in the backtest.",
+      "failed": false
+    },
+    {
+      "ticker": "IFF",
+      "move_pct": 4.283,
+      "close": 88.51,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single news event found for Oct 14. Likely continuation of a rally on analyst target raises (Morgan Stanley $100, Benchmark $105), the $4.3B Food Ingredients sale to CVC, and the buyback, ahead of Q3 earnings.",
+      "miss_reason": "Outside any active strategy's universe: IFF is a ~$22B mid/large-cap specialty chemicals/ingredients name. With no discrete catalyst, the move was a gradual drift toward the 52-week high ($89.32), which gap-up or news-reactive filters wouldn't flag.",
+      "suggestion": "Add mid-cap materials/staples names such as IFF to the momentum-trader universe, with a trigger on a close within 2% of the 52-week high plus analyst target raises. Test the effect on position count first.",
+      "failed": false
+    },
+    {
+      "ticker": "EXE",
+      "move_pct": 4.234,
+      "close": 92.69,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found for 2026-10-14; likely a natural gas price rally lifting gas producers. Next earnings are Oct 27, so this isn't earnings-driven.",
+      "miss_reason": "Outside any active strategy's universe: EXE (Expand Energy) is a ~$22B mid/large-cap natural gas E&P that no strategy lists. With no news catalyst, a sector-beta move gave news-reactive and momentum filters nothing to trigger on.",
+      "suggestion": "Add a nat-gas E&P group (EXE, AR, RRC, CRK) to the momentum universe, entered when the group's average daily move is \u2265 +3% and NG=F is up, so sector rallies get caught without needing a company headline.",
+      "failed": false
+    },
+    {
+      "ticker": "AMAT",
+      "move_pct": -7.024,
+      "close": 462.265,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Chip-equipment profit-taking after a ~80% YTD run. AMAT gave no industry spending forecast at its investor day, and China/geopolitical worries added to the selling. LRCX and KLA fell about 4%. Date matching is uncertain.",
+      "miss_reason": "Outside any active strategy's universe: AMAT is a ~$370B large-cap semi-equipment name that no strategy lists. The drop was a gradual sector de-rating (sixth straight down day) with no gap or catalyst, and a long-only bot has no use for it.",
+      "suggestion": "Add large-cap semi-equipment names (AMAT, LRCX, KLA) to the mean-reversion universe, gated on a sector-wide drop of 4% or more plus RSI(2) below 10, so the bot can buy sector-wide profit-taking dips.",
+      "failed": false
+    },
+    {
+      "ticker": "FLEX",
+      "move_pct": -6.194,
+      "close": 110.11,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-14; searches turned up nothing dated that day. Likely an AI-infrastructure / tech sector pullback or profit-taking after a big run.",
+      "miss_reason": "Outside any active strategy's universe: FLEX is a mid/large-cap EMS/hardware contract manufacturer (Nasdaq, Singapore-domiciled) that no strategy lists. With no discrete catalyst, a news-reactive filter would not have fired either.",
+      "suggestion": "No actionable change for a long-only bot; the move is sector beta with no event. If wanted, add AI-hardware supply-chain names like FLEX to the momentum universe, gated on a \u22655% single-day drop with \u22651.5\u00d7 average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "JNJ",
+      "move_pct": -5.309,
+      "close": 248.98,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 earnings reported Oct 13 (EPS $2.59 beat, guidance raised). Shares still fell about 5% on a large talc-litigation charge and a MedTech revenue miss tied to Middle East disruption. Press coverage of the reaction conflicts.",
+      "miss_reason": "Outside any active strategy's universe: JNJ is a mega-cap defensive pharma/healthcare name that no strategy includes. The drop was also an earnings gap that appeared at the open, so momentum and mean-reversion filters would have had no pre-gap signal.",
+      "suggestion": "Add large-cap healthcare to the news-reactive strategy's universe, with an earnings-gate release for names gapping \u2264 -4% on a results day. That would allow a mean-reversion long after the drop when guidance was raised. Otherwise, no change.",
+      "failed": false
+    },
+    {
+      "ticker": "DPZ",
+      "move_pct": -4.863,
+      "close": 298.36,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely Q3 2026 results reported Oct 13: U.S. same-store sales rose only 0.3% (vs +5.2% a year ago), intl +0.2%, so the stock fell on weak comps. I couldn't find an article dated Oct 14 that confirms this.",
+      "miss_reason": "Outside any active strategy's universe: DPZ is a mid-cap restaurant franchisor that no strategy includes. The drop also looks like a post-earnings gap lower, and a long-only bot would skip it or its earnings gate would block it.",
+      "suggestion": "Add mid-cap consumer-discretionary and restaurant names like DPZ to the news-reactive universe, and let the earnings gate release names with a post-results gap of -4% or worse as mean-reversion watchlist candidates.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-14T19:32:09.168643+00:00"
+}
