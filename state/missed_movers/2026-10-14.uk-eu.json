@@ -1,0 +1,126 @@
+{
+  "date": "2026-10-14",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 2 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 RI.PA +5%, MRO.L +5%, WPP.L +4%, DSFIR.AS +3%, SY1.DE +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 2 downside moves (LSEG.L -5%, BBY.L -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: RI.PA (+5.18%) \u2014 No confirmed company news. Pernod Ricard (RI.PA) rallied about 5% the day before its Q1 FY27 sales release on Oct 15, probably on pre-earnings positioning and a rebound in beaten-down spirits stocks. Why we passed: Outside any active strategy's universe: RI.PA is a Paris-listed large-cap consumer-staples (spirits) name that no strategy includes. With no company news, a news-reactive bot had no trigger, and a sector-wide rebound is not a signal it tracks.",
+  "top_movers": [
+    {
+      "ticker": "RI.PA",
+      "move_pct": 5.182,
+      "close": 65.36,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed company news. Pernod Ricard (RI.PA) rallied about 5% the day before its Q1 FY27 sales release on Oct 15, probably on pre-earnings positioning and a rebound in beaten-down spirits stocks.",
+      "miss_reason": "Outside any active strategy's universe: RI.PA is a Paris-listed large-cap consumer-staples (spirits) name that no strategy includes. With no company news, a news-reactive bot had no trigger, and a sector-wide rebound is not a signal it tracks.",
+      "suggestion": "Add a liquid-EU-large-cap tier (e.g. CAC 40/STOXX 50) to the momentum universe, with a pre-earnings-drift rule: allow entry when the gap is at least +3% and volume is at least 1.5\u00d7 average, within 2 days of a scheduled results date.",
+      "failed": false
+    },
+    {
+      "ticker": "MRO.L",
+      "move_pct": 4.967,
+      "close": 4.682,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed company-specific news for 2026-10-14 found; likely an aerospace-sector or analyst-driven rebound in Melrose (GKN Aerospace), which had been trading near its 12-month low of about 410p.",
+      "miss_reason": "Outside any active strategy's universe: Melrose is a UK mid/large-cap aerospace engineering name that no strategy lists. A +5% move with no clear catalyst also gives a news-reactive bot no trigger, and momentum filters would see a rebound from depressed levels.",
+      "suggestion": "Add UK FTSE 100/250 industrials and aerospace names such as MRO.L to the momentum-trader universe, gated by the existing volume floor (\u22651.5\u00d7 average volume) so that low-volume sector drifts are still excluded.",
+      "failed": false
+    },
+    {
+      "ticker": "WPP.L",
+      "move_pct": 3.987,
+      "close": 3.9505,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day catalyst. Searches found no WPP news dated 2026-10-14, only the earlier results-driven rally (shares ~400p after beating revenue forecasts). Likely follow-through or a sector move in ad stocks.",
+      "miss_reason": "Outside any active strategy's universe: WPP.L is a UK FTSE 100 mid-cap advertising name, and no strategy's universe covers it. With no discrete same-day catalyst, a news-reactive bot would have had no trigger either.",
+      "suggestion": "Add FTSE 100/250 constituents (e.g. WPP.L) to the uk-eu momentum universe, with a gate such as 1-day return \u2265 +3% on volume \u2265 1.5\u00d7 20-day average, rather than adding a news-reactive rule.",
+      "failed": false
+    },
+    {
+      "ticker": "DSFIR.AS",
+      "move_pct": 3.397,
+      "close": 103.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-14 \u2014 likely a sector or technical move. Searches turned up only older items: a Q2 beat, a buyback and the SIX dual listing.",
+      "miss_reason": "Outside any active strategy's universe. DSFIR.AS is a Dutch/Swiss large-cap flavours, fragrances and nutrition name on Euronext Amsterdam, and no strategy's universe includes it. A +3.4% move with no catalyst also wouldn't trip a gap or news trigger.",
+      "suggestion": "Add Euronext Amsterdam large caps (AEX/AMX constituents, e.g. DSFIR.AS) to the uk-eu momentum universe, keeping the existing \u22651.5\u00d7 average volume and gap filters so only confirmed movers get through.",
+      "failed": false
+    },
+    {
+      "ticker": "SY1.DE",
+      "move_pct": 3.375,
+      "close": 96.18,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found; likely a rebound or sector move in staples/flavours. Symrise has an ongoing \u20ac400M buyback (to 31 Oct 2026) and a terpenes sale, which may be supporting the shares.",
+      "miss_reason": "Outside any active strategy's universe: Symrise is a DAX/MDAX-listed mid/large-cap fragrance and flavours maker in German consumer staples/specialty chemicals, and no strategy covers that sector. A +3.4% move with no news also wouldn't trigger a news-reactive signal.",
+      "suggestion": "No actionable change: a +3.4% move with no identified catalyst doesn't justify widening the universe. If wanted, add DAX/MDAX staples and chemicals names to the momentum universe with a \u22651.5\u00d7 volume gate.",
+      "failed": false
+    },
+    {
+      "ticker": "BP.L",
+      "move_pct": 3.282,
+      "close": 6.0712,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No BP-specific news found for 2026-10-14; the move looks like an oil-price-driven energy sector rally. Brent has been volatile around $90-100 on Iran tensions, and BP tends to rise with it.",
+      "miss_reason": "Outside any active strategy's universe: BP.L is a UK large-cap integrated oil major, and no strategy's universe includes it. With no stock-specific catalyst, a sector-beta move would also have been unlikely to trip momentum or news-reactive entry filters.",
+      "suggestion": "Add a UK/EU energy basket (BP.L, SHEL.L, TTE.PA) to the momentum universe, gated on Brent daily change \u2265 +2%, so oil-driven sector rallies can be traded without a stock-specific catalyst.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": -5.441,
+      "close": 834.2,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive-sentiment-gate"
+      ],
+      "catalyst": "No company-specific news found for 2026-10-14; likely a sector-wide semiconductor-equipment sell-off (AI-capex worries, possibly ahead of ASML's Q3 results). Searches turned up no same-day coverage, so this is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: ASM.AS is an Amsterdam-listed mid/large-cap semicap name that no strategy includes. The news-reactive-sentiment-gate traded it, but with no headline catalyst there was no sentiment trigger. Momentum and mean-reversion strategies couldn't see it.",
+      "suggestion": "Add ASM.AS (and peers such as BESI.AS) to the mean-reversion universe, or let news-reactive-sentiment-gate fire on sector-wide moves, e.g. when ASML.AS falls \u22654% and the peer basket's average 1-day return is \u2264-3%, even without a headline.",
+      "failed": false
+    },
+    {
+      "ticker": "LSEG.L",
+      "move_pct": -5.147,
+      "close": 83.2046,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "LSEG confirmed press speculation that it may buy credit-data firm Octus (about $3.5bn). Investors sold the stock on the deal cost, with AI-disruption worries on its data business as the backdrop.",
+      "miss_reason": "Outside any active strategy's universe: LSEG is a UK large-cap exchange and data company that no strategy lists. The drop was also a deal-news gap-down, which a momentum or mean-reversion filter would likely reject as news-driven.",
+      "suggestion": "Add FTSE 100 financial-data and exchange names (LSEG.L, etc.) to the mean-reversion universe. Gate entry on a 2-day stabilisation after M&A-driven gaps of -4% or more, instead of buying the initial drop.",
+      "failed": false
+    },
+    {
+      "ticker": "BBY.L",
+      "move_pct": -4.138,
+      "close": 8.4454,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. Searches for BBY.L (Balfour Beatty) on 2026-10-14 returned only older articles, so this is likely a technical or sector move in UK construction/infrastructure.",
+      "miss_reason": "Outside any active strategy's universe. BBY.L is a FTSE 250 mid-cap UK construction/infrastructure name, and no strategy lists it. A -4.14% move with no catalyst would also be too small for a news-reactive or gap filter.",
+      "suggestion": "No actionable change. A -4% drop with no catalyst on a mid-cap outside the universe isn't worth widening it, and the bot can't short. If wanted, add FTSE 250 industrials to mean-reversion's universe with a \u2265-4% one-day dip trigger.",
+      "failed": false
+    },
+    {
+      "ticker": "ASML.AS",
+      "move_pct": -3.745,
+      "close": 1521.6,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive-sentiment-gate"
+      ],
+      "catalyst": "No obvious news catalyst found for 2026-10-14; searches returned nothing dated today. Possibly a sector-wide chip-equipment move or a pre-earnings move, since ASML's Q3 report usually lands in mid-October (unconfirmed).",
+      "miss_reason": "No strategy's universe includes ASML.AS. It is a large-cap Euronext Amsterdam semiconductor-equipment name. The news-reactive-sentiment-gate has traded it before but didn't fire today, probably because no fresh headline or sentiment spike cleared its gate.",
+      "suggestion": "Let news-reactive-sentiment-gate fire on a price-only trigger: a one-day move of -3% or worse on a large-cap in its universe, with no headline, should be flagged for review. Optionally add ASML.AS to a mean-reversion universe.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-14T15:02:38.303356+00:00"
+}
