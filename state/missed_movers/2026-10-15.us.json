@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-15",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 MRNA +5%, BMY +5%, UNH +4%, UHS +4%, MRK +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (DELL -11%, CIEN -10%, P -9%, ORCL -9%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: DELL (-11.48%) \u2014 Barclays downgraded Dell, HPE and NetApp to Equal Weight, saying AI server revenue reflects memory pricing more than enterprise AI demand. That set off an AI-infrastructure selloff (HPE, Oracle, SMCI). Why we passed: Outside any active strategy's universe: DELL is a large-cap (~$350B), AI-hardware name that no strategy lists. The move was also an analyst-downgrade gap that hit at the open, and a long-only bot has no way to short it.",
+  "top_movers": [
+    {
+      "ticker": "MRNA",
+      "move_pct": 5.208,
+      "close": 226.4542,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-15; searches returned nothing dated that day. Likely a technical or sector-driven move in volatile biotech. The 226.45 close doesn't match the ~$50-80 range seen in 2026 coverage, so check the price data.",
+      "miss_reason": "Outside any active strategy's universe: MRNA is a mid-cap, highly volatile biotech, a category the strategies don't include. With no pre-market catalyst, a +5% move would also be easy for gap and volume filters to skip.",
+      "suggestion": "(no actionable change) First verify the 226.45 close against a second data source, since it looks inconsistent with recent prices. Only consider adding high-beta biotech to the momentum universe if data checks out and the risk caps allow it.",
+      "failed": false
+    },
+    {
+      "ticker": "BMY",
+      "move_pct": 4.701,
+      "close": 59.245,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed Oct 15 driver found. BMY's Oct 12 Phase 3 wins (RYZ101, admilparant) and a pre-earnings run-up (Q3 report Oct 29) may be carrying momentum, or this is a pharma sector move.",
+      "miss_reason": "Outside any active strategy's universe: BMY is a large-cap pharma that no strategy lists. With no clear same-day catalyst, a news-reactive bot had no trigger, and a +4.7% move with no gap or volume signature may not have cleared momentum filters.",
+      "suggestion": "Add large-cap healthcare names like BMY to the momentum universe, or let a dynamic-universe rule admit any S&P 500 name with a close-to-close move \u2265 +4% on \u22651.5\u00d7 average volume. Skip it if pharma is outside the bot's risk tolerance.",
+      "failed": false
+    },
+    {
+      "ticker": "UNH",
+      "move_pct": 4.446,
+      "close": 394.76,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No distinct Oct 15 news found. The +4.45% looks like follow-through from the Oct 13 Q3 beat (adj EPS $4.69 vs ~$4.13 est, MCR 88.4%, FY26 EPS guide raised to \u2265$20.50), possibly with a sector move.",
+      "miss_reason": "Outside any active strategy's universe: UNH is a ~$350B mega-cap managed-care name that no strategy lists. The move was also a delayed post-earnings drift two days after the catalyst, so gap and news-reactive filters had no fresh trigger.",
+      "suggestion": "Add a post-earnings-drift rule: for large-cap names with an earnings beat and guidance raise in the last 3 sessions, admit them to the momentum universe if the close is above the 20-day high on at least 1.2x average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "UHS",
+      "move_pct": 4.135,
+      "close": 186.36,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-15; searches returned nothing dated that day. Likely a hospital-sector rebound, possibly tied to CMS payment-rate or peer news, but unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: UHS is a mid-cap healthcare facilities operator that no strategy includes. A +4% move with no discrete catalyst also wouldn't trip a news-reactive or gap-up filter.",
+      "suggestion": "(no actionable change \u2014 a catalyst-free +4% sector drift in an out-of-universe mid-cap isn't worth widening the universe for; optionally add a healthcare-facilities basket to the momentum universe if sector moves recur)",
+      "failed": false
+    },
+    {
+      "ticker": "MRK",
+      "move_pct": 3.77,
+      "close": 147.27,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No Merck-specific news found; the move looks like a large-cap pharma rotation rally (LLY and ABBV also up about 3%) on a down Nasdaq day, with MarketBeat citing Keytruda and pipeline optimism.",
+      "miss_reason": "Outside any active strategy's universe. MRK is a ~$370B mega-cap pharma name, a defensive large-cap that the bot's universes don't include. A sector-rotation move with no gap or volume spike also wouldn't trip momentum or news filters.",
+      "suggestion": "Add a defensive-sector basket (MRK, LLY, ABBV, PFE) to the momentum universe, entered when \u22653 members rise \u22653% in a day. Otherwise treat this as a no-op, since it is a low-conviction sector move with no catalyst.",
+      "failed": false
+    },
+    {
+      "ticker": "DLTR",
+      "move_pct": 3.688,
+      "close": 121.18,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-15. Searches turned up no dated company-specific event, so this is likely a sector or consumer-discretionary move, with a possible analyst-note effect.",
+      "miss_reason": "Outside any active strategy's universe. DLTR is a ~$25B mid-cap discount retailer that no strategy lists. A +3.7% drift with no catalyst also wouldn't trip gap-up or news-reactive triggers.",
+      "suggestion": "Add mid-cap consumer-staples/discount retail names (DLTR, DG, FIVE) to the momentum-trader universe, or lower its dollar-volume floor to ~$15B market cap. Keep the existing \u22651.5\u00d7 volume gate for entries.",
+      "failed": false
+    },
+    {
+      "ticker": "DELL",
+      "move_pct": -11.485,
+      "close": 507.3304,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Barclays downgraded Dell, HPE and NetApp to Equal Weight, saying AI server revenue reflects memory pricing more than enterprise AI demand. That set off an AI-infrastructure selloff (HPE, Oracle, SMCI).",
+      "miss_reason": "Outside any active strategy's universe: DELL is a large-cap (~$350B), AI-hardware name that no strategy lists. The move was also an analyst-downgrade gap that hit at the open, and a long-only bot has no way to short it.",
+      "suggestion": "Add large-cap AI-hardware names (DELL, HPE, SMCI, ORCL) to the news-reactive universe, with a downgrade-gap rule: when a name gaps \u2264-8% on volume \u22652\u00d7 average, block new longs and exit existing ones. The bot can't short, so this is a risk-off signal for its AI holdings, not a trade.",
+      "failed": false
+    },
+    {
+      "ticker": "CIEN",
+      "move_pct": -10.242,
+      "close": 357.44,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No CIEN-specific news found. It looks like a sector-wide selloff in AI optical names (Lumentum, Coherent, Corning) as traders took profits after a huge run, possibly worsened by a hot CPI print and AI-capex worries.",
+      "miss_reason": "Outside any active strategy's universe: CIEN is a ~$50B mid/large-cap telecom-optical name that no strategy's universe includes. The drop was also a long-only-incompatible, non-catalyst sector unwind, so a dip-buying or news-reactive filter would have had no trigger.",
+      "suggestion": "Add a theme-basket (AI optical: CIEN, LITE, COHR, GLW) to the mean-reversion universe, gated on basket-wide drawdown \u22658% in one session with RSI(2)<10. Otherwise treat this as a no-op, since the bot can't short.",
+      "failed": false
+    },
+    {
+      "ticker": "P",
+      "move_pct": -9.478,
+      "close": 141.78,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found \u2014 searches for P on 2026-10-15 returned only stale Pandora-era (pre-2019) items, and the ticker could not be tied to any specific company or event; likely technical or sector move.",
+      "miss_reason": "Outside any active strategy's universe: P is in no strategy's universe, so no momentum or mean-reversion filter ever evaluated it. Without a confirmed catalyst, I can't say whether a gap, RSI or volume filter would also have excluded it.",
+      "suggestion": "Log -8%-or-worse movers that are outside every strategy universe, with their market cap and ADV, for a week. Then check whether a liquidity-gated universe expansion (e.g. ADV above the current floor) would have captured them.",
+      "failed": false
+    },
+    {
+      "ticker": "ORCL",
+      "move_pct": -9.31,
+      "close": 129.94,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely continuation of the AI-debt selloff: doubts over OpenAI's revenue, Oracle's talks on more chip financing, and a hot inflation print. No single article confirmed the Oct 15 -9.3% move.",
+      "miss_reason": "Outside any active strategy's universe: ORCL is a mega-cap tech name that no strategy's universe includes. The move also looks like a sentiment and macro drop on a stock already down about 30% YTD, so a long-only momentum or news-reactive bot would not have taken it.",
+      "suggestion": "Add large-cap AI-infrastructure names (ORCL, CRWV, etc.) to a mean-reversion watchlist, entering only after a \u22658% single-day drop on \u22652\u00d7 average volume and an RSI(2) floor. Do this only if shorting stays unavailable.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-15T19:32:06.760028+00:00"
+}
