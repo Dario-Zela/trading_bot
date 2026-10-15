@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-15",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 BTRW.L +4%, LAND.L +4%, RHM.DE +3%, BRBY.L +3%, BAB.L +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (FRES.L -6%, AAF.L -5%, ENR.DE -4%, EDV.L -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: FRES.L (-5.82%) \u2014 No obvious news catalyst found for 2026-10-15; searches returned nothing dated today. Likely a precious-metals (silver/gold) price pullback hitting the miner, but that is unconfirmed. Why we passed: Outside any active strategy's universe: FRES.L is a FTSE 100 Mexican silver/gold miner and no strategy's universe includes it. A long-only bot also has no way to act on a sector-driven drop.",
+  "top_movers": [
+    {
+      "ticker": "BTRW.L",
+      "move_pct": 4.239,
+      "close": 3.0347,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for Barratt Redrow (BTRW.L) on 2026-10-15. Likely a UK housebuilder sector rebound after a long slump, possibly helped by rate-cut or gilt-yield moves.",
+      "miss_reason": "Outside any active strategy's universe: BTRW.L is a UK mid-cap (FTSE 100/250 housebuilder) that no strategy includes. A +4.2% move with no news also gives a news-reactive strategy nothing to trigger on.",
+      "suggestion": "Add a UK housebuilders sector basket (BTRW.L, PSN.L, TW.L, BDEV.L) to the mean-reversion universe, with a rule that fires when the basket gains \u22653% on gilt-yield declines (a rate-sensitivity proxy).",
+      "failed": false
+    },
+    {
+      "ticker": "LAND.L",
+      "move_pct": 3.664,
+      "close": 6.365,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. Searches turned up no LAND.L news dated 2026-10-15, so this is likely a sector or rates-driven move in UK REITs rather than a stock-specific event.",
+      "miss_reason": "Outside any active strategy's universe. LAND.L is a UK large/mid-cap commercial property REIT, a rate-sensitive sector the bot's strategies don't cover. With no catalyst to trigger a news-reactive entry, a +3.7% sector-beta move wouldn't have passed a momentum screen.",
+      "suggestion": "Add a UK REIT/real-estate basket (LAND.L, BLND.L, SGRO.L) to the momentum universe, gated by a gilt-yield-decline proxy (e.g. 10y gilt down \u226510bp), so rate-driven sector rallies can be traded without news.",
+      "failed": false
+    },
+    {
+      "ticker": "RHM.DE",
+      "move_pct": 3.389,
+      "close": 988.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No same-day news found for RHM.DE; the +3.39% move looks like a sector-wide European defence rally on geopolitical and spending sentiment, not a company-specific event.",
+      "miss_reason": "Outside any active strategy's universe: RHM.DE is a large-cap German defence name, and no strategy's universe includes EU defence or Xetra listings. With no discrete catalyst, a news-reactive trigger would not have fired either.",
+      "suggestion": "Add a 'EU defence' sector basket (RHM.DE, HAG.DE, BA.L, SAAB-B.ST) to the momentum-trader universe, gated on sector breadth of at least 3 of 4 names up more than 2% on the day.",
+      "failed": false
+    },
+    {
+      "ticker": "BRBY.L",
+      "move_pct": 3.316,
+      "close": 10.75,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found \u2014 searches returned only older items, none dated 2026-10-15. Likely a luxury-sector or technical move.",
+      "miss_reason": "Outside any active strategy's universe: BRBY.L is a UK mid/large-cap luxury name, and no strategy lists it. A +3.3% move with no identifiable catalyst would also be too small for a gap or news-reactive trigger.",
+      "suggestion": "Add a UK/EU luxury-retail basket (BRBY.L, MC.PA, RMS.PA, MONC.MI) to the momentum-trader universe, with an entry gate of sector-relative +3% on at least 1.2x average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "BAB.L",
+      "move_pct": 3.087,
+      "close": 9.216,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 15 Oct 2026; searches returned nothing dated that day. Likely a UK defence-sector or technical move, or a continuation of Babcock's multi-year defence-budget rally.",
+      "miss_reason": "Outside any active strategy's universe: BAB.L is a UK FTSE 100 defence/engineering name that none of the strategies include. With no identifiable catalyst, a +3% drift also probably wouldn't trip gap or news-reactive triggers.",
+      "suggestion": "Add FTSE 100 defence constituents (BAB.L, BA.L, RR.L) to the momentum-trader's uk-eu universe, with a sector-relative-strength entry such as a \u2265+2.5% day on above-average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "AZN.L",
+      "move_pct": 2.852,
+      "close": 122.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No dated news for AZN.L on 2026-10-15 turned up in search. The +2.85% move looks like a sector or large-cap rotation move, possibly a pharma re-rating or a pipeline or trial update, which I could not confirm.",
+      "miss_reason": "Outside any active strategy's universe: AZN.L is the FTSE 100's largest mega-cap (about \u00a3200bn+), a UK defensive pharma name. A universe built around small and mid-cap momentum or US names would exclude it, and a +2.85% move is probably not a big enough gap to trigger a news-reactive signal.",
+      "suggestion": "Add a FTSE 100 top-10 mega-cap list (AZN.L, SHEL.L, HSBA.L) to the momentum universe, gated by a relative-strength rule such as 1-day return \u2265 +2.5% with volume \u2265 1.2\u00d7 the 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "FRES.L",
+      "move_pct": -5.824,
+      "close": 25.71,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-15; searches returned nothing dated today. Likely a precious-metals (silver/gold) price pullback hitting the miner, but that is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: FRES.L is a FTSE 100 Mexican silver/gold miner and no strategy's universe includes it. A long-only bot also has no way to act on a sector-driven drop.",
+      "suggestion": "Add a precious-metals-miners basket (FRES.L, AAL.L, ANTO.L) to the commodity strategy's universe, with a metal-price-linked filter (e.g. silver/gold -3% day). Without short capability, use it only as an avoid or exit signal.",
+      "failed": false
+    },
+    {
+      "ticker": "AAF.L",
+      "move_pct": -4.886,
+      "close": 2.764,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst for 15 Oct found. AAF.L (Airtel Africa) fell -4.89% with no results or corporate news I could find; likely a technical, sector or EM/FX-driven move. (Related: May 2026 Bharti Airtel discounted stake purchase.)",
+      "miss_reason": "Outside any active strategy's universe: AAF.L is a mid-cap FTSE 250 telecom with African emerging-market exposure, so UK/EU large-cap universes excluded it. With no news catalyst, a news-reactive bot had no trigger either.",
+      "suggestion": "(no actionable change \u2014 a no-news -4.9% drop in a name outside the universe, and the bot can't short; widening the universe for this alone isn't justified.)",
+      "failed": false
+    },
+    {
+      "ticker": "ENR.DE",
+      "move_pct": -3.951,
+      "close": 137.58,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for Siemens Energy on 2026-10-15. Searches returned nothing dated today, so this is likely a sector or technical move, such as profit-taking in AI/power-infrastructure names after a strong run.",
+      "miss_reason": "Outside any active strategy's universe: ENR.DE is a large-cap German industrial/energy-equipment name that no strategy lists. With no gap-down news event, the news-reactive logic had nothing to trigger on. A -3.95% drift is also likely below momentum and mean-reversion entry thresholds.",
+      "suggestion": "No actionable change. Without a verified catalyst, adding DAX industrials to the mean-reversion universe on a single -4% day isn't justified, and the bot has no short capability to trade the decline anyway.",
+      "failed": false
+    },
+    {
+      "ticker": "EDV.L",
+      "move_pct": -3.835,
+      "close": 39.62,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 15 Oct 2026. Searches returned nothing dated today for Endeavour Mining, so this is likely a gold-price or gold-miner sector move.",
+      "miss_reason": "Outside any active strategy's universe: EDV.L is a mid/large-cap London-listed West Africa gold miner, and no strategy's universe includes LSE miners. A -3.8% move with no company-specific news also wouldn't trigger a news-reactive filter.",
+      "suggestion": "Add LSE precious-metals miners (EDV.L, FRES.L, HOC.L) to the commodity strategy's universe, gated on a gold-price proxy move (e.g. GLD \u2264 -1.5%), so sector-driven drops are caught without needing company news.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-15T15:02:35.106597+00:00"
+}
