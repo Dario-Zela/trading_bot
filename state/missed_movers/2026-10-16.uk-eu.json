@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-16",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 G24.DE +6%, EXPN.L +5%, SGE.L +5%, RHM.DE +5%, SN.L +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (ASM.AS -9%, CCC.L -7%, BESI.AS -6%, ASML.AS -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: ASM.AS (-8.52%) \u2014 No confirmed company-specific news found for 2026-10-16; searches returned only older coverage. The -8.5% move is likely a semicap sector sell-off tied to mid-October ASML/peer results, which I could not verify. Why we passed: Outside any active strategy's universe: ASM.AS is a Dutch mid/large-cap semiconductor-equipment name that no strategy lists. Even if it were in scope, an -8.5% sector-driven gap-down would likely fail momentum and gap filters, and the bot is probably long-only.",
+  "top_movers": [
+    {
+      "ticker": "G24.DE",
+      "move_pct": 5.567,
+      "close": 78.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for Scout24 (G24.DE), the German classifieds platform. The searches turned up nothing dated 2026-10-16, so this is likely a rebound or a sector or software-wide move.",
+      "miss_reason": "Outside any active strategy's universe: G24.DE is a mid-cap German (MDAX-class) internet/classifieds name that no strategy lists. With no identifiable catalyst, a news-reactive trigger would also have had nothing to fire on.",
+      "suggestion": "Add a small 'EU mid-cap momentum' watchlist (e.g. MDAX/SDAX names above a ~\u20ac5B cap and a \u20ac20M average daily volume floor). Let it enter on a gap or day move of \u2265 +4% with volume \u2265 1.5\u00d7 its 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "EXPN.L",
+      "move_pct": 5.481,
+      "close": 28.48,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No stock-specific news found. Experian rebounded with other UK data/software names (Sage +5.6%) as investors rotated out of AI-exposed tech; the stock is down ~20% YTD on AI-disruption fears.",
+      "miss_reason": "Outside any active strategy's universe: Experian is a FTSE 100 large-cap data/credit-bureau stock. With no news catalyst and a sector-rotation bounce off depressed levels, a momentum or news-reactive filter would not have flagged it pre-move.",
+      "suggestion": "Add a sector-relative rebound screen that adds FTSE 100 names to the mean-reversion universe when they are \u226515% below their 200-day MA and a peer basket (Sage, Auto Trader) gaps up \u22653% by the open.",
+      "failed": false
+    },
+    {
+      "ticker": "SGE.L",
+      "move_pct": 4.835,
+      "close": 11.2331,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for Sage Group on 2026-10-16. Likely a technical or sector rebound in UK/EU software stocks, since no results or trading update was found for that date.",
+      "miss_reason": "Outside any active strategy's universe: SGE.L is a FTSE 100 large-cap software name that no strategy's universe list includes. With no company-specific catalyst, a news-reactive or gap-up filter would not have fired on it anyway.",
+      "suggestion": "Add FTSE 100 / STOXX 600 software and tech constituents (SGE.L, etc.) to the mean-reversion strategy's universe. Gate entries on a \u22654% close-to-close move above 1.5\u00d7 average volume, so a sector-rebound day like this one is caught.",
+      "failed": false
+    },
+    {
+      "ticker": "RHM.DE",
+      "move_pct": 4.665,
+      "close": 1034.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-16. Likely a defence-sector rebound or technical bounce: the 1034 close is far below the ~1,600-1,900 range cited earlier in 2026, after the F126 frigate cancellation and sell-offs.",
+      "miss_reason": "Outside any active strategy's universe: RHM.DE is a large-cap German (Xetra) defence name that no uk-eu strategy lists. With no news trigger, a +4.7% sector rebound would also fail gap-up and volume-spike filters.",
+      "suggestion": "Add large-cap EU defence names (RHM.DE, BA.L, HO.FP, SAAB-B.ST) to the momentum-trader universe, gated by a relative-strength rule such as a +3% day on above 1.2x 20-day average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "SN.L",
+      "move_pct": 4.306,
+      "close": 10.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for Smith & Nephew (SN.L) on 2026-10-16. Searches turned up no same-day RNS or press item, so likely a sector or technical move ahead of the Q3 update.",
+      "miss_reason": "Outside any active strategy's universe: SN.L is a UK large-cap medtech (FTSE 100) that no strategy includes. With no news catalyst and a moderate +4.3% move, a gap or news filter would likely not have fired even if it were included.",
+      "suggestion": "Add FTSE 100 healthcare/medtech names such as SN.L to the uk-eu momentum universe, with the existing \u22651.5\u00d7 average-volume gap filter unchanged, so sector-rotation moves of about 4% are screened instead of ignored.",
+      "failed": false
+    },
+    {
+      "ticker": "REL.L",
+      "move_pct": 4.284,
+      "close": 28.97,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-16. RELX had no trading update in my searches, so the +4.3% looks like a rebound in AI-disruption-hit data/info-services names or a sector move.",
+      "miss_reason": "Outside any active strategy's universe: REL.L is a FTSE 100 large-cap information-services stock, and no strategy includes it. With no news and a rebound-style move, a news-reactive or gap-up filter would not have fired anyway.",
+      "suggestion": "Add FTSE 100 constituents like REL.L to the momentum-trader universe, gated by the existing volume floor (\u22651.5\u00d7 average volume) and an RSI cap. Without that gating, this kind of no-news sector bounce would add noise.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": -8.519,
+      "close": 756.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed company-specific news found for 2026-10-16; searches returned only older coverage. The -8.5% move is likely a semicap sector sell-off tied to mid-October ASML/peer results, which I could not verify.",
+      "miss_reason": "Outside any active strategy's universe: ASM.AS is a Dutch mid/large-cap semiconductor-equipment name that no strategy lists. Even if it were in scope, an -8.5% sector-driven gap-down would likely fail momentum and gap filters, and the bot is probably long-only.",
+      "suggestion": "Add ASM.AS and the other Euronext semicap names (ASML.AS, BESI.AS) to the uk-eu universe as a sector basket. Then add a mean-reversion rule that buys a \u2265-6% gap-down only if the peer basket also fell \u22654% that day, which points to a sector move rather than stock-specific news.",
+      "failed": false
+    },
+    {
+      "ticker": "CCC.L",
+      "move_pct": -6.915,
+      "close": 51.15,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 16 Oct 2026 (searches surfaced only older Computacenter selloffs) \u2014 likely a technical, sector or tech-sell-off move, possibly ahead of the 30 Oct Q3 trading update.",
+      "miss_reason": "Outside any active strategy's universe: CCC.L is Computacenter, a FTSE 250 mid-cap IT reseller. With no identifiable catalyst, a -6.9% drop gives a news-reactive bot nothing to trigger on, and a long-only bot cannot short it.",
+      "suggestion": "Add a FTSE 250 low-news watchlist for a mean-reversion strategy, entering longs when the close is down 6% or more with no catalyst and RSI(14) is below 30. Skip names with a results or trading update due within 10 trading days.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": -6.049,
+      "close": 163.85,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed company-specific news found for 2026-10-16; the -6% drop looks like a semiconductor-equipment sector sell-off, but I couldn't verify a trigger.",
+      "miss_reason": "Outside any active strategy's universe: BESI.AS is a Euronext Amsterdam mid/large-cap semiconductor-equipment name that no strategy lists. With no identifiable catalyst, a news-reactive filter had nothing to trigger on either.",
+      "suggestion": "Add a high-beta semicap sub-universe (BESI.AS, ASM.AS, ASML.AS) to the uk-eu mean-reversion strategy, entered only when the group falls at least 4% together on the day and a stock's RSI(14) is below 30.",
+      "failed": false
+    },
+    {
+      "ticker": "ASML.AS",
+      "move_pct": -5.987,
+      "close": 1454.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed Oct 16 news found. Likely a delayed sell-off after Oct 14 Q3 results (record sales, but no bookings figure and a stretched valuation), possibly with a wider semiconductor-equipment pullback.",
+      "miss_reason": "Outside any active strategy's universe: ASML.AS is a roughly \u20ac500B Euronext Amsterdam mega-cap semiconductor name that no strategy includes. The drop also came two days after earnings, so event-driven filters had already expired.",
+      "suggestion": "Add ASML.AS and other large-cap EU semis (ASM International, BE Semiconductor) to the uk-eu mean-reversion universe, with a post-earnings drift rule that fires on a \u22655% drop within 3 days of results.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-16T15:03:03.346623+00:00"
+}
