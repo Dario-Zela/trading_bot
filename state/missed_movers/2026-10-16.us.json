@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-16",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 EXPE +7%, COIN +7%, FICO +7%, EFX +7%, INTU +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (DELL -8%, HPE -6%, P -6%, COHR -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: DELL (-8.16%) \u2014 Continued AI-hardware selloff on AI-financing worries, extending the Barclays downgrade (to Hold, enterprise-AI timing concerns) that hit Dell earlier in the week. Super Micro and HPE also fell sharply. Why we passed: Outside any active strategy's universe: DELL is a large-cap hardware name that no strategy includes. It was also a sector and downgrade-driven slide that began days earlier, so a momentum or gap filter would have seen a stretched, multi-day move.",
+  "top_movers": [
+    {
+      "ticker": "EXPE",
+      "move_pct": 7.178,
+      "close": 293.325,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear company-specific catalyst found. Likely a sector-wide online-travel rally (possibly oil or macro driven); EXPE follows a ~5.7% gain the day before, to a $293 close.",
+      "miss_reason": "Outside any active strategy's universe: EXPE is a mid-cap consumer-discretionary/online-travel name that no strategy's universe includes. With no news catalyst, the news-reactive logic had nothing to trigger on.",
+      "suggestion": "Add mid-cap consumer-discretionary names like EXPE to the momentum universe, gated on two consecutive up days with \u22651.5\u00d7 average volume. Alternatively, add a travel-sector basket signal that fires when BKNG/ABNB/EXPE all rise \u22653% together.",
+      "failed": false
+    },
+    {
+      "ticker": "COIN",
+      "move_pct": 6.872,
+      "close": 184.13,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed COIN-specific news for 2026-10-16 in search. Likely a high-beta crypto-equity rally tracking a Bitcoin rebound or US crypto-regulation (CLARITY Act) headlines, but I couldn't verify that.",
+      "miss_reason": "Outside any active strategy's universe: COIN is a mid/large-cap crypto-exchange stock, a high-volatility, BTC-correlated sector the bot doesn't cover. A +6.9% sector-beta move with no earnings or gap signal also gives momentum and news-reactive filters little to trigger on.",
+      "suggestion": "Add a crypto-beta basket (COIN, MSTR, HOOD, CRCL) as a separate universe with a BTC-momentum gate, e.g. enter when BTC 24h return \u2265 +4% and the stock is above its 20-day MA, with a tight position cap for its volatility.",
+      "failed": false
+    },
+    {
+      "ticker": "FICO",
+      "move_pct": 6.846,
+      "close": 766.14,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst for 2026-10-16: searches found no same-day news. At 766, FICO is far below its ~1,650 level in January, so this looks like a rebound or sector move (software/credit-score), not a confirmed news event.",
+      "miss_reason": "Outside any active strategy's universe: FICO is a mid/large-cap financial-analytics software name that no strategy lists. With no pre-market news or gap catalyst, a news-reactive bot would have had no trigger either.",
+      "suggestion": "Add a dynamic universe rule that admits any US name with market cap above $10B, 20-day average volume above 500k and a close-to-close move of +5% or more. Admit it to momentum-trader's candidate list for the next session, with the existing RSI and gap filters applied.",
+      "failed": false
+    },
+    {
+      "ticker": "EFX",
+      "move_pct": 6.764,
+      "close": 160.36,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single hard catalyst found. EFX rallied ahead of Q3 earnings on Oct 20, helped by mortgage-product news (Mortgage Score Select, Mortgage Ultimate) and the VantageScore-vs-FICO shift. Sources disagree on the date (Oct 15 vs 16).",
+      "miss_reason": "Outside any active strategy's universe: EFX is a mid/large-cap credit-bureau (commercial services) name that no strategy lists. With no gap or news trigger, a news-reactive filter would not have fired. The move was a gradual pre-earnings drift.",
+      "suggestion": "Add an S&P 500 sector-leader scan to the momentum universe, e.g. top-decile 5-day relative strength with volume \u22651.5\u00d7 the 20-day average, and let it enter pre-earnings runs of 2+ days before the earnings gate blocks entries.",
+      "failed": false
+    },
+    {
+      "ticker": "INTU",
+      "move_pct": 6.717,
+      "close": 330.08,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely a software-sector rebound (Adobe also rose) plus follow-through from the Oct 15 Sequence acquisition news. Sources disagree on the size of the move, so this isn't a confirmed single driver.",
+      "miss_reason": "Outside any active strategy's universe. INTU is a large-cap software/fintech name that no strategy lists. The move was a sector or news-driven rebound with no earnings gap, so a gap or volume filter would not have caught it anyway.",
+      "suggestion": "Add large-cap software/fintech names such as INTU and ADBE to the momentum strategy's universe. Also add a sector-breadth trigger that admits them when \u22653 peers gain \u22653% on the same day.",
+      "failed": false
+    },
+    {
+      "ticker": "RDDT",
+      "move_pct": 6.529,
+      "close": 158.67,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-16. Searches turned up nothing dated today, so this is likely a technical or sector-driven rebound in social/ad-tech names.",
+      "miss_reason": "Outside any active strategy's universe: RDDT is a mid/large-cap, high-beta internet/social-media stock that no strategy includes. With no news catalyst, a +6.5% non-gap drift would also fail a news-reactive or gap-up filter.",
+      "suggestion": "Add a dynamic 'movers' watchlist to the momentum-trader universe: admit US names with market cap above $10B, 20-day average volume above 3M, and a daily move of at least +5%, subject to the existing RSI and position-count caps.",
+      "failed": false
+    },
+    {
+      "ticker": "DELL",
+      "move_pct": -8.163,
+      "close": 465.915,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued AI-hardware selloff on AI-financing worries, extending the Barclays downgrade (to Hold, enterprise-AI timing concerns) that hit Dell earlier in the week. Super Micro and HPE also fell sharply.",
+      "miss_reason": "Outside any active strategy's universe: DELL is a large-cap hardware name that no strategy includes. It was also a sector and downgrade-driven slide that began days earlier, so a momentum or gap filter would have seen a stretched, multi-day move.",
+      "suggestion": "Add large-cap AI-hardware names (DELL, HPE, SMCI) to the mean-reversion universe, gated on a sector-wide drawdown of at least 2 days and RSI(2) below 10. This would catch the next oversold bounce, and none of those names would need a short.",
+      "failed": false
+    },
+    {
+      "ticker": "HPE",
+      "move_pct": -6.415,
+      "close": 59.085,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed driver for 2026-10-16. Searches found no dated HPE news for the day. The move is probably part of an AI-infrastructure/tech selloff or an analyst downgrade, but I couldn't verify either.",
+      "miss_reason": "Outside any active strategy's universe: HPE is a mid/large-cap enterprise hardware name that no strategy lists. A -6.4% move with no clear company catalyst also gives a news-reactive bot nothing to trigger on, and a long-only bot would not short it.",
+      "suggestion": "Add HPE and similar AI-infrastructure hardware names (DELL, SMCI, ANET) to the mean-reversion universe, with a sector-wide-drop flag so one-day selloffs of 5% or more with no stock-specific news can be tested as bounce candidates.",
+      "failed": false
+    },
+    {
+      "ticker": "P",
+      "move_pct": -6.298,
+      "close": 132.85,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found \u2014 searches for ticker P on 2026-10-16 returned nothing relevant, and the company behind the ticker is ambiguous, so likely a technical or sector move.",
+      "miss_reason": "Outside any active strategy's universe: no strategy lists P, so it was never screened. It is probably too small, too thinly traded or too recently listed to pass the cap and liquidity filters. With no clear catalyst, a news-reactive signal had nothing to fire on.",
+      "suggestion": "Add a universe-audit step that logs daily top losers outside the universe with their market cap and ADV. If this recurs, relax the universe min-market-cap or min-ADV floor. Otherwise treat it as a no-op, since the bot can't short.",
+      "failed": false
+    },
+    {
+      "ticker": "COHR",
+      "move_pct": -5.577,
+      "close": 249.39,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found for 2026-10-16; likely part of a recurring AI-optics sector pullback (COHR/LITE/AAOI/CIEN) driven by profit-taking and valuation worries.",
+      "miss_reason": "Outside any active strategy's universe: COHR is a large-cap optical/laser AI-hardware name that no strategy lists. A sector-wide drift with no discrete catalyst also wouldn't trip a news-reactive trigger.",
+      "suggestion": "Add a 'AI-photonics' basket (COHR, LITE, CIEN, AAOI) to the mean-reversion universe, entered only when \u22653 members fall >4% on the same day with no earnings, using a 1.5\u00d7 average-volume floor.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-16T19:32:05.559681+00:00"
+}
