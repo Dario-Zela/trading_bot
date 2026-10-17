@@ -502,3 +502,37 @@
 - **macro-aligned-hmm@uk-eu** · `keep` · ✅ applied — IC -0.108 with 28.6% hit over 7 trades is weak, but this is shadow only and the US sleeve is already being demoted.
 - **insider-cluster-momentum@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.128, n=360) → Alpaca slot 1
   - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 1, "enforcement": true, "slot_kind": "alpaca"}`
+
+## Weekly evolution — 2026-10-17
+
+- **ml-challenger@uk-eu** · `demote` · ⏭️ skipped — Strategy is evolution_frozen (experiment control) — 'demote' refused. (Dormant on T212: 0 trades on 67k graded predictions, IC -0.017, meets demotion criteria.)
+- **momentum-trader-vix-gated-crowd-cap@uk-eu** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 0, "hit_rate": 0.0, "total_pnl_gbp": 0.0, "avg_pnl_pct": 0.0, "max_drawdown_pct": 0.0, "n_predictions_graded": 450, "ic": 0.13, "decile_spread": -2.038}}`
+- **ml-challenger** · `deactivate` · ⏭️ skipped — Strategy is evolution_frozen (experiment control) — 'deactivate' refused. (Signal is inverted at US (IC -0.111, hit rate 0% on 36 trades, -£346) and flat at uk-eu on very large samples. Research warns that complex predictors decay out of sample. Frees a cap slot for a new variant.)
+- **momentum-trader-vix-gated-crowd-cap** · `spawn-variant` · ✅ applied — Anchored to Anic et al. (arXiv 2510.26228): LLM news scoring as a filter on cross-sectional momentum. It breaks the signal-source axis (momentum plus news filter) and uses a slower 20d sort key than the parent, so it is not a pure tune.
+  - details: `{"variant_id": "momentum-trader-news-gated", "addendum_applied": true}`
+- **news-reactive-disclosure@us** · `demote` · ⏭️ skipped — Does not meet demotion criteria
+  - details: `{"metrics": null}`
+- **momentum-trader-vix-gated-crowd-cap@us** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 0, "hit_rate": 0.0, "total_pnl_gbp": 0.0, "avg_pnl_pct": 0.0, "max_drawdown_pct": 0.0, "n_predictions_graded": 236, "ic": 0.138, "decile_spread": 6.677}}`
+- **news-reactive-sentiment-gate@us** · `demote` · ✅ applied — IC -0.014 (noise) on 447 predictions with only 2 trades. Meets demotion criteria.
+  - details: `{"from_tier": "alpaca-paper", "slot_cleared": true, "previous_slot": 2, "slot_kind": "alpaca"}`
+- **mean-reverter@us** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 27, "hit_rate": 0.333, "total_pnl_gbp": 451.15, "avg_pnl_pct": 1.046, "max_drawdown_pct": -0.84, "n_predictions_graded": 342, "ic": 0.074, "decile_spread": -0.446}}`
+- **insider-cluster-momentum@us** · `demote` · ✅ applied — Dormant: 0 trades on 363 predictions, and IC has fallen to 0.038 with a negative decile spread. Meets demotion criteria.
+  - details: `{"from_tier": "alpaca-paper", "slot_cleared": true, "previous_slot": 1, "slot_kind": "alpaca"}`
+- **momentum-trader-vix-gated@us** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 0, "hit_rate": 0.0, "total_pnl_gbp": 0.0, "avg_pnl_pct": 0.0, "max_drawdown_pct": 0.0, "n_predictions_graded": 418, "ic": 0.113, "decile_spread": 6.844}}`
+- **insider-cluster-momentum@us** · `unmark-tier2-candidate` · ✅ applied — IC dropped from 0.128 to 0.038 with 0 trades. The thesis missed and the strategy is out-competed.
+- **momentum-trader-vix-gated@uk-eu** · `unmark-tier2-candidate` · ✅ applied — IC 0.075 and its only trade lost £6. It is out-competed by crowd-cap, which is the same family with IC 0.13. Narrowing the field.
+- **momentum-trader-vix-gated-crowd-cap@us** · `mark-tier2-candidate` · ✅ applied — Highest IC on the slate. The fee-net trade evidence is still missing.
+  - details: `{"tier2_marked_at": "2026-10-17", "thesis_present": true}`
+- **momentum-trader-vix-gated-crowd-cap@uk-eu** · `mark-tier2-candidate` · ✅ applied — Refreshing the stale thesis, which cited metrics from another strategy. Ranked behind the US sleeve.
+  - details: `{"tier2_marked_at": "2026-10-17", "thesis_present": true}`
+- **mean-reverter@us** · `keep` · ✅ applied — Now on paper after promotion. The only strategy with meaningful traded P&L.
+- **news-reactive-agent-top-n@us** · `keep` · ✅ applied — IC -0.129 on a small sample. Revisit next week and deactivate if it persists.
+- **news-reactive-sentiment-gate@uk-eu** · `keep` · ✅ applied — IC 0.117 (n=477) with 3 trades. Worth watching on the shadow bench.
+- **momentum-trader-vix-gated-crowd-cap@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.138, n=236) → Alpaca slot 1
+  - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 1, "enforcement": true, "slot_kind": "alpaca"}`
+- **momentum-trader-vix-gated@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.113, n=418) → Alpaca slot 2
+  - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 2, "enforcement": true, "slot_kind": "alpaca"}`
