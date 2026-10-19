@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-19",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 RHM.DE +6%, UMG.AS +4%, EL.PA +4%, BAB.L +4%, BMW.DE +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (BESI.AS -5%, SMT.L -3%, URW.PA -2%, AZN.L -2%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: RHM.DE (+6.26%) \u2014 No company-specific news found for 10-19. Likely a European defence-sector rally on Ukraine/US-support doubts and Morgan Stanley's call for year-end contract awards, extending a week of gains. Why we passed: Outside any active strategy's universe: RHM.DE is a large-cap German (Xetra) defence name that no strategy lists. The move was also a sector-driven continuation after a ~17% weekly run, which RSI or extension filters would likely have rejected.",
+  "top_movers": [
+    {
+      "ticker": "RHM.DE",
+      "move_pct": 6.257,
+      "close": 1090.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found for 10-19. Likely a European defence-sector rally on Ukraine/US-support doubts and Morgan Stanley's call for year-end contract awards, extending a week of gains.",
+      "miss_reason": "Outside any active strategy's universe: RHM.DE is a large-cap German (Xetra) defence name that no strategy lists. The move was also a sector-driven continuation after a ~17% weekly run, which RSI or extension filters would likely have rejected.",
+      "suggestion": "Add European defence names (RHM.DE, BA.L, HO.PA, SAAB-B.ST) to the momentum-trader universe as a sector basket, and let a sector-breadth rule (\u22653 peers up >3% on the day) bypass the RSI cap for the leader.",
+      "failed": false
+    },
+    {
+      "ticker": "UMG.AS",
+      "move_pct": 4.296,
+      "close": 16.265,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found. The rebound likely reflects a bounce ahead of Q3 results on Oct 29, after a \u20ac250M cost-cutting program and role cuts announced around Oct 14. Pershing Square's April bid is stale.",
+      "miss_reason": "Outside any active strategy's universe: UMG is a large-cap Dutch media/music stock listed on Euronext Amsterdam, and no strategy covers it. Even if it had been covered, a +4.3% move with no clear news catalyst would likely fail news-reactive and gap filters.",
+      "suggestion": "Add large-cap AEX/Euronext constituents to the mean-reversion or momentum universe, with a relative-strength filter such as a \u2265+3% day on \u22651.5\u00d7 average volume. This would catch pre-earnings rebounds like this one.",
+      "failed": false
+    },
+    {
+      "ticker": "EL.PA",
+      "move_pct": 3.833,
+      "close": 154.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found. The move looks like a pre-Q3-revenue run-up (due ~Oct 20) with possible sector or smart-glasses sentiment support, not a confirmed catalyst.",
+      "miss_reason": "Outside any active strategy's universe: EL.PA is a large-cap French (CAC 40) consumer/medtech name that no strategy lists. A +3.8% move with no gap or news trigger also wouldn't pass a news-reactive or momentum filter.",
+      "suggestion": "Add CAC 40/Euro Stoxx 50 large caps to the momentum universe, and add a pre-earnings drift rule that allows entry when a name is up \u22653% on \u22651.5\u00d7 average volume within 1\u20132 days of a scheduled results date.",
+      "failed": false
+    },
+    {
+      "ticker": "BAB.L",
+      "move_pct": 3.598,
+      "close": 9.618,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. Searches turned up no dated 19 Oct 2026 item for BAB.L (Babcock International), so this is likely a technical or UK defence-sector move.",
+      "miss_reason": "Outside any active strategy's universe: BAB.L is a UK mid-cap defence/engineering name, and no strategy's ticker list includes it. With no identifiable catalyst, a news-reactive strategy would not have fired, and a +3.6% move is modest for a momentum gap filter.",
+      "suggestion": "Add a daily 'top-movers outside universe' scan that promotes UK FTSE 250 names with a close-to-close gain of at least 3% and volume of at least 1.5x the 20-day average to a watchlist for the uk-eu momentum strategy.",
+      "failed": false
+    },
+    {
+      "ticker": "BMW.DE",
+      "move_pct": 3.52,
+      "close": 57.06,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed company-specific news for 2026-10-19. The move looks like a sector-wide German auto rally; BMW's Q3 update is due soon, and the searches found nothing dated today.",
+      "miss_reason": "Outside any active strategy's universe: BMW.DE is a large-cap German blue chip on Xetra, and no strategy includes it. A broad, low-volatility sector move also gives momentum or gap filters little to trigger on.",
+      "suggestion": "Add a DAX/Euro Stoxx 50 large-cap tier to the momentum universe, gated by a sector-breadth rule (e.g. \u22653 auto names up \u22652% by 10:00 CET), so sector-wide rallies in names like BMW.DE are caught.",
+      "failed": false
+    },
+    {
+      "ticker": "RNO.PA",
+      "move_pct": 3.333,
+      "close": 27.59,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found: searches returned nothing dated 2026-10-19 for Renault. The +3.33% is likely a sector or technical move, such as European autos or a rebound.",
+      "miss_reason": "Outside any active strategy's universe. Renault is a mid-cap French auto name on Euronext Paris, and no strategy lists it. A +3.3% move with no catalyst would also be too small for a gap or news-reactive trigger.",
+      "suggestion": "Add liquid CAC40/STOXX600 mid-caps like RNO.PA to the momentum universe, gated by the existing volume and gap filters. Also log sector-wide moves (e.g. European autos) so unexplained gainers can be tagged as sector beta.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": -4.804,
+      "close": 155.55,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-19 \u2014 likely a sector-wide semiconductor-equipment/AI-capex de-rating or pre-earnings (Q3 results due late October) de-risking, not a company-specific event.",
+      "miss_reason": "Outside any active strategy's universe: BESI is a Dutch mid/large-cap semi-equipment name on Euronext Amsterdam and isn't in any strategy's universe. It also fell on no discrete catalyst, and a bot that only trades longs wouldn't profit from a drop.",
+      "suggestion": "Add Euronext Amsterdam semi-equipment names (BESI.AS, ASML.AS, ASM.AS) to the uk-eu momentum universe, with a sector-relative weakness filter (for example a 1-day drop of 4% or more with sector breadth negative) as a no-entry or exit signal.",
+      "failed": false
+    },
+    {
+      "ticker": "SMT.L",
+      "move_pct": -3.135,
+      "close": 15.45,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No dated news found for 2026-10-19. The drop is likely a growth/tech sell-off hitting SMT's top holdings (SpaceX, Nvidia, ASML), since SMT is a high-beta tech-heavy trust.",
+      "miss_reason": "Outside any active strategy's universe: SMT.L is a large-cap UK investment trust (a fund, not an operating company) with no earnings or news catalyst. A -3.1% move that tracks its holdings gives no single-name signal for momentum or news-reactive filters.",
+      "suggestion": "No actionable change for the trust itself. To catch the underlying move, add a tech-beta proxy rule: when SMT.L falls \u22653% on no news, flag a sector sell-off and tighten the momentum strategy's long entries on Nvidia, ASML and similar names.",
+      "failed": false
+    },
+    {
+      "ticker": "URW.PA",
+      "move_pct": -2.338,
+      "close": 87.72,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for URW.PA on 2026-10-19; searches returned nothing dated today. Likely a technical or sector move in European retail/real-estate REITs.",
+      "miss_reason": "Outside any active strategy's universe: URW is a Paris-listed large-cap retail/commercial REIT that no strategy includes. A -2.34% move is also too small to trip gap or momentum filters, and the bot has no short capability.",
+      "suggestion": "(no actionable change \u2014 a -2.3% drift with no catalyst is within normal noise and would need short capability. Consider adding a European REIT basket to a mean-reversion universe only if backtests support it.)",
+      "failed": false
+    },
+    {
+      "ticker": "AZN.L",
+      "move_pct": -1.985,
+      "close": 124.46,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-19; the -1.99% looks like a technical or sector move in UK large-cap pharma, possibly a continued drift after the July Wainua trial miss.",
+      "miss_reason": "Outside any active strategy's universe: AZN.L is a FTSE 100 mega-cap pharma name that no strategy lists. A -2% drift with no catalyst also wouldn't pass a typical momentum, gap or volume-spike filter.",
+      "suggestion": "No actionable change. A -2% non-catalyst move in a defensive mega-cap is within normal noise, and capturing it would need short capability. If wanted, add AZN.L to the mean-reversion universe with an RSI<30 entry gate.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-19T15:02:42.709580+00:00"
+}
