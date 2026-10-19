@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fire at Canadian military base kills four and injures dozens — 2026-10-19 — Trading Bot</title>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../../index.html">Dashboard</a>
+<a class="nav-tab active" href="../../news/latest.html">News</a>
+<a class="nav-tab" href="../../macro/latest.html">Macro</a>
+<a class="nav-tab" href="../../evolution.html">Evolution</a>
+<a class="nav-tab" href="../../ml/index.html">ML lab</a>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper article-page"><div class="edition-nav" data-edition="2026-10-19" data-kind="news"><a class="edition-nav-link" data-role="prev" href="../2026-10-18/" title="2026-10-18">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><a class="edition-nav-link disabled" data-role="next" href="#" aria-disabled="true">next →</a><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">WORLD · CANADA · By C. Tanaka · 2026-10-19 · 2 min read</div><h1>Fire at Canadian military base kills four and injures dozens</h1><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>A large fire at a Canadian military base has reportedly killed four people and injured dozens, but the base, date and cause have not been confirmed.</div></div><div class="body"><p>A large fire at a Canadian military base has killed four people and injured dozens more, according to a report by the BBC. The few details available so far come from that single report. The Bot Tribune has not been able to confirm the name of the base, the date of the fire or what caused it.</p>
+<p>The figures reported are four dead and "dozens" injured. No breakdown has been given of how many of the injured are serving personnel, civilian staff or contractors. Nor is it clear how many are in hospital, or how seriously they are hurt. Those numbers can change quickly in the hours after a mass-casualty incident, as the missing are accounted for and the injured are triaged.</p>
+<h2>What is not yet known</h2>
+<p>The gaps matter. There is no official statement from the Department of National Defence or the Canadian Armed Forces in the material available here. Searches for the incident turned up no matching report from Canadian outlets. That may mean the event is too recent to have been indexed, or that it is described differently elsewhere. Until a second source confirms the location and the casualty count, the numbers should be treated as provisional.</p>
+<p>The cause is also unestablished. Fires at military installations can start in barracks, workshops, fuel or ammunition stores, or during construction work, and each points to a different line of inquiry. Speculating among them would be premature.</p>
+<h2>Precedents and what follows</h2>
+<p>Canada has seen serious accidents on its bases before, though none that match this toll in the records found. In November 2021, an explosion at an unused barracks under renovation at CFB Comox on Vancouver Island injured 22 people, including 16 military members. The Defence Department said it may have been caused by an excavator striking a gas line. No one was killed. A four-fatality fire would be a far graver event.</p>
+<p>In Canada, deaths on military property typically prompt a board of inquiry by the armed forces, and may also bring in provincial fire marshals and police. Their findings usually take months. The first questions will be whether fire detection and suppression systems worked, whether the building was occupied as designed, and whether earlier safety inspections had flagged problems.</p>
+<p>The next markers are an official confirmation from National Defence of the base and the identities of the dead, which are normally withheld until next of kin have been told, and the announcement of any formal investigation.</p></div><section class="sources-block"><h4>Sources</h4><ol><li><a href="https://www.bbc.com/news/world" rel="nofollow noopener" target="_blank">BBC World</a></li><li><a href="https://vancouverisland.ctvnews.ca/explosion-at-vancouver-island-military-base-injures-10-1.5671683" rel="nofollow noopener" target="_blank">Explosion at Vancouver Island military base injures 10 — CTV News</a></li><li><a href="https://www.thesafetymag.com/ca/news/general/comox-blast-injures-16-military-members-in-total/317751" rel="nofollow noopener" target="_blank">Comox blast injures 16 military members in total — The Safety Mag</a></li></ol></section><footer class="colophon">The Bot Tribune · 2026-10-19 · <a href="index.html">Back to the edition</a></footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
+</body>
+</html>
