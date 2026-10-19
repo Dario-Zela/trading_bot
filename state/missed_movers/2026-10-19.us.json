@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-19",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 TRGP +4%, FANG +4%, KMI +4%, APA +4%, NOC +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (TWLO -11%, SMCI -10%, FLEX -8%, MRNA -8%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: TWLO (-10.62%) \u2014 No company-specific news. TWLO fell about 10.6% to 244.37 in a sector-wide software/AI selloff, with valuation and AI-disruption worries and an HSBC Reduce call in the background. Q3 earnings are due Oct 29. Why we passed: Outside any active strategy's universe: TWLO is a mid-cap software name that no strategy lists. The move was a one-day sector-wide gap-down with no stock-specific catalyst, so a long-only momentum or news-reactive bot would not have a long entry. The reported -10.62% (-29.03 to 244.37) matches the Fri Oct 16 close, so ",
+  "top_movers": [
+    {
+      "ticker": "TRGP",
+      "move_pct": 4.371,
+      "close": 294.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found; searches returned nothing dated 2026-10-19. Likely a midstream/energy sector move, with TRGP at a ~$295 record high, above its prior ~$280 52-week high.",
+      "miss_reason": "Outside any active strategy's universe: TRGP is a ~$55-65B large-cap midstream energy MLP-style name that no strategy lists. A sector-driven +4.4% breakout with no discrete news also gives a news-reactive bot nothing to trigger on.",
+      "suggestion": "Add a sector-ETF-relative momentum screen (e.g. XLE/AMLP constituents above 52-week high with \u22651.5\u00d7 20-day volume) to the momentum universe so midstream breakouts without news get flagged.",
+      "failed": false
+    },
+    {
+      "ticker": "FANG",
+      "move_pct": 4.269,
+      "close": 203.95,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found for 2026-10-19; the +4.27% looks like a Permian E&P / oil-price sector move, which I could not confirm from today's coverage.",
+      "miss_reason": "Outside any active strategy's universe: FANG (Diamondback Energy) is a ~$50B mid/large-cap Permian oil producer, and no strategy's universe includes it. A sector-beta move with no stock-specific catalyst also gives news-reactive filters nothing to trigger on.",
+      "suggestion": "Add US E&P names (FANG, EOG, DVN, OXY) to the commodity/energy strategy universe, gated on a crude-oil momentum signal (e.g. WTI 1-day return \u2265 +2%), so sector rallies like this can be traded.",
+      "failed": false
+    },
+    {
+      "ticker": "KMI",
+      "move_pct": 4.205,
+      "close": 34.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No single hard catalyst found. The +4.2% move looks like pre-Q3-earnings positioning plus an energy/midstream rotation on Iran-driven oil risk and data-center gas-demand sentiment.",
+      "miss_reason": "Outside any active strategy's universe: KMI is a large-cap midstream/pipeline name, and no strategy's universe covers it. With no discrete news event, a news-reactive bot had no trigger either.",
+      "suggestion": "Add a midstream/energy-infrastructure basket (KMI, WMB, OKE) to the momentum universe, gated on sector ETF (XLE/AMLP) relative strength \u2265 +1.5% on the day, instead of relying on per-stock news triggers.",
+      "failed": false
+    },
+    {
+      "ticker": "APA",
+      "move_pct": 4.065,
+      "close": 49.15,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed APA-specific news for Oct 19. The move most likely came from higher crude prices, a sector-wide energy rally on Middle East/Iran oil headlines, and support from the Oct 7 Q3 update.",
+      "miss_reason": "Outside any active strategy's universe: APA is a mid-cap E&P (energy sector) that no strategy lists. A sector-beta move with no stock-specific catalyst gave a news-reactive signal nothing to trigger on.",
+      "suggestion": "Add a sector-momentum rule to the universe builder: when \u22653 energy names (XLE or XOP constituents) gap up \u22652% on a day Brent is up \u22651.5%, add the liquid mid-cap E&Ps (APA, DVN, FANG) as one-day candidates.",
+      "failed": false
+    },
+    {
+      "ticker": "NOC",
+      "move_pct": 4.049,
+      "close": 519.86,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found. Likely a dip-buying bounce in defense stocks after a ~19% sector selloff since August, ahead of NOC's Q3 earnings before the open on 2026-10-20.",
+      "miss_reason": "Outside any active strategy's universe. NOC is a large-cap defense prime that no strategy's universe includes, and the move was a sector rebound with no discrete catalyst for a news-reactive bot to trigger on.",
+      "suggestion": "Add large-cap aerospace and defense names (NOC, LMT, RTX, GD) to the mean-reversion universe, gated on a sector drawdown of 15% or more from the 60-day high plus a +3% day. Skip entries within 1 day of earnings.",
+      "failed": false
+    },
+    {
+      "ticker": "RTX",
+      "move_pct": 3.728,
+      "close": 193.92,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst: searches found no RTX news dated 2026-10-19. The +3.7% move is likely a defense-sector or pre-Q3-earnings rally, possibly tied to recent contract wins such as Germany's F127 SPY-6 radar award.",
+      "miss_reason": "Outside any active strategy's universe: RTX is a ~$250B large-cap aerospace/defense prime that no strategy's universe includes. A +3.7% move with no clear gap-up or news trigger also wouldn't pass a news-reactive or gap filter.",
+      "suggestion": "Add large-cap defense names (RTX, LMT, NOC, GD) to the momentum-trader universe as a sector basket, so a \u2265+3% day on above-average volume can trigger entry. Keep the existing RSI and gap filters unchanged.",
+      "failed": false
+    },
+    {
+      "ticker": "TWLO",
+      "move_pct": -10.618,
+      "close": 244.37,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news. TWLO fell about 10.6% to 244.37 in a sector-wide software/AI selloff, with valuation and AI-disruption worries and an HSBC Reduce call in the background. Q3 earnings are due Oct 29.",
+      "miss_reason": "Outside any active strategy's universe: TWLO is a mid-cap software name that no strategy lists. The move was a one-day sector-wide gap-down with no stock-specific catalyst, so a long-only momentum or news-reactive bot would not have a long entry. The reported -10.62% (-29.03 to 244.37) matches the Fri Oct 16 close, so ",
+      "suggestion": "Add mid-cap software (TWLO, MDB, DOCN) to the mean-reversion universe, gated on an IGV/sector-ETF drop of \u22653% and RSI(2) <10. Also check whether the mover feed is lagging a session, since the figures match Oct 16 rather than Oct 19.",
+      "failed": false
+    },
+    {
+      "ticker": "SMCI",
+      "move_pct": -9.86,
+      "close": 31.63,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed news catalyst for 2026-10-19. Searches returned nothing dated that day. Likely a sector or company-specific AI-hardware selloff; SMCI has dropped before on customer concentration and DOJ-related news.",
+      "miss_reason": "Outside any active strategy's universe. SMCI is a volatile mid-cap AI-server name that no strategy includes. A -9.9% single-day drop with no pre-market catalyst also gives a momentum or news-reactive bot no entry signal.",
+      "suggestion": "Add high-beta AI-hardware names such as SMCI to the mean-reversion universe, gated by a rule like a one-day drop of at least 8% on volume of at least 2x the 20-day average. Stay long-only, since the bot can't short.",
+      "failed": false
+    },
+    {
+      "ticker": "FLEX",
+      "move_pct": -8.162,
+      "close": 90.46,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-19. The search returned no dated coverage; the likely driver is profit-taking in AI-infrastructure hardware names after a strong run, but that is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: FLEX is a ~$35B mid/large-cap EMS/hardware name that no strategy includes. With no discrete catalyst, a news-reactive bot had no trigger, and an -8% sector-rotation drop doesn't fit its entry filters.",
+      "suggestion": "Add a sector-momentum universe expansion: include AI-infrastructure hardware/EMS names (FLEX, JBL, CLS) with a liquidity floor, so mean-reversion can act on non-news drops \u22657% in one session. Not a high-priority change.",
+      "failed": false
+    },
+    {
+      "ticker": "MRNA",
+      "move_pct": -7.818,
+      "close": 218.01,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No new company news found for Oct 19. Likely continued profit-taking after a run to a 52-week high (~$242 on Oct 15) and a ~8\u201311% drop on Oct 16, ahead of Oct 24 Phase 3 melanoma cancer-vaccine data, with Sell ratings and insider (Hoge) sales weighing.",
+      "miss_reason": "Outside any active strategy's universe: MRNA is a volatile, binary-catalyst mid-cap biotech that no strategy includes. A two-day pullback after a spike also looks like a failed momentum name or one-sided short, and the bot has no short leg.",
+      "suggestion": "No change to the universe. If a biotech sleeve is ever added, gate it on a hard no-entry rule within ~5 trading days of a known binary readout (e.g. the Oct 24 Phase 3 data) and require a \u22651.5\u00d7 volume spike.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-19T19:32:02.557758+00:00"
+}
