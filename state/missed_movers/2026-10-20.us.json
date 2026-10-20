@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-20",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 DDOG +6%, TWLO +6%, MRNA +6%, WDC +6%, SNDK +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (NRG -4%, MOS -4%, AMP -4%, ES -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: DDOG (+5.84%) \u2014 No confirmed Oct 20 news. Likely a continued software/tech rebound as yields eased, plus recent bullish analyst calls (Bernstein Outperform, $350 target). Earnings are due Nov 4. Why we passed: Outside any active strategy's universe: DDOG is a ~$90B mid/large-cap software name, and no strategy's universe includes it. The move was a sector and analyst-driven drift with no discrete catalyst for a news-reactive filter to trigger on.",
+  "top_movers": [
+    {
+      "ticker": "DDOG",
+      "move_pct": 5.844,
+      "close": 261.55,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed Oct 20 news. Likely a continued software/tech rebound as yields eased, plus recent bullish analyst calls (Bernstein Outperform, $350 target). Earnings are due Nov 4.",
+      "miss_reason": "Outside any active strategy's universe: DDOG is a ~$90B mid/large-cap software name, and no strategy's universe includes it. The move was a sector and analyst-driven drift with no discrete catalyst for a news-reactive filter to trigger on.",
+      "suggestion": "Add a high-beta software/cloud basket (DDOG, SNOW, PLTR, NET, MDB) to the momentum-trader universe, gated on a sector breadth filter such as \u226570% of the basket up on the day.",
+      "failed": false
+    },
+    {
+      "ticker": "TWLO",
+      "move_pct": 5.754,
+      "close": 258.43,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No dated news for 2026-10-20 turned up in search. TWLO is up sharply this year (about $120 in April to about $258), so this looks like continued momentum, not a one-day catalyst.",
+      "miss_reason": "Outside any active strategy's universe: TWLO is a roughly $29B mid-cap software/CPaaS name, and no strategy's universe includes it. A +5.75% move with no clear catalyst also wouldn't trigger a news-reactive entry.",
+      "suggestion": "Add a dynamic universe rule that admits mid-caps with market cap above $10B, 20-day average dollar volume above $100M and 6-month return above +50% to the momentum strategy's candidate list.",
+      "failed": false
+    },
+    {
+      "ticker": "MRNA",
+      "move_pct": 5.745,
+      "close": 230.535,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Run-up ahead of full Phase 3 INTerpath-001 melanoma data (mRNA-4157/intismeran + Keytruda) at ESMO on Oct 24; BofA raised its target to $220; stock near its 52-week high.",
+      "miss_reason": "Outside any active strategy's universe: MRNA is a mid-cap biotech and no strategy includes it. This was also an anticipation-driven drift into a binary event, with no gap or earnings print that a news-reactive filter would key on.",
+      "suggestion": "Add a biotech/healthcare-catalyst sleeve to the momentum-trader universe, admitting names within 5% of their 52-week high on at least 1.5\u00d7 average volume. Exclude names with a binary readout within 3 days, since this one has ESMO on Oct 24.",
+      "failed": false
+    },
+    {
+      "ticker": "WDC",
+      "move_pct": 5.666,
+      "close": 350.81,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Analyst-driven rally in storage names: Morgan Stanley (bullish, ~80% upside call) expects WDC and STX to beat September-quarter results and guide December higher, ahead of WDC earnings Thursday. Sector sentiment was mixed.",
+      "miss_reason": "Outside any active strategy's universe: WDC is a ~$350 large-cap hardware/storage name that no strategy lists. The move was also sector and analyst-driven, with no hard catalyst, and the stock had been very volatile (-16% in August, +7% on Oct 5).",
+      "suggestion": "Add semiconductor/storage names (WDC, STX, SNDK, MU) to the momentum-trader universe. Gate entries on a sector-relative-strength rule (sector ETF +3% over 5 days) and skip new entries within 2 days before earnings.",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": 5.596,
+      "close": 1372.0101,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found. Sector-wide memory/NAND rally on strong NAND pricing, an AI-demand read-through from Micron, and a Zacks upgrade, rebounding from last week's CXMT DRAM selloff. Q1 earnings are due late Oct.",
+      "miss_reason": "Outside any active strategy's universe: SNDK is a ~$200B+ AI-memory name priced above $1,300 per share, with very high volatility. With no catalyst, a sector-beta rebound would not clear a news-reactive trigger, and a momentum or RSI filter would likely have rejected it after the prior week's whipsaw.",
+      "suggestion": "Add SNDK, MU and the other memory/semis names to the momentum universe, with a per-share price cap or fractional sizing so that ~$1,370 shares fit position-size limits. Also add a sector-relative-strength trigger, e.g. a \u2265+4% day with the sector ETF up \u22652%.",
+      "failed": false
+    },
+    {
+      "ticker": "AMZN",
+      "move_pct": 5.44,
+      "close": 263.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Morgan Stanley named AMZN a Top Pick (PT $350 from $335) on accelerating AWS growth and Nvidia GPU supply. Coverage is dated Oct 19, so some of the move may be a carry-over. Earnings are due Oct 29.",
+      "miss_reason": "Outside any active strategy's universe: AMZN is a mega-cap tech name that no strategy lists. This was also an analyst-upgrade move with no earnings gap, so a news-reactive or gap-up filter would have seen it only after the move.",
+      "suggestion": "Add mega-cap tech (AMZN, MSFT, GOOGL) to the news-reactive universe, with an 'analyst upgrade / top-pick' trigger. Require a \u2265+3% gap and \u22651.5\u00d7 average volume, and skip entries within 7 days before earnings.",
+      "failed": false
+    },
+    {
+      "ticker": "NRG",
+      "move_pct": -4.434,
+      "close": 99.15,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed NRG-specific news found. Likely part of a broad independent-power-producer selloff (VST, CEG, TLN) on AI-capex worries and the PJM capacity-auction delay; NRG is near 52-week lows.",
+      "miss_reason": "Outside any active strategy's universe: NRG is a mid/large-cap independent power producer, and no strategy lists it. The drop looks like a gradual sector-driven slide with no gap or catalyst for a news-reactive filter to catch.",
+      "suggestion": "Add an 'ai_power_ipp' basket (NRG, VST, CEG, TLN) to the mean-reversion universe, with entry only when the whole basket is down \u22653% in a day. No change for the long-only momentum strategy.",
+      "failed": false
+    },
+    {
+      "ticker": "MOS",
+      "move_pct": -4.171,
+      "close": 18.035,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for today. Search turned up no MOS story dated 2026-10-20. Likely a continuation of the stock's weak trend near 52-week lows, or a fertilizer-sector move.",
+      "miss_reason": "Outside any active strategy's universe: MOS is a mid-cap fertilizer/materials name that no strategy's universe includes. With no news catalyst, a news-reactive trigger had nothing to fire on, and a long-only bot would not take a -4% drift anyway.",
+      "suggestion": "(no actionable change: a long-only bot can't act on a no-news decline.) If wanted, add a mean-reversion watchlist tier for materials/fertilizer mid-caps with a \u22653% drop on no news and RSI(14) <30.",
+      "failed": false
+    },
+    {
+      "ticker": "AMP",
+      "move_pct": -3.861,
+      "close": 481.465,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-20. Searches turned up no AMP-specific announcement, only older sector-weakness pieces. Likely a financials/wealth-manager sector move ahead of late-Oct Q3 earnings.",
+      "miss_reason": "Outside any active strategy's universe: AMP is a ~$45B mid/large-cap wealth/asset manager (financials), a category the strategies don't cover. A -3.9% sector-driven drift with no gap or news trigger also wouldn't pass momentum or news-reactive filters.",
+      "suggestion": "(no actionable change \u2014 a sector-beta drop with no catalyst on a name outside the universe; if desired, add a financials/wealth-manager sector basket to the mean-reversion universe, but expected edge is low.)",
+      "failed": false
+    },
+    {
+      "ticker": "ES",
+      "move_pct": -3.186,
+      "close": 64.72,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for Eversource (ES) today. The -3.19% drop looks like a regulated-utility or rate-sensitive sector move, not a stock-specific event.",
+      "miss_reason": "Outside any active strategy's universe: ES is a mid-cap regulated utility, a defensive, low-beta sector the momentum and news-reactive strategies don't cover. A -3% move with no catalyst also wouldn't trigger a news-driven entry.",
+      "suggestion": "No actionable change. Unexplained sector-beta moves in utilities are low-edge, and the bot has no short capability to trade them. Only add a utilities (XLU) rate-sensitivity basket if the bot starts expressing yield-driven views.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-20T19:32:14.700624+00:00"
+}
