@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-20",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 WKL.AS +3%, BESI.AS +3%, ZAL.DE +2%, SGE.L +2%, DSFIR.AS +2%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (AAL.L -5%, STLAP.PA -4%, GLEN.L -4%, GLE.PA -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: AAL.L (-4.74%) \u2014 No confirmed company-specific news found; the move looks like a sector-wide copper/miners selloff on weak copper prices, with possible Teck-merger China approval uncertainty weighing. Why we passed: Outside any active strategy's universe: AAL.L is a FTSE 100 large-cap diversified miner, and no strategy's universe includes UK mining names. A sector-driven drift with no discrete catalyst gives a news-reactive bot nothing to trigger on.",
+  "top_movers": [
+    {
+      "ticker": "WKL.AS",
+      "move_pct": 2.92,
+      "close": 83.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed Oct 20 news. Likely a continued rebound after JPMorgan raised its target from \u20ac87 to \u20ac100 (overweight) on Oct 19, when the stock led the AEX, up about 3%.",
+      "miss_reason": "Outside any active strategy's universe: WKL.AS is a large-cap Euronext Amsterdam information-services name that no strategy lists. The move was a slow analyst-upgrade rebound with no gap or volume spike, so momentum and news filters would not have fired.",
+      "suggestion": "Add AEX/Euronext large caps to the momentum-trader universe, and add an analyst-target-raise trigger (e.g. a target-price raise of \u226510% from a tier-1 broker) as a news-reactive entry signal.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": 2.829,
+      "close": 159.95,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found. Likely a pre-Q3-results run-up and AI/semi-equipment sector strength: Besi guided Q3 revenue +10-15%, and hybrid bonding order momentum was strong.",
+      "miss_reason": "Outside any active strategy's universe: BESI.AS is a Dutch mid-cap semiconductor-equipment name listed on Euronext Amsterdam. A +2.83% move with no gap or news catalyst also wouldn't trip a gap-up or news-reactive trigger.",
+      "suggestion": "Add a small 'eu_semicap' sleeve (BESI.AS, ASML.AS, ASM International) to the momentum-trader universe, gated on a 5-day relative-strength rank vs SOXX. Don't use a gap filter, since this was a quiet drift.",
+      "failed": false
+    },
+    {
+      "ticker": "ZAL.DE",
+      "move_pct": 1.782,
+      "close": 25.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-20; likely a technical move. The stock has been grinding up in a breakout attempt, with sector and retail sentiment the probable driver.",
+      "miss_reason": "Outside any active strategy's universe: ZAL.DE is a mid-cap German e-commerce/fashion name (MDAX/DAX-fringe) that no strategy covers. A +1.78% move with no catalyst also wouldn't pass gap or volume-surge momentum filters.",
+      "suggestion": "Add a small liquid-EU mid-cap sleeve (e.g. MDAX constituents with ADV > \u20ac20M) to the momentum universe, gated by a 20-day breakout plus relative-strength rank, rather than relying on gap-up triggers.",
+      "failed": false
+    },
+    {
+      "ticker": "SGE.L",
+      "move_pct": 1.693,
+      "close": 11.41,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for Sage Group on 2026-10-20; the +1.69% looks like a technical or sector move (UK software/AI-sentiment rebound), not a company-specific event.",
+      "miss_reason": "Outside any active strategy's universe: SGE.L is a UK large-cap software name (FTSE 100) that no strategy's universe includes. A +1.69% drift with no gap or volume spike also wouldn't trip a momentum or news-reactive trigger.",
+      "suggestion": "Add FTSE 100 software/tech constituents (SGE.L, etc.) to the momentum-trader universe, keeping the existing gap-up and volume \u22651.5\u00d7 filters so low-conviction +1\u20132% drifts are still ignored.",
+      "failed": false
+    },
+    {
+      "ticker": "DSFIR.AS",
+      "move_pct": 1.681,
+      "close": 108.85,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-20. dsm-firmenich (DSFIR.AS) rose a modest +1.68%, which looks like a technical or sector-driven move in specialty chemicals and ingredients.",
+      "miss_reason": "Outside any active strategy's universe: this is a large-cap Dutch/Swiss specialty chemicals and nutrition name listed on Euronext Amsterdam. A +1.68% move with no news is also too small to pass a momentum or gap-up filter, and there was no news for a news-reactive strategy to trigger on.",
+      "suggestion": "No actionable change: a +1.68% drift with no catalyst is below any sensible gap or momentum threshold. If wider Euronext coverage is wanted, add large-cap AEX/Stoxx 600 names to the universe, but only with a minimum volume-surge gate of about 1.5x average.",
+      "failed": false
+    },
+    {
+      "ticker": "ENX.PA",
+      "move_pct": 1.495,
+      "close": 169.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-20. Likely a modest technical or sector move, possibly continued momentum after analyst target raises (Deutsche Bank to \u20ac180, Buy).",
+      "miss_reason": "Outside any active strategy's universe: Euronext is a mid/large-cap Paris-listed exchange operator (financials). A +1.5% move is also too small to pass gap or momentum thresholds, and there was no news for a news-reactive filter to catch.",
+      "suggestion": "No actionable change. A +1.5% move with no catalyst is below any sensible momentum or gap threshold, and adding European exchange operators to a universe on this evidence would be noise.",
+      "failed": false
+    },
+    {
+      "ticker": "AAL.L",
+      "move_pct": -4.744,
+      "close": 38.55,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed company-specific news found; the move looks like a sector-wide copper/miners selloff on weak copper prices, with possible Teck-merger China approval uncertainty weighing.",
+      "miss_reason": "Outside any active strategy's universe: AAL.L is a FTSE 100 large-cap diversified miner, and no strategy's universe includes UK mining names. A sector-driven drift with no discrete catalyst gives a news-reactive bot nothing to trigger on.",
+      "suggestion": "Add FTSE 100 materials names (AAL.L, GLEN.L, RIO.L, ANTO.L) to the mean-reversion universe, gated on a sector-wide copper-linked drop of at least 3% over 2 days. Treat that as a basket signal, not a single-name news signal.",
+      "failed": false
+    },
+    {
+      "ticker": "STLAP.PA",
+      "move_pct": -4.43,
+      "close": 3.808,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day catalyst found. Stellantis (STLAP.PA) fell 4.4% to \u20ac3.81, near its 52-week low. Undated reports cite JPMorgan and HSBC downgrades over US dealer inventory and recalls, but I couldn't tie them to Oct 20.",
+      "miss_reason": "Outside any active strategy's universe: STLAP.PA is a large-cap Paris-listed European auto name that no strategy includes. A persistent downtrend with no gap-up or fresh-news trigger also fits poorly with long-only momentum or news-reactive filters.",
+      "suggestion": "Add large-cap EU autos (STLAP.PA, RNO.PA, VOW3.DE) to the mean-reversion universe, gated by a rule such as a one-day drop \u22654% with RSI(14) <30. Alternatively log them as watch-only until the bot can short.",
+      "failed": false
+    },
+    {
+      "ticker": "GLEN.L",
+      "move_pct": -4.287,
+      "close": 5.581,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for Glencore on 2026-10-20; searches turned up no company-specific news that day. Likely a sector-wide mining/commodity sell-off, with Q3 production due later in the month.",
+      "miss_reason": "Outside any active strategy's universe: GLEN.L is a FTSE 100 large-cap diversified miner/commodity trader, and no strategy's universe includes it. With no news catalyst, a news-reactive bot had nothing to trigger on.",
+      "suggestion": "Add a UK/EU mining basket (GLEN.L, AAL.L, RIO.L, ANTO.L) to the mean-reversion universe, with a filter that fires on a sector-wide drop of \u22654% on no company news. Only worth doing if shorting or a bounce-buy is allowed.",
+      "failed": false
+    },
+    {
+      "ticker": "GLE.PA",
+      "move_pct": -3.924,
+      "close": 61.94,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-20; searches turned up nothing dated today. Likely a French bank/sector or CAC 40 move, possibly French political or credit worries.",
+      "miss_reason": "Outside any active strategy's universe: GLE.PA is a large-cap Euronext Paris bank that no strategy includes. With no company-specific news, a sector-wide drop would also not trip a news-reactive filter.",
+      "suggestion": "Add large-cap EU financials (GLE.PA, BNP.PA, ACA.PA) to the mean-reversion universe, gated on a \u22653% drop with no earnings in the last 5 days, to catch sector-driven selloffs.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-20T15:02:49.199599+00:00"
+}
