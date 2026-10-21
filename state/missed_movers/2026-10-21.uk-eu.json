@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-21",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 AC.PA +4%, RNO.PA +3%, EOAN.DE +3%, SAN.PA +3%, BMW.DE +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (IGG.L -3%, SU.PA -3%, BNZL.L -3%, DPLM.L -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: AC.PA (+3.56%) \u2014 No obvious news catalyst found for Accor (AC.PA) on 2026-10-21; likely a rebound or sector move in European travel and hotel stocks. Q3 2026 revenue is probably not out yet. Why we passed: Outside any active strategy's universe: AC.PA is a mid/large-cap French hotel operator on Euronext Paris, and no strategy covers it. A +3.56% move with no news also wouldn't trigger a news-reactive signal.",
+  "top_movers": [
+    {
+      "ticker": "AC.PA",
+      "move_pct": 3.556,
+      "close": 46.88,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for Accor (AC.PA) on 2026-10-21; likely a rebound or sector move in European travel and hotel stocks. Q3 2026 revenue is probably not out yet.",
+      "miss_reason": "Outside any active strategy's universe: AC.PA is a mid/large-cap French hotel operator on Euronext Paris, and no strategy covers it. A +3.56% move with no news also wouldn't trigger a news-reactive signal.",
+      "suggestion": "Add a Euronext Paris/CAC 40 mid-cap sleeve to the momentum-trader universe, and flag unscreened names that gain \u22653% on \u22651.5\u00d7 avg volume for review. Don't trade them automatically, since this move had no verified catalyst.",
+      "failed": false
+    },
+    {
+      "ticker": "RNO.PA",
+      "move_pct": 3.418,
+      "close": 28.14,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-21 (searches returned only older Renault items) \u2014 likely a sector or technical move, possibly European autos strength or an analyst action.",
+      "miss_reason": "Outside any active strategy's universe: RNO.PA is a mid-cap Euronext Paris automaker that no strategy lists. With no identifiable catalyst, the +3.42% move would also be too small and unremarkable for a news-reactive or gap/momentum filter.",
+      "suggestion": "Add a small set of CAC 40 / Stoxx 600 autos (RNO.PA, STLAP.PA, VOW3.DE) to the uk-eu momentum universe, gated by the existing volume-floor and gap-size filters, to see whether sector-wide moves like this are tradable.",
+      "failed": false
+    },
+    {
+      "ticker": "EOAN.DE",
+      "move_pct": 3.33,
+      "close": 17.995,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found. Likely a rebound in the German utilities/grid sector after recent regulatory-driven weakness (Bundesnetzagentur gas-grid return draft); possibly analyst support.",
+      "miss_reason": "Outside any active strategy's universe: EOAN.DE is a large-cap DAX utility, and no strategy covers European large-cap defensive names. A +3.3% move with no catalyst is also a low-volatility sector rebound that momentum or news filters would not flag.",
+      "suggestion": "Add a small liquid DAX/Euro Stoxx utilities basket (EOAN, RWE, IBE) to the mean-reversion universe, gated on a \u22653% one-day gain after a \u22658% 5-day drawdown. Skip the change if the bot only trades US names.",
+      "failed": false
+    },
+    {
+      "ticker": "SAN.PA",
+      "move_pct": 3.095,
+      "close": 73.29,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. Sanofi rose about 3% ahead of Q3 results on Oct 30, likely a rebound from near its 52-week low (\u20ac69.77) and a pharma sector bounce.",
+      "miss_reason": "Outside any active strategy's universe. SAN.PA is a large-cap Euronext Paris pharma name that no strategy lists. With no catalyst, a momentum or news-reactive filter would also find nothing to trigger on after a low-volume drift.",
+      "suggestion": "Add large-cap CAC 40 / Stoxx 50 healthcare names such as SAN.PA to the mean-reversion universe, with an entry rule for a \u2265+2.5% bounce within 10% of the 52-week low, and skip entries in the 5 days before earnings.",
+      "failed": false
+    },
+    {
+      "ticker": "BMW.DE",
+      "move_pct": 3.004,
+      "close": 58.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No BMW-specific news found for 2026-10-21; Q3 results aren't due until 2026-11-03. The +3% looks like a sector or market move, perhaps German autos rallying ahead of earnings.",
+      "miss_reason": "Outside any active strategy's universe: BMW.DE is a large-cap German auto stock on Xetra, and no strategy's universe includes it. A +3% move on no catalyst also falls below typical gap or volume triggers for news-reactive logic.",
+      "suggestion": "(no actionable change \u2014 a +3% move with no identifiable catalyst doesn't justify widening the universe. Optionally add DAX/Stoxx autos large caps to a mean-reversion universe if uk-eu coverage is wanted.)",
+      "failed": false
+    },
+    {
+      "ticker": "MKS.L",
+      "move_pct": 3.003,
+      "close": 4.287,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found \u2014 likely a technical or sector move, possibly a continuation of M&S's recent run in UK retail and FTSE 100 rotation.",
+      "miss_reason": "Outside any active strategy's universe: MKS.L is a UK large-cap retailer that no strategy lists. With no identifiable catalyst, a news-reactive bot had no trigger, and a +3% drift is probably too small for a momentum gap filter.",
+      "suggestion": "Add FTSE 100 constituents (starting with consumer-discretionary names like MKS.L) to the momentum-trader's uk-eu universe, and keep the existing gap and volume filters (e.g. \u22651.5\u00d7 average volume) so that quiet +3% drifts stay excluded.",
+      "failed": false
+    },
+    {
+      "ticker": "IGG.L",
+      "move_pct": -3.386,
+      "close": 9.415,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No same-day news found; likely continued drift after the 2 Oct Q1 trading update (revenues -14%, OTC retention fell to 70%) and broker forecast cuts (e.g. Panmure Liberum).",
+      "miss_reason": "Outside any active strategy's universe: IG Group is a UK FTSE 100 financial/spread-betting name that no strategy's universe includes. The move was also a slow post-warning grind with no fresh gap or volume spike for a news-reactive filter to catch.",
+      "suggestion": "Add a uk-eu 'profit-warning drift' watchlist: for FTSE 100 names that fell \u22658% on a trading update, admit them to the mean-reversion universe for 10 days with an RSI(14)<30 entry gate.",
+      "failed": false
+    },
+    {
+      "ticker": "SU.PA",
+      "move_pct": -2.957,
+      "close": 244.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed company-specific catalyst found for 2026-10-21; search turned up nothing dated today, so this is likely a sector/market move (European electrical/AI-infrastructure names).",
+      "miss_reason": "Outside any active strategy's universe: SU.PA is a CAC 40 large-cap industrial (electrical equipment) not in any strategy's list. A -2.96% move with no news also wouldn't trip a news-reactive trigger or a gap/volume filter.",
+      "suggestion": "Add large-cap EU industrials (SU.PA, SIE.DE, ABBN.SW) to the mean-reversion universe with a -2.5% one-day drop trigger, gated on a sector-ETF move to filter out stock-specific news.",
+      "failed": false
+    },
+    {
+      "ticker": "BNZL.L",
+      "move_pct": -2.849,
+      "close": 27.28,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found. Bunzl often issues a Q3 trading update in late October, but I couldn't verify one for today. This is likely a continuation of the weak-outlook de-rating or a sector move.",
+      "miss_reason": "Outside any active strategy's universe: BNZL.L is a UK FTSE 100 support-services distributor that none of the strategies include. A -2.85% drift with no confirmed catalyst also wouldn't trip gap or volume filters.",
+      "suggestion": "Add FTSE 100 mid/large-cap industrials such as BNZL.L to the mean-reversion universe, gated on a scheduled-update calendar so moves on trading-update days are flagged. Otherwise no actionable change.",
+      "failed": false
+    },
+    {
+      "ticker": "DPLM.L",
+      "move_pct": -2.822,
+      "close": 75.75,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. Searches turned up no DPLM-specific news for 2026-10-21, so the -2.82% looks like a technical or sector-wide move in UK industrial distribution after a strong run.",
+      "miss_reason": "Outside any active strategy's universe: Diploma is a FTSE 100 industrial distributor that no strategy lists. A -2.8% drift with no gap or news also wouldn't trip a news-reactive or momentum trigger.",
+      "suggestion": "No actionable change. If long-only mean-reversion should cover UK mid/large caps, add DPLM.L to its universe with a filter such as a 1-day drop \u22652.5% while above the 50-day MA.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-21T15:02:53.566821+00:00"
+}
