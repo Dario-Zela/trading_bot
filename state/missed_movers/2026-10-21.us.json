@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-21",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 HAS +12%, EFX +11%, CRL +6%, IT +6%, MSCI +5%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (GM -7%, DVA -6%, GPC -6%, FIX -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: HAS (+11.82%) \u2014 Hasbro reported Q3 2026 results on Oct 20 after the close. Magic: The Gathering passed $600M in quarterly revenue, the 2026 outlook was raised and the buyback target doubled. The stock gapped up on Oct 21. Why we passed: Outside any active strategy's universe: HAS is a mid-cap consumer/toy name that no strategy covers. It was also an overnight earnings gap, so the move was set at the open and a post-open momentum signal would have come too late.",
+  "top_movers": [
+    {
+      "ticker": "HAS",
+      "move_pct": 11.82,
+      "close": 109.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Hasbro reported Q3 2026 results on Oct 20 after the close. Magic: The Gathering passed $600M in quarterly revenue, the 2026 outlook was raised and the buyback target doubled. The stock gapped up on Oct 21.",
+      "miss_reason": "Outside any active strategy's universe: HAS is a mid-cap consumer/toy name that no strategy covers. It was also an overnight earnings gap, so the move was set at the open and a post-open momentum signal would have come too late.",
+      "suggestion": "Add mid-cap consumer discretionary names with earnings in the prior 24h to the news-reactive universe, and let the earnings gate release names gapping up 8% or more on at least 2x average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "EFX",
+      "move_pct": 11.132,
+      "close": 176.645,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely Q3 2026 earnings reaction: results reported Oct 20 showed revenue of $1.693B (+10%), with mortgage +15% and USIS +13%, after July's guidance-driven selloff. I couldn't find coverage of the Oct 21 price move.",
+      "miss_reason": "Outside any active strategy's universe: EFX is a mid/large-cap credit-bureau (business services) name. The move was an earnings-gap rebound, so any momentum or news filter would have seen it only after the open gap.",
+      "suggestion": "Add mid-cap financial/business-services names to the universe, and let the earnings gate release post-earnings gaps of +8% or more with volume above 1.5\u00d7 average on day 2, after the opening range settles.",
+      "failed": false
+    },
+    {
+      "ticker": "CRL",
+      "move_pct": 6.162,
+      "close": 317.35,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found for 10/21 (Q3 earnings are due Nov 4); likely a sector move in CROs/life-science tools, possibly peer results or biotech funding sentiment. This is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: CRL is a mid-cap (~$15B) healthcare CRO/life-science tools name, and no strategy includes it. With no clear catalyst, a +6% sector-driven move would also not have triggered news-reactive entries.",
+      "suggestion": "Add a dynamic 'top-gainer scan' to the momentum universe, admitting S&P 400/500 healthcare names with a gap/close move \u2265 +5% on volume \u2265 1.5\u00d7 the 20-day average, so mid-cap sector rotations are tradable.",
+      "failed": false
+    },
+    {
+      "ticker": "IT",
+      "move_pct": 5.631,
+      "close": 219.195,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news catalyst found. Gartner has been rebounding since its Aug 2026 Q2 beat, so this looks like a continued AI-disruption-fear relief rally in research and software names.",
+      "miss_reason": "Outside any active strategy's universe: Gartner is a mid-cap research and consulting stock, outside the bot's configured lists. With no earnings or gap trigger, a news-reactive filter would also have had nothing to fire on.",
+      "suggestion": "Add a daily 'unlisted mover scan' that lets any US stock above ~$5B market cap and ~$50M average daily dollar volume into the momentum-trader candidate pool when it closes up \u22654% on \u22651.5\u00d7 average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "MSCI",
+      "move_pct": 5.452,
+      "close": 592.65,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-Q3 earnings reaction. MSCI reported Oct 20 with adj EPS $5.11 vs ~$5.02 est, revenue $892M (+12.4%) vs ~$884M est, and asset-based fees +24.9%. I couldn't confirm the price reaction itself.",
+      "miss_reason": "Outside any active strategy's universe: MSCI is a ~$45B mid/large-cap financial-data/index provider that no strategy lists. The move was an earnings gap, so pre-market positioning would have beaten any post-open momentum signal.",
+      "suggestion": "Add large-cap financial data/index names (MSCI, SPGI, MCO, FDS) to the momentum universe, and let the earnings gate release names with a post-results gap of at least +4% on volume of at least 1.5x average.",
+      "failed": false
+    },
+    {
+      "ticker": "MMM",
+      "move_pct": 5.297,
+      "close": 170.86,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 beat (adj EPS $2.50 vs ~$2.39), FY26 EPS guide raised to $9.10\u20139.15, plus an expanded Amazon data-center deal (warrant for 3.2M shares). Articles date the pop to Oct 20, so the bot's window may lag by a day.",
+      "miss_reason": "Outside any active strategy's universe: MMM is a large-cap industrial that no strategy lists. It was also an earnings/deal gap that happened pre-market, so a post-open momentum or news-reactive entry would have missed the move.",
+      "suggestion": "Add large-cap industrials like MMM to the momentum universe, and let the earnings-gate release names that gap up \u2265+4% on a guidance raise, entering within 30 minutes of the open if volume is \u22651.5\u00d7 average.",
+      "failed": false
+    },
+    {
+      "ticker": "GM",
+      "move_pct": -7.06,
+      "close": 76.94,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-Q3 earnings selloff: GM reported Oct 20 and narrowed its FY26 guidance. The stock fell about 7% the next day despite a new $20B buyback. I couldn't find coverage naming the cause, so the cause is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: GM is a large-cap cyclical auto name that no strategy covers. It was also an earnings-gap move, which a momentum or mean-reversion filter would likely skip, and the bot has no short capability for a gap-down.",
+      "suggestion": "Add large-cap autos/cyclicals (GM, F) to the mean-reversion universe, with an earnings-gate release for gap-downs \u22655% on \u22652\u00d7 average volume once the first 30 minutes after the open have passed.",
+      "failed": false
+    },
+    {
+      "ticker": "DVA",
+      "move_pct": -6.487,
+      "close": 175.16,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Fell ~6.4% on a new HHS/Trump administration kidney-care proposal aimed at dialysis-market competition, plus pre-earnings de-risking before the Oct 29 Q3 report. Press dates the drop Oct 20.",
+      "miss_reason": "Outside any active strategy's universe: DVA is a mid-cap healthcare-services stock. The drop was a policy-headline gap with no earnings print, so momentum and mean-reversion filters would not have flagged it, and the bot has no short capability.",
+      "suggestion": "Add a healthcare-policy watchlist (DVA, FMS, CMS-exposed names) to the news-reactive universe, triggered by an HHS/CMS headline plus a \u22655% single-day drop on \u22651.5\u00d7 average volume, and use it as a risk-off or avoid flag. No short entry is needed.",
+      "failed": false
+    },
+    {
+      "ticker": "GPC",
+      "move_pct": -6.063,
+      "close": 123.2975,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-Q3 earnings selloff: GPC reported Oct 20 and narrowed FY26 adjusted EPS guidance to $7.50-7.75 (top end cut from $8.00). I couldn't confirm the Q3 figures or the Oct 21 price reaction.",
+      "miss_reason": "Outside any active strategy's universe: GPC is a mid-cap auto/industrial parts distributor. The drop was an earnings-gap move that came after the print, so momentum and news-reactive entries had no pre-market position. A long-only bot has no short exposure to a guidance cut.",
+      "suggestion": "Add mid-cap consumer/industrial distributors to the mean-reversion universe and add a post-earnings-drift rule: after a gap-down of 5% or more on an earnings day, watch for a rebound entry once the next session's volume confirms.",
+      "failed": false
+    },
+    {
+      "ticker": "FIX",
+      "move_pct": -5.405,
+      "close": 1394.405,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found; likely profit-taking and rotation out of AI/data-center construction names ahead of Q3 earnings (FIX trades ~60x earnings, with past drops tied to insider selling).",
+      "miss_reason": "Outside any active strategy's universe: FIX is a ~$50B mid/large-cap industrial/HVAC contractor that no strategy lists. With no discrete catalyst, a news-reactive bot had nothing to trigger on, and a -5% drift on a sector move would not pass a momentum filter.",
+      "suggestion": "Add FIX and peers (EME, STRL, PWR) to a 'data-center-capex' basket in the mean-reversion universe, entering only when a \u22655% drop comes with no earnings or news flag and RSI(14) is below 35.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-21T19:32:06.788399+00:00"
+}
