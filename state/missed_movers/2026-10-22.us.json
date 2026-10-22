@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-22",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 SMCI +10%, CRL +9%, BE +7%, DDOG +6%, CIEN +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (T -6%, DXCM -6%, NFLX -5%, CMG -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: SMCI (+9.55%) \u2014 Super Micro pre-announced fiscal Q1'27 results: revenue $18.5-19.5B (above prior guidance) and gross margin 12.0-12.5% (was 10.4-10.8%), on strong AI server demand. The 35.57 close matches Oct 21's close, so the move likely dates from that session. Why we passed: Outside any active strategy's universe: SMCI is a volatile mid/large-cap AI-hardware name that no strategy lists. It was also a pre-market guidance-driven gap, so any post-open momentum or news-reactive signal would have fired after the move was largely priced in.",
+  "top_movers": [
+    {
+      "ticker": "SMCI",
+      "move_pct": 9.547,
+      "close": 35.57,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Super Micro pre-announced fiscal Q1'27 results: revenue $18.5-19.5B (above prior guidance) and gross margin 12.0-12.5% (was 10.4-10.8%), on strong AI server demand. The 35.57 close matches Oct 21's close, so the move likely dates from that session.",
+      "miss_reason": "Outside any active strategy's universe: SMCI is a volatile mid/large-cap AI-hardware name that no strategy lists. It was also a pre-market guidance-driven gap, so any post-open momentum or news-reactive signal would have fired after the move was largely priced in.",
+      "suggestion": "Add SMCI and similar high-beta AI-server names (DELL, VRT, CLS) to the momentum-trader universe. Also let the news-reactive gate admit pre-announcements that raise guidance, with a gap of +5% or more and volume at least 1.5x average.",
+      "failed": false
+    },
+    {
+      "ticker": "CRL",
+      "move_pct": 9.326,
+      "close": 344.87,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found for Oct 22; Q3 earnings aren't due until Nov 4. The +9.3% move is likely a sector rally (CRO/biotech tools, possibly peer earnings) or an analyst action.",
+      "miss_reason": "Outside any active strategy's universe: CRL is a ~$17B mid-cap life-science tools/CRO name that no strategy lists. With no pre-market catalyst, a news-reactive filter had nothing to trigger on, and a momentum screen wouldn't have flagged it before the intraday move.",
+      "suggestion": "Add a daily 'dynamic mid-cap' universe slice (S&P 400/500 names with price \u2265 $20 and 20-day avg volume \u2265 500k) to the momentum strategy, so a \u2265 +5% day on volume \u2265 2\u00d7 average is evaluated rather than skipped for lack of membership.",
+      "failed": false
+    },
+    {
+      "ticker": "BE",
+      "move_pct": 7.132,
+      "close": 238.53,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst for 2026-10-22. BE (Bloom Energy, fuel cells for AI data-centre power) is a high-beta name that fell ~9% on Oct 14 and probably rebounded with the AI-power theme.",
+      "miss_reason": "Outside any active strategy's universe. BE is a volatile mid/large-cap clean-energy/AI-power name that no strategy lists. A +7% rebound without a clear news hook also wouldn't trigger a news-reactive entry.",
+      "suggestion": "Add high-beta AI-power/energy names such as BE to the momentum universe, with a dynamic add rule: ADV above $200M and 20-day ATR above 5%. Cap position size to limit volatility risk.",
+      "failed": false
+    },
+    {
+      "ticker": "DDOG",
+      "move_pct": 6.497,
+      "close": 273.09,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued rebound on AI-demand analyst upgrades (Bernstein to Outperform, PT $350; Mizuho/Barclays/Morgan Stanley PT raises). Exact date of each note unclear. No earnings; next report is Nov 4.",
+      "miss_reason": "Outside any active strategy's universe: DDOG is a mid/large-cap software name that no strategy lists. It also had a multi-day run (+7.8% on Oct 21), so an RSI or extension filter would likely have excluded it.",
+      "suggestion": "Add high-beta software/AI-infrastructure names such as DDOG, SNOW and NET to the momentum universe. Also add an analyst-upgrade news trigger that allows entry on a \u2265+5% day with volume \u22651.5\u00d7 the 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "CIEN",
+      "move_pct": 5.67,
+      "close": 361.34,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed Oct 22 news found. Likely a sector move in optical/AI-networking names. Ciena is a high-beta AI-datacenter optical play and has been volatile since its Q3 FY26 earnings.",
+      "miss_reason": "Outside any active strategy's universe. CIEN is a roughly $50B mid/large-cap networking name, and no strategy's universe includes it. A +5.7% move with no company-specific catalyst also gives news-reactive logic nothing to trigger on.",
+      "suggestion": "Add a dynamic universe slot to momentum-trader. It would admit US tech/networking names above $10B market cap with a 20-day average dollar volume above $200M, and it could be seeded from the prior day's top sector-ETF constituents.",
+      "failed": false
+    },
+    {
+      "ticker": "ILMN",
+      "move_pct": 5.572,
+      "close": 282.86,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day catalyst. Likely a continued diagnostics/life-science tools sector rally and BioInsight software launch sentiment, with Q3 earnings due Oct 29.",
+      "miss_reason": "Outside any active strategy's universe: ILMN is a ~$40B mid/large-cap life-science tools name that no strategy's universe lists. The move was also sector and sentiment driven with no discrete news event for a news-reactive filter to catch.",
+      "suggestion": "Add a daily scan that lets any US name with \u22655% close-to-close gain on \u22651.5\u00d7 average volume into the momentum-trader universe for the next session, which would catch ILMN-style sector-rally leaders outside the static list.",
+      "failed": false
+    },
+    {
+      "ticker": "T",
+      "move_pct": -6.447,
+      "close": 21.91,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely AT&T Q3 earnings reaction (it usually reports around Oct 22). I couldn't find coverage confirming the date or the cause of the -6.45% drop, so this is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: T is a mega-cap, low-beta telecom, probably excluded as a defensive, low-volatility name. An earnings gap-down at the open also leaves no entry, and the bot has no short capability.",
+      "suggestion": "No actionable change for the long-only book. Optionally, add large-cap defensive names to the news-reactive universe so post-earnings gap-downs can trigger an exit or avoid-list flag.",
+      "failed": false
+    },
+    {
+      "ticker": "DXCM",
+      "move_pct": -6.391,
+      "close": 80.26,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Abbott cut its diabetes-care growth outlook to low-to-mid single digits, raising CGM demand and competition worries, plus pre-earnings positioning ahead of DexCom's Q3 report on Oct 29. Search results dated the ~6% drop Oct 21, so the date is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: DXCM is a mid-cap medtech name that no strategy lists. The drop was also a read-through from a peer's guidance, not a DXCM-specific news or gap signal, so a news-reactive filter would not have fired.",
+      "suggestion": "Add a healthcare/medtech sleeve to the news-reactive universe, e.g. DXCM, PODD and ABT, and trigger it on a peer-guidance read-through with a \u22655% close-to-close drop on \u22651.5\u00d7 average volume; otherwise no change, since the bot can't short.",
+      "failed": false
+    },
+    {
+      "ticker": "NFLX",
+      "move_pct": -5.314,
+      "close": 65.04,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely continued post-earnings selling after Netflix's Oct 20 Q3 report (the stock has fallen after each of its last four reports). I couldn't confirm a fresh Oct 22 headline, so this is partly inferred.",
+      "miss_reason": "Outside any active strategy's universe: NFLX is a large-cap, but no strategy lists it. The drop also came two sessions after the earnings gap, so a gap-up/news-reactive filter would have seen no fresh trigger, and a long-only bot can't short the weakness.",
+      "suggestion": "Add NFLX and similar large-cap streamers to the mean-reversion universe, gated by a post-earnings rule: after a gap-down of 7% or more, wait 2 sessions and enter only if the close is above the prior low and RSI(14) is below 30.",
+      "failed": false
+    },
+    {
+      "ticker": "CMG",
+      "move_pct": -5.16,
+      "close": 28.12,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed driver found. Q3 earnings aren't due until Oct 28, so this looks like a pre-earnings selloff tied to food-safety (Cyclospora) and weak-traffic worries, not a company announcement.",
+      "miss_reason": "Outside any active strategy's universe. CMG is a large-cap restaurant name that no strategy lists. With no earnings or news gap, a -5% drift would also not trip a gap or news-reactive trigger.",
+      "suggestion": "Add large-cap consumer-discretionary names like CMG to the mean-reversion universe, with a pre-earnings blackout filter that skips entries within 5 trading days of the report date.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-22T19:32:13.646231+00:00"
+}
