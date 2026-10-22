@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-22",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 RTO.L +7%, QIA.DE +6%, BESI.AS +5%, AKZA.AS +4%, LSEG.L +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (RMS.PA -8%, ABDN.L -4%, RAND.AS -4%, FRES.L -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: RMS.PA (-7.71%) \u2014 Likely reaction to Q3 2026 sales, which Herm\u00e8s was scheduled to report on Oct 22. I found no same-day coverage, so the details are unconfirmed. Growth worries (China/APAC) had already hit the stock in July. Why we passed: Outside any active strategy's universe: RMS.PA is a ~\u20ac130B+ euro-listed luxury large-cap on Euronext Paris. The drop was a scheduled-results gap at the open, so any earnings gate or gap filter would have excluded it, and a long-only bot can't short it.",
+  "top_movers": [
+    {
+      "ticker": "RTO.L",
+      "move_pct": 7.211,
+      "close": 3.375,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 trading update on Oct 22: North America residential lead flow improved to -1% in September (from a mid-to-high single-digit decline in July/Aug), with a $200m buyback to start and leverage at 2.4x.",
+      "miss_reason": "Outside any active strategy's universe: RTO.L is a FTSE 100 pest-control and hygiene services stock that no strategy lists. The gap came from a scheduled morning RNS, so a post-open momentum signal would have entered after most of the move.",
+      "suggestion": "Add FTSE 100 names with a scheduled trading update or results date to the news-reactive universe, and release them from the earnings gate on a gap of +5% or more with volume at least 1.5x the 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "QIA.DE",
+      "move_pct": 5.537,
+      "close": 45.175,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst found. Qiagen's Q3 results weren't yet out in my searches, so this may be a pre-results rerating or a sector move in European diagnostics/life-science tools.",
+      "miss_reason": "Outside any active strategy's universe: QIA.DE is a mid-cap German/Dutch diagnostics and life-science tools name, not in the large-cap index lists. With no identifiable news, a news-reactive bot had no signal and a momentum screen had no candidate.",
+      "suggestion": "Add a dynamic universe rule that admits any uk-eu name with a daily move of at least +4% on at least 1.5x 20-day average volume to the momentum-trader watchlist for the next session, whether or not it is in the static list.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": 5.27,
+      "close": 163.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 orders beat: \u20ac342.6M, up 96% y/y vs ~\u20ac298M consensus on AI hybrid-bonding demand. CEO also dismissed ASML as a hybrid bonding rival, easing last week's fears. Some reports of the share reaction conflict.",
+      "miss_reason": "Outside any active strategy's universe: BESI is a mid-cap Dutch semiconductor-equipment name, so the bot never screened it. It was also an earnings-day gap, which pre-market positioning captures and post-open momentum filters usually miss.",
+      "suggestion": "Add a 'eu_semi_equipment' sleeve (BESI.AS, ASM International, ASML) to the news-reactive universe, and release the earnings gate for names gapping up 3% or more on a results or orders beat within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "AKZA.AS",
+      "move_pct": 3.695,
+      "close": 60.62,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day driver found. Likely Q3 results (usually late Oct) or news in the ongoing Axalta merger / Nippon Paint\u2013Sherwin-Williams takeover saga, but I couldn't verify either.",
+      "miss_reason": "Outside any active strategy's universe: AKZA.AS is a mid/large-cap Dutch chemicals/coatings name on Euronext Amsterdam that no strategy lists. A +3.7% move on a likely event-driven day also suits pre-open positioning better than a post-signal entry.",
+      "suggestion": "Add Euronext Amsterdam large/mid-caps (e.g. AEX/AMX constituents) to the news-reactive strategy's universe, and gate entries on a daily return \u2265 +3% with volume \u2265 1.5\u00d7 the 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "LSEG.L",
+      "move_pct": 3.046,
+      "close": 89.98,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 trading update: organic income +8.8%, FY2026 guidance raised (organic growth \u22658%, margin and cash flow also lifted), \u00a3500m buyback in Q3, and a $3.5bn deal to buy Octus.",
+      "miss_reason": "Outside any active strategy's universe: LSEG is a FTSE 100 large-cap financial/data name that no strategy includes. The gap came from a pre-market results release, so a post-open momentum signal would have been late.",
+      "suggestion": "Add FTSE 100 financial-data and exchange names (LSEG.L) to the news-reactive universe. Let the earnings gate release names with a trading-update gap of +2% or more within 30 minutes of the 07:00 UK RNS.",
+      "failed": false
+    },
+    {
+      "ticker": "BAYN.DE",
+      "move_pct": 2.99,
+      "close": 44.78,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-22; likely a continuation move after the June 2026 US Supreme Court Roundup ruling for Bayer, or a sector move.",
+      "miss_reason": "Outside any active strategy's universe: BAYN.DE is a large-cap German pharma/agro name on Xetra, and no strategy's universe includes it. A +3% move with no fresh headline would also not trigger a news-reactive or gap-up filter.",
+      "suggestion": "Add large-cap DAX/Xetra names with active litigation or event risk (e.g. BAYN.DE) to the momentum universe, with the existing gap/volume filters (e.g. \u22651.5\u00d7 average volume) still applied.",
+      "failed": false
+    },
+    {
+      "ticker": "RMS.PA",
+      "move_pct": -7.709,
+      "close": 1245.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely reaction to Q3 2026 sales, which Herm\u00e8s was scheduled to report on Oct 22. I found no same-day coverage, so the details are unconfirmed. Growth worries (China/APAC) had already hit the stock in July.",
+      "miss_reason": "Outside any active strategy's universe: RMS.PA is a ~\u20ac130B+ euro-listed luxury large-cap on Euronext Paris. The drop was a scheduled-results gap at the open, so any earnings gate or gap filter would have excluded it, and a long-only bot can't short it.",
+      "suggestion": "Add Euronext Paris luxury large-caps (RMS, MC, KER) to a results-day watchlist, and let the earnings-gate release names with a gap of at least 5% within 30 minutes of the open. Short-side mean-reversion is out of scope for a long-only bot.",
+      "failed": false
+    },
+    {
+      "ticker": "ABDN.L",
+      "move_pct": -4.332,
+      "close": 2.2482,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 22 Oct; searches turned up no dated Aberdeen announcement. Likely a sector or technical move among UK asset managers, possibly on outflow worries after the weak H1 results.",
+      "miss_reason": "Outside any active strategy's universe: ABDN.L is a mid-cap FTSE 250 asset manager that no strategy's universe includes. A -4.3% drop with no catalyst also wouldn't trip a news-reactive trigger, and a long-only bot wouldn't act on it.",
+      "suggestion": "(no actionable change: a long-only bot can't use a no-news decline.) If wanted, add FTSE 250 financials to the mean-reversion universe with an RSI<30 and volume \u22651.5\u00d7 average entry gate.",
+      "failed": false
+    },
+    {
+      "ticker": "RAND.AS",
+      "move_pct": -3.886,
+      "close": 40.07,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely Randstad Q3 results/staffing-demand weakness (unconfirmed). Searches only found the Oct 2025 Q3 reaction, not 2026 coverage, so no verified same-day driver.",
+      "miss_reason": "Outside any active strategy's universe: Randstad is a mid-cap Dutch staffing/cyclical-services stock on Euronext Amsterdam. A results-day gap down is also hard for a momentum bot to catch, since the move happens at the open.",
+      "suggestion": "Add mid-cap AEX/AMX names to the uk-eu universe, with an earnings-day gap filter (gap \u2264 -3% on \u22651.5\u00d7 average volume) that flags them for review. Shorting is unavailable, so the practical use is a post-drop mean-reversion watchlist.",
+      "failed": false
+    },
+    {
+      "ticker": "FRES.L",
+      "move_pct": -3.169,
+      "close": 25.36,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No FRES.L-specific news found for 2026-10-22; likely a precious-metals sector pullback (silver/gold weakness) hitting the miner, amplified by its high beta to metal prices. Cause not confirmed.",
+      "miss_reason": "Outside any active strategy's universe: FRES.L is a FTSE 100 Mexican silver/gold miner and no strategy includes it. A -3.2% sector-driven move with no stock-specific catalyst also wouldn't trigger news-reactive logic.",
+      "suggestion": "Add a precious-metals miners basket (FRES.L, AAL.L, plus gold/silver ETFs) to the commodity strategy universe, gated on a gold/silver 1-day move of at least 2%, so it can trade metal-driven sector moves.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-22T15:03:20.014565+00:00"
+}
