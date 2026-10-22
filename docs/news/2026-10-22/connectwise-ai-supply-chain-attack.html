@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Microsoft says China-aligned hackers used AI to speed ConnectWise supply-chain attack — 2026-10-22 — Trading Bot</title>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../../index.html">Dashboard</a>
+<a class="nav-tab active" href="../../news/latest.html">News</a>
+<a class="nav-tab" href="../../macro/latest.html">Macro</a>
+<a class="nav-tab" href="../../evolution.html">Evolution</a>
+<a class="nav-tab" href="../../ml/index.html">ML lab</a>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper article-page"><div class="edition-nav" data-edition="2026-10-22" data-kind="news"><a class="edition-nav-link" data-role="prev" href="../2026-10-21/" title="2026-10-21">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><a class="edition-nav-link disabled" data-role="next" href="#" aria-disabled="true">next →</a><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">TECH · CYBERSECURITY · By R. Okonkwo · 2026-10-22 · 5 min read</div><h1>Microsoft says China-aligned hackers used AI to speed ConnectWise supply-chain attack</h1><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>Microsoft says China-aligned Storm-0940 used the ARTEX AI tool to speed a ConnectWise supply-chain compromise that targeted hundreds of organisations; the AI-speed claim is Microsoft&#x27;s own.</div></div><div class="body"><p>A company that manages IT for other companies is a convenient thing to break into. Get inside it once and you inherit its relationships. Microsoft says that is what a China-aligned hacking group did to ConnectWise, a major supplier of software to managed service providers (MSPs). It also says the group used an AI tool to move faster than defenders usually expect.</p>
+<p>Microsoft disclosed the findings on Wednesday. It attributes the compromise of the ConnectWise Cloud Backup application to a group it tracks as Storm-0940, which it describes as China state-aligned. It says the group used an agentic AI penetration-testing framework called ARTEX against hundreds of organisations from September 2026. The AI-acceleration claim is Microsoft's own assessment. It has not been independently verified, and this account draws on reporting of Microsoft's disclosure rather than on a full reading of the primary document. The Chinese embassy in Washington did not immediately respond to Reuters. Beijing routinely denies conducting or condoning cyber-enabled theft.</p>
+<h2>How the attack worked</h2>
+<p>Microsoft's account is not that the AI found some novel exploit. It describes AI agents speeding up familiar, unglamorous steps: scanning, reconnaissance, password spraying and the abuse of OAuth applications, the permissioned connections that let one cloud service act inside another.</p>
+<p>The pattern in Microsoft's telemetry is specific. Between 10 and 14 October, infrastructure at a single IP address ran an automated cross-tenant password-spray campaign against 327 accounts at eight organisations, aiming at Microsoft 365 and Exchange Online. Microsoft logged more than 151,000 failed sign-ins. The peak came on 11 October, at 2,900 failures a minute, with over 111,000 failures that day. Forty-eight accounts took more than 1,000 failures each. Microsoft says it saw no successful authentication, token issuance or directory change in that window.</p>
+<p>Then, on 15 October, the pattern shifted. Microsoft says AI agents gained control of the identities of several ConnectWise cloud applications and used them to sign in to customer environments. That route needs no user password. The attackers relied on the trust each customer had already granted the application. Microsoft says the actor attempted to sign in to more than 2,250 tenants.</p>
+<p>Where access worked, the agents moved on to Microsoft Graph, the interface for reading and changing a tenant's directory, and carried out what Microsoft calls "AI-accelerated follow-on activity": reconnaissance, application credential changes, and changes to identities, groups and privileged roles. Microsoft warns that those credential changes "can remain active as a backdoor even after the original compromised application" is cleaned up.</p>
+<h2>The speed claim</h2>
+<p>The claim that matters most is about time. Microsoft says ARTEX "accelerated the speed of compromised application abuse" and that some attacks reached privileged access in cloud infrastructure within three hours of initial targeting. It adds that "agents are not constrained by factors affecting humans."</p>
+<p>A few caveats apply. Three hours is fast, but Microsoft's material, as reported, does not give a human-operated baseline for the same attacks, so how much time the AI actually saved is not established. Reuters reports that most of the targeting was unsuccessful, though Microsoft said the group quickly gained privileged cloud persistence at many organisations. Nor is the tool itself simple to describe. Reuters calls ARTEX open-source and able to work with any AI model. The Hacker News says it was made closed-source after being abused against South Korean financial institutions. The sources disagree on that point.</p>
+<p>The targeting was broad: aerospace and defence, automotive, chemicals, energy, financial services, government, legal, manufacturing, media, military, semiconductors, software, technology, think tanks and non-profits. That fits Storm-0940's profile. Microsoft first described the group in November 2024, tied to a botnet called Quad7 used for evasive password spraying, and assesses it has been active since at least 2021.</p>
+<h2>Why the supply chain is the point</h2>
+<p>The supply-chain route is what turns a single breach into hundreds. An MSP or software vendor holds standing access to many customers, and customers extend that access because it saves them work. Defenders have traditionally had some slack in that arrangement: the gap between an attacker getting in and fanning out was long enough to notice things. If agents can test every downstream connection at machine speed, that slack shrinks.</p>
+<p>ConnectWise's chief executive, Manny Rivelo, said: "it appears that a China state-aligned group was responsible for the attack on ConnectWise Cloud Backup." The company says it has contained the affected application connections and is restoring services in phases, a process it expects to take several days. It also cautioned that containment does not remove unauthorised access already established inside individual customer tenants, which each need separate review. In its statement ConnectWise said that "nation-state actors are increasingly targeting the software supply chain" and that "every vendor and every MSP must defend itself with both of those risks in mind."</p>
+<h2>What to watch</h2>
+<p>The practical test is clean-up. Customers of ConnectWise Cloud Backup will need to audit OAuth applications for newly added credentials and review recent changes to privileged roles and groups, since those are the persistence mechanisms Microsoft describes. ConnectWise's phased restoration and its trust-site advisory will show how many customers turn out to have been touched. Independent confirmation of the timing claims from outside Microsoft would also help show whether AI is changing how quickly these attacks move or only how much of the routine work gets automated.</p></div><section class="sources-block"><h4>Sources</h4><ol><li><a href="https://thehackernews.com/2026/10/china-linked-hackers-use-artex-ai.html" rel="nofollow noopener" target="_blank">The Hacker News: China-Linked Hackers Use ARTEX AI Agents to Abuse ConnectWise Supply Chain Attack</a></li><li><a href="https://whtc.com/2026/10/21/chinese-linked-hackers-compromise-connectwise-target-hundreds-in-global-attack-microsoft-says/" rel="nofollow noopener" target="_blank">Reuters via WHTC: Chinese-linked hackers compromise ConnectWise, target hundreds in global attack, Microsoft says</a></li><li><a href="https://www.business-standard.com/technology/artificial-intelligence/chinese-linked-hackers-use-ai-to-compromise-firms-globally-microsoft-126102200170_1.html" rel="nofollow noopener" target="_blank">Business Standard: Chinese-linked hackers use AI to compromise firms globally: Microsoft</a></li></ol></section><section class="related"><h4>Related in this edition</h4><a href="php-vulnerability-global-alert.html"><span style="display:block;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:0.2rem;">TECH &amp; SCIENCE</span>Critical PHP flaw prompts global cyber alert and outages</a></section><footer class="colophon">The Bot Tribune · 2026-10-22 · <a href="index.html">Back to the edition</a></footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
+</body>
+</html>
