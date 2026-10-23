@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-23",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 ALLE +11%, ROP +10%, LEN +8%, BX +8%, HPQ +8%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (MRNA -18%, COHR -13%, LRCX -12%, LITE -12%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: MRNA (-17.93%) \u2014 Sell-the-news after leaked Phase 3 melanoma data (intismeran + Keytruda, 42% lower recurrence risk) ahead of ESMO. Shares had roughly quadrupled since August, and Citi downgraded on valuation. Search dates the main drop to Oct 22. Why we passed: Outside any active strategy's universe: a mid/large-cap biotech that is not in any momentum or mean-reversion list. It was also a news-leak gap-down on a stock up about 4x in two months, and a long-only bot cannot short it.",
+  "top_movers": [
+    {
+      "ticker": "ALLE",
+      "move_pct": 10.714,
+      "close": 176.035,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 earnings beat: adjusted EPS $2.60 vs ~$2.48 consensus, revenue $1.17B (+9.6%, +7.2% organic) vs ~$1.13B est., and the full-year 2026 outlook was raised.",
+      "miss_reason": "Outside any active strategy's universe: ALLE is a mid-cap industrial (security hardware) that no strategy covers. It was also an earnings gap, so the move came on the open and a post-open momentum signal would have been late.",
+      "suggestion": "Add a post-earnings-gap scan: admit any US name with a gap of at least +5%, EPS and revenue beats, and a guidance raise to the momentum strategy's universe for that session, bypassing the static universe list.",
+      "failed": false
+    },
+    {
+      "ticker": "ROP",
+      "move_pct": 9.961,
+      "close": 437.16,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Follow-through from Q3 results reported 10/22: adj EPS $5.89 beat the $5.79 estimate, revenue rose 8%, and FY EPS guidance was raised to $22.35-22.40. No separate 10/23 news found, so the +10% is likely a delayed re-rating.",
+      "miss_reason": "Outside any active strategy's universe: ROP is a ~$45B mid/large-cap software and industrial-tech compounder that no strategy lists. The stock was flat premarket on 10/22, so a gap-based or earnings-day trigger would not have fired.",
+      "suggestion": "Add a post-earnings-drift scanner that admits any S&P 500 name into the momentum universe when the 1-day move is \u2265 +7% within 2 sessions of an earnings beat plus guidance raise, even if it is not in a static universe list.",
+      "failed": false
+    },
+    {
+      "ticker": "LEN",
+      "move_pct": 8.494,
+      "close": 84.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Rate-driven homebuilder rally: the 10-yr Treasury yield fell below 5% and mortgage rates eased, on top of Berkshire Hathaway's reported ~11% LEN stake build. No company-specific news found.",
+      "miss_reason": "Outside any active strategy's universe: LEN is a large-cap homebuilder, and no strategy covers housing or rate-sensitive cyclicals. The move was a macro and rates sector move, with no earnings gap or news-reactive signal to trigger on.",
+      "suggestion": "Add a rate-sensitive sector basket (LEN, DHI, PHM, ITB) to the momentum universe, gated on a \u226510bp one-day drop in the 10-yr yield plus \u2265+3% sector-ETF move, so the next rate-relief rally is caught.",
+      "failed": false
+    },
+    {
+      "ticker": "BX",
+      "move_pct": 8.241,
+      "close": 118.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 2026 earnings: distributable EPS $1.32 beat the $1.29 estimate, credit/insurance inflows were $35.8B, AUM hit $1.37T and credit DE turned up. Premarket was +3.4%; the session closed up 8.2%.",
+      "miss_reason": "Outside any active strategy's universe: BX is a large-cap alternative asset manager/financial that no strategy lists. The move was an earnings-gap catalyst, so a post-open momentum or news bot would also have found the gap already priced.",
+      "suggestion": "Add large-cap financials/alt managers (BX, KKR, APO) to the news-reactive universe, and release the earnings gate for names that beat EPS and gap up \u22653% premarket, entering within the first 30 minutes after the open.",
+      "failed": false
+    },
+    {
+      "ticker": "HPQ",
+      "move_pct": 7.766,
+      "close": 33.7524,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed company-specific news found. The move looks like a rally in AI PC / workstation hardware names, with HPE and Dell also up on the day, rather than an earnings or M&A event.",
+      "miss_reason": "Outside any active strategy's universe: HPQ is a mid-cap PC/printer hardware name that no strategy lists. With no pre-market news catalyst, a news-reactive bot had nothing to trigger on, and a momentum screen would only see the gap at the open.",
+      "suggestion": "Add a daily 'unlisted movers' scan to the momentum-trader's candidate set: any US stock above $5B market cap with a gap \u2265 +5% and volume \u2265 1.5\u00d7 its 20-day average gets added to the universe for that session.",
+      "failed": false
+    },
+    {
+      "ticker": "GIS",
+      "move_pct": 7.242,
+      "close": 34.9288,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No GIS-specific news found. It looks like a continuing staples/defensive rally after P&G's earnings beat sparked +6-8% moves on Oct 22, extending a bounce from a ~30% drawdown.",
+      "miss_reason": "Outside any active strategy's universe. GIS is a large-cap, low-beta packaged-food staple, and the universe likely favours growth, tech or high-beta names. The move was sector-driven with no stock-specific trigger, and it started a day earlier.",
+      "suggestion": "Add a consumer-staples sector-momentum rule: if \u22653 staples names gain \u22654% on volume \u22651.5\u00d7 the 20-day average after a bellwether earnings beat (e.g. PG), let a defensive sleeve enter the laggards on day 2.",
+      "failed": false
+    },
+    {
+      "ticker": "MRNA",
+      "move_pct": -17.928,
+      "close": 201.74,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sell-the-news after leaked Phase 3 melanoma data (intismeran + Keytruda, 42% lower recurrence risk) ahead of ESMO. Shares had roughly quadrupled since August, and Citi downgraded on valuation. Search dates the main drop to Oct 22.",
+      "miss_reason": "Outside any active strategy's universe: a mid/large-cap biotech that is not in any momentum or mean-reversion list. It was also a news-leak gap-down on a stock up about 4x in two months, and a long-only bot cannot short it.",
+      "suggestion": "Add a post-gap 'parabolic-run exhaustion' watchlist: biotechs with a >150% 60-day gain and a >10% single-day drop would feed the mean-reversion universe, so a bounce entry is considered after day 2 once volume normalizes.",
+      "failed": false
+    },
+    {
+      "ticker": "COHR",
+      "move_pct": -12.984,
+      "close": 206.69,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide AI optics selloff, with COHR down about 12% and Lumentum also lower, reported as AI optics stocks cooling ahead of earnings. I found no company-specific news. The date attribution is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: COHR is a mid/large-cap photonics name that no strategy's universe includes. The drop was a high-beta sector de-rating with no single catalyst for a news-reactive bot to key on, and the bot likely has no short capability.",
+      "suggestion": "Add AI-optics/semis names (COHR, LITE, AAOI) to the mean-reversion universe, with a sector-wide gate that fires when \u22653 peers fall \u22657% on the same day. Only then consider a rebound entry, with a size cap.",
+      "failed": false
+    },
+    {
+      "ticker": "LRCX",
+      "move_pct": -12.337,
+      "close": 228.635,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Lam's Dec-quarter guide (~$8.6B, barely above consensus) cited supply-chain constraints that could push shipments into March. That set off a chip-wide selloff (SOX -6.7%) amid AI-capex doubts.",
+      "miss_reason": "Outside any active strategy's universe: LRCX is a large-cap semiconductor-equipment name that no strategy lists. The drop was an earnings-reaction gap (results were after the close on 10/21), so a post-print gap-down was already priced at the open.",
+      "suggestion": "Add large-cap semi-equipment names (LRCX, AMAT, KLAC) to the news-reactive universe. Also add a sector-contagion rule that flags names when SOX falls more than 4% on a day with a bellwether earnings gap.",
+      "failed": false
+    },
+    {
+      "ticker": "LITE",
+      "move_pct": -11.775,
+      "close": 750.53,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued AI-optics sector selloff (Coherent, AAOI, Ciena, Lumentum) on tech weakness and AI-capex worries ahead of earnings. I found no company-specific news. Sources only confirm the Oct 22 leg, not Oct 23.",
+      "miss_reason": "Outside any active strategy's universe: LITE is a high-priced (~$750), highly volatile mid/large-cap optical-networking name after a ~500% run, so it likely fails the universe's price/volatility screens. The drop was a sector-wide move, not a catalyst the news filter could act on.",
+      "suggestion": "Add a 'high-beta AI-hardware' sub-universe (LITE, COHR, CIEN, AAOI) with a sector-relative mean-reversion rule, e.g. consider entry when the basket falls \u22658% in 2 days with no company-specific news.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-23T19:32:06.381008+00:00"
+}
