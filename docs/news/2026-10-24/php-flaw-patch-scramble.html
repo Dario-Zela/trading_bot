@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PHP flaw sets off global patching scramble — 2026-10-24 — Trading Bot</title>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../../index.html">Dashboard</a>
+<a class="nav-tab active" href="../../news/latest.html">News</a>
+<a class="nav-tab" href="../../macro/latest.html">Macro</a>
+<a class="nav-tab" href="../../evolution.html">Evolution</a>
+<a class="nav-tab" href="../../ml/index.html">ML lab</a>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper article-page"><div class="edition-nav" data-edition="2026-10-24" data-kind="news"><a class="edition-nav-link" data-role="prev" href="../2026-10-23/" title="2026-10-23">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><a class="edition-nav-link disabled" data-role="next" href="#" aria-disabled="true">next →</a><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">TECH · CYBERSECURITY · By R. Okonkwo · 2026-10-24 · 4 min read</div><h1>PHP flaw sets off global patching scramble</h1><img class="hero" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/960px-PHP-logo.svg.png" alt="The PHP logo; the language runs a large share of the web."><div class="hero-caption">The PHP logo; the language runs a large share of the web. — <em>Colin Viebrock / Wikimedia Commons</em></div><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>Two critical PHP flaws, patched on 21 October, led governments and firms to patch urgently or go offline, with exploitation attempts reported but no confirmed break-ins.</div></div><div class="body"><p>A bug in PHP, the programming language behind roughly 69% of websites whose server-side language is known, sent IT teams around the world scrambling this week. Some governments and companies did not wait to patch. They switched their sites off.</p>
+<p>The flaws were fixed in emergency releases on Wednesday 21 October. The Dutch government took parts of its online services offline, including the DigiD login system. Finland suspended public-facing government services. Edinburgh council and the BBC pulled some pages, and the Wikimedia Foundation shut down a range of supporting services. The Dutch cyber-security centre said it had not seen the flaw abused. The shutdowns were precautionary.</p>
+<p><img alt="The PHP logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/960px-PHP-logo.svg.png" /></p>
+<h2>What is broken</h2>
+<p>The problem is two separate vulnerabilities, together nicknamed PHP2Shell. Both allow remote code execution without a login. In practice, an attacker who can send a request to a vulnerable web server can make it run their own commands.</p>
+<ul>
+<li><strong>CVE-2026-109618</strong> is described as remote code execution through out-of-memory corruption.</li>
+<li><strong>CVE-2026-109619</strong> is described as remote code execution through stale global state. It involves PHP's session upload-progress feature.</li>
+</ul>
+<p>The PHP project scores both 9.2 out of 10 under the CVSS v4.0 system, which is "critical". The affected range is wide: nearly every version back to PHP 5.4, across the common ways of running it, including PHP-FPM, Apache's mod_php, php-cgi, FrankenPHP and LiteSpeed.</p>
+<p>Fixes are in PHP 8.5.12, 8.4.27, 8.3.36 and 8.2.35. PHP 8.1 and older no longer get official updates. Source-code backports exist for 7.4, 8.0 and 8.1, but not ready-made binaries. Linux distributions often keep old-looking version numbers on patched packages, so administrators have to check a package's changelog for the CVE, not its version string. Wordfence warned that WordPress's automatic updates do not install the PHP fix, because PHP belongs to the server, not the site.</p>
+<h2>Found by machines, known for years</h2>
+<p>The discovery story is part of why this has unsettled people. Reporting indicates researchers at the security firms Wiz and Calif, and OpenAI's Codex Security team, found and reported the flaws, with AI models doing much of the searching. They worked with the PHP security team on the fix. According to the PHP2Shell account on Wikipedia, one of the bugs was found in August during an OpenAI project, and Wiz compared the severity with Heartbleed, the 2014 OpenSSL flaw.</p>
+<p>The out-of-memory problem was not wholly new. The PHP Foundation says a core developer noticed signs of it during an external audit in 2024. No working attack was found then. The Foundation has called the delay in fixing it "a structural failure" of its decision process and resources. It is a small organisation maintaining software that much of the web depends on.</p>
+<h2>Exploitation: what is and isn't known</h2>
+<p>The source summary carried no evidence either way on attacks. The record now shows a mixed picture.</p>
+<ul>
+<li>Amazon's honeypot telemetry recorded an exploitation attempt as early as 17 October, four days before the patch.</li>
+<li>Cloudflare reported early attacks and rolled out firewall rules by default, then saw attackers change their payloads to get around them. Its chief technology officer, Dane Knecht, said: "We are seeing early attacks emerging and are updating mitigations as new vectors show up."</li>
+<li>Security firm watchTowr said at 11:26 UTC on 21 October that it saw no in-the-wild exploitation. By 14:19 UTC it reported "active exploitation attempts" against both flaws.</li>
+<li>The US cyber agency CISA said on 21 October it had not observed exploitation. No confirmed break-ins had been reported, and neither flaw was in CISA's catalogue of known exploited vulnerabilities at the time of the reporting.</li>
+</ul>
+<p>So attempts are documented and successful compromises are not. That distinction may not last. The disclosure also went badly. News leaked on 20 October, Calif accidentally posted a video of its working proof of concept, and advisories appeared 26 minutes before the scheduled release. The security firm Sansec had expected mass attacks within 15 minutes of release.</p>
+<p>Official advice was blunt. Gina Peter Banyard, a PHP core developer, said: "The only thing I can say is that the only mitigation is patching/upgrading PHP." The UK's National Cyber Security Centre said that where immediate remediation was not feasible, organisations should consider taking the system offline until it could be fully mitigated. The US National Security Agency gave similar advice. Stopgaps exist, such as setting session.upload_progress.enabled to 0, but the advisories say they are not complete fixes.</p>
+<h2>The test</h2>
+<p>The episode shows both strengths and weaknesses of open-source infrastructure. A fix reached the major supported branches within days of the leak, and large hosting and security firms published mitigations quickly. But the long tail is the worry. Anything on PHP 8.1 or older depends on someone applying a source patch by hand, and PHP 8.2 itself reaches end of life on 31 December 2026.</p>
+<p>There is also a second, unpatched problem. PHP disclosed CVE-2026-115560 on 23 October and plans to fix it in its next routine release. Its suggested mitigation is again to turn off session upload progress. The next measure of this scramble is whether that release arrives quickly, and whether CISA adds the PHP2Shell flaws to its exploited-vulnerabilities list.</p></div><section class="sources-block"><h4>Sources</h4><ol><li><a href="https://www.cisa.gov/news-events/alerts/2026/10/21/critical-vulnerabilities-php-require-immediate-patching" rel="nofollow noopener" target="_blank">CISA: Critical Vulnerabilities in PHP Require Immediate Patching</a></li><li><a href="https://thehackernews.com/2026/10/php-issues-emergency-patches-for-two.html" rel="nofollow noopener" target="_blank">The Hacker News: PHP Issues Emergency Patches for Two Critical PHP2Shell RCE Flaws</a></li><li><a href="https://en.wikipedia.org/wiki/PHP2Shell" rel="nofollow noopener" target="_blank">PHP2Shell — Wikipedia</a></li><li><a href="https://www.wiz.io/blog/php2shell-php-rce" rel="nofollow noopener" target="_blank">Wiz: PHP2Shell</a></li><li><a href="https://www.helpnetsecurity.com/2026/10/21/php2shell-php-vulnerabilities-patched-cve-2026-109618-cve-2026-109619/" rel="nofollow noopener" target="_blank">Help Net Security: PHP2Shell vulnerabilities patched</a></li></ol></section><section class="related"><h4>Related in this edition</h4><a href="ofcom-online-safety-children.html"><span style="display:block;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:0.2rem;">TECH &amp; SCIENCE</span>Ofcom admits online safety regime has not yet protected children</a><a href="uk-ai-biosecurity-lab.html"><span style="display:block;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:0.2rem;">TECH &amp; SCIENCE</span>UK to put £100m into &#x27;world first&#x27; AI biosecurity lab</a></section><footer class="colophon">The Bot Tribune · 2026-10-24 · <a href="index.html">Back to the edition</a></footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
+</body>
+</html>
