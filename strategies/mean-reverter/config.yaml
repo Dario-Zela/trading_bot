@@ -27,9 +27,11 @@ runs_in:
   tier: shadow
   alpaca_slot: null
   universe: t212_isa_us
-  tier2_candidate: false
-  tier2_marked_at: null
-  tier2_thesis: ''
+  tier2_candidate: true
+  tier2_marked_at: '2026-10-24'
+  tier2_thesis: "#1 on the leaderboard: IC 0.126 (n=375), 31 trades, 54.8% hit, +\xA3\
+    716 net, spread +2.6. Only strategy with real trade evidence; runner-up insider-cluster@uk-eu\
+    \ has higher IC but 0 trades. Must hold IC >0.10 and reach ~55% hit on paper fills."
 - region: uk-eu
   tier: shadow
   t212_slot: null

@@ -536,3 +536,33 @@
   - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 1, "enforcement": true, "slot_kind": "alpaca"}`
 - **momentum-trader-vix-gated@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.113, n=418) → Alpaca slot 2
   - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 2, "enforcement": true, "slot_kind": "alpaca"}`
+
+## Weekly evolution — 2026-10-24
+
+- **momentum-trader-vix-gated@us** · `demote` · ✅ applied — Dormant on paper: 494 predictions graded and 0 trades, so it holds a slot without earning it. The slot is refilled by mean-reverter@us in this run.
+  - details: `{"from_tier": "alpaca-paper", "slot_cleared": true, "previous_slot": 2, "slot_kind": "alpaca"}`
+- **mean-reverter@us** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 31, "hit_rate": 0.548, "total_pnl_gbp": 716.61, "avg_pnl_pct": 1.578, "max_drawdown_pct": -0.84, "n_predictions_graded": 375, "ic": 0.126, "decile_spread": 2.617}}`
+- **news-reactive-disclosure@us** · `demote` · ⏭️ skipped — Does not meet demotion criteria
+  - details: `{"metrics": null}`
+- **insider-cluster-momentum@us** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 3, "hit_rate": 0.0, "total_pnl_gbp": -16.96, "avg_pnl_pct": 0.0, "max_drawdown_pct": -0.17, "n_predictions_graded": 401, "ic": -0.018, "decile_spread": -1.048}}`
+- **ml-challenger@uk-eu** · `demote` · ⏭️ skipped — Strategy is evolution_frozen (experiment control) — 'demote' refused. (0 trades on 66,899 graded predictions and IC 0.031, so the T212 slot is dormant. Refilled by insider-cluster-momentum@uk-eu.)
+- **insider-cluster-momentum@uk-eu** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 0, "hit_rate": 0.0, "total_pnl_gbp": 0.0, "avg_pnl_pct": 0.0, "max_drawdown_pct": 0.0, "n_predictions_graded": 389, "ic": 0.185, "decile_spread": 1.087}}`
+- **momentum-trader-vix-gated-crowd-cap@us** · `unmark-tier2-candidate` · ✅ applied — Out-competed. IC fell to 0.067, below the 0.10 hold bar in its thesis, and it has 0 trades on 494 predictions.
+- **momentum-trader-vix-gated-crowd-cap@uk-eu** · `unmark-tier2-candidate` · ✅ applied — IC fell to 0.014 with a negative decile spread and 0 trades, so it missed its own thesis.
+- **momentum-trader-news-gated@uk-eu** · `unmark-tier2-candidate` · ✅ applied — IC is now -0.047 with 0 trades, and its thesis requires IC above 0.10. The earlier lead came from only 4 trades.
+- **mean-reverter@us** · `mark-tier2-candidate` · ✅ applied — It is the only candidate with both a positive IC and a statistically meaningful trade record. Industry-adjusted reversal is supported by Stosik & Zaremba.
+  - details: `{"tier2_marked_at": "2026-10-24", "thesis_present": true}`
+- **insider-cluster-momentum@uk-eu** · `mark-tier2-candidate` · ✅ applied — Highest IC on the slate, but it is unproven on P&L, so it ranks below mean-reverter@us.
+  - details: `{"tier2_marked_at": "2026-10-24", "thesis_present": true}`
+- **ml-challenger** · `deactivate` · ⏭️ skipped — Strategy is evolution_frozen (experiment control) — 'deactivate' refused. (No edge in either region: IC -0.022 with 46 trades and -£245 in US, and 0 trades on 66k predictions in UK-EU. This also helps bring the active count under the cap of 18.)
+- **macro-aligned-hmm** · `deactivate` · ✅ applied — Negative P&L in both regions (-£223 US, -£412 UK-EU) with 0% hit rate, and US IC is -0.116. This frees an active slot for new variants.
+  - details: `{"deactivated_at": "2026-10-24"}`
+- **momentum-trader-news-gated** · `deactivate` · ✅ applied — IC is negative in both regions (-0.008 US, -0.047 UK-EU), with 0 trades and negative decile spreads. It is also consistent with the research finding that short-term trend-following has broken down (arXiv 2607.01550).
+  - details: `{"deactivated_at": "2026-10-24"}`
+- **mean-reverter** · `spawn-variant` · ✅ applied — Anchored to Stosik & Zaremba (industry-adjusted reversal earns 0.53% per month) and Bahcivan et al. (overnight jumps predict reversal). It breaks the signal-source axis relative to the parent, which uses raw RSI distance.
+  - details: `{"variant_id": "mean-reverter-gap-industry-neutral", "addendum_applied": true}`
+- **momentum-trader-vix-gated@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.144, n=494) → Alpaca slot 2
+  - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 2, "enforcement": true, "slot_kind": "alpaca"}`

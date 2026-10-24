@@ -1,0 +1,52 @@
+id: mean-reverter-gap-industry-neutral
+display_name: Mean reverter (variant)
+description: 'Auto-spawned variant of mean-reverter on 2026-10-24 by the weekly evolution
+  agent. Reason: Anchored to Stosik & Zaremba (industry-adjusted reversal earns 0.53%
+  per month) and Bahcivan et al. (overnight jumps predict reversal). It breaks the
+  signal-source axis relative to the parent, which uses raw RSI distance.'
+implementation: llm
+active: true
+capital_gbp: 10000
+max_positions: 4
+max_position_pct: 30
+min_position_gbp: 50
+use_stops: true
+use_take_profits: true
+stop_loss_pct: -2.5
+take_profit_pct: 3.0
+tools:
+- get_universe
+- get_history
+- get_technicals
+- get_recent_news
+model_assignment:
+  wide_scoring: haiku
+  deep_analysis: sonnet
+  final_select: sonnet
+runs_in:
+- region: us
+  tier: shadow
+  alpaca_slot: null
+  universe: t212_isa_us
+  tier2_candidate: true
+  tier2_marked_at: '2026-10-24'
+  tier2_thesis: "#1 on the leaderboard: IC 0.126 (n=375), 31 trades, 54.8% hit, +\xA3\
+    716 net, spread +2.6. Only strategy with real trade evidence; runner-up insider-cluster@uk-eu\
+    \ has higher IC but 0 trades. Must hold IC >0.10 and reach ~55% hit on paper fills."
+- region: uk-eu
+  tier: shadow
+  t212_slot: null
+  universe: t212_isa_uk_eu
+  tier2_candidate: false
+  tier2_marked_at: null
+  tier2_thesis: ''
+  alpaca_slot: null
+skip_if_earnings_in_days: 1
+tier2_candidate: false
+tier2_marked_at: null
+tier2_thesis: ''
+prefilter_mode: python
+prefilter_top_n: 100
+cost_gate_multiplier: 4.0
+last_tune_date: '2026-09-12'
+prefilter_sort_key: rsi_14_asc

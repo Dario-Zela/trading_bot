@@ -8,7 +8,7 @@ description: "Auto-spawned variant of macro-aligned on 2026-06-07 by the weekly 
   \ leaves regime-risk on the table \u2014 the HMM variant addresses exactly this\
   \ structural gap."
 implementation: llm
-active: true
+active: false
 capital_gbp: 10000
 max_positions: 3
 max_position_pct: 30
@@ -48,3 +48,4 @@ prefilter_top_n: 100
 prefilter_sort_key: dollar_volume_desc
 last_tune_date: '2026-09-12'
 cost_gate_multiplier: 2.5
+deactivated_at: '2026-10-24'
