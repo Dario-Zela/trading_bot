@@ -40,3 +40,9 @@
 - **Claim**: Oil (USO) will close below $100 by 2026-07-18 (currently $105.48), continuing the commodity-complex deflation trend
 - **Falsification criteria**: USO closes above $110 at any point before 2026-07-18
 - **What happened**: USO closed at $123.96 on 2026-07-17, far above the $110 falsification threshold and moving further from (not toward) the $100 target — the commodity-deflation thesis was wrong and oil instead rallied hard.
+
+## 2026-W26-p05 — falsified 2026-10-25
+
+- **Claim**: HYG 5d return will be negative for at least 2 of the next 3 weekly closes (through 2026-07-18), confirming a credit-risk-off shift
+- **Falsification criteria**: HYG 5d return is positive in 2 or more of the 3 weekly closes from 2026-07-04 through 2026-07-18
+- **What happened**: The target window ended 2026-07-18 and I have no HYG data for those closes. I am marking it falsified by default because it can no longer be confirmed, and the current HYG 5d return is +0.25%.
