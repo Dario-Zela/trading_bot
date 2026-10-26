@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-26",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 OR.PA +6%, BP.L +4%, TTE.PA +4%, ITH.L +4%, SHELL.AS +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (KER.PA -17%, SAF.PA -10%, BESI.AS -8%, RR.L -8%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: KER.PA (-16.57%) \u2014 Q3 update (reported Fri 23 Oct): Gucci comparable sales -6%, group -1%, with weaker China/Japan traffic. Shares fell ~16%, their worst day ever, and EU luxury hit decade lows. Likely the same move, dated late. Why we passed: Outside any active strategy's universe: KER.PA is a Paris-listed large-cap luxury name that no strategy includes. It was also a results-day gap-down, and a long-only bot cannot short it or fade it, and it had no pre-market signal.",
+  "top_movers": [
+    {
+      "ticker": "OR.PA",
+      "move_pct": 5.642,
+      "close": 436.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No same-day news found. Likely L'Or\u00e9al's Q3 sales release, which usually lands in late October, but I couldn't confirm it. A beat would fit a +5.6% move after strong Q1 and H1 2026 growth.",
+      "miss_reason": "Outside any active strategy's universe: OR.PA is a large-cap (~\u20ac230B) Euronext Paris consumer staples/beauty name that no strategy covers. If the move was a results-day gap, a gap-up or RSI filter would also have excluded it.",
+      "suggestion": "Add large-cap CAC40/Euro Stoxx 50 staples and luxury names (e.g. OR.PA, MC.PA, RMS.PA) to the news-reactive universe, with a post-earnings gap rule such as gap \u2265 +4% on \u22651.5\u00d7 average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "BP.L",
+      "move_pct": 4.347,
+      "close": 6.385,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst for a +4.35% move. Press reports for 26 Oct 2026 show BP down 1\u20132% (about 629p) as Brent eased on US\u2013Iran de-escalation hopes, which contradicts the bot's figure. Likely a data or close-price artifact.",
+      "miss_reason": "Outside any active strategy's universe: BP.L is a FTSE 100 large-cap oil major that no strategy covers. A +4.35% close-to-close move that isn't visible in intraday reports also suggests a bad close or stale prior close, which a price-sanity filter would reject.",
+      "suggestion": "Add a data-quality check that cross-checks close-to-close moves against a second source (or the prior-day close) before flagging a mover. Separately, consider adding FTSE 100 energy names to a commodity-linked universe.",
+      "failed": false
+    },
+    {
+      "ticker": "TTE.PA",
+      "move_pct": 4.339,
+      "close": 83.45,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found; likely a sector-wide move in European energy/oil stocks, consistent with oil prices responding to the US-Iran conflict. The driver is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: TTE.PA is a Euronext Paris large-cap (~\u20ac165-177bn) oil major, and no strategy covers it. A sector-driven, newsless +4.3% gap also gives news-reactive filters nothing to trigger on.",
+      "suggestion": "Add large-cap Euronext energy names (TTE.PA, SHEL, BP, ENI) to the momentum universe, plus a sector-breadth trigger that enters when \u22653 energy names gap up \u22653% with Brent confirming.",
+      "failed": false
+    },
+    {
+      "ticker": "ITH.L",
+      "move_pct": 3.867,
+      "close": 3.008,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for Ithaca Energy (UK North Sea oil & gas) on 2026-10-26; searches returned nothing dated today. Likely an energy-sector or commodity-price move.",
+      "miss_reason": "Outside any active strategy's universe: ITH.L is a UK mid-cap E&P (FTSE 250 range) and no strategy's universe includes it. A +3.87% move with no news is also too small and undirected for gap-up or news-reactive triggers.",
+      "suggestion": "Add UK/EU oil & gas mid-caps (ITH.L, plus peers like HBR.L and EnQuest) to the commodity/energy strategy universe. Gate entry on a sector-relative strength rule, e.g. the name beats its sector ETF by \u22652% on volume \u22651.2\u00d7 the 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "SHELL.AS",
+      "move_pct": 3.749,
+      "close": 48.295,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-26 \u2014 likely an oil/energy sector-driven move. A search turned up no Shell-specific news for that date.",
+      "miss_reason": "Outside any active strategy's universe: SHELL.AS is a large-cap Amsterdam-listed energy major, a secondary listing of the London-primary Shell. No strategy covers it, so no momentum or news filter ever evaluated it.",
+      "suggestion": "Add SHELL.AS (or Shell's primary London line) to the uk-eu momentum universe, and add a sector-relative screen that flags large-cap energy names with a daily move of at least +3% on above-average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "SHEL.L",
+      "move_pct": 3.716,
+      "close": 40.33,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst. Searches found no Shell-specific news for 2026-10-26. Midday reports I found showed Shell down ~1-2% with Brent near $114, which contradicts the +3.72% close, so the move is unexplained.",
+      "miss_reason": "Outside any active strategy's universe: SHEL.L is a FTSE 100 mega-cap integrated oil major, and no strategy lists it. A late-session reversal with no news would also not have passed gap-up or volume-spike entry filters.",
+      "suggestion": "Add large-cap energy (SHEL.L, BP.L) to the uk-eu momentum universe, with a Brent-linked sector-momentum gate. Also verify the +3.72% and 40.33 close against a second price source, since they conflict with the intraday reports.",
+      "failed": false
+    },
+    {
+      "ticker": "KER.PA",
+      "move_pct": -16.571,
+      "close": 178.12,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 update (reported Fri 23 Oct): Gucci comparable sales -6%, group -1%, with weaker China/Japan traffic. Shares fell ~16%, their worst day ever, and EU luxury hit decade lows. Likely the same move, dated late.",
+      "miss_reason": "Outside any active strategy's universe: KER.PA is a Paris-listed large-cap luxury name that no strategy includes. It was also a results-day gap-down, and a long-only bot cannot short it or fade it, and it had no pre-market signal.",
+      "suggestion": "Add KER.PA, MC.PA and RMS.PA to a long-only mean-reversion universe, entering only after a \u226512% single-day drop on a sector-wide selloff with RSI(2)<10 and a 1-day confirmation close. Also check the 1-3 day timestamp lag on mover data.",
+      "failed": false
+    },
+    {
+      "ticker": "SAF.PA",
+      "move_pct": -10.0,
+      "close": 271.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed news catalyst found for 2026-10-26. Searches show only a slide to ~\u20ac310 before the Oct 23 Q3 revenue release, and nothing reporting the -10% move; possibly a delayed Q3 reaction or sector move.",
+      "miss_reason": "Outside any active strategy's universe: SAF.PA is a large-cap (~\u20ac110B+) French aerospace/defence name that no strategy includes. A one-day -10% gap on a stock with no news in the feed would also trip gap/volatility filters.",
+      "suggestion": "Add large-cap CAC 40/Stoxx 50 constituents to the mean-reversion strategy's universe, gated by a gap-down \u22658% rule and a no-negative-guidance check, so the next large-cap flush is evaluated rather than ignored.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": -7.727,
+      "close": 145.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-26; likely a sector-wide semicap/AI-chip equipment sell-off or profit-taking after a volatile autumn (shares were ~\u20ac192-222 in Aug, \u20ac145 now).",
+      "miss_reason": "Outside any active strategy's universe: BESI is a mid/large-cap Dutch semiconductor-equipment name on Euronext Amsterdam, and no strategy's universe includes it. The bot is also likely long-only, so it can't act on a drop.",
+      "suggestion": "Add EU semicap names (BESI.AS, ASM International, ASML) to the uk-eu momentum/mean-reversion universe, with a sector-correlation filter to flag a -5% or worse sector-wide down day.",
+      "failed": false
+    },
+    {
+      "ticker": "RR.L",
+      "move_pct": -7.574,
+      "close": 11.642,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Safran warned of softening wide-body jet aftermarket demand (GE Aerospace also flagged softness), hitting engine peers. RR.L fell to about 1,164p, a multi-month low. Search dated the drop to 23 Oct, so the timing is uncertain.",
+      "miss_reason": "Outside any active strategy's universe: RR.L is a FTSE 100 large-cap aerospace/defence name that no strategy covers. The drop was a peer-read-through gap on a sector warning, so any momentum or news filter would also have seen it only after the open.",
+      "suggestion": "Add FTSE 100 aerospace names (RR.L, BA.L) to the uk-eu news-reactive universe. Add a peer-warning trigger that flags a sector basket when a major peer (Safran, GE) issues a downgrade or profit warning and the name gaps down \u22654%.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-26T16:02:53.141079+00:00"
+}
