@@ -1,0 +1,124 @@
+{
+  "date": "2026-10-26",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 1 of today's 10 biggest US movers.\n\n\u2022 5 upside misses \u2014 CCI +9%, CRWD +8%, PANW +7%, HAL +5%, APA +5%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (BE -11%, FIX -9%, GL -8%, T -8%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: BE (-11.24%) \u2014 No obvious news catalyst found for Bloom Energy on 2026-10-26. Searches returned no same-day reports, so this is likely a sector or technical pullback in AI-power and fuel-cell names after a big run-up. Why we passed: Outside any active strategy's universe. BE is a mid-cap, high-beta clean-energy/fuel-cell name. The bot is long-only, so a -11% drop gives it no entry, and it had no same-day catalyst for a news-reactive strategy to act on.",
+  "top_movers": [
+    {
+      "ticker": "CCI",
+      "move_pct": 9.057,
+      "close": 85.97,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed driver found for the +9% move on 10/26. Q3 results and a guidance update came out 10/21, so this is likely a delayed re-rating or a sector move in towers/REITs, not same-day earnings.",
+      "miss_reason": "Outside any active strategy's universe: CCI is a large-cap tower REIT, likely filtered out as a rate-sensitive, low-beta REIT/utility-type name. A +9% one-day jump in a low-volatility name has no prior momentum or gap setup for the bot to trigger on.",
+      "suggestion": "Add large-cap REITs/towers (CCI, AMT, SBAC) to the momentum universe, with an unusual-move trigger such as a daily move \u2265 +4% on \u22652\u00d7 20-day average volume, entered on the next session's open.",
+      "failed": false
+    },
+    {
+      "ticker": "CRWD",
+      "move_pct": 8.25,
+      "close": 257.57,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed news for 10-26 found. Likely a cybersecurity sector rally; recent CRWD items were the Falcon IQ launch at Fal.Con 2026 and a strong Q2 beat-and-raise, whose dates I could not verify.",
+      "miss_reason": "Outside any active strategy's universe: CRWD is a large-cap software/cybersecurity name that no strategy lists. With no identifiable same-day catalyst, a news-reactive bot would not have flagged it either.",
+      "suggestion": "Add a 'large-cap tech/software' sleeve (e.g. CRWD, PANW, ZS, NOW) to the momentum-trader universe, gated on a gap-up of at least +3% with volume of at least 1.5x the 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "PANW",
+      "move_pct": 7.221,
+      "close": 380.55,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continuation of a sector-wide cybersecurity rally. It was driven by AI-found critical web-code flaws and an Evercore survey showing stronger security budgets, with CRWD, OKTA and others also up. No PANW-specific news found.",
+      "miss_reason": "Outside any active strategy's universe: PANW is a large-cap cybersecurity name that no strategy's universe includes. The move was a multi-day sector re-rating with no single-name gap or earnings event, so a news-reactive filter would also have had nothing to trigger on.",
+      "suggestion": "Add a sector-momentum universe expansion: when \u22653 names in an industry group (PANW, CRWD, OKTA, NET) each rise \u22655% within 3 sessions, add the group's liquid large caps to the momentum-trader universe for the next 5 sessions.",
+      "failed": false
+    },
+    {
+      "ticker": "SLB",
+      "move_pct": 7.084,
+      "close": 53.06,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive-sentiment-gate"
+      ],
+      "catalyst": "Likely SLB's Q3 earnings beat. A 247wallst item reports a ~6% surge on the beat, but I couldn't confirm its date or a same-day article, so it's unverified. No other clear driver found.",
+      "miss_reason": "Outside any active strategy's universe: SLB is a large-cap oilfield-services name that no strategy lists. The move looks earnings-driven, so the gap was priced at the open, and only news-reactive-sentiment-gate traded it.",
+      "suggestion": "Add large-cap energy/oilfield services (SLB, HAL, BKR) to the universe of the momentum strategy. Allow entries on post-earnings gaps of +5% or more when volume is at least 1.5x the 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "HAL",
+      "move_pct": 5.212,
+      "close": 34.92,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed company-specific news for 2026-10-26; my search found nothing dated that day. The move is most likely an oil and energy-sector rally, not an earnings or M&A event.",
+      "miss_reason": "Outside any active strategy's universe: HAL is a large-cap oilfield-services name, and no strategy covers energy or oil-services equities. A sector-beta move with no stock-specific catalyst also gives news-reactive logic nothing to trigger on.",
+      "suggestion": "Add a sector-momentum rule that admits large-cap energy names such as HAL, SLB and BKR when XLE or OIH gains more than 2% on the day and the stock gaps up above 1.5\u00d7 average volume. This keeps it separate from the news-reactive entry path.",
+      "failed": false
+    },
+    {
+      "ticker": "APA",
+      "move_pct": 4.976,
+      "close": 51.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No APA-specific news found; likely a sector-wide crude/E&P rally (high-beta oil producer). I couldn't confirm the oil move for 2026-10-26.",
+      "miss_reason": "Outside any active strategy's universe: APA is a mid-cap E&P (~$12B market cap) that no strategy includes. A sector-beta move with no company news also gives a news-reactive filter nothing to trigger on.",
+      "suggestion": "Add a liquid energy/E&P basket (APA, DVN, OXY, FANG) to the momentum universe, gated on an oil-ETF (XLE/USO) daily move \u2265 +2%, so sector-driven gainers are eligible.",
+      "failed": false
+    },
+    {
+      "ticker": "BE",
+      "move_pct": -11.237,
+      "close": 193.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for Bloom Energy on 2026-10-26. Searches returned no same-day reports, so this is likely a sector or technical pullback in AI-power and fuel-cell names after a big run-up.",
+      "miss_reason": "Outside any active strategy's universe. BE is a mid-cap, high-beta clean-energy/fuel-cell name. The bot is long-only, so a -11% drop gives it no entry, and it had no same-day catalyst for a news-reactive strategy to act on.",
+      "suggestion": "No actionable change for the short side, since the bot can't short. If wanted, add high-beta AI-power names like BE to the mean-reversion universe, gated by an RSI<30 and \u22652\u00d7 avg-volume washout rule.",
+      "failed": false
+    },
+    {
+      "ticker": "FIX",
+      "move_pct": -9.263,
+      "close": 1160.86,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day catalyst found. Likely a sell-off in AI/data-center construction names (possibly tied to Q3 earnings or profit-taking); FIX trades at a very high multiple, so it may be a sector de-rating.",
+      "miss_reason": "Outside any active strategy's universe: FIX is a ~$40B+ mid/large-cap specialty contractor with a ~$1,100+ share price, likely excluded by price or sector filters. A -9% one-day drop on a long-only bot would also not match its entry signals.",
+      "suggestion": "Add a sector-basket (data-center/electrical contractors: FIX, EME, PWR, VRT) to the universe, and add a long-only 'sector shock' rule that flags the basket when 3+ names fall \u22654% on the same day, to watch for rebounds.",
+      "failed": false
+    },
+    {
+      "ticker": "GL",
+      "move_pct": -8.087,
+      "close": 154.79,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed driver for the Oct 26 drop. Likely a delayed reaction to the Oct 21 Q3 report, where operating EPS of $4.84 missed the ~$5.03 estimate in one source. Not verified.",
+      "miss_reason": "Outside any active strategy's universe: GL is a ~$13B mid-cap life insurer, a niche financial name. Any gap or volume filter would also have skipped a non-earnings-day drop, and the bot has no short capability.",
+      "suggestion": "Add mid-cap insurers and financials (GL, PRU, LNC, etc.) to the mean-reversion universe. Flag days with a close-to-close drop of 7% or more and no earnings that day for a rebound-watch entry.",
+      "failed": false
+    },
+    {
+      "ticker": "T",
+      "move_pct": -7.96,
+      "close": 20.93,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst: searches found no 2026-10-26 news for AT&T (T). The -7.96% drop to 20.93 is probably a telecom sector selloff or post-earnings repricing, but I could not verify either.",
+      "miss_reason": "Outside any active strategy's universe: T is a mega-cap, low-beta telecom/dividend name that the momentum and mean-reversion universes don't include. A long-only bot also can't profit from a drop.",
+      "suggestion": "Add large-cap defensive/telecom names (T, VZ, TMUS) to the mean-reversion universe's watchlist, with an entry gate such as a one-day drop \u22656% on volume \u22651.5\u00d7 its 20-day average.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-26T19:31:59.600848+00:00"
+}
