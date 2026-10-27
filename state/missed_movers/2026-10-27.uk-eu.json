@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-27",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 CCC.L +11%, BAB.L +6%, RR.L +6%, ENR.DE +4%, IFX.DE +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (EXPN.L -6%, EL.PA -3%, AUTO.L -2%, RAND.AS -2%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: CCC.L (+10.89%) \u2014 Computacenter (if CCC.L is Computacenter) lifted FY26 PBT guidance to \u2265\u00a3425m on 26 Oct, with the AI/hyperscale order backlog at \u00a312.6bn. Today's +10.9% looks like follow-through. I found no distinct Oct 27 news, and the 50.898 close doesn't match the ~58 I'd expect. Why we passed: Outside any active strategy's universe: a UK mid-cap IT reseller (FTSE 250) that no strategy's universe lists. The catalyst was announced the day before, so the gap-up came a session earlier and any news-reactive or earnings-gate logic had already moved on.",
+  "top_movers": [
+    {
+      "ticker": "CCC.L",
+      "move_pct": 10.889,
+      "close": 50.898,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Computacenter (if CCC.L is Computacenter) lifted FY26 PBT guidance to \u2265\u00a3425m on 26 Oct, with the AI/hyperscale order backlog at \u00a312.6bn. Today's +10.9% looks like follow-through. I found no distinct Oct 27 news, and the 50.898 close doesn't match the ~58 I'd expect.",
+      "miss_reason": "Outside any active strategy's universe: a UK mid-cap IT reseller (FTSE 250) that no strategy's universe lists. The catalyst was announced the day before, so the gap-up came a session earlier and any news-reactive or earnings-gate logic had already moved on.",
+      "suggestion": "Add a UK-EU mid-cap momentum sleeve that includes FTSE 250 names, with a 'guidance-raise' trigger that holds a name on the watchlist for 2-3 sessions after a trading-update gap of \u2265+5% on volume \u22652\u00d7 the 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "BAB.L",
+      "move_pct": 6.303,
+      "close": 9.984,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 27 Oct; Babcock (UK defence/engineering) likely rose with the defence-sector rally and on continued buyback support, after a rally through October.",
+      "miss_reason": "Outside any active strategy's universe: BAB.L is a mid-cap FTSE 250 UK defence contractor, below the large-cap cutoff. With no identifiable catalyst, a news-reactive bot had no trigger, and a +6.3% sector-driven gap would likely fail gap or RSI filters anyway.",
+      "suggestion": "Add a UK/EU defence sub-basket (BAB.L, BA.L, QQ.L, RHM.DE) to the momentum universe, gated at \u22651.5\u00d7 20-day average volume, so sector-wide defence rallies are caught without widening the whole universe.",
+      "failed": false
+    },
+    {
+      "ticker": "RR.L",
+      "move_pct": 5.618,
+      "close": 12.296,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst: searches found no coverage of RR.L on 2026-10-27. The +5.62% move is possibly a sector or technical move, or a Q3 trading update that I couldn't verify.",
+      "miss_reason": "Outside any active strategy's universe: RR.L is a FTSE 100 large-cap aerospace/defence engine maker, and no strategy lists it. A +5.6% catalyst-style gap would also likely have been over before a post-close signal could act.",
+      "suggestion": "Add FTSE 100 large-caps such as RR.L to the momentum universe, with a gate that admits a name when its gap is \u2265 +4% on \u22651.5\u00d7 20-day average volume. Set sector-level position caps so defence names don't stack.",
+      "failed": false
+    },
+    {
+      "ticker": "ENR.DE",
+      "move_pct": 4.483,
+      "close": 124.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed news catalyst found for 2026-10-27; searches returned nothing dated that day. Likely a sector or technical move in Siemens Energy (grid/power equipment), possibly a rebound after a pullback from the ~160 EUR August level.",
+      "miss_reason": "Outside any active strategy's universe: ENR.DE is a large-cap German industrial/energy-equipment name that no strategy's universe includes, so no filter ever evaluated it. The +4.5% move with no clear catalyst would also fit poorly with a news-reactive trigger.",
+      "suggestion": "Add large-cap Xetra/DAX industrials such as ENR.DE to the momentum-trader universe, keeping its existing gap and volume filters. Backtest first to confirm that ~4% non-catalyst moves in this name continue rather than revert.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": 4.171,
+      "close": 50.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-27 \u2014 likely a sector-wide semiconductor/AI-power move. Searches turned up no dated company news; only background of Infineon's 2026 AI-driven rally.",
+      "miss_reason": "Outside any active strategy's universe: IFX.DE is a large-cap German (XETRA) semiconductor that no strategy includes. A +4.17% move with no identifiable catalyst also would not trigger a news-reactive or gap filter.",
+      "suggestion": "Add large-cap EU semis (IFX.DE, STM.PA, ASML.AS) to the momentum-trader universe, gated by a sector-relative-strength rule such as a daily move \u2265 +3% with volume \u2265 1.5\u00d7 the 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "IAG.L",
+      "move_pct": 4.092,
+      "close": 4.1085,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-27 \u2014 searches returned nothing dated that day. Likely a sector or macro move in European airlines (oil, travel demand, or read-across from peer results).",
+      "miss_reason": "Outside any active strategy's universe: IAG.L is a large-cap FTSE 100 airline and no strategy lists it. With no stock-specific news, a news-reactive bot had nothing to trigger on, and a +4% sector-drift day would not pass a gap or volume filter.",
+      "suggestion": "Add a sector-breadth scan to the universe builder: if \u22653 names in a GICS industry (e.g. airlines) rise \u22653% in a session, temporarily add the group's liquid large-caps to the momentum strategy's next-day universe.",
+      "failed": false
+    },
+    {
+      "ticker": "EXPN.L",
+      "move_pct": -5.727,
+      "close": 29.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-27. Searches turned up only older Experian selloffs (growth slowdown, FICO competition, weak USD), so this is likely a sector or technical move.",
+      "miss_reason": "Outside any active strategy's universe: EXPN.L is a FTSE 100 large-cap data/credit-bureau stock that no strategy includes. With no clear catalyst, a news-reactive bot would have had nothing to trigger on, and a -5.7% drop on its own would fail a long-only momentum screen.",
+      "suggestion": "Add FTSE 100 constituents to the mean-reversion universe, with a filter requiring a one-day drop of at least 5% and no earnings flag. If the drop is sector-wide (peers like TransUnion/Equifax also down), skip it as a sector move rather than a dislocation.",
+      "failed": false
+    },
+    {
+      "ticker": "EL.PA",
+      "move_pct": -2.98,
+      "close": 175.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No same-day news found for EL.PA (EssilorLuxottica). The -2.98% looks like continued weakness in a stock that has fallen about 29% year to date on doubts about its AI-glasses strategy.",
+      "miss_reason": "Outside any active strategy's universe: EL.PA is a large-cap French consumer/medtech name that no strategy lists. A drop with no catalyst, inside a long downtrend, also fits poorly with momentum-long or news-reactive entry rules.",
+      "suggestion": "No actionable change for a long-only bot. If the uk-eu universe is widened, add CAC40 large caps and gate them with a 20-day-low filter plus a mean-reversion RSI<30 rule.",
+      "failed": false
+    },
+    {
+      "ticker": "AUTO.L",
+      "move_pct": -2.398,
+      "close": 5.292,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for AUTO.L (Auto Trader) today; likely a technical or sector move, possibly continued weakness in UK online classifieds and growth names amid AI-disruption worries.",
+      "miss_reason": "Outside any active strategy's universe: AUTO.L is a UK FTSE 100 online-classifieds stock that no strategy includes. A -2.4% drift with no catalyst would also fall below typical gap or momentum trigger thresholds.",
+      "suggestion": "No actionable change: a -2.4% non-catalyst drift in a long-only bot isn't worth widening the universe. If wanted, add FTSE 100 constituents to the mean-reversion universe with an RSI<30 and \u22651.5\u00d7 volume gate.",
+      "failed": false
+    },
+    {
+      "ticker": "RAND.AS",
+      "move_pct": -2.231,
+      "close": 40.31,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-27. Randstad's staffing peers fell on weak demand in past quarters, so this is likely a sector or technical move. No Q3 2026 report turned up in search.",
+      "miss_reason": "Outside any active strategy's universe: RAND.AS is a mid-cap Dutch staffing/cyclical stock that no strategy covers. A -2.23% drift with no catalyst would likely not have passed a gap or volume trigger anyway.",
+      "suggestion": "(no actionable change) The move is small, has no catalyst and would need a short, so it is outside risk tolerance. If AEX/Euronext mid-caps are ever added, add RAND.AS to the universe, but only with an earnings-date gate.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-27T16:02:42.298105+00:00"
+}
