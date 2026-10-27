@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-27",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 LITE +9%, FIX +7%, P +7%, COHR +7%, BE +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (FICO -13%, CHTR -6%, SKYD -5%, DASH -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: FICO (-13.10%) \u2014 No confirmed driver for 2026-10-27 found. Searches only returned older FICO selloffs (FHFA/Pulte criticism, VantageScore mortgage competition, price-target cuts), so this is likely a continuation of that regulatory/competition overhang. Why we passed: Outside any active strategy's universe: FICO is a mid/large-cap financial-data/software name that no strategy's universe includes, so no filter evaluated it. A single-day -13% gap on an unscheduled headline would also fail gap-size and RSI filters, and the bot likely has no short capability.",
+  "top_movers": [
+    {
+      "ticker": "LITE",
+      "move_pct": 8.936,
+      "close": 823.745,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found. Likely continuation of the AI optical rally: StoneX initiated Buy with a $1,200 target and the CEO said AI components are 'sold out' through 2029, ahead of Nov 5 earnings.",
+      "miss_reason": "Outside any active strategy's universe: LITE is a ~$800+/share mid/large-cap AI optical-components name that no strategy lists. A volatile momentum name running into earnings would also likely trip gap, RSI or price filters.",
+      "suggestion": "Add a dynamic 'AI optical/photonics' basket (LITE, COHR, AAOI, CIEN) to the momentum universe, with a pre-earnings exclusion (skip entries within 3 trading days of the Nov 4-5 reports).",
+      "failed": false
+    },
+    {
+      "ticker": "FIX",
+      "move_pct": 7.426,
+      "close": 1247.0649,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news. Q3 earnings (revenue ~$3.77B vs ~$3.40B est, EPS beat, dividend raise) came out around Oct 22-26, so this is likely a rebound or post-earnings drift in AI data-center construction names.",
+      "miss_reason": "Outside any active strategy's universe: FIX is a mid/large-cap electrical/mechanical contractor (about $45B market cap, ~$1,200 share price) that no strategy lists. Any gap filter would also have fired on the earnings reaction days earlier, not today.",
+      "suggestion": "Add an AI-infrastructure/data-center contractor basket (FIX, EME, PWR, STRL) to the momentum universe, and add a rule that releases post-earnings names for entry when they close \u2265+5% on \u22651.5\u00d7 average volume within 5 days of results.",
+      "failed": false
+    },
+    {
+      "ticker": "P",
+      "move_pct": 7.314,
+      "close": 132.35,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. Searches only returned stale Pandora Media (old NYSE: P) articles, and I couldn't identify which company holds ticker P today. Likely a technical or sector move.",
+      "miss_reason": "Outside any active strategy's universe, since none includes P. It looks like a mid/large-cap name (~$132 close) with no news the bot could react to, so a +7.3% close-to-close move with no catalyst would fail any news-reactive gate.",
+      "suggestion": "(no actionable change until the ticker is identified.) Then add it to the universe if it passes the liquidity and market-cap floors. Resolve ticker-to-company mapping so recycled symbols like P don't return stale news.",
+      "failed": false
+    },
+    {
+      "ticker": "COHR",
+      "move_pct": 6.962,
+      "close": 223.86,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found. Likely a sympathy rally in AI optical-networking names (COHR is a transceiver/laser supplier) after a sharp pullback from the ~$440 June high.",
+      "miss_reason": "Outside any active strategy's universe: COHR is a ~$45B mid/large-cap AI-optics name that no strategy lists. With no identifiable catalyst, a news-reactive bot had no trigger, and a +7% sector-beta move gives a momentum filter little to latch onto.",
+      "suggestion": "Add a dynamic universe rule that admits any US name with market cap >$10B and 20-day average dollar volume >$500M to the momentum universe, so high-beta AI-hardware names like COHR are screened by the existing gap and volume filters.",
+      "failed": false
+    },
+    {
+      "ticker": "BE",
+      "move_pct": 6.627,
+      "close": 206.11,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed company-specific catalyst found for 2026-10-27. Search results were undated or older. Likely a rebound in AI-power/fuel-cell names after a pullback from the ~$263 mid-October level.",
+      "miss_reason": "Outside any active strategy's universe: BE (Bloom Energy) is a volatile mid-cap clean-energy/fuel-cell name that no strategy covers. A +6.6% move on no clear news also wouldn't trip an earnings or news-reactive trigger.",
+      "suggestion": "Add a high-beta AI-power/clean-energy basket (BE, VRT, OKLO, etc.) to the momentum universe with a +5% day / 1.5x volume trigger. Otherwise no change, since the move had no identifiable catalyst.",
+      "failed": false
+    },
+    {
+      "ticker": "SNPS",
+      "move_pct": 6.117,
+      "close": 456.45,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-27 (search returned only older SNPS moves) \u2014 likely a semiconductor/EDA or AI-software sector move rather than company-specific news.",
+      "miss_reason": "Outside any active strategy's universe: SNPS is a large-cap EDA software name (semis-adjacent) that no strategy's universe includes. Even if it were included, a +6% non-earnings gap could have tripped a gap-size or RSI filter.",
+      "suggestion": "Add large-cap semis/EDA names (SNPS, CDNS) to the momentum strategy's universe file, and allow gap-ups of 4\u20137% on \u22651.5\u00d7 average volume when there is no earnings flag.",
+      "failed": false
+    },
+    {
+      "ticker": "FICO",
+      "move_pct": -13.097,
+      "close": 708.525,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed driver for 2026-10-27 found. Searches only returned older FICO selloffs (FHFA/Pulte criticism, VantageScore mortgage competition, price-target cuts), so this is likely a continuation of that regulatory/competition overhang.",
+      "miss_reason": "Outside any active strategy's universe: FICO is a mid/large-cap financial-data/software name that no strategy's universe includes, so no filter evaluated it. A single-day -13% gap on an unscheduled headline would also fail gap-size and RSI filters, and the bot likely has no short capability.",
+      "suggestion": "Add FICO and similar high-priced regulatory-exposed names (e.g. credit bureaus) to the news-reactive universe, with a gap-down filter (\u2264 -8% on \u22652x average volume) feeding a watchlist or mean-reversion rebound check instead of a hard exclusion.",
+      "failed": false
+    },
+    {
+      "ticker": "CHTR",
+      "move_pct": -6.436,
+      "close": 101.62,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst found. Charter reports Q3 on Oct 29-30, its first report since the Cox deal closed, so the -6.4% drop is likely pre-earnings de-risking or a cable/broadband sector move.",
+      "miss_reason": "Outside any active strategy's universe: CHTR is a large-cap cable and media name that no strategy lists, and it is in a persistent downtrend, down about 55% over 12 months. Any momentum or mean-reversion screen would also have been waiting on earnings.",
+      "suggestion": "Add CHTR and peers such as CMCSA and ALTICE to the news-reactive universe, with an earnings-proximity flag (report within 3 days) that lifts the gap and volume filters. Pre-earnings sell-offs like this one would then be tracked.",
+      "failed": false
+    },
+    {
+      "ticker": "SKYD",
+      "move_pct": -5.47,
+      "close": 7.345,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-27; SKYD (Paramount Skydance) is in a persistent downtrend (about -46% YTD), so the -5.5% looks like continued technical or sector-driven selling.",
+      "miss_reason": "Outside any active strategy's universe. SKYD is a ~$10B media name trading near $7, and no strategy includes it. With no news or gap trigger, a news-reactive bot had nothing to act on, and a long-only bot wouldn't buy a steady downtrend.",
+      "suggestion": "No actionable change: this is a drift-type decline in an out-of-universe name, and capturing it would need short capability. If wanted, add mid-cap media names to the mean-reversion universe, gated on RSI(14) < 30.",
+      "failed": false
+    },
+    {
+      "ticker": "DASH",
+      "move_pct": -5.419,
+      "close": 169.6594,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found: searches turned up no DASH-specific story dated 2026-10-27, so likely a technical or sector move (consumer internet / delivery names).",
+      "miss_reason": "Outside any active strategy's universe: DASH is a large-cap consumer-internet name that no strategy's universe includes. With no pre-market catalyst, the -5.4% drift also gave a news-reactive bot nothing to trigger on.",
+      "suggestion": "No actionable change without a confirmed driver. If large-cap consumer-internet names keep showing up as top losers, add a liquid-large-cap watchlist to the mean-reversion universe, gated by a minimum -4% close-to-close move.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-27T19:32:03.193056+00:00"
+}
