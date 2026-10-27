@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PHP flaw sets off global patching scramble — 2026-10-27 — Trading Bot</title>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../../index.html">Dashboard</a>
+<a class="nav-tab active" href="../../news/latest.html">News</a>
+<a class="nav-tab" href="../../macro/latest.html">Macro</a>
+<a class="nav-tab" href="../../evolution.html">Evolution</a>
+<a class="nav-tab" href="../../ml/index.html">ML lab</a>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper article-page"><div class="edition-nav" data-edition="2026-10-27" data-kind="news"><a class="edition-nav-link" data-role="prev" href="../2026-10-26/" title="2026-10-26">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><a class="edition-nav-link disabled" data-role="next" href="#" aria-disabled="true">next →</a><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">TECH · CYBER · By R. Okonkwo · 2026-10-27 · 5 min read</div><h1>PHP flaw sets off global patching scramble</h1><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>Two critical PHP flaws patched on 21 October are being actively exploited, and operators on old branches or shared hosting may struggle to fix them quickly.</div></div><div class="body"><p>A pair of flaws in PHP, the scripting language behind a large share of the web, were fixed in an emergency release on 21 October. They are now being used in real attacks. Anyone running an unpatched copy of PHP that serves web pages is potentially exposed. Many of the people responsible for those copies do not control when, or whether, they can update.</p>
+<p>The two bugs, tracked as CVE-2026-109618 and CVE-2026-109619 and nicknamed "php2shell", are rated 9.2 out of 10 on the CVSS 4.0 scale. The PHP project says an unauthenticated attacker can exploit both remotely. The US cyber agency CISA put both on its Known Exploited Vulnerabilities list on 26 October and gave federal civilian agencies until 29 October to fix them.</p>
+<h2>What is broken</h2>
+<p>The flaws are memory-handling errors. In the first, if a server runs out of memory while request data is only partly set up, the cleanup code treats that half-built data as valid. In the second, a use-after-free, leftover state from one request points to memory that has already been released. A later request handled by the same worker process can then use it. PHP also confirms that memory disclosure is possible.</p>
+<p>PHP says any installation serving web requests is at risk. That covers PHP-FPM, Apache's mod_php, php-cgi, FrankenPHP and LiteSpeed. The project rates mod_php highest, because a demonstrated exploit can fire before any application code runs. The practical point is that a site does not need a badly written plugin to be vulnerable. The weakness is in the language runtime itself.</p>
+<p>Security firm Calif traced the earliest affected code path back to PHP 5.4.0, according to Tenable's analysis. The code is old.</p>
+<h2>Who has been hit, and how many are exposed</h2>
+<p>The fixes are in PHP 8.5.12, 8.4.27, 8.3.36 and 8.2.35. Those are the only branches that get official patches.</p>
+<p>Exploitation began before the fix did. Amazon's threat-intelligence team saw an attempt against its honeypot servers on 17 October, four days before disclosure, and more on the day of release. Cloudflare reports early attacks and has pushed firewall rules to block known exploit paths. Trail of Bits said on 26 October that working exploits run against unpatched PHP 8.2 through 8.5. PHP's own team said it found no functional exploit at release, and public exploit code now circulating is unverified. One researcher, Adel Karimi, reported breaking into three honeypots running PHP 8.4.26, though the setup was deliberately favourable and says little about reliability elsewhere.</p>
+<p>Estimates of the exposed population vary widely, which suggests nobody has an exact count. Palo Alto's Cortex Xpanse put potentially vulnerable instances at over 22.6 million. An independent estimate cited by Tenable is over 1.3 million internet-exposed hosts. A Shodan search finds over 1.9 million internet-facing hosts running PHP, though that counts PHP, not vulnerability. For scale, W3Techs says PHP is used by 69.3% of sites whose server-side language is known.</p>
+<h2>Who can patch quickly</h2>
+<p>The answer splits by how much control an operator has.</p>
+<p>A company running its own servers on a current PHP branch can update within hours. Even then, installing the new package is not enough. Processes already running keep the old code in memory, so PHP workers must be restarted. Google Cloud advises capturing worker memory from any server showing signs of probing before restarting, since a restart erases the evidence.</p>
+<p>Operators on older branches are in a worse position. PHP 7.4 through 8.1 get no official release, only minimal source backports for people who build PHP themselves. PHP 5.4 through 7.3 get nothing from the project, and users must rely on their Linux distribution or a paid long-term-support vendor. CISA's advice for anyone who cannot update promptly, or who runs 8.1 or earlier, is blunt: take the system offline.</p>
+<p>The third group is the least visible. CISA stresses that PHP is often embedded in other software, so its presence may not be obvious, and tells organisations to inventory every system running any PHP version. Shared-hosting customers and owners of forgotten content-management installs depend on someone else to patch, or on nobody noticing the site at all. Neither is a plan.</p>
+<p>The release itself is also imperfect. PHP 8.4.27 and 8.5.12 can crash processes in some applications using the SimpleXML extension. The cause is a separate garbage-collector change, not the security fix, and a correction was merged but had not shipped as of 26 October. Some operators will have to choose between a known crash risk and a known exploit.</p>
+<p>For those who cannot patch at once, there are partial measures. Setting memory_limit to -1 in a way applications cannot override reduces exposure to the first flaw, and disabling session.upload_progress reduces exposure to the second. Both are stopgaps, and PHP says updating is the only complete fix. Cloudflare's rules help only for traffic routed through its network.</p>
+<h2>What to watch</h2>
+<p>The next markers are the 29 October federal deadline and the fix for the SimpleXML regression, which will show how fast the patched population grows. A separate bug, CVE-2026-115560, disclosed on 23 October, concerns session upload progress; PHP advises disabling that setting until its next bugfix release. Also watch for the first verified public exploit, and for scan data showing how many PHP hosts are still unpatched a week after disclosure.</p></div><section class="sources-block"><h4>Sources</h4><ol><li><a href="https://www.cisa.gov/news-events/alerts/2026/10/21/critical-vulnerabilities-php-require-immediate-patching" rel="nofollow noopener" target="_blank">CISA: Critical Vulnerabilities in PHP Require Immediate Patching</a></li><li><a href="https://www.tenable.com/blog/php2shell-cve-2026-109618-cve-2026-109619-frequently-asked-questions-about-critical-php-remote" rel="nofollow noopener" target="_blank">Tenable: php2shell FAQ</a></li><li><a href="https://unit42.paloaltonetworks.com/cve-2026-109618-cve-2026-109619/" rel="nofollow noopener" target="_blank">Unit 42: Threat Brief on CVE-2026-109618 and CVE-2026-109619</a></li><li><a href="https://blog.cloudflare.com/php-vulnerabilities-waf-protection/" rel="nofollow noopener" target="_blank">Cloudflare: protections against php2shell</a></li><li><a href="https://blog.qualys.com/vulnerabilities-threat-research/2026/10/20/php-announces-critical-security-release-for-two-vulnerabilities" rel="nofollow noopener" target="_blank">Qualys: PHP2Shell: Find, Mitigate, and Patch Now</a></li></ol></section><footer class="colophon">The Bot Tribune · 2026-10-27 · <a href="index.html">Back to the edition</a></footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
+</body>
+</html>
