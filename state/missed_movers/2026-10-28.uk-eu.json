@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-28",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 BESI.AS +10%, STMPA.PA +7%, ASM.AS +5%, ANTO.L +5%, IFX.DE +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (HSBA.L -6%, RKT.L -5%, MBG.DE -4%, BP.L -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: BESI.AS (+10.44%) \u2014 No same-day source found. Likely a rebound in AI-packaging semis after Besi's strong Q3 (reported orders ~\u20ac343M, ~15% above consensus), but I couldn't confirm that as the driver on 10-28. Why we passed: Outside any active strategy's universe: BESI.AS is an Amsterdam-listed mid-cap semicap equipment name, probably below the cap/liquidity cutoffs. A gap-up on news is also hard for a post-open momentum filter to enter, and RSI or gap caps likely excluded it.",
+  "top_movers": [
+    {
+      "ticker": "BESI.AS",
+      "move_pct": 10.441,
+      "close": 162.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No same-day source found. Likely a rebound in AI-packaging semis after Besi's strong Q3 (reported orders ~\u20ac343M, ~15% above consensus), but I couldn't confirm that as the driver on 10-28.",
+      "miss_reason": "Outside any active strategy's universe: BESI.AS is an Amsterdam-listed mid-cap semicap equipment name, probably below the cap/liquidity cutoffs. A gap-up on news is also hard for a post-open momentum filter to enter, and RSI or gap caps likely excluded it.",
+      "suggestion": "Add a small-allocation 'EU semicap/AI-supply-chain' watchlist (BESI, ASMI, ASML) to the momentum universe, and let it bypass the gap-size cap when volume is \u22652x the 20-day average and a sector peer is also up.",
+      "failed": false
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": 6.561,
+      "close": 43.205,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed driver found. My search returned no Oct 28, 2026 coverage of STMicro. The +6.6% is plausibly a post-Q3-results rerating or a European semiconductor sector rally, but I couldn't verify either.",
+      "miss_reason": "Outside any active strategy's universe: STMPA.PA is a large-cap Euronext Paris semiconductor, and no strategy lists it. If the move was earnings-driven, the gap-up would also have been priced at the open, ahead of any post-signal entry.",
+      "suggestion": "Add liquid Euronext Paris/Milan large caps like STMPA.PA to the momentum universe, with a gap-up rule (e.g. open gap \u2265 +4% on \u22651.5\u00d7 average volume) that allows entry after the first 30 minutes.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": 5.164,
+      "close": 745.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 2026 results beat on revenue with adjusted operating margin up to 33.4%, and a higher outlook. ASM also announced a new \u20ac300M buyback after finishing its \u20ac150M program.",
+      "miss_reason": "Outside any active strategy's universe: ASM.AS is a ~\u20ac35-40B Dutch semiconductor-equipment large cap that no strategy lists. It was also an earnings-gap move, so the pre-open reaction would have beaten any post-open momentum signal.",
+      "suggestion": "Add a Euronext Amsterdam semicap watchlist (ASM.AS, BESI.AS, ASML.AS) to the news-reactive universe, and let the earnings gate release names with a post-results gap \u2265 +3% within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "ANTO.L",
+      "move_pct": 5.057,
+      "close": 33.24,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-28. Searches turned up no company RNS or Antofagasta-specific news for the day, so the +5.06% is most likely a copper or sector move.",
+      "miss_reason": "Outside any active strategy's universe: ANTO.L is a FTSE 100 copper miner, a large-cap commodity name that no strategy's universe includes. With no stock-specific news, a news-reactive bot would not have triggered either.",
+      "suggestion": "Add a 'LSE miners / copper' basket (ANTO.L, GLEN.L, RIO.L) to the momentum-trader universe, gated on a copper-futures move of at least +2% (the threshold is a placeholder), so sector-driven days like this one are caught.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": 3.826,
+      "close": 52.64,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No dated news found for IFX.DE today; the +3.8% looks like a sector-wide semiconductor/AI-linked rally, possibly after peer results. Not confirmed.",
+      "miss_reason": "Outside any active strategy's universe: IFX.DE is a large-cap German (Xetra) semiconductor, and no strategy lists it. With no company-specific catalyst, a news-reactive filter would also have had nothing to trigger on.",
+      "suggestion": "Add large-cap EU semis (IFX.DE, STM.PA, ASML.AS) to the momentum-trader universe, or add a sector-basket trigger that admits peers when \u22653 semis gain \u22653% on the same day.",
+      "failed": false
+    },
+    {
+      "ticker": "BTRW.L",
+      "move_pct": 3.797,
+      "close": 3.39,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. BTRW.L (Barratt Redrow, UK housebuilder) rose 3.8% with only routine buyback notices in the news, so this is likely a UK housebuilder or rates/gilt-yield sector move.",
+      "miss_reason": "Outside any active strategy's universe: BTRW.L is a UK mid-cap housebuilder, and no strategy's universe includes it. With no company-specific catalyst, a news-reactive bot had nothing to trigger on, and a +3.8% sector-beta move is a modest signal for momentum filters.",
+      "suggestion": "Add UK housebuilders (BTRW.L, PSN.L, TW.L) to the momentum universe with a sector-relative-strength rule, e.g. enter when the name is up \u22653% and its sector basket is up \u22652% on above-average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "HSBA.L",
+      "move_pct": -6.056,
+      "close": 12.812,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "HSBC Q3 results missed consensus: net interest income fell about $2.6B short of estimates and EPS and revenue were below forecasts. A $1B buyback and a 32% rise in pre-tax profit didn't offset it, and CET1 slipped to 13.9%.",
+      "miss_reason": "Outside any active strategy's universe: HSBA.L is a large-cap UK/HK bank that no strategy covers. The drop was also a gap-down on a results release before the open, so post-open momentum signals would arrive late. The bot is long-only, so it couldn't short the move. Search coverage dated the sell-off to Oct 27, so the ",
+      "suggestion": "Add FTSE 100 financials (HSBA.L, BARC.L, LLOY.L) to the mean-reversion universe, with an earnings-gap entry rule: gap \u2264 -5% and RSI(14) < 30 on a fundamentals-driven miss, size-capped at 50% of a normal position.",
+      "failed": false
+    },
+    {
+      "ticker": "RKT.L",
+      "move_pct": -5.141,
+      "close": 52.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Reckitt (RKT.L) Q3 update: Core LFL revenue +3.3% vs 3.6% expected. FY26 LFL growth guidance cut to 3.5-4.5% from 4-5% on Lysol supply problems, weak China VMS and a softer cold/flu season.",
+      "miss_reason": "Outside any active strategy's universe: RKT.L is a large-cap UK consumer-staples name that no strategy lists. It was also a scheduled-results gap-down, and a long-only bot gets no entry from a drop like that.",
+      "suggestion": "Add a long-only 'post-earnings guidance-cut' watchlist covering FTSE 100 staples. Flag names that gap down \u22654% on results, then re-enter only after RSI(14)<30 and 2 days of stabilising closes, instead of trying to trade the gap.",
+      "failed": false
+    },
+    {
+      "ticker": "MBG.DE",
+      "move_pct": -3.666,
+      "close": 39.94,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely follow-through selling after Mercedes-Benz's weak Q3 2026 report: Cars margin about 2.5%, China sales down 31%, and a cut to the Cars return-on-sales target. Exact report date and cause unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: MBG.DE is a large-cap German auto name that no strategy covers. The drop also came from a known earnings and China-weakness story, so pre-market positioning would have beaten any post-move signal.",
+      "suggestion": "Add large-cap Xetra/DAX autos to the mean-reversion or news-reactive universe, with an earnings-window gate that blocks new entries within 2 trading days of results and releases after a gap of -3% or more.",
+      "failed": false
+    },
+    {
+      "ticker": "BP.L",
+      "move_pct": -2.948,
+      "close": 6.123,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-28 \u2014 likely an oil-price-driven sector move, with BP sliding alongside crude and the energy majors amid Iran-related geopolitical swings.",
+      "miss_reason": "Outside any active strategy's universe: BP.L is a UK FTSE 100 large-cap integrated oil major and apparently isn't in any strategy's ticker list. A sector-beta move with no stock-specific catalyst also gives little signal to a news-reactive bot.",
+      "suggestion": "Add a uk-eu energy-majors basket (BP.L, SHEL.L) to the mean-reversion universe, gated on a Brent daily move beyond \u00b12.5%, so oil-driven sector drops are captured without needing stock-specific news.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-28T16:03:31.540580+00:00"
+}
