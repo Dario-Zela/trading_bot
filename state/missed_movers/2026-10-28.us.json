@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-28",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 PNR +12%, FLEX +9%, DELL +7%, SMCI +7%, BE +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (XYL -14%, BA -10%, VLO -9%, PSX -7%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: XYL (-13.56%) \u2014 Unconfirmed: searches found no coverage of 10/28/2026. A -13.6% gap on a large-cap industrial in late October is most likely a Q3 earnings/guidance miss, but I could not verify it. Why we passed: Outside any active strategy's universe (mid/large-cap water-tech industrial). If it was an earnings gap, the drop happened at the open, so post-market signals came too late, and a long-only bot can't short it anyway.",
+  "top_movers": [
+    {
+      "ticker": "PNR",
+      "move_pct": 11.709,
+      "close": 62.11,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely Q3 2026 earnings reaction (results reaffirmed the guidance midpoint, FY adj. EPS ~$4.70, with Taco acquisition and channel-inventory reset). I couldn't confirm the release date or what drove the +11.7% move.",
+      "miss_reason": "Outside any active strategy's universe: PNR is a mid-cap industrial (water solutions) that no strategy lists. An earnings gap-up of this size is also priced in at the open, so a post-open momentum or news signal would have arrived too late.",
+      "suggestion": "Add a gap-scan path that admits any US name with a \u2265+8% earnings-day gap on \u22652\u00d7 average volume, even if it isn't in a strategy's static universe (e.g. mid-cap S&P 400 industrials), and cap it to one position.",
+      "failed": false
+    },
+    {
+      "ticker": "FLEX",
+      "move_pct": 9.253,
+      "close": 84.19,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No dated news for 2026-10-28 found. Likely an AI/data-center power and cooling rally, with possible fiscal Q2 results or a Cloud & Power Infrastructure spin-off update. Unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: FLEX is a mid/large-cap EMS and electronics manufacturer that no strategy lists. If the move was earnings-linked, the gap also happened before post-market signals could trigger an entry.",
+      "suggestion": "Add AI-infrastructure hardware names (FLEX, JBL, VRT, CLS) to the momentum-trader universe, or let the earnings-gate release names with a post-results gap of at least +5% within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "DELL",
+      "move_pct": 6.93,
+      "close": 502.765,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed Oct 28 driver. Reports tie DELL's Oct 27 rally to AI-environment cyber-resilience products, AI PCs and an AI-stock lift. One report had DELL down ~2% at 11am on Oct 28, so today's +6.9% is likely continued AI-hardware momentum.",
+      "miss_reason": "Outside any active strategy's universe: DELL is a ~$300B+ large-cap AI-hardware name that no strategy lists. Even if listed, a +4\u20138% gap on Oct 27 plus an intraday reversal would likely trip gap or RSI filters.",
+      "suggestion": "Add a large-cap AI-infrastructure basket (DELL, SMCI, HPE, ANET) to the momentum-trader universe, gated on a relative-volume \u22651.5\u00d7 and 5-day-return threshold rather than a fixed ticker list.",
+      "failed": false
+    },
+    {
+      "ticker": "SMCI",
+      "move_pct": 6.672,
+      "close": 35.175,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Rally continued into the Nov 3 earnings report after the raised Q1 revenue pre-announcement ($18.5-19.5B vs $14.5-15.5B guide). Reuters also reported a $5B debt deal for Super Micro-backed Argentum AI to buy AI chips.",
+      "miss_reason": "Outside any active strategy's universe: SMCI is a volatile mid-cap AI-server name, ~$35 and prone to 5%+ swings. Pre-earnings and news-driven, the move was likely filtered out by earnings-gate and volatility rules even if it had been included.",
+      "suggestion": "Add SMCI-type high-beta AI hardware names to the momentum universe, with a pre-earnings blackout (skip entries within 3 trading days of the report) and an ATR-based position-size cap.",
+      "failed": false
+    },
+    {
+      "ticker": "BE",
+      "move_pct": 6.564,
+      "close": 219.64,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued rebound from the ~11% post-Q3-earnings selloff, helped by AI data-center power enthusiasm and bullish analyst notes (Evercore $350 target, Barclays target raise). No new company-specific news found for Oct 28.",
+      "miss_reason": "Outside any active strategy's universe: BE is a roughly $70B, highly volatile mid/large-cap fuel-cell and AI-power name. It was already up about 7% the prior day, so a gap or RSI filter would likely have excluded a second-day rebound with no fresh catalyst.",
+      "suggestion": "Add an AI-power/energy-infrastructure basket (BE, VRT, GEV, VST) to the momentum universe, plus a post-earnings-drop rebound rule that enters when a name recovers 2 consecutive days on volume of 1.5x or more average.",
+      "failed": false
+    },
+    {
+      "ticker": "ALB",
+      "move_pct": 6.255,
+      "close": 99.37,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-10-28. Likely a lithium-sector move, possibly ahead of Albemarle's Q3 earnings, which usually come in late Oct or early Nov. Searches turned up nothing dated today.",
+      "miss_reason": "Outside any active strategy's universe: ALB is a mid-cap, high-beta lithium/materials name that no strategy lists. A sector-driven +6% move with no news also gave a news-reactive path nothing to trigger on.",
+      "suggestion": "Add a 'lithium_materials' basket (ALB, SQM, LAC) to the momentum universe, with the gap-up filter requiring a \u2265+4% move on \u22651.5\u00d7 20-day average volume, so the next sector rally is caught.",
+      "failed": false
+    },
+    {
+      "ticker": "XYL",
+      "move_pct": -13.561,
+      "close": 93.54,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Unconfirmed: searches found no coverage of 10/28/2026. A -13.6% gap on a large-cap industrial in late October is most likely a Q3 earnings/guidance miss, but I could not verify it.",
+      "miss_reason": "Outside any active strategy's universe (mid/large-cap water-tech industrial). If it was an earnings gap, the drop happened at the open, so post-market signals came too late, and a long-only bot can't short it anyway.",
+      "suggestion": "Add large-cap industrials like XYL to the news-reactive universe, and flag any gap \u2264 -8% on \u22652\u00d7 average volume for a mean-reversion watchlist. Don't add a short leg.",
+      "failed": false
+    },
+    {
+      "ticker": "BA",
+      "move_pct": -10.496,
+      "close": 167.905,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 earnings: wider adjusted loss (-$0.34 vs -$0.21 est). The 737 MAX ramp to rate 52 slipped to 2H27 on slow wing output, and 2026 deliveries will miss the 500 target. The stock hit a 52-week low.",
+      "miss_reason": "Outside any active strategy's universe: BA is a large-cap aerospace/defense name that no strategy's universe includes. The move was an earnings gap on the 10/27 after-hours report, and the bot has no short capability, so a long-only momentum or mean-reversion bot would not trade it.",
+      "suggestion": "Add large-cap industrials such as BA to the mean-reversion universe, with an earnings-gate release for post-earnings gaps of at least -8% on 2x average volume. Only buy after a 2-day stabilization, and don't catch the first-day knife.",
+      "failed": false
+    },
+    {
+      "ticker": "VLO",
+      "move_pct": -8.956,
+      "close": 387.95,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed driver found. Searches returned nothing dated 2026-10-28. The move is likely a refiner-sector selloff (crack-spread compression) or profit-taking after a big run, possibly tied to Q3 earnings.",
+      "miss_reason": "Outside any active strategy's universe: VLO is a ~$120B large-cap energy refiner, and no strategy lists it. An -8.96% single-day drop is also a downside move, which a long-only momentum or mean-reversion bot wouldn't enter.",
+      "suggestion": "Add large-cap US energy and refiners (VLO, MPC, PSX) to the mean-reversion universe, with a gate that skips entries when the whole sector gaps down on a crack-spread or crude shock, and a -9% one-day drop floor.",
+      "failed": false
+    },
+    {
+      "ticker": "PSX",
+      "move_pct": -6.837,
+      "close": 268.65,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely Q3 2026 earnings reaction (8-K filed around today; refining beat but Midstream, Chemicals and Marketing weakened) plus refiner weakness. Searches found no confirmed same-day driver.",
+      "miss_reason": "Outside any active strategy's universe: PSX is a large-cap energy refiner that no strategy lists. An earnings-day gap down would also have been blocked by earnings gates, and the bot can't short.",
+      "suggestion": "Add large-cap energy/refiners (PSX, VLO, MPC) to the mean-reversion universe, and let the earnings-gate release names whose post-results drop is \u22655% on \u22651.5\u00d7 average volume.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-28T19:32:26.935936+00:00"
+}
