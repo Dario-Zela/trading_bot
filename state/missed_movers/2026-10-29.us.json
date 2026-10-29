@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-29",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 VRT +17%, ORCL +11%, FLEX +10%, LH +9%, SNDK +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (FFIV -21%, CSGP -15%, CHRW -12%, LII -10%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: FFIV (-20.90%) \u2014 Not confirmed by search. The -20.9% gap is most likely the reaction to F5's fiscal Q4 earnings and FY27 guidance, which it usually reports in late October. No same-day article was found. Why we passed: Outside any active strategy's universe: FFIV is a mid-cap networking/security software name that no strategy lists. If it was reported after the close, the gap happened overnight and the bot's pre-market signals had nothing to act on. A long-only bot also can't trade a -21% drop.",
+  "top_movers": [
+    {
+      "ticker": "VRT",
+      "move_pct": 16.55,
+      "close": 243.845,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 earnings beat: sales $4.31B (+61% y/y) vs ~$3.76B est, adj EPS $2.21 vs $1.82, organic orders +100%; FY26 guidance raised on AI data-center demand.",
+      "miss_reason": "Outside any active strategy's universe: VRT is a ~$90B mid/large-cap AI data-center power and cooling industrial that no strategy lists. The gap came from an earnings release before the open, which a post-open momentum or news-reactive signal can't front-run.",
+      "suggestion": "Add an AI-infrastructure/industrials bucket (VRT, ETN, GEV, etc.) to the momentum universe, plus an earnings-gap rule: enter names gapping \u2265 +8% on \u22652\u00d7 average volume within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "ORCL",
+      "move_pct": 10.532,
+      "close": 145.67,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Oracle's investor day laid out a funding plan: free cash flow positive in 2H FY2028 (~$30B in FY2029), extra equity and debt capped at $20B through FY2030. This eased financing worries and the stock rose about 10-11%.",
+      "miss_reason": "Outside any active strategy's universe. ORCL is a large-cap US tech name that no strategy's universe includes. The move was a scheduled-event gap and re-rating, so a technical or momentum filter would not have caught it even if the stock had been in the universe.",
+      "suggestion": "Add large-cap US tech (ORCL and similar AI-infrastructure names) to the news-reactive strategy's universe. Also add an event-gate rule that admits names with a gap of +8% or more on 2x or more average volume after an investor-day or guidance catalyst.",
+      "failed": false
+    },
+    {
+      "ticker": "FLEX",
+      "move_pct": 9.692,
+      "close": 92.35,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news. Flex reported fiscal Q2 2027 results on Oct 28 (before the open), so the +9.7% move is likely a lagged earnings and AI-datacenter re-rating. I couldn't find the results or the Oct 29 reaction.",
+      "miss_reason": "Outside any active strategy's universe: FLEX is a mid-cap EMS/electronics manufacturer (Nasdaq, Singapore-domiciled), not in any strategy's list. Any post-earnings gap would also have been filtered or already priced by the open.",
+      "suggestion": "Add FLEX and similar AI-supply-chain EMS names (JBL, CLS, SANM) to the momentum universe. Also let the earnings-gate release names 1 day after results if close-to-close return \u2265 +5% on volume \u2265 1.5\u00d7 the 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "LH",
+      "move_pct": 8.738,
+      "close": 361.15,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely Q3 2026 earnings reaction (results due pre-market Oct 28\u201329; consensus EPS ~$4.64, rev ~$3.76B). I couldn't find the actual figures, so the beat/raise is inferred, not confirmed.",
+      "miss_reason": "Outside any active strategy's universe: LH is a large-cap healthcare diagnostics name that no strategy covers. Even if it were in a universe, an earnings gap-up would likely trip the earnings gate or gap filters before the post-results signal.",
+      "suggestion": "Add large-cap healthcare/diagnostics (LH, DGX) to the news-reactive universe. Let the earnings-gate release names with a post-results gap \u2265 +5% on \u22651.5\u00d7 average volume within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": 7.34,
+      "close": 1396.5601,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No SNDK-specific news found for 10/29; likely a memory/NAND sector rally on AI storage demand (Micron/WDC strength) extending the late-October run, with the stock near $1,400.",
+      "miss_reason": "Outside any active strategy's universe: SNDK is a recent-spinoff, ~$1,400/share mid/large-cap memory name that no strategy includes. Its price and extreme volatility likely also fail price-cap or volatility screens.",
+      "suggestion": "Add SNDK, and peers MU and WDC, to the momentum-trader universe, with position sizing by ATR or a dollar-notional cap so the ~$1,400 share price doesn't break the per-share price filter.",
+      "failed": false
+    },
+    {
+      "ticker": "GEHC",
+      "move_pct": 6.491,
+      "close": 75.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 2026 results reported Oct 28: revenue $5.5B (+7.2%, organic +6.2%), adj. EPS $1.34 (+25%) vs ~$1.21 consensus, book-to-bill 1.03, and full-year guidance raised.",
+      "miss_reason": "Outside any active strategy's universe: GEHC is a large-cap medical-device name that no strategy lists. It was also an earnings gap-up, where positioning happens before the print and post-gap momentum or RSI filters would likely have excluded it.",
+      "suggestion": "Add large-cap healthcare/medtech names like GEHC to the momentum universe, and let the earnings gate release names with a post-earnings gap \u2265 +5% on a beat-and-raise, entering at the open of day 2 (day-1 close was +6.49%).",
+      "failed": false
+    },
+    {
+      "ticker": "FFIV",
+      "move_pct": -20.896,
+      "close": 365.0001,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Not confirmed by search. The -20.9% gap is most likely the reaction to F5's fiscal Q4 earnings and FY27 guidance, which it usually reports in late October. No same-day article was found.",
+      "miss_reason": "Outside any active strategy's universe: FFIV is a mid-cap networking/security software name that no strategy lists. If it was reported after the close, the gap happened overnight and the bot's pre-market signals had nothing to act on. A long-only bot also can't trade a -21% drop.",
+      "suggestion": "Add FFIV-type mid-cap tech names to the news-reactive universe, and add a post-earnings gap-down screen (gap \u2264 -15% on \u22653\u00d7 avg volume) that flags names for a watchlist or mean-reversion entry after day-2 stabilization. A long-only bot can't short the drop.",
+      "failed": false
+    },
+    {
+      "ticker": "CSGP",
+      "move_pct": -15.047,
+      "close": 27.185,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely post-Q3 2026 earnings selloff (report due ~Oct 28\u201329; options implied about \u00b115%). I couldn't find coverage of the actual results. Prior quarters showed weak guidance and Homes.com/bookings concerns.",
+      "miss_reason": "Outside any active strategy's universe: CSGP is a mid-cap, already-crushed (~-50\u201370% YTD) real-estate data/internet name. The move was an earnings gap, so a long-only momentum or mean-reversion bot had no entry signal, and shorting isn't possible.",
+      "suggestion": "Add an earnings-gap watchlist rule: include mid-caps with options-implied earnings moves \u226510% in the news-reactive universe, and flag gaps \u2264-10% on \u22653\u00d7 volume for a next-day mean-reversion check.",
+      "failed": false
+    },
+    {
+      "ticker": "CHRW",
+      "move_pct": -11.845,
+      "close": 126.675,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely Q3 2026 earnings reaction (CHRW reported around Oct 28-29) amid weak freight demand and margin worries. Searches found no same-day coverage, so this is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: CHRW is a mid-cap freight/logistics name that no strategy includes. An earnings-day gap of about -12% would also have been caught by gap and earnings gates, and the bot is long-only with no short capability.",
+      "suggestion": "Add mid-cap transports/logistics (CHRW, EXPD, JBHT) to the news-reactive universe, and let the earnings-gate release names with a post-results gap of 8% or more once the first 30 minutes of volume confirm. A long-only bot would still gain nothing on a decline, so this is only a watchlist/rebound signal.",
+      "failed": false
+    },
+    {
+      "ticker": "LII",
+      "move_pct": -10.155,
+      "close": 333.53,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 results on Oct 28: adj. EPS $6.84 (-7% y/y), Home Comfort margin down 490bp on competition, inflation and dealer destocking. FY guidance was reportedly cut. The stock fell about 10% the next day.",
+      "miss_reason": "Outside any active strategy's universe: LII is a mid-cap HVAC industrial that no strategy covers. The gap came from an after-close earnings release, so a pre-market momentum or news filter had no entry before the drop. The bot also appears to be long-only.",
+      "suggestion": "Add mid-cap industrials (S&P 400, market cap above $10B) to the universe. Also add a post-earnings-gap rule that flags names gapping down 8% or more on 2x average volume, for watchlist or mean-reversion review. Shorting is out of scope.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-29T19:32:25.790805+00:00"
+}
