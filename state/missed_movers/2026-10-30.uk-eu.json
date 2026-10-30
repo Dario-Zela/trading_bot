@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-30",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 RNO.PA +8%, DSY.PA +6%, ADS.DE +5%, WPP.L +5%, RHM.DE +5%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (HLN.L -17%, LLOY.L -5%, VNA.DE -3%, STJ.L -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: HLN.L (-16.99%) \u2014 Likely reaction to Haleon's Q3 2026 trading statement (released 29 Oct; analysts had flagged growth near the low end of guidance). I couldn't confirm the figures or the cause of the -17% move. Why we passed: Outside any active strategy's universe: HLN.L is a large-cap UK consumer-health stock that no strategy covers. It was also a results-driven gap, and a -17% gap would likely fail gap-size filters even if it were in a universe.",
+  "top_movers": [
+    {
+      "ticker": "RNO.PA",
+      "move_pct": 7.904,
+      "close": 28.26,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Follow-through from Renault's Q3 results on Oct 29: revenue +1.5% to ~\u20ac11.6B, EV sales +85%, FY2026 guidance confirmed. Stock rebounded from near its 52-week low. No separate Oct 30 news found.",
+      "miss_reason": "Outside any active strategy's universe: Renault is a Paris-listed mid-cap auto name that no strategy includes. The move was also a delayed reaction to results released the prior day, so a gap or volume trigger would have fired at the open.",
+      "suggestion": "Add large and mid-cap CAC 40/SBF 120 autos like RNO.PA to the uk-eu momentum universe. Also let the earnings-gate release names with a post-results gap of at least +5% within one session of the report.",
+      "failed": false
+    },
+    {
+      "ticker": "DSY.PA",
+      "move_pct": 5.737,
+      "close": 24.88,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Follow-through after Q3 results on Oct 28 (rev \u20ac1.55B vs \u20ac1.52B est, EPS \u20ac0.32 vs \u20ac0.31, FY26 guidance raised, life-sciences push). No same-day news found; may also be a software-sector rebound.",
+      "miss_reason": "Outside any active strategy's universe: DSY.PA is a large-cap Euronext Paris software name that no strategy includes. The catalyst also came two days earlier, so a same-day gap or news trigger would not have fired.",
+      "suggestion": "Add large-cap EU software/tech (DSY.PA, SAP.DE, etc.) to the momentum universe, and add a post-earnings drift rule that enters names up \u22653% within 3 days of a beat-and-raise print, which this setup would have met.",
+      "failed": false
+    },
+    {
+      "ticker": "ADS.DE",
+      "move_pct": 5.107,
+      "close": 166.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Follow-through from record Q3 (revenue +9% to \u20ac7.25B, first >\u20ac1B quarterly operating profit) and guidance raise to ~\u20ac2.5B EBIT, with analyst target hikes (Citi \u20ac211). Today's specific trigger is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: a large-cap German DAX consumer name that no strategy covers. The catalyst was also a pre-announced profit warning-style upgrade on Oct 20, so today's move was drift after the news, not a fresh gap.",
+      "suggestion": "Add DAX/Euro Stoxx 50 large caps such as ADS.DE to the momentum universe, plus a post-guidance-raise drift rule: enter on a +3% day within 10 sessions of an upgrade if price is above the 20-day MA.",
+      "failed": false
+    },
+    {
+      "ticker": "WPP.L",
+      "move_pct": 4.685,
+      "close": 4.022,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely follow-through from WPP's Q3 2026 trading update (scheduled 29 Oct) after a heavily sold-off year. I couldn't confirm the actual figures or the reaction, so this is unverified.",
+      "miss_reason": "Outside any active strategy's universe: WPP.L is a UK-listed mid-cap ad-agency stock that no strategy covers. If the move was a results-driven gap, it also happened after the pre-market signal window.",
+      "suggestion": "Add a UK/EU mid-cap 'earnings-gap' watchlist (FTSE 250 or FTSE 100 names reporting Q3) to the news-reactive universe, with a gate that releases names gapping at least +4% on a results day.",
+      "failed": false
+    },
+    {
+      "ticker": "RHM.DE",
+      "move_pct": 4.542,
+      "close": 1054.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found; likely a European defence-sector bounce ahead of Q3 results due 5 Nov 2026, with no company-specific release identified.",
+      "miss_reason": "Outside any active strategy's universe: RHM.DE is a large-cap German defence stock on Xetra, and no strategy covers it. With no discrete catalyst, a +4.5% move would also be unlikely to trip a gap or news trigger.",
+      "suggestion": "Add large-cap EU defence names (RHM.DE, BA.L, HO.PA, SAAB-B.ST) to the uk-eu momentum universe, with an entry rule such as 1-day move \u2265 +4% on volume \u2265 1.5\u00d7 the 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "DBK.DE",
+      "move_pct": 4.443,
+      "close": 31.265,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely Q3 2026 results: a search snippet says pre-tax profit rose 8% to about \u20ac2.6B, a third straight record quarter, on track for 2026 targets. The snippet is undated, so I couldn't confirm it is today's report.",
+      "miss_reason": "Outside any active strategy's universe: DBK.DE is a large-cap European bank that no strategy includes. If this was an earnings gap, a pre-market catalyst move would also have been missed by post-open momentum signals.",
+      "suggestion": "Add large-cap EU financials (DBK.DE, CBK.DE, BNP.PA) to the news-reactive universe, and let the earnings gate release names with a post-results gap of at least +3% on above-average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "HLN.L",
+      "move_pct": -16.986,
+      "close": 3.118,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely reaction to Haleon's Q3 2026 trading statement (released 29 Oct; analysts had flagged growth near the low end of guidance). I couldn't confirm the figures or the cause of the -17% move.",
+      "miss_reason": "Outside any active strategy's universe: HLN.L is a large-cap UK consumer-health stock that no strategy covers. It was also a results-driven gap, and a -17% gap would likely fail gap-size filters even if it were in a universe.",
+      "suggestion": "Add FTSE 100 consumer-staples/healthcare names to the news-reactive universe, and release the earnings-gate for post-results gaps of \u00b110% or more so large-cap results shocks are flagged for review.",
+      "failed": false
+    },
+    {
+      "ticker": "LLOY.L",
+      "move_pct": -5.039,
+      "close": 0.9857,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Fallout from Q3 results (reported 29 Oct): guidance unchanged, slower NII growth signalled, and UK Budget bank-tax worries. Searches showed the main drop on the 29th, so the 30 Oct leg is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: LLOY.L is a UK large-cap bank (FTSE 100) that no strategy includes. The drop was also a results-driven gap the day before, so any post-gap signal was stale, and the bot can't short.",
+      "suggestion": "Add UK/EU financials (LLOY.L, BARC.L, NWG.L) to the universe, and make the earnings-gate flag a -4% or larger post-results drop as a mean-reversion candidate, subject to a 2-day cooldown.",
+      "failed": false
+    },
+    {
+      "ticker": "VNA.DE",
+      "move_pct": -3.436,
+      "close": 15.88,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found; searches returned only prior-year Vonovia results. Likely a rate-sensitive German real-estate sector move (bund yields) ahead of Q3 results in early November.",
+      "miss_reason": "Outside any active strategy's universe: Vonovia is a large-cap German residential REIT on XETRA, and no strategy covers it. A -3.4% drift with no news gap would also fail a news-reactive or gap filter.",
+      "suggestion": "No actionable change for this name. If wanted, add a rate-sensitive sector basket (EU REITs) to the mean-reversion universe, gated on a bund-yield move above a set bp threshold.",
+      "failed": false
+    },
+    {
+      "ticker": "STJ.L",
+      "move_pct": -3.279,
+      "close": 10.765,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed news driver found for 30 Oct. St James's Place (STJ.L) has been under pressure all year from adviser/partner-firm exits (Sovereign Wealth, Prospera, Wellesley), so this is likely a continuation of that move.",
+      "miss_reason": "Outside any active strategy's universe. STJ is a mid-cap FTSE 250 wealth manager, and no strategy lists it. A -3.3% drift with no discrete catalyst also wouldn't trip a gap or volume-spike trigger, and a long-only bot can't short it.",
+      "suggestion": "No actionable change. A -3% drift with no identifiable catalyst on a long-only bot isn't worth widening the universe for. A rule to watch for repeated adviser-exit headlines at FTSE 250 financials would be speculative.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-30T16:03:01.764727+00:00"
+}
