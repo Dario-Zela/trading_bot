@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-30",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 CVNA +17%, GEN +16%, FDXF +15%, HII +14%, NCLH +14%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (NOW -27%, FTNT -22%, MRVL -14%, GOOGL -13%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: NOW (-26.79%) \u2014 Post-Q3 earnings selloff (reported Oct 28): ServiceNow beat its own guidance and raised FY outlook, but EPS $1.00 vs $1.03 est. and revenue were reported light, so AI-disruption fears hit software again. Unconfirmed. Why we passed: Outside any active strategy's universe: NOW is a large-cap enterprise software name (~$110 post-split) that no strategy covers. The gap came off an after-hours earnings reaction, which a long-only bot can't trade on the day.",
+  "top_movers": [
+    {
+      "ticker": "CVNA",
+      "move_pct": 17.407,
+      "close": 68.56,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No same-day news found. Likely a delayed reaction to Carvana's record Q3 report on Oct 28 (revenue $8.04B, adj. EBITDA $800M, guided to the high end of $2.7\u20133.0B). EPS missed ($0.39 vs $0.45). Unverified.",
+      "miss_reason": "Outside any active strategy's universe. CVNA is a volatile mid/large-cap used-car retailer that no strategy lists. Any earnings-driven jump would also have come after the Oct 28 report, with no fresh pre-market signal on the day.",
+      "suggestion": "Add a dynamic 'top-gainer scan' to the momentum universe: admit any name with a daily move \u2265 +8% on \u22652\u00d7 20-day average volume and market cap above $5B, even if it isn't in the static list.",
+      "failed": false
+    },
+    {
+      "ticker": "GEN",
+      "move_pct": 15.581,
+      "close": 28.04,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Gen Digital reported FQ2'27 on Oct 28 (revenue $1.369B, +12%; non-GAAP EPS $0.74, +19%) and raised FY27 guidance. The +15.6% close on Oct 30 looks like a delayed follow-through move; I found no separate same-day news.",
+      "miss_reason": "Outside any active strategy's universe: GEN is a mid-cap cybersecurity software name that no strategy includes. The earnings gap came two days earlier, so a post-earnings drift entry would have needed the name to already be in the universe.",
+      "suggestion": "Add a post-earnings-drift screen that admits any US name with a \u2265+8% single-day move within 3 sessions of an earnings beat-and-raise, even if it is outside the static universe, subject to a market-cap floor and volume filter.",
+      "failed": false
+    },
+    {
+      "ticker": "FDXF",
+      "move_pct": 15.33,
+      "close": 126.505,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst found. FDXF (FedEx Freight, spun off June 2026) gained 15% with no dated news. It was likely an LTL-sector or peer-earnings move, or a rebound after a weak stretch.",
+      "miss_reason": "Outside any active strategy's universe: FDXF is a newly spun-off (June 2026) mid-cap LTL trucker with little price history, so it was likely never added to the universe. A news-reactive bot also had no identifiable catalyst to trigger on.",
+      "suggestion": "Add a universe-refresh rule that automatically includes new S&P 500 / Dow Transports spin-offs once they have ~20 sessions of price history. Their 1.5\u00d7 volume and gap filters would then be able to evaluate names like FDXF.",
+      "failed": false
+    },
+    {
+      "ticker": "HII",
+      "move_pct": 13.935,
+      "close": 316.75,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 2026 earnings beat (reported Oct 29): EPS $5.48 vs ~$4.50 est, record $3.5B revenue, $32.4B new awards, and raised FY26 shipbuilding revenue guidance to $10.5\u201310.7B.",
+      "miss_reason": "Outside any active strategy's universe: HII is a mid-cap defense shipbuilder that no strategy's universe includes. The move was also an overnight earnings gap, so the gain came at the open and post-open momentum signals had little left to catch.",
+      "suggestion": "Add mid-cap defense/industrials names like HII to the news-reactive universe. Also add an earnings-gap rule that admits any name gapping \u2265 +8% on an EPS beat of \u2265 10% within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "NCLH",
+      "move_pct": 13.893,
+      "close": 18.24,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely reaction to Q3 2026 results (reported Oct 29): beat above guidance on stronger close-in demand and onboard spend, plus a raised FY2026 outlook. The share-price reaction itself is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: NCLH is a mid-cap cruise operator that no strategy includes. The earnings-driven gap-up was also priced at the open, so a post-signal momentum entry would have missed most of the move.",
+      "suggestion": "Add a mid-cap consumer-discretionary/travel (cruise, airline) watchlist to the news-reactive universe. Let it release names that gap up \u2265 +8% on an earnings beat plus a guidance raise, entering within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "TXT",
+      "move_pct": 12.045,
+      "close": 87.535,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed news found for 2026-10-30. A +12% single-day move in an aerospace/defense industrial like Textron most likely reflects an earnings or guidance surprise, but I could not verify one.",
+      "miss_reason": "Outside any active strategy's universe: TXT is a mid-cap aerospace/defense industrial (Cessna, Bell) that no strategy lists. A catalyst gap-up would also have happened before the open, so post-open signals would have been late.",
+      "suggestion": "Add a dynamic 'top-gainer scan' to the momentum universe: admit any US stock above $5B market cap with a close-to-close gain of at least +8% on at least 2x average volume into next-day candidate lists, even if it isn't in the static universe.",
+      "failed": false
+    },
+    {
+      "ticker": "NOW",
+      "move_pct": -26.794,
+      "close": 109.385,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-Q3 earnings selloff (reported Oct 28): ServiceNow beat its own guidance and raised FY outlook, but EPS $1.00 vs $1.03 est. and revenue were reported light, so AI-disruption fears hit software again. Unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: NOW is a large-cap enterprise software name (~$110 post-split) that no strategy covers. The gap came off an after-hours earnings reaction, which a long-only bot can't trade on the day.",
+      "suggestion": "Add large-cap software (NOW, CRM, WDAY, ADBE) to a watch universe and let the earnings-gate flag post-earnings gaps \u2264 -15% as a short or avoid signal and as a mean-reversion candidate after a 2-3 day base.",
+      "failed": false
+    },
+    {
+      "ticker": "FTNT",
+      "move_pct": -22.261,
+      "close": 135.51,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-Q3 earnings gap-down (reported Oct 28 after the close): Fortinet beat on revenue and EPS, but the stock fell 20%+ on guidance and growth worries, dragging peers such as Tenable lower. Sources conflict on the size of the drop.",
+      "miss_reason": "Outside any active strategy's universe: FTNT is a mid/large-cap cybersecurity name that no strategy covers. The drop was an overnight earnings gap, so a long-only bot had no entry and could not short it. A gap that size would also have failed any gap-size or RSI filter.",
+      "suggestion": "Add FTNT and similar large-cap software/security names to the news-reactive universe, and give the earnings-gate a post-earnings gap-down watchlist (gap \u2264 -15% with \u22653x average volume). A day-2+ mean-reversion long could then fire, with no shorting needed.",
+      "failed": false
+    },
+    {
+      "ticker": "MRVL",
+      "move_pct": -13.796,
+      "close": 215.675,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst found. Searches turned up no dated 2026-10-30 report. Likely an AI-semiconductor selloff, possibly tied to hyperscaler capex commentary, but I could not verify that.",
+      "miss_reason": "Outside any active strategy's universe: MRVL is a large-cap semiconductor name that no strategy lists. A -13.8% gap-down is also a short-side or knife-catch setup that a long-only momentum or mean-reversion bot would filter out.",
+      "suggestion": "Add large-cap AI/semis (MRVL, AVGO, AMD) to the mean-reversion universe, gated by a no-negative-news check and an RSI(2) < 10 entry, so the bot can trade rebounds after sector-wide drops of 10% or more.",
+      "failed": false
+    },
+    {
+      "ticker": "GOOGL",
+      "move_pct": -12.973,
+      "close": 282.795,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 earnings (reported Oct 28 after close) missed: EPS $2.12 vs ~$3.02 est, negative free cash flow, $51B quarterly capex and an SpaceX mark-down loss, despite Cloud revenue doubling. Shares fell ~13% at the open.",
+      "miss_reason": "Outside any active strategy's universe (mega-cap GOOGL isn't in any strategy's list). It was also a gap-down on an after-hours earnings event, so any momentum or news filter would see the gap only at the open, and the bot is long-only.",
+      "suggestion": "Add mega-cap GOOGL to the news-reactive universe, and add an earnings-gate rule: after a gap of \u2264-8% on a prior-evening earnings miss, flag the name for a mean-reversion watch with a 1-2 day cooldown instead of a long entry.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-10-30T19:32:02.834631+00:00"
+}
