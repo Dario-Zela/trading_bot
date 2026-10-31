@@ -31,8 +31,8 @@ model_assignment:
   final_select: sonnet
 runs_in:
 - region: us
-  tier: shadow
-  alpaca_slot: null
+  tier: alpaca-paper
+  alpaca_slot: 2
   universe: t212_isa_us
   tier2_candidate: false
   tier2_marked_at: null
@@ -43,10 +43,10 @@ runs_in:
   universe: t212_isa_uk_eu
   alpaca_slot: null
   tier2_candidate: true
-  tier2_marked_at: '2026-10-24'
-  tier2_thesis: '#2: IC 0.185 (n=389), spread +1.09, but 0 trades. Now on T212 paper.
-    It must begin trading and hold IC above 0.15 to challenge mean-reverter@us; otherwise
-    it is dropped.'
+  tier2_marked_at: '2026-10-31'
+  tier2_thesis: '#2: IC 0.124 (n=386), spread +0.44, 0 trades so far. Now on T212
+    paper, so it must start trading and hold IC >0.12 to challenge mean-reverter@us.
+    If it has no fills next week, drop it.'
 prefilter_mode: llm
 prefilter_top_n: 40
 cost_gate_multiplier: 3.0

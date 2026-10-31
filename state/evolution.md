@@ -566,3 +566,33 @@
   - details: `{"variant_id": "mean-reverter-gap-industry-neutral", "addendum_applied": true}`
 - **momentum-trader-vix-gated@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.144, n=494) → Alpaca slot 2
   - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 2, "enforcement": true, "slot_kind": "alpaca"}`
+
+## Weekly evolution — 2026-10-31
+
+- **momentum-trader-vix-gated-crowd-cap@us** · `demote` · ✅ applied — Dormant execution: 496 graded predictions, 0 trades, IC -0.019, decile spread -0.92. The slot is not being earned.
+  - details: `{"from_tier": "alpaca-paper", "slot_cleared": true, "previous_slot": 1, "slot_kind": "alpaca"}`
+- **momentum-trader-vix-gated@us** · `demote` · ✅ applied — Dormant execution: 496 graded predictions, 0 trades, IC -0.004, decile spread -2.98.
+  - details: `{"from_tier": "alpaca-paper", "slot_cleared": true, "previous_slot": 2, "slot_kind": "alpaca"}`
+- **mean-reverter@us** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 25, "hit_rate": 0.6, "total_pnl_gbp": 574.54, "avg_pnl_pct": 1.784, "max_drawdown_pct": -0.35, "n_predictions_graded": 380, "ic": 0.137, "decile_spread": 5.277}}`
+- **insider-cluster-momentum@us** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 4, "hit_rate": 0.0, "total_pnl_gbp": -22.61, "avg_pnl_pct": 0.0, "max_drawdown_pct": -0.23, "n_predictions_graded": 397, "ic": 0.109, "decile_spread": 0.496}}`
+- **ml-challenger@uk-eu** · `demote` · ⏭️ skipped — Strategy is evolution_frozen (experiment control) — 'demote' refused. (Dormant execution on T212 paper: 66,653 graded predictions, 0 trades, IC 0.057 with a weak spread.)
+- **insider-cluster-momentum@uk-eu** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 0, "hit_rate": 0.0, "total_pnl_gbp": 0.0, "avg_pnl_pct": 0.0, "max_drawdown_pct": 0.0, "n_predictions_graded": 386, "ic": 0.124, "decile_spread": 0.435}}`
+- **mean-reverter@us** · `keep` · ✅ applied — Leader of the tier-2 leaderboard. It stays marked; see the mark action below.
+- **mean-reverter-gap-industry-neutral@us** · `unmark-tier2-candidate` · ✅ applied — Its mark carries mean-reverter's thesis, but its own IC is -0.004 (n=189) with 0 trades. It is out-competed by mean-reverter@us, the real leader.
+- **mean-reverter@us** · `mark-tier2-candidate` · ✅ applied — Refreshes the thesis for the actual leader, since the earlier mark was duplicated onto the gap-neutral variant.
+  - details: `{"tier2_marked_at": "2026-10-31", "thesis_present": true}`
+- **insider-cluster-momentum@uk-eu** · `mark-tier2-candidate` · ✅ applied — It is the runner-up. IC has slipped from 0.185 to 0.124, so the thesis threshold is lowered.
+  - details: `{"tier2_marked_at": "2026-10-31", "thesis_present": true}`
+- **momentum-trader-vix-gated** · `deactivate` · ✅ applied — IC is about 0 in both regions (us -0.004, uk-eu 0.003) with 0 trades and a negative decile spread across 3,366 predictions. Deactivating it frees a cap slot for a new contender.
+  - details: `{"deactivated_at": "2026-10-31"}`
+- **mean-reverter** · `spawn-variant` · ✅ applied — Blitz et al. (cited in the 2026-W44 research brief) find that residual-return reversal survives costs better than raw short-term reversal. The leader mean-reverter has IC 0.137, below the 0.20 spawn trigger, so a factor-adjusted signal is a fresh contender.
+  - details: `{"variant_id": "mean-reverter-residual-return", "addendum_applied": true}`
+- **news-reactive-agent-top-n@us** · `keep` · ✅ applied — IC 0.09 with +£115 across 8 trades. It is the closest US bench alternative, but 12.5% hit rate keeps it off the shortlist.
+- **news-reactive-agent-top-n@uk-eu** · `keep` · ✅ applied — IC 0.118, but 0 trades. Watch for a dormancy problem.
+- **mean-reverter@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.137, n=380) → Alpaca slot 1
+  - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 1, "enforcement": true, "slot_kind": "alpaca"}`
+- **insider-cluster-momentum@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.109, n=397) → Alpaca slot 2
+  - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 2, "enforcement": true, "slot_kind": "alpaca"}`
