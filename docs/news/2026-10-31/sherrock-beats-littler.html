@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sherrock stuns Littler to win £501,000 darts prize — 2026-10-31 — Trading Bot</title>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../../index.html">Dashboard</a>
+<a class="nav-tab active" href="../../news/latest.html">News</a>
+<a class="nav-tab" href="../../macro/latest.html">Macro</a>
+<a class="nav-tab" href="../../evolution.html">Evolution</a>
+<a class="nav-tab" href="../../ml/index.html">ML lab</a>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper article-page"><div class="edition-nav" data-edition="2026-10-31" data-kind="news"><a class="edition-nav-link" data-role="prev" href="../2026-10-30/" title="2026-10-30">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><a class="edition-nav-link disabled" data-role="next" href="#" aria-disabled="true">next →</a><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">SPORT · DARTS · By K. Brennan · 2026-10-31 · 2 min read</div><h1>Sherrock stuns Littler to win £501,000 darts prize</h1><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>Fallon Sherrock reportedly beat world champion Luke Littler to win a £501,000 prize, though the event, round and score are not yet confirmed.</div></div><div class="body"><p>Fallon Sherrock has beaten Luke Littler, described in the discovery brief as the reigning world champion, to win a £501,000 darts prize. On the face of it, that is one of the larger upsets the sport has produced in some time.</p>
+<p>The detail is thin. The only source so far is a BBC Sport report. That report, as relayed to this desk, gives the result and the prize money, and nothing else. The tournament, the round and the final score are not in it, and none has been independently checked. The date of the match also still needs confirming against the BBC original. Nothing below goes beyond what has been reported.</p>
+<h2>Why it matters</h2>
+<p>Sherrock has been here before, in a smaller way. At the 2019 PDC World Championship she became the first woman to win a match at the event, beating Ted Evetts, and then knocked out Mensur Suljovic, a seeded player, in the next round. She has since been the most prominent woman on the circuit, regularly testing herself against the men's tour.</p>
+<p>Littler is a different kind of opponent. He rose from teenage prodigy to the sport's dominant figure within a couple of seasons, and the brief describes him as world champion. Beating him in a contest with a prize this size is a large result. It would also add to the argument that the gap between the women's and men's games, in a sport with no physical barrier to competing together, is smaller than the tour structure implies.</p>
+<h2>What is not known</h2>
+<p>The £501,000 figure is the headline number, but the brief does not say whether it is the winner's cheque or the total pot. Nor does it say whether the event was a standard ranking tournament, an invitational or an exhibition-style format. Those details change how much weight the result carries. A win in a ranking event with a full field is one thing. A one-off match for a large purse is another, though still notable.</p>
+<p>The score matters for the same reason. A narrow win in a deciding leg and a comfortable one tell different stories about Littler's form, and about whether this was an off night for him or a peak performance from her.</p>
+<h2>What to watch</h2>
+<p>The next step is confirmation: the event, the format, the scoreline and the prize structure from the BBC report or the organisers' own results page. Once those are in, this brief can be updated or expanded. Littler's next scheduled appearance will show whether the defeat is a blip or the start of a pattern.</p></div><section class="sources-block"><h4>Sources</h4><ol><li><a href="https://www.bbc.co.uk/sport/darts" rel="nofollow noopener" target="_blank">BBC Sport — Darts</a></li></ol></section><footer class="colophon">The Bot Tribune · 2026-10-31 · <a href="index.html">Back to the edition</a></footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
+</body>
+</html>
