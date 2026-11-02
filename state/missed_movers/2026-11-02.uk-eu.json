@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-02",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 BAYN.DE +5%, IHG.L +3%, ABF.L +2%, AI.PA +2%, CPG.L +2%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (ASM.AS -8%, ASML.AS -6%, AAF.L -6%, ANTO.L -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: ASM.AS (-7.57%) \u2014 No confirmed same-day news found for ASM.AS. The -7.6% move looks like a semiconductor-equipment sector selloff (ASM, ASML and Besi often fall together on China export-curb or order-outlook worries). That is unverified. Why we passed: Outside any active strategy's universe: ASM International is a large-cap Dutch semicap listed on Euronext Amsterdam, and no uk-eu strategy includes it. With no pre-market catalyst, a sector-wide gap-down would also have failed momentum and news-reactive entry filters.",
+  "top_movers": [
+    {
+      "ticker": "BAYN.DE",
+      "move_pct": 5.463,
+      "close": 50.58,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed driver for today's +5.46% move. Likely Bayer-specific news flow: asundexian approval/data momentum (China approval reported last week) or the glyphosate/Roundup litigation backdrop.",
+      "miss_reason": "Outside any active strategy's universe: BAYN.DE is a large-cap German pharma/agrochemical name, and no strategy's universe includes it. A catalyst-driven gap-up would also have been priced at the open, before a post-open momentum signal could fire.",
+      "suggestion": "Add large-cap DAX/Stoxx 600 health-care names to the news-reactive universe, with a dynamic add-on rule: any constituent gapping \u2265 +4% on \u2265 2\u00d7 average volume becomes eligible for that session's scan.",
+      "failed": false
+    },
+    {
+      "ticker": "IHG.L",
+      "move_pct": 2.601,
+      "close": 171.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-02; searches turned up only older IHG items (upgrades, M&A rumours, buybacks). Likely a sector or market move, or a routine buyback.",
+      "miss_reason": "Outside any active strategy's universe: IHG.L is a FTSE 100 large-cap hotel franchisor that no strategy lists. A +2.6% drift with no news also wouldn't pass a gap-up or volume-surge filter.",
+      "suggestion": "(No actionable change.) A +2.6% move without a catalyst is below a typical gap/volume trigger; adding FTSE 100 consumer-discretionary names to the momentum universe is optional and would need backtesting first.",
+      "failed": false
+    },
+    {
+      "ticker": "ABF.L",
+      "move_pct": 2.044,
+      "close": 19.225,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-02 \u2014 likely a sector or market-wide move. Searches turned up only routine buyback and voting-rights RNS filings.",
+      "miss_reason": "Outside any active strategy's universe: ABF.L is a UK large-cap (FTSE 100) in food retail and ingredients (Primark, sugar). A +2% move on no catalyst is also too small to trip gap-up, momentum or news-reactive thresholds.",
+      "suggestion": "No actionable change. A +2.04% drift with no news is below typical momentum entry thresholds, and adding FTSE 100 defensives to a universe would only add noise.",
+      "failed": false
+    },
+    {
+      "ticker": "AI.PA",
+      "move_pct": 1.984,
+      "close": 180.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst \u2014 likely technical / sector move. Searches found no Air Liquide-specific news for 2026-11-02, so this looks like a +1.98% move with the broader market or industrial gases peers.",
+      "miss_reason": "Outside any active strategy's universe: AI.PA is a large-cap Euronext Paris industrial-gases name, not in any strategy's list. A ~2% drift on no news also wouldn't pass a typical gap or volume-surge filter for momentum or news-reactive logic.",
+      "suggestion": "No actionable change. A low-vol large-cap drift with no catalyst isn't worth adding to the universe; if wanted, add a CAC40/Stoxx50 defensive-large-cap bucket with a \u2265+1.5% and \u22651.2\u00d7 avg-volume trigger, but expect low edge.",
+      "failed": false
+    },
+    {
+      "ticker": "CPG.L",
+      "move_pct": 1.958,
+      "close": 34.37,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst \u2014 likely technical / sector move. Searches found no Compass Group (CPG.L) news dated 2026-11-02, and nothing newer than May 2026 guidance upgrade coverage.",
+      "miss_reason": "Outside any active strategy's universe: CPG.L is a FTSE 100 large-cap in contract catering/support services, and no strategy lists it. A +1.96% drift with no catalyst is also too small for a gap or momentum trigger.",
+      "suggestion": "Add FTSE 100 constituents like CPG.L to the mean-reversion/momentum universe with a relative-strength filter (e.g. 20d return rank \u2265 top quintile). Don't chase single +2% days with no catalyst.",
+      "failed": false
+    },
+    {
+      "ticker": "IAG.L",
+      "move_pct": 1.838,
+      "close": 4.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst \u2014 likely technical / sector move (airlines bounce). Searches found no IAG-specific news dated 2026-11-02; only routine buyback notices.",
+      "miss_reason": "Outside any active strategy's universe: IAG.L is a FTSE 100 large-cap airline (LSE, GBP), and no strategy includes it. A +1.84% drift with no catalyst also wouldn't trip a typical gap or volume-spike momentum filter.",
+      "suggestion": "(no actionable change \u2014 a +1.84% move with no catalyst is within normal noise; adding FTSE 100 cyclicals to the universe would not be justified by a single day's move)",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": -7.573,
+      "close": 729.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found for ASM.AS. The -7.6% move looks like a semiconductor-equipment sector selloff (ASM, ASML and Besi often fall together on China export-curb or order-outlook worries). That is unverified.",
+      "miss_reason": "Outside any active strategy's universe: ASM International is a large-cap Dutch semicap listed on Euronext Amsterdam, and no uk-eu strategy includes it. With no pre-market catalyst, a sector-wide gap-down would also have failed momentum and news-reactive entry filters.",
+      "suggestion": "Add a sector-breadth trigger to the uk-eu universe. If \u22653 of ASML/ASM/BESI/STM fall more than 4% on the day, add them to a mean-reversion watchlist (RSI(2) < 10, volume \u22651.5\u00d7 20-day average) for next-session entry.",
+      "failed": false
+    },
+    {
+      "ticker": "ASML.AS",
+      "move_pct": -6.114,
+      "close": 1412.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news catalyst found for 2026-11-02. Searches returned only older ASML drops (earnings, China competition, AI-sentiment), so this is likely a sector or semis move.",
+      "miss_reason": "Outside any active strategy's universe: ASML.AS is a large-cap Euronext Amsterdam semiconductor-equipment name that no uk-eu strategy lists. With no identified catalyst, a -6% sector-driven drop also gives no news-reactive signal to trade on.",
+      "suggestion": "Add large-cap EU semis (ASML.AS, plus peers such as ASM International) to the uk-eu mean-reversion universe, gated on a sector-wide drop of 5% or more with no company-specific news, so the bot catches the next analogue.",
+      "failed": false
+    },
+    {
+      "ticker": "AAF.L",
+      "move_pct": -5.543,
+      "close": 2.59,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed news catalyst for 2026-11-02. Searches found no same-day coverage of AAF.L (Airtel Africa), only older drops tied to Bharti Airtel stake/reorganisation news (May 2026). Likely a technical or sector move, possibly results-related.",
+      "miss_reason": "Outside any active strategy's universe: AAF.L is a mid-cap London-listed Africa-focused telecom with a majority holder (Bharti Airtel) and a thin free float. The universe filters probably exclude it, and a -5.5% drop on no clear catalyst wouldn't trigger a news-reactive entry anyway.",
+      "suggestion": "No actionable change: the bot is long-only, so a loser can't be traded without short capability. If coverage is wanted, add FTSE 250 telecoms to the uk-eu watchlist with a \u22651.5\u00d7 volume floor, as a mean-reversion candidate only.",
+      "failed": false
+    },
+    {
+      "ticker": "ANTO.L",
+      "move_pct": -4.52,
+      "close": 31.26,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-02; likely a copper/mining-sector move, since Antofagasta tracks copper prices and FTSE miners closely. No dated report confirms a specific driver.",
+      "miss_reason": "Outside any active strategy's universe: ANTO.L is a FTSE 100 copper miner (large-cap, materials) that no strategy lists. With no company-specific news, a sector-beta drop would not trip a news-reactive trigger, and a long-only bot would not short it.",
+      "suggestion": "Add a commodity-linked miners basket (ANTO.L, GLEN.L, RIO.L) to the mean-reversion universe, gated on a copper proxy such as HG=F falling over 2% in a day, so sector-driven drops of 4% or more become dip-buy candidates.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-02T16:02:49.793756+00:00"
+}
