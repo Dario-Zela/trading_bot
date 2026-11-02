@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-02",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 FDXF +15%, REGN +13%, GPN +13%, GDDY +11%, CSGP +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (RDDT -29%, INTC -29%, ILMN -19%, TWLO -15%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: RDDT (-29.22%) \u2014 No confirmed catalyst for the Nov 2 drop. Searches found nothing dated today. Q3 results came out Oct 29 (revenue +53%, Q4 guide $1.0\u20131.03B), so the -29% looks like a non-earnings shock, possibly a Google/AI-licensing or traffic story. Why we passed: Outside any active strategy's universe: RDDT is a mid/large-cap, recent-IPO social-media name that no strategy lists. The drop also came days after earnings, so earnings-gate and gap-up filters would not have flagged it, and a long-only bot can't short a decline.",
+  "top_movers": [
+    {
+      "ticker": "FDXF",
+      "move_pct": 15.33,
+      "close": 126.505,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FDXF's +15% jump happened Oct 30, not Nov 2: its first standalone earnings beat (adj EPS $1.49 vs $1.38 est, revenue +12%) and an above-consensus outlook. Nov 2 close of 126.505 is flat vs Oct 30's 126.04.",
+      "miss_reason": "Outside any active strategy's universe: FDXF is a mid-cap FedEx spin-off (June 2026) that no strategy lists. The move was a pre-market earnings gap on Oct 30, and the +15.33% on Nov 2 is likely a stale-close artifact in the mover scan.",
+      "suggestion": "Add a check to the mover scanner that drops names whose prior-close date is more than 1 trading day old, then add recent spin-offs and S&P 500 adds to the universe-refresh job so earnings gaps like this are tradable.",
+      "failed": false
+    },
+    {
+      "ticker": "REGN",
+      "move_pct": 13.327,
+      "close": 927.89,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 2026 earnings beat (non-GAAP EPS $20.07, revenue $5.12B, both above consensus) plus positive Libtayo adjuvant cSCC survival data; shares +13.3% to 927.89.",
+      "miss_reason": "Outside any active strategy's universe: REGN is a large-cap biotech that no strategy covers. It was also an earnings-gap move, where the jump is priced at the open before a post-open momentum or news signal could fire.",
+      "suggestion": "Add large-cap healthcare/biotech (e.g. REGN, VRTX, AMGN) to the news-reactive universe, and let the earnings gate release names with a post-results gap \u2265 +8% on \u22652\u00d7 average volume within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "GPN",
+      "move_pct": 12.972,
+      "close": 96.84,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely takeover interest: reports of a ~$40B buyout approach (CD&R with GTCR, its largest holder) lifted the stock. I couldn't confirm the Nov 2 driver or the deal terms. Earnings are not until Nov 5.",
+      "miss_reason": "Outside any active strategy's universe. GPN is a mid/large-cap payments name that no strategy lists. Even if it had been in one, a deal-rumor gap-up would likely fail a gap-size or RSI filter, and the news arrived before the open.",
+      "suggestion": "Add a news-reactive 'dynamic universe' rule: admit any US name with a gap of at least +8% on at least 2x average volume and an M&A or buyout headline, with a capped position size and a tight stop below the gap-day low.",
+      "failed": false
+    },
+    {
+      "ticker": "GDDY",
+      "move_pct": 10.719,
+      "close": 117.24,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed Nov 2 news found. Likely tied to the Gen Digital takeover-approach story (FT, late Sept) or Q3 earnings around now. Unverified.",
+      "miss_reason": "Outside any active strategy's universe: GDDY is a ~$12-15B mid-cap software/internet services name that no strategy includes. A news- or deal-driven gap would also have been missed by a momentum or mean-reversion filter.",
+      "suggestion": "Add a dynamic 'top-gainer watchlist' to the universe: any US name with \u2265$5B market cap, a \u2265+8% gap and \u22652\u00d7 average volume gets admitted to the news-reactive strategy for that session, with a cap on position size.",
+      "failed": false
+    },
+    {
+      "ticker": "CSGP",
+      "move_pct": 7.214,
+      "close": 30.17,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst found. CSGP rose 7.21% to 30.17, near a seven-year low; the move is likely a rebound or post-Q3-earnings drift, but my searches found no dated news for Nov 2.",
+      "miss_reason": "Outside any active strategy's universe: CSGP is a mid-cap (~$12B) real-estate data/software name that no strategy's universe includes. Even if it were included, a move with no clear catalyst would not trigger a news-reactive entry.",
+      "suggestion": "Add a daily 'unlisted gainer' scan to the momentum strategy's universe builder: admit US names with market cap above $5B and a move of at least +5% on at least 1.5x average volume, as watchlist-only candidates.",
+      "failed": false
+    },
+    {
+      "ticker": "CBOE",
+      "move_pct": 6.772,
+      "close": 335.53,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found. Likely post-Q3 earnings repricing (8-K dated 2026-10-30, opex guidance cut, Cboe Australia sale pending) and possible Nov 2 earnings-call or analyst follow-through.",
+      "miss_reason": "Outside any active strategy's universe: CBOE is a ~$35B mid/large-cap exchange operator in financials, and no strategy lists it. The move also looks like a catalyst-driven earnings drift that a technical or momentum filter would not have flagged pre-open.",
+      "suggestion": "Add a dynamic 'earnings-gap' watchlist to the news-reactive strategy: any US name with market cap above $10B that closes \u2265+5% within 3 sessions of an 8-K earnings filing becomes eligible, even if it is not in the static universe.",
+      "failed": false
+    },
+    {
+      "ticker": "RDDT",
+      "move_pct": -29.221,
+      "close": 91.73,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst for the Nov 2 drop. Searches found nothing dated today. Q3 results came out Oct 29 (revenue +53%, Q4 guide $1.0\u20131.03B), so the -29% looks like a non-earnings shock, possibly a Google/AI-licensing or traffic story.",
+      "miss_reason": "Outside any active strategy's universe: RDDT is a mid/large-cap, recent-IPO social-media name that no strategy lists. The drop also came days after earnings, so earnings-gate and gap-up filters would not have flagged it, and a long-only bot can't short a decline.",
+      "suggestion": "Add a universe-wide scan that flags any S&P 500 or >$10B name with a daily move beyond \u00b115% on volume \u22653\u00d7 its 20-day average, and sends it to a news-check queue even if no strategy lists it.",
+      "failed": false
+    },
+    {
+      "ticker": "INTC",
+      "move_pct": -28.576,
+      "close": 65.76,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Weak Q4 guidance and PC-market slowdown hit INTC on Fri 10/30 (~-29% to ~$66). The -28.58% is the stale Friday gap, and Monday only slid a few more percent. Downgrades followed, e.g. Freedom Broker to Hold and a Morgan Stanley PT cut.",
+      "miss_reason": "Outside any active strategy's universe (a ~$290B mega-cap that no strategy lists). The crash was an overnight earnings-guidance gap after a ~250% YTD run, so a bot can't enter pre-gap, and by Monday the stock was RSI-oversold.",
+      "suggestion": "(no actionable change: the loss came from an after-hours gap on a long-only book; at most, add a post-earnings-gap mean-reversion check that waits for RSI<25 to stabilise and then reverses, not to chase the drop.)",
+      "failed": false
+    },
+    {
+      "ticker": "ILMN",
+      "move_pct": -18.641,
+      "close": 235.99,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed Nov 2 driver found. Q3 results (Oct 29) showed a revenue miss ($1.13B vs ~$1.15B) with EPS flattered by a $79M tariff refund, despite raised guidance. Likely continued post-earnings selling.",
+      "miss_reason": "Outside any active strategy's universe: ILMN is a mid-cap life-science tools name that no strategy includes. The selling also began around the Oct 29 after-hours earnings reaction, so a post-close signal would have fired before Nov 2.",
+      "suggestion": "Add a post-earnings-drift rule to the news-reactive universe: admit any S&P 400/500 name with a \u22658% post-earnings gap and \u22652\u00d7 avg volume, and let the earnings-gate release it within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "TWLO",
+      "move_pct": -15.242,
+      "close": 205.03,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Reaction to Q3 results (reported Oct 29): revenue +20% to $1.56B and a raised FY guide, but a cautious Q4 outlook drove a ~15% drop. I found no distinct Nov 2 news, so the timing is uncertain.",
+      "miss_reason": "Outside any active strategy's universe: TWLO is a mid-cap software name that no strategy includes. It was also a guidance-driven gap that a momentum or mean-reversion bot could only catch with pre-market positioning, and the bot has no short capability.",
+      "suggestion": "Add mid-cap US software (market cap >$10B, ADV >$200M) to the news-reactive universe, and add an earnings-gate release for post-earnings gaps of at least 10% in either direction. Long-only, this would only flag the name for a mean-reversion rebound entry.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-02T20:32:23.657689+00:00"
+}
