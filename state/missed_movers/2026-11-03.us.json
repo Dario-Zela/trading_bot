@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-03",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 IDXX +21%, CBRE +6%, HWM +6%, CRH +6%, PNR +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (LITE -19%, MRVL -13%, CIEN -11%, P -10%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: IDXX (+21.19%) \u2014 Q3 2026 beat-and-raise reported Nov 2: revenue $1,214M (+10%), EPS $4.01 vs ~$3.82 whisper, FY26 EPS guide raised to $14.96\u201315.16. Stock had fallen ~7% into the print. Why we passed: Outside any active strategy's universe (mid/large-cap healthcare diagnostics, not in any strategy's list). It was also a one-day earnings gap, so a post-close or pre-market signal would have been needed, and a gap this size would likely fail a gap or RSI filter.",
+  "top_movers": [
+    {
+      "ticker": "IDXX",
+      "move_pct": 21.191,
+      "close": 668.015,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 2026 beat-and-raise reported Nov 2: revenue $1,214M (+10%), EPS $4.01 vs ~$3.82 whisper, FY26 EPS guide raised to $14.96\u201315.16. Stock had fallen ~7% into the print.",
+      "miss_reason": "Outside any active strategy's universe (mid/large-cap healthcare diagnostics, not in any strategy's list). It was also a one-day earnings gap, so a post-close or pre-market signal would have been needed, and a gap this size would likely fail a gap or RSI filter.",
+      "suggestion": "Add an earnings-gap-continuation rule that admits any US name with S&P 500-level liquidity (e.g. avg dollar volume above $100M) gapping \u2265+8% on \u22652\u00d7 volume the morning after results, even if it isn't in a strategy's static universe.",
+      "failed": false
+    },
+    {
+      "ticker": "CBRE",
+      "move_pct": 6.48,
+      "close": 137.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed CBRE-specific news today. Q3 earnings were Oct 22. The +6.5% move looks like a rebound in rate-sensitive real estate as Treasury yields fell, from a stock still ~20% below its February high.",
+      "miss_reason": "Outside any active strategy's universe: CBRE is a mid/large-cap commercial real estate services name that no strategy includes. With no pre-market catalyst or gap, a news-reactive or gap-up screen would not have flagged it anyway.",
+      "suggestion": "Add a rate-sensitive sector basket (CBRE, JLL, REITs) to the mean-reversion universe, gated on a \u22651% daily drop in the 10-year yield, so yield-driven real estate rebounds can be traded.",
+      "failed": false
+    },
+    {
+      "ticker": "HWM",
+      "move_pct": 6.377,
+      "close": 211.925,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear same-day news found. Likely a continued rebound after the Oct 29 Q3 beat (revenue +29% to $2.7B, adj. EPS $1.46 vs ~$1.37, FY26 guidance raised, $5B buyback added), with the stock still well below its $310 high.",
+      "miss_reason": "Outside any active strategy's universe: HWM is a large-cap aerospace supplier that no strategy lists. The catalyst was also stale (earnings 3 trading days earlier), so a news-reactive or gap-up filter would not have fired on Nov 3.",
+      "suggestion": "Add large-cap industrials/aerospace (HWM, GE, TDG) to the momentum universe, and add a post-earnings-drift rule that admits names within 5 trading days of a beat-and-raise when the daily move is \u2265 +4% on \u22651.5\u00d7 average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "CRH",
+      "move_pct": 6.343,
+      "close": 96.57,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed driver found. CRH's Q3 results date is unconfirmed (sources say Nov 3-9), and nothing shows an earnings release or deal today. Likely an earnings-anticipation or building-materials sector rebound after a ~16% slide since July.",
+      "miss_reason": "Outside any active strategy's universe: CRH is a ~$65B large-cap building-materials name (Irish-domiciled, NYSE primary listing) that no strategy's universe list includes. A +6% gap on no clear news also wouldn't trip a news-reactive trigger.",
+      "suggestion": "Add a universe-expansion rule that auto-includes US-listed materials/industrials names with market cap >$20B and ADV >$200M, so large-cap non-US-domiciled names like CRH get screened by the momentum gap-up filter.",
+      "failed": false
+    },
+    {
+      "ticker": "PNR",
+      "move_pct": 6.158,
+      "close": 70.34,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No same-day news found; likely continued post-earnings drift after the Oct 27 Q3 beat (adj EPS $1.18 vs ~$1.07 est, ~12% jump that day) and a rebound in industrial/housing-related names.",
+      "miss_reason": "Outside any active strategy's universe: PNR is a ~$11-12B mid-cap industrial/water-pool equipment name. With no catalyst today, a +6% drift day would not trip news-reactive triggers, and the post-earnings gap came a week earlier.",
+      "suggestion": "Add a post-earnings-drift (PEAD) watchlist: for 10 trading days after an earnings gap \u2265 +8%, admit mid-cap names (>$5B) to the momentum universe, with entry on a \u2265 +3% day on \u2265 1.5\u00d7 average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "SHW",
+      "move_pct": 6.04,
+      "close": 352.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found; SHW rose with a broad rotation out of tech into cyclicals and housing-linked names (Home Depot also up), with oil sharply lower. This is a sector-rotation move, not an earnings or M&A event.",
+      "miss_reason": "Outside any active strategy's universe: SHW is a large-cap industrial/materials name that no strategy covers. With no earnings or news trigger, a news-reactive bot had no signal, and a +6% gap would likely trip a gap/RSI filter anyway.",
+      "suggestion": "Add large-cap cyclicals such as SHW, HD and LOW to the momentum universe, and add a sector-rotation trigger: enter when the sector ETF is up \u22652% and the name gaps \u22653% on \u22651.5\u00d7 average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "LITE",
+      "move_pct": -18.74,
+      "close": 683.15,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Marvell agreed to buy Lumentum in a ~$115B all-stock deal (4.5 MRVL shares per LITE share). MRVL fell ~12.7% and AI-optics stocks sold off, so LITE dropped ~18.6%. Sources date the drop to Nov 2, one day before the bot's date.",
+      "miss_reason": "Outside any active strategy's universe: LITE is a ~$50B+ AI-optics name. It is now a merger-arb target whose price is pegged to Marvell's, and the drop was a gap on deal news that pre-market positioning would have captured. A momentum or mean-reversion filter would also see no tradable setup.",
+      "suggestion": "Add a pending-M&A-target exclusion/flag (stock-for-stock deal, price tracking acquirer ratio) and, if the bot is long-only, treat acquirer deal-day gaps as a news-reactive skip. Otherwise no actionable change, since profiting from the fall would need shorting.",
+      "failed": false
+    },
+    {
+      "ticker": "MRVL",
+      "move_pct": -12.912,
+      "close": 171.04,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Marvell announced a ~$115B all-stock acquisition of Lumentum (Lumentum -18.6%), and the move landed amid a broad AI-chip selloff (SOX -3%+) over AI-return doubts.",
+      "miss_reason": "Outside any active strategy's universe: MRVL is a large-cap semiconductor name that no strategy covers. The drop was also a gap-down on M&A and sector news, which long-only momentum and mean-reversion filters would skip.",
+      "suggestion": "Add large-cap semis (MRVL, AVGO, AMD) to the news-reactive universe, and flag an acquirer gap-down \u2264 -8% on a deal announcement as an event signal, e.g. a mean-reversion watch after 2 sessions.",
+      "failed": false
+    },
+    {
+      "ticker": "CIEN",
+      "move_pct": -10.971,
+      "close": 285.535,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Optical/AI-networking sector selloff after Marvell's ~$115B all-stock Lumentum deal raised AI-spending doubts; CIEN fell with peers. I found no CIEN-specific news, and the search sources' dates are ambiguous.",
+      "miss_reason": "Outside any active strategy's universe: CIEN is a ~$40B+ mid/large-cap optical-networking name that no strategy's universe includes. The move was a sector-wide, news-driven drop, and the bot is long-only, so a falling name gives no entry.",
+      "suggestion": "Add a sector-contagion rule that flags the optical/AI-networking basket (CIEN, LITE, COHR) when \u22653 names drop \u22658% in a day, and queue the survivors for a next-day mean-reversion watchlist with an RSI<30 gate.",
+      "failed": false
+    },
+    {
+      "ticker": "P",
+      "move_pct": -9.946,
+      "close": 114.35,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Everpure (NYSE: P, formerly Pure Storage) fell ~10% in a broad AI/tech sell-off that hit Nasdaq names despite strong guidance. I found no company-specific news, and the date is only loosely confirmed.",
+      "miss_reason": "Outside any active strategy's universe: a ~$39B mid-cap data-storage name, likely excluded by cap or sector filters. The drop was a sector-driven gap-down, so momentum and mean-reversion filters would also have rejected it.",
+      "suggestion": "Add a tech/AI-infrastructure basket (P, DELL, LITE) to the mean-reversion universe, gated on Nasdaq down \u22653% over 3 days plus a single-name gap \u2264-8%, to catch sell-off rebounds.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-03T20:33:19.753994+00:00"
+}
