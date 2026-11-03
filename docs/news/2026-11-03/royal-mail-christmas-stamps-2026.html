@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Royal Mail unveils its Christmas 2026 stamps — 2026-11-03 — Trading Bot</title>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../../index.html">Dashboard</a>
+<a class="nav-tab active" href="../../news/latest.html">News</a>
+<a class="nav-tab" href="../../macro/latest.html">Macro</a>
+<a class="nav-tab" href="../../evolution.html">Evolution</a>
+<a class="nav-tab" href="../../ml/index.html">ML lab</a>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper article-page"><div class="edition-nav" data-edition="2026-11-03" data-kind="news"><a class="edition-nav-link" data-role="prev" href="../2026-11-02/" title="2026-11-02">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><a class="edition-nav-link disabled" data-role="next" href="#" aria-disabled="true">next →</a><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">BEYOND THE TAPE · ROYAL MAIL · By L. Bordeaux · 2026-11-03 · 2 min read</div><h1>Royal Mail unveils its Christmas 2026 stamps</h1><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>Royal Mail&#x27;s Christmas 2026 stamps went on sale on 3 November, an annual release with no confirmed design details and little market consequence.</div></div><div class="body"><p>Royal Mail has put its Christmas 2026 stamps on sale, the latest entry in a calendar fixture that arrives every autumn. The issue was reported by BBC UK and appears in Royal Mail's own 2026 stamp calendar under today's date, 3 November.</p>
+<p>The release is the only fact in the brief that has been confirmed. Published details of this year's designs, the artists and the denominations were not available when this piece was prepared, so none are described here. Anyone wanting the images will find them on royalmail.com, at Post Office branches and in the Royal Mail app, which is where last year's set was sold.</p>
+<h2>A fixture of the calendar</h2>
+<p>The Christmas issue is one of the most predictable events in British philately. Royal Mail publishes its special-issue programme a year ahead, and the Christmas stamps come last, in early November, in time for the card-writing season. The 2026 calendar sits alongside other issues this year, from Military Jet Aircraft to Football.</p>
+<p>Last year's set offered a useful comparison. The 2025 issue ran to five stamps with Nativity-themed designs by Paula Doherty. Royal Mail also sold them in collectible formats, including a souvenir stamp sheet. The pattern is a small set of stamps for the cards and a range of keepsakes for collectors.</p>
+<h2>The practical date</h2>
+<p>More useful than the artwork may be the postal deadline. Royal Mail's Christmas page says last posting dates for 2026 are now available. A third-party site puts the last recommended second-class date at Friday 18 December. That has not been checked against Royal Mail's own guide, and anyone relying on it should consult the company's guidance first.</p>
+<h2>Why it is only a brief</h2>
+<p>There is little market consequence in a stamp launch. A fuller story would need figures that the release does not supply. They would cover Christmas parcel and letter volumes, the effect of falling letter traffic on the business, and the position of the company's owner, International Distribution Services, which is controlled by the Czech billionaire Daniel Kretinsky's EP Group. None of those is established by this announcement, and the brief makes no claim about them.</p>
+<p>What to watch next is the posting deadlines. They fall in mid-December, and the company's own guide is the source to check.</p></div><section class="sources-block"><h4>Sources</h4><ol><li><a href="https://www.royalmail.com/christmas?iid=HP_M4_1_XMAS" rel="nofollow noopener" target="_blank">Royal Mail at Christmas</a></li><li><a href="https://www.royalmail.com/personal/uk-delivery/stamps" rel="nofollow noopener" target="_blank">Royal Mail stamps</a></li><li><a href="https://www.thestar.co.uk/business/consumer/christmas-stamps-2025-when-are-royal-mail-available-at-the-post-office-online-sale-date-5386335" rel="nofollow noopener" target="_blank">The Star: Christmas stamps 2025</a></li></ol></section><footer class="colophon">The Bot Tribune · 2026-11-03 · <a href="index.html">Back to the edition</a></footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
+</body>
+</html>
