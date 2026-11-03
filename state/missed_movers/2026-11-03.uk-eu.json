@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-03",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 AKZA.AS +5%, ANTO.L +5%, AAF.L +4%, AAL.L +4%, AC.PA +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (AD.AS -2%, BP.L -2%, KER.PA -2%, AZN.L -2%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: AKZA.AS (+4.52%) \u2014 No clear Nov 3 headline found. Likely a rebound or re-rating around the pending Axalta merger (early-2027 close) and the recent Q3 / SE Asia Deco sale news, plus a possible sector move. Why we passed: Outside any active strategy's universe: AKZA.AS is a mid/large-cap Dutch coatings name that no strategy lists. The move also looks deal- and news-driven with no identifiable gap catalyst, so a momentum or news-reactive filter would not have flagged it pre-open.",
+  "top_movers": [
+    {
+      "ticker": "AKZA.AS",
+      "move_pct": 4.519,
+      "close": 61.98,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear Nov 3 headline found. Likely a rebound or re-rating around the pending Axalta merger (early-2027 close) and the recent Q3 / SE Asia Deco sale news, plus a possible sector move.",
+      "miss_reason": "Outside any active strategy's universe: AKZA.AS is a mid/large-cap Dutch coatings name that no strategy lists. The move also looks deal- and news-driven with no identifiable gap catalyst, so a momentum or news-reactive filter would not have flagged it pre-open.",
+      "suggestion": "Add a dynamic universe rule that admits any uk-eu name with a prior-day close-to-close move \u2265 +3% and volume \u2265 1.5\u00d7 its 20-day average, so the next name like this is monitored even when it is not in a strategy's static list.",
+      "failed": false
+    },
+    {
+      "ticker": "ANTO.L",
+      "move_pct": 4.511,
+      "close": 32.67,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-03; searches returned nothing dated today, so likely a copper/sector-driven rebound across LSE miners.",
+      "miss_reason": "Outside any active strategy's universe: ANTO.L is a FTSE 100 large-cap copper miner, and no strategy's universe includes UK/EU materials. A +4.5% sector-beta move with no gap or news trigger also wouldn't fire a news-reactive filter.",
+      "suggestion": "Add FTSE 100 materials/copper miners (ANTO.L, GLEN.L, RIO.L) to the momentum universe, gated on a copper-futures +2% day or sector-ETF breadth \u226570% so it fires on sector rallies and not on noise.",
+      "failed": false
+    },
+    {
+      "ticker": "AAF.L",
+      "move_pct": 3.707,
+      "close": 2.686,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-03; likely a technical rebound or an emerging-market telecom/FX move after the shares' earlier 2026 slide (about 359p in May to about 269p now).",
+      "miss_reason": "Outside any active strategy's universe: AAF.L is a FTSE 100/250-class UK-listed Africa-focused telecom that no strategy includes. A +3.7% drift with no news also would not trip a gap-up or news-reactive trigger.",
+      "suggestion": "Add AAF.L and similar UK-listed EM-exposed large caps to the uk-eu momentum universe, and require \u2265+3% close-to-close with \u22651.5\u00d7 20-day average volume to enter, so it only fires on confirmed moves.",
+      "failed": false
+    },
+    {
+      "ticker": "AAL.L",
+      "move_pct": 3.591,
+      "close": 38.37,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst for 2026-11-03: searches found no dated coverage. An undated article mentions a copper unit-cost guidance cut, but I can't tie it to today, so this is likely a miners or copper sector move.",
+      "miss_reason": "Outside any active strategy's universe: AAL.L is a large-cap FTSE 100 diversified miner, and no strategy lists it. A +3.59% sector-driven move with no clear news also wouldn't trip a news-reactive or gap-up trigger.",
+      "suggestion": "Add FTSE 100 miners (AAL.L, GLEN.L, RIO.L, ANTO.L) to the momentum-trader universe, gated by a sector-relative filter such as a 1-day return \u2265 +3% with the basket median \u2265 +2%.",
+      "failed": false
+    },
+    {
+      "ticker": "AC.PA",
+      "move_pct": 2.807,
+      "close": 47.62,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear same-day news found. Accor's Q3 results (about Oct 22) raised FY EBITDA guidance, so the +2.8% looks like a continued re-rating or sector bounce, not a Nov 3 event.",
+      "miss_reason": "Outside any active strategy's universe: Accor is a ~\u20ac11bn French mid-cap hotel stock, and no strategy's universe includes it. With no fresh catalyst, a news-reactive or gap filter would not have fired on a modest +2.8% move.",
+      "suggestion": "Add a euro-area mid-cap leisure/travel basket (e.g. AC.PA) to the momentum universe, with a 20-day relative-strength entry that doesn't rely on a same-day catalyst, so post-earnings drift is caught.",
+      "failed": false
+    },
+    {
+      "ticker": "IHG.L",
+      "move_pct": 2.601,
+      "close": 171.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-03; searches turned up no same-day IHG item, so this is likely a sector or market-wide rebound in UK travel and leisure names.",
+      "miss_reason": "Outside any active strategy's universe. IHG.L is a FTSE 100 large-cap hotel franchisor that no strategy lists. A +2.6% drift with no gap or volume spike also wouldn't trip a gap-up or news-reactive trigger.",
+      "suggestion": "No actionable change. Without a catalyst this is ordinary large-cap drift, and adding FTSE 100 consumer-discretionary names to the universe for a +2.6% move isn't justified without a volume-spike or gap filter.",
+      "failed": false
+    },
+    {
+      "ticker": "AD.AS",
+      "move_pct": -2.26,
+      "close": 32.01,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-03 \u2014 likely a sector move in European defensive/food retail or pre-Q3-results positioning; search returned only older Ahold Delhaize items.",
+      "miss_reason": "Outside any active strategy's universe: AD.AS is a Dutch large-cap grocery retailer on Euronext Amsterdam. A -2.26% drift with no catalyst is also too small to trip typical gap or momentum thresholds.",
+      "suggestion": "No actionable change \u2014 a sub-2.5% non-catalyst move in a defensive staple is below signal thresholds. If Euronext large-caps are wanted, add AD.AS to the mean-reversion universe with an RSI<30 entry.",
+      "failed": false
+    },
+    {
+      "ticker": "BP.L",
+      "move_pct": -1.992,
+      "close": 6.149,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-03 \u2014 likely a sector-wide move with oil majors (BP/Shell) following crude lower. Searches returned no BP-specific news that day.",
+      "miss_reason": "Outside any active strategy's universe: BP.L is a UK large-cap integrated oil major that no strategy includes. A -1.99% move on no company news is also too small and undirected for momentum or news-reactive entry triggers.",
+      "suggestion": "(no actionable change \u2014 a ~2% sector-beta drift with no catalyst is within normal noise; adding BP.L would only make sense if a UK energy sleeve were already planned.)",
+      "failed": false
+    },
+    {
+      "ticker": "KER.PA",
+      "move_pct": -1.86,
+      "close": 174.16,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst \u2014 likely technical / sector move; search found no Kering-specific news on 2026-11-03, so probably luxury-sector weakness or profit-taking.",
+      "miss_reason": "Outside any active strategy's universe: KER.PA is a large-cap Paris-listed luxury name that no strategy includes. A -1.86% drift with no catalyst is also too small to trip typical momentum or gap filters.",
+      "suggestion": "(no actionable change \u2014 a -1.86% move with no catalyst is within normal noise; only consider adding EU luxury names to the mean-reversion universe if a drop beyond about -4% on 2x average volume is the trigger.)",
+      "failed": false
+    },
+    {
+      "ticker": "AZN.L",
+      "move_pct": -1.791,
+      "close": 137.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found. The -1.79% looks like a pullback after the Oct 30 jump on a Q3 beat, with the stock going from ~\u00a3130.5 to ~\u00a3137.1. Likely profit-taking or a sector move.",
+      "miss_reason": "Outside any active strategy's universe. AZN.L is a UK mega-cap pharma that the bot's universes don't include. A -1.8% pullback after a gap-up is also too small and too orderly to trip a momentum or news-reactive trigger.",
+      "suggestion": "Add FTSE 100 mega-caps such as AZN.L to the mean-reversion universe, with an entry rule such as a 1\u20133% pullback within 3 sessions of an earnings gap-up \u22655% on above-average volume. Long-only, so this long-side rule can't capture the -1.79% drop itself.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-03T16:03:07.580161+00:00"
+}
