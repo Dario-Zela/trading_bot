@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-04",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 FISV +13%, DD +9%, RVTY +9%, BE +9%, ETN +8%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (IT -13%, SYY -10%, ZBRA -9%, ADM -8%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: IT (-12.66%) \u2014 Likely reaction to Gartner's Q3 2026 results (reported around Nov 3-4). I couldn't find coverage confirming the figures or the reason for the -12.7% drop. Prior drops followed weak guidance and contract-value softness. Why we passed: Outside any active strategy's universe: Gartner is a mid-cap research and advisory firm, and no strategy includes it. The drop was also an earnings gap, so a momentum or mean-reversion bot would have had no pre-market signal to act on.",
+  "top_movers": [
+    {
+      "ticker": "FISV",
+      "move_pct": 12.526,
+      "close": 58.635,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely a post-Q3-earnings rally (report dated Nov 3 pre-market; one aggregator shows a ~+12.5% jump on heavy volume), possibly with activist/governance pressure. I could not confirm the exact driver.",
+      "miss_reason": "Outside any active strategy's universe: FISV is a large-cap payments/fintech name that none of the strategies list. This was an earnings gap-up, so a momentum or news-reactive bot would have been late even if the name had been in the universe.",
+      "suggestion": "Add a dynamic 'earnings-gap watchlist' that admits any S&P 500 name with a gap of at least +8% and volume of at least 2.5x its 30-day average into the news-reactive universe for that session, instead of relying on the static universe list.",
+      "failed": false
+    },
+    {
+      "ticker": "DD",
+      "move_pct": 9.314,
+      "close": 154.2525,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news. DuPont's Q3 2026 results were scheduled for Nov 3, so the +9.3% move is likely a delayed reaction to that report and guidance; I found no article confirming it.",
+      "miss_reason": "Outside any active strategy's universe: DD is a large-cap diversified chemicals/materials name that no strategy includes. The move was also most likely earnings-driven, with the gap on Nov 3 and follow-through on Nov 4, so post-earnings gap filters would have blocked it anyway.",
+      "suggestion": "Add large-cap materials/chemicals names such as DD to the momentum universe, and let the earnings gate release names with a post-earnings gap of at least +5% on confirming volume of at least 1.5x average, one session after the report.",
+      "failed": false
+    },
+    {
+      "ticker": "RVTY",
+      "move_pct": 9.269,
+      "close": 165.16,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely Q3 2026 earnings follow-through: Revvity reported before the open Nov 3 and was bid up again Nov 4, possibly alongside life-science tools peers. I found no confirmed same-day news.",
+      "miss_reason": "Outside any active strategy's universe. RVTY is a mid-cap life-science tools name that no strategy lists. The earnings gap came the day before, so a gap-up or earnings-gate filter would have seen it as stale or already extended.",
+      "suggestion": "Add a post-earnings-drift rule to the news-reactive universe. Include mid-caps (market cap > $5B, 20-day average volume > 1M) that beat on earnings and then close up \u22655% on day 2 with volume \u22651.5\u00d7 average.",
+      "failed": false
+    },
+    {
+      "ticker": "BE",
+      "move_pct": 9.025,
+      "close": 213.885,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No specific Nov 4 news found. BE rebounded after its post-Q3 selloff (record $1.24B revenue, FY26 guidance raised to $4.4-4.6B), likely on AI data-center power demand and sector momentum.",
+      "miss_reason": "Outside any active strategy's universe: BE is a volatile, richly valued mid/large-cap fuel-cell and AI-power name. Even if screened, a +9% move with no fresh catalyst after a large gap would likely trip gap and RSI filters.",
+      "suggestion": "Add a 'volatile AI-power' basket (BE, VRT, OKLO) to the momentum universe, gated by a 20-day ATR cap and a \u22651.5\u00d7 relative-volume check, so rebounds after post-earnings dips can be entered.",
+      "failed": false
+    },
+    {
+      "ticker": "ETN",
+      "move_pct": 7.759,
+      "close": 392.56,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely Q3 2026 earnings/guidance reaction (Eaton usually reports in early Nov) with AI data-center electrical demand; I could not confirm the Nov 4 release, so this is unverified.",
+      "miss_reason": "Outside any active strategy's universe: ETN is a ~$150B large-cap industrial (electrical/data-center power) that no strategy lists. An earnings gap would also have been priced at the open, so a post-signal momentum entry would have been late.",
+      "suggestion": "Add large-cap AI-infrastructure industrials (ETN, VRT, GEV, PWR) to the momentum-trader universe, and let the earnings-gate release names with a post-results gap of at least +5% on volume of at least 1.5\u00d7 average.",
+      "failed": false
+    },
+    {
+      "ticker": "APP",
+      "move_pct": 7.686,
+      "close": 246.385,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed news catalyst found for 2026-11-04. APP is a very volatile ad-tech name, so this is likely a sector/AI-software rebound or a pre-Q3-earnings run-up, but I couldn't verify either.",
+      "miss_reason": "Outside any active strategy's universe: APP is a large-cap Nasdaq ad-tech/software name that no strategy includes. Even if it were included, a +7.7% move with no clear catalyst would likely fail gap/RSI or news-confirmation filters.",
+      "suggestion": "Add high-beta large-cap tech (APP and similar names with a 20-day average true range above 4%) to the momentum strategy's universe, gated by a relative-volume of at least 1.5x and a close in the top 20% of the day's range.",
+      "failed": false
+    },
+    {
+      "ticker": "IT",
+      "move_pct": -12.665,
+      "close": 205.805,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely reaction to Gartner's Q3 2026 results (reported around Nov 3-4). I couldn't find coverage confirming the figures or the reason for the -12.7% drop. Prior drops followed weak guidance and contract-value softness.",
+      "miss_reason": "Outside any active strategy's universe: Gartner is a mid-cap research and advisory firm, and no strategy includes it. The drop was also an earnings gap, so a momentum or mean-reversion bot would have had no pre-market signal to act on.",
+      "suggestion": "Add a post-earnings gap scanner that admits mid-cap names (market cap above about $5B) into the mean-reversion universe when the gap is -10% or more on at least 2x average volume. It would hold off entry until a 30-minute stabilization check passes.",
+      "failed": false
+    },
+    {
+      "ticker": "SYY",
+      "move_pct": -9.606,
+      "close": 74.295,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely reaction to Sysco's fiscal Q1 2027 results, reported Nov 3 (pre-report price about $82). I couldn't find coverage of the actual numbers or the drop, so the cause is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: SYY is a large-cap food distributor, probably excluded by sector or universe filters. The earnings gap happened at the open, so pre-market positioning and gap filters would also have blocked a long entry.",
+      "suggestion": "No actionable change for a long-only bot, since a -9.6% earnings gap on a name outside the universe would need short capability. Optionally add large-cap staples/distributors to the universe, with an earnings-gate that releases post-earnings drift setups.",
+      "failed": false
+    },
+    {
+      "ticker": "ZBRA",
+      "move_pct": -8.817,
+      "close": 327.43,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Fell after Q3 results on Nov 3 (EPS $4.95, sales +22% with Elo). The search didn't confirm the exact trigger. Likely causes are memory-cost margin pressure or guidance, after a big run-up since August.",
+      "miss_reason": "Outside any active strategy's universe: ZBRA is a mid-cap tech hardware name that no strategy includes. It also reported after the close on Nov 3, so the gap-down came at the open, before post-earnings signals were available.",
+      "suggestion": "Add mid-cap S&P 400 tech names to the universe, with an earnings-gate that releases names showing a post-results gap of at least 5% within 30 minutes of the open. Long-only strategies would then skip the drop and could buy a rebound.",
+      "failed": false
+    },
+    {
+      "ticker": "ADM",
+      "move_pct": -8.149,
+      "close": 70.11,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed driver for the -8.15% drop. ADM reported Q3 on about Nov 3 with a raised FY adjusted EPS guide, so the selloff may be a post-earnings reaction, but I found no coverage of the share move.",
+      "miss_reason": "Outside any active strategy's universe: ADM is a large-cap agribusiness/commodity processor, and no strategy covers it. If it was earnings-driven, the gap came at the open, and a momentum or news-reactive bot would not enter a falling large-cap, especially long-only.",
+      "suggestion": "No actionable change: the bot is long-only and the name is outside its universe, so the drop was not tradable. A broader fix would be adding large-cap ag/staples names to the earnings-gate watchlist so post-earnings gaps of \u2264-5% are logged for review.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-04T20:32:15.105635+00:00"
+}
