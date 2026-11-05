@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-05",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 CDW +17%, XYZ +16%, MOS +16%, ZBH +14%, CNC +14%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (FIS -24%, TRMB -18%, FIX -16%, TPL -15%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: FIS (-24.49%) \u2014 FIS reported Q3 2026 results with a small adjusted EPS beat ($1.61), then cut FY26 adj. EPS growth to 1.2\u20132.4% from 7\u20138.5% and warned of 2027 earnings and margin pressure. Banking recurring growth was weak. Why we passed: Outside any active strategy's universe: FIS is a mid-cap fintech/payments name that no strategy covers. The gap came from earnings and guidance released before the open, so a long-only momentum or mean-reversion bot had no entry, and a -24% gap-down is a short setup.",
+  "top_movers": [
+    {
+      "ticker": "CDW",
+      "move_pct": 17.185,
+      "close": 172.11,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 2026 results released Nov 4 after the close: commercial net sales up ~21%, double-digit gross profit growth, non-GAAP EPS up more than 20%. The +17% gap-up on Nov 5 is the reaction. I couldn't find a source for the price move itself.",
+      "miss_reason": "Outside any active strategy's universe: CDW is a mid-cap IT solutions reseller that no strategy lists. It was also an overnight earnings gap, so the move was already in the opening price before any post-market signal could trigger entry.",
+      "suggestion": "Add a post-earnings gap-up scanner that admits any US name above a mid-cap market-cap floor with a gap of at least +8% on at least 2x average volume. It would trade the open only and be limited to a small position size.",
+      "failed": false
+    },
+    {
+      "ticker": "XYZ",
+      "move_pct": 16.065,
+      "close": 88.25,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed driver found. Block (XYZ) likely rallied on Q3 2026 earnings or guidance, but my searches turned up no coverage of a Nov 5 event, so treat this as unverified.",
+      "miss_reason": "Outside any active strategy's universe: XYZ (Block) is a mid/large-cap fintech/payments name that no strategy's universe includes. If the move was an earnings gap, a gap-up or earnings gate would also have excluded it.",
+      "suggestion": "Add a dynamic 'earnings-gap' watchlist that admits any US name with market cap above $10B and an open gap of at least +8% on at least 2x average volume, to a momentum strategy with a capped position size.",
+      "failed": false
+    },
+    {
+      "ticker": "MOS",
+      "move_pct": 15.858,
+      "close": 21.37,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely Q3 2026 results reaction: Mosaic reported a net loss but adjusted EBITDA of $324M, with phosphate prices higher and sulfur-supply curtailments. The +15.9% rally is probably relief and squeeze. Not confirmed by a same-day article.",
+      "miss_reason": "Outside any active strategy's universe: MOS is a mid-cap fertilizer/materials name that no strategy covers. The move was an earnings-day gap, so the bot would have needed pre-market positioning, and the stock was near multi-year lows.",
+      "suggestion": "Add a materials/fertilizer basket (MOS, CF, NTR) to the news-reactive universe, and let the earnings gate release names gapping \u2265 +8% on \u22652\u00d7 average volume within 15 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "ZBH",
+      "move_pct": 14.434,
+      "close": 110.555,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 2026 results (reported Nov 4): sales +3.1% to $2.06B, adj EPS $1.90, and the company raised its FY adj EPS guidance (8.40-8.55 vs 8.30-8.45). The stock reaction itself wasn't confirmed in search.",
+      "miss_reason": "Outside any active strategy's universe (mid/large-cap medical devices). It was also an earnings gap: the news came after the Nov 4 close, so the +14% jump was in the open gap and a momentum or news bot would have missed the entry.",
+      "suggestion": "Add a post-earnings gap-continuation rule: let healthcare/medtech mid-caps with a gap of at least +8% on at least 2x average volume into an eligible set, and enter 15-30 minutes after the open instead of requiring universe membership.",
+      "failed": false
+    },
+    {
+      "ticker": "CNC",
+      "move_pct": 14.008,
+      "close": 76.34,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day catalyst found. Likely a managed-care sector rally and continued re-rating after Centene's Oct 27 Q3 report, which raised FY26 adjusted EPS guidance to >$5.20.",
+      "miss_reason": "Outside any active strategy's universe: CNC is a mid/large-cap health insurer that no strategy lists. A +14% move without a clear headline suggests a sector or policy-driven gap that a news-reactive bot would not have flagged pre-market.",
+      "suggestion": "Add a sector-breadth trigger: when \u22653 names in a GICS sub-industry (e.g. managed care: UNH, HUM, ELV, MOH, CNC) gap up \u22655%, admit the sub-industry's constituents to the momentum universe for that session.",
+      "failed": false
+    },
+    {
+      "ticker": "SWK",
+      "move_pct": 13.241,
+      "close": 118.45,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 earnings beat (adj. EPS $2.31 vs ~$1.56 est., helped by a $0.67 tariff refund) and a raised FY26 EPS guide to $5.45\u20135.85. Organic sales rose 4%, and a new $1B buyback was announced.",
+      "miss_reason": "Outside any active strategy's universe (mid-cap industrial/tools, not in any strategy's list). It was also an earnings gap-up, with the move set at the open after results released Nov 4, so a post-open momentum or news signal would arrive too late.",
+      "suggestion": "Add an earnings-gap sleeve that admits any S&P 400/500 name gapping \u2265+8% on \u22652\u00d7 average volume after an earnings release, entering 15\u201330 minutes after the open, without requiring membership in the static universe lists.",
+      "failed": false
+    },
+    {
+      "ticker": "FIS",
+      "move_pct": -24.486,
+      "close": 29.7184,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FIS reported Q3 2026 results with a small adjusted EPS beat ($1.61), then cut FY26 adj. EPS growth to 1.2\u20132.4% from 7\u20138.5% and warned of 2027 earnings and margin pressure. Banking recurring growth was weak.",
+      "miss_reason": "Outside any active strategy's universe: FIS is a mid-cap fintech/payments name that no strategy covers. The gap came from earnings and guidance released before the open, so a long-only momentum or mean-reversion bot had no entry, and a -24% gap-down is a short setup.",
+      "suggestion": "Add FIS and similar mid-cap financial-tech names to the news-reactive universe. Also add a post-earnings-drift watch that flags gaps \u2264 -15% on guidance cuts, for review or hedging, since the bot can't short.",
+      "failed": false
+    },
+    {
+      "ticker": "TRMB",
+      "move_pct": -18.097,
+      "close": 53.79,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 2026 results (reported Nov 4): revenue $966.8M slightly missed ~$972.6M est., ARR growth slowed to 11% from 14%, and FY GAAP EPS outlook was cut to a loss. The stock fell about 18%.",
+      "miss_reason": "Outside any active strategy's universe (mid-cap industrial-tech software). The drop was an earnings gap-down, and the bot is long-only, so it could not have shorted it. Pre-market positioning would also have missed the overnight gap.",
+      "suggestion": "Add mid-cap US software/industrial-tech names to the universe, and add a post-earnings rebound entry. For example, go long only after a gap of -15% or worse once day-2 closes above day-1's high, with a volume floor of \u22652\u00d7 average.",
+      "failed": false
+    },
+    {
+      "ticker": "FIX",
+      "move_pct": -15.725,
+      "close": 1082.48,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed Nov 5 catalyst found. Likely a continued AI/data-center capex selloff in high-multiple contractors after the Q3 print (no 2027 guidance, margin worries). The -15.7% size is unverified.",
+      "miss_reason": "Outside any active strategy's universe: FIX (Comfort Systems USA) is a ~$38B mid/large-cap industrial contractor that no strategy lists. The drop was a sudden sector-driven gap-down, and a long-only momentum or mean-reversion bot would not short it.",
+      "suggestion": "Add an AI-infrastructure/data-center contractor basket (FIX, EME, PWR, VRT) to the mean-reversion universe, and flag any name with a one-day drop of 10% or more on above-average volume as a rebound candidate (RSI(2) < 10 filter).",
+      "failed": false
+    },
+    {
+      "ticker": "TPL",
+      "move_pct": -14.976,
+      "close": 281.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 earnings reported after the Nov 4 close missed: adj. EBITDA $173.6M vs ~$178M est. as lower oil prices outweighed higher production. The -15% drop was a post-earnings gap. Reuters source; the size of the move wasn't confirmed.",
+      "miss_reason": "Outside any active strategy's universe: TPL is a mid-cap Permian royalty and land company that no strategy includes. The drop was also an overnight earnings gap, so a momentum or mean-reversion bot could not have entered before the open. A long-only bot has no short exposure to it.",
+      "suggestion": "Add TPL and similar energy royalty names (e.g. PR, DTM) to the news-reactive universe. Let the earnings-gate release names with a post-results gap of -8% or worse for mean-reversion review, since a long-only bot can't short.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-05T20:32:20.252621+00:00"
+}
