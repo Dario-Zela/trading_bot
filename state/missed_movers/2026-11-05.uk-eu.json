@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-05",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 HEI.DE +10%, ZAL.DE +9%, G24.DE +9%, MKS.L +8%, WKL.AS +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (WEIR.L -10%, ENR.DE -8%, ASM.AS -7%, ITH.L -7%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: HEI.DE (+9.98%) \u2014 Not confirmed: searches found no 2026-11-05 coverage. Likely a Q3 2026 results beat or outlook raise, as Heidelberg Materials' Q3 reports have drawn +5-7% jumps in past years. Treat this as a hypothesis. Why we passed: Outside any active strategy's universe: HEI.DE is a large-cap German (DAX) building-materials stock that no strategy lists. A results-day gap of about +10% would also likely have tripped gap-size or earnings-gate filters, so it would have been skipped even if listed.",
+  "top_movers": [
+    {
+      "ticker": "HEI.DE",
+      "move_pct": 9.984,
+      "close": 172.95,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Not confirmed: searches found no 2026-11-05 coverage. Likely a Q3 2026 results beat or outlook raise, as Heidelberg Materials' Q3 reports have drawn +5-7% jumps in past years. Treat this as a hypothesis.",
+      "miss_reason": "Outside any active strategy's universe: HEI.DE is a large-cap German (DAX) building-materials stock that no strategy lists. A results-day gap of about +10% would also likely have tripped gap-size or earnings-gate filters, so it would have been skipped even if listed.",
+      "suggestion": "Add DAX/Stoxx 600 cyclical large caps such as HEI.DE to the news-reactive universe, and have the earnings-gate release names with a post-results gap of at least +5% on above-average volume within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "ZAL.DE",
+      "move_pct": 9.141,
+      "close": 27.58,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely Zalando Q3 2026 results/guidance reaction (it usually reports in early November), but I couldn't find 2026 coverage, so this is unconfirmed. Treat as probable earnings-driven.",
+      "miss_reason": "Outside any active strategy's universe: ZAL.DE is a mid-cap German consumer-discretionary e-commerce name that no strategy's universe includes. If it was earnings-driven, the gap happened at the open, so a pre-market momentum or news filter would have had no prior signal.",
+      "suggestion": "Add a uk-eu earnings-gap strategy that adds the day's reporters from an earnings calendar (e.g. DAX/MDAX/SDAX consumer names) to the universe, and enters gaps \u2265 +5% on \u22652\u00d7 average volume at the open.",
+      "failed": false
+    },
+    {
+      "ticker": "G24.DE",
+      "move_pct": 9.069,
+      "close": 92.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely a reaction to Scout24's Q3/9M results, scheduled for 4 Nov 2026, but I found no same-day coverage to confirm it. The stock closed at 92.6, up from about 72 in early October, after a +9.07% day.",
+      "miss_reason": "Outside any active strategy's universe: G24.DE is a mid-cap German (MDAX-class) online-classifieds stock, and none of the bot's strategies include it. A results-day gap of this size would also be filtered out as an earnings-gap or post-catalyst move.",
+      "suggestion": "Add a post-earnings-gap scanner that extends the universe to liquid MDAX/SDAX names. It should admit any name with a gap of at least +5% on volume of at least 2x the 20-day average, within 30 minutes of the Xetra open.",
+      "failed": false
+    },
+    {
+      "ticker": "MKS.L",
+      "move_pct": 8.402,
+      "close": 4.4542,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed driver found. M&S was scheduled to report H1 results around 4-5 Nov 2026, so the +8.4% is probably a results-driven reaction, but I found no 2026 coverage to confirm it.",
+      "miss_reason": "Outside any active strategy's universe: MKS.L is a UK FTSE 100 large-cap retailer that no strategy covers. If it was results-driven, the gap-up came at the open, which post-open momentum or news signals chase too late.",
+      "suggestion": "Add FTSE 100 consumer/retail names to the uk-eu momentum universe, and let the earnings-gate release names with a post-results gap \u2265 +5% on volume \u2265 1.5\u00d7 average within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "WKL.AS",
+      "move_pct": 7.388,
+      "close": 91.28,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Nine-month trading update (Nov 4): organic growth about 6% and FY2026 guidance reaffirmed, with analyst target raises (BofA to \u20ac102) and a rebound in a stock that was heavily sold off.",
+      "miss_reason": "Outside any active strategy's universe: Wolters Kluwer is a Dutch large-cap information-services/software name that no strategy's universe includes. The move was also a results-driven gap, so it was priced at the open, before a post-open signal could fire.",
+      "suggestion": "Add AEX/Euronext large-caps like WKL.AS to the momentum universe, and let the earnings-gate release names with a post-results gap of +4% or more and volume of at least 1.5\u00d7 average within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "AD.AS",
+      "move_pct": 7.356,
+      "close": 34.59,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely Q3 2026 results day for Ahold Delhaize (+7.4%), but I couldn't confirm it. Searches only found the Nov 2025 and Nov 2024 Q3 beats on strong US sales, so treat the cause as an unverified hypothesis.",
+      "miss_reason": "Outside any active strategy's universe: AD.AS is an Amsterdam-listed AEX large-cap consumer staple, and no strategy covers Euronext Amsterdam names. If it was an earnings gap, the move happened at the open on results, so a post-open momentum signal would also have been late.",
+      "suggestion": "Add a Euronext Amsterdam large-cap staples list (AD.AS and similar) to the news-reactive strategy's universe, with an earnings-day gate that releases names gapping \u2265 +4% on results within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "WEIR.L",
+      "move_pct": -9.894,
+      "close": 23.86,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 trading update: orders +8% (+5% organic) were judged too weak by brokers, and net debt/EBITDA is expected to breach the 0.5\u20131.5x range at year-end. Search showed a ~7% fall; the -9.89% close is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: Weir is a UK FTSE 100 industrial/mining-equipment maker that no strategy covers. It was also a pre-market RNS gap-down on results, which post-open momentum or mean-reversion filters would reject.",
+      "suggestion": "(no actionable change \u2014 the bot is long-only, so a gap-down on a results update can't be traded; at most add FTSE 100 industrials to a watchlist for post-drop mean-reversion once the gap-size filter allows it.)",
+      "failed": false
+    },
+    {
+      "ticker": "ENR.DE",
+      "move_pct": -8.417,
+      "close": 120.12,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed Nov-5 news. Siemens Energy has sold off on AI-capex profitability worries (-7.95% on Nov 4, -8.56% on Oct 22) ahead of Q4 results on Nov 11. Sources conflict on which day the -8.4% fell.",
+      "miss_reason": "Outside any active strategy's universe: ENR.DE is a large-cap German industrial/AI-power-infrastructure name that no strategy covers. It was also a sentiment-driven slide with no discrete gap or catalyst, and the bot has no short capability.",
+      "suggestion": "Add large DAX/EU AI-power names (ENR.DE) to the mean-reversion universe, with an entry gate that waits until after the Nov 11 earnings. Require a \u22652-day drawdown of at least 15% plus an RSI(14) below 30.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": -6.982,
+      "close": 679.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found for ASM.AS; the -7% drop looks like a semiconductor-equipment sector selloff or a Q3 orders/guidance reaction, but I could not verify either.",
+      "miss_reason": "Outside any active strategy's universe: ASM International is a mid/large-cap Dutch semicap name on Euronext Amsterdam that no strategy's universe includes. Even if it had been included, a gap-down this size would likely trip gap and RSI filters on a long-only bot.",
+      "suggestion": "Add high-beta European semicap names (ASM.AS, BESI.AS) to the mean-reversion universe, gated by a filter such as a gap-down of -5% or more with volume at least 1.5x its 20-day average, so a sector-wide flush can be traded as a rebound.",
+      "failed": false
+    },
+    {
+      "ticker": "ITH.L",
+      "move_pct": -6.689,
+      "close": 2.6258,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed company-specific news for 5 Nov 2026. The drop likely reflects a sell-off in UK oil and gas stocks as crude prices stalled. This is unverified, because the search returned nothing dated that day.",
+      "miss_reason": "Outside any active strategy's universe. Ithaca Energy is a mid-cap UK North Sea E&P with a thin free float, since Delek and Eni hold most of the shares. A sector-wide drift lower gives no distinct gap or volume signal for a momentum or news-reactive filter.",
+      "suggestion": "Add mid-cap UK energy names such as ITH.L to the universe of a commodity-linked strategy. Gate entries on a sector-relative move, for example a name down 5% or more while the Brent proxy is down 2% or more, with a minimum average daily volume floor for liquidity.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-05T16:02:39.385388+00:00"
+}
