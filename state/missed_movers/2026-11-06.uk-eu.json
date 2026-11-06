@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-06",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 DSFIR.AS +6%, EDV.L +6%, BAYN.DE +5%, DGE.L +4%, AAF.L +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (CCH.L -19%, RHM.DE -18%, STMPA.PA -12%, IFX.DE -11%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: CCH.L (-18.73%) \u2014 Russia risk: Kommersant reported brewer Bochkari sought external management of Coca-Cola HBC's Russian units (Multon). The stock fell ~18% to about 4,050p even after a Q3 beat and raised guidance. Some reports date the drop to 5 Nov. Why we passed: Outside any active strategy's universe: CCH.L is a LSE-listed mid/large-cap consumer-staples bottler. The drop was a sudden geopolitical headline gap-down, so there was no pre-signal and a long-only bot would not short it.",
+  "top_movers": [
+    {
+      "ticker": "DSFIR.AS",
+      "move_pct": 6.468,
+      "close": 112.75,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news. Likely post-Q3 drift: Q3 trading update (~Nov 4) reportedly beat on fragrance-led core profit, and Citi raised its target to EUR 111. Unverified for Nov 6.",
+      "miss_reason": "Outside any active strategy's universe: DSFIR.AS is a large-cap Dutch/Swiss flavours-and-fragrances name that no strategy includes. The move also looks like a follow-through gap after results, not a fresh same-day catalyst.",
+      "suggestion": "Add a uk-eu large-cap scan, e.g. Stoxx 600 names with a daily move \u2265 +5% on \u22651.5\u00d7 20-day average volume, as a candidate list for momentum-trader. Also flag names within 3 days of an earnings date.",
+      "failed": false
+    },
+    {
+      "ticker": "EDV.L",
+      "move_pct": 5.693,
+      "close": 39.73,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-06. Searches showed only routine buy-back notices, so this is likely a gold-price or sector-wide rally in LSE-listed gold miners.",
+      "miss_reason": "Outside any active strategy's universe: EDV.L is a FTSE 100 gold miner with operations in West Africa, and no strategy lists it. With no company-specific news, a news-reactive bot had no trigger, and a +5.7% sector-beta move may not have cleared momentum thresholds.",
+      "suggestion": "Add EDV.L and similar LSE gold miners (e.g. FRES.L) to the commodity/momentum universe as a gold-beta sleeve, gated on a gold-futures daily move above a threshold such as +1.5%, so the next sector rally is caught.",
+      "failed": false
+    },
+    {
+      "ticker": "BAYN.DE",
+      "move_pct": 5.052,
+      "close": 56.56,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed driver for 6 Nov. Bayer reported Q3 on about 3 Nov (narrower loss, raised FY guidance), so this is likely follow-through. A Roundup litigation headline is also possible but unverified.",
+      "miss_reason": "Outside any active strategy's universe: BAYN.DE is a large-cap German DAX pharma/agchem name, and no uk-eu strategy covers it. The move also followed a catalyst from days earlier, so a gap-up or news-reactive signal would not have fired today.",
+      "suggestion": "Add DAX/Euro Stoxx 50 constituents to the momentum universe, and add a post-earnings-drift rule: for 5 sessions after an earnings beat or guidance raise, allow entry on a close \u2265 +3% on above-average volume (1.5\u00d7 20-day).",
+      "failed": false
+    },
+    {
+      "ticker": "DGE.L",
+      "move_pct": 4.298,
+      "close": 18.93,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Diageo's Q1 trading update beat expectations (organic net sales about +1.4% vs consensus about -0.4%) and reiterated full-year guidance, pushing the shares to a 52-week high. Search dates were inconsistent, so the exact day is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: DGE.L is a FTSE 100 consumer-staples large cap, and no strategy lists UK/EU staples. It was also a results-driven gap at the open, so a post-open momentum or news-reactive signal would have been late.",
+      "suggestion": "Add FTSE 100 constituents to the news-reactive strategy's UK/EU universe, with a trading-update gate that releases names gapping \u2265 +3% on \u2265 2\u00d7 average volume within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "AAF.L",
+      "move_pct": 4.294,
+      "close": 2.866,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-06. Airtel Africa's last confirmed news was the May 2026 Bharti Airtel stake move, so this looks like a technical rebound or buyback-supported move.",
+      "miss_reason": "Outside any active strategy's universe: AAF.L is a mid-cap FTSE 250 emerging-market telecom (Africa-focused, Bharti Airtel owns ~63%). Its modest +4.3% move with no news would not pass a catalyst or gap filter anyway.",
+      "suggestion": "Add FTSE 250 names to the momentum universe, but only with a liquidity floor (e.g. 20-day average daily value \u2265 \u00a35M) and a \u2265 +4% close-to-close trigger. Gate it on a confirmed RNS/news item so catalyst-free drifts like this stay excluded.",
+      "failed": false
+    },
+    {
+      "ticker": "ADYEN.AS",
+      "move_pct": 3.814,
+      "close": 890.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No dated news found for 2026-11-06. Likely a rebound in a stock down ~40% YTD, possibly lifted by European fintech/payments sentiment. Adyen raised 2026 growth guidance in August and announced an Orb acquisition.",
+      "miss_reason": "Outside any active strategy's universe: ADYEN.AS is a large-cap Euronext Amsterdam fintech, and no strategy covers it. With no identifiable catalyst, a +3.8% move in a beaten-down name would also be a weak momentum signal and probably wouldn't pass a gap or volume filter.",
+      "suggestion": "Add large-cap Euronext Amsterdam names (AEX constituents like ADYEN.AS) to the uk-eu momentum universe, with a gate requiring \u22651.5\u00d7 20-day average volume on a \u2265+3% close, so ordinary rebounds don't trigger entries.",
+      "failed": false
+    },
+    {
+      "ticker": "CCH.L",
+      "move_pct": -18.727,
+      "close": 40.3762,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Russia risk: Kommersant reported brewer Bochkari sought external management of Coca-Cola HBC's Russian units (Multon). The stock fell ~18% to about 4,050p even after a Q3 beat and raised guidance. Some reports date the drop to 5 Nov.",
+      "miss_reason": "Outside any active strategy's universe: CCH.L is a LSE-listed mid/large-cap consumer-staples bottler. The drop was a sudden geopolitical headline gap-down, so there was no pre-signal and a long-only bot would not short it.",
+      "suggestion": "No actionable change for the long-only constraint. If the universe is widened, add a FTSE 100/250 staples watchlist with a headline-risk flag (e.g. 'Russia' keyword on a held name) that triggers a cut-exposure check, not a new entry.",
+      "failed": false
+    },
+    {
+      "ticker": "RHM.DE",
+      "move_pct": -17.703,
+      "close": 833.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 results missed (revenue \u20ac3.15B vs \u20ac3.23B est, adj. EPS 7% below consensus) and Rheinmetall cut its 2026 sales guidance to about \u20ac13.2B from \u20ac13.7\u201314.2B on Boxer and artillery-ammo delays.",
+      "miss_reason": "Outside any active strategy's universe: RHM.DE is a German large-cap defence name that no strategy covers. The drop was also a scheduled-earnings gap-down, and a long-only momentum or mean-reversion bot has no short leg to act on it.",
+      "suggestion": "Add European defence large-caps (RHM.DE, BA.L, HO.FP) to a watchlist universe. Give the earnings-gate a post-results gap-down \u2264-10% rule that flags the name for mean-reversion review after a 1\u20132 session cool-off, not for entry on the day.",
+      "failed": false
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": -11.673,
+      "close": 36.055,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed news for 2026-11-06. Searches only found the 23 Jul 2026 Q3 guidance-miss sell-off, so today's -11.7% is probably an unconfirmed semis/auto-chip sector move or a follow-on from that.",
+      "miss_reason": "Outside any active strategy's universe: STMPA.PA is a large-cap Euronext Paris listing of a European semiconductor name that no uk-eu strategy covers. A drop this size was also a long-only bot's wrong side, with no obvious bounce setup.",
+      "suggestion": "Add STMPA.PA and similar large-cap EU semis (ASML, Infineon) to the mean-reversion universe, with a filter that waits for a one-day drop of at least 8% on above-average volume (1.5\u00d7 the 20-day average) and then a stabilisation day.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": -11.409,
+      "close": 44.88,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst found for the -11.41% drop. Searches turned up nothing dated 6 Nov 2026. The likely cause is a sector-wide semiconductor/AI-chip sell-off, or a pre-results de-rating ahead of Q4 results due about 10\u201312 Nov.",
+      "miss_reason": "Outside any active strategy's universe: IFX.DE is a large-cap German (Xetra) semiconductor, and no uk-eu strategy includes it. With no clear news trigger, a news-reactive filter would have had nothing to fire on. The bot also can't short.",
+      "suggestion": "Add large-cap EU semis (IFX.DE, STM.PA, ASML.AS) to the mean-reversion watchlist. Flag any \u2265-8% single-day drop with no news hit as a candidate for next-day rebound entry, with a volume floor of 1.5\u00d7 the 20-day average.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-06T16:03:14.435115+00:00"
+}
