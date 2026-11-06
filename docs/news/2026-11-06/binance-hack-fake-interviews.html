@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Binance hack: fake job interviews named as the entry point — 2026-11-06 — Trading Bot</title>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../../index.html">Dashboard</a>
+<a class="nav-tab active" href="../../news/latest.html">News</a>
+<a class="nav-tab" href="../../macro/latest.html">Macro</a>
+<a class="nav-tab" href="../../evolution.html">Evolution</a>
+<a class="nav-tab" href="../../ml/index.html">ML lab</a>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper article-page"><div class="edition-nav" data-edition="2026-11-06" data-kind="news"><a class="edition-nav-link" data-role="prev" href="../2026-11-05/" title="2026-11-05">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><a class="edition-nav-link disabled" data-role="next" href="#" aria-disabled="true">next →</a><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">WATCH · BINANCE HACK · By R. Okonkwo · 2026-11-06 · 3 min read</div><h1>Binance hack: fake job interviews named as the entry point</h1><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>Binance says attackers used fake job interviews and a malicious coding test to compromise an engineer, leading to a theft of about $6.34bn that the FBI blames on North Korean hackers.</div></div><div class="body"><p>A $6.3bn theft from Binance, the world's largest crypto exchange, began not with a flaw in its software but with a job offer. According to the company's own incident report, published on 3 November, attackers spent weeks posing as recruiters to get a Binance-linked engineer to run their code. The tactic is old, but the scale is not.</p>
+<p>The figures come from Binance and have been reported by several outlets, including BleepingComputer, whose account of the report this article draws on. Binance puts the loss at about $6.34bn, taken on 29 October. It says roughly $2.85bn had been frozen or intercepted by 3 November, and that about 98% of affected token assets had been replenished by 31 October. Binance describes its report as initial. It says its findings will be subject to independent review.</p>
+<h2>How the interviews worked</h2>
+<p>The approach began in September, on a legitimate job-hunting platform. A software engineer whose profile mentioned Binance experience was contacted by someone claiming to be a Project Director at a fictitious company. Two interviews followed.</p>
+<p>The first was a video call with a fake HR representative, who shared a social media account full of personal content to build trust. The second, in a chat app, was with someone claiming to be Binance's CEO. That person told the engineer to download a coding assignment from an online code repository.</p>
+<p>The assignment carried the payload. Binance says it installed a previously unseen custom malware strain that replaced a legitimate <code>pyenv</code> executable in the macOS Homebrew directory. That gave the attackers remote command execution and a way to hide. In the report's words, "The 0-day malware was not detected by the endpoint security protection tools at the time."</p>
+<h2>From one laptop to the signing service</h2>
+<p>By 20 October, the attackers had used the compromised laptop and an internal AI tool to reach two more employees on the wallet infrastructure team. They obtained credentials and a container deployment token. On 29 October they used those to deploy a malicious script and reach the wallet signing service, then moved funds across several blockchains. Binance says they also used an Ethereum mechanism, EIP-7702, to keep draining assets after withdrawals were suspended.</p>
+<p>The chain matters more than any single step. None of it required breaking encryption or finding a bug in a smart contract. Each step relied on a person trusting a plausible stranger, or on a tool trusting a person who had been compromised.</p>
+<h2>Attribution and what is unproven</h2>
+<p>The FBI has attributed the attack to North Korean state-sponsored hackers known as TraderTraitor, also tracked as Lazarus Group, Jade Sleet and APT38. Binance itself has not tied the employee compromise to a specific campaign. BleepingComputer notes the tactics closely resemble documented North Korean operations known as Contagious Interview and Operation Dream Job. North Korea has rejected the claim. That similarity is circumstantial evidence, and the attribution rests on the FBI's judgment, not on anything independently published.</p>
+<p>The account is also, so far, Binance's own. The company has said it rebuilt affected systems, replaced compromised devices and revoked stolen credentials, and that independent security firms are reviewing the findings. Those reviews, and any law-enforcement detail on the frozen funds, are the next things to watch.</p>
+<h2>The wider risk</h2>
+<p>Exchanges spend heavily on auditing code and hardening custody systems. This incident, if Binance's account holds, shows the weaker point was a single engineer's laptop and a hiring process that anyone can imitate. Staff with signing or deployment access are valuable targets, and a public profile naming an employer is enough to mark them. Any firm that lets engineers run coding tests from strangers on a machine with production reach is exposed in the same way.</p>
+<p>The practical lesson is separation: keep recruitment contact and unvetted code off any device that can touch wallet infrastructure, and treat internal AI tools with access to credentials as part of the attack surface.</p></div><section class="sources-block"><h4>Sources</h4><ol><li><a href="https://www.bleepingcomputer.com/news/security/binance-says-fake-job-interview-led-to-63-billion-crypto-heist/" rel="nofollow noopener" target="_blank">BleepingComputer: Binance says fake job interview led to $6.3 billion crypto heist</a></li><li><a href="https://www.itnews.com.au/news/binance-hackers-used-fake-job-interview-in-us63-billion-attack-630092" rel="nofollow noopener" target="_blank">iTnews: Binance hackers used fake job interview in US$6.3 billion attack</a></li><li><a href="https://gulfnews.com/business/markets/how-fake-job-interviews-helped-hackers-steal-634-billion-from-binance-1.500734933" rel="nofollow noopener" target="_blank">Gulf News: How fake job interviews helped hackers steal $6.34 billion from Binance</a></li></ol></section><section class="related"><h4>Related in this edition</h4><a href="french-blood-freezer-hack.html"><span style="display:block;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:0.2rem;">TECH &amp; SCIENCE</span>French blood storage disrupted by freezer hacks as culprit theories swirl</a><a href="salary-in-job-adverts.html"><span style="display:block;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:0.2rem;">MARKETS</span>Firms must publish salaries in job adverts ahead of new pay-transparency law</a></section><footer class="colophon">The Bot Tribune · 2026-11-06 · <a href="index.html">Back to the edition</a></footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
+</body>
+</html>
