@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-06",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 APP +30%, CPAY +8%, CF +6%, VRSK +4%, MSI +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (SNDK -21%, WDC -17%, P -16%, MU -16%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: APP (+29.95%) \u2014 Likely a post-Q3 earnings reaction: AppLovin reported revenue of $2.18B (+55% y/y) and EPS of $4.30 versus about $3.95 expected. I couldn't find a source tying the +29.95% move to today. Why we passed: Outside any active strategy's universe: APP is a large-cap ad-tech/software name that no strategy includes. Earnings-driven gaps also happen at the open, so a momentum or mean-reversion filter would see the move only after the gap.",
+  "top_movers": [
+    {
+      "ticker": "APP",
+      "move_pct": 29.954,
+      "close": 354.91,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely a post-Q3 earnings reaction: AppLovin reported revenue of $2.18B (+55% y/y) and EPS of $4.30 versus about $3.95 expected. I couldn't find a source tying the +29.95% move to today.",
+      "miss_reason": "Outside any active strategy's universe: APP is a large-cap ad-tech/software name that no strategy includes. Earnings-driven gaps also happen at the open, so a momentum or mean-reversion filter would see the move only after the gap.",
+      "suggestion": "Add high-beta large-cap names like APP to the news-reactive universe, and let the earnings gate release names that gap up 15% or more on a beat, once volume in the first 30 minutes is at least 2x average.",
+      "failed": false
+    },
+    {
+      "ticker": "CPAY",
+      "move_pct": 7.629,
+      "close": 450.32,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely post-Q3 earnings follow-through: results out Nov 4 beat guidance (adj. EPS $7.54 vs ~$7.05-7.25 guided, revenue +18%). I found no same-day Nov 6 article, so this driver is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: CPAY is a roughly $30B mid/large-cap fintech/payments name that no strategy lists. The catalyst also came two sessions earlier, so an earnings-gated or gap-up filter would have had no fresh signal on Nov 6.",
+      "suggestion": "Add a post-earnings-drift screen over a broad mid-cap universe: admit names with an earnings beat in the last 3 sessions and a close-to-close gain \u2265 +5% on above-average volume, rather than only same-day gaps.",
+      "failed": false
+    },
+    {
+      "ticker": "CF",
+      "move_pct": 6.09,
+      "close": 118.455,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found. Likely a delayed reaction to Q3 results (reported after the close Nov 4), plus a nitrogen/urea price rally tied to Hormuz-related supply fears.",
+      "miss_reason": "Outside any active strategy's universe: CF is a mid-cap fertilizer/basic-materials name, and no strategy covers it. A post-earnings and commodity-driven move would also have been missed by technical filters.",
+      "suggestion": "Add a commodity-chemicals/fertilizer sector basket (CF, NTR, MOS, LXU) to the momentum universe and relax the earnings-gate to release names with a post-results gap or follow-through of \u2265+3% on day 2.",
+      "failed": false
+    },
+    {
+      "ticker": "VRSK",
+      "move_pct": 4.192,
+      "close": 210.275,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely a rebound after the Nov 5 Q3 selloff (revenue $809M, reportedly a miss vs. estimates; guidance maintained). No fresh Nov 6 news found, so this is inferred, not confirmed.",
+      "miss_reason": "Outside any active strategy's universe: VRSK is a mid/large-cap data-analytics name that no strategy includes. A bounce after an earnings-driven drop is also a mean-reversion move that momentum and news-reactive filters would skip.",
+      "suggestion": "Add a post-earnings-drop rebound screen to the mean-reversion universe: admit S&P 500 names that fell \u22655% on an earnings day and close \u2265+3% the next session on volume \u22651.2\u00d7 the 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "MSI",
+      "move_pct": 4.028,
+      "close": 517.01,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely a reaction to Motorola Solutions' Q3 2026 results (record backlog ~$16.6B, +14% y/y, per its 8-K). I couldn't confirm today's price reaction or any guidance raise, so the cause is unverified.",
+      "miss_reason": "Outside any active strategy's universe: MSI is a ~$85B large-cap in communications and public-safety tech. If earnings drove the move, the gap came at the open, so a post-open momentum filter would see it as too late or too extended.",
+      "suggestion": "Add large-cap (>$50B) names to the universe of the earnings-gap strategy, and release the earnings-gate for gaps of +3% or more with volume above 1.5x the 20-day average within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "MOS",
+      "move_pct": 4.001,
+      "close": 22.225,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news. Likely a delayed rebound after the weak Q3 print (~Nov 3-4: net loss $72M, phosphate loss, sulfur-constrained output) and a sector bounce in fertilizer/potash.",
+      "miss_reason": "Outside any active strategy's universe: MOS is a mid-cap fertilizer/materials name that no strategy lists. The move also had no clear catalyst, so a news-reactive filter would have nothing to trigger on.",
+      "suggestion": "Add a sector-momentum scan that lets mid-cap materials/ag names enter a momentum universe when price is up 3% or more on volume of at least 1.5\u00d7 the 20-day average. Cap it at a small position size.",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": -20.592,
+      "close": 823.83,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No same-day news found for Nov 6. Likely continued AI-memory/NAND unwind after the Oct 30 -13.5% drop on Kioxia's outlook that flash price strength is fading, plus pre-split (8-for-1, Nov 20) volatility.",
+      "miss_reason": "Outside any active strategy's universe: SNDK is a ~$120B+ memory/NAND name with a ~$800+ share price that no strategy lists. It was also a sector-driven move with no clear catalyst, so news-reactive filters had nothing to trigger on.",
+      "suggestion": "Add high-beta AI-semis/memory names (SNDK, MU, WDC) to the mean-reversion universe, with a sector-drawdown trigger such as 5-day move \u2264 -25% and a price-cap check that allows ~$800+ share prices.",
+      "failed": false
+    },
+    {
+      "ticker": "WDC",
+      "move_pct": -16.563,
+      "close": 271.47,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide memory/storage rout (SanDisk, Micron, Seagate also down sharply) on post-midterm AI-bubble worries, AI-pause rhetoric and supply-glut fears; no WDC-specific news found. Some dating is uncertain.",
+      "miss_reason": "Outside any active strategy's universe: WDC is a large-cap hardware/storage name that no strategy's universe includes. The bot also seems to be long-only, so it could not short a macro/sector-driven drop.",
+      "suggestion": "Add memory/storage names (WDC, STX, SNDK, MU) to a sector-momentum universe with a 'sector_drawdown' gate: flag a basket drop of \u22658% in one session as a risk-off signal that trims exposure to correlated AI/semis holdings.",
+      "failed": false
+    },
+    {
+      "ticker": "P",
+      "move_pct": -16.147,
+      "close": 94.175,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found \u2014 searches returned nothing for P on 2026-11-06 (ticker is ambiguous). A -16% single-day drop on a ~$94 stock is consistent with an earnings or guidance shock, but that is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe, probably a mid-cap name that fails the universe's cap, liquidity or sector screens. If it was an earnings gap-down, the bot has no short capability, and long-only momentum and mean-reversion filters would not enter.",
+      "suggestion": "Add a universe-audit log that records top losers/gainers (|move| \u2265 10%) missing from every strategy universe, with market cap and ADV, so the market-cap/ADV floor can be tuned from data. Resolve ambiguous single-letter tickers by company name.",
+      "failed": false
+    },
+    {
+      "ticker": "MU",
+      "move_pct": -16.05,
+      "close": 667.67,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Memory-chip selloff deepened: fears of Chinese competition (CXMT) and a 2029 DRAM oversupply, plus hot inflation prints and rate-hike worries, hit MU, SanDisk and SK Hynix. No MU-specific news was found.",
+      "miss_reason": "Outside any active strategy's universe: MU is a large-cap semiconductor name that no strategy includes, and this was a sector-wide, multi-day drawdown with no single catalyst for a news-reactive bot to key on. The bot is also likely long-only, so it can't short.",
+      "suggestion": "Add a sector-breadth rule: when \u22653 names in a semiconductor/memory basket fall >8% in a day, flag a risk-off regime and cut long exposure in correlated holdings. Alternatively, add MU to a mean-reversion universe with an RSI<25 filter.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-06T20:32:29.323372+00:00"
+}
