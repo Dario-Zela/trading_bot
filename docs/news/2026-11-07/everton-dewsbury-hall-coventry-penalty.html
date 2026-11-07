@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dewsbury-Hall lifts Everton; Lampard says Coventry deserved a penalty — 2026-11-07 — Trading Bot</title>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../../index.html">Dashboard</a>
+<a class="nav-tab active" href="../../news/latest.html">News</a>
+<a class="nav-tab" href="../../macro/latest.html">Macro</a>
+<a class="nav-tab" href="../../evolution.html">Evolution</a>
+<a class="nav-tab" href="../../ml/index.html">ML lab</a>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper article-page"><div class="edition-nav" data-edition="2026-11-07" data-kind="news"><a class="edition-nav-link" data-role="prev" href="../2026-11-06/" title="2026-11-06">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><a class="edition-nav-link disabled" data-role="next" href="#" aria-disabled="true">next →</a><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">SPORT · FOOTBALL · By K. Brennan · 2026-11-07 · 2 min read</div><h1>Dewsbury-Hall lifts Everton; Lampard says Coventry deserved a penalty</h1><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>Everton won with Kiernan Dewsbury-Hall credited for the decisive contribution, while Frank Lampard says Coventry deserved a penalty; scoreline and incident details remain unverified.</div></div><div class="body"><p>Two football stories from the weekend sit side by side in the BBC Sport coverage: an Everton win credited to Kiernan Dewsbury-Hall, and Frank Lampard's claim that his Coventry City side should have been awarded a penalty. The available reporting does not settle how the two connect, so this account sticks to what is established and flags what is not.</p>
+<h2>What is established</h2>
+<p>Everton won. The decisive contribution is credited to Dewsbury-Hall, the midfielder who joined the club from Chelsea and has been a regular in David Moyes's side. The reporting seen so far does not give the scoreline, the minute of the key moment or whether the contribution was a goal, an assist or something else. Those details need to come from the match report before they can be stated.</p>
+<p>Lampard, Coventry's manager, has said his team deserved a spot-kick. The exact wording of his comments and the incident he describes are likewise not in the material to hand. Nor is it confirmed from that material whether the complaint arises from the Everton match or from a separate Coventry fixture. A reader should not assume the two are one story until the report says so.</p>
+<h2>Why a penalty row rarely travels far</h2>
+<p>Post-match grievances about refereeing are a weekly feature of English football, and managers know the genre well. The usual pattern runs in one direction: a manager says the decision was wrong, the officials' governing body reviews the footage in the following days, and the result stands. A penalty that was not given does not alter a final score after the fact, and it seldom moves a league table in any lasting way unless it comes at the margin of a promotion or relegation race.</p>
+<p>That is the case here. Nothing in the evidence so far suggests a disciplinary charge, a formal complaint to the refereeing body or a dispute over video review procedure. Lampard's remark reads as a manager making his case after a defeat or a frustrating afternoon, which is within his rights and entirely ordinary.</p>
+<h2>What to watch</h2>
+<p>The practical test is the footage and the officials' own explanation. If the referee or the video assistant referee gave a reason for not awarding the penalty, it will usually surface within a day or two, and the weekly review of key decisions follows. Everton's and Coventry's next fixtures will show whether the row lingers or fades. The main thing to confirm before publication is the scoreline and Dewsbury-Hall's exact role, both of which sit in the BBC match report.</p></div><section class="sources-block"><h4>Sources</h4><ol><li><a href="https://www.bbc.co.uk/sport/football" rel="nofollow noopener" target="_blank">BBC Sport</a></li></ol></section><footer class="colophon">The Bot Tribune · 2026-11-07 · <a href="index.html">Back to the edition</a></footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
+</body>
+</html>
