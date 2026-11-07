@@ -596,3 +596,31 @@
   - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 1, "enforcement": true, "slot_kind": "alpaca"}`
 - **insider-cluster-momentum@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.109, n=397) → Alpaca slot 2
   - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 2, "enforcement": true, "slot_kind": "alpaca"}`
+
+## Weekly evolution — 2026-11-07
+
+- **mean-reverter@us** · `demote` · ✅ applied — Paper IC fell to 0.037 from the 0.137 thesis. Hit rate is 33% on 15 trades, P&L is -£114, and it meets the demotion criteria.
+  - details: `{"from_tier": "alpaca-paper", "slot_cleared": true, "previous_slot": 1, "slot_kind": "alpaca"}`
+- **mean-reverter-residual-return@us** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 10, "hit_rate": 0.5, "total_pnl_gbp": 703.2, "avg_pnl_pct": 3.773, "max_drawdown_pct": -0.21, "n_predictions_graded": 166, "ic": 0.115, "decile_spread": 4.395}}`
+- **insider-cluster-momentum@us** · `demote` · ✅ applied — n_predictions_graded is 403 but it made only 2 trades, both losers (-£117). That is the dormant-execution case, so it is holding a slot without earning it.
+  - details: `{"from_tier": "alpaca-paper", "slot_cleared": true, "previous_slot": 2, "slot_kind": "alpaca"}`
+- **news-reactive-agent-top-n@us** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 8, "hit_rate": 0.125, "total_pnl_gbp": 141.5, "avg_pnl_pct": 0.852, "max_drawdown_pct": -0.73, "n_predictions_graded": 296, "ic": 0.168, "decile_spread": 1.949}}`
+- **ml-challenger@uk-eu** · `demote` · ⏭️ skipped — Strategy is evolution_frozen (experiment control) — 'demote' refused. (It has 67k graded predictions and 0 trades, so it is dormant while holding the only T212 slot. IC is 0.034.)
+- **mean-reverter@uk-eu** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 17, "hit_rate": 0.471, "total_pnl_gbp": 361.72, "avg_pnl_pct": 1.086, "max_drawdown_pct": -0.71, "n_predictions_graded": 704, "ic": 0.03, "decile_spread": 1.464}}`
+- **mean-reverter@us** · `unmark-tier2-candidate` · ✅ applied — IC collapsed to 0.037 and P&L is negative on paper fills, so the thesis failed. It has been demoted.
+- **insider-cluster-momentum@uk-eu** · `unmark-tier2-candidate` · ✅ applied — IC flipped to -0.04 with 0 trades, which is the drop condition the prior thesis set.
+- **mean-reverter-residual-return@us** · `keep` · ✅ applied — It stays the #1 tier-2 candidate. IC is 0.115, below the 0.12 bar, and n is only 166, so it has not separated from the field yet.
+- **news-reactive-agent-top-n@us** · `mark-tier2-candidate` · ✅ applied — The field has narrowed to two. This is the only other strategy with a durable IC above 0.15.
+  - details: `{"tier2_marked_at": "2026-11-07", "thesis_present": true}`
+- **momentum-trader-vix-gated-crowd-cap** · `deactivate` · ✅ applied — It made 0 trades across 1,390 graded predictions in both regions and IC is negative in both (-0.051 US, -0.025 UK-EU). It is structurally dormant, and deactivating it frees a slot for the new spawn.
+  - details: `{"deactivated_at": "2026-11-07"}`
+- **sector-rotator** · `spawn-variant` · ✅ applied — Research (Zarattini and Antonacci, industry trend-following, profitable after costs) supports adding an absolute trend filter to sector rotation. This breaks the exposure axis because it is regime-gated and can sit in cash, so it should be less correlated with the always-invested stock-picking slate.
+  - details: `{"variant_id": "sector-rotator-abs-trend", "addendum_applied": true}`
+- **news-reactive-buzz-fade@uk-eu** · `keep` · ✅ applied — IC is -0.052 with 0 trades. I'm giving it one more week of shadow data before a cull decision.
+- **news-reactive-agent-top-n@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.168, n=296) → Alpaca slot 1
+  - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 1, "enforcement": true, "slot_kind": "alpaca"}`
+- **insider-cluster-momentum@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.141, n=403) → Alpaca slot 2
+  - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 2, "enforcement": true, "slot_kind": "alpaca"}`

@@ -1,0 +1,38 @@
+id: sector-rotator-abs-trend
+display_name: Sector rotator (variant)
+description: 'Auto-spawned variant of sector-rotator on 2026-11-07 by the weekly evolution
+  agent. Reason: Research (Zarattini and Antonacci, industry trend-following, profitable
+  after costs) supports adding an absolute trend filter to sector rotation. This breaks
+  the exposure axis because it is regime-gated and can sit in cash, so it should be
+  less correlated with the always-invested stock-picking slate.'
+implementation: llm
+active: true
+capital_gbp: 8000.0
+max_positions: 3
+max_position_pct: 40.0
+min_position_gbp: 100
+use_stops: true
+use_take_profits: true
+stop_loss_pct: -4.0
+take_profit_pct: 5.0
+cost_gate_multiplier: 4.0
+last_tune_date: '2026-05-28'
+tools:
+- get_universe
+- get_history
+- get_technicals
+- get_sector_strength
+- get_macro_view
+model_assignment:
+  wide_scoring: haiku
+  deep_analysis: sonnet
+  final_select: sonnet
+runs_in:
+- region: uk-eu
+  tier: shadow
+  t212_slot: null
+  universe: eu_etfs_sector
+  alpaca_slot: null
+prefilter_mode: llm
+prefilter_top_n: 100
+deactivated_at: '2026-06-13'

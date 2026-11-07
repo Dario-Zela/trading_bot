@@ -42,11 +42,9 @@ runs_in:
   t212_slot: null
   universe: t212_isa_uk_eu
   alpaca_slot: null
-  tier2_candidate: true
-  tier2_marked_at: '2026-10-31'
-  tier2_thesis: '#2: IC 0.124 (n=386), spread +0.44, 0 trades so far. Now on T212
-    paper, so it must start trading and hold IC >0.12 to challenge mean-reverter@us.
-    If it has no fills next week, drop it.'
+  tier2_candidate: false
+  tier2_marked_at: null
+  tier2_thesis: ''
 prefilter_mode: llm
 prefilter_top_n: 40
 cost_gate_multiplier: 3.0
