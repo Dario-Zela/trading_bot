@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>M20 pile-up involving more than 30 vehicles leaves two seriously injured — 2026-11-08 — Trading Bot</title>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../../index.html">Dashboard</a>
+<a class="nav-tab active" href="../../news/latest.html">News</a>
+<a class="nav-tab" href="../../macro/latest.html">Macro</a>
+<a class="nav-tab" href="../../evolution.html">Evolution</a>
+<a class="nav-tab" href="../../ml/index.html">ML lab</a>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper article-page"><div class="edition-nav" data-edition="2026-11-08" data-kind="news"><a class="edition-nav-link" data-role="prev" href="../2026-11-07/" title="2026-11-07">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><a class="edition-nav-link disabled" data-role="next" href="#" aria-disabled="true">next →</a><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">WORLD · KENT · By C. Tanaka · 2026-11-08 · 2 min read</div><h1>M20 pile-up involving more than 30 vehicles leaves two seriously injured</h1><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>A reported pile-up of more than 30 vehicles on the M20 in Kent has seriously injured two people and disrupted Channel-bound traffic, with closure details still unclear.</div></div><div class="body"><p>A pile-up involving more than 30 vehicles on the M20 in Kent has left two people seriously injured and disrupted traffic on the main road to the Channel crossings, according to a report from BBC UK on Sunday. Few details were available at the time of writing, and a search of other outlets found no independent account of the crash. The figures below rest on that single report.</p>
+<h2>What is reported</h2>
+<p>The BBC reports that more than 30 vehicles were involved and that two people were seriously injured. It also reports disruption on the motorway.</p>
+<p>The closure details, the exact stretch of road, the cause and the number of people treated at the scene were not available. The vehicle count is a early estimate. Early counts in multi-vehicle crashes are often revised once recovery crews have cleared the carriageway.</p>
+<h2>Why the route matters</h2>
+<p>The M20 runs from the edge of London through Maidstone and Ashford to Folkestone and the Channel Tunnel terminal. It is also the main approach to Dover when the A20 is in use. Heavy goods vehicles make up a large share of its traffic, and the road has little slack. A blockage in either direction pushes traffic onto local roads quickly.</p>
+<p>A crash on this scale is a serious local incident. It becomes a wider story only if the closure is prolonged or if the cause points to a recurring problem on the route. Neither is established yet. A closure measured in hours is a bad day for drivers and hauliers. One that runs into days, perhaps because of damage to the road surface or a lengthy investigation, would begin to affect cross-Channel freight schedules.</p>
+<h2>What to watch</h2>
+<p>The first marker is whether National Highways and Kent Police give a timetable for reopening both carriageways. The second is any statement on cause, such as weather, a stopped vehicle or congestion queuing. Kent Police normally publish an update on casualties, and the condition of the two seriously injured people will be reported there. If the cause turns out to be a repeat of conditions seen on this stretch before, questions about the route's safety measures would follow. Until then, this remains a motorway incident with knock-on delays.</p></div><section class="sources-block"><h4>Sources</h4><ol><li><a href="https://www.bbc.co.uk/news/uk" rel="nofollow noopener" target="_blank">BBC UK</a></li></ol></section><footer class="colophon">The Bot Tribune · 2026-11-08 · <a href="index.html">Back to the edition</a></footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
+</body>
+</html>
