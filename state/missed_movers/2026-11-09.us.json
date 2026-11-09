@@ -1,0 +1,125 @@
+{
+  "date": "2026-11-09",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 1 of today's 10 biggest US movers.\n\n\u2022 5 upside misses \u2014 COHR +14%, ABNB +12%, VST +11%, APP +10%, NRG +10%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (AXON -18%, MCHP -10%, CHTR -6%, PODD -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: AXON (-18.18%) \u2014 Q3 earnings miss (EPS ~$1.72 vs ~$1.90 est, revenue ~2.4% light) with a guidance cut, plus a $1.2B Skydio deal and margin pressure from memory costs; analysts cut targets. Sources conflict on the exact drop date. Why we passed: Outside any active strategy's universe: AXON is a mid/large-cap growth name no strategy covers. It was also an earnings-gap move, and the decline began on the post-results session, so a bot working from post-market signals could not have positioned ahead of it.",
+  "top_movers": [
+    {
+      "ticker": "COHR",
+      "move_pct": 13.578,
+      "close": 192.81,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day catalyst found. Searches returned only older COHR moves (AI optics demand, earnings, analyst target raises), and the price levels in them don't match today's 192.81 close.",
+      "miss_reason": "Outside any active strategy's universe: COHR is a mid/large-cap optical/photonics name tied to the AI-datacenter theme, and no strategy covers it. With no news-reactive trigger either, a sector/AI-optics momentum move was missed.",
+      "suggestion": "Add a liquid AI-hardware/optical-networking sub-universe (COHR, LITE, CIEN, ANET) to the momentum strategy, admitting names with a \u2265+8% day on \u22651.5x 20-day average volume and a \u2265$1B market cap floor.",
+      "failed": false
+    },
+    {
+      "ticker": "ABNB",
+      "move_pct": 11.673,
+      "close": 189.99,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 earnings beat (reported Nov 5 after close): revenue +19% to ~$4.87B, EPS $3.16 vs $2.85 est, bookings +16%, FY growth outlook raised, plus a new $12B buyback. Part of the EPS beat was a tax item.",
+      "miss_reason": "Outside any active strategy's universe (large-cap consumer-internet/travel name). The move was an overnight earnings gap (~$170 to ~$189), so a post-open momentum or news filter would see it as already priced in and too extended to chase.",
+      "suggestion": "Add ABNB and similar large-cap travel/consumer-internet names to the news-reactive universe, with an earnings-gap rule that enters on gap \u2265 +8% when first-hour volume is \u2265 2\u00d7 average and price holds above the open.",
+      "failed": false
+    },
+    {
+      "ticker": "AMD",
+      "move_pct": 11.039,
+      "close": 449.04,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive-buzz-fade",
+        "news-reactive-sentiment-gate"
+      ],
+      "catalyst": "Unconfirmed: sources are undated and conflict on price. They point to a Google Cloud EPYC/TPU deal, an Oppenheimer upgrade after earnings, and rotation out of Nvidia into AMD and other chip stocks.",
+      "miss_reason": "Outside any active strategy's universe: AMD is a large-cap semiconductor name. Only the news-reactive strategies trade it, and they likely passed because sentiment-gate and buzz-fade skip or fade headline-driven gaps like this one.",
+      "suggestion": "Add large-cap semis (AMD, MU, AMAT) to the momentum universe, and let news-reactive-sentiment-gate pass a name on a confirmed upgrade or partnership headline when the gap is at least +5% on volume of 1.5x average or more.",
+      "failed": false
+    },
+    {
+      "ticker": "VST",
+      "move_pct": 10.55,
+      "close": 124.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Rebound after Q3 results, 2027 EBITDA guidance ($7.7-8.5B) and a $1.5B buyback add-on, following a ~14% data-center power selloff on Nov 4. Coverage is dated Nov 6; I found no separate Nov 9 news.",
+      "miss_reason": "Outside any active strategy's universe: VST is a ~$40B+ mid/large-cap independent power producer (AI/data-center power theme) that no strategy covers. The move was also earnings- and rebound-driven, so a post-results gap would likely have failed gap/RSI filters.",
+      "suggestion": "Add large-cap IPP/AI-power names (VST, CEG, NRG, TLN) to the momentum-trader universe, and let its gap-up filter release post-earnings gaps of at least +7% when volume is at least 1.5x average within the first 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "APP",
+      "move_pct": 9.862,
+      "close": 391.22,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst: searches returned nothing dated 2026-11-09. Likely a continued post-Q3-earnings / ad-tech rebound or sector move; unverified.",
+      "miss_reason": "Outside any active strategy's universe: APP is a large-cap, high-beta ad-tech/software name that no strategy includes. If it was earnings-related, the gap was also likely priced in before a post-signal entry.",
+      "suggestion": "Add high-beta large-cap tech (e.g. APP) to the momentum-trader universe, or add a dynamic-universe rule admitting any name with a \u2265+8% day on \u22652\u00d7 average volume, so next analogue is screened.",
+      "failed": false
+    },
+    {
+      "ticker": "NRG",
+      "move_pct": 9.609,
+      "close": 88.29,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 2026 beat (adj. EPS $4.68 vs ~$3.4 est, EBITDA +67% on LS Power assets), reaffirmed 2026 guidance, set 2027 guidance, and announced a $4B asset sale funding $3B of buybacks.",
+      "miss_reason": "Outside any active strategy's universe: NRG is a mid/large-cap independent power producer (utilities/IPP). The move was an earnings-gap catalyst, so a post-results momentum filter would also have been late.",
+      "suggestion": "Add US mid-cap utilities/IPPs (e.g. NRG, VST, CEG) to the momentum universe, and let the earnings-gate release names with a post-results gap of +5% or more on volume of at least 1.5x average.",
+      "failed": false
+    },
+    {
+      "ticker": "AXON",
+      "move_pct": -18.183,
+      "close": 313.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 earnings miss (EPS ~$1.72 vs ~$1.90 est, revenue ~2.4% light) with a guidance cut, plus a $1.2B Skydio deal and margin pressure from memory costs; analysts cut targets. Sources conflict on the exact drop date.",
+      "miss_reason": "Outside any active strategy's universe: AXON is a mid/large-cap growth name no strategy covers. It was also an earnings-gap move, and the decline began on the post-results session, so a bot working from post-market signals could not have positioned ahead of it.",
+      "suggestion": "Add AXON-type US mid-cap growth names to the universe, and add an earnings-gate rule that flags post-earnings gaps of -8% or worse for avoidance or a short-watch. If the bot can't short, a no-op is fine.",
+      "failed": false
+    },
+    {
+      "ticker": "MCHP",
+      "move_pct": -10.023,
+      "close": 58.35,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Weak Dec-qtr guidance (EPS $0.87-0.95 vs $0.94 est.), foundry/assembly supply constraints and CEO 'data center bubble' remarks. Sources date the -10% close to Nov 6; MCHP rose ~5% on Nov 9.",
+      "miss_reason": "Outside any active strategy's universe (mid-cap analog/MCU semi). Even in universe, this was an earnings-gap move that happened a session earlier, so any Nov 9 signal would see a bounce, not a fresh drop.",
+      "suggestion": "Check the data feed's date alignment for movers, since the -10.02% at 58.35 matches Nov 6 and not Nov 9. Separately, add large-cap semis to the news-reactive universe with an earnings-gap rule (gap \u2264 -8% on guidance miss \u2192 skip or flag for mean reversion).",
+      "failed": false
+    },
+    {
+      "ticker": "CHTR",
+      "move_pct": -6.189,
+      "close": 118.07,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day catalyst found; the drop looks like continued post-Q1 selling on broadband subscriber losses and churn worries, possibly with Liberty Broadband-related share-sale headlines.",
+      "miss_reason": "Outside any active strategy's universe: CHTR is a large-cap cable/telecom name that no strategy includes. A grinding, news-light decline after a big earnings crash would also fail gap-up and momentum entry filters.",
+      "suggestion": "(no actionable change: the bot is long-only and can't short this decline. If it needs coverage, add large-cap telecom/cable to the mean-reversion universe with a min-ADV filter and an earnings-crash cooldown of about 60 days.)",
+      "failed": false
+    },
+    {
+      "ticker": "PODD",
+      "move_pct": -6.156,
+      "close": 146.51,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No Nov 9 news found. Likely continued post-Q3 (Nov 4) drift: record margins but a conservative 2027 outlook, flat US patient starts and one-off reserve boosts to international growth.",
+      "miss_reason": "Outside any active strategy's universe (mid-cap medtech, ~$10B). The drop had no fresh same-day catalyst, so a news-reactive bot had no trigger, and the earnings gap came days earlier.",
+      "suggestion": "Add mid-cap healthcare names with 20-day ADV above $100M to the mean-reversion universe, so a -6% non-event day on a name that recently reported can be evaluated against its RSI(14) oversold threshold.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-09T20:32:10.172150+00:00"
+}
