@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-09",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 ENR.DE +4%, CCH.L +3%, ASML.AS +3%, SMT.L +3%, ASM.AS +2%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (HNR1.DE -4%, MUV2.DE -4%, AAF.L -4%, DHL.DE -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: HNR1.DE (-4.37%) \u2014 No confirmed news driver found. Hannover Re's Q3 statement is due around now, so the drop may be pre-results de-risking or reinsurance-sector weakness. Unverified. Why we passed: Outside any active strategy's universe: HNR1.DE is a large-cap German reinsurer that no strategy lists. A -4.4% drop on a roughly 293 EUR stock also looks like a long-only bot's dip-buy or momentum filters would skip it.",
+  "top_movers": [
+    {
+      "ticker": "ENR.DE",
+      "move_pct": 3.742,
+      "close": 118.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found for Siemens Energy. The +3.74% looks like a rebound or AI/power-infrastructure sector move in a high-beta DAX name, possibly ahead of FY results due this week.",
+      "miss_reason": "Outside any active strategy's universe: ENR.DE is a large-cap German industrial/energy-equipment name, and no uk-eu strategy includes it. A +3.7% move on a ~118 close also sits below typical gap or breakout thresholds.",
+      "suggestion": "Add DAX/Xetra large-caps with 20-day ADV above \u20ac100M (such as ENR.DE) to the momentum-trader's uk-eu universe, with the existing breakout filter unchanged. Also add an earnings-calendar flag so names reporting within 3 days are tracked.",
+      "failed": false
+    },
+    {
+      "ticker": "CCH.L",
+      "move_pct": 3.356,
+      "close": 41.88,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-09. Searches turned up only routine treasury-share filings and older results news, so this is likely a sector or defensive-staples rotation move.",
+      "miss_reason": "Outside any active strategy's universe: CCH.L is a FTSE 100 consumer-staples bottler that no strategy lists. A steady +3.4% move with no gap or volume spike would also fail typical momentum and news-reactive entry filters.",
+      "suggestion": "Add a low-volatility large-cap staples bucket (FTSE 100 / Stoxx 600 staples) to the uk-eu momentum universe, with a relative-strength-vs-sector trigger (e.g. 1-day move \u2265 +3% and \u2265 2\u00d7 sector median), so non-news sector rotations are caught.",
+      "failed": false
+    },
+    {
+      "ticker": "ASML.AS",
+      "move_pct": 2.688,
+      "close": 1283.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-09 \u2014 likely a sector-wide AI/semiconductor rally in European chip names, following ASML's strong AI-demand commentary at its Q3 results.",
+      "miss_reason": "Outside any active strategy's universe: ASML.AS is a large-cap Euronext Amsterdam semiconductor-equipment name that no uk-eu strategy includes. A +2.7% sector-beta move would also be too small to trip a gap or momentum trigger.",
+      "suggestion": "Add large-cap EU semis (ASML.AS, STM, IFX.DE) to the momentum-trader universe, gated by a sector-relative-strength rule such as a +2% day with the SOX/Stoxx tech index also up, so sector rallies are caught without single-name noise.",
+      "failed": false
+    },
+    {
+      "ticker": "SMT.L",
+      "move_pct": 2.51,
+      "close": 14.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-09. Likely a technical or sector move: growth/tech sentiment lifting a trust whose NAV is driven by private holdings (SpaceX, Anthropic) and US tech.",
+      "miss_reason": "Outside any active strategy's universe: SMT.L is a large-cap (~\u00a315bn) closed-end investment trust, not an operating company. A +2.5% move with no earnings or news also fails news-reactive and gap-up filters, and is too mild for momentum screens.",
+      "suggestion": "No actionable change: a +2.5% drift in an investment trust with no catalyst is within normal range. If wanted, add SMT.L to a UK growth/tech sentiment-proxy watchlist, but don't loosen the momentum gap or volume thresholds for it.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": 2.391,
+      "close": 651.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious stock-specific news found; likely a sector-wide rebound in European semiconductor/AI-equipment names (ASML, BESI) after the sharp early-November drop. Could not confirm a driver for 2026-11-09.",
+      "miss_reason": "Outside any active strategy's universe: ASM International is a ~\u20ac30B+ Dutch semiconductor-equipment large cap on Euronext Amsterdam, and no strategy's universe covers it. A +2.4% sector-beta move is also too small to trip typical gap or news-reactive triggers.",
+      "suggestion": "Add a 'EU semicap' basket (ASM.AS, ASML.AS, BESI.AS) to the momentum universe, gated on a basket move \u2265 +2% with volume \u2265 1.2\u00d7 the 20-day average, so sector rebounds can be traded without needing a stock-specific catalyst.",
+      "failed": false
+    },
+    {
+      "ticker": "EDV.L",
+      "move_pct": 2.018,
+      "close": 40.94,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Probably Endeavour Mining's Q3 2026 results, which an investor calendar lists for 08:00 today. I couldn't find the release or its figures, so this is unconfirmed. A gold-sector move is also possible.",
+      "miss_reason": "Outside any active strategy's universe: EDV.L is a FTSE 100 gold miner with a dual TSX listing, and no strategy's universe includes it. A results-day gap at the 08:00 open would also have been missed by pre-market-positioned or post-open momentum filters.",
+      "suggestion": "Add FTSE 100 gold/precious-metals miners (EDV.L, FRES.L, etc.) to the uk-eu universe, and release the earnings gate for names that gap up 2% or more on results day within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "HNR1.DE",
+      "move_pct": -4.373,
+      "close": 293.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed news driver found. Hannover Re's Q3 statement is due around now, so the drop may be pre-results de-risking or reinsurance-sector weakness. Unverified.",
+      "miss_reason": "Outside any active strategy's universe: HNR1.DE is a large-cap German reinsurer that no strategy lists. A -4.4% drop on a roughly 293 EUR stock also looks like a long-only bot's dip-buy or momentum filters would skip it.",
+      "suggestion": "Add large-cap DAX/MDAX financials, HNR1.DE included, to the news-reactive universe. Gate it on an earnings-calendar flag so results-day gaps of 3% or more get evaluated within the first 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "MUV2.DE",
+      "move_pct": -4.272,
+      "close": 569.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No clear Nov 9 catalyst found. Munich Re pre-announced strong Q3 and raised its FY26 profit guidance on Oct 23, so this looks like a sell-the-news or sector drop ahead of the Nov 12 final Q3 report.",
+      "miss_reason": "Outside any active strategy's universe: MUV2.DE is a large-cap DAX reinsurer that none of the bot's strategies cover. A -4.3% day with no fresh news also wouldn't pass a news-reactive filter.",
+      "suggestion": "(No actionable change: a news-less large-cap insurer drop is not worth adding to a universe, and acting on it would need short capability the bot lacks.)",
+      "failed": false
+    },
+    {
+      "ticker": "AAF.L",
+      "move_pct": -4.011,
+      "close": 2.776,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed 9 Nov driver found. Likely a continued post-H1 results drift (results 3 Nov: profit +20.5% but fuel-cost and investment pressure) plus Airtel Money IPO and Bharti stake-swap overhang.",
+      "miss_reason": "Outside any active strategy's universe: AAF.L is a Jersey/UK-listed, Africa-focused mid-cap telecom, so it isn't in the UK/EU strategy lists. A -4% drift with no fresh catalyst also wouldn't trigger news-reactive or momentum entry filters.",
+      "suggestion": "Add AAF.L, or FTSE 100/250 telecoms generally, to the mean-reversion universe. Gate entries on a \u22653% one-day drop with no earnings in the last 5 sessions, so post-results drift can be told apart from catalyst gaps.",
+      "failed": false
+    },
+    {
+      "ticker": "DHL.DE",
+      "move_pct": -3.909,
+      "close": 58.02,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-09. Q3 results were due about 5 Nov, so this looks like post-earnings drift or a sector/logistics move, and no cause is confirmed.",
+      "miss_reason": "Outside any active strategy's universe: DHL.DE is a large-cap German logistics name that no strategy's universe includes. With no news trigger, a -3.9% drift also would not have passed a catalyst or gap filter.",
+      "suggestion": "Add large-cap DAX/STOXX 50 constituents such as DHL.DE to the mean-reversion universe, with a trigger on a one-day drop of at least 3.5% and no earnings event within 2 days.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-09T16:02:56.114644+00:00"
+}
