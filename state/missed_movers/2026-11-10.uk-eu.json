@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-10",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 IFX.DE +6%, ANTO.L +6%, AAL.L +6%, STMPA.PA +6%, ASML.AS +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (ENX.PA -5%, SHL.DE -3%, FME.DE -3%, CAP.PA -2%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: IFX.DE (+6.35%) \u2014 No confirmed same-day news found. Likely AI-power and semiconductor momentum, possibly tied to FY2026 Q4 results or outlook around now (stock up ~69% YTD). Why we passed: Outside any active strategy's universe: IFX.DE is a large-cap German (Xetra) semiconductor and no strategy lists it. If results were the trigger, the gap-up came at the open, so post-open signals would be too late anyway.",
+  "top_movers": [
+    {
+      "ticker": "IFX.DE",
+      "move_pct": 6.349,
+      "close": 48.66,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found. Likely AI-power and semiconductor momentum, possibly tied to FY2026 Q4 results or outlook around now (stock up ~69% YTD).",
+      "miss_reason": "Outside any active strategy's universe: IFX.DE is a large-cap German (Xetra) semiconductor and no strategy lists it. If results were the trigger, the gap-up came at the open, so post-open signals would be too late anyway.",
+      "suggestion": "Add large-cap EU semis (IFX.DE, STM, ASML) to the momentum-trader universe, with an earnings-gate release for post-results gaps of \u2265 +5% on \u22651.5\u00d7 average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "ANTO.L",
+      "move_pct": 6.296,
+      "close": 33.09,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed company-specific news found for 2026-11-10; the +6.3% move looks like a copper-driven sector rally across London-listed miners, but I couldn't verify that.",
+      "miss_reason": "Outside any active strategy's universe: ANTO.L is a FTSE 100 large-cap copper miner, and no strategy includes it. With no single-name catalyst, a news-reactive bot would also have had nothing to trigger on.",
+      "suggestion": "Add a commodity-proxy rule so the universe admits large-cap miners (ANTO.L, GLEN.L, AAL.L) when copper futures rise \u22653% on the day. Alternatively, add a sector-breadth trigger that admits a name when \u22653 peers gap up \u22652%.",
+      "failed": false
+    },
+    {
+      "ticker": "AAL.L",
+      "move_pct": 5.782,
+      "close": 39.15,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst: searches returned no news for 2026-11-10. Likely a sector-wide move in miners (copper/iron ore/China demand), but I could not verify that.",
+      "miss_reason": "Outside any active strategy's universe: AAL.L is a FTSE 100 large-cap diversified miner (copper, iron ore, PGMs), and no strategy's universe covers UK mining or materials. A +5.8% sector-driven move with no stock-specific news also gives a news-reactive strategy nothing to trigger on.",
+      "suggestion": "Add FTSE 100 materials names (AAL.L, GLEN.L, RIO.L, ANTO.L) to the momentum universe, and use a cross-sectional sector-breadth trigger (e.g. \u22653 miners up \u22653% on the day) so the move is caught without needing a news signal.",
+      "failed": false
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": 5.527,
+      "close": 39.715,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-10 \u2014 likely a sector-wide semiconductor rebound or technical move; searches turned up no dated STMicroelectronics news for the day.",
+      "miss_reason": "Outside any active strategy's universe: STMPA.PA is a large-cap Euronext Paris semiconductor listing that no strategy includes. With no identifiable catalyst, a news-reactive filter would not have fired either.",
+      "suggestion": "Add large-cap European semis (STMPA.PA, ASML.AS, IFX.DE) to the momentum-trader universe, gated by the existing gap-up and volume filters (\u22651.5\u00d7 average volume). Sector-wide moves would then be caught without a news trigger.",
+      "failed": false
+    },
+    {
+      "ticker": "ASML.AS",
+      "move_pct": 5.516,
+      "close": 1354.4,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector rebound in semis/chip equipment after a sharp selloff on AI-regulation fears (LRCX/KLA ~+9% in the US on Nov 9); no ASML-specific news found. Sources mostly cover Nov 9, so the Nov 10 link is inferred.",
+      "miss_reason": "Outside any active strategy's universe: ASML.AS is a large-cap Dutch semiconductor-equipment name that no uk-eu strategy includes. The move was a macro/sector rebound, so a gap-up or momentum filter would also likely have rejected it.",
+      "suggestion": "Add ASML.AS and other EU large-cap semis (ASM International, BE Semiconductor) to the momentum universe, plus a sector-rebound trigger: enter when SOX closes \u2265+4% the day after a \u2265-5% drop, with US semis' moves as the signal.",
+      "failed": false
+    },
+    {
+      "ticker": "ENR.DE",
+      "move_pct": 5.436,
+      "close": 124.52,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No verifiable news catalyst found for 2026-11-10. Searches returned nothing dated that day, so this is likely a sector or technical move (power-infrastructure/AI-capex sentiment) ahead of fiscal-year results.",
+      "miss_reason": "Outside any active strategy's universe: ENR.DE is a large-cap German industrial (power and grid equipment) and no strategy lists it. With no pre-market news signal, a +5.4% drift would not trip a news-reactive trigger.",
+      "suggestion": "Add a DAX/Euro Stoxx 50 large-cap tier to the momentum-trader universe, gated by a close-to-close \u2265 +4% and \u22651.5\u00d7 20-day volume filter, so no-news sector moves in liquid EU industrials are still caught.",
+      "failed": false
+    },
+    {
+      "ticker": "ENX.PA",
+      "move_pct": -4.529,
+      "close": 162.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day catalyst found. Euronext reported Q3 results around Nov 6 with revenue of about \u20ac547M, above expectations, plus a \u20ac350M buyback. The stock fell only about 2% on that news, so the -4.5% move looks like follow-through selling.",
+      "miss_reason": "Outside any active strategy's universe: ENX.PA is a mid/large-cap exchange operator in the financials sector, and no strategy lists it. With no news-reactive trigger on the day, the bot had no signal to bring it in.",
+      "suggestion": "Add a dynamic universe-expansion rule so that any CAC40/AEX constituent down more than 4% on at least 1.5x average volume is passed to the mean-reversion screener for the next session, instead of requiring static membership.",
+      "failed": false
+    },
+    {
+      "ticker": "SHL.DE",
+      "move_pct": -3.292,
+      "close": 43.19,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-10 \u2014 likely technical / sector move, with possible spin-off-related supply overhang (Siemens AG's planned ~30% Healthineers distribution) and China weakness.",
+      "miss_reason": "Outside any active strategy's universe: SHL.DE is a German large-cap medtech (Xetra) that no strategy covers. A -3.3% drift with no catalyst would also fall below typical gap and volume-spike thresholds.",
+      "suggestion": "Add a DAX/MDAX healthcare sleeve to the mean-reversion universe, gated by a \u22653% drop on no-news days (no earnings or guidance flag) and by RSI(14) <35. That would catch drift reversals like this one.",
+      "failed": false
+    },
+    {
+      "ticker": "FME.DE",
+      "move_pct": -2.842,
+      "close": 41.03,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst \u2014 searches found no same-day Nov 10 news for Fresenius Medical Care; likely a technical or sector move (healthcare/dialysis weakness, with US volume concerns persisting since August).",
+      "miss_reason": "Outside any active strategy's universe: FME.DE is a mid/large-cap German healthcare (dialysis) name listed on Xetra, and no strategy includes it. A -2.84% drift with no catalyst would also fall below typical gap and momentum trigger thresholds.",
+      "suggestion": "No actionable change: a -2.84% move with no catalyst is within normal noise. If EU healthcare coverage is wanted, add the Xetra DAX/MDAX healthcare names to the mean-reversion universe, keeping the existing RSI and volume filters.",
+      "failed": false
+    },
+    {
+      "ticker": "CAP.PA",
+      "move_pct": -2.482,
+      "close": 123.75,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-10 \u2014 likely sector-wide IT services weakness (AI-disruption fears) or an analyst rating change; nothing dated to today surfaced.",
+      "miss_reason": "Outside any active strategy's universe: CAP.PA is a large-cap Euronext Paris IT-services name that no strategy includes. A -2.5% drift with no earnings or M&A event would also fall below typical gap and volume-spike entry thresholds.",
+      "suggestion": "Add a sector-relative screen, e.g. flag universe-eligible names whose 1-day return trails their sector index by \u22652\u03c3, and consider adding Euronext Paris large-caps (CAC 40) to the mean-reversion universe.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-10T16:02:29.501988+00:00"
+}
