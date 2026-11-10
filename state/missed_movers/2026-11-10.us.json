@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-10",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 COHR +18%, MPWR +16%, AMD +14%, TER +13%, FERG +12%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (NVDA -5%, FSLR -4%, TTWO -3%, AXON -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: COHR (+17.77%) \u2014 No confirmed same-day news found. Likely continued AI-optics momentum after the Nov 4 Q1 FY27 beat (revenue +50% to $2.37B, FY27 growth guided above 60%), possibly with a sector rally. Why we passed: Outside any active strategy's universe: COHR is a mid/large-cap optical/photonics name that no strategy includes. A multi-day post-earnings drift with no single-day gap trigger would also be hard for a news-reactive bot to catch.",
+  "top_movers": [
+    {
+      "ticker": "COHR",
+      "move_pct": 17.766,
+      "close": 227.065,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found. Likely continued AI-optics momentum after the Nov 4 Q1 FY27 beat (revenue +50% to $2.37B, FY27 growth guided above 60%), possibly with a sector rally.",
+      "miss_reason": "Outside any active strategy's universe: COHR is a mid/large-cap optical/photonics name that no strategy includes. A multi-day post-earnings drift with no single-day gap trigger would also be hard for a news-reactive bot to catch.",
+      "suggestion": "Add a dynamic universe-expansion rule that lets momentum-trader consider any US stock above $10B market cap with a close-to-close gain of at least +8% on at least 1.5x average volume, capped at 2 extra names per day.",
+      "failed": false
+    },
+    {
+      "ticker": "MPWR",
+      "move_pct": 15.982,
+      "close": 1380.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news; sector-wide analog/AI-power rebound after a steep tech sell-off, helped by pro-data-center comments from Trump and short covering. Some sources date the ~16-17% move to Nov 9.",
+      "miss_reason": "Outside any active strategy's universe: MPWR is a ~$65B, $1,300+/share semiconductor name that no strategy includes. It was a sector-beta bounce with no earnings or news trigger, so a news-reactive filter had nothing to fire on.",
+      "suggestion": "Add a 'semi/AI-power rebound' basket (MPWR, ADI, ON, VRT) to the momentum universe, entered when the sector ETF (SOXX) gains \u22652% after a drop of \u22655% over the prior 5 sessions, and cap per-name size for high share prices.",
+      "failed": false
+    },
+    {
+      "ticker": "AMD",
+      "move_pct": 14.449,
+      "close": 513.92,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Google Cloud picked AMD EPYC for its TPU 8tx and Oppenheimer upgraded to Outperform ($600 PT), driving a +13% jump on Nov 9. Nov 10 added only ~1-2% on Anthropic IPO-filing news.",
+      "miss_reason": "Outside any active strategy's universe: AMD is a ~$800B mega-cap semiconductor name that no strategy covers. The move was catalyst-driven and gapped on Nov 9, so any gap or RSI filter would also have excluded it. The reported +14.45% on Nov 10 looks like a stale-baseline artifact, since 513.92 is only ~1% above the Nov",
+      "suggestion": "Add mega-cap semis (AMD, NVDA, AVGO) to the momentum universe. Also check that the mover scan uses the prior session's close, because a stale baseline inflated this day's move.",
+      "failed": false
+    },
+    {
+      "ticker": "TER",
+      "move_pct": 13.216,
+      "close": 247.06,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst found for 2026-11-10. Searches returned nothing dated that day. Likely AI/semiconductor-test sentiment after Teradyne's earlier AI-demand-driven rallies, but this is unverified.",
+      "miss_reason": "Outside any active strategy's universe: TER is a large-cap semiconductor test-equipment name that no strategy's universe includes. A +13% move with no identifiable news looks like a sector or momentum burst that a news-reactive filter would not have flagged pre-open.",
+      "suggestion": "Add US semiconductor/AI-hardware large caps such as TER to the momentum universe. Also add a rule that admits any name with a prior-day gain of at least 8% on at least 2x average volume, to a capped watchlist.",
+      "failed": false
+    },
+    {
+      "ticker": "FERG",
+      "move_pct": 12.435,
+      "close": 262.76,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Fiscal Q3 results: sales +9.5% to ~$9.0B, adj. EPS $3.43 beat, non-residential +15%, and FY26 sales growth guidance raised to ~7%.",
+      "miss_reason": "Outside any active strategy's universe: FERG is a large-cap US-listed plumbing/HVAC distributor, probably outside the sector or index lists used. It was also an earnings gap-up, which pre-market positioning and gap filters would skip.",
+      "suggestion": "Add an earnings-gap scanner that admits any US stock over $10B market cap with a gap of at least +5% on at least 2x average volume, then lets momentum-trader enter after the first 30 minutes if price holds above the open.",
+      "failed": false
+    },
+    {
+      "ticker": "BE",
+      "move_pct": 12.37,
+      "close": 194.67,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed driver found for 2026-11-10. Searches turned up only undated or older Bloom Energy rallies tied to AI data-center power demand, so this is likely an AI-power sector move.",
+      "miss_reason": "Outside any active strategy's universe: BE is a mid-cap fuel-cell/clean-energy name, a high-beta AI-power theme stock. If it were screened, a gap-up or RSI/extension cap would likely exclude a stock that has already run hard this year.",
+      "suggestion": "Add an 'AI-power/data-center energy' basket (BE, VST, CEG, OKLO) to the momentum universe, gated by a volume \u22651.5\u00d7 20-day average and a cap on RSI(14) near 80, to catch the next sector-wide move.",
+      "failed": false
+    },
+    {
+      "ticker": "NVDA",
+      "move_pct": -4.9,
+      "close": 177.495,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No Nov 10 article found. Sell-off appears to be a continuation of the AI-stock rout and the Jensen Huang probe news (Nov 9 drop ~4%) while the broader AI trade is down ~25% from peak.",
+      "miss_reason": "Outside any active strategy's universe: NVDA is a mega-cap AI/semiconductor name that no strategy includes. The drop was also headline/sentiment-driven (CEO probe plus AI-capex worries), so pre-market gaps would have tripped gap and volatility filters anyway.",
+      "suggestion": "Add NVDA and other mega-cap semis (AMD, AVGO, TSM) to the mean-reversion universe, but gate entries with a rule that skips names with an open governance/regulatory headline or a >3% gap on 2+ consecutive down days.",
+      "failed": false
+    },
+    {
+      "ticker": "FSLR",
+      "move_pct": -4.283,
+      "close": 192.525,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for Nov 10; likely a sector or technical move. FSLR is roughly 40% below its June 2026 high, and no dated article explains today's -4.3% drop.",
+      "miss_reason": "Outside any active strategy's universe: FSLR is a mid/large-cap solar name that no strategy lists. With no gap or earnings trigger, a -4.3% drift in a downtrend also wouldn't trip a news-reactive or momentum filter.",
+      "suggestion": "(no actionable change) The move had no discrete catalyst and the bot can't short. If solar exposure is wanted, add FSLR to the mean-reversion universe with an RSI<30 entry, but this single move doesn't justify it.)",
+      "failed": false
+    },
+    {
+      "ticker": "TTWO",
+      "move_pct": -3.3,
+      "close": 207.78,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found. Likely a pre-launch move ahead of GTA VI's scheduled Nov 19, 2026 release, with post-earnings repositioning and a weak gaming/tech tape; unverified.",
+      "miss_reason": "Outside any active strategy's universe: TTWO is a ~$40B large-cap video game publisher that no strategy's universe includes. A -3.3% drift with no clear catalyst would likely also fail gap and volume filters.",
+      "suggestion": "Add TTWO and other large-cap gaming names (EA, RBLX) to the mean-reversion universe, and require a catalyst tag or a \u22651.5x volume spike before entry, so a -3% no-news drift is not bought blindly.",
+      "failed": false
+    },
+    {
+      "ticker": "AXON",
+      "move_pct": -3.166,
+      "close": 303.09,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-10; likely continued high-multiple growth/tech de-rating and valuation pressure (convertible-note dilution overhang cited in recent coverage), not a dated event.",
+      "miss_reason": "Outside any active strategy's universe: AXON is a ~$20B+ mid/large-cap high-multiple tech/defense name that no strategy includes. A -3% drift on no news also wouldn't trip gap, volume or news-reactive triggers, and a long-only bot can't short it.",
+      "suggestion": "No actionable change for this move; if a broader fix is wanted, add a rule to the momentum universe to include US names with market cap >$10B and ADV >$100M, so sustained downtrends can at least block long entries.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-10T20:32:00.729391+00:00"
+}
