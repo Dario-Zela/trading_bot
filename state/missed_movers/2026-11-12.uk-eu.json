@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-12",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 ENR.DE +8%, IFX.DE +5%, ASM.AS +4%, STMPA.PA +4%, SPX.L +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (BNR.DE -3%, ABF.L -2%, EL.PA -2%, BTRW.L -1%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: ENR.DE (+8.18%) \u2014 Unconfirmed: no Nov 12, 2026 article found. Most likely Siemens Energy's Q4 FY26 results and first FY27 guidance, which it had said would come in November, amid AI/data-center turbine demand. Why we passed: Outside any active strategy's universe: ENR.DE is a large-cap German industrial (DAX/MDAX-class, energy equipment) that no strategy lists. If earnings-driven, the gap-up happened at the open, so post-market signals came too late.",
+  "top_movers": [
+    {
+      "ticker": "ENR.DE",
+      "move_pct": 8.177,
+      "close": 128.06,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Unconfirmed: no Nov 12, 2026 article found. Most likely Siemens Energy's Q4 FY26 results and first FY27 guidance, which it had said would come in November, amid AI/data-center turbine demand.",
+      "miss_reason": "Outside any active strategy's universe: ENR.DE is a large-cap German industrial (DAX/MDAX-class, energy equipment) that no strategy lists. If earnings-driven, the gap-up happened at the open, so post-market signals came too late.",
+      "suggestion": "Add large-cap DAX/Euro Stoxx 50 industrials such as ENR.DE to the momentum universe, with an earnings-gate release for names gapping \u2265 +5% on above-1.5\u00d7 average volume within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": 4.825,
+      "close": 51.92,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No same-day news confirmed. Likely AI-power-demand momentum around Q4 FY26 results and the planned November raise of the FY27 AI data-centre revenue target. Searches found no Nov 12 article.",
+      "miss_reason": "Outside any active strategy's universe: IFX.DE is a large-cap German (Xetra) semiconductor, and no strategy's universe includes it. If the move was results/AI-guidance driven, the gap was also set at the open, so post-open signals would have been late.",
+      "suggestion": "Add large-cap DAX/Euro Stoxx semis (IFX.DE, ASML, STM) to the momentum-trader universe, and add an earnings/guidance-gap rule that admits names with a gap of at least +3% on volume of at least 1.5x average.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": 4.421,
+      "close": 708.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-12 \u2014 likely a sector-wide move in AI-linked semiconductor equipment names (ASM is a high-beta European chip-tool stock).",
+      "miss_reason": "Outside any active strategy's universe: ASM.AS is a ~\u20ac30B+ Euronext Amsterdam large-cap semiconductor-equipment name that no strategy's universe includes. With no identifiable stock-specific news, a news-reactive bot had no trigger either.",
+      "suggestion": "Add Euronext Amsterdam semis (ASM.AS, ASML.AS, BESI.AS) to the momentum-trader universe, gated by a sector-relative filter such as a +3% move with SOX/SX5E semis breadth up, so sector-driven days are caught.",
+      "failed": false
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": 4.052,
+      "close": 41.73,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found \u2014 likely a sector-wide move in European semiconductors; no STMicroelectronics-specific headline dated 2026-11-12 turned up.",
+      "miss_reason": "Outside any active strategy's universe: STMPA.PA is a large-cap Paris-listed semiconductor, and no strategy includes it. A +4% move with no company news also gives a news-reactive strategy nothing to trigger on.",
+      "suggestion": "Add large-cap Euronext Paris/Amsterdam semiconductors (STMPA.PA, ASML, IFX) to the momentum-trader universe, with a sector-relative trigger such as a +3% move on \u22651.3\u00d7 average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "SPX.L",
+      "move_pct": 4.011,
+      "close": 76.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed news catalyst found for 12 Nov 2026. Spirax (SPX.L) has issued a trading update in mid-November in past years (13 Nov 2025), so a pre-close update or sector rebound is plausible but unverified.",
+      "miss_reason": "Outside any active strategy's universe: SPX.L is a ~\u00a35.6bn FTSE 100 industrial (steam systems/engineering), a mid/large-cap UK name that no strategy's universe includes. A news-driven gap-up would also have been missed without universe coverage.",
+      "suggestion": "Add a UK industrials/FTSE 100 watchlist to the news-reactive strategy's universe, gated on a \u2265+3% gap with \u22651.5\u00d7 average volume on an RNS trading-update day, rather than widening the momentum universe.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": 3.777,
+      "close": 156.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day driver found; likely a semiconductor-equipment/AI-packaging sector move, with possible lingering Applied Materials stake and takeover-interest headlines (undated, unverified).",
+      "miss_reason": "Outside any active strategy's universe: BESI.AS is an Amsterdam-listed mid/large-cap semiconductor-equipment name that no strategy includes. A +3.78% move is also modest, so a gap or momentum filter would probably not have flagged it.",
+      "suggestion": "Add European semi-cap equipment names (BESI.AS, ASM International, ASML) to the momentum-trader universe, or add a sector-relative-strength trigger that admits names moving \u2265+3% alongside a sector ETF gain.",
+      "failed": false
+    },
+    {
+      "ticker": "BNR.DE",
+      "move_pct": -2.656,
+      "close": 60.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found. Brenntag reportedly published Q3 results around Nov 11, so this is likely post-earnings follow-through selling or a chemicals-sector move. I could not verify this.",
+      "miss_reason": "Outside any active strategy's universe: BNR.DE is a mid-cap German chemicals distributor (MDAX/DAX-adjacent) that no strategy's universe includes. A -2.66% drift after earnings is also too small for gap or momentum triggers.",
+      "suggestion": "Add mid-cap DE chemicals/distribution names such as BNR.DE to the mean-reversion universe, and let the earnings-gate release them 1 day after results when the move is \u22652% with volume \u22651.5\u00d7 the 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "ABF.L",
+      "move_pct": -1.85,
+      "close": 19.895,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news for ABF.L on 2026-11-12. The search found only older Primark/Sugar-driven selloffs, so this is likely a modest -1.85% drift on sector or consumer-discretionary weakness.",
+      "miss_reason": "Outside any active strategy's universe: ABF.L is a UK FTSE 100 large-cap, consumer-discretionary retailer and food group that no strategy includes. A -1.85% move with no gap or volume spike would also fall below typical momentum and news-reactive trigger thresholds.",
+      "suggestion": "No actionable change: a -1.85% move with no identified catalyst is within normal noise, and the bot can't short. If UK retail coverage is wanted, add ABF.L to a uk-eu universe only with a \u22653% move plus \u22651.5\u00d7 volume filter.",
+      "failed": false
+    },
+    {
+      "ticker": "EL.PA",
+      "move_pct": -1.623,
+      "close": 184.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-12. The stock is in a 2026 downtrend on smart-glasses competition doubts (Google, Goldman/Bernstein cautious notes), so -1.6% looks like drift or sector weakness.",
+      "miss_reason": "Outside any active strategy's universe: EssilorLuxottica is a large-cap French consumer/healthcare name that no strategy includes. A -1.6% move on no news is also too small for a news-reactive or momentum trigger.",
+      "suggestion": "No actionable change. A -1.6% no-news drift in a name outside the universe is low-signal and needs short capability. Only consider adding EL.PA to the mean-reversion universe if the bot expands its CAC 40 coverage.",
+      "failed": false
+    },
+    {
+      "ticker": "BTRW.L",
+      "move_pct": -1.458,
+      "close": 3.257,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst \u2014 likely technical / sector move. Searches found no BTRW-specific news dated 2026-11-12, so the -1.46% looks like UK housebuilder weakness or rate/gilt sentiment.",
+      "miss_reason": "Outside any active strategy's universe: BTRW.L is a UK mid/large-cap housebuilder that no strategy lists. A -1.46% drift with no catalyst also wouldn't pass a typical gap, volume-spike or news-reactive trigger.",
+      "suggestion": "(no actionable change \u2014 a small, news-less sector drift; adding UK housebuilders to a universe on this move alone would be noise-fitting, so revisit only if a gilt-yield or rate-sensitivity factor is added.)",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-12T16:02:21.444730+00:00"
+}
