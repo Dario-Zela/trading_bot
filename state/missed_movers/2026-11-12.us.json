@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-12",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 CHTR +11%, HONA +9%, SKYD +9%, TTWO +8%, ECHO +7%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (MRNA -7%, FSLR -6%, NVDA -5%, LEN -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: CHTR (+10.61%) \u2014 No confirmed Nov 12 driver found. Charter had fallen after its Nov 6 Q3 report (internet subscriber losses, $2B cost plan, Cox integration), so this looks like a rebound or sector move, but I could not verify the cause. Why we passed: Outside any active strategy's universe: CHTR is a large-cap cable/telecom name that no strategy's universe includes. A headline-driven jump from a depressed base also would not have passed a trend-following or momentum screen.",
+  "top_movers": [
+    {
+      "ticker": "CHTR",
+      "move_pct": 10.611,
+      "close": 134.06,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed Nov 12 driver found. Charter had fallen after its Nov 6 Q3 report (internet subscriber losses, $2B cost plan, Cox integration), so this looks like a rebound or sector move, but I could not verify the cause.",
+      "miss_reason": "Outside any active strategy's universe: CHTR is a large-cap cable/telecom name that no strategy's universe includes. A headline-driven jump from a depressed base also would not have passed a trend-following or momentum screen.",
+      "suggestion": "Add large-cap communications/cable names like CHTR to the news-reactive universe, with a gap-up trigger such as a one-day move \u2265 +8% on volume \u2265 2\u00d7 the 20-day average. Alternatively, log it as a no-op if it was a one-off with no catalyst.",
+      "failed": false
+    },
+    {
+      "ticker": "HONA",
+      "move_pct": 9.162,
+      "close": 166.93,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found; one search returned only institutional-holdings filings (Quiver), nothing dated 2026-11-12. Likely a technical, sector or flow-driven move, unverified.",
+      "miss_reason": "Outside any active strategy's universe (none lists HONA). It looks like a large-cap name, so the exclusion is likely a universe-list or ticker-mapping gap, not a filter. A +9% move with no news is also hard for a news-reactive bot to catch.",
+      "suggestion": "Add a dynamic universe tier that admits any liquid name with a close-to-close gain of at least +7% on at least 1.5x average volume, so unlisted movers get evaluated by the momentum filters the next day.",
+      "failed": false
+    },
+    {
+      "ticker": "SKYD",
+      "move_pct": 9.051,
+      "close": 8.735,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found. Searches turned up no SKYD news dated 2026-11-12 and no scheduled earnings or events, so this is likely a technical or sentiment bounce after a weak year.",
+      "miss_reason": "Outside any active strategy's universe. SKYD looks like a small or micro-cap with thin liquidity and a volatile price history (about -48% YTD), so universe cap and liquidity screens would exclude it. With no catalyst, a news-reactive signal would not have fired either.",
+      "suggestion": "No actionable change. A +9% move with no catalyst in an illiquid name outside the universe is noise. Relaxing the market-cap or ADV floor would add more low-quality names than it would catch real movers.",
+      "failed": false
+    },
+    {
+      "ticker": "TTWO",
+      "move_pct": 8.312,
+      "close": 224.64,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely GTA VI launch-run momentum (Nov 19 release). Nov 9 earnings raised FY guidance and the CEO said presales were 'far in excess of expectations'. I found no Nov 12-specific article, and reported prices don't reconcile.",
+      "miss_reason": "Outside any active strategy's universe: TTWO is a ~$40B+ large-cap video-game stock that no strategy includes. The big catalyst (earnings and guidance raise) came days earlier, so a post-earnings gap or momentum filter would have been stale by Nov 12.",
+      "suggestion": "Add large-cap communication-services/gaming names like TTWO to the momentum-trader universe. Add a 'pre-launch event drift' rule: enter on a 5-day return of +5% or more with volume at least 1.5x the 20-day average, if the name is within 10 days of a known product launch.",
+      "failed": false
+    },
+    {
+      "ticker": "ECHO",
+      "move_pct": 6.78,
+      "close": 101.035,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst \u2014 search only surfaced Echo Global Logistics, taken private in 2021 near $48, which doesn't match a ~$101 close; likely technical / sector move.",
+      "miss_reason": "Outside any active strategy's universe: ECHO is likely a small/illiquid name below the cap and volume floors. With no identifiable pre-market catalyst, news-reactive and gap-based filters would not have flagged it either.",
+      "suggestion": "Add a daily 'unlisted-mover watch' that logs names with a close-to-close move \u2265 +6% and a 20-day average dollar volume above the liquidity floor, so universe gaps are reviewed instead of silently skipped.",
+      "failed": false
+    },
+    {
+      "ticker": "FDXF",
+      "move_pct": 5.107,
+      "close": 129.87,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-12. FedEx Freight (FDXF) was recently spun off, and the search turned up only undated items (BofA target cut, Oct earnings, S&P 500 debut). Likely a technical or sector rebound.",
+      "miss_reason": "Outside any active strategy's universe. FDXF is a mid/large-cap LTL freight stock that only recently began trading after the FedEx spin-off. It likely lacks the price and volume history that universe screens require. With no news trigger, a news-reactive bot had nothing to act on.",
+      "suggestion": "Add a universe-refresh rule that admits spin-offs and new S&P 500 constituents once they have ~20 trading days of history, so the momentum screen can evaluate names like FDXF instead of silently excluding them.",
+      "failed": false
+    },
+    {
+      "ticker": "MRNA",
+      "move_pct": -6.755,
+      "close": 250.83,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found. Searches turned up no MRNA-specific story dated 2026-11-12. The listed 250.83 close also looks far above recent ~$30s MRNA quotes, so check the price feed.",
+      "miss_reason": "Outside any active strategy's universe: MRNA is a mid-cap, high-volatility, cash-burning biotech with no strategy coverage. A -6.75% drift with no gap or news trigger would not pass momentum or news-reactive filters anyway.",
+      "suggestion": "Verify the MRNA price and corporate-action data (a possible reverse split or bad quote) before changing any strategy. If it's valid, add it to the mean-reversion universe only if it meets a min-liquidity and ATR-cap rule.",
+      "failed": false
+    },
+    {
+      "ticker": "FSLR",
+      "move_pct": -5.548,
+      "close": 180.98,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-12; likely a sector-wide solar / policy-sentiment move, with FSLR already about 40% off its June 52-week high.",
+      "miss_reason": "Outside any active strategy's universe: FSLR is a ~$19B mid/large-cap solar name no strategy lists. With no clear catalyst, a news-reactive bot had no trigger and a long-only momentum bot would not short a -5.5% drift.",
+      "suggestion": "Add a sector-breadth rule, e.g. when \u22653 solar names (FSLR, ENPH, RUN, SEDG) fall \u22654% on the same day, add them to the mean-reversion watchlist for the next session. No short capability is needed.",
+      "failed": false
+    },
+    {
+      "ticker": "NVDA",
+      "move_pct": -5.474,
+      "close": 168.89,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found \u2014 searches returned no same-day (2026-11-12) coverage of NVDA; likely a broad AI/semiconductor sell-off or technical move, unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: NVDA is a mega-cap semiconductor that no strategy includes, so no filter evaluated it. A -5.5% move with no company-specific catalyst is also hard for a news-reactive bot to trigger on.",
+      "suggestion": "Add NVDA and similar liquid mega-cap tech names to the mean-reversion universe, gated by a market-cap floor and a no-news check. Otherwise no change: the bot is long-only, so it can't trade the drop itself.",
+      "failed": false
+    },
+    {
+      "ticker": "LEN",
+      "move_pct": -5.372,
+      "close": 86.66,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. Searches turned up nothing dated 2026-11-12. Likely a homebuilder sector move on rates or housing data, with lingering Millrose/short-seller (Hunterbrook) overhang.",
+      "miss_reason": "Outside any active strategy's universe: LEN is a large-cap homebuilder (consumer cyclical/housing), and no strategy includes it. With no earnings or M&A gap, a -5% drift would not trip news-reactive filters either.",
+      "suggestion": "Add a homebuilder/housing sector basket (LEN, DHI, PHM, NVR, ITB) to the mean-reversion universe, triggered when \u22653 members fall \u22654% on the same day, so sector-wide rate moves are caught.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-12T20:31:43.941398+00:00"
+}
