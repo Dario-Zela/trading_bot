@@ -1,0 +1,124 @@
+{
+  "date": "2026-11-13",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 1 of today's 10 biggest UK/EU movers.\n\n\u2022 5 upside misses \u2014 BRBY.L +7%, III.L +6%, RAND.AS +4%, MUV2.DE +3%, ZAL.DE +2%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (EDV.L -7%, STLAP.PA -5%, BAB.L -4%, G1A.DE -4%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: EDV.L (-6.91%) \u2014 No confirmed driver for 2026-11-13. Search found only undated or older items (CEO termination, Burkina Faso permit fears), so a gold-miner or West Africa jurisdiction-risk move is possible but unverified. Why we passed: Outside any active strategy's universe: EDV.L is a UK-listed (FTSE 100) West Africa gold miner, and no strategy includes it. A gap-down on a jurisdiction or governance headline would also be unreachable for a long-only bot.",
+  "top_movers": [
+    {
+      "ticker": "BRBY.L",
+      "move_pct": 6.816,
+      "close": 11.675,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found. The move is likely tied to Burberry's H1 FY27 interim results, which usually land in mid-November (last year's were 13 Nov 2025, +7.9%). I could not verify this for 2026.",
+      "miss_reason": "Outside any active strategy's universe: BRBY.L is a UK mid-cap luxury name that no strategy includes. If it was a results-day gap, an earnings-gate or gap-size filter would also have blocked a post-open entry.",
+      "suggestion": "Add a small earnings-calendar watchlist of FTSE 100/250 consumer and luxury names to the news-reactive universe. Release the earnings gate for gaps \u2265 +5% on volume \u2265 2\u00d7 the 20-day average within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "III.L",
+      "move_pct": 6.199,
+      "close": 27.24,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely 3i's H1 FY27 results, with Action trading and NAV in focus. I couldn't confirm today's news; searches found nothing dated 2026-11-13.",
+      "miss_reason": "Outside any active strategy's universe: III.L is a FTSE 100 listed private-equity/investment trust, a financial-sector name that the strategies don't include. A results-day gap would also likely fail gap-size or earnings-gate filters.",
+      "suggestion": "Add FTSE 100 financials/investment trusts such as III.L to the uk-eu momentum universe, and let the earnings-gate release names that gap up 4% or more on results day with volume above 1.5x average.",
+      "failed": false
+    },
+    {
+      "ticker": "RAND.AS",
+      "move_pct": 4.302,
+      "close": 42.91,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst \u2014 searches found no Randstad news dated 2026-11-13 (last results were Q3 in October). Likely a technical, sector or staffing-peer rebound move.",
+      "miss_reason": "Outside any active strategy's universe: RAND.AS is a mid/large-cap Dutch staffing name on Euronext Amsterdam, and no strategy covers it. With no same-day news, a news-reactive bot had no trigger either.",
+      "suggestion": "Add a universe-expansion scan that admits Euronext Amsterdam/Stoxx 600 names with a daily move \u2265 +4% and volume \u2265 1.5\u00d7 the 20-day average to the momentum-trader watchlist, so catalyst-free breakouts get evaluated.",
+      "failed": false
+    },
+    {
+      "ticker": "MUV2.DE",
+      "move_pct": 3.477,
+      "close": 589.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely follow-through from Munich Re's final Q3 results on Nov 12 (prelim net profit ~\u20ac1.7bn beat consensus; FY guidance raised to \u20ac6.6bn). I found no Nov 13 article confirming this.",
+      "miss_reason": "Outside any active strategy's universe: Munich Re is a large-cap German reinsurer, and no strategy covers it. The results-driven move was also largely priced in at the Oct 23 pre-announcement, so a day-after gap would not have triggered a news-reactive entry.",
+      "suggestion": "Add large-cap EU financials (MUV2.DE, ALV.DE, SREN.SW) to the momentum universe, and let the earnings-gate admit names making a second day of post-results gains, with a gap \u2265 +3% on volume \u2265 1.5\u00d7 its 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "ZAL.DE",
+      "move_pct": 2.27,
+      "close": 28.38,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-13; searches turned up no dated same-day news. The +2.27% looks like a modest technical or sector move, possibly European retail/consumer strength.",
+      "miss_reason": "Outside any active strategy's universe: ZAL.DE is a mid-cap German consumer-discretionary (e-commerce/fashion) name. A +2.27% move with no news is also too small to pass typical momentum gap or volume filters.",
+      "suggestion": "No actionable change: a +2.27% no-news move in an out-of-universe mid-cap is within noise. If broadening, add DAX/MDAX consumer-discretionary names to the uk-eu universe only with a \u22653% gap and \u22651.5\u00d7 volume gate.",
+      "failed": false
+    },
+    {
+      "ticker": "SIE.DE",
+      "move_pct": 2.238,
+      "close": 283.2,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive-agent-top-n"
+      ],
+      "catalyst": "No obvious news catalyst found for 2026-11-13. Possibly post-results drift, since Siemens's FY results were reportedly due around Nov 12 (unconfirmed), or a broad German industrials/AI-capex move.",
+      "miss_reason": "Outside any active strategy's universe: SIE.DE is a large-cap German industrial (DAX) that no strategy's universe includes. Only news-reactive-agent-top-n traded it, and a +2.24% move with no clear headline is too small for gap or momentum screens.",
+      "suggestion": "Add DAX/Euro Stoxx 50 large-caps to the momentum-trader universe, with a post-earnings-drift rule: admit names within 2 sessions of results if the close-to-close move is \u2265 +2% on \u22651.2\u00d7 20-day average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "EDV.L",
+      "move_pct": -6.906,
+      "close": 38.42,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed driver for 2026-11-13. Search found only undated or older items (CEO termination, Burkina Faso permit fears), so a gold-miner or West Africa jurisdiction-risk move is possible but unverified.",
+      "miss_reason": "Outside any active strategy's universe: EDV.L is a UK-listed (FTSE 100) West Africa gold miner, and no strategy includes it. A gap-down on a jurisdiction or governance headline would also be unreachable for a long-only bot.",
+      "suggestion": "Add a gold-miner sleeve (EDV.L, FRES.L, similar) to the mean-reversion universe, gated by a -5% gap and a volume \u22651.5\u00d7 20-day average. Only enter once a news check shows no governance or permit event.",
+      "failed": false
+    },
+    {
+      "ticker": "STLAP.PA",
+      "move_pct": -4.659,
+      "close": 3.54,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst for 13 Nov found; searches only surfaced older Stellantis news (EV write-down, 52-week lows). Likely continuation of the sector-wide auto weakness and the stock's downtrend.",
+      "miss_reason": "Outside any active strategy's universe: STLAP.PA is a Euronext Paris large-cap auto stock. A -4.7% drift with no fresh news gives a news-reactive bot no trigger, and a downtrend fails long-only momentum and mean-reversion entry filters.",
+      "suggestion": "Add Euronext Paris large-caps such as STLAP.PA to the uk-eu universe watchlist, and log sector-wide auto drawdowns (e.g. 3+ autos down >3% on the same day) as a signal instead of requiring a stock-specific catalyst.",
+      "failed": false
+    },
+    {
+      "ticker": "BAB.L",
+      "move_pct": -4.375,
+      "close": 9.945,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed company-specific news for 13 Nov; likely a sector move as UK defence stocks fell on reports of a US push over the Ukraine war. That link is unconfirmed and undated.",
+      "miss_reason": "Outside any active strategy's universe: BAB.L is a UK mid-cap defence/engineering name that no strategy includes. A sector-sentiment drop of about 4% with no stock-specific catalyst also gives news-reactive filters nothing to trigger on.",
+      "suggestion": "Add a UK defence basket (BAB.L, BA.L, QQ.L, RR.L) to the mean-reversion universe, gated on a sector-wide drop of at least 3% on no stock-specific news.",
+      "failed": false
+    },
+    {
+      "ticker": "G1A.DE",
+      "move_pct": -4.375,
+      "close": 69.95,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-13; searches turned up no dated company news, so likely a sector/technical move, possibly a large-holder share sale (unconfirmed).",
+      "miss_reason": "Outside any active strategy's universe: G1A.DE (GEA Group) is a German mid-cap industrial/food-processing machinery name, so no momentum, mean-reversion or news-reactive strategy screened it. A -4.4% drift with no clear catalyst also wouldn't trigger news filters.",
+      "suggestion": "No actionable change: a no-catalyst -4% move in a mid-cap outside the universe isn't worth widening it. If DE mid-caps are wanted, add MDAX names to the mean-reversion universe with a liquidity floor (e.g. ADV \u2265 \u20ac20M).",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-13T16:02:27.328473+00:00"
+}
