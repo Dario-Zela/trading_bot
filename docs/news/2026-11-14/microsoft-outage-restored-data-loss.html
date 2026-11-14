@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Microsoft says services fully restored after day-long global outage, but data-loss questions remain — 2026-11-14 — Trading Bot</title>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../../index.html">Dashboard</a>
+<a class="nav-tab active" href="../../news/latest.html">News</a>
+<a class="nav-tab" href="../../macro/latest.html">Macro</a>
+<a class="nav-tab" href="../../evolution.html">Evolution</a>
+<a class="nav-tab" href="../../ml/index.html">ML lab</a>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper article-page"><div class="edition-nav" data-edition="2026-11-14" data-kind="news"><a class="edition-nav-link" data-role="prev" href="../2026-11-13/" title="2026-11-13">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><a class="edition-nav-link disabled" data-role="next" href="#" aria-disabled="true">next →</a><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">TECH · CLOUD · By R. Okonkwo · 2026-11-14 · 4 min read</div><h1>Microsoft says services fully restored after day-long global outage, but data-loss questions remain</h1><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>Microsoft says services are back after an outage that began 12 November and ran most of a day, but it has not said whether any email or data was lost.</div></div><div class="body"><p>Microsoft's cloud services were knocked offline for most of a day this week, and the company says they are now back. What it has not said is whether anyone lost anything. For a business that ran its email, calendars and meetings through one provider, that is the question that matters once the login screens work again.</p>
+<h2>What happened</h2>
+<p>The disruption began on Thursday 12 November and worsened through the evening, Pacific time. Microsoft's service notices named Exchange Online, Teams, SharePoint Online, Microsoft 365 Copilot, Defender XDR, Planner, To Do, Intune and Defender for Office 365 among the affected products. Outlook email was the most visible casualty. Reports described the effect variously as thousands of users and as products used by millions of people around the world. Neither figure comes from a Microsoft count.</p>
+<p>Microsoft's explanation was narrow and technical. It said that "a process on the affected servers responsible for establishing secure connections becomes overwhelmed," and the servers then stop processing requests. In plain terms, the part of the system that sets up encrypted connections choked, and everything that depended on it went quiet. The company apologised and called it a technical issue. It also said the outage was not a cyberattack and was unrelated to AI agents.</p>
+<p>Recovery was slow. Late on Thursday Microsoft reported partial recovery in some regions, but it was not sustained. Initial fixes fell short, and engineers restarted the affected servers and tried other routes. At about 5 a.m. Eastern on Friday the company reported "early stabilization and capacity improvements." By 7:09 a.m. it described "encouraging recovery progress" while warning that some users could see intermittent problems. CNN reported that email was "approaching normal levels." Microsoft was still working through a backlog in the early hours of Saturday GMT, so "fully restored" is the company's description of an end state it reached over roughly two days, not a single moment.</p>
+<p>Some city governments in the US were among the organisations affected. Jacksonville, Florida, said it was seeing some services restored and was cautiously optimistic that progress would continue.</p>
+<h2>The question Microsoft has not answered</h2>
+<p>The public accounts reviewed for this article contain no statement on data loss, either to confirm it or to rule it out. That absence is not evidence that nothing was lost. It means the question has not been addressed in public.</p>
+<p>The distinction matters because of how email fails. A service can be unreachable without losing anything: messages queue, then arrive late. It can also drop mail outright, bouncing it to senders or discarding it, and a backlog is exactly where that risk sits. Microsoft has acknowledged a backlog this time. Earlier Exchange Online incidents this year, including one on 31 August, produced delayed and failed deliveries. Whether any message sent during this outage was permanently undelivered, or any change saved in Teams, Planner or SharePoint was not committed, is unknown.</p>
+<p>The usual answer is a post-incident review. Microsoft typically publishes these for major Microsoft 365 incidents, and it would settle the matter: how many tenants were affected, how long, and whether anything was unrecoverable. At the time of writing, none had been located. Some of the detail in circulating reports also comes from live blogs that were still updating, and the BBC coverage named in the briefing could not be retrieved.</p>
+<h2>Why concentration is the story</h2>
+<p>The incident did not need to be catastrophic to be instructive. A single fault in one connection-handling process disrupted email, chat, file sharing, device management and security tooling at once, because they sit on shared infrastructure. Customers who bought those products separately for convenience found they had bought one point of failure.</p>
+<p>That is the cloud concentration argument, and it is not new. It is, however, easier to dismiss in the abstract than on a day when a city government cannot reach its mail. Few organisations can realistically run a second email provider. What they can do is check what their service agreement actually promises on recovery, keep independent backups of mailboxes, and know in advance how they would communicate if the primary channel vanished.</p>
+<h2>What to watch</h2>
+<p>The next marker is Microsoft's post-incident report. It should state the number of affected customers, the duration by region, and a direct answer on data loss. If it says no data was lost, that closes the question. If it is silent or vague on the point, administrators will have to audit their own mail flow and collaboration data to find out for themselves.</p></div><section class="sources-block"><h4>Sources</h4><ol><li><a href="https://abc7news.com/live-updates/microsoft-outage-live-updates-what-know-outlook-365-other-apps-remain-down/20036817/entry/20038028/" rel="nofollow noopener" target="_blank">ABC7 News live updates: Microsoft outage</a></li><li><a href="https://www.cnn.com/2026/11/12/business/live-news/microsoft-global-outage-intl-hnk" rel="nofollow noopener" target="_blank">CNN: Microsoft says email service is &#x27;approaching normal levels&#x27; following widespread global outage</a></li></ol></section><section class="related"><h4>Related in this edition</h4><a href="faa-national-ground-stop-atc-outage.html"><span style="display:block;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:0.2rem;">FRONT</span>US imposes longest nationwide ground stop since 9/11 as air traffic radar and radio systems fail</a></section><footer class="colophon">The Bot Tribune · 2026-11-14 · <a href="index.html">Back to the edition</a></footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
+</body>
+</html>
