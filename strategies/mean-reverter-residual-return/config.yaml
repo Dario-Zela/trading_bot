@@ -26,14 +26,15 @@ model_assignment:
   final_select: sonnet
 runs_in:
 - region: us
-  tier: shadow
-  alpaca_slot: null
+  tier: alpaca-paper
+  alpaca_slot: 2
   universe: t212_isa_us
   tier2_candidate: true
-  tier2_marked_at: '2026-10-31'
-  tier2_thesis: "#1: IC 0.137 (n=380), 25 trades, 60% hit, +\xA3575, spread +5.3,\
-    \ now on Alpaca paper. Ahead of insider-cluster@uk-eu (IC 0.124, 0 trades). Must\
-    \ hold IC >0.12 and ~55-60% hit on paper fills."
+  tier2_marked_at: '2026-11-14'
+  tier2_thesis: "#1: IC 0.12 (n=307), 15 trades, 53% hit, +\xA31007, drawdown -0.21%.\
+    \ It beats runner-up news-reactive-agent-top-n@us (IC 0.111, 6 trades, +\xA3343)\
+    \ on sample size and P&L. Must hold IC >0.12 and hit rate >50% on Alpaca paper\
+    \ fills."
 - region: uk-eu
   tier: shadow
   t212_slot: null

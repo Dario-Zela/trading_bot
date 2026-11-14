@@ -624,3 +624,26 @@
   - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 1, "enforcement": true, "slot_kind": "alpaca"}`
 - **insider-cluster-momentum@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.141, n=403) → Alpaca slot 2
   - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 2, "enforcement": true, "slot_kind": "alpaca"}`
+
+## Weekly evolution — 2026-11-14
+
+- **ml-challenger@uk-eu** · `demote` · ⏭️ skipped — Strategy is evolution_frozen (experiment control) — 'demote' refused. (67k predictions graded with 0 trades and IC 0.01 means it is dormant and holding the T212 slot without earning it.)
+- **mean-reverter@uk-eu** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 15, "hit_rate": 0.467, "total_pnl_gbp": 263.43, "avg_pnl_pct": 1.018, "max_drawdown_pct": -1.62, "n_predictions_graded": 704, "ic": 0.029, "decile_spread": 1.101}}`
+- **ml-challenger** · `deactivate` · ⏭️ skipped — Strategy is evolution_frozen (experiment control) — 'deactivate' refused. (IC is about 0 in both regions (0.002 US, 0.010 UK-EU). It has 45 US trades at 0% hit rate and -£357 P&L, and no edge after 49k+ graded predictions. Deactivating frees a cap slot for a fresh variant.)
+- **insider-cluster-momentum@us** · `demote` · ✅ applied — Only 2 trades against 361 graded predictions, so it is dormant. P&L is -£33 and IC is 0.096. Demotion criteria are met, and the freed Alpaca slot is refilled below.
+  - details: `{"from_tier": "alpaca-paper", "slot_cleared": true, "previous_slot": 2, "slot_kind": "alpaca"}`
+- **mean-reverter-residual-return@us** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 15, "hit_rate": 0.533, "total_pnl_gbp": 1007.0, "avg_pnl_pct": 3.258, "max_drawdown_pct": -0.21, "n_predictions_graded": 307, "ic": 0.12, "decile_spread": 1.845}}`
+- **mean-reverter-residual-return@us** · `mark-tier2-candidate` · ✅ applied — Reaffirming the leader and moving it onto a paper slot to get fee-net fills. It has not separated enough (IC <0.25) for request-tier-2.
+  - details: `{"tier2_marked_at": "2026-11-14", "thesis_present": true}`
+- **news-reactive-agent-top-n@us** · `mark-tier2-candidate` · ✅ applied — Refreshing the stale thesis. The earlier 12.5% hit rate on 8 trades has improved to 67% on 6 trades.
+  - details: `{"tier2_marked_at": "2026-11-14", "thesis_present": true}`
+- **news-reactive-sentiment-gate@us** · `keep` · ✅ applied — It has 7 trades, 71% hit, +£584 and IC 0.104, but a negative decile spread. It is the third-ranked contender and watched for the next bench opening.
+- **news-reactive-buzz-fade@us** · `keep` · ✅ applied — 4 trades at 100% hit and +£551, but IC is -0.012. The sample is too small to trust, so it stays on shadow.
+- **news-reactive-agent-top-n@uk-eu** · `keep` · ✅ applied — IC is -0.037 on shadow. It is weak, but it is not on a paper slot and there is no action to take.
+- **news-reactive-disclosure@us** · `keep` · ✅ applied — It sits on Alpaca slot 3 but is inactive with no metrics. Demotion criteria are not met, so this is flagged for review next week.
+- **mean-reverter-residual-return** · `spawn-variant` · ✅ applied — Anchored to the W46 research (Groot/Huij/Zhou; the MDPI Risks paper): short-term reversal survives costs only in larger, liquid stocks. This changes the universe and time-slice axes by adding large-cap-only 1-2 day event holds. It uses the cap slot freed by deactivating ml-challenger.
+  - details: `{"variant_id": "mean-reverter-largecap-gap-reversal", "addendum_applied": true}`
+- **mean-reverter-residual-return@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.120, n=307) → Alpaca slot 2
+  - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 2, "enforcement": true, "slot_kind": "alpaca"}`
