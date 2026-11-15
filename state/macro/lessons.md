@@ -46,3 +46,15 @@
 - **Claim**: HYG 5d return will be negative for at least 2 of the next 3 weekly closes (through 2026-07-18), confirming a credit-risk-off shift
 - **Falsification criteria**: HYG 5d return is positive in 2 or more of the 3 weekly closes from 2026-07-04 through 2026-07-18
 - **What happened**: The target window ended 2026-07-18 and I have no HYG data for those closes. I am marking it falsified by default because it can no longer be confirmed, and the current HYG 5d return is +0.25%.
+
+## 2026-W44-p03 — falsified 2026-11-15
+
+- **Claim**: USO will close above 160 on 2026-11-13, keeping the oil uptrend intact.
+- **Falsification criteria**: USO closes at or below 160 on 2026-11-13.
+- **What happened**: USO closed at 145.58 on 2026-11-13, below the 160 threshold.
+
+## 2026-W44-p04 — falsified 2026-11-15
+
+- **Claim**: DXY will stay between 100.5 and 103 through 2026-11-13.
+- **Falsification criteria**: Any daily DXY close above 103 or below 100.5 between 2026-11-02 and 2026-11-13.
+- **What happened**: DXY closed at 103.41 on 2026-11-13, above the 103 ceiling.
