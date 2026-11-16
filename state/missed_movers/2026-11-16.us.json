@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-16",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 CHTR +4%, STE +4%, GPN +4%, FIS +4%, FOXA +4%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (AMD -9%, DELL -7%, CSCO -6%, COHR -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: AMD (-8.75%) \u2014 no obvious news catalyst found for 2026-11-16; searches returned nothing dated that day. An -8.75% drop looks like a sector-wide AI/semiconductor sell-off or a valuation de-rating. Why we passed: Outside any active strategy's universe: AMD is a mega-cap semiconductor name that no strategy lists. With no catalyst, the move looks like a gradual sector sell-off, which a long-only momentum or mean-reversion bot has no way to trade.",
+  "top_movers": [
+    {
+      "ticker": "CHTR",
+      "move_pct": 4.319,
+      "close": 138.39,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 11/16. Likely a rebound in a heavily sold-off name (52-wk range ~$112\u2013$309) after the Cox deal closed and the stock fell on debt concerns, or a cable/telecom sector move.",
+      "miss_reason": "Outside any active strategy's universe: CHTR is a large-cap cable/telecom name that no strategy includes. A +4% rebound with no catalyst also wouldn't trigger a news-reactive signal, and a name in a long downtrend would likely fail momentum trend filters.",
+      "suggestion": "No actionable change. Adding a mean-reversion strategy universe slot for large-cap telecom/media with RSI<35 and a >3% up-day trigger could catch similar rebounds, but a single unexplained move doesn't justify it.",
+      "failed": false
+    },
+    {
+      "ticker": "STE",
+      "move_pct": 4.293,
+      "close": 264.32,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-16 \u2014 likely technical, sector or medtech rotation move; recent news is only the Oct Xodus Medical acquisition, and the next earnings are not until early Feb.",
+      "miss_reason": "Outside any active strategy's universe: STE is a ~$26B mid/large-cap healthcare equipment name (Irish-domiciled) that no strategy's universe includes. A +4.3% move with no catalyst also wouldn't trigger a news-reactive entry.",
+      "suggestion": "Add a sector-ETF-linked mid-cap healthcare-equipment basket (e.g. IHI constituents with market cap > $10B) to the momentum universe, gated on a daily-move \u2265 +3% and volume \u2265 1.5\u00d7 the 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "GPN",
+      "move_pct": 4.207,
+      "close": 91.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day catalyst found. GPN has rallied from about $84 in mid-October on post-earnings strength and take-private chatter, and the +4.2% move looks like continuation or a payments-sector bounce.",
+      "miss_reason": "Outside any active strategy's universe. GPN is a mid/large-cap payments processor that no strategy lists. With no discrete same-day news event, a news-reactive trigger would not have fired, and a gap or momentum screen likely never evaluated it.",
+      "suggestion": "Add a dynamic universe expander that admits any US name with market cap above $10B and a 5-day return of at least +8% or volume of at least 1.5x its 20-day average, so momentum-trader can evaluate non-listed stocks like GPN.",
+      "failed": false
+    },
+    {
+      "ticker": "FIS",
+      "move_pct": 4.161,
+      "close": 29.54,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found \u2014 likely a technical bounce or sector move. FIS was down about 40% year to date and closed at 29.54, near multi-year lows, and searches turned up no dated news for 2026-11-16.",
+      "miss_reason": "Outside any active strategy's universe: FIS is a mid-cap fintech/payments name in a prolonged downtrend. A momentum filter would reject it for its weak trend, and a +4% unexplained bounce has no catalyst for a news-reactive strategy to trigger on.",
+      "suggestion": "No actionable change. A one-day +4% bounce with no catalyst in a downtrending name is not worth widening the universe for. If a mean-reversion strategy is wanted, it could add a capped-size oversold-bounce sleeve for large-cap fintech names with RSI < 30.",
+      "failed": false
+    },
+    {
+      "ticker": "FOXA",
+      "move_pct": 4.124,
+      "close": 68.42,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed driver found for 2026-11-16. Search returned no dated news; the only context is the pending Roku deal (DOJ review) and a ~10% monthly run-up, so this is possibly deal-related or a sector move.",
+      "miss_reason": "Outside any active strategy's universe: FOXA is a ~$29B mid/large-cap media name that no strategy lists. Even if it were included, a +4% move with no clear catalyst and an extended monthly run would likely fail momentum and news-reactive filters.",
+      "suggestion": "(no actionable change) Not enough evidence to justify widening any universe. If media or M&A-pending names recur, add a watchlist tag for a \u2265+3% day on \u22651.5\u00d7 average volume, and review it before changing any strategy parameters.",
+      "failed": false
+    },
+    {
+      "ticker": "FOX",
+      "move_pct": 4.088,
+      "close": 61.11,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-16 \u2014 likely technical / sector move (media names rallying, or a continuation after the Nov earnings print). Search returned nothing dated today.",
+      "miss_reason": "Outside any active strategy's universe: FOX (Class B voting shares of Fox Corp) is a mid/large-cap media name that no strategy's universe includes. A +4.09% move with no clear news is also modest for gap or news-reactive triggers.",
+      "suggestion": "Add FOX/FOXA to the momentum-trader's US universe, and dedupe the two share classes so the bot doesn't double up. Alternatively, lower the universe market-cap/liquidity floor to admit mid-cap media and communication-services names.",
+      "failed": false
+    },
+    {
+      "ticker": "AMD",
+      "move_pct": -8.754,
+      "close": 534.06,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-16; searches returned nothing dated that day. An -8.75% drop looks like a sector-wide AI/semiconductor sell-off or a valuation de-rating.",
+      "miss_reason": "Outside any active strategy's universe: AMD is a mega-cap semiconductor name that no strategy lists. With no catalyst, the move looks like a gradual sector sell-off, which a long-only momentum or mean-reversion bot has no way to trade.",
+      "suggestion": "Add mega-cap semis (AMD, NVDA, AVGO) to the mean-reversion universe, with a gate that only buys an oversold drop of 8% or more when it lines up with sector weakness (SMH down 3% or more). Otherwise make no change; shorting isn't supported.",
+      "failed": false
+    },
+    {
+      "ticker": "DELL",
+      "move_pct": -7.177,
+      "close": 344.53,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "AI-server selloff deepened ahead of Nov 24 earnings: Super Micro hit by a reported DOJ smuggling probe, AI-profitability worries, and Morgan Stanley's PT cut to $403. DELL is down about 24% in November.",
+      "miss_reason": "Outside any active strategy's universe: DELL is a ~$230B large-cap hardware name that no strategy includes. The drop was also a gradual sector-wide slide with no single gap event, and the bot has no short capability.",
+      "suggestion": "Add large-cap AI-hardware names (DELL, SMCI, HPE) to the mean-reversion universe, gated by a pre-earnings blackout (no entries within 5 trading days of the Nov 24 report) and a sector-drawdown trigger.",
+      "failed": false
+    },
+    {
+      "ticker": "CSCO",
+      "move_pct": -6.244,
+      "close": 95.64,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Post-earnings selloff after fiscal Q1 FY27: memory-cost gross-margin pressure and slowing non-hyperscaler orders, plus Citi (PT $139\u2192$120), Barclays and Wells Fargo target cuts. The search results dated the -6.2% drop to Nov 13.",
+      "miss_reason": "Outside any active strategy's universe: CSCO is a mega-cap networking/hardware name that no strategy lists. The move was also earnings-driven and gapped on the print, so a momentum or mean-reversion bot would have no clean pre-gap entry. Follow-through was modest.",
+      "suggestion": "Add large-cap tech hardware (CSCO, ANET, HPE) to the mean-reversion universe. Allow entries on post-earnings gap-downs of \u22655% once day-2 price holds above the day-1 low, so the earnings gate releases names after the gap.",
+      "failed": false
+    },
+    {
+      "ticker": "COHR",
+      "move_pct": -6.002,
+      "close": 218.15,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-16. Likely a sector move: AI-optics names have been retreating from the June 2026 high (~$440) on profit-taking and valuation worries.",
+      "miss_reason": "Outside any active strategy's universe. COHR is a ~$35B+ AI-optics/photonics large cap that no strategy lists. A -6% drift with no catalyst also wouldn't trigger a news-reactive filter, and a long-only bot wouldn't take it anyway.",
+      "suggestion": "Add a high-beta AI-hardware/optics basket (COHR, LITE, CIEN) to the momentum universe, or a sector-relative-weakness flag. Otherwise no change: the move was a long-only blind spot with no catalyst.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-16T20:31:54.060209+00:00"
+}
