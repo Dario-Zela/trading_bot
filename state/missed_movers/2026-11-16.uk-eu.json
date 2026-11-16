@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-16",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 CNA.L +4%, AV.L +3%, UMG.AS +3%, ABF.L +2%, AD.AS +2%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (IFX.DE -4%, ASM.AS -4%, PCT.L -3%, MT.AS -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: IFX.DE (-4.29%) \u2014 no obvious news catalyst found for 2026-11-16 \u2014 likely a technical / sector move, probably a semiconductor or AI-chip pullback. Searches turned up no dated company news. Why we passed: Outside any active strategy's universe: IFX.DE is a large-cap German (Xetra) semiconductor, and no strategy's universe includes it. With no identifiable news, a news-reactive strategy would also have had no trigger.",
+  "top_movers": [
+    {
+      "ticker": "CNA.L",
+      "move_pct": 3.813,
+      "close": 1.6065,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for Centrica (CNA.L) on 2026-11-16; searches surfaced only older items, so likely a sector or energy-price move or a broker note",
+      "miss_reason": "Outside any active strategy's universe: CNA.L is a FTSE 100 large-cap energy/utility name, and no strategy lists it. A +3.8% move in a low-beta utility likely wouldn't pass momentum gap or volume filters anyway.",
+      "suggestion": "(no actionable change \u2014 no catalyst was confirmed, so there's nothing concrete to tune. If UK defensives matter, add a FTSE 100 utilities/energy basket to a universe and check whether a +3% move trips the momentum threshold.)",
+      "failed": false
+    },
+    {
+      "ticker": "AV.L",
+      "move_pct": 3.407,
+      "close": 7.648,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-16 \u2014 likely a sector-wide move in UK insurers/financials rather than an Aviva-specific event.",
+      "miss_reason": "Outside any active strategy's universe: AV.L is a FTSE 100 large-cap UK insurer, a category the strategies don't cover. A +3.4% move on no news also wouldn't trigger a news-reactive bot, and large-cap financials rarely hit gap or volume filters.",
+      "suggestion": "Add a small set of FTSE 100 financials (AV.L, LGEN.L, PHNX.L) to the momentum universe, gated on a sector-relative strength rule such as 1-day return above the sector median by at least 2%.",
+      "failed": false
+    },
+    {
+      "ticker": "UMG.AS",
+      "move_pct": 2.649,
+      "close": 17.63,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-16 \u2014 likely a sector or technical rebound. The stock had been weak over the past year, and Q3 subscription growth beat in October.",
+      "miss_reason": "Outside any active strategy's universe: UMG is a large-cap Amsterdam-listed music/media name that no strategy includes. A +2.65% drift without a gap or volume spike would also fail typical momentum and news-reactive filters.",
+      "suggestion": "No actionable change: a +2.65% move with no identified catalyst is within normal noise. Adding Euronext Amsterdam large caps to the universe would be justified only if backtests show an edge.",
+      "failed": false
+    },
+    {
+      "ticker": "ABF.L",
+      "move_pct": 2.343,
+      "close": 20.53,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-16; searches turned up no dated ABF announcement, so likely a technical or sector move (UK consumer staples / Primark read-across).",
+      "miss_reason": "Outside any active strategy's universe: ABF.L is a FTSE 100 large-cap food and retail (Primark) conglomerate that no strategy lists. A +2.34% move with no news is also below typical gap or momentum thresholds, so a news-reactive filter would not have fired.",
+      "suggestion": "Add FTSE 100 consumer-staples and retail names such as ABF.L to the uk-eu momentum universe, and keep the gap-up trigger at a fixed threshold (e.g. \u22653%) so that +2% drift days like this stay filtered out.",
+      "failed": false
+    },
+    {
+      "ticker": "AD.AS",
+      "move_pct": 2.125,
+      "close": 36.05,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-16; likely a defensive-staples or sector rotation bounce for Ahold Delhaize, which is trading near its 52-week low.",
+      "miss_reason": "Outside any active strategy's universe: AD.AS is a large-cap Dutch grocery retailer (consumer staples) that no strategy includes. A +2.1% move with no news is also too small and low-volatility to trip gap or momentum triggers.",
+      "suggestion": "(No actionable change.) The move is modest, has no catalyst and is a low-beta staples name. If wanted, add AD.AS and other Euronext large-cap staples to a mean-reversion universe for near-52-week-low bounces, but not for this one move.",
+      "failed": false
+    },
+    {
+      "ticker": "BNR.DE",
+      "move_pct": 2.124,
+      "close": 58.66,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-16 \u2014 likely a sector-wide or technical rebound in chemicals distribution, possibly an after-effect of Q3 results due around Nov 11 or analyst target changes.",
+      "miss_reason": "Outside any active strategy's universe: BNR.DE (Brenntag) is a German mid-cap chemicals distributor, and no strategy covers it. A +2.12% move with no catalyst is also too small to pass a gap or momentum trigger.",
+      "suggestion": "No actionable change: a +2.1% non-catalyst move in a mid-cap outside the universe doesn't justify widening it. If the universe grows, add DAX/MDAX constituents above a minimum average daily volume floor.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": -4.289,
+      "close": 49.875,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-16 \u2014 likely a technical / sector move, probably a semiconductor or AI-chip pullback. Searches turned up no dated company news.",
+      "miss_reason": "Outside any active strategy's universe: IFX.DE is a large-cap German (Xetra) semiconductor, and no strategy's universe includes it. With no identifiable news, a news-reactive strategy would also have had no trigger.",
+      "suggestion": "Add Xetra/DAX large-cap semis (IFX.DE, etc.) to the mean-reversion universe, with a trigger like a \u22654% one-day drop and no company-specific news. Check first that it doesn't overlap with existing sector caps.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": -4.087,
+      "close": 694.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for ASM.AS on 2026-11-16 \u2014 likely a technical / sector move, a pullback in semi-equipment names after the sharp 9 Nov rally (AMAT +11%, LRCX +9%).",
+      "miss_reason": "Outside any active strategy's universe: ASM International is a ~\u20ac30B+ Euronext Amsterdam mid/large-cap semicap name that no strategy lists. A -4% sector-drift day with no company news also gives a news-reactive bot no trigger, and the bot can't short anyway.",
+      "suggestion": "Add ASM.AS (and ASML.AS, BESI.AS) to the uk-eu mean-reversion universe as a semicap sub-basket, so sector-wide pullbacks of \u22653% after a rally can be caught as dip-buy candidates.",
+      "failed": false
+    },
+    {
+      "ticker": "PCT.L",
+      "move_pct": -3.381,
+      "close": 5.715,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst \u2014 likely a sector move. PCT.L is Polar Capital Technology Trust, a tech investment trust, so a -3.4% day most likely tracks a global tech/AI-stock sell-off. I found no dated news for 2026-11-16.",
+      "miss_reason": "Outside any active strategy's universe: PCT.L is a UK-listed closed-end investment trust (a fund, not an operating company). There is no earnings or news event for a news-reactive filter to key on, and its fall mirrors its underlying holdings.",
+      "suggestion": "No actionable change for this name. If we want tech-beta signals, add a rule that lets momentum/mean-reversion trade LSE investment trusts, keyed to NAV discount and to a large-cap tech basket's moves (e.g. QQQ down >2%).",
+      "failed": false
+    },
+    {
+      "ticker": "MT.AS",
+      "move_pct": -3.027,
+      "close": 57.02,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-16; likely a sector-wide move in European steel and mining, with no company-specific news confirmed in search.",
+      "miss_reason": "Outside any active strategy's universe. MT.AS is a large-cap Amsterdam-listed cyclical steel/mining name, and no strategy includes it. A -3% drift with no news also wouldn't trip a news-reactive or gap filter.",
+      "suggestion": "No actionable change for a single no-news -3% move; if wanted, add a Euronext Amsterdam/Paris large-cap cyclicals basket (MT.AS, etc.) to the mean-reversion universe with a \u22653% down-day trigger.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-16T16:02:34.440210+00:00"
+}
