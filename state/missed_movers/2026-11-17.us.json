@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-17",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 TSN +9%, CNC +5%, TSCO +4%, ELV +4%, LUV +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (SNDK -9%, LITE -8%, CIEN -8%, BE -8%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: TSN (+8.72%) \u2014 No confirmed same-day catalyst found; likely beef/protein-sector move tied to USDA Mexican cattle import reopening news (unverified date). Treat as no obvious news catalyst. Why we passed: Outside any active strategy's universe: TSN is a ~$22B mid/large-cap packaged-food/protein name, likely excluded by sector or cap filters. A news-driven +8.7% gap with no scheduled earnings also favours pre-market positioning.",
+  "top_movers": [
+    {
+      "ticker": "TSN",
+      "move_pct": 8.722,
+      "close": 63.95,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day catalyst found; likely beef/protein-sector move tied to USDA Mexican cattle import reopening news (unverified date). Treat as no obvious news catalyst.",
+      "miss_reason": "Outside any active strategy's universe: TSN is a ~$22B mid/large-cap packaged-food/protein name, likely excluded by sector or cap filters. A news-driven +8.7% gap with no scheduled earnings also favours pre-market positioning.",
+      "suggestion": "Add consumer-staples/protein names (TSN, HRL, CAG) to the momentum universe, and let the gap-up filter admit unscheduled +5% moves on \u22651.5\u00d7 average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "CNC",
+      "move_pct": 4.911,
+      "close": 74.77,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-17. The stock was +4.91% to 74.77, a rebound after a 6% drop on Nov 6, so likely a managed-care sector or Medicaid/ACA policy move.",
+      "miss_reason": "Outside any active strategy's universe: CNC is a mid/large-cap managed-care (health insurer) name that no strategy includes. With no discrete catalyst, a news-reactive bot had nothing to trigger on, and a momentum filter would see a sector rebound after a drawdown.",
+      "suggestion": "Add a healthcare managed-care basket (CNC, MOH, UNH, ELV, HUM) to the mean-reversion universe, with entry on a \u2265+4% day after a \u22655% drawdown within the last 8 sessions.",
+      "failed": false
+    },
+    {
+      "ticker": "TSCO",
+      "move_pct": 4.115,
+      "close": 37.95,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. Search turned up no TSCO-specific news dated 2026-11-17; likely a rebound in a beaten-down retailer (down ~33% YTD) or a sector move ahead of retail earnings.",
+      "miss_reason": "Outside any active strategy's universe: TSCO is a ~$19B large-cap rural-retail consumer-discretionary name that no strategy lists. With no news catalyst, a +4% non-gap move would not trigger a news-reactive filter even if it were in scope.",
+      "suggestion": "Add a dynamic universe slot that admits any >$10B US name with a close-to-close move \u2265+3% on \u22651.5\u00d7 20-day average volume. Run it through the existing momentum filters instead of hard-coding the ticker list.",
+      "failed": false
+    },
+    {
+      "ticker": "ELV",
+      "move_pct": 3.861,
+      "close": 446.28,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious company-specific news catalyst found; likely a sector-wide managed-care rally (supported by a positive Evercore note on Tennessee rates). Close is near the 52-week high of ~450.",
+      "miss_reason": "Outside any active strategy's universe: ELV is a ~$100B large-cap managed-care/health-insurance name that no strategy lists. A +3.9% sector drift with no gap or earnings event also wouldn't trip momentum or news-reactive triggers.",
+      "suggestion": "Add large-cap managed-care names (ELV, UNH, CI, HUM, CNC) to the momentum universe, or add a sector-breadth trigger that admits peers when \u22653 of them rise \u22653% on volume \u22651.2\u00d7 the 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "LUV",
+      "move_pct": 3.338,
+      "close": 46.44,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed stock-specific news found for 11/17. The +3.3% move looks like a broad airline-sector rally, probably on lower oil/jet fuel or travel-demand optimism. This is unverified.",
+      "miss_reason": "Outside any active strategy's universe. LUV is a mid-cap airline (~$24B), and no strategy's universe covers it. A sector-beta move of about 3% with no stock-specific catalyst also gives momentum and news filters little to act on.",
+      "suggestion": "Add a sector-basket rule to the momentum universe: if at least 3 airline names (DAL, UAL, AAL, LUV) are up \u22652.5% on a \u22651.2x volume surge, admit the whole group. Otherwise this is a no-op.",
+      "failed": false
+    },
+    {
+      "ticker": "PCG",
+      "move_pct": 3.245,
+      "close": 13.68,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found for PCG; likely a rebound from near 52-week lows, possibly tied to wildfire-liability or California regulatory headlines (unverified).",
+      "miss_reason": "Outside any active strategy's universe: PCG is a ~$28B mid-cap regulated utility with a low ~$13 share price, and the bot's momentum and news filters likely skipped a modest +3% move with no clear catalyst.",
+      "suggestion": "(no actionable change \u2014 a +3% low-volatility utility bounce with no catalyst isn't worth widening the universe; at most add utilities to the mean-reversion universe with a 52-week-low proximity filter.)",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": -8.576,
+      "close": 809.11,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No Nov 17 news found; likely continued AI-hardware/memory-storage selloff (NAND names fell Nov 10 and 13 on Nvidia CEO exit headlines and share-loss data) after a huge run.",
+      "miss_reason": "Outside any active strategy's universe: SNDK is a ~$800 high-priced, high-volatility mid/large-cap memory name, probably excluded by the price or volatility filters. The bot is also long-only, so a decline gives it no entry.",
+      "suggestion": "Add SNDK and peers (MU, WDC, STX) to a 'semis/memory' universe in the mean-reversion strategy, with an ATR-scaled position size so the high share price doesn't hit the max-price filter.",
+      "failed": false
+    },
+    {
+      "ticker": "LITE",
+      "move_pct": -8.484,
+      "close": 546.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 11/17 \u2014 likely another AI-optics valuation/profit-taking selloff, a recurring 2026 pattern (LITE, COHR, AAOI drop together) after a huge run-up",
+      "miss_reason": "Outside any active strategy's universe: LITE is a high-priced (~$546), high-beta mid/large-cap optical-components name that no strategy's universe includes. The drop was sector-sympathy, with no discrete catalyst for a news-reactive filter, and the bot is long-only.",
+      "suggestion": "Add an 'AI-optics' basket (LITE, COHR, AAOI, CRDO) to the mean-reversion universe, entered only after a \u22657% single-day basket drop with RSI(2)<10, with a reduced position size to cap the high-beta risk.",
+      "failed": false
+    },
+    {
+      "ticker": "CIEN",
+      "move_pct": -8.191,
+      "close": 257.56,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-17 \u2014 likely a sector move. Ciena is an AI-optical name that has sold off hard from its June 2026 high (~$637) amid valuation worries.",
+      "miss_reason": "Outside any active strategy's universe: CIEN is a mid/large-cap optical-networking stock that no strategy's universe includes. The decline looks like a drawn-out derating rather than a one-day gap, so event or gap filters would not have fired.",
+      "suggestion": "Add high-beta AI-infrastructure/optical names (CIEN, LITE, COHR) to the mean-reversion universe, with a sector-drawdown filter such as a \u2265-6% day on 2\u00d7 average volume. Alternatively, accept this as a no-op, since we can't short.",
+      "failed": false
+    },
+    {
+      "ticker": "BE",
+      "move_pct": -7.662,
+      "close": 177.28,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. Searches returned only undated or older items (AI-datacenter project pauses, valuation worries), so this is likely an AI-power/fuel-cell sector risk-off move.",
+      "miss_reason": "Outside any active strategy's universe: BE is a high-beta, mid-cap clean-energy/AI-power name, and the bot is long-only with no short capability. A sector-driven decline with no gap or catalyst also gives a momentum or news bot no entry signal.",
+      "suggestion": "No actionable change for a long-only bot. As an option, add BE and similar AI-power names to a watchlist with a mean-reversion entry only after RSI(14) < 30 and a volume spike of at least 1.5x the 20-day average.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-17T20:31:44.845817+00:00"
+}
