@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-17",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 CCH.L +3%, MRO.L +2%, BNZL.L +2%, CRDA.L +2%, MTLN.L +2%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (ASM.AS -4%, AAL.L -3%, STLAP.PA -3%, SIE.DE -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: ASM.AS (-4.29%) \u2014 no obvious news catalyst found for 2026-11-17 \u2014 likely a sector-wide semicap/AI-chip selloff (ASM is a high-beta semiconductor equipment name); no company-specific news confirmed. Why we passed: Outside any active strategy's universe: ASM.AS is a large-cap Dutch semicap name that no strategy's universe includes. A -4.3% move with no earnings or M&A trigger also gives a news-reactive bot nothing to act on.",
+  "top_movers": [
+    {
+      "ticker": "CCH.L",
+      "move_pct": 2.973,
+      "close": 43.64,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-17. Searches returned only routine RNS filings (treasury shares, voting rights). The +2.97% looks like a technical or sector move, possibly staples/defensive rotation.",
+      "miss_reason": "Outside any active strategy's universe: CCH.L is a FTSE 100 large-cap consumer staples bottler, and no strategy's universe includes it. A ~3% move with no catalyst also wouldn't trip a news-reactive trigger.",
+      "suggestion": "Add a low-priority UK large-cap staples/defensive watchlist to the momentum universe, entered only when the stock is up \u22652.5% on \u22651.5\u00d7 20-day average volume. Don't loosen the existing filters.",
+      "failed": false
+    },
+    {
+      "ticker": "MRO.L",
+      "move_pct": 1.941,
+      "close": 4.936,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst \u2014 likely technical / sector move (aerospace/UK industrials bid); searches found no Melrose-specific news or RNS for 2026-11-17 beyond routine buyback transaction notices.",
+      "miss_reason": "Outside any active strategy's universe: Melrose is a FTSE 100 aerospace engineering large-cap that no strategy lists. A +1.94% drift on no news is also too small for gap-up or news-reactive triggers.",
+      "suggestion": "No actionable change: a +1.9% no-news move is below any sensible momentum gate. If UK aerospace exposure is wanted, add MRO.L to the momentum universe with a \u22653% move and \u22651.5\u00d7 avg-volume entry filter.",
+      "failed": false
+    },
+    {
+      "ticker": "BNZL.L",
+      "move_pct": 1.936,
+      "close": 29.48,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst \u2014 likely technical / sector move. Searches found no Bunzl-specific news dated 2026-11-17, only routine buyback notices (+1.94% to 29.48).",
+      "miss_reason": "Outside any active strategy's universe: BNZL.L is a FTSE 100 mid/large-cap UK support-services distributor, and no strategy's universe includes it. A +1.9% move with no catalyst also wouldn't trip a gap-up or news-reactive trigger.",
+      "suggestion": "(no actionable change \u2014 a +1.94% move with no catalyst is below typical gap/momentum thresholds, so adding UK support-services names to a universe on this alone isn't justified.)",
+      "failed": false
+    },
+    {
+      "ticker": "CRDA.L",
+      "move_pct": 1.861,
+      "close": 38.32,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst: searches found nothing dated 2026-11-17 for Croda (CRDA.L). A +1.86% move is likely a technical or sector move. The 38.32 close also doesn't match Croda's ~\u00a330-37 price range, so the ticker mapping needs checking.",
+      "miss_reason": "Outside any active strategy's universe. Croda is a mid-cap FTSE 100/250 specialty chemicals name, and no strategy includes it. A +1.86% move with no catalyst would also fall below typical momentum and gap-up thresholds.",
+      "suggestion": "No actionable change for this move. Separately, check the CRDA.L close of 38.32 against the data feed's price units (GBP vs pence) and the ticker mapping, since it doesn't match Croda's recent ~2,900-3,350p range.",
+      "failed": false
+    },
+    {
+      "ticker": "MTLN.L",
+      "move_pct": 1.846,
+      "close": 46.34,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-17 \u2014 likely a technical, sector or buyback-supported move. Metlen's ongoing \u20ac600m buyback is the only live driver found.",
+      "miss_reason": "Outside any active strategy's universe: MTLN.L is a mid/large-cap Greek-origin metals and energy name on a UK primary listing, and no strategy's universe includes it. A +1.85% move with no catalyst also wouldn't pass gap or volume filters.",
+      "suggestion": "No actionable change: a +1.85% move with no identifiable catalyst doesn't justify widening the universe. If wanted, add Metlen to the uk-eu universe, but only with a gap \u22653% and volume \u22651.5\u00d7 average entry filter.",
+      "failed": false
+    },
+    {
+      "ticker": "EL.PA",
+      "move_pct": 1.81,
+      "close": 185.65,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-17; searches returned no same-day item. The +1.81% move looks technical or sector-driven (European luxury/consumer rotation, smart-glasses sentiment).",
+      "miss_reason": "Outside any active strategy's universe: EL.PA is a large-cap French eyewear/medtech name that no strategy includes. A +1.81% drift with no catalyst would also likely fall below momentum gap and volume-surge thresholds.",
+      "suggestion": "No actionable change: a sub-2% no-news drift in a name outside the universe doesn't justify adding it. If wanted, add EL.PA to the uk-eu momentum universe and require a gap of 3% or more with volume at least 1.5x average.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": -4.29,
+      "close": 664.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-17 \u2014 likely a sector-wide semicap/AI-chip selloff (ASM is a high-beta semiconductor equipment name); no company-specific news confirmed.",
+      "miss_reason": "Outside any active strategy's universe: ASM.AS is a large-cap Dutch semicap name that no strategy's universe includes. A -4.3% move with no earnings or M&A trigger also gives a news-reactive bot nothing to act on.",
+      "suggestion": "Add a semicap/AI-hardware sector basket (ASM.AS, ASML.AS, BESI.AS) to the mean-reversion universe, entered only when the basket falls \u22653% on no company news and RSI(2) < 10.",
+      "failed": false
+    },
+    {
+      "ticker": "AAL.L",
+      "move_pct": -3.24,
+      "close": 36.43,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed company-specific news found for 2026-11-17; the -3.24% move looks like a sector-wide miners sell-off on softer copper/iron ore prices and weak global risk sentiment (not verified against a dated source).",
+      "miss_reason": "Outside any active strategy's universe: AAL.L is a FTSE 100 large-cap diversified miner, and no strategy's universe includes UK/EU mining names. A broad commodity-beta drop with no single-name catalyst also gives news-reactive and momentum signals little to trigger on.",
+      "suggestion": "Add a UK/EU materials basket (AAL.L, GLEN.L, RIO.L, ANTO.L) to the mean-reversion universe, gated on a sector-wide drop of \u22652.5% in a day, rather than reacting to single-name signals.",
+      "failed": false
+    },
+    {
+      "ticker": "STLAP.PA",
+      "move_pct": -2.904,
+      "close": 3.4105,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-17 \u2014 likely continuation of Stellantis' prolonged slide (EV-reset charges, weak EU share) plus sector weakness; no dated same-day source confirmed.",
+      "miss_reason": "Outside any active strategy's universe: STLAP.PA is the Paris line of a large-cap European automaker, but it is not in any strategy's list, probably because it is a secondary listing duplicating Milan/NYSE. A -2.9% drift with no catalyst would also fail a news-reactive trigger.",
+      "suggestion": "Add primary-listing aliasing so secondary lines such as STLAP.PA map to the same issuer, and admit them to the mean-reversion universe when the move is \u22652.5% with a volume ratio \u22651.2\u00d7 and no earnings in the window.",
+      "failed": false
+    },
+    {
+      "ticker": "SIE.DE",
+      "move_pct": -2.792,
+      "close": 271.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found \u2014 searches surfaced no Siemens-specific news for 2026-11-17; likely a technical, sector or industrial-tech de-rating move.",
+      "miss_reason": "Outside any active strategy's universe: SIE.DE is a large-cap German industrial/automation name on Xetra, and no strategy covers it. A -2.8% drift with no catalyst also wouldn't trip a news-reactive or gap filter.",
+      "suggestion": "Add large-cap Xetra DAX names (SIE.DE etc.) to the mean-reversion universe, with a -2.5% close-to-close trigger gated on no-news and a volume floor, rather than adding a new strategy.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-17T16:02:15.996013+00:00"
+}
