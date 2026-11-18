@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-18",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 URW.PA +1%, ZAL.DE +1%, HEN3.DE +1%, IHG.L +1%, DTE.DE +0%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (DBK.DE -6%, RMS.PA -5%, SAP.DE -5%, DSY.PA -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: DBK.DE (-5.97%) \u2014 Leaked-documents media investigation linking the bank to oligarch, Epstein-related and suspicious-payment flows, plus a risk-off AI/tech selloff. Sources date the drop to Nov 17, so the date match is uncertain. Why we passed: Outside any active strategy's universe: DBK.DE is a large-cap German bank, apparently not in the tradable lists. It was also a headline-driven gap-down with no earnings signal, and a long-only bot can't short it.",
+  "top_movers": [
+    {
+      "ticker": "URW.PA",
+      "move_pct": 0.859,
+      "close": 93.96,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-18; the +0.86% gain looks like a modest technical or European real-estate sector move, not a company-specific event.",
+      "miss_reason": "Outside any active strategy's universe. URW.PA is a Paris-listed mid/large-cap retail REIT, and no strategy's universe covers it. A +0.86% move on no news is also too small to pass any momentum or gap filter.",
+      "suggestion": "(no actionable change \u2014 a +0.86% no-news move doesn't justify widening the universe; only consider adding Euronext Paris REITs if a strategy's min-move threshold, e.g. \u22653% on \u22651.5\u00d7 avg volume, is met.)",
+      "failed": false
+    },
+    {
+      "ticker": "ZAL.DE",
+      "move_pct": 0.819,
+      "close": 28.31,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst: a +0.82% move with no same-day Zalando news found. Likely a technical or sector move, possibly a rebound after the recent guidance cut and Erfurt lawsuit headlines.",
+      "miss_reason": "Outside any active strategy's universe: ZAL.DE is a roughly \u20ac6bn German mid-cap in online fashion retail. A +0.82% move is too small to trip gap, momentum or news-reactive thresholds, and there was no catalyst for a news trigger.",
+      "suggestion": "No actionable change: a sub-1% drift with no catalyst isn't worth widening the universe. If wanted, add German mid-caps (market cap above \u20ac5bn) to the mean-reversion universe, but this move alone doesn't justify it.",
+      "failed": false
+    },
+    {
+      "ticker": "HEN3.DE",
+      "move_pct": 0.638,
+      "close": 88.36,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst \u2014 likely technical / sector move. Search found nothing dated 2026-11-18 for Henkel; only older Stahl and Olaplex deal news.",
+      "miss_reason": "Outside any active strategy's universe: Henkel pref shares are a large-cap German consumer-staples/household name. A +0.64% move is also too small to trip gap, momentum or volume-spike filters, and there was no news to trigger a news-reactive entry.",
+      "suggestion": "(no actionable change \u2014 a +0.64% drift with no catalyst is noise, and a move this small is not worth lowering the min-gap or momentum thresholds for.)",
+      "failed": false
+    },
+    {
+      "ticker": "IHG.L",
+      "move_pct": 0.583,
+      "close": 181.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 18 Nov; +0.58% looks like a modest technical or sector drift, with continued buyback support after the strong Q3 RevPAR update (5.3%) on 22 Oct.",
+      "miss_reason": "Outside any active strategy's universe: IHG.L is a FTSE 100 large-cap hotel/leisure name that no strategy includes. A +0.58% move with no catalyst would also fail any gap, momentum or news-reactive threshold.",
+      "suggestion": "No actionable change: a +0.58% no-news drift is noise. Adding IHG.L to the universe would only help if a momentum strategy wanted UK consumer-travel exposure, and nothing here justifies that.",
+      "failed": false
+    },
+    {
+      "ticker": "DTE.DE",
+      "move_pct": 0.443,
+      "close": 27.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-18 \u2014 likely a small defensive/telecom sector move (+0.44%) with no company-specific driver.",
+      "miss_reason": "Outside any active strategy's universe: DTE.DE is a large-cap German telecom, a low-volatility defensive name. A +0.44% move is too small to trip momentum, gap or news-reactive thresholds, and there was no catalyst to react to.",
+      "suggestion": "(no actionable change \u2014 a +0.44% drift in a low-beta large-cap with no catalyst is noise; adding DTE.DE or lowering the momentum/gap threshold would mostly add false positives)",
+      "failed": false
+    },
+    {
+      "ticker": "FRES.L",
+      "move_pct": 0.336,
+      "close": 23.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst: the +0.34% move is minor and I found nothing dated 2026-11-18. Search only surfaced a Sep 2026 CFO succession RNS and an undated Sinda 5% stake item, so likely a technical or precious-metals sector move.",
+      "miss_reason": "Outside any active strategy's universe: Fresnillo is a Mexican silver and gold miner listed in London, a FTSE 100 mid/large-cap in a commodity sector no strategy covers. A +0.34% move would also fail any momentum or gap threshold.",
+      "suggestion": "No actionable change: a +0.34% drift with no catalyst is noise. Consider ranking 'biggest gainers' by a minimum absolute move (e.g. \u22652%) so low-signal names like this stop reaching the post-trade review.",
+      "failed": false
+    },
+    {
+      "ticker": "DBK.DE",
+      "move_pct": -5.972,
+      "close": 31.02,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Leaked-documents media investigation linking the bank to oligarch, Epstein-related and suspicious-payment flows, plus a risk-off AI/tech selloff. Sources date the drop to Nov 17, so the date match is uncertain.",
+      "miss_reason": "Outside any active strategy's universe: DBK.DE is a large-cap German bank, apparently not in the tradable lists. It was also a headline-driven gap-down with no earnings signal, and a long-only bot can't short it.",
+      "suggestion": "Add a news-reactive watchlist rule that admits any uk-eu large-cap with a gap \u2264 -4% and \u22652\u00d7 average volume at the open into a no-new-entry 'avoid/flag' list, and into a short-capable sleeve if one is ever built.",
+      "failed": false
+    },
+    {
+      "ticker": "RMS.PA",
+      "move_pct": -5.458,
+      "close": 1290.5,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found for RMS.PA on 2026-11-18; likely a luxury-sector sell-off or a rating/price-target cut amid the ongoing Middle East/tourism-demand weakness. Unverified.",
+      "miss_reason": "Outside any active strategy's universe: RMS.PA is a ~\u20ac130B+ Euronext Paris luxury large-cap, and no strategy lists it. With no news catalyst, a news-reactive trigger would not have fired. A -5.5% move in a high-priced stock is probably a sector move that momentum and mean-reversion filters skip.",
+      "suggestion": "Add a luxury-sector basket (RMS.PA, MC.PA, KER.PA, CFR.SW) to the uk-eu mean-reversion universe, with a sector-wide-drop gate that fires only when \u22653 names fall \u22653% on the same day. Reversal entries would then be allowed on those days.",
+      "failed": false
+    },
+    {
+      "ticker": "SAP.DE",
+      "move_pct": -5.419,
+      "close": 201.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Broad European tech/AI selloff (sector -~4%, worst day in 8 months, pre-Nvidia jitters) plus SAP's Chief Customer Officer resigning; reports date the ~5% drop to Nov 17, so the dating is uncertain.",
+      "miss_reason": "Outside any active strategy's universe: SAP.DE is a large-cap Xetra tech name that no strategy includes. It was also a sector-wide macro/AI-sentiment drop with no earnings gap, which a long-only momentum or news bot wouldn't trade.",
+      "suggestion": "Add a large-cap EU tech basket (SAP.DE, ASML.AS) to the mean-reversion universe, gated on a sector-wide drop \u22653% with no company-specific filing, so the bot can buy the dip after a sector flush.",
+      "failed": false
+    },
+    {
+      "ticker": "DSY.PA",
+      "move_pct": -4.952,
+      "close": 24.57,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-18; likely a continuation of the 2026 AI-disruption selloff in European software (DSY fell ~20% on Q4 results in Feb) or a sector move.",
+      "miss_reason": "Outside any active strategy's universe: DSY.PA is a Euronext Paris large-cap software name that no strategy includes. A -4.95% drift without a fresh catalyst would also likely fail a news-reactive trigger, and a long-only bot can't short it.",
+      "suggestion": "Add large-cap EU software (DSY.PA, SAP.DE) to the mean-reversion universe, with a gate requiring a no-news drop of 4% or more on volume at least 1.5\u00d7 average. If no short capability exists, treat this as a no-op.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-18T16:02:27.791916+00:00"
+}
