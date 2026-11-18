@@ -1,0 +1,124 @@
+{
+  "date": "2026-11-18",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 1 of today's 10 biggest US movers.\n\n\u2022 5 upside misses \u2014 FIX +3%, SYK +2%, CHRW +2%, ILMN +2%, RDDT +2%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (CRM -9%, INTU -7%, NOW -7%, NKE -7%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: CRM (-9.20%) \u2014 No CRM-specific news. Software sold off on AI-agent disruption fears ahead of Anthropic's IPO; NOW, WDAY and TEAM fell 6-7%. Reports date the ~9.4% drop to Nov 17, so the day label may be off by one. Why we passed: Outside any active strategy's universe: CRM is a large-cap software name, and no strategy includes it. The drop was a sector-wide, sentiment-driven gap with no earnings or other discrete catalyst for a news-reactive filter to key on.",
+  "top_movers": [
+    {
+      "ticker": "FIX",
+      "move_pct": 2.907,
+      "close": 1088.4301,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-18. Comfort Systems (FIX) rose 2.91%, likely on a sector move in data-center/electrical contractors. The only recent item was a Nov 5 buyback expansion.",
+      "miss_reason": "Outside any active strategy's universe: FIX is a mid/large-cap HVAC/mechanical contractor, not in the large-cap index or megacap-tech lists. A +2.9% drift with no news also wouldn't trip gap-up or news-reactive triggers.",
+      "suggestion": "Add a daily 'unlisted mover' scan to the momentum-trader universe builder, admitting names with market cap above $10B, 20-day average dollar volume above a floor, and a 60-day relative-strength rank in the top decile, even if outside the index lists.",
+      "failed": false
+    },
+    {
+      "ticker": "COHR",
+      "move_pct": 2.465,
+      "close": 208.445,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "insider-cluster-momentum"
+      ],
+      "catalyst": "no obvious news catalyst \u2014 search found no COHR-specific news dated 2026-11-18; +2.46% is likely a sector move (AI optical/photonics names) or drift.",
+      "miss_reason": "Outside any active strategy's universe: COHR is a mid/large-cap optical/photonics name that no strategy's universe includes. Only insider-cluster-momentum trades it, and it had no insider cluster signal today. The move was also modest.",
+      "suggestion": "Add COHR and similar AI-optical peers (LITE, CIEN) to the momentum strategy's universe, gated by a relative-strength rule such as a 20-day return in the top quintile, instead of requiring an insider-cluster trigger.",
+      "failed": false
+    },
+    {
+      "ticker": "SYK",
+      "move_pct": 2.235,
+      "close": 317.665,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-18. Searches returned no same-day headlines, so this looks like a rebound in large-cap medtech or a technical move after a recent pullback from about $326 on Nov 6.",
+      "miss_reason": "Outside any active strategy's universe. SYK is a roughly $120B large-cap medical-device name, and no strategy includes it. A +2.2% move with no catalyst also wouldn't trip a typical gap-up or volume-surge momentum filter.",
+      "suggestion": "No actionable change. Consider adding mega/large-cap healthcare names to the mean-reversion universe only if backtests show an edge, since a +2% non-catalyst move is within normal daily noise.",
+      "failed": false
+    },
+    {
+      "ticker": "CHRW",
+      "move_pct": 2.187,
+      "close": 137.615,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-18. Likely a modest rebound or freight-sector move after a sharp decline from about $186 in July to about $137.6, with no dated news for the day.",
+      "miss_reason": "Outside any active strategy's universe: CHRW is a mid-cap freight and logistics name that no strategy includes. A +2.19% move with no catalyst would also fall below typical momentum gap and volume thresholds.",
+      "suggestion": "No actionable change. A +2.2% no-news move doesn't justify widening the universe. If transports are wanted, add a sector-ETF-linked mid-cap logistics basket to the mean-reversion universe, gated by a minimum 20-day drawdown of about 20%.",
+      "failed": false
+    },
+    {
+      "ticker": "ILMN",
+      "move_pct": 1.977,
+      "close": 201.915,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-18. The +1.98% looks like a modest rebound after a roughly 24% drop over the prior two weeks, likely technical or sector-driven.",
+      "miss_reason": "Outside any active strategy's universe: ILMN is a ~$32B mid-cap life-science tools name that no strategy includes. A +2% move with no catalyst would also fall below typical gap and momentum thresholds.",
+      "suggestion": "No actionable change. A +2% no-news bounce is noise; if wanted, add a small-weight 'oversold-rebound' watchlist of mid-cap healthcare tools with a 10-day return below -15%, but expected value is low.",
+      "failed": false
+    },
+    {
+      "ticker": "RDDT",
+      "move_pct": 1.884,
+      "close": 94.62,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-18; the +1.88% looks like a technical or sector move. Searches turned up nothing dated that day, and the latest coverage I found was from mid-October.",
+      "miss_reason": "Outside any active strategy's universe: RDDT is a mid/large-cap social-media/internet name that no strategy lists. A +1.88% move on no news would also likely fail momentum gap and volume thresholds, so no strategy would have fired anyway.",
+      "suggestion": "No actionable change: a +1.88% no-news move is below typical momentum triggers. Optionally, add RDDT to the momentum universe, since it was added to the S&P 500 in Aug 2026, if universe membership follows index constituents.",
+      "failed": false
+    },
+    {
+      "ticker": "CRM",
+      "move_pct": -9.198,
+      "close": 195.07,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No CRM-specific news. Software sold off on AI-agent disruption fears ahead of Anthropic's IPO; NOW, WDAY and TEAM fell 6-7%. Reports date the ~9.4% drop to Nov 17, so the day label may be off by one.",
+      "miss_reason": "Outside any active strategy's universe: CRM is a large-cap software name, and no strategy includes it. The drop was a sector-wide, sentiment-driven gap with no earnings or other discrete catalyst for a news-reactive filter to key on.",
+      "suggestion": "Add a software-sector basket (CRM, NOW, WDAY, TEAM) to the mean-reversion universe, triggered when \u22653 members drop \u22655% on one day, with a cap on position size. Otherwise, no change: we can't short.",
+      "failed": false
+    },
+    {
+      "ticker": "INTU",
+      "move_pct": -6.994,
+      "close": 321.39,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued AI-disruption selloff in software (Claude bank-linked finance tool raising TurboTax/QuickBooks fears) with INTU sliding ahead of its FQ1 earnings due Nov 19. No single confirmed company-specific news item.",
+      "miss_reason": "Outside any active strategy's universe: INTU is a ~$90B large-cap software name that no strategy includes. It was also a gradual sector de-rating into earnings, not a gap, so momentum and gap filters would not have flagged it.",
+      "suggestion": "Add large-cap software (INTU, CRM, ADBE, NOW) to the mean-reversion universe, with a rule that blocks new entries within 2 trading days before earnings, so oversold sector moves can be traded after the print.",
+      "failed": false
+    },
+    {
+      "ticker": "NOW",
+      "move_pct": -6.994,
+      "close": 92.42,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-18; likely part of the ongoing AI-disruption selloff in SaaS/software stocks, which has hit NOW repeatedly in 2026. Search returned nothing dated today.",
+      "miss_reason": "Outside any active strategy's universe: NOW is a large-cap enterprise software name, and no strategy includes it. The drop looks like a sector-wide drift, so no gap or earnings signal would have triggered a news-reactive or momentum entry.",
+      "suggestion": "Add a software-sector relative-weakness screen (e.g. IGV down \u22652% with \u22653 large-cap SaaS names down \u22654%) to the universe-expansion check, but the bot is long-only, so likely no actionable change.",
+      "failed": false
+    },
+    {
+      "ticker": "NKE",
+      "move_pct": -6.73,
+      "close": 35.685,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found. NKE is in a prolonged slide near multi-year lows (China risk, turnaround doubts, JPMorgan Underweight, weak athletic-retail read-throughs), so likely a continuation of that trend.",
+      "miss_reason": "Outside any active strategy's universe: NKE is a large-cap consumer discretionary name that no strategy lists. A -6.7% drop with no clear catalyst also looks like trend continuation, which long-only momentum and mean-reversion filters would skip.",
+      "suggestion": "Add a 'large-cap laggard' watchlist (mega/large-cap names within 10% of a 52-week low) to the mean-reversion universe. Only enter if RSI(2) < 10 and volume \u2265 1.5\u00d7 the 20-day average, to avoid catching falling knives.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-18T20:31:49.006142+00:00"
+}
