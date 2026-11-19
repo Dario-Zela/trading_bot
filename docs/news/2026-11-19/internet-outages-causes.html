@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Outages: hacks, AI or just overdue updates? — 2026-11-19 — Trading Bot</title>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../../index.html">Dashboard</a>
+<a class="nav-tab active" href="../../news/latest.html">News</a>
+<a class="nav-tab" href="../../macro/latest.html">Macro</a>
+<a class="nav-tab" href="../../evolution.html">Evolution</a>
+<a class="nav-tab" href="../../ml/index.html">ML lab</a>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper article-page"><div class="edition-nav" data-edition="2026-11-19" data-kind="news"><a class="edition-nav-link" data-role="prev" href="../2026-11-18/" title="2026-11-18">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><a class="edition-nav-link disabled" data-role="next" href="#" aria-disabled="true">next →</a><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">TECH · RESILIENCE · By R. Okonkwo · 2026-11-19 · 3 min read</div><h1>Outages: hacks, AI or just overdue updates?</h1><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>Recent big cloud outages mostly trace to providers&#x27; own configuration and update errors, not attacks, which makes concentration risk the issue for markets.</div></div><div class="body"><p>Every few weeks, it seems, a large part of the internet stops working. Banks' apps hang, airlines cannot check in passengers, and websites return error pages. The BBC's technology desk has put a question to the pattern: are these outages the work of hackers, the result of AI, or simply the cost of putting off routine maintenance? The question matters because the answer decides what firms should defend against. That includes the exchanges, brokers and trading firms that now run much of their plumbing on a handful of providers.</p>
+<p>The BBC's own reporting was not available to check for this piece, so what follows relies on the public record of recent failures rather than on that article's conclusions.</p>
+<h2>What the record shows</h2>
+<p>The best-documented recent outages point mostly in one direction. In July 2024, a faulty content update from the security firm CrowdStrike crashed about 8.5 million Windows machines, grounding flights and disrupting hospitals. No attacker was involved. In October 2025, an outage at Amazon Web Services' US-East-1 region was traced to a DNS fault tied to its DynamoDB database service, and it knocked out apps and services around the world. Later that month, Microsoft's Azure Front Door service failed after an inadvertent configuration change. In November 2025, Cloudflare said a database permissions change had caused a file used by its bot-management system to double in size, which led to widespread errors. Cloudflare said at the time that it had found no sign of an attack.</p>
+<p>The pattern is consistent. Each of these failures began with a change made by the provider, not with an intruder. The causes were a configuration push, a software update, a database permissions edit. That is ordinary change management failing at very large scale.</p>
+<h2>Why the three explanations differ</h2>
+<p>The three candidate causes call for different responses.</p>
+<p><strong>Attacks.</strong> Hostile action is real, and denial-of-service floods and ransomware do cause outages. But the headline failures above were self-inflicted. Planning only for attackers would miss the more frequent threat.</p>
+<p><strong>AI.</strong> This is the least documented of the three. Providers increasingly use automation, and in some cases AI tools, to write and ship code. Whether that has measurably raised the failure rate is not established in the public record. Without incident reports that name AI-generated changes as a cause, the claim is a hypothesis.</p>
+<p><strong>Deferred maintenance.</strong> Ageing systems and tangled dependencies do raise risk. Yet several of the failures above came from new changes, not neglected old ones. The tidier reading is that complexity and concentration are the problem: when a single configuration file or DNS record sits under thousands of businesses, a small slip spreads very far.</p>
+<h2>The market angle</h2>
+<p>For trading firms, the concentration matters more than the cause. A broker whose order system, market-data feed and authentication all depend on one cloud region has a single point of failure, whatever triggered it. Regulators in the UK and EU have already moved towards oversight of critical third-party technology providers, partly for this reason. Whether any provider is formally designated as critical is a separate question from whether firms have tested running without it.</p>
+<p>The practical test is whether a firm can keep trading, or at least close positions safely, when a provider is down for several hours. That is a question about backups, fallback venues and manual procedures. It is not a question about attackers.</p>
+<p>The next data points will be the providers' own post-incident reports, which usually appear within days and state a root cause. If they keep citing internal changes, the evidence will favour the maintenance-and-change-control reading over the attack and AI explanations.</p></div><section class="sources-block"><h4>Sources</h4><ol><li><a href="https://www.bbc.co.uk/news/technology" rel="nofollow noopener" target="_blank">BBC Technology</a></li></ol></section><section class="related"><h4>Related in this edition</h4><a href="british-hacker-sms-phishing-jailed.html"><span style="display:block;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:0.2rem;">TECH &amp; SCIENCE</span>British hacker jailed for six years in the US over $11m SMS phishing scheme</a></section><footer class="colophon">The Bot Tribune · 2026-11-19 · <a href="index.html">Back to the edition</a></footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
+</body>
+</html>
