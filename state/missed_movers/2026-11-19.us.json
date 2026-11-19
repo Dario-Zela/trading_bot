@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-19",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 OKTA +12%, GNRC +11%, PANW +9%, AKAM +9%, TJX +9%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (HUM -12%, UNH -11%, CNC -7%, ELV -7%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: HUM (-12.12%) \u2014 Managed-care selloff on a proposed CMS Medicare Advantage audit rule (extrapolating overpayment recoveries back to 2018; ~$9B/yr est.). Sources date the drop Nov 18, so the Nov 19 date is unconfirmed. Why we passed: Outside any active strategy's universe: HUM is a large-cap managed-care name that no strategy includes. It was also a gap-down regulatory shock with no prior signal, which momentum and mean-reversion filters wouldn't catch, and the bot can't short.",
+  "top_movers": [
+    {
+      "ticker": "OKTA",
+      "move_pct": 11.513,
+      "close": 195.32,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed Nov 19 catalyst found. Likely a software/cybersecurity sector rally or continued post-S&P 500 inclusion (Nov 4) momentum; earnings are not due until Dec 1.",
+      "miss_reason": "Outside any active strategy's universe: OKTA is a mid/large-cap software name that no strategy's universe covers. With no earnings or news gap, a news-reactive trigger would also have had nothing to fire on.",
+      "suggestion": "Add recent S&P 500 additions such as OKTA (effective Nov 4) to the momentum universe, or add a rule that admits any name with a daily move of at least +8% on volume of at least 2x its 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "GNRC",
+      "move_pct": 10.829,
+      "close": 205.72,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found; likely another leg of the 2026 data-center backup-power rally (Amazon deal, Jefferies upgrade), but the Nov 19 trigger is unverified.",
+      "miss_reason": "Outside any active strategy's universe: GNRC is a mid-cap industrial/electrical-equipment name that no strategy includes. A +10.8% move with no pre-market signal would also have been hard to catch intraday.",
+      "suggestion": "Add a mid-cap 'AI-power/data-center infrastructure' basket (GNRC, VRT, ETN, PWR) to the momentum-trader universe, gated by the existing gap-up and volume filters (e.g. \u22651.5\u00d7 20-day average volume).",
+      "failed": false
+    },
+    {
+      "ticker": "PANW",
+      "move_pct": 9.065,
+      "close": 337.01,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day driver found. Likely a post-earnings or AI-cyber-demand rally (stock ~+113% in 3 months, ~$337), but I couldn't verify a 2026-11-19 report or news item.",
+      "miss_reason": "Outside any active strategy's universe: PANW is a large-cap cybersecurity name that no strategy includes. If it was earnings-driven, the gap came at the open and post-event signals would have lagged anyway.",
+      "suggestion": "Add large-cap software/cybersecurity names (PANW, CRWD, FTNT) to the momentum universe, and let the earnings gate release names with a post-results gap \u2265 +5% on above-average volume within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "AKAM",
+      "move_pct": 8.641,
+      "close": 91.91,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed news catalyst found for 2026-11-19. Searches returned only undated or older AKAM items. The +8.64% looks like a rebound after a post-earnings selloff or a software/cyber sector move, not a verified event.",
+      "miss_reason": "Outside any active strategy's universe: AKAM is a mid-cap internet-infrastructure and cybersecurity name that no strategy's universe includes. With no pre-market catalyst, even a momentum filter would not have flagged it ahead of the move.",
+      "suggestion": "Add a daily 'top-gainer watchlist' that admits any US name with market cap above $5B and a close-to-close move of +6% or more on at least 1.5x average volume. Use it to extend the momentum universe, and revisit that name's backtest before trading it.",
+      "failed": false
+    },
+    {
+      "ticker": "TJX",
+      "move_pct": 8.63,
+      "close": 141.3275,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely the Q3 FY27 earnings print: sales +6% to $16.0B, comps +4%, EPS $1.39 (+9%), above plan. I found no source confirming the share reaction or timing, so this is inferred.",
+      "miss_reason": "Outside any active strategy's universe: TJX is a large-cap off-price retailer that no strategy's universe includes. Even if it were included, an earnings gap-up would have been blocked by an earnings gate or gap filter.",
+      "suggestion": "Add large-cap US consumer-discretionary names like TJX to the momentum universe, and let the earnings gate release post-results gaps of +5% or more on above-average volume after the first 30 minutes of the session.",
+      "failed": false
+    },
+    {
+      "ticker": "CRWD",
+      "move_pct": 8.619,
+      "close": 237.18,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No same-day source found for 2026-11-19; likely a sector-wide cybersecurity/software rally (as on earlier 2026 days) rather than CRWD-specific news. This is unverified.",
+      "miss_reason": "Outside any active strategy's universe: CRWD is a large-cap cybersecurity/software name that no strategy includes, so no filter ever evaluated it. With no company-specific catalyst, a news-reactive signal wouldn't have fired either.",
+      "suggestion": "Add large-cap US software/cybersecurity names (CRWD, PANW, ZS, FTNT) to the momentum-trader universe, gated by the existing volume floor and RSI cap, so a sector-wide rally day can be caught.",
+      "failed": false
+    },
+    {
+      "ticker": "HUM",
+      "move_pct": -12.121,
+      "close": 386.89,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Managed-care selloff on a proposed CMS Medicare Advantage audit rule (extrapolating overpayment recoveries back to 2018; ~$9B/yr est.). Sources date the drop Nov 18, so the Nov 19 date is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: HUM is a large-cap managed-care name that no strategy includes. It was also a gap-down regulatory shock with no prior signal, which momentum and mean-reversion filters wouldn't catch, and the bot can't short.",
+      "suggestion": "Add a sector-shock watchlist (HUM, UNH, CVS, CI, ELV) to the news-reactive universe, flagging any name down \u22658% on \u22652\u00d7 volume, for a post-selloff mean-reversion entry or a halt on adding long exposure.",
+      "failed": false
+    },
+    {
+      "ticker": "UNH",
+      "move_pct": -10.505,
+      "close": 347.57,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "CMS proposed expanding Medicare Advantage audits (extrapolating findings across plan contracts back to 2018), hitting MA-heavy insurers; UNH, about 44% MA revenue, fell ~10% with Humana, CVS and Cigna. Press dates were a day or two off.",
+      "miss_reason": "Outside any active strategy's universe: UNH is a mega-cap managed-care name that no strategy lists. This was also a gap-down on a regulatory headline, so a long-only momentum or mean-reversion bot had no long entry, and the bot cannot short.",
+      "suggestion": "Add a sector-shock watchlist rule: when a large-cap health-insurer ETF/peer basket (UNH, HUM, CVS, CI) drops \u22655% on a policy headline, flag it for the news-reactive strategy; a post-drop mean-reversion long would need a \u22652-day stabilization filter.",
+      "failed": false
+    },
+    {
+      "ticker": "CNC",
+      "move_pct": -7.343,
+      "close": 67.065,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day driver found. Searches surfaced only older Centene drops (ACA headwinds, Medicare Advantage rate proposal, membership decline). Likely a managed-care sector move or ACA/Medicaid policy news.",
+      "miss_reason": "Outside any active strategy's universe: CNC is a mid/large-cap health-insurer (managed care) name that no strategy lists. Even if included, a -7% gap on a sector or policy headline would likely fail a gap-size or volume filter on a long-only bot.",
+      "suggestion": "Add a managed-care/health-insurer sector basket (CNC, MOH, UNH, ELV, HUM) to the news-reactive universe, so a coordinated sector drop of at least 5% can trigger a mean-reversion watch or a sector-level signal.",
+      "failed": false
+    },
+    {
+      "ticker": "ELV",
+      "move_pct": -7.233,
+      "close": 401.89,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day driver found; searches returned only older ELV selloffs (Medicaid cost pressure, guidance cuts). Likely a managed-care sector move, unverified.",
+      "miss_reason": "Outside any active strategy's universe: ELV is a ~$90B large-cap managed-care name that no strategy covers. A -7% sector-driven drop with no earnings gap would also not trip a news-reactive or momentum entry filter.",
+      "suggestion": "Add large-cap healthcare/managed-care (ELV, UNH, CVS, CI, HUM) to the mean-reversion universe, and flag sector-wide drops where \u22653 peers fall >4% together; otherwise no change if the bot is long-only.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-19T20:31:51.344067+00:00"
+}
