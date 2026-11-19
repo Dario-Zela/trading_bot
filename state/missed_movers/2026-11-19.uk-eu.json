@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-19",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 CTEC.L +9%, ASM.AS +3%, WTB.L +3%, GAW.L +3%, BESI.AS +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (ANTO.L -8%, EDV.L -8%, AAL.L -7%, GLEN.L -7%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: CTEC.L (+9.42%) \u2014 No obvious news catalyst found for 2026-11-19. Searches for Convatec (CTEC.L) turned up nothing dated today, so this is likely a technical or sector rebound in UK medtech or large-cap healthcare. Why we passed: Outside any active strategy's universe: Convatec is a FTSE 100 mid/large-cap medtech name that none of the strategies list. With no identifiable news driver, a news-reactive bot would also have had no trigger, and a +9.4% gap was probably too large to chase.",
+  "top_movers": [
+    {
+      "ticker": "CTEC.L",
+      "move_pct": 9.42,
+      "close": 2.718,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-19. Searches for Convatec (CTEC.L) turned up nothing dated today, so this is likely a technical or sector rebound in UK medtech or large-cap healthcare.",
+      "miss_reason": "Outside any active strategy's universe: Convatec is a FTSE 100 mid/large-cap medtech name that none of the strategies list. With no identifiable news driver, a news-reactive bot would also have had no trigger, and a +9.4% gap was probably too large to chase.",
+      "suggestion": "Add FTSE 100 healthcare/medtech constituents to the momentum-trader universe. Also add a no-news-gap rule that admits a +8% close-to-close move on \u22651.5\u00d7 average volume as a next-day continuation candidate.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": 3.437,
+      "close": 668.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for ASM International on 2026-11-19; likely a sector move, with European semicap names (ASML, BESI) rallying in sympathy.",
+      "miss_reason": "Outside any active strategy's universe: ASM.AS is a large-cap Dutch semiconductor-equipment name that no strategy includes. With no company-specific news, a news-reactive filter would not have fired either.",
+      "suggestion": "Add ASM.AS and other Euronext Amsterdam semicap names (ASML.AS, BESI.AS) to the momentum-trader universe, gated by the existing volume floor, and test whether a sector-relative-strength rule picks up these sympathy moves.",
+      "failed": false
+    },
+    {
+      "ticker": "WTB.L",
+      "move_pct": 3.368,
+      "close": 28.85,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst. Search found only undated Whitbread items (restaurant overhaul and job cuts, Corvex stake, buyback), none verifiable for 2026-11-19. Likely a sector or rate-sensitivity bounce.",
+      "miss_reason": "Outside any active strategy's universe: Whitbread (Premier Inn owner) is a FTSE 100 mid/large-cap UK consumer-discretionary name, and no strategy includes it. A +3.4% move with no clear news also wouldn't trip a news-reactive trigger.",
+      "suggestion": "Add FTSE 100 / FTSE 250 consumer-discretionary names such as WTB.L to the uk-eu momentum universe, with a gate of \u2265+3% close-to-close on \u22651.5\u00d7 20-day average volume, rather than relying on news triggers.",
+      "failed": false
+    },
+    {
+      "ticker": "GAW.L",
+      "move_pct": 3.317,
+      "close": 171.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found; searches returned no dated 19 Nov 2026 Games Workshop news, so likely a technical or sector move, possibly a bounce in UK consumer/mid-cap names.",
+      "miss_reason": "Outside any active strategy's universe: GAW.L is a ~\u00a35.9bn FTSE 100 UK consumer-discretionary stock, and no strategy includes it. With no pre-market catalyst, a +3.3% drift would also fall below typical gap-up or volume-spike triggers.",
+      "suggestion": "Add FTSE 100 / FTSE 250 constituents to the momentum-trader universe, then check whether its gap-up filter (e.g. \u22651.5\u00d7 avg volume) would have passed a +3% no-news move before enabling them.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": 3.285,
+      "close": 149.35,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-19 \u2014 likely a technical / semiconductor-equipment sector move (AI/advanced-packaging sentiment). Search returned no dated same-day news.",
+      "miss_reason": "Outside any active strategy's universe: BESI.AS is a mid/large-cap Dutch semiconductor-equipment name on Euronext Amsterdam, a category no strategy covers. A +3.29% sector-beta move without a discrete catalyst would also fall short of typical gap or news triggers.",
+      "suggestion": "Add a small Euronext semi-equipment basket (BESI.AS, ASML.AS, ASM.AS) to the momentum-trader universe, gated by a sector-relative-strength rule such as a 20-day RS rank in the top quartile, rather than a news or gap trigger.",
+      "failed": false
+    },
+    {
+      "ticker": "BRBY.L",
+      "move_pct": 3.106,
+      "close": 11.625,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found; searches returned nothing dated 2026-11-19 for BRBY.L, so likely a luxury-sector or technical rebound move.",
+      "miss_reason": "Outside any active strategy's universe: BRBY.L is a FTSE 100 luxury/apparel large-cap, and no strategy's universe includes it. A +3.1% move with no clear news is also below typical gap/momentum entry thresholds.",
+      "suggestion": "Add FTSE 100 consumer-discretionary and luxury names (BRBY.L, plus peers such as MC.PA and RMS.PA) to the momentum universe, and trigger on a sector-relative strength rank rather than only a gap-up with a volume floor.",
+      "failed": false
+    },
+    {
+      "ticker": "ANTO.L",
+      "move_pct": -7.779,
+      "close": 27.86,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed company-specific news for 19 Nov. The -7.8% drop looks like a copper/mining-sector sell-off, possibly extending the post-Q3 weak 2027 guidance and higher cost outlook. Not verified.",
+      "miss_reason": "Outside any active strategy's universe: ANTO.L is a FTSE 100 large-cap copper miner that no strategy lists. It is also a commodity-beta move with no discrete catalyst, so news-reactive filters had nothing to trigger on, and a long-only bot can't short it.",
+      "suggestion": "Add FTSE 100 miners (ANTO.L, GLEN.L, RIO.L) to the commodity strategy's universe and add a sector-wide drawdown filter (e.g. copper-miner basket \u2264 -3% on the day) as a mean-reversion entry trigger.",
+      "failed": false
+    },
+    {
+      "ticker": "EDV.L",
+      "move_pct": -7.511,
+      "close": 34.23,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day catalyst found; likely a gold-miner/sector selloff or West Africa risk (Mana output, Burkina Faso permit fears). Search results did not cover 2026-11-19.",
+      "miss_reason": "Outside any active strategy's universe: EDV.L is a FTSE 100 gold miner whose price is driven by bullion and West Africa jurisdiction risk. A long-only momentum or mean-reversion bot would see a sector-wide drop with no earnings gate to trigger.",
+      "suggestion": "(No actionable change.) If gold-sector coverage is wanted, add a GDX or gold-spot drawdown proxy to the commodity strategy's universe. Shorting individual miners isn't possible under the long-only constraint.",
+      "failed": false
+    },
+    {
+      "ticker": "AAL.L",
+      "move_pct": -6.854,
+      "close": 33.16,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-19. Searches turned up nothing dated today, only earlier copper-led weakness in Anglo American (3 Nov). Likely a sector or copper move, with the Teck merger as background.",
+      "miss_reason": "Outside any active strategy's universe: AAL.L is a FTSE 100 large-cap miner that no strategy lists. With no discrete catalyst, a news-reactive filter had nothing to trigger on, and a -6.85% drop is also long-only-unfriendly.",
+      "suggestion": "Add a sector-basket check (e.g. AAL.L, GLEN.L, RIO.L, ANTO.L) to the mean-reversion universe; flag when 3+ miners fall more than 3% on the same day, to separate copper moves from stock-specific news. Also confirm the 33.16 close, since recent quotes were around 3,700p.",
+      "failed": false
+    },
+    {
+      "ticker": "GLEN.L",
+      "move_pct": -6.561,
+      "close": 4.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide metals sell-off: copper, silver and gold fell sharply on a stronger dollar and AI-capex doubts hitting copper demand; miners led London lower. Search found no Glencore-specific news. Coverage is dated Nov 18, so the Nov 19 attribution is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: GLEN.L is a large-cap diversified miner/commodity trader that no strategy includes. A long-only momentum/mean-reversion bot would also not short a macro-driven commodity sell-off.",
+      "suggestion": "Add a commodity-miner basket (GLEN.L, AAL.L, ANTO.L, RIO.L) to the mean-reversion universe, gated on a copper/dollar-index shock (e.g. copper \u2264 -4% day) so the bot can buy oversold miners after macro flushes.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-19T16:02:17.737176+00:00"
+}
