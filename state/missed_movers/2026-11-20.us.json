@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-20",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 0 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 PANW +7%, P +7%, OKTA +5%, WDC +4%, INTC +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (WSM -15%, TWLO -9%, AMD -8%, FISV -8%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: WSM (-15.42%) \u2014 Likely post-Q3 earnings selloff (report due Nov 19 after a ~44% YTD run-up, probable margin/tariff or guidance worry). I couldn't find a source confirming the 2026 reaction, so this is unverified. Why we passed: Outside any active strategy's universe: WSM is a mid-cap consumer-discretionary retailer that none of the strategies cover. The drop was also an earnings gap-down, and a long-only bot can't short it or react after the gap.",
+  "top_movers": [
+    {
+      "ticker": "PANW",
+      "move_pct": 6.955,
+      "close": 360.45,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued post-earnings rally: FQ1'27 beat (rev $3.44B vs $3.31B, NGS ARR +66%), raised FY guide, and $4.5B all-stock Applied Compute AI deal. Results came out Nov 18, so today's move looks like follow-through.",
+      "miss_reason": "Outside any active strategy's universe: PANW is a large-cap cybersecurity name that no strategy includes. The catalyst also came after the close on Nov 18, so the biggest gap had already printed before any signal could fire.",
+      "suggestion": "Add large-cap tech/cybersecurity names such as PANW, CRWD and FTNT to the momentum universe. Add a post-earnings-drift rule that enters on day 2-3 when the prior-day gap is \u2265 +8% and volume is \u2265 1.5\u00d7 the 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "P",
+      "move_pct": 6.506,
+      "close": 105.35,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found. P is Everpure (formerly Pure Storage), a data-storage name. The +6.5% likely reflects AI-storage sector momentum and analyst Buy reiterations (e.g. Needham), not a company-specific event.",
+      "miss_reason": "Outside any active strategy's universe: P is a mid/large-cap enterprise data-storage name, and no strategy lists it. With no clear catalyst, a news-reactive bot would also have had no trigger, and the move looks like a gradual sector drift.",
+      "suggestion": "Add a dynamic universe rule that admits any US name with market cap above ~$5B, 20-day average volume above 1M shares, and a daily move of +5% or more, so momentum strategies can evaluate it the next day. I did not check the strategy configs, so this is untested against them.",
+      "failed": false
+    },
+    {
+      "ticker": "OKTA",
+      "move_pct": 5.455,
+      "close": 205.975,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news; OKTA rose with a multi-day cybersecurity rally (Palo Alto's strong quarter, outage and vulnerability worries). Earnings are Dec 1. Sources differ on the exact figures.",
+      "miss_reason": "Outside any active strategy's universe: a mid-cap SaaS/identity-security name that no strategy includes. It had also already run about 12% on Nov 18 and about 8% on Nov 19, so a +5% third day would likely fail RSI/extension filters.",
+      "suggestion": "Add a sector-momentum universe (e.g. CIBR/HACK-style cybersecurity names with ADV above $50M) to the momentum trader. Gate entries on a day-1/day-2 breakout, not day 3, with an RSI cap of about 75.",
+      "failed": false
+    },
+    {
+      "ticker": "WDC",
+      "move_pct": 3.619,
+      "close": 297.355,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. Searches turned up no WDC-specific driver for 2026-11-20. Likely a rebound in storage/AI-hardware names after a sharp drawdown (about -29% over two weeks, per MarketChameleon).",
+      "miss_reason": "Outside any active strategy's universe: WDC is a large-cap (~$100B) semiconductor/storage name that no strategy lists. A +3.6% move with no news is also too small to trip a news-reactive or gap-up filter, and a rebound within a downtrend fails momentum screens.",
+      "suggestion": "Add large-cap AI-hardware/storage names (WDC, STX, MU, SNDK) to the momentum-trader universe, gated by a relative-strength check such as a 5-day return above -10% or a close back above the 20-day MA, to catch rebounds.",
+      "failed": false
+    },
+    {
+      "ticker": "INTC",
+      "move_pct": 3.129,
+      "close": 56.1123,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-20 (searches returned nothing dated that day); likely a sector or semiconductor rebound after a recent drawdown.",
+      "miss_reason": "Outside any active strategy's universe: INTC is a large-cap (~$300B+) semiconductor name that no strategy's universe includes. A +3.1% move with no catalyst would likely not pass a gap or news filter anyway.",
+      "suggestion": "Add large-cap semis (INTC, AMD, MU) to the momentum-trader universe, or add a sector-relative-strength screen, rather than loosening gap or volume thresholds; only worth doing if backtests show an edge on non-catalyst drift.",
+      "failed": false
+    },
+    {
+      "ticker": "EXPD",
+      "move_pct": 3.065,
+      "close": 194.04,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-20; likely a sector or freight-logistics rebound. EXPD is a $190-200 large-cap logistics name with a Hold consensus and no same-day company news.",
+      "miss_reason": "Outside any active strategy's universe: EXPD is a mid/large-cap freight forwarder (industrials/logistics) that no strategy includes. A +3% move on no news is also modest, so it was unlikely to trip a gap-up or volume-surge filter even if it had been in scope.",
+      "suggestion": "Add a sector-basket universe (e.g. transports/logistics: EXPD, CHRW, JBHT) to momentum-trader, with a relative-strength filter such as a \u2265+2.5% day on \u22651.3\u00d7 20-day average volume, so sector-wide moves are captured.",
+      "failed": false
+    },
+    {
+      "ticker": "WSM",
+      "move_pct": -15.416,
+      "close": 220.045,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Likely post-Q3 earnings selloff (report due Nov 19 after a ~44% YTD run-up, probable margin/tariff or guidance worry). I couldn't find a source confirming the 2026 reaction, so this is unverified.",
+      "miss_reason": "Outside any active strategy's universe: WSM is a mid-cap consumer-discretionary retailer that none of the strategies cover. The drop was also an earnings gap-down, and a long-only bot can't short it or react after the gap.",
+      "suggestion": "Add mid-cap retail/consumer-discretionary names to the mean-reversion universe, and gate entry on a post-earnings gap-down \u226510% with a confirming bounce, such as a close above the first 30-minute high, instead of buying the open.",
+      "failed": false
+    },
+    {
+      "ticker": "TWLO",
+      "move_pct": -8.623,
+      "close": 179.875,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-20; likely a technical or sector-wide software selloff. Last known event was the Oct 30 Q3 earnings drop (~-17%) on slower Q4 organic growth guidance.",
+      "miss_reason": "Outside any active strategy's universe: TWLO is a mid-cap SaaS/CPaaS name that no strategy includes. An -8.6% drift with no same-day catalyst also gives a news-reactive bot nothing to trigger on, and a long-only bot can't short it.",
+      "suggestion": "Add a 'large-cap software drawdown' watchlist (e.g. TWLO, with a rule such as 1-day move \u2264-7% and no earnings in the last 5 days) as a mean-reversion candidate set; otherwise no change, since shorting isn't supported.",
+      "failed": false
+    },
+    {
+      "ticker": "AMD",
+      "move_pct": -7.963,
+      "close": 483.665,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Broad AI-chip selloff hit AMD, Nvidia and Broadcom on AI-spending doubts, China export-rule and short-report worries, and the Anthropic IPO. Sources conflict on the exact trigger, so this is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: AMD is a large-cap semiconductor name that no strategy includes. The move was also a sector-wide, sentiment-driven drop with no single stock-specific catalyst, and the bot appears to be long-only, so it had no way to trade the downside.",
+      "suggestion": "Add a sector-breadth gate: when \u22653 large-cap semis fall more than 5% in one session, cut momentum-long exposure to AI-chip names the next day. Also add AMD to the universe for that gate, since it needs no short capability.",
+      "failed": false
+    },
+    {
+      "ticker": "FISV",
+      "move_pct": -7.531,
+      "close": 56.36,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-20; searches returned only older Fiserv items (Oct 2025 guidance cut, Feb 2026 downgrades). Likely continued post-collapse weakness or a sector/fintech move.",
+      "miss_reason": "Outside any active strategy's universe: FISV is a mid/large-cap payments/fintech name that no strategy lists. It also trades at depressed levels after a 2025 crash, so momentum and quality screens would likely have excluded it anyway.",
+      "suggestion": "Add a daily 'unmapped large-cap decliners' check that flags any name with a \u22655% drop and above-average volume that is outside every strategy universe, to decide whether to widen the fintech/payments universe. No other change is warranted for a no-news drop.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-20T20:32:01.235484+00:00"
+}
