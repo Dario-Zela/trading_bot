@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-20",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 BAB.L +7%, ASM.AS +3%, HLMA.L +3%, AAF.L +2%, PSH.L +2%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (INVP.L -7%, JD.L -5%, FME.DE -5%, ADYEN.AS -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: BAB.L (+7.07%) \u2014 No confirmed same-day news found for Babcock (BAB.L); the +7% move fits a UK defence-sector rally, as earlier Babcock jumps came on defence-spending news and naval contracts. Why we passed: Outside any active strategy's universe: BAB.L is a UK FTSE 100 defence and engineering mid/large-cap, and no strategy includes it. A gap-driven, news-led move like this would also have been missed by momentum and mean-reversion filters.",
+  "top_movers": [
+    {
+      "ticker": "BAB.L",
+      "move_pct": 7.066,
+      "close": 10.4882,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found for Babcock (BAB.L); the +7% move fits a UK defence-sector rally, as earlier Babcock jumps came on defence-spending news and naval contracts.",
+      "miss_reason": "Outside any active strategy's universe: BAB.L is a UK FTSE 100 defence and engineering mid/large-cap, and no strategy includes it. A gap-driven, news-led move like this would also have been missed by momentum and mean-reversion filters.",
+      "suggestion": "Add FTSE 100/250 defence and aerospace names (BAB.L, BA.L, QQ.L, RR.L) to the momentum-trader universe, gated by a sector-relative-strength rule such as sector ETF up \u22652% with \u22651.5\u00d7 average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": 2.514,
+      "close": 685.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-20; likely a technical or sector move, with semicap peers (ASML, BESI) and the AI-chip capex theme lifting the stock. The only items found were routine buyback updates.",
+      "miss_reason": "Outside any active strategy's universe: ASM International is a Dutch large-cap semiconductor-equipment name that no strategy includes. A +2.5% sector-drift move with no gap or catalyst would also fall below typical momentum and news-reactive trigger thresholds.",
+      "suggestion": "Add Euronext Amsterdam semicap names (ASM.AS, BESI.AS, ASML.AS) to the momentum-trader universe as a sector basket, entering when the basket's average 1-day move is \u2265 +2% and each name is above its 20-day MA.",
+      "failed": false
+    },
+    {
+      "ticker": "HLMA.L",
+      "move_pct": 2.503,
+      "close": 35.22,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 20 Nov. Halma's earnings were possibly due 19 Nov, but I found no coverage, so this may be a lagged post-results drift or a sector move.",
+      "miss_reason": "Outside any active strategy's universe. Halma is a FTSE 100 mid/large-cap UK industrial-tech name that no strategy lists. A +2.5% move is also modest, so gap-up and volume filters would likely not have flagged it even if it were in scope.",
+      "suggestion": "Add FTSE 100 constituents like HLMA.L to the uk-eu momentum universe, and let the momentum-trader's gap filter (e.g. \u2265+2% on \u22651.2\u00d7 average volume) fire on the session after a results release.",
+      "failed": false
+    },
+    {
+      "ticker": "AAF.L",
+      "move_pct": 1.919,
+      "close": 2.762,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-20 (latest items: ongoing Citi-run buyback tranche from 5 Nov, Bharti Airtel stake news in May) \u2014 likely technical / sector move.",
+      "miss_reason": "Outside any active strategy's universe: AAF.L is a mid-cap LSE-listed Africa-focused telecom, not in any strategy's list. A +1.92% drift with no catalyst is also too small for momentum or news-reactive triggers.",
+      "suggestion": "No actionable change: a +1.9% no-news move is below any sensible momentum threshold, so don't widen the universe for it. Revisit only if mid-cap LSE telcos repeatedly show catalyst-driven gaps \u2265 +4%.",
+      "failed": false
+    },
+    {
+      "ticker": "PSH.L",
+      "move_pct": 1.775,
+      "close": 38.6134,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for Pershing Square Holdings (PSH.L) on 2026-11-20. The +1.77% looks like a NAV-driven or market-driven move, since PSH tracks its US equity portfolio.",
+      "miss_reason": "Outside any active strategy's universe. PSH.L is a Guernsey-domiciled closed-end investment trust, so it is an index-like fund with no earnings or news events, and a +1.77% move is too small to trip momentum or gap filters.",
+      "suggestion": "No actionable change. Investment trusts and closed-end funds should stay excluded from the universe, because their moves follow underlying holdings and NAV discount changes, not signals the bot's filters can act on.",
+      "failed": false
+    },
+    {
+      "ticker": "CCC.L",
+      "move_pct": 1.773,
+      "close": 46.98,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-20; searches returned only earlier 2026 items (Jan guidance raise, Mar results). Likely a modest technical or IT-services/AI-infrastructure sector move.",
+      "miss_reason": "Outside any active strategy's universe. Computacenter is a UK mid-cap (~\u00a34-5bn) IT reseller/services firm, and a +1.77% drift with no catalyst wouldn't trip gap-up, volume-spike or news-reactive triggers even if it were screened.",
+      "suggestion": "No actionable change: a +1.77% move without a catalyst is below typical momentum thresholds (e.g. gap \u22653% on \u22651.5\u00d7 volume), and widening the UK mid-cap universe for this would mostly add noise.",
+      "failed": false
+    },
+    {
+      "ticker": "INVP.L",
+      "move_pct": -6.928,
+      "close": 5.575,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-20. Searches turned up nothing dated that day. The ticker may not be Investec, whose price (~6.4 GBP) doesn't match the 5.575 close, so the driver is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: INVP.L is a small/mid-cap UK-listed name, possibly a financial or investment trust. With no news catalyst, the -6.93% drop looks like an idiosyncratic or technical move that the bot's filters had no reason to flag.",
+      "suggestion": "Add a daily check that logs any UK/EU name with a \u22655% close-to-close move and \u22651.5\u00d7 average volume to a watchlist for the mean-reversion strategy, and verify the ticker-to-company mapping for INVP.L before widening the universe.",
+      "failed": false
+    },
+    {
+      "ticker": "JD.L",
+      "move_pct": -4.951,
+      "close": 0.8946,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found \u2014 searches returned only older JD profit warnings. The -4.95% looks like a technical or sector retail move, following a -4% fall the day before, after a 100.10p high on 5 Nov.",
+      "miss_reason": "Outside any active strategy's universe: JD is a UK FTSE 100 consumer-discretionary retailer and no strategy includes it. With no discrete catalyst, a news-reactive bot had no trigger, and a two-day slide fits no momentum or mean-reversion entry.",
+      "suggestion": "Add FTSE 100/250 consumer-discretionary names (JD.L, FRAS.L) to the mean-reversion universe, with an entry gated on a \u22654% one-day drop and a \u22652x volume spike. Confirm there is no negative news first, because the January 2024, May 2024 and January 2025 JD drops were profit warnings.",
+      "failed": false
+    },
+    {
+      "ticker": "FME.DE",
+      "move_pct": -4.86,
+      "close": 36.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-20; searches turned up no same-day FME.DE story, so this looks like a technical or sector move in European healthcare/dialysis names.",
+      "miss_reason": "Outside any active strategy's universe: FME.DE is a large-cap German dialysis/healthcare name that no strategy's universe includes. With no catalyst, a news-reactive bot had no trigger, and a -4.9% drift is too small for a gap filter.",
+      "suggestion": "Add large-cap DAX/MDAX healthcare names such as FME.DE to the mean-reversion universe, with a -4% close-to-close trigger gated on a same-day news check, rather than adding any short capability.",
+      "failed": false
+    },
+    {
+      "ticker": "ADYEN.AS",
+      "move_pct": -4.733,
+      "close": 803.2,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day catalyst found; searches only surfaced earlier Adyen selloffs (margin-target cut, Exane downgrade) with no dates matching 2026-11-20. Likely a follow-through or sector move.",
+      "miss_reason": "Outside any active strategy's universe: Adyen is a large-cap Dutch payments/fintech name on Euronext Amsterdam that no strategy lists. The bot is also probably long-only, so a -4.7% drop gives no entry signal.",
+      "suggestion": "No actionable change without short capability. If a mean-reversion strategy is extended to EU large-cap fintech, add ADYEN.AS to its universe and require a drop of at least 4% on 1.5x average volume, with no earnings or guidance news in the last 5 days.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-20T16:02:34.850628+00:00"
+}
