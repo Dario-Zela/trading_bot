@@ -4,7 +4,7 @@ description: "LLM-driven. Buys oversold bounces. Weights RSI and distance from M
   counter-trend. Region-agnostic \u2014 runs in US and UK/EU pipelines with\ndifferent\
   \ universes.\n"
 implementation: llm
-active: true
+active: false
 capital_gbp: 10000
 max_positions: 5
 max_position_pct: 30
@@ -46,3 +46,4 @@ prefilter_top_n: 100
 cost_gate_multiplier: 4.0
 last_tune_date: '2026-09-12'
 prefilter_sort_key: rsi_14_asc
+deactivated_at: '2026-11-21'

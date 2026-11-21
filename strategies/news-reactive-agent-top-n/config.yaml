@@ -33,11 +33,9 @@ runs_in:
   tier: alpaca-paper
   alpaca_slot: 1
   universe: t212_isa_us
-  tier2_candidate: true
-  tier2_marked_at: '2026-11-14'
-  tier2_thesis: "#2: IC 0.111 (n=266), 6 trades, 67% hit, +\xA3343, spread +1.5. It\
-    \ is the runner-up behind mean-reverter-residual-return@us. It needs about 15\
-    \ trades with hit rate above 50% and IC above 0.11 to challenge for the lead."
+  tier2_candidate: false
+  tier2_marked_at: null
+  tier2_thesis: ''
 - region: uk-eu
   tier: shadow
   t212_slot: null

@@ -647,3 +647,22 @@
   - details: `{"variant_id": "mean-reverter-largecap-gap-reversal", "addendum_applied": true}`
 - **mean-reverter-residual-return@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.120, n=307) → Alpaca slot 2
   - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 2, "enforcement": true, "slot_kind": "alpaca"}`
+
+## Weekly evolution — 2026-11-21
+
+- **ml-challenger@uk-eu** · `demote` · ⏭️ skipped — Strategy is evolution_frozen (experiment control) — 'demote' refused. (n_predictions_graded of 66,583 with 0 trades is the dormant-execution case, and IC is 0.01 (noise). The slot is paired with a promote below.)
+- **mean-reverter-largecap-gap-reversal@uk-eu** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 0, "hit_rate": 0.0, "total_pnl_gbp": 0.0, "avg_pnl_pct": 0.0, "max_drawdown_pct": 0.0, "n_predictions_graded": 322, "ic": 0.083, "decile_spread": 1.585}}`
+- **ml-challenger** · `deactivate` · ⏭️ skipped — Strategy is evolution_frozen (experiment control) — 'deactivate' refused. (The US sleeve has IC -0.058 on n=49,645 with 45 trades, hit rate 0% and -£1,094. The UK-EU sleeve has IC 0.01 and no trades. The strategy is structurally broken, and deactivating it brings the active count under the 18 cap.)
+- **mean-reverter** · `deactivate` · ✅ applied — The base mean-reverter is superseded by residual-return, largecap-gap-reversal and gap-industry-neutral. Its IC is 0.013 (us) and 0.023 (uk-eu) on n>300, so it adds no edge. Deactivating it frees a cap slot for the spawn below.
+  - details: `{"deactivated_at": "2026-11-21"}`
+- **mean-reverter-residual-return** · `spawn-variant` · ✅ applied — Time-slice axis break: weekly-only entries versus the parent's daily rebalance. The parent has IC 0.123 but only a 43% hit rate across 7 trades, so fee and noise drag looks like the bleeder. The idea is tied to the intramonth and overnight-reversal findings in the research brief.
+  - details: `{"variant_id": "mean-reverter-residual-return-weekly", "addendum_applied": true}`
+- **mean-reverter-largecap-gap-reversal@us** · `mark-tier2-candidate` · ✅ applied — Refreshes the stale thesis. It now leads on IC. The open question is whether the signal converts to trades, so no request-tier-2 yet.
+  - details: `{"tier2_marked_at": "2026-11-21", "thesis_present": true}`
+- **mean-reverter-residual-return@us** · `mark-tier2-candidate` · ✅ applied — It is demoted from #1 to #2 behind gap-reversal on IC. The thin P&L and sub-50% hit rate do not support a lead.
+  - details: `{"tier2_marked_at": "2026-11-21", "thesis_present": true}`
+- **news-reactive-agent-top-n@us** · `unmark-tier2-candidate` · ✅ applied — Out-competed. IC fell from 0.111 to 0.161 on 267 predictions, but P&L is -£51, hit rate is 50% and drawdown is -2.2%. It no longer beats the two mean-reverters on risk-adjusted evidence, and the field should narrow to two.
+- **news-reactive-agent-top-n@us** · `keep` · ✅ applied — Keep on the paper bench for more fills. No demotion criteria are met.
+- **mean-reverter-residual-return@us** · `keep` · ✅ applied — On alpaca-paper with no demotion criteria met.
+- **news-reactive-disclosure@us** · `keep` · ✅ applied — This inactive strategy holds Alpaca slot 3 but meets_demotion_criteria is false, so it cannot be demoted this run. Flag for human review: the slot should be freed and refilled with mean-reverter-largecap-gap-reversal@us, the leading candidate.

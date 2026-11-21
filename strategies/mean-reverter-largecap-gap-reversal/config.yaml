@@ -30,11 +30,11 @@ runs_in:
   alpaca_slot: null
   universe: t212_isa_us
   tier2_candidate: true
-  tier2_marked_at: '2026-11-14'
-  tier2_thesis: "#1: IC 0.12 (n=307), 15 trades, 53% hit, +\xA31007, drawdown -0.21%.\
-    \ It beats runner-up news-reactive-agent-top-n@us (IC 0.111, 6 trades, +\xA3343)\
-    \ on sample size and P&L. Must hold IC >0.12 and hit rate >50% on Alpaca paper\
-    \ fills."
+  tier2_marked_at: '2026-11-21'
+  tier2_thesis: "#1: highest IC on the slate (0.203, n=179) with decile spread 7.5,\
+    \ but 0 trades in the window. It leads runner-up residual-return@us (IC 0.123,\
+    \ 43% hit, +\xA3116). It must reach n>=200 and produce actual trades with hit\
+    \ rate >50% to separate."
 - region: uk-eu
   tier: shadow
   t212_slot: null
