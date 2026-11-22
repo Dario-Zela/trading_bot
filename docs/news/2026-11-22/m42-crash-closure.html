@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serious crash closes M42 near Birmingham Airport — 2026-11-22 — Trading Bot</title>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;0,800;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="page-news">
+  <nav class="app-nav">
+    <span class="brand">⚡ TRADING BOT</span>
+    <a class="nav-tab" href="../../index.html">Dashboard</a>
+<a class="nav-tab active" href="../../news/latest.html">News</a>
+<a class="nav-tab" href="../../macro/latest.html">Macro</a>
+<a class="nav-tab" href="../../evolution.html">Evolution</a>
+<a class="nav-tab" href="../../ml/index.html">ML lab</a>
+    <span class="spacer"></span>
+    
+    <div class="font-picker"><span class="label">Font</span><button data-font="classic">Classic</button><button data-font="newsreader">Newsreader</button><button data-font="crimson">Crimson</button><button data-font="lora">Lora</button></div>
+  </nav>
+  <main class="paper article-page"><div class="edition-nav" data-edition="2026-11-22" data-kind="news"><a class="edition-nav-link" data-role="prev" href="../2026-11-21/" title="2026-11-21">← prev</a><a class="edition-nav-link latest" href="../latest.html">latest ↑</a><a class="edition-nav-link disabled" data-role="next" href="#" aria-disabled="true">next →</a><a class="edition-nav-link all" href="../index.html">all</a></div><a class="back-link" href="index.html">← Back to the front page</a><div class="article-meta">BEYOND THE TAPE · ROADS · By L. Bordeaux · 2026-11-22 · 2 min read</div><h1>Serious crash closes M42 near Birmingham Airport</h1><div class="callout" style="border-left-color: var(--c-front);"><div class="callout-label" style="color: var(--c-front);">In one sentence</div><div>A serious crash has closed part of the M42 near Birmingham Airport, the BBC reports; casualty numbers, timings and airport impact are unconfirmed.</div></div><div class="body"><p>A serious crash has closed a stretch of the M42 near Birmingham Airport, according to the BBC, putting one of the Midlands' busiest road links out of action. The BBC report is the only source available. It did not say when the collision happened, how many people were hurt, or when the carriageway might reopen, and none of those details could be independently confirmed.</p>
+<h2>The road in question</h2>
+<p>The M42 curls around the south and east of Birmingham, running through Solihull and past the NEC and Birmingham Airport. It connects the M5 to the south-west with the M6 and the M1 beyond, and the airport and exhibition centre sit beside it. On an ordinary Sunday it carries a mixture of airport runs, weekend shoppers, lorries cutting round the city, and people heading to or from the National Exhibition Centre. When the road stops, the roads around it fill up quickly.</p>
+<p>That is the usual pattern with a serious collision on a motorway. The word "serious" in a police or highways statement generally means that emergency services have been called and that investigators may need time at the scene. Those investigations, along with any recovery of vehicles and repairs to the barrier or surface, are what usually decide whether a closure lasts a couple of hours or most of a day.</p>
+<h2>What is not yet known</h2>
+<p>The gaps matter here. Without confirmed casualty figures, the incident cannot be described as anything more than a serious crash. Without an estimated reopening time, it is not clear whether this is a morning's inconvenience or something longer. And although the closure is close to Birmingham Airport, there is no confirmation that flights or passenger access have been affected. Travellers heading to the terminal may well find diversions in place, but that is an inference from the location and not a reported fact.</p>
+<p>For most readers this is a local travel disruption rather than a national story. It would become a bigger one if the closure ran for days, if the human toll proved severe, or if the airport itself were cut off.</p>
+<h2>What to watch</h2>
+<p>The places to look are National Highways, which publishes live closure and diversion information for the strategic road network, and West Midlands Police or the relevant force, which would issue any casualty update and appeal for witnesses or dashcam footage. Anyone with a flight or a train connection on the day would do well to leave extra time and to check the airport's own travel advice before setting off. This article will be updated if either body confirms a reopening time or the scale of the incident.</p></div><section class="sources-block"><h4>Sources</h4><ol><li><a href="https://www.bbc.co.uk/news/uk" rel="nofollow noopener" target="_blank">BBC UK</a></li></ol></section><footer class="colophon">The Bot Tribune · 2026-11-22 · <a href="index.html">Back to the edition</a></footer></main>
+  
+<script>
+/* Edition-nav upgrade: on every news/macro page, find the .edition-nav
+   strip, read the current edition id from its data attribute, fetch the
+   sibling editions.json, and update the prev/next anchor hrefs. This
+   keeps an older edition's "next →" live without re-rendering its HTML
+   every time a new edition is published. */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.edition-nav[data-edition]').forEach(async (nav) => {
+    const cur = nav.dataset.edition;
+    if (!cur) return;
+    try {
+      const resp = await fetch('../editions.json', { cache: 'no-cache' });
+      if (!resp.ok) return;
+      const list = await resp.json();
+      if (!Array.isArray(list) || list.length === 0) return;
+      // editions.json is newest-first; sort defensively in case
+      const ids = [...list].sort((a, b) => (a.id < b.id ? 1 : -1));
+      const idx = ids.findIndex(e => e.id === cur);
+      if (idx < 0) return;
+      const newer = idx > 0 ? ids[idx - 1] : null;        // 'next →'
+      const older = idx < ids.length - 1 ? ids[idx + 1] : null; // '← prev'
+      const setLink = (role, target) => {
+        const a = nav.querySelector(`.edition-nav-link[data-role="${role}"]`);
+        if (!a) return;
+        if (target) {
+          a.href = target.url;
+          a.title = target.id;
+          a.classList.remove('disabled');
+          a.removeAttribute('aria-disabled');
+          if (role === 'prev') a.textContent = '← prev';
+          if (role === 'next') a.textContent = 'next →';
+        } else {
+          a.href = '#';
+          a.classList.add('disabled');
+          a.setAttribute('aria-disabled', 'true');
+        }
+      };
+      setLink('prev', older);
+      setLink('next', newer);
+    } catch (e) { /* offline / no manifest — keep render-time links */ }
+  });
+});
+</script>
+
+  
+<script>
+const BOT_FONTS = {
+  classic:    { head: "'Playfair Display', Georgia, serif", body: "'Source Serif 4', Georgia, serif", sans: "'Source Sans 3', sans-serif" },
+  newsreader: { head: "'Newsreader', Georgia, serif",       body: "'Newsreader', Georgia, serif",      sans: "'Inter', sans-serif" },
+  crimson:    { head: "'Crimson Pro', Georgia, serif",      body: "'Crimson Pro', Georgia, serif",     sans: "'IBM Plex Sans', sans-serif" },
+  lora:       { head: "'Lora', Georgia, serif",             body: "'Lora', Georgia, serif",            sans: "'Lato', sans-serif" },
+};
+function applyBotFont(name) {
+  const f = BOT_FONTS[name] || BOT_FONTS.classic;
+  const r = document.documentElement.style;
+  r.setProperty('--serif-head', f.head);
+  r.setProperty('--serif-body', f.body);
+  r.setProperty('--sans', f.sans);
+  try { localStorage.setItem('botFont', name); } catch(e) {}
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.classList.toggle('active', b.dataset.font === name);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.font-picker button').forEach(b => {
+    b.addEventListener('click', () => applyBotFont(b.dataset.font));
+  });
+  let saved = 'classic';
+  try { saved = localStorage.getItem('botFont') || 'classic'; } catch(e) {}
+  applyBotFont(saved);
+});
+</script>
+
+</body>
+</html>
