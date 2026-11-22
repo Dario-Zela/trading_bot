@@ -1,0 +1,819 @@
+{
+  "week_id": "2026-W47",
+  "generated_at": "2026-11-22T17:03:50.628308+00:00",
+  "snapshot": {
+    "yield_curve": {
+      "as_of": "2026-11-20",
+      "3M": 4.122000217437744,
+      "5Y": 4.701000213623047,
+      "10Y": 4.9120001792907715,
+      "30Y": 5.302999973297119,
+      "spread_3m10y": 0.7899999618530273
+    },
+    "credit_spreads": {
+      "as_of": "2026-11-20",
+      "hyg_5d_return_pct": -0.7928263464978547,
+      "lqd_5d_return_pct": 0.8559526346753943,
+      "hy_vs_ig_5d_diff": -1.648778981173249
+    },
+    "dollar_index": {
+      "as_of": "2026-11-20",
+      "level": 103.80999755859375,
+      "return_5d_pct": 0.3868038703405796,
+      "return_20d_pct": 1.9644436184658165
+    },
+    "sector_strength": [
+      {
+        "ticker": "XLP",
+        "label": "Consumer Staples",
+        "5d": -2.0465613653237513,
+        "20d": 2.492631877400653
+      },
+      {
+        "ticker": "XLU",
+        "label": "Utilities",
+        "5d": -3.0654002287778925,
+        "20d": 0.30544466452848695
+      },
+      {
+        "ticker": "XLRE",
+        "label": "Real Estate",
+        "5d": -4.3047101496312195,
+        "20d": -0.2583993684287855
+      },
+      {
+        "ticker": "XLV",
+        "label": "Health Care",
+        "5d": -6.147736423152505,
+        "20d": -1.1378811356665297
+      },
+      {
+        "ticker": "XLY",
+        "label": "Consumer Discretionary",
+        "5d": -6.267714670826741,
+        "20d": -0.5658703786763364
+      },
+      {
+        "ticker": "XLE",
+        "label": "Energy",
+        "5d": -6.850370729150967,
+        "20d": -12.721770195555916
+      },
+      {
+        "ticker": "XLF",
+        "label": "Financials",
+        "5d": -7.00409098325967,
+        "20d": -2.3792518689627618
+      },
+      {
+        "ticker": "XLI",
+        "label": "Industrials",
+        "5d": -7.352769138443449,
+        "20d": -5.011541881122705
+      },
+      {
+        "ticker": "XLB",
+        "label": "Materials",
+        "5d": -7.447825816086306,
+        "20d": -5.788347575935038
+      },
+      {
+        "ticker": "XLC",
+        "label": "Communication Services",
+        "5d": -7.967617506290791,
+        "20d": -5.193823567416878
+      },
+      {
+        "ticker": "XLK",
+        "label": "Technology",
+        "5d": -12.491193578189641,
+        "20d": -18.675982109167254
+      }
+    ],
+    "commodities": [
+      {
+        "name": "Gold",
+        "ticker": "GLD",
+        "close": 322.8699951171875,
+        "5d": -9.165850603732029,
+        "20d": -11.930932593783638
+      },
+      {
+        "name": "Silver",
+        "ticker": "SLV",
+        "close": 36.970001220703125,
+        "5d": -16.224789653552364,
+        "20d": -24.117404978649592
+      },
+      {
+        "name": "Oil (USO)",
+        "ticker": "USO",
+        "close": 139.6300048828125,
+        "5d": -4.087097728675094,
+        "20d": -17.63699292855524
+      },
+      {
+        "name": "Natural gas (UNG)",
+        "ticker": "UNG",
+        "close": 10.5600004196167,
+        "5d": 4.039416911286486,
+        "20d": 10.229650351933707
+      },
+      {
+        "name": "Agriculture (DBA)",
+        "ticker": "DBA",
+        "close": 26.149999618530273,
+        "5d": -1.5065899435956376,
+        "20d": -6.171514779008658
+      },
+      {
+        "name": "Base metals (DBB)",
+        "ticker": "DBB",
+        "close": 22.360000610351562,
+        "5d": -7.065664560787777,
+        "20d": -10.12861187868863
+      }
+    ]
+  },
+  "plan": {
+    "edition_date": "2026-11-22",
+    "masthead_subtitle": "A disorderly risk-off week: tech, metals and oil all sold hard while the long end held near 5% and the dollar firmed.",
+    "todays_question": "",
+    "front_lead_slug": "crowded-trades-unwind",
+    "notes": "9 pieces; Regions pieces avoid non-US claims beyond dollar/commodity inference since the snapshot has no foreign data. Tech brief fact about XLP is awkwardly worded and should be cleaned by the writer.",
+    "pieces": [
+      {
+        "slug": "crowded-trades-unwind",
+        "section": "Editorial",
+        "headline": "Everything that was crowded fell at once",
+        "kicker": "EDITORIAL \u00b7 WEEKLY THESIS",
+        "byline": "The Editor",
+        "one_line": "Technology, precious metals and energy were liquidated together while a 4.91% 10-year and a firmer dollar tightened conditions from the other side.",
+        "tier": "lead",
+        "triage_index": 0,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "long-end-near-five",
+        "section": "Rates",
+        "headline": "The 10-year sits 9 basis points from 5% and the 30-year is already past it",
+        "kicker": "RATES \u00b7 LONG END",
+        "byline": "G. Mehlman",
+        "one_line": "Long yields held near cycle-high territory even as equities and commodities collapsed, so bonds offered no flight-to-quality bid at the long end.",
+        "tier": "feature",
+        "triage_index": 1,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "dollar-quiet-tightener",
+        "section": "FX",
+        "headline": "The dollar's 20-day climb of 2% is the quiet tightener",
+        "kicker": "FX \u00b7 DOLLAR",
+        "byline": "E. Castellano",
+        "one_line": "DXY at 103.81 has gained 0.39% on the week and 1.96% over twenty days, amplifying pressure on commodities and EM.",
+        "tier": "feature",
+        "triage_index": 2,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "hy-lags-ig",
+        "section": "Credit",
+        "headline": "High yield lagged investment grade by 1.6 points in a week",
+        "kicker": "CREDIT \u00b7 HY VS IG",
+        "byline": "T. Larch",
+        "one_line": "HYG fell 0.79% while LQD gained 0.86%, a quality rotation inside credit that is milder than equities but points one way.",
+        "tier": "feature",
+        "triage_index": 3,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "tech-outlier",
+        "section": "Sectors",
+        "headline": "Technology's 18.7% monthly drop is the market's centre of gravity",
+        "kicker": "SECTORS \u00b7 TECHNOLOGY",
+        "byline": "I. Aresti",
+        "one_line": "XLK fell 12.5% in five days, nearly double the next-worst sector's loss of 8.0%, and is the main driver of index weakness.",
+        "tier": "feature",
+        "triage_index": 4,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "energy-oil-gas-split",
+        "section": "Sectors",
+        "headline": "Energy is down 12.7% in a month and oil is the reason",
+        "kicker": "SECTORS \u00b7 ENERGY",
+        "byline": "I. Aresti",
+        "one_line": "XLE has lost 12.7% over 20 days as USO fell 17.6%, though natural gas rose 10.2%.",
+        "tier": "brief",
+        "triage_index": 5,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "us-financing-squeeze",
+        "section": "Regions",
+        "headline": "US assets took the hit while the long end refused to help",
+        "kicker": "REGIONS \u00b7 UNITED STATES",
+        "byline": "P. Kanu",
+        "one_line": "US equities, credit and commodities all weakened under a 4.9% 10-year and a stronger dollar.",
+        "tier": "feature",
+        "triage_index": 6,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "em-exporters-double-hit",
+        "section": "Regions",
+        "headline": "Emerging markets and commodity exporters face a dollar and metals double hit",
+        "kicker": "REGIONS \u00b7 EM AND EXPORTERS",
+        "byline": "P. Kanu",
+        "one_line": "A firmer dollar and falling metals, oil and agriculture are a difficult mix for commodity-linked economies.",
+        "tier": "brief",
+        "triage_index": 7,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      },
+      {
+        "slug": "hedges-failed",
+        "section": "Risk",
+        "headline": "Gold failed as a hedge, which is the real warning",
+        "kicker": "RISK \u00b7 HEDGE FAILURE",
+        "byline": "S. Vance",
+        "one_line": "With gold down 9.2% and silver down 16.2% in the same week equities sold off, the usual hedges did not work.",
+        "tier": "feature",
+        "triage_index": 8,
+        "triage_indices": [],
+        "theme": "",
+        "region": "global",
+        "kind": "new"
+      }
+    ]
+  },
+  "briefs": {
+    "hy-lags-ig": {
+      "slug": "hy-lags-ig",
+      "headline": "High yield lagged investment grade by 1.6 points in a week",
+      "kicker": "CREDIT \u00b7 HY VS IG",
+      "byline": "T. Larch",
+      "body_md": "High-yield bonds lagged investment-grade debt this week, a gap that suggests investors moved toward safer credit rather than fleeing the asset class. The high-yield ETF HYG fell 0.79% over five days while the investment-grade ETF LQD rose 0.86%, leaving high yield 1.65 points behind on a relative basis.\n\nThe move is milder than the pressure in equities, and its shape fits investors trimming risk rather than panicking. The most exposed borrowers are energy-heavy high-yield issuers, since the oil fund USO has dropped 17.6% over 20 days.\n\nWhat would turn this into a real spread-widening episode is a set of signs appearing together: high-yield losses accelerating, investment-grade spreads starting to follow them wider, and weaker oil pushing more energy borrowers toward downgrades. Until those line up, this is a quality rotation inside credit.",
+      "sources_used": [
+        "Triage market data: HYG and LQD five-day moves, HY-minus-IG spread change, USO 20-day move (no external sources provided)"
+      ],
+      "failed": false
+    },
+    "long-end-near-five": {
+      "slug": "long-end-near-five",
+      "headline": "The 10-year sits 9 basis points from 5% and the 30-year is already past it",
+      "kicker": "RATES \u00b7 LONG END",
+      "byline": "G. Mehlman",
+      "body_md": "Long-dated Treasury yields stayed high last week while equities and commodities sold off hard, leaving bonds without the flight-to-quality bid investors usually expect in a risk-off week. The 10-year closed at 4.91% and the 30-year at 5.30%, so the long bond is already above 5% and the 10-year is 9 basis points short of that level. The Nasdaq-100 technology proxy XLK fell 12.5% over the same week. The curve is steep rather than inverted: the 10-year sits 79 basis points above the 3-month yield of 4.12%. That pattern points to term premium and supply, not growth fears, driving the long end. A close above 5% on the 10-year would put pressure on equity multiples and could change the stock-bond correlation that portfolios have leaned on in past selloffs. Watch whether the 10-year breaks 5% in the sessions ahead.",
+      "sources_used": [],
+      "failed": false
+    },
+    "tech-outlier": {
+      "slug": "tech-outlier",
+      "headline": "Technology's 18.7% monthly drop is the market's centre of gravity",
+      "kicker": "SECTORS \u00b7 TECHNOLOGY",
+      "byline": "I. Aresti",
+      "body_md": "Technology stocks have sold off sharply over the past month, and the damage is concentrated in one sector. The Technology Select Sector SPDR (XLK) fell 12.5% over five sessions and 18.7% over 20, nearly double the 8.0% loss in communication services, the next-worst sector on the five-day measure. Materials fell 7.4%. Because technology carries so much weight in the index, its slide accounts for much of the broader decline. The 10-year Treasury yield, at 4.9%, is the leading suspect: long-duration growth shares tend to fall when yields rise. Consumer staples, a defensive group, is the only sector in the comparison set with a positive 20-day return, up 2.5%. The key test is whether XLK rebounds without yields falling. If it does, positioning rather than rates is the more likely explanation.",
+      "sources_used": [
+        "Desk triage facts supplied with the brief (no external sources provided)"
+      ],
+      "failed": false
+    },
+    "crowded-trades-unwind": {
+      "slug": "crowded-trades-unwind",
+      "headline": "Everything that was crowded fell at once",
+      "kicker": "EDITORIAL \u00b7 WEEKLY THESIS",
+      "byline": "The Editor",
+      "body_md": "Technology, precious metals and energy were sold together last week, and even the defensive sectors that usually absorb selling fell. The technology sector ETF (XLK) dropped 12.49% over five days and 18.68% over 20, and every sector was negative over the week. Silver fell 16.22% and gold 9.17%. Consumer staples (XLP) lost 2.05%, utilities (XLU) 3.07% and real estate (XLRE) 4.30%, so no sector offered a clean refuge. The most plausible common driver is tighter financial conditions: the 10-year Treasury yield is at 4.91%, the 30-year at 5.30%, and the dollar index at 103.81, up 1.96% over 20 days.\n\nThe read is testable. If this is forced selling, the 10-year should settle back below 5% and the dollar should stop rising, with metals and tech bouncing within one to two weeks. A 10-year move above 5%, or high-yield bonds (HYG) continuing to lag investment-grade bonds (LQD), would instead point to a genuine tightening of conditions rather than a flush.",
+      "sources_used": [
+        "Internal triage market data (no external sources provided)"
+      ],
+      "failed": false
+    },
+    "energy-oil-gas-split": {
+      "slug": "energy-oil-gas-split",
+      "headline": "Energy is down 12.7% in a month and oil is the reason",
+      "kicker": "SECTORS \u00b7 ENERGY",
+      "byline": "I. Aresti",
+      "body_md": "Energy stocks have fallen sharply over the past month, with the Energy Select Sector SPDR (XLE) down 12.7% over 20 trading days. Crude is the driver: the oil fund USO dropped 17.6% over the same stretch, while natural gas (UNG) rose 10.2%.\n\nOver the last five days, XLE fell 6.9% and USO 4.1%, while UNG gained 4.0%. Falling oil typically eases inflation expectations, which matters while long-dated yields stay high.\n\nWatch whether crude stabilises and whether gas keeps its gains.",
+      "sources_used": [
+        "Triage market data: XLE, USO, UNG 5-day and 20-day returns"
+      ],
+      "failed": false
+    },
+    "dollar-quiet-tightener": {
+      "slug": "dollar-quiet-tightener",
+      "headline": "The dollar's 20-day climb of 2% is the quiet tightener",
+      "kicker": "FX \u00b7 DOLLAR",
+      "byline": "E. Castellano",
+      "body_md": "The dollar index stood at 103.81, up 0.39% on the week and 1.96% over twenty sessions, as base metals sold off sharply. The DBB base-metals ETF is down 7.07% over five days and 10.13% over twenty. Gold has fallen too, with GLD down 9.17% this week despite no visible safe-haven bid.\n\nA stronger dollar makes dollar-priced commodities dearer for buyers abroad, which is the textbook channel here. The data so far does not show how much of the drop is currency and how much is crowded positions unwinding. Emerging-market currencies and commodity importers face the most pressure.\n\nThe key test is a dollar pullback. If the dollar softens and metals fail to recover with it, positioning rather than currency is the likelier driver.",
+      "sources_used": [],
+      "failed": false
+    },
+    "hedges-failed": {
+      "slug": "hedges-failed",
+      "headline": "Gold failed as a hedge, which is the real warning",
+      "kicker": "RISK \u00b7 HEDGE FAILURE",
+      "byline": "S. Vance",
+      "body_md": "Gold and silver fell alongside equities in the same week, so the assets investors usually turn to in a selloff did little to cushion portfolios. Over five days, GLD dropped 9.17% and SLV fell 16.22%. Over 20 days the losses were 11.93% and 24.12%. Defensive sectors failed too, with consumer staples (XLP), utilities (XLU) and real estate (XLRE) all lower on the week. The 10-year Treasury yield held at 4.91% with no bond rally to offset the pain, a pattern that points to liquidity or margin pressure rather than a search for safety.\n\nFour signals bear watching: a 10-year yield above 5%, a widening gap between high-yield and investment-grade spreads, a dollar that keeps climbing, and a second leg lower that drags defensives down as well. If that happens, diversification will offer less protection than many portfolios assume.",
+      "sources_used": [
+        "Internal triage facts (GLD, SLV, XLP, XLU, XLRE price moves; 10-year yield)"
+      ],
+      "failed": false
+    },
+    "us-financing-squeeze": {
+      "slug": "us-financing-squeeze",
+      "headline": "US assets took the hit while the long end refused to help",
+      "kicker": "REGIONS \u00b7 UNITED STATES",
+      "byline": "P. Kanu",
+      "body_md": "Every one of the 11 US equity sectors finished the past five sessions lower, while credit and commodities also weakened. The long end of the Treasury curve offered no relief: the 10-year yield stood at 4.91% and the 30-year at 5.30%. The 30-year rate feeds into long-dated mortgages and corporate borrowing, so a high level there tightens financing across the economy.\n\nThe dollar index rose 1.96% over 20 days. A stronger dollar raises the cost of dollar debt for borrowers outside the US and tends to pressure commodities priced in dollars, which fits the broader weakness in those markets. The steep curve means the pressure sits in longer-dated yields rather than only in short-term rates.\n\nThe data behind this brief covers US markets only, so it does not say how bond markets outside the US moved. Watch whether the 30-year yield holds above 5.30% and whether the dollar's gains continue, since both would keep financing conditions tight for a market that is already reducing debt.",
+      "sources_used": [
+        "Triage fact sheet: US market snapshot (state/macro), 2026-11-22"
+      ],
+      "failed": false
+    },
+    "em-exporters-double-hit": {
+      "slug": "em-exporters-double-hit",
+      "headline": "Emerging markets and commodity exporters face a dollar and metals double hit",
+      "kicker": "REGIONS \u00b7 EM AND EXPORTERS",
+      "byline": "P. Kanu",
+      "body_md": "Commodity exporters and emerging markets face a double hit from a firmer dollar and falling oil, metals and farm-goods markets.\n\nThe dollar index rose 1.96% over 20 sessions, while the oil fund USO fell 17.64% and the agriculture fund DBA lost 6.17%. The base-metals fund DBB dropped 7.07% in the last five sessions.\n\nThese are market proxies, not observed regional prices, so the squeeze on specific economies is an inference. Weak China-linked demand is the likeliest suspect for the metals decline. A metals bounce with the dollar still firm would weaken that view.",
+      "sources_used": [
+        "Triage market data: DBB, DBA, USO, DXY (5- and 20-session moves)"
+      ],
+      "failed": false
+    }
+  },
+  "articles": {
+    "energy-oil-gas-split": {
+      "slug": "energy-oil-gas-split",
+      "headline": "Energy is down 12.7% in a month and oil is the reason",
+      "kicker": "SECTORS \u00b7 ENERGY",
+      "byline": "I. Aresti",
+      "body_md": "The energy sector has had a month in which its two main raw materials moved in opposite directions. The Energy Select Sector SPDR (XLE) is down 6.85% over five trading days and 12.72% over twenty. The United States Oil Fund (USO), a proxy for crude, has fallen 4.09% on the week and 17.64% on the month. The United States Natural Gas Fund (UNG) has risen 4.04% on the week and 10.23% on the month. Anyone who treats \"energy\" as a single trade has had a poor few weeks.\n\n## Two commodities, one sector label\n\nXLE holds equities, not futures, and the equities lean toward oil. Its holdings are mostly the integrated majors, crude-weighted exploration and production companies, and the service and refining businesses that depend on drilling activity and fuel margins. The fund's 12.7% decline is smaller than crude's 17.6%, as it should be. Producers hedge, integrated companies earn money downstream, and dividends cushion share prices. It is still a large fall for a sector usually sold as defensive.\n\nGas is a different business. Companies weighted toward natural gas, and the pipeline and processing firms that move it, are tied to a commodity that has gained 10.2% in a month. UNG's gain does not translate one for one into equities, because futures-based funds carry roll costs and the shares reflect balance sheets and hedging books. But the divergence indicates where the damage sits: in crude, and in the companies that are paid for crude.\n\nThe split also undercuts the usual explanations for a broad sell-off. A general flight from commodities would have dragged gas down too. Something specific to oil, whether demand worries, supply, or positioning, is a likelier cause, though the price data alone cannot say which.\n\n## What cheaper crude does to inflation expectations\n\nFor policymakers, falling oil is normally welcome. Fuel feeds straight into headline inflation and into the inflation expectations households and markets carry forward. A 17.6% drop in crude over a month should, other things equal, pull near-term breakevens lower.\n\nOther things are not equal. The 10-year Treasury yield sits [about nine basis points from 5%](/long-end-near-five), and the 30-year has already passed it. If lower oil were easing inflation fears, long yields would be expected to ease with it. They have not. That suggests the long end is pricing something other than energy: heavy Treasury supply, a higher required term premium, or doubts about the fiscal path. Cheaper crude is arriving in a bond market that is not paying attention to it.\n\nThe dollar is another factor. Its [2% climb over 20 days](/dollar-quiet-tightener) is part of the pressure on dollar-priced commodities, and a stronger currency also tightens financial conditions without any central bank action.\n\n## What to watch\n\nThree things will show whether the oil slide is a repricing or a pause. The first is whether crude stabilises while long yields stay high, which would confirm that rates are driven by something other than fuel costs. The second is the next CPI release, where the energy component will show how much of the drop has reached consumer prices. The third is whether gas holds its gains or fades back toward oil's trend. A sector split between a falling commodity and a rising one is unstable, and one of the two prices will have to give way.",
+      "in_one_sentence": "XLE has lost 12.7% in 20 days as crude proxy USO fell 17.6%, while natural gas fund UNG rose 10.2%, and long yields are staying high despite cheaper oil.",
+      "image_url": "",
+      "image_caption": "",
+      "image_credit": "",
+      "sources": [],
+      "related_slugs": [
+        "long-end-near-five",
+        "dollar-quiet-tightener",
+        "crowded-trades-unwind"
+      ],
+      "failed": false
+    },
+    "tech-outlier": {
+      "slug": "tech-outlier",
+      "headline": "Technology's 18.7% monthly drop is the market's centre of gravity",
+      "kicker": "SECTORS \u00b7 TECHNOLOGY",
+      "byline": "I. Aresti",
+      "body_md": "The market's weakness this month has an address, and it is the technology sector. The Technology Select Sector SPDR (XLK) fell 12.5% in the past five trading days and 18.7% over twenty. The next-worst sectors over the week, communication services (XLC) at -8.0% and materials (XLB) at -7.4%, lost roughly two-thirds as much. Most sector sell-offs are a crowd moving in the same direction at different speeds. This one is a single sector moving well ahead of the crowd.\n\n## An outlier, not just a laggard\n\nThe distinction matters for diagnosis. If the decline were a broad repricing of equities, the sector ranking would be tightly bunched, with technology a little worse than the rest. Instead there is a clear gap between first and second place. Technology's five-day loss is about 1.6 times that of communication services, the runner-up, and about 1.7 times that of materials.\n\nThe weekly drop also accounts for most of the monthly one. A 12.5% fall in five days inside an 18.7% fall in twenty means roughly two-thirds of the damage arrived in the last quarter of the window. The sell-off is accelerating, not grinding.\n\nThe defensive end of the board tells the other half of the story. Consumer staples (XLP) is the only sector in the weakest-to-strongest defensive group with a positive twenty-day return, at +2.49%. Money has not left equities wholesale. It has left the parts of the market that carry the most expectations.\n\n## Duration, or positioning?\n\nTwo explanations fit the numbers, and they make different predictions.\n\nThe first is duration. Technology is the sector most dependent on earnings that lie far in the future, so its valuation is the most sensitive to the rate used to discount them. The 10-year Treasury yield is near 4.9%, about nine basis points from 5%, and the 30-year is already above that line (see [the rates piece in this edition](/long-end-near-five)). On this reading, XLK is simply the sector with the longest-dated cash flows, and it is being repriced for a higher cost of capital. The dollar's roughly 2% climb over twenty days points the same way, since it tightens financial conditions on top of the rise in yields (see the FX piece).\n\nThe second is positioning. Technology has been the most heavily owned sector in the index, and crowded positions tend to unwind fast and indiscriminately once a few holders are forced to sell. The evidence in favour is the pattern: a sharp acceleration, a large gap to the next sector, and weakness in other consumers of the same trade. Gold's failure as a hedge during the same stretch suggests that selling pressure was not confined to equities (see the risk piece). That is typical of deleveraging, in which holders sell what they can rather than what they want to.\n\nThe two are not exclusive. A rate shock can be the trigger and positioning the amplifier. But the relative weights matter, because they imply different recoveries. This piece cannot settle that weighting from price data alone. Sector returns show how much technology fell, not who sold it or why.\n\n## What would tell them apart\n\nThe test is simple and can be run on prices alone. If duration is the driver, XLK should track yields: it should stabilise only when the 10-year and 30-year stop rising, and it should recover when they fall. If positioning is the driver, XLK can rebound while yields stay where they are, because the selling pressure was forced and has a natural end.\n\nA rebound in XLK without lower yields would therefore favour positioning. A further slide while yields hold near 4.9% would not rule out positioning, but it would make the duration case harder to dismiss. A rebound that arrives only after yields retreat would point firmly to rates.\n\nThere is also a mundane reason for caution. After a 12.5% week, even a forced seller's exit tends to produce a sharp bounce, so a single up day in XLK is weak evidence for anything. The useful signal is a rebound that survives a further test of the 5% level on the 10-year.\n\nThat test is the next catalyst. A 10-year yield through 5% would hand the duration argument fresh evidence, with the 30-year already past it. A failure to break, paired with technology holding its lows, would suggest the sector's decline had more to do with who owned it than with what rates did.",
+      "in_one_sentence": "XLK's 12.5% weekly drop nearly doubles the next-worst sector's loss; whether rates or crowded positioning is behind it will show in how it trades against a 10-year near 5%.",
+      "image_url": "",
+      "image_caption": "",
+      "image_credit": "",
+      "sources": [],
+      "related_slugs": [
+        "crowded-trades-unwind",
+        "long-end-near-five",
+        "dollar-quiet-tightener",
+        "hedges-failed"
+      ],
+      "failed": false
+    },
+    "hy-lags-ig": {
+      "slug": "hy-lags-ig",
+      "headline": "High yield lagged investment grade by 1.6 points in a week",
+      "kicker": "CREDIT \u00b7 HY VS IG",
+      "byline": "T. Larch",
+      "body_md": "Credit markets are sorting borrowers by quality rather than running from them. Over the past five sessions the largest exchange-traded fund tracking high-yield corporate bonds, HYG, fell 0.79%. Its investment-grade counterpart, LQD, rose 0.86%. The 1.65-point gap between the two is the widest sign yet that the week's equity selloff has reached the bond market, though it has arrived in a far more orderly form.\n\n## A rotation, not a rout\n\nThe direction of the moves matters as much as their size. In a true credit panic, investment-grade funds fall alongside junk, because forced sellers dump whatever they can get a bid on. Here the safer product gained. That pattern fits investors cutting risk and keeping their money in credit, rather than leaving the asset class altogether.\n\nThere is a rates explanation too. LQD carries far more interest-rate sensitivity than HYG, so a rally in Treasuries would lift it more. But the long end of the Treasury curve has not obliged: the 10-year sits 9 basis points from 5%, and the 30-year is already above it (see [the long end near five](/long-end-near-five)). If long yields had been falling, the gain in LQD would be easy to explain. With long yields this high, LQD's rise looks less like a duration trade and more like a preference for issuer quality. That reading rests on the price moves alone. It is an inference, not something the data confirms directly.\n\nSet against equities, the move is mild. Technology's 18.7% monthly drop is the centre of gravity for risk assets (see [technology's outlier month](/tech-outlier)), and the broader unwinding of crowded positions is covered in [the day's lead editorial](/crowded-trades-unwind). A sub-1% decline in HYG is small beside those numbers. High-yield funds have so far behaved like a market under mild pressure, not a market in distress.\n\n## The oil problem\n\nThe part of high yield to watch is energy. The oil fund USO has fallen 17.6% over 20 days, and the energy sector is down 12.7% over a month (see [energy and the oil-gas split](/energy-oil-gas-split)). Energy producers have historically made up a large share of the high-yield universe, and their borrowing costs track the crude price closely. Cheaper oil cuts cash flow, thins the cushion for covering interest, and makes refinancing harder for the weakest names.\n\nOne caveat is that this piece has not matched HYG's weekly loss to specific energy holdings. A 0.79% fall is small enough that it may reflect broad risk reduction rather than energy-specific stress. But the timing is worth noting. A fall in oil of this size is the type of shock that usually reaches bond prices with a lag, as ratings agencies and lenders reassess the weakest balance sheets. Today's weekly move may be an early reading on that process rather than the whole of it.\n\nThe dollar adds pressure. Its 20-day gain of roughly 2% (see [the dollar as a quiet tightener](/dollar-quiet-tightener)) tightens financial conditions for borrowers abroad, and for commodity exporters in particular (see [the emerging-market double hit](/em-exporters-double-hit)).\n\n## What would make it a real episode\n\nA 1.65-point weekly gap is notable, but one week does not make a widening cycle. Several developments would turn this into one.\n\n- **Investment grade stops rising.** The orderly reading depends on LQD holding its gain. If the safer fund starts to fall alongside HYG, the story shifts from quality rotation to indiscriminate selling.\n- **Outflows from high-yield funds.** Persistent redemptions force funds to sell bonds into thin markets, which can push prices down faster than credit fundamentals justify.\n- **Oil keeps falling.** A further leg lower in crude would extend the pressure on energy issuers, which is where defaults would be likeliest to start.\n- **Long yields keep rising.** Higher funding costs for the entire corporate sector would hit weaker borrowers first, and would blunt the hedge that investment-grade bonds have so far provided.\n- **Safe havens keep failing.** Gold's poor showing as a hedge (see [why the hedges failed](/hedges-failed)) leaves fewer places to hide if credit does sour.\n\nThe next test is the coming week's price action in HYG and LQD relative to the 1.65-point gap. If the gap narrows through a rebound in high yield, this will read as a brief repricing. If it widens while oil stays weak and long yields stay near 5%, quality rotation will start to look like the first stage of a more serious spread-widening episode.",
+      "in_one_sentence": "HYG fell 0.79% while LQD rose 0.86%, a 1.65-point quality rotation in credit that is orderly for now but exposed to oil's slide and high long-end yields.",
+      "image_url": "",
+      "image_caption": "",
+      "image_credit": "",
+      "sources": [],
+      "related_slugs": [
+        "energy-oil-gas-split",
+        "long-end-near-five",
+        "crowded-trades-unwind",
+        "dollar-quiet-tightener",
+        "hedges-failed"
+      ],
+      "failed": false
+    },
+    "dollar-quiet-tightener": {
+      "slug": "dollar-quiet-tightener",
+      "headline": "The dollar's 20-day climb of 2% is the quiet tightener",
+      "kicker": "FX \u00b7 DOLLAR",
+      "byline": "E. Castellano",
+      "body_md": "The dollar has been rising for a month, and almost nobody is talking about it. The ICE US Dollar Index (DXY) closed at 103.81, up 0.39% on the week and 1.96% over twenty trading days. That is a steady grind, not a spike. Over the same stretch, the metals complex has fallen hard: the DBB base-metals fund is down 7.07% in five days and 10.13% in twenty, and the gold fund GLD has lost 9.17% in a week. The dollar is a tightener in the background. The open question is how much of the commodity rout it actually explains.\n\n## The arithmetic of a 2% move\n\nThe textbook link is simple. Metals are priced in dollars, so a stronger dollar makes them costlier for buyers holding euros, yuan or rupees, and demand softens at the margin. A stronger dollar also tightens financial conditions for the many borrowers worldwide who owe in dollars.\n\nThe size of the moves is the problem for a pure-currency story. A 1.96% rise in the index sits against a 10.13% fall in base metals, a ratio of about five to one. Gold is starker. It fell 9.17% in five days, while the dollar added only 0.39% over the same days. Even on generous assumptions about sensitivity, a currency move that small cannot account for a drop that large. The dollar looks like a contributor and a tailwind for the sellers, not the cause.\n\nThe gold move also lacks the usual alibi. A falling metal alongside a rising dollar is sometimes explained as capital fleeing into cash, but the bid for traditional havens has been missing too. That is the subject of [Gold failed as a hedge, which is the real warning](/hedges-failed), and it points toward forced selling rather than a change in views on the metal.\n\n## Positioning does the heavy lifting\n\nThe more plausible reading is that the dollar supplied the push and crowded positions supplied the momentum. When a trade is widely held, a modest adverse move can trigger stop-outs and margin calls, and those sales hit whatever is liquid, including assets that would normally rise in a sell-off. The pattern across this week's market, covered in [Everything that was crowded fell at once](/crowded-trades-unwind), fits that description better than a clean currency story does.\n\nThe dollar's role is best understood as a slow squeeze on the funding side. It raises the cost of dollar liabilities and trims demand for dollar-priced goods, which leaves leveraged holders with less cushion when prices turn.\n\nThere is a test. If the dollar retreats and metals do not bounce, the currency was never the main driver, and positioning is. If metals rebound in step with a softer dollar, the currency channel was larger than the raw ratios suggest. A pullback in DXY that fails to lift metals would be the cleanest evidence for the positioning explanation.\n\n## Winners and losers across regions\n\nThe losers are easiest to identify. Economies that earn dollars from raw materials, such as the copper, iron-ore and precious-metals exporters in Latin America, Africa and Australasia, take a double hit: lower prices for what they sell and a firmer currency on what they owe. [Emerging markets and commodity exporters face a dollar and metals double hit](/em-exporters-double-hit) lays out that exposure in more detail.\n\nThe winners are less dramatic. Importers of industrial inputs gain a lower bill, though a stronger dollar cancels part of that for any country whose own currency is weakening against it. Holders of dollar cash gain the most plainly. The United States itself is a mixed case: the dollar is strong, yet [US assets took the hit while the long end refused to help](/us-financing-squeeze), and the pressure on Treasury yields near 5% (see [The 10-year sits 9 basis points from 5%](/long-end-near-five)) shows that a firm currency has not meant easy financing.\n\n## What to watch\n\nThe next test is whether the dollar's trend holds or fades. A reversal in DXY that carries metals up with it would show the currency mattered. A reversal that leaves metals where they are would show positioning mattered more, and would suggest the selling is not finished. Either result will say more about this episode than another day of the same direction.",
+      "in_one_sentence": "DXY has risen 1.96% in twenty days, but that is far too small to explain a 10% base-metals fall; positioning looks like the bigger driver, and a dollar pullback is the test.",
+      "image_url": "",
+      "image_caption": "",
+      "image_credit": "",
+      "sources": [],
+      "related_slugs": [
+        "crowded-trades-unwind",
+        "hedges-failed",
+        "em-exporters-double-hit",
+        "us-financing-squeeze",
+        "long-end-near-five"
+      ],
+      "failed": false
+    },
+    "long-end-near-five": {
+      "slug": "long-end-near-five",
+      "headline": "The 10-year sits 9 basis points from 5% and the 30-year is already past it",
+      "kicker": "RATES \u00b7 LONG END",
+      "byline": "G. Mehlman",
+      "body_md": "When investors are frightened, they usually buy government bonds. Prices rise, yields fall, and the safest paper in the world takes in what the rest of the market is dumping. The week to 20 November did not follow that pattern. Equities, commodities and gold sold off hard. The 10-year Treasury ended the week at 4.91%, nine basis points short of 5%. The 30-year closed at 5.30%, already well beyond that line.\n\nThe technology sector fell 12.5% over the week, as measured by the XLK fund. Yields at the long end stayed close to cycle-high levels throughout. For a portfolio manager holding both stocks and long bonds, the bonds provided no cushion.\n\n## What the curve is saying\n\nThe shape of the curve is the first clue. The 3-month bill yielded 4.12% on 20 November and the 5-year note 4.70%. The 10-year sat at 4.91% and the 30-year at 5.30%. The gap between the 3-month and the 10-year was +0.79 percentage points.\n\nThat is a steep curve, not an inverted one. An inverted curve is the classic recession signal, with short rates above long rates because markets expect the central bank to cut into weakness. Nothing here resembles that. Short rates sit well below long rates, and the premium for lending to the government for ten or thirty years remains large.\n\nIf growth fears were driving the selloff in risk assets, the long end would normally have rallied. Investors would price in slower activity and lower future policy rates, and long yields would fall. They did not. The more natural reading is that the long end is being set by something other than the growth outlook: the compensation investors demand for holding duration, usually called the term premium, and the volume of Treasury debt they are asked to absorb.\n\nThis is inference from the price action, not something the data prove. Yields alone cannot separate expected policy rates from the term premium, and published term-premium estimates are model-dependent. But the pattern fits. Yields that stay high while other assets fall point to sellers of duration, or to buyers who will only take it at a higher price, rather than to an economy expected to weaken.\n\nThe move also fits the other pieces of the week's picture. The dollar has climbed about 2% over 20 days, and gold failed to act as a hedge. When the safe assets do not rally together with the sell-off, the market is not simply de-risking. It is repricing the cost of financing.\n\n## What a close above 5% would mean\n\nFive per cent on the 10-year is a round number, and round numbers matter in markets mostly because positioning and attention gather around them. The 30-year has already passed it, so a 10-year close above it would not be a surprise so much as a confirmation that the entire long end now sits above that threshold.\n\nThe first channel is equity valuation. Stock multiples are, in arithmetic terms, a function of the rate used to discount future earnings. A higher long yield lowers the present value of profits that arrive far in the future, which is why long-duration growth stocks are the most exposed. The technology sector's sharp weekly and monthly declines are consistent with that sensitivity, although the sell-off has other causes as well, including crowded positioning.\n\nThe second channel is competition. A risk-free 10-year yield near 5% and a 30-year above it raise the hurdle that equities must clear. The gap between the earnings yield on stocks and the bond yield narrows, and the extra return investors demand for owning shares has to come from either lower prices or higher expected earnings. In a week with falling prices, the first is the one on offer.\n\nThe third channel, and the one that matters most for portfolio construction, is the stock-bond correlation. For much of the period before 2022, bonds tended to rise when stocks fell, which made the classic 60/40 mix work. When inflation or supply, rather than growth, dominates, that relationship flips: stocks and bonds fall together, because the same force that lifts yields is the one that hurts equity multiples. The past week looks like an example of the second regime. Bonds did not rise as stocks fell, and a 10-year close above 5% would reinforce the view that the old hedge is unreliable.\n\n## What to watch\n\nThree things will show whether the long end is still the source of pressure. The first is whether the 10-year closes above 5% on a daily basis, and whether it holds there. The second is the 30-year, which at 5.30% leaves little room before it tests levels that are higher still. The third is the steepness of the curve: if the 3m10y spread keeps widening while risk assets stay weak, the term-premium reading gains weight. If the spread narrows because long yields fall, it would suggest that growth concerns are finally taking over.\n\nTreasury auctions and the next inflation and employment releases are the nearest catalysts. A weak auction, with soft demand at the long end, would be the cleanest evidence that supply is the constraint. Until then, the lesson of the week is narrower: when stocks fell, long Treasuries did not come to the rescue.",
+      "in_one_sentence": "Long Treasury yields held near cycle highs as stocks and commodities fell, pointing to term premium and supply, not growth fears, as the driver at the long end.",
+      "image_url": "",
+      "image_caption": "",
+      "image_credit": "",
+      "sources": [
+        {
+          "title": "U.S. Department of the Treasury \u2014 Daily Treasury Par Yield Curve Rates",
+          "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+        },
+        {
+          "title": "FRED \u2014 10-Year Treasury Constant Maturity Rate (DGS10)",
+          "url": "https://fred.stlouisfed.org/series/DGS10"
+        }
+      ],
+      "related_slugs": [
+        "us-financing-squeeze",
+        "hedges-failed",
+        "tech-outlier",
+        "dollar-quiet-tightener"
+      ],
+      "failed": false
+    },
+    "crowded-trades-unwind": {
+      "slug": "crowded-trades-unwind",
+      "headline": "Everything that was crowded fell at once",
+      "kicker": "EDITORIAL \u00b7 WEEKLY THESIS",
+      "byline": "The Editor",
+      "body_md": "The week's losses were not about one idea going wrong. Technology fell 12.5% in five days and is down 18.7% over twenty. Silver lost 16.2% and gold 9.2%. Energy, already down 12.7% on the month, kept sliding. Every sector in the market finished the five days negative. The pattern looks less like investors changing their minds about a theme and more like a crowd leaving a room all at once.\n\nThat is the house reading, and it comes with a test. If the selling was forced, it should end quickly. If it was something else, the bond market will say so.\n\n## What fell\n\nA repricing has a story. Rates rise and long-duration growth stocks suffer, or growth fears build and cyclicals suffer, or inflation scares fade and gold suffers. Each leaves a fingerprint, with some assets hurt and others helped.\n\nThis week's fingerprint is a smear. Technology, silver, gold and energy share little in their fundamentals. They did share one feature: they were popular. Each had drawn heavy positioning, whether momentum funds in tech, retail and macro money in the metals, or the long-running energy trade. When positions like those are cut together, correlations that look absurd in calm weather become the norm.\n\nThe silver and gold moves fit that account. Silver's 16.2% drop is nearly double gold's 9.2%, the usual signature of a more speculative, more levered holder base being shaken out first. A fundamental repricing of precious metals would be unlikely to arrive in the same week as a 12.5% drop in the technology sector.\n\n## No clean hiding place\n\nThe defensives did not hold. Consumer staples lost 2.05% over five days, utilities 3.07% and real estate 4.30%. These are the sectors investors rotate into when they want to be out of the storm, and none of them rose.\n\nThat matters for two reasons. First, it is what indiscriminate selling looks like: when funds must cut gross exposure, they sell what they can sell, not what they would like to sell. Second, it points to a common cause outside equities. Utilities and real estate are bond proxies, valued off the yield curve. They suffer when long rates rise even if nothing is wrong with the underlying businesses.\n\nThe companion piece on [gold's failure as a hedge](/hedges-failed) takes up the uncomfortable corollary. An asset sold to protect portfolios fell 9.2% in the week that protection was needed.\n\n## The squeeze from the other side\n\nThe plausible common pressure is visible in rates and currency. The 10-year Treasury yield stands at 4.91%, nine basis points from 5%. The 30-year, at 5.30%, is already beyond it. The dollar index, at 103.81, has risen 1.96% over twenty days. Higher long yields raise the return that every risk asset must beat, and a stronger dollar tightens financial conditions for anyone who borrows in it or earns in other currencies or in commodities priced in dollars. The [long end near five](/long-end-near-five) and the [dollar as quiet tightener](/dollar-quiet-tightener) are the two halves of this squeeze, and the [US financing](/us-financing-squeeze) and [emerging-market](/em-exporters-double-hit) angles show where it bites.\n\nCredit offers a smaller clue. High yield lagged investment grade by 1.6 points over the week, which is the direction one would expect when funding gets harder at the margin. It is a modest gap, and the [credit piece](/hy-lags-ig) treats it as such. It matters mainly as a thing to keep watching.\n\nThe two explanations are not exclusive. Higher yields and a firmer dollar may well have been the trigger that forced the crowded positions out. The editorial question is whether the trigger keeps pulling or the flush simply runs its course.\n\n## How the thesis can fail\n\nA thesis that cannot be wrong is only a mood, so here are the terms.\n\nIf this was deleveraging, the following should happen within one to two weeks. The 10-year should stabilise below 5% rather than march through it. The dollar should stop rising. Metals and technology, the two hardest-hit and most crowded areas, should bounce, because forced sellers are indifferent to price and their exit leaves cheap assets behind. A bounce need not recover the losses. It only needs to show that the selling was mechanical.\n\nIf instead the 10-year breaks above 5% and holds there, the story changes. A yield that crosses a round number and stays across it is a genuine tightening of conditions, and no amount of position-cleaning would explain it away. The same goes for credit. If HYG keeps lagging LQD in the coming days, the market is charging more for weaker balance sheets, and the week's losses will look like the first instalment of a repricing, not a flush.\n\nThere is also a reading in which both are true: a flush that ends, followed by a tighter backdrop that caps the recovery. Technology's 18.7% monthly decline, examined in the [sector piece](/tech-outlier), leaves a lot of room for a bounce and not much reason to expect a return to the highs while the 30-year sits above 5%. Energy's slide, which the [energy report](/energy-oil-gas-split) traces mainly to oil, may take longer to stabilise, since it began before this week.\n\n## What to watch\n\nThe cleanest evidence arrives early. The first test is the 10-year yield against 5% over the next several sessions. The second is the dollar index: another leg above 103.81 would count against the forced-selling reading. The third is whether silver and the technology sector rally on days when yields are flat. A bounce that needs falling yields to work is a relief trade. A bounce that comes without them suggests the crowd has finished leaving.\n\nUntil those answers come in, the week's lesson is narrower than a new macro regime and broader than a bad day for tech. Crowded trades are fragile to funding conditions, and this week the funding conditions moved.",
+      "in_one_sentence": "Tech, metals and energy were liquidated together while a 4.91% 10-year and a firmer dollar tightened conditions; the next two weeks will show whether it was a flush or a tightening.",
+      "image_url": "",
+      "image_caption": "",
+      "image_credit": "",
+      "sources": [],
+      "related_slugs": [
+        "long-end-near-five",
+        "dollar-quiet-tightener",
+        "hy-lags-ig",
+        "tech-outlier",
+        "energy-oil-gas-split",
+        "us-financing-squeeze"
+      ],
+      "failed": false
+    },
+    "us-financing-squeeze": {
+      "slug": "us-financing-squeeze",
+      "headline": "US assets took the hit while the long end refused to help",
+      "kicker": "REGIONS \u00b7 UNITED STATES",
+      "byline": "P. Kanu",
+      "body_md": "The United States is absorbing a tightening of financial conditions from three directions at once. Long-term borrowing costs are climbing, the dollar is firming, and a market that was already shedding positions has found no buyer willing to step in. The 10-year Treasury yield stands at 4.91%, nine basis points short of 5%. The 30-year has already gone through it, at 5.30%. Over the past five days, all 11 sectors of the S&P 500 have fallen.\n\nA broad decline of that kind says less about any single company than about the price of money. When every sector falls together, the common factor is usually the discount rate, and that is what the bond market is now setting.\n\n## A curve that steepens against the market\n\nThe shape of the Treasury curve matters as much as its level. A 30-year yield of 5.30% against a 10-year of 4.91% puts the extra compensation for holding the longest bonds at roughly 39 basis points. Investors are demanding more to lend for three decades than for one, and they are demanding it while equities and credit fall. In a conventional risk-off episode, money runs to the long end and pushes yields down. Here the long end has declined to play that role.\n\nThat is the awkward part for a market already deleveraging. Mortgages, long-dated corporate issuance and the discount rates used to value equities are all priced off the long end. A steep curve that keeps rising raises the hurdle for every asset that depends on distant cash flows. It also makes the unwinding of leveraged positions harder to stop, because the usual safe-haven bid is missing. The wider unwind is covered in [Everything that was crowded fell at once](/crowded-trades-unwind), and the yield levels themselves in [The 10-year sits 9 basis points from 5% and the 30-year is already past it](/long-end-near-five).\n\n## The damage across assets\n\nEquities are the most visible casualty. Technology has fallen 18.7% over a month and energy 12.7%. Between them, the two sectors carry much of the index's recent drawdown, and the five-day sweep across all 11 sectors shows the selling has spread beyond them. Credit has weakened too. High yield lagged investment grade by 1.6 points over the week, the pattern expected when financing gets scarcer and lenders reprice the weakest borrowers first. The split is examined in [High yield lagged investment grade by 1.6 points in a week](/hy-lags-ig).\n\nCommodities, which might have offered a refuge from a rising dollar and rising yields, weakened as well. Energy's slide is largely an oil story, as set out in [Energy is down 12.7% in a month and oil is the reason](/energy-oil-gas-split). Gold's failure to cushion the fall is the sharper signal, because a hedge that fails in the one scenario it exists for invites investors to question the rest of their protection ([Gold failed as a hedge, which is the real warning](/hedges-failed)).\n\n## The dollar adds to the squeeze\n\nThe dollar index has risen 1.96% over 20 days. A stronger dollar tightens conditions on its own account. It makes dollar-denominated debt more expensive to service for borrowers outside the US, and it trims the translated earnings of American multinationals. It also pressures commodity prices, which are quoted in dollars. [The dollar's 20-day climb of 2% is the quiet tightener](/dollar-quiet-tightener) covers the currency in detail.\n\nOne caution on scope. The data available for this report contains no direct readings from non-US markets, so any claim about spillovers abroad rests only on the dollar and commodity moves. The inference is that a firmer dollar and weaker metals and oil are the channels through which US conditions reach everyone else, a pressure taken up in [Emerging markets and commodity exporters face a dollar and metals double hit](/em-exporters-double-hit). Whether foreign bond or equity markets are falling in step cannot be confirmed from the figures here.\n\n## What to watch\n\nThe obvious threshold is 5% on the 10-year. A close above it would put the benchmark at a level it has tested only intermittently, and would test whether the equity selloff has further to run or has begun to price the new rate. The next readings to check are the 30-year's behaviour around 5.30%, whether the dollar's 20-day gain extends past 2%, and whether high yield continues to underperform investment grade. If long yields stop rising while the dollar holds its gain, the pressure on US assets may ease. If both keep moving, the deleveraging has no obvious floor.",
+      "in_one_sentence": "US equities, credit and commodities all weakened as a 4.91% 10-year, a 5.30% 30-year and a firmer dollar tightened financing for a market already deleveraging.",
+      "image_url": "",
+      "image_caption": "",
+      "image_credit": "",
+      "sources": [],
+      "related_slugs": [
+        "crowded-trades-unwind",
+        "long-end-near-five",
+        "dollar-quiet-tightener",
+        "hy-lags-ig",
+        "energy-oil-gas-split",
+        "em-exporters-double-hit"
+      ],
+      "failed": false
+    },
+    "em-exporters-double-hit": {
+      "slug": "em-exporters-double-hit",
+      "headline": "Emerging markets and commodity exporters face a dollar and metals double hit",
+      "kicker": "REGIONS \u00b7 EM AND EXPORTERS",
+      "byline": "P. Kanu",
+      "body_md": "A stronger dollar is a headwind for countries that earn their living selling raw materials. Falling prices for the things they sell are a second headwind. Over the past month both have arrived together. The dollar index is up about 2% over 20 days, while exchange-traded proxies for base metals, oil and agricultural commodities have all dropped.\n\nThis is inference from commodity and currency data. It is not a reading of regional prices. No emerging-market equity, bond or currency series is cited here, so what follows is an argument about exposure, not a report of damage already done.\n\n## What the data show\n\nThe Invesco DB Base Metals Fund (DBB) fell 7.07% over five days. The agriculture fund (DBA) lost 1.51% over five days and 6.17% over 20. The US Oil Fund (USO) is down 17.64% over 20 days. Over the same stretch the DXY gained 1.96%.\n\nThese are fund prices, which carry roll and structure effects that spot prices do not. The direction is still consistent across all three groups. Metals, energy and farm goods fell together while the currency in which they are priced strengthened.\n\n## Why the combination bites\n\nCommodities are priced in dollars, so a rising dollar makes them dearer for buyers elsewhere and tends to push prices down. For an exporter the arithmetic compounds. Revenue per unit falls, and the dollar debt that many emerging borrowers carry becomes heavier in local-currency terms. Both effects land on the same balance sheets.\n\nThe pattern is not uniform. Oil exporters, copper and metals producers and farm-heavy economies each have a different mix, and the oil drop is the steepest of the three. But the common thread is a loss of export income at a moment when dollar funding is not getting any cheaper.\n\n## A demand story, with a caveat\n\nChina-linked demand is a natural suspect for the metals weakness. China is the largest buyer of most industrial metals, and a soft patch there tends to show up first in copper, aluminium and their relatives. The data here do not demonstrate that, though. A firmer dollar alone can pull metals lower, and so can a broad de-risking that sells everything liquid. Metals, oil and agriculture all falling at once fits a general retreat from risk at least as well as it fits a single-country demand shock.\n\nThat is the reason to hold the demand explanation loosely. It would be weakened by a specific pattern: base metals bouncing while the dollar stays firm. That would suggest the earlier drop was a positioning and liquidity event, not a reassessment of what the world's factories need. If metals stay weak even as the dollar steadies, the demand reading gains ground.\n\n## What to watch\n\nThe first test is whether DBB recovers any of its five-day loss while the DXY holds its gains. The second is whether oil stabilises after a 17.6% slide, since that decline matters most to the fiscal position of energy exporters. The wider backdrop is covered in the pieces on the [dollar's 20-day climb](/dollar-quiet-tightener) and on [how the sell-off hit US assets](/us-financing-squeeze). If the dollar keeps rising and commodity prices keep sliding, the pressure on commodity-linked economies would move from a market story to a funding one.",
+      "in_one_sentence": "A firmer dollar and falling metals, oil and agriculture are a difficult mix for commodity-linked economies, though the China-demand link is inference, not observation.",
+      "image_url": "",
+      "image_caption": "",
+      "image_credit": "",
+      "sources": [],
+      "related_slugs": [
+        "dollar-quiet-tightener",
+        "energy-oil-gas-split",
+        "us-financing-squeeze",
+        "crowded-trades-unwind"
+      ],
+      "failed": false
+    },
+    "hedges-failed": {
+      "slug": "hedges-failed",
+      "headline": "Gold failed as a hedge, which is the real warning",
+      "kicker": "RISK \u00b7 HEDGE FAILURE",
+      "byline": "S. Vance",
+      "body_md": "When stocks fall, the standard portfolio has a short list of places to hide. Treasuries are meant to rally. Gold is meant to hold or rise. Utilities, staples and other defensive sectors are meant to lose less than the rest. In the week equities sold off, almost none of that happened.\n\nThe SPDR Gold Shares ETF (GLD) fell 9.17% over five days and 11.93% over twenty. The silver ETF (SLV) did worse: down 16.22% in a week and 24.12% in a month. Consumer staples (XLP), utilities (XLU) and real estate (XLRE) were all negative over the five days. The 10-year Treasury yield stood at 4.91%, with no sign of the duration rally that usually accompanies a risk-off move.\n\nA falling stock market is an ordinary event. Every hedge falling with it is a different kind of signal.\n\n## Why the pattern matters\n\nHedges work because different assets respond to different fears. Bonds pay off when growth worries dominate. Gold pays off when confidence in money or institutions wobbles. Defensive stocks pay off because people still buy toothpaste and switch on the lights. A decline in one of these is routine, and a decline in all of them at once is not.\n\nWhen everything is sold together, the usual explanation is that the selling is not about the value of any single asset. It is about the seller. An investor facing a margin call, a redemption request or a funding squeeze sells what can be sold, not what should be. Gold and silver are liquid, widely held and, after a strong run, often sitting on large gains. They are natural sources of cash. Silver's 24% monthly fall, against 12% for gold, is the sort of gap a leveraged, crowded position produces.\n\nThis is an inference from the price pattern, not an established fact. The data show a correlated sell-off; they do not show who was forced to sell. But the pattern fits a liquidity or margin-driven event better than it fits a change in views on any one asset. It also fits the wider picture in this edition, where [technology's 18.7% monthly drop](/tech-outlier) and [energy's 12.7% slide](/energy-oil-gas-split) point to positions being cut across the board. For the broader account of that unwind, see [Everything that was crowded fell at once](/crowded-trades-unwind).\n\n## What the missing bond rally says\n\nThe most telling absence is in Treasuries. In an ordinary growth scare, money moves into government bonds and yields fall. Here the 10-year sits at 4.91%, nine basis points from 5%, and the 30-year is already past it. Bonds at the long end are not acting as a refuge; they are behaving like one more thing being sold, or one more thing nobody is willing to buy at a higher price. The pressure on US assets is examined in [US assets took the hit while the long end refused to help](/us-financing-squeeze), and the rates picture in [the 10-year sits 9 basis points from 5%](/long-end-near-five).\n\nA hedge that fails in the same direction as the thing it protects is worse than no hedge, because portfolios were sized on the assumption that it would not.\n\n## What to watch for a second leg\n\nFour markers would separate an orderly repricing from something more disorderly.\n\n- **The 10-year above 5%.** The level is a round number and a psychological line more than a mechanical one. A close above it, with equities still falling, would confirm that long-dated bonds are not offering shelter.\n- **A widening gap between high yield and investment grade.** High yield [lagged investment grade by 1.6 points in a week](/hy-lags-ig). A move from lag to outright stress, with spreads gapping wider and primary issuance shutting, would show the squeeze spreading from risk assets into funding.\n- **A still-rising dollar.** The dollar's 20-day climb of roughly 2% works as [a quiet tightener](/dollar-quiet-tightener). If it keeps rising during a sell-off, it suggests demand for dollar funding is outrunning supply. That is the usual mark of a scramble for cash, and it falls hardest on [emerging markets and commodity exporters](/em-exporters-double-hit).\n- **Gold and silver failing to stabilise.** Precious metals that keep falling while the dollar rises would suggest forced liquidation is still under way. A bounce in gold while equities and bonds keep sliding would suggest the cash need is easing.\n\n## What a disorderly second leg would look like\n\nFor portfolios built on diversification, the risk is arithmetic. A classic 60/40 mix, with a gold sleeve and a defensive tilt inside the equity half, assumes that at least one component rises or holds when another falls. If stocks, long bonds, metals and defensives fall together, there is nothing left to rebalance out of, and drawdowns compound rather than offset one another. Strategies that target a fixed level of volatility would be forced to cut exposure as volatility rises, adding to the selling. Investors who borrow against their holdings would face more margin calls on the same assets, which would feed the next round of sales.\n\nNone of this is yet a verdict. A week and a month of data cannot prove that a funding event is under way, and sell-offs of this kind can burn out quickly once the forced sellers are finished. But the combination of a 10-year at 4.91%, a firmer dollar, weaker credit at the lower end and failed hedges is the combination that precedes the worse version of events. The next tests are plain: whether the 10-year closes above 5%, whether the high-yield gap widens, and whether the dollar's climb continues into the next full week of trading.",
+      "in_one_sentence": "Gold, silver, long bonds and defensive stocks all fell together, a pattern that points to forced selling and a funding squeeze rather than a change of view on any one asset.",
+      "image_url": "",
+      "image_caption": "",
+      "image_credit": "",
+      "sources": [],
+      "related_slugs": [
+        "crowded-trades-unwind",
+        "long-end-near-five",
+        "dollar-quiet-tightener",
+        "hy-lags-ig",
+        "us-financing-squeeze",
+        "em-exporters-double-hit"
+      ],
+      "failed": false
+    }
+  },
+  "predictions": [
+    {
+      "id": "a4bae1eb-46ba-4f9b-842d-395c2c9835b4",
+      "source": "macro",
+      "made_at": "2026-11-22T17:03:24.816240+00:00",
+      "claim": "The US 10-year Treasury yield closes at or below 5.00% on every trading day through 2026-12-22, i.e. it does not breach 5% on a closing basis despite the 4.91% starting level.",
+      "horizon": "this-month",
+      "target_date": "2026-12-22",
+      "falsification_criteria": "Any daily 10Y constant-maturity close at or above 5.00% between 2026-11-23 and 2026-12-22 disproves the call.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W47-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "Equity and commodity liquidation plus a quality rotation in credit historically draws long-end buyers near round-number cycle highs. The 5% level has been a ceiling in prior tests, and the market is pricing a breach as more likely than I do."
+    },
+    {
+      "id": "4b06f851-e9b1-41fa-bbb0-25cff66f467d",
+      "source": "macro",
+      "made_at": "2026-11-22T17:03:24.816240+00:00",
+      "claim": "XLK (Technology) closes 2026-12-22 above its 2026-11-20 close, as a rebound from a 12.5% weekly and 18.7% monthly drop.",
+      "horizon": "this-month",
+      "target_date": "2026-12-22",
+      "falsification_criteria": "XLK's close on 2026-12-22 is at or below its 2026-11-20 close.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W47-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "A drop of this size in five days is a forced-liquidation signature, and these tend to see at least a partial mean-reversion bounce within a month. The call is contrarian to the current momentum."
+    },
+    {
+      "id": "062094d5-435c-4fd3-b7fa-4d81af626be4",
+      "source": "macro",
+      "made_at": "2026-11-22T17:03:24.816240+00:00",
+      "claim": "GLD closes 2026-12-22 above $322.87 (its 2026-11-20 close) as gold recovers part of a 9% weekly liquidation-driven drop.",
+      "horizon": "this-month",
+      "target_date": "2026-12-22",
+      "falsification_criteria": "GLD's close on 2026-12-22 is at or below $322.87.",
+      "conviction": "low",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W47-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "Gold fell in sympathy with crowded positioning rather than on a change in fundamentals. A 9% weekly drop is extreme, and forced selling usually exhausts within weeks."
+    },
+    {
+      "id": "a8043c59-d420-41e3-baaa-b9275baf426f",
+      "source": "macro",
+      "made_at": "2026-11-22T17:03:24.816240+00:00",
+      "claim": "DXY is below 103.81 on 2027-02-19, so the 20-day dollar climb fully reverses within the quarter.",
+      "horizon": "this-quarter",
+      "target_date": "2027-02-19",
+      "falsification_criteria": "The DXY close on 2027-02-19 is at or above 103.81.",
+      "conviction": "low",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W47-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "Dollar strength built on a liquidation squeeze tends to fade once deleveraging ends. Even so, the 5% 10Y offers carry support, so I hold this at low conviction."
+    },
+    {
+      "id": "c657fef4-e706-4688-a640-257b0ea00658",
+      "source": "macro",
+      "made_at": "2026-11-22T17:03:24.816240+00:00",
+      "claim": "HYG's close on 2027-02-19 is above its 2026-11-20 close, i.e. high-yield credit holds up despite the equity rout.",
+      "horizon": "this-quarter",
+      "target_date": "2027-02-19",
+      "falsification_criteria": "HYG's close on 2027-02-19 is below its 2026-11-20 close (price only, ignoring distributions).",
+      "conviction": "low",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W47-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "HYG's 0.8% weekly loss is mild compared with equities, which suggests the credit market is not pricing a default cycle. Price return is a harsh test because of distributions, so conviction stays low."
+    },
+    {
+      "id": "f8c63949-8e91-4436-9d59-42072b2b11d9",
+      "source": "macro",
+      "made_at": "2026-11-22T17:03:24.816240+00:00",
+      "claim": "The 3M-10Y Treasury spread stays positive (above 0.00) on 2027-02-19, so the curve doesn't re-invert within the quarter.",
+      "horizon": "this-quarter",
+      "target_date": "2027-02-19",
+      "falsification_criteria": "The 3M-10Y spread (10Y minus 3M constant-maturity) is zero or negative on 2027-02-19.",
+      "conviction": "high",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W47-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "The spread is +79bp, driven by long-end pressure. Closing that gap in three months would take either a collapse in 10Y yields of about 80bp or a surprise 3M spike, and neither is the base case."
+    },
+    {
+      "id": "7d79d653-5ece-49c5-a6fd-774592ee8a2a",
+      "source": "macro",
+      "made_at": "2026-11-22T17:03:24.816240+00:00",
+      "claim": "The 30-year Treasury yield closes above 5.00% on 2027-05-21, so the long end stays at or above 5% through spring.",
+      "horizon": "this-half",
+      "target_date": "2027-05-21",
+      "falsification_criteria": "The 30Y constant-maturity yield on 2027-05-21 is at or below 5.00%.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W47-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "At 5.30% the 30Y has a 30bp buffer, and it held near cycle highs even as risk assets collapsed, which points to a term-premium story rather than a growth-fear story. A 30bp decline would need a clear regime change."
+    },
+    {
+      "id": "f152c863-f780-4f91-bd95-3d24fb256097",
+      "source": "macro",
+      "made_at": "2026-11-22T17:03:24.816240+00:00",
+      "claim": "USO closes 2027-11-19 above $139.63 (its 2026-11-20 close) as oil's 17.6% monthly drop is retraced within a year.",
+      "horizon": "this-year",
+      "target_date": "2027-11-19",
+      "falsification_criteria": "USO's close on 2027-11-19 is at or below $139.63.",
+      "conviction": "low",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W47-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "Oil fell 17.6% in 20 days alongside the broad liquidation. Over a year, supply response to lower prices and a likely fading dollar favor a recovery, but USO roll costs make this a low-conviction call."
+    },
+    {
+      "id": "9bde3fdf-569d-459b-b786-20b5bd47e22e",
+      "source": "macro",
+      "made_at": "2026-11-22T17:03:24.816240+00:00",
+      "claim": "The 10Y Treasury yield closes 2027-12-31 below 5.00%, so the 5% level doesn't become the new regime.",
+      "horizon": "multi-year",
+      "target_date": "2027-12-31",
+      "falsification_criteria": "The 10Y constant-maturity yield on 2027-12-31 is at or above 5.00%.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W47-calls",
+      "status": "open",
+      "graded_at": null,
+      "grading_note": "The 10Y is already at 4.91%, so this is close to a coin flip. I lean below because yields at or above 5% have tended to be followed by demand from buyers, and by slower growth that comes with tighter conditions."
+    }
+  ],
+  "homework": [
+    {
+      "id": "7caa7cda-6d4f-4e25-95c3-167512c19448",
+      "source": "macro",
+      "made_at": "2026-10-25T17:03:30.670131+00:00",
+      "claim": "GLD closes above $350 on 2026-11-20 after this week's 4% drop. The metals sell-off is a real-rate wobble, not a trend break.",
+      "horizon": "this-month",
+      "target_date": "2026-11-20",
+      "falsification_criteria": "GLD closing price on 2026-11-20 is at or below $350.00.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W43-calls",
+      "status": "falsified",
+      "graded_at": "2026-11-21T05:03:34.681739+00:00",
+      "grading_note": "GLD closed at $322.87 on 2026-11-20 per the ETF snapshot (day -3.67%, week -9.17%), well under the $350.00 falsifier threshold; web data corroborates the slide, with GLD at $352.48 on Nov 17 and a provisional $342.63\u2013$342.88 on Nov 18 (StockAnalysis and Investing.com). I could not find a dated Nov 20 close on the web, so the $322.87 figure is from the snapshot alone."
+    },
+    {
+      "id": "9495057b-5ccf-45e0-8327-accf49c6d3cd",
+      "source": "macro",
+      "made_at": "2026-08-23T17:05:58.997024+00:00",
+      "claim": "Utilities (XLU) underperform the S&P 500 by at least 8 percentage points cumulatively.",
+      "horizon": "this-quarter",
+      "target_date": "2026-11-21",
+      "falsification_criteria": "XLU total return from 2026-08-21 to 2026-11-21 trails SPY total return by less than 8pp, or XLU outperforms.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W34-calls",
+      "status": "falsified",
+      "graded_at": "2026-11-21T05:02:44.888167+00:00",
+      "grading_note": "XLU closed at $42.77 on Aug 21 and $42.69 on Nov 20 (stockanalysis.com, price-only, about -0.2%), while SPY went from about $765.65\u2013766.03 on Aug 21 (Bloomberg L\u00ednea / Investing.com) to $689.81 on Nov 20 (stockanalysis.com), about -9.9%. XLU beat SPY by roughly 9.7pp, so the claimed 8pp underperformance is falsified."
+    },
+    {
+      "id": "2b1f916c-e8f6-4853-94b5-09c55e4d377d",
+      "source": "macro",
+      "made_at": "2026-08-23T17:05:58.997024+00:00",
+      "claim": "3m10y curve spread widens past 1.15 points as the bear steepener continues.",
+      "horizon": "this-quarter",
+      "target_date": "2026-11-21",
+      "falsification_criteria": "3m10y spread (10Y minus 3M) never exceeds 1.15 points on any date through 2026-11-21.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W34-calls",
+      "status": "falsified",
+      "graded_at": "2026-11-21T05:02:39.027860+00:00",
+      "grading_note": "The 10y-3m spread never approached the 1.15 threshold in the sources I could check: FRED monthly averages were 0.73 (Jul), 0.80 (Aug), 0.90 (Sep), daily readings were 0.83 (Nov 13), 0.77 (Nov 17) and 0.70 (Nov 19) per FRED T10Y3M, and I found no print above 1.15 (I did not check every daily print from Aug 23 to Nov 21)."
+    },
+    {
+      "id": "3b7c0ee0-084b-4c6a-a9ce-5c4a81efe128",
+      "source": "macro",
+      "made_at": "2026-08-23T17:05:58.997024+00:00",
+      "claim": "Credit cracks: HYG underperforms LQD by 0.5pp or more on a 5-day basis at least once, ending the current calm.",
+      "horizon": "this-quarter",
+      "target_date": "2026-11-21",
+      "falsification_criteria": "The hy_vs_ig_5d_diff metric never drops below -0.50 on any weekly reading through 2026-11-21.",
+      "conviction": "low",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W34-calls",
+      "status": "proven",
+      "graded_at": "2026-11-21T05:02:22.641514+00:00",
+      "grading_note": "Using the ETF snapshot as proxy (no web lookup), HYG fell 0.79% and LQD rose 0.86% over the week to 2026-11-20, a 5-day HYG-minus-LQD gap of about -1.65pp, which clears the -0.50pp threshold. The falsifier (metric never below -0.50) is therefore not met. The metric itself is internal, so this grade rests on the proxy's magnitude, not the bot's exact series."
+    },
+    {
+      "id": "9bdf955c-f145-48a6-adbc-ad2f04144b9e",
+      "source": "macro",
+      "made_at": "2026-05-24T17:11:54.686713+00:00",
+      "claim": "XLE total return from May 22 to November 20, 2026 underperforms XLU total return over the same period.",
+      "horizon": "this-half",
+      "target_date": "2026-11-20",
+      "falsification_criteria": "XLE total return equals or exceeds XLU total return from May 22 to November 20, 2026.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W21-calls",
+      "status": "falsified",
+      "graded_at": "2026-11-20T05:04:01.472449+00:00",
+      "grading_note": "XLE closed about $59.49 on May 22 (Yahoo Finance) and $60.89 on Nov 19 (ETF snapshot), a price gain of about +2.4%; XLU closed $45.35 on May 22 (Yahoo Finance AU) and $44.12 on Nov 16 (Wedbush), about -2.7% through Nov 16. That leaves XLE ahead by roughly 5 points before dividends, so the falsifier (XLE \u2265 XLU) is met. The Nov 19\u201320 XLU closes were not found, but a roughly 5% XLU rally in those day"
+    },
+    {
+      "id": "58171601-98d6-43fa-b6b9-c80331fa3e26",
+      "source": "macro",
+      "made_at": "2026-10-25T17:03:30.670131+00:00",
+      "claim": "The US 10-year Treasury yield closes below 5.15% on every trading day through 2026-11-20, and finishes that day between 4.65% and 5.15%.",
+      "horizon": "this-month",
+      "target_date": "2026-11-20",
+      "falsification_criteria": "Any daily close of the 10Y (FRED DGS10) at or above 5.15% through 2026-11-20, or a 2026-11-20 close outside 4.65%-5.15%.",
+      "conviction": "medium",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W43-calls",
+      "status": "partial",
+      "graded_at": "2026-11-20T05:03:39.436459+00:00",
+      "grading_note": "Final-day level looks consistent: the 10Y closed at 5.046% on Nov 19 per Investing.com (CNBC showed a similar 5.046%), and I could not find a Nov 20 close. The every-day condition likely failed: a Yahoo/AlphaCheck piece reports the 10Y at 5.16% on a Friday (likely Nov 13), a Bloomberg report cites about 5.14% on Nov 17, and only the 5.16% print is single-sourced and may be intraday, so it is not c"
+    },
+    {
+      "id": "725f16d6-578d-4b9b-b761-147fd98c6fcf",
+      "source": "macro",
+      "made_at": "2026-10-18T17:03:33.211586+00:00",
+      "claim": "USO closes at or below 161.76, this week's close, on 2026-11-13, so the 9% oil jump does not extend.",
+      "horizon": "this-month",
+      "target_date": "2026-11-13",
+      "falsification_criteria": "USO closes above 161.76 on 2026-11-13.",
+      "conviction": "low",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W42-calls",
+      "status": "proven",
+      "graded_at": "2026-11-14T05:03:42.953881+00:00",
+      "grading_note": "USO closed at 145.58 on 2026-11-13 per the ETF snapshot, about 10% below the 161.76 falsifier threshold, so the claim held. A search corroborated the level (about 142.65 to 148.41 in early November per Fox Business and Yahoo Finance listings) but did not independently confirm the exact 11-13 print."
+    },
+    {
+      "id": "9ed13ac4-3172-4a46-a1ec-49d1caac09ec",
+      "source": "macro",
+      "made_at": "2026-10-18T17:03:33.211586+00:00",
+      "claim": "The US 10-year Treasury yield closes at or below 5.10% on 2026-11-13, i.e., no further rise from the current 5.098% despite the oil spike.",
+      "horizon": "this-month",
+      "target_date": "2026-11-13",
+      "falsification_criteria": "The FRED/Treasury daily 10-year constant-maturity yield for 2026-11-13 is above 5.10%.",
+      "conviction": "low",
+      "source_section": "Calls",
+      "source_slug": "macro-2026-W42-calls",
+      "status": "falsified",
+      "graded_at": "2026-11-14T05:03:42.009486+00:00",
+      "grading_note": "Multiple sources put the 10-year close on 2026-11-13 at about 5.12\u20135.15%, above the 5.10% threshold: Investing.com 5.124% (+0.41% on the day), Trading Economics 5.13%, and Forbes 5.15%, all via search results. FRED DGS10 was not retrieved directly (the WebFetch call failed on a missing parameter and I did not retry it), so this rests on secondary sources."
+    }
+  ],
+  "for_strategies_md": "**Bias for the week ahead:**\n\n- _Rates:_ Underweight long duration. The 30Y is above 5.3% with no flight-to-quality bid, so favour the front end.\n- _FX:_ Lean long USD. DXY is up 2% over 20 days, tightening conditions for commodities and EM.\n- _Credit:_ Favour investment grade over high yield. HYG lagged LQD by 1.6 points this week.\n- _Sectors:_ Underweight Technology (XLK -18.7% over 20 days) and Energy (XLE -12.7%). Lean to Staples and Utilities, which held best over five days.\n- _Regions:_ Underweight EM and commodity exporters, which face a dollar and metals double hit. Keep US exposure to quality names.\n- _Risk:_ A 10Y close above 5%, or a further dollar rally with gold still failing as a hedge, would signal liquidation is extending.\n\n**Watchlist:** SPY, XLP, XLU, XLK, XLE, LQD, HYG, TLT, UUP, EFA, EEM"
+}
