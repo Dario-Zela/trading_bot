@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-23",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 FME.DE +2%, ULVR.L +2%, CCEP.L +2%, UNA.AS +2%, HNR1.DE +2%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (STMPA.PA -11%, ASML.AS -9%, PCT.L -8%, G24.DE -8%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: STMPA.PA (-10.81%) \u2014 No company-specific news found; reports point to a broad tech/semiconductor selloff, with STMicro the CAC 40's worst performer (down ~6.5% at midday, closed -10.8%). Why we passed: Outside any active strategy's universe: STMPA.PA is a Euronext Paris large-cap semiconductor name that no strategy includes. A sector-wide drift with no earnings or news trigger also gives a news-reactive bot nothing to act on.",
+  "top_movers": [
+    {
+      "ticker": "FME.DE",
+      "move_pct": 2.397,
+      "close": 37.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news. Likely a rebound after the Nov 12 Fresenius SE placement at \u20ac39 (stake cut to ~20%) and ongoing FME buyback support. Cause is unverified.",
+      "miss_reason": "Outside any active strategy's universe: FME.DE is a mid/large-cap German healthcare name on Xetra that no strategy includes. A +2.4% move with no catalyst is also too small to trip typical momentum or gap filters.",
+      "suggestion": "No strong change warranted. If a German healthcare name should be eligible, add a Xetra mid-cap healthcare tier to the mean-reversion universe, gated on ADV and a \u22652% move with a volume-ratio check.",
+      "failed": false
+    },
+    {
+      "ticker": "ULVR.L",
+      "move_pct": 2.163,
+      "close": 48.875,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found; likely sector or technical strength in defensive staples, possibly with continued re-rating on the McCormick food-unit merger story (unverified date).",
+      "miss_reason": "Outside any active strategy's universe: ULVR.L is a large-cap UK consumer-staples name that no strategy includes. A +2.2% move on no clear catalyst is also too small and too low-volume to trip momentum or news-reactive filters.",
+      "suggestion": "Add large-cap FTSE 100 defensive staples to the mean-reversion/momentum universe, with a relative-strength-vs-sector trigger (e.g. 1-day return \u2265 +2% and above the sector median) rather than a news-gated entry.",
+      "failed": false
+    },
+    {
+      "ticker": "CCEP.L",
+      "move_pct": 2.129,
+      "close": 88.75,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst \u2014 a search of 2026-11-23 found only routine buyback and share-count filings, so likely a sector or defensive-staples rotation move.",
+      "miss_reason": "Outside any active strategy's universe: CCEP.L is a large-cap consumer-staples bottler. A +2.13% move with no news is too small for gap-up or momentum triggers, and a news-reactive bot has no headline to react to.",
+      "suggestion": "No actionable change: a +2% large-cap staples drift with no catalyst is within normal noise. If staples breadth matters, add CCEP.L to the mean-reversion universe rather than loosening the momentum gap filter.",
+      "failed": false
+    },
+    {
+      "ticker": "UNA.AS",
+      "move_pct": 2.002,
+      "close": 58.59,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day catalyst found. Search surfaced only undated background (McCormick food-business merger, post-Magnum-demerger reshaping), so this looks like a modest sector or defensive move.",
+      "miss_reason": "Outside any active strategy's universe: UNA.AS is a large-cap Amsterdam-listed consumer-staples name that no strategy includes. A +2% move in a low-beta defensive stock also likely sits below typical momentum or gap-up thresholds.",
+      "suggestion": "Add large-cap EU staples (UNA.AS, ULVR.L) to the momentum universe with a lower move threshold (~+1.5% with \u22651.2\u00d7 avg volume) for low-beta names, or accept as a no-op since the move is small and undriven.",
+      "failed": false
+    },
+    {
+      "ticker": "HNR1.DE",
+      "move_pct": 1.731,
+      "close": 293.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-23 \u2014 likely a sector move in European reinsurers or a pre-renewal rerating. A modest +1.73% close-to-close gain, with no dated headline found.",
+      "miss_reason": "Outside any active strategy's universe: HNR1.DE is a large-cap German reinsurer (DAX/financials) that no strategy covers. A +1.73% drift on no news also falls below typical gap-up and momentum thresholds.",
+      "suggestion": "Add large-cap EU financials/insurers (e.g. DAX/Stoxx 600 insurance) to the momentum universe, keeping the existing gap-up filter. Alternatively, add a sector-relative-strength rule such as +1.5% vs. sector median on \u22651\u00d7 average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "CAP.PA",
+      "move_pct": 1.422,
+      "close": 117.7,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-23; the +1.42% looks like a modest technical or sector move, possibly a rebound in European IT services.",
+      "miss_reason": "Outside any active strategy's universe: Capgemini is a CAC 40 large-cap IT services name on Euronext Paris, and no strategy covers it. A +1.42% move without a catalyst would also fall below typical gap and momentum thresholds.",
+      "suggestion": "No actionable change: a +1.42% move with no catalyst is within normal noise. Adding Euronext Paris large caps to a universe would only be justified by a wider EU-expansion decision, not by this one name.",
+      "failed": false
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": -10.809,
+      "close": 36.72,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found; reports point to a broad tech/semiconductor selloff, with STMicro the CAC 40's worst performer (down ~6.5% at midday, closed -10.8%).",
+      "miss_reason": "Outside any active strategy's universe: STMPA.PA is a Euronext Paris large-cap semiconductor name that no strategy includes. A sector-wide drift with no earnings or news trigger also gives a news-reactive bot nothing to act on.",
+      "suggestion": "Add large-cap CAC 40 / Euronext semis (STMPA.PA) to the mean-reversion universe with a sector-beta filter that fires when a name falls \u22658% on no company news while the sector index falls.",
+      "failed": false
+    },
+    {
+      "ticker": "ASML.AS",
+      "move_pct": -9.331,
+      "close": 1168.0,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-23; searches surfaced no same-day reporting. A -9.3% drop in a mega-cap looks like a sector or AI-capex-driven semicap sell-off, not a confirmed company event.",
+      "miss_reason": "Outside any active strategy's universe: ASML.AS is a ~\u20ac400B Euronext Amsterdam mega-cap semicap name that no strategy lists. A -9% single-day gap would also likely trip gap-size and volatility filters if it were included.",
+      "suggestion": "Add large-cap EU semis (ASML.AS, ASM International, BESI) to the mean-reversion universe, with a cap of about -8% on the one-day gap-down filter. Require a same-day sector confirmation, such as SOX or SMH down more than 3%, before entry.",
+      "failed": false
+    },
+    {
+      "ticker": "PCT.L",
+      "move_pct": -8.281,
+      "close": 5.15,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst: PCT is a tech-focused investment trust, so the -8.3% looks like a sell-off in its large-cap tech holdings (NAV-driven) rather than a company-specific event.",
+      "miss_reason": "Outside any active strategy's universe: PCT.L is a UK-listed closed-end investment trust (a fund wrapper, not an operating company). Strategies screening single-name equities likely exclude trusts, and the move had no stock-specific signal.",
+      "suggestion": "No change to the trust itself. Instead, add a tech-sector drawdown signal (e.g. a Nasdaq-100 -2% day flag) that tightens momentum entries on US tech names, since PCT's move is derivative of its holdings.",
+      "failed": false
+    },
+    {
+      "ticker": "G24.DE",
+      "move_pct": -8.03,
+      "close": 80.75,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. G24.DE is Scout24 (German property portal), which fell 8% with no 2026-11-23 article found, so likely a sector/technical or AI-disruption sentiment sell-off.",
+      "miss_reason": "Outside any active strategy's universe: Scout24 is a DAX-listed mid/large-cap internet/real-estate platform that no strategy covers. With no identifiable news, a news-reactive trigger had nothing to fire on.",
+      "suggestion": "Add DAX/MDAX constituents to the mean-reversion universe, with a gate that flags single-day drops \u22657% on no news and requires \u22651.5\u00d7 average volume, so the next unexplained liquid-name selloff gets screened.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-23T16:02:29.132464+00:00"
+}
