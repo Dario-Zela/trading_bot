@@ -1,0 +1,124 @@
+{
+  "date": "2026-11-24",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 1 of today's 10 biggest US movers.\n\n\u2022 5 upside misses \u2014 DELL +22%, MU +19%, LITE +19%, BE +19%, HPE +18%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (CRWD -9%, IP -4%, TSN -4%, TPL -3%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: DELL (+21.71%) \u2014 Not confirmed. Dell's fiscal Q3 report was scheduled for 2026-11-24 with strong AI-server backlog expectations, so the +21.7% is probably an earnings/AI-server reaction. I found no post-results coverage. Why we passed: Outside any active strategy's universe: DELL is a ~$230B large-cap hardware/AI-infrastructure name that no strategy lists. If it was an earnings gap, an earnings gate or gap-size cap would also have blocked entry.",
+  "top_movers": [
+    {
+      "ticker": "NVDA",
+      "move_pct": 32.056,
+      "close": 165.77,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive-agent-top-n"
+      ],
+      "catalyst": "No verifiable catalyst found. Searches returned nothing for NVDA on 2026-11-24. A +32% one-day move in a mega-cap is implausible, so it is probably a data artifact (bad close, split or adjustment error).",
+      "miss_reason": "Outside any active strategy's universe. NVDA is a mega-cap semiconductor name that no strategy lists, and only news-reactive-agent-top-n traded it. A +32% print would also trip any gap or RSI sanity filter, so the bot probably skipped it as bad data.",
+      "suggestion": "Add a data-quality gate that flags any large-cap daily move above +20% for cross-checking against a second price source before it counts as a mover. Add NVDA to the momentum universe only if the move is confirmed real.",
+      "failed": false
+    },
+    {
+      "ticker": "DELL",
+      "move_pct": 21.712,
+      "close": 338.385,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Not confirmed. Dell's fiscal Q3 report was scheduled for 2026-11-24 with strong AI-server backlog expectations, so the +21.7% is probably an earnings/AI-server reaction. I found no post-results coverage.",
+      "miss_reason": "Outside any active strategy's universe: DELL is a ~$230B large-cap hardware/AI-infrastructure name that no strategy lists. If it was an earnings gap, an earnings gate or gap-size cap would also have blocked entry.",
+      "suggestion": "Add large-cap AI-hardware names (DELL, SMCI, HPE) to the momentum universe. Let the earnings gate release names gapping \u2265 +10% on \u22652\u00d7 average volume within 30 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "MU",
+      "move_pct": 19.096,
+      "close": 708.035,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Sector-wide AI/chip rebound, not company news: Nvidia's leadership shake-up (Huang's return) lit up semis, and Citi called AI memory-demand fears overblown after a ~24% weekly drop.",
+      "miss_reason": "Outside any active strategy's universe: MU is a ~$800B mega-cap memory name at about $708 a share. The move was a one-day sentiment snap-back with no company-specific news, so an event or news filter had nothing to key on.",
+      "suggestion": "Add MU and the memory peers (SNDK, WDC) to the momentum universe, and add a rule that enters a name up \u2265+10% on \u22652\u00d7 average volume when a sector ETF (SMH/DRAM) is also up \u22655%.",
+      "failed": false
+    },
+    {
+      "ticker": "LITE",
+      "move_pct": 19.029,
+      "close": 548.175,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed driver found for 2026-11-24. Searches turned up only older LITE rallies (Aug 2026 earnings, Mar 2026 NVIDIA deal), so this is likely an AI-optics sector move. Unverified.",
+      "miss_reason": "Outside any active strategy's universe. LITE is a mid/large-cap optical-components name, volatile and AI-theme driven. A +19% one-day gap would also likely trip RSI and gap-size caps in a momentum filter, even if it were in the universe.",
+      "suggestion": "Add a high-beta AI/optical-networking basket (LITE, COHR, CIEN, CRDO) to the momentum universe, with the gap-up cap raised to about 20% when relative volume is at least 2x.",
+      "failed": false
+    },
+    {
+      "ticker": "BE",
+      "move_pct": 18.843,
+      "close": 169.22,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst for 2026-11-24. Search found no dated coverage. BE is a high-beta AI-power/fuel-cell name that has repeatedly jumped on data-center deals, so this was likely sector or AI-infrastructure momentum.",
+      "miss_reason": "Outside any active strategy's universe. BE is a mid-cap, high-volatility fuel-cell/AI-power stock that no strategy lists. With no news trigger, a news-reactive bot would not have fired either.",
+      "suggestion": "Add a dynamic 'top-gainer' universe slot. It would admit names with dollar volume above a set floor and a 1-day move of at least +8% on 2x average volume. It would run under the existing momentum filters with a reduced position size cap.",
+      "failed": false
+    },
+    {
+      "ticker": "HPE",
+      "move_pct": 18.43,
+      "close": 48.4497,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Pre-earnings run-up and tech rebound ahead of the FQ4 report: ~+17-18% to ~$48. Sources date this to Nov 23, then a ~16% drop on Nov 24 after results. The bot's date or data may be off by a day.",
+      "miss_reason": "Outside any active strategy's universe (mid-cap enterprise hardware/AI server name). The jump was a one-day earnings-anticipation spike with no news trigger, so a news-reactive bot had nothing to fire on. A +18% gap would also trip RSI and gap filters.",
+      "suggestion": "Add HPE and similar AI-server mid-caps (SMCI, DELL, NTAP) to the momentum universe. Add an earnings-proximity rule that blocks new entries within 1 day of a report, since this spike reversed -16% on results.",
+      "failed": false
+    },
+    {
+      "ticker": "CRWD",
+      "move_pct": -8.996,
+      "close": 208.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. Searches turned up nothing dated 2026-11-24, so this is likely a sector-wide cybersecurity/software selloff or a technical move (unconfirmed).",
+      "miss_reason": "Outside any active strategy's universe: CRWD is a large-cap US cybersecurity/software name that no strategy's universe includes. With no pre-market catalyst, a news-reactive bot had no signal, and a long-only momentum bot wouldn't buy a -9% drop.",
+      "suggestion": "Add large-cap software/cybersecurity names such as CRWD to the mean-reversion universe, gated on a no-news-catalyst check and RSI below about 30. Without that gate it would buy genuine fundamental breakdowns.",
+      "failed": false
+    },
+    {
+      "ticker": "IP",
+      "move_pct": -4.051,
+      "close": 29.13,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-24; likely a sector or risk-off move in packaging and materials. Searches turned up only undated or older IP drop articles.",
+      "miss_reason": "Outside any active strategy's universe. IP is a mid-cap industrial packaging name that none of the momentum, mean-reversion or news-reactive universes include. With no news trigger, a news-reactive bot would not have fired on it either.",
+      "suggestion": "(No actionable change.) If the bot ever adds shorting, add a liquid mid-cap materials/packaging sleeve to the mean-reversion universe, for example S&P 400 names with a \u22653% daily drop and no earnings in the window.",
+      "failed": false
+    },
+    {
+      "ticker": "TSN",
+      "move_pct": -3.578,
+      "close": 62.79,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-24 \u2014 likely a sector or technical move (packaged-food and protein names weak). Search returned nothing dated that day.",
+      "miss_reason": "Outside any active strategy's universe. TSN is a mid/large-cap consumer-staples protein producer, probably screened out by the bot's universe definition. A -3.6% drift with no catalyst also wouldn't trip momentum or news-reactive triggers.",
+      "suggestion": "(no actionable change \u2014 a -3.6% move with no identifiable catalyst in a non-universe defensive name doesn't justify widening the universe; a long-only bot couldn't express it anyway.)",
+      "failed": false
+    },
+    {
+      "ticker": "TPL",
+      "move_pct": -3.47,
+      "close": 258.16,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-24. The -3.47% drop to 258.16 looks like a sector or technical move. TPL has fallen steadily since its $547 February high.",
+      "miss_reason": "Outside any active strategy's universe. TPL is a mid-cap Permian land and royalty company in the energy sector, with a very high share price and thin float. A -3.5% drift with no catalyst wouldn't trip a gap, volume or news filter.",
+      "suggestion": "(no actionable change \u2014 a low-conviction drift with no catalyst and no short capability.) If energy coverage is wanted, add TPL to the universe via a sector-relative-weakness rule, e.g. XLE underperformance of at least 2% over 5 days.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-24T20:31:39.346230+00:00"
+}
