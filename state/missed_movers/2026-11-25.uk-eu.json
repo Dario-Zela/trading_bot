@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-25",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 SAN.PA +10%, CPG.L +4%, EXPN.L +4%, REL.L +3%, REN.AS +3%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (STMPA.PA -10%, IFX.DE -10%, ANTO.L -9%, BESI.AS -9%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: STMPA.PA (-10.27%) \u2014 No company-specific news found; STMicro fell ~10% as Europe's chip stocks erased Monday's rally in a sector-wide semiconductor selloff, with no earnings or M&A driver. Why we passed: Outside any active strategy's universe: STMPA.PA is a Paris-listed large-cap European semiconductor that no strategy covers. The move was a sector-wide gap-down with no catalyst, which is hard for momentum or news filters to flag.",
+  "top_movers": [
+    {
+      "ticker": "SAN.PA",
+      "move_pct": 9.723,
+      "close": 93.55,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. Searches turned up no Sanofi news dated 2026-11-25, so the +9.72% move is unexplained. A pipeline readout, M&A or guidance news is possible but unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: SAN.PA is a CAC 40 large-cap pharma, and no strategy includes Euronext Paris names. A +9.7% one-day move is also rare for a mega-cap, so it was likely a gap-up on an unscheduled event that pre-market signals wouldn't have flagged.",
+      "suggestion": "Add a gap-and-volume scanner on large-cap EU names outside strategy universes. Alert, or admit to the news-reactive strategy, when |close-to-close| \u2265 5% and volume \u2265 2\u00d7 the 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "CPG.L",
+      "move_pct": 4.496,
+      "close": 35.33,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst. CPG.L normally maps to Compass Group, but its price (~2388p) doesn't match the 35.33 close, and the Nov-25 coverage I found showed shares falling, not rising. Likely a technical or sector move.",
+      "miss_reason": "Outside any active strategy's universe: no strategy lists it, and the ticker/price mismatch suggests it is a thinly covered or mis-mapped line. With no news catalyst, a +4.5% drift would not trip a gap-up or news-reactive trigger.",
+      "suggestion": "First verify the CPG.L symbol-to-price mapping in the data feed. Then consider adding uk-eu names with a +4% move on \u22651.5x average volume to a momentum watchlist, rather than widening the full universe.",
+      "failed": false
+    },
+    {
+      "ticker": "EXPN.L",
+      "move_pct": 4.328,
+      "close": 29.41,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-25. Searches turned up only older filings (a US$1bn buyback launched in January 2026, routine own-share notices), so this is likely a technical or sector rebound move.",
+      "miss_reason": "Outside any active strategy's universe. EXPN.L is a FTSE 100 large-cap data/credit-bureau company, and no strategy's universe includes it. With no catalyst, a +4.33% drift would also likely fail gap-up and volume-spike filters.",
+      "suggestion": "Add FTSE 100 data/analytics names such as EXPN.L to the momentum-trader universe, with an optional 'large-cap no-news drift' rule that enters at +3% intraday on at least 1.2x 20-day average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "REL.L",
+      "move_pct": 3.239,
+      "close": 30.28,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. RELX (REL.L, about 3,028p) rose 3.2% with no company-specific news in search, so likely a rebound or sector move in data and analytics and information services.",
+      "miss_reason": "Outside any active strategy's universe. RELX is a roughly \u00a355bn FTSE 100 large-cap in information services, which the momentum and news-reactive universes don't appear to include. A +3% move on no catalyst also gives a news-reactive bot nothing to trigger on.",
+      "suggestion": "Add FTSE 100 large-caps with a daily move of at least +3% on volume of at least 1.5x the 20-day average to the momentum-trader's universe, so non-catalyst rebounds in liquid UK names are screened.",
+      "failed": false
+    },
+    {
+      "ticker": "REN.AS",
+      "move_pct": 2.966,
+      "close": 36.1,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found for 2026-11-25. REN.AS appears to be RELX's Euronext Amsterdam line, so +2.97% looks like a rebound in quality-growth and information-services stocks, possibly tied to AI sentiment.",
+      "miss_reason": "Outside any active strategy's universe. REN.AS is a large-cap, low-beta, dual-listed (LSE/AMS/NYSE) data and analytics name. With no catalyst, a ~3% drift would also fail gap, volume and RSI momentum filters.",
+      "suggestion": "No actionable change. If wanted, add dual-listed large caps (REL.L / REN.AS) to the uk-eu momentum universe, and require a relative-volume \u22651.5\u00d7 filter so non-catalyst drifts like this stay excluded.",
+      "failed": false
+    },
+    {
+      "ticker": "WKL.AS",
+      "move_pct": 2.861,
+      "close": 86.28,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 25 Nov 2026. Searches turned up only the ongoing 2026 buyback of up to \u20ac500M. The move is likely a rebound in data and legal-information software stocks or a general sector move.",
+      "miss_reason": "Outside any active strategy's universe. WKL.AS is an Amsterdam-listed large-cap (about \u20ac20B+ market cap) in professional information and software. A +2.86% move with no news is below typical gap or volume-spike triggers, so a momentum or news-reactive bot would not have flagged it.",
+      "suggestion": "Add Euronext Amsterdam AEX large-caps such as WKL.AS to the uk-eu momentum universe. Gate entries on a relative-strength rule, for example a sector-relative +2% move on at least 1.2x 20-day average volume, instead of requiring a news trigger.",
+      "failed": false
+    },
+    {
+      "ticker": "STMPA.PA",
+      "move_pct": -10.272,
+      "close": 35.9,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found; STMicro fell ~10% as Europe's chip stocks erased Monday's rally in a sector-wide semiconductor selloff, with no earnings or M&A driver.",
+      "miss_reason": "Outside any active strategy's universe: STMPA.PA is a Paris-listed large-cap European semiconductor that no strategy covers. The move was a sector-wide gap-down with no catalyst, which is hard for momentum or news filters to flag.",
+      "suggestion": "Add large-cap EU semis (STMPA.PA, ASML, Infineon) to the mean-reversion universe, gated on a sector-wide drop (e.g. \u22653 of 5 names down >5% on one day) rather than single-name news.",
+      "failed": false
+    },
+    {
+      "ticker": "IFX.DE",
+      "move_pct": -9.934,
+      "close": 43.61,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No Infineon-specific news. Sector selloff in AI-chip names (Nvidia leadership turmoil, new US AI-chip export rules, rising yields) dragged the stock down about 10% to ~43.6, the DAX's worst performer. Reports date the drop to Nov 24, so the date is not fully confirmed.",
+      "miss_reason": "Outside any active strategy's universe: IFX.DE is a large-cap German semiconductor that no strategy covers. It was also a sector-contagion gap-down with no company catalyst, which momentum and news-reactive filters would likely skip anyway.",
+      "suggestion": "Add large-cap EU semis (IFX.DE, STM, ASML) to the mean-reversion universe, gated on a \u22658% one-day drop with no company-specific news and a \u226540% drawdown from the 52-week high, with a reduced position size.",
+      "failed": false
+    },
+    {
+      "ticker": "ANTO.L",
+      "move_pct": -8.631,
+      "close": 25.3,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst for 25 Nov. Searches found no dated news for that day. The likely cause is a copper-price dip and risk-off selling in miners. The Oct 15 Q3 miss and weak 2027 guidance probably added to it.",
+      "miss_reason": "Outside any active strategy's universe: ANTO.L is a FTSE 100 copper miner, and no strategy's universe includes it. An 8.6% drop with no clear news also looks like a sector or commodity move. A long-only momentum or mean-reversion bot would not trade it.",
+      "suggestion": "Add FTSE 100 miners (ANTO.L, GLEN.L, RIO.L) to a commodity-sensitive universe. Add a copper-price (HG=F) drawdown trigger, such as a daily move below -3%, to flag miner sell-offs. Treat it as a no-op if shorting isn't supported.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": -8.563,
+      "close": 142.55,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed same-day news found; likely a sector-wide tech/semis selloff, with BESI's usual sensitivity to hybrid-bonding/HBM headlines. Earlier 2026 drops had that cause, but none was dated 25 Nov.",
+      "miss_reason": "Outside any active strategy's universe: BESI is a mid/large-cap Dutch semicap equipment name on Euronext Amsterdam, which no strategy covers. A sector-driven drop with no clear catalyst would also fail a news-reactive filter.",
+      "suggestion": "Add a small Euronext semicap basket (BESI.AS, ASML.AS, ASMI.AS) to the mean-reversion universe, with a sector-correlation gate that fires when \u22653 members fall more than 5% on the same day.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-25T16:02:42.394987+00:00"
+}
