@@ -1,0 +1,125 @@
+{
+  "date": "2026-11-25",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 1 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 DLTR +11%, CSGP +8%, MRNA +7%, CHTR +6%, NKE +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 3 downside moves (ADI -17%, HPE -16%, SNDK -14%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: ADI (-17.37%) \u2014 FQ4 earnings beat (rev ~$4.37B, EPS $4.06), but the stock sold off hard on FY27 capex of $1.6\u20131.9B, expected gross-margin moderation, and in-line Q1 guidance. Reports date the drop to Nov 24 or 25. Why we passed: Outside any active strategy's universe: ADI is a large-cap semiconductor name that no strategy lists. It was also an earnings-gap move, so pre-market positioning would have beaten any post-result momentum or mean-reversion signal. The bot is long-only, so it can't short the drop.",
+  "top_movers": [
+    {
+      "ticker": "DLTR",
+      "move_pct": 11.179,
+      "close": 154.65,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Q3 earnings beat: adj. EPS $1.16 above consensus, revenue +6.9% to ~$5.07B, comps +4.6% on traffic +3.8%, and raised FY guidance. Discount retailers rallied with it.",
+      "miss_reason": "Outside any active strategy's universe (mid/large-cap discount retailer). It was also a pre-market earnings gap, so post-open momentum or news signals entered after most of the +11% move had happened.",
+      "suggestion": "Add DLTR and similar consumer-staples/discount retail names to the news-reactive universe, and let the earnings gate release names with a gap \u2265 +5% on a beat-and-raise within 15 minutes of the open.",
+      "failed": false
+    },
+    {
+      "ticker": "CSGP",
+      "move_pct": 8.079,
+      "close": 32.64,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-25. Searches only returned earlier 2026 CSGP moves (Homes AI launch, analyst target hikes), so this is likely a rebound or sector move.",
+      "miss_reason": "Outside any active strategy's universe: CSGP is a mid-cap real-estate data/software name that no strategy includes. With no discrete catalyst, a news-reactive trigger had nothing to fire on.",
+      "suggestion": "Add a liquidity-screened 'high-beta rebound' watchlist (e.g. mid-caps down >40% YTD with avg dollar volume >$100M) to the momentum universe, so \u2265+5% gap-up days on volume \u22651.5\u00d7 average can trigger entries.",
+      "failed": false
+    },
+    {
+      "ticker": "MRNA",
+      "move_pct": 7.214,
+      "close": 227.38,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-25 \u2014 likely sector/biotech momentum or sentiment-driven move; search surfaced no same-day Moderna headline.",
+      "miss_reason": "Outside any active strategy's universe: MRNA is a volatile, headline-driven mid-cap biotech, a category the momentum, mean-reversion and news strategies don't include. With no clear catalyst, a news-reactive bot had nothing to trigger on either.",
+      "suggestion": "(no actionable change \u2014 a +7% move without a catalyst in a name outside the universe doesn't justify adding high-beta biotech; at most, add a watchlist alert for names whose daily move is \u2265 +7% on \u22652\u00d7 average volume.)",
+      "failed": false
+    },
+    {
+      "ticker": "CHTR",
+      "move_pct": 6.215,
+      "close": 135.87,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst for 2026-11-25: searches returned nothing dated that day. Likely a sector or sentiment move, possibly tied to the SpaceX mobile-partnership talk that drove June's rally.",
+      "miss_reason": "Outside any active strategy's universe. CHTR is a mid/large-cap cable and broadband name, and no strategy includes it. With no identifiable pre-market catalyst, a news-reactive bot had no trigger either.",
+      "suggestion": "Add a daily 'unexplained top-gainer' watchlist, such as US names with >+5% moves on >1.5x average volume across S&P 500/400 constituents, so the universe filter stops excluding large caps like CHTR.",
+      "failed": false
+    },
+    {
+      "ticker": "NKE",
+      "move_pct": 5.895,
+      "close": 35.75,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-25 \u2014 likely a sector or consumer-discretionary rotation or a rebound in a depressed name (close of $35.75 is far below historical levels).",
+      "miss_reason": "Outside any active strategy's universe: NKE is a large-cap consumer-discretionary name that no strategy includes. With no discrete catalyst, a news-reactive signal had nothing to trigger on, and a +5.9% move on rotation would not pass a gap filter.",
+      "suggestion": "Add large-cap consumer-discretionary names (NKE, LULU, etc.) to the momentum-trader universe, gated by a relative-strength filter such as 1-day return \u2265 +4% with volume \u2265 1.5\u00d7 its 20-day average.",
+      "failed": false
+    },
+    {
+      "ticker": "IP",
+      "move_pct": 5.659,
+      "close": 30.62,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-25. Searches returned only older IP upgrade and investor-day stories, so this is likely a sector or technical move (packaging/materials).",
+      "miss_reason": "Outside any active strategy's universe. IP is a mid/large-cap packaging and materials name that no strategy's universe includes. With no identifiable news catalyst, a news-reactive filter would also have had nothing to trigger on.",
+      "suggestion": "Add a low-cost 'unlisted mover' watch to the universe builder: auto-include S&P 500 names with a >=5% gain on >=1.5x average volume for next-day momentum screening. A sector-ETF relative-strength check could separate sector moves from stock-specific ones.",
+      "failed": false
+    },
+    {
+      "ticker": "ADI",
+      "move_pct": -17.373,
+      "close": 312.95,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FQ4 earnings beat (rev ~$4.37B, EPS $4.06), but the stock sold off hard on FY27 capex of $1.6\u20131.9B, expected gross-margin moderation, and in-line Q1 guidance. Reports date the drop to Nov 24 or 25.",
+      "miss_reason": "Outside any active strategy's universe: ADI is a large-cap semiconductor name that no strategy lists. It was also an earnings-gap move, so pre-market positioning would have beaten any post-result momentum or mean-reversion signal. The bot is long-only, so it can't short the drop.",
+      "suggestion": "Add large-cap semis such as ADI, TXN and MCHP to the mean-reversion universe, and let an earnings-gate release names with a gap down of 10% or more on a beat, entering only after a stabilisation bar in the first hour.",
+      "failed": false
+    },
+    {
+      "ticker": "HPE",
+      "move_pct": -16.306,
+      "close": 40.19,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "FQ4 beat and raised revenue outlook, but Cloud & AI margin guided to ~14% for FY27 (vs 18.4%) on memory costs and supply limits. Stock fell 16%, its worst day since 2015. Reported Nov 24, so possibly a day-after move.",
+      "miss_reason": "Outside any active strategy's universe: HPE is a large-cap IT hardware name that no strategy lists. It was also an earnings gap-down on a margin-guidance surprise, which a long-only momentum or mean-reversion bot has no way to trade.",
+      "suggestion": "Add large-cap hardware/AI-infrastructure names like HPE, DELL and SMCI to the mean-reversion universe, with an earnings-gap-down rule that buys only after a \u226510% drop plus a day-2 stabilization close above the day-1 low.",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": -14.234,
+      "close": 76.34,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed Nov 25 catalyst. Searches found only earlier-November SNDK drops (Nov 10 and 13) tied to an AI-hardware/memory sell-off and NAND share worries, so this is likely a continuation of that sector move.",
+      "miss_reason": "Outside any active strategy's universe: SNDK is a recently spun-off, highly volatile mid-cap NAND/memory name that no strategy lists. Its multi-day double-digit slides would also trip typical gap, volatility and RSI filters, and a bot with no short capability can't act on a loser.",
+      "suggestion": "Add SNDK and similar high-beta AI-memory names (MU, WDC, STX) to the mean-reversion universe with a volatility cap, so a -14% day after consecutive drops can trigger an oversold-bounce entry once RSI(2) is below 10.",
+      "failed": false
+    },
+    {
+      "ticker": "DELL",
+      "move_pct": -11.833,
+      "close": 295.28,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive-agent-top-n",
+        "news-reactive-sentiment-gate"
+      ],
+      "catalyst": "Post-earnings selloff after Q3 FY27: record revenue and a $132B AI backlog, but guidance for Q4 ISG operating margin fell to just under 15% and AI-server margins looked compressed.",
+      "miss_reason": "Outside the universe of the momentum and mean-reversion strategies. The move was an earnings gap on results released after the prior close, so it was priced at the open. Only the news-reactive strategies trade DELL, and they didn't take a position.",
+      "suggestion": "Add DELL to the momentum universe, or add an earnings-day rule so a post-earnings gap \u2264 -8% on \u22652\u00d7 average volume is eligible for mean-reversion entry after a 30-minute stabilization window.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-25T20:31:46.551674+00:00"
+}
