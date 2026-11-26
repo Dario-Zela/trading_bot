@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-26",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 0 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 BVI.PA +7%, IMB.L +5%, SAN.PA +5%, VOW3.DE +5%, STLAP.PA +5%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 4 downside moves (ASM.AS -7%, CCC.L -7%, BGEO.L -6%, BESI.AS -6%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: ASM.AS (-7.24%) \u2014 no obvious news catalyst found \u2014 searches turned up no ASM-specific news for 2026-11-26, so likely a semicap/AI-chip sector de-rating or profit-taking after a strong run. Why we passed: Outside any active strategy's universe: ASM.AS is a ~\u20ac30B Dutch mid/large-cap semiconductor-equipment name on Euronext Amsterdam, and no strategy includes it. With no news trigger, a news-reactive filter would also have had nothing to fire on.",
+  "top_movers": [
+    {
+      "ticker": "BVI.PA",
+      "move_pct": 6.636,
+      "close": 31.98,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for Bureau Veritas on 2026-11-26. Searches showed nothing dated today, so this is likely a sector or technical rebound, possibly helped by the ongoing portfolio rotation (the oil & petrochemicals testing divestment).",
+      "miss_reason": "Outside any active strategy's universe: BVI.PA is a mid/large-cap French testing and inspection (TIC) services stock, and no strategy's universe includes it. A +6.6% move with no news also gives a news-reactive bot nothing to trigger on.",
+      "suggestion": "Add a low-priority 'unscreened movers' watchlist to the momentum universe: Euronext/CAC 40 and SBF 120 names with a daily move \u2265 +5% on volume \u2265 1.5\u00d7 the 20-day average. Run it in paper mode first to measure follow-through before allocating capital.",
+      "failed": false
+    },
+    {
+      "ticker": "IMB.L",
+      "move_pct": 5.394,
+      "close": 30.09,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst: searches found no 2026-11-26 news for Imperial Brands (IMB.L). Likely a defensive/sector rotation or post-results drift, but that is unverified.",
+      "miss_reason": "Outside any active strategy's universe: IMB.L is a UK FTSE 100 tobacco large-cap, low-beta, and rarely screens as a momentum or gap candidate. A +5.4% move on no news also gives a news-reactive bot no trigger.",
+      "suggestion": "Add a daily 'unexplained mover' scan that flags any FTSE 100/STOXX 600 name with a close-to-close move of at least +4% and volume of at least 1.5x its 20-day average, and log it for review. Don't add the name to a trading universe yet.",
+      "failed": false
+    },
+    {
+      "ticker": "SAN.PA",
+      "move_pct": 5.152,
+      "close": 98.37,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued re-rating after Sanofi's ~$41B cash bid for Insmed, with analyst target raises (RBC \u20ac105). Press dates conflict, so the exact Nov 26 trigger is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: Sanofi is a CAC 40 large-cap pharma, and no strategy's universe includes it. Even if included, the move was M&A-driven and extended (RSI ~81, 2nd-day follow-through), so overbought filters would likely have blocked it.",
+      "suggestion": "Add large-cap CAC 40/Euro Stoxx 50 health-care names to the momentum universe, with an M&A-gap carve-out that waives the RSI>70 cap when a \u22654% gap follows a 5%+ M&A headline and volume is \u22651.5\u00d7 average.",
+      "failed": false
+    },
+    {
+      "ticker": "VOW3.DE",
+      "move_pct": 4.981,
+      "close": 65.34,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Auto-sector rebound from multi-year lows: JPMorgan sector upgrade/outlook and an EU cap on hybrid imports lifted VW prefs; likely a partial dated-source ambiguity (25\u201326 Nov).",
+      "miss_reason": "Outside any active strategy's universe: VOW3.DE is a large-cap German preferred share on Xetra, and no strategy's universe covers it. It was also a rebound from a 52-week low (61.62), so momentum filters wouldn't have flagged it.",
+      "suggestion": "Add large-cap DAX/STOXX 600 constituents to the mean-reversion universe, with an entry rule for names within ~5% of a 52-week low that gain \u22653% on a sector-wide upgrade day.",
+      "failed": false
+    },
+    {
+      "ticker": "STLAP.PA",
+      "move_pct": 4.812,
+      "close": 3.256,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-26 \u2014 my search turned up nothing dated that day, so this is likely a sector or technical rebound, possibly on buzz about a new mass-market model plan",
+      "miss_reason": "Outside any active strategy's universe: STLAP.PA is the Paris line of Stellantis, a large-cap European auto maker. It is probably excluded as a duplicate listing of the Milan STLAM line or by the exchange/currency filters. With no clear catalyst, a news-reactive bot had no trigger either.",
+      "suggestion": "Add the Stellantis Paris (STLAP.PA) and Milan (STLAM.MI) lines to the uk-eu momentum universe, de-duplicated by ISIN so only the more liquid line is held. Then a +4% close on a large-cap auto name could pass the existing gap and volume filters.",
+      "failed": false
+    },
+    {
+      "ticker": "CPG.L",
+      "move_pct": 4.496,
+      "close": 35.33,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-26. Searches turned up no same-day Compass Group (CPG.L) news, so this is likely a technical or sector move. Close of 35.33 doesn't match the ~2110p price in older coverage, so the ticker mapping is uncertain.",
+      "miss_reason": "Outside any active strategy's universe: CPG.L is a UK-listed large-cap contract caterer (FTSE 100), a defensive consumer-services name that the bot's universes don't cover. A +4.5% move with no catalyst also wouldn't trigger a news-reactive strategy.",
+      "suggestion": "Add FTSE 100 constituents like CPG.L to the momentum universe with a gap/volume gate (e.g. \u2265+3% on \u22651.5\u00d7 20-day avg volume). First verify the CPG.L price feed, since 35.33 conflicts with the ~2110p price in older coverage.",
+      "failed": false
+    },
+    {
+      "ticker": "ASM.AS",
+      "move_pct": -7.236,
+      "close": 594.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found \u2014 searches turned up no ASM-specific news for 2026-11-26, so likely a semicap/AI-chip sector de-rating or profit-taking after a strong run.",
+      "miss_reason": "Outside any active strategy's universe: ASM.AS is a ~\u20ac30B Dutch mid/large-cap semiconductor-equipment name on Euronext Amsterdam, and no strategy includes it. With no news trigger, a news-reactive filter would also have had nothing to fire on.",
+      "suggestion": "Add a sector-basket check (ASML.AS, ASM.AS, BESI.AS, AIXA.DE) to the uk-eu universe, and let mean-reversion consider names that fall \u22655% on no news while the sector basket is also down.",
+      "failed": false
+    },
+    {
+      "ticker": "CCC.L",
+      "move_pct": -6.698,
+      "close": 42.4708,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-26. Searches returned only older Computacenter items (2018, 2024 CFO exit, July 2026 profit-taking), so this is likely a technical or sector move. The ticker mapping is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: CCC.L is a UK mid-cap IT-services name (Computacenter, if the mapping holds) that no strategy includes. A -6.7% move with no identifiable catalyst also gives a news-reactive strategy nothing to trigger on.",
+      "suggestion": "Add a daily 'unmapped large mover' scan over the full uk-eu listing: log any name with |move| \u2265 6% and volume \u2265 2\u00d7 the 20-day average. That would show whether such names deserve a place in the mean-reversion universe before any trading rules change.",
+      "failed": false
+    },
+    {
+      "ticker": "BGEO.L",
+      "move_pct": -6.056,
+      "close": 114.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. Searches turned up nothing dated 2026-11-26 for Lion Finance Group (BGEO, formerly Bank of Georgia). Likely a Georgia political or country-risk sell-off, or a sector move, but unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: BGEO.L is a mid-cap FTSE 250 Georgia-focused bank with thin liquidity and emerging-market country risk. Without a clear catalyst, the news-reactive logic had nothing to trigger on.",
+      "suggestion": "No actionable change. A long-only bot can't express a -6% drop in a frontier-market bank, and adding a Georgia-risk name to the universe isn't worth it. If wanted, add a UK/EU watchlist alert for any FTSE 250 name down more than 5% on above-average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "BESI.AS",
+      "move_pct": -5.963,
+      "close": 134.05,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed news catalyst found for 2026-11-26; searches turned up no same-day BESI story. Likely a semiconductor-equipment / AI-capex sector derating (earlier 2026 drops were tied to HBM hybrid-bonding worries).",
+      "miss_reason": "Outside any active strategy's universe: BESI is an Amsterdam-listed mid/large-cap semiconductor-equipment name, probably not in the UK/EU momentum or mean-reversion lists. A sector-driven drift with no discrete catalyst also gives a news-reactive bot nothing to trigger on.",
+      "suggestion": "Add a sector-breadth trigger: when \u22653 EU semi-equipment names (ASML, ASMI, BESI, Aixtron) fall more than 4% on the same day, auto-add the group to the mean-reversion universe for the next session.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-26T16:02:16.412311+00:00"
+}
