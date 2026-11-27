@@ -1,0 +1,124 @@
+{
+  "date": "2026-11-27",
+  "region": "uk-eu",
+  "universes_checked": [
+    "uk_eu_blue_chips"
+  ],
+  "n_tickers_checked": 203,
+  "summary": "Held 1 of today's 10 biggest UK/EU movers.\n\n\u2022 6 upside misses \u2014 IMB.L +15%, STLAP.PA +9%, EDV.L +7%, FRES.L +6%, BAYN.DE +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 3 downside moves (LAND.L -1%, SVT.L -1%, IHG.L -1%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: IMB.L (+14.56%) \u2014 Imperial Brands surged on takeover interest: Altria confirmed it is considering a possible all-cash offer after reports Japan Tobacco was studying a bid. Sources date the spike to Thu 26 Nov, a day before the bot's 27 Nov window. Why we passed: Outside any active strategy's universe: IMB.L is a FTSE 100 large-cap consumer staple (tobacco) that no strategy includes. The move was also an overnight M&A gap, so a post-close signal would be too late. The ~14.6% gap likely breaches gap/RSI filters as well.",
+  "top_movers": [
+    {
+      "ticker": "IMB.L",
+      "move_pct": 14.556,
+      "close": 34.47,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Imperial Brands surged on takeover interest: Altria confirmed it is considering a possible all-cash offer after reports Japan Tobacco was studying a bid. Sources date the spike to Thu 26 Nov, a day before the bot's 27 Nov window.",
+      "miss_reason": "Outside any active strategy's universe: IMB.L is a FTSE 100 large-cap consumer staple (tobacco) that no strategy includes. The move was also an overnight M&A gap, so a post-close signal would be too late. The ~14.6% gap likely breaches gap/RSI filters as well.",
+      "suggestion": "Add FTSE 100 / STOXX 600 large caps to the news-reactive strategy's universe with an M&A gate: when a bid-interest headline arrives with a gap \u2265 +8%, enter a small position capped at 0.5x normal size, since the price is then bounded by the possible offer.",
+      "failed": false
+    },
+    {
+      "ticker": "STLAP.PA",
+      "move_pct": 8.63,
+      "close": 3.537,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-27; search returned only older Stellantis rallies. Likely a sector or technical move, or a Stellantis-specific headline I couldn't confirm.",
+      "miss_reason": "Outside any active strategy's universe: STLAP.PA is a Paris-listed large-cap auto line that no strategy includes. With no news trigger found, a news-reactive filter would also not have fired.",
+      "suggestion": "Add large-cap Euronext Paris/Milan names like STLAP.PA to the momentum universe, or add a universe-agnostic scanner that flags any name with a \u2265+7% daily move on \u22651.5\u00d7 average volume.",
+      "failed": false
+    },
+    {
+      "ticker": "EDV.L",
+      "move_pct": 7.343,
+      "close": 33.33,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-27; likely a gold-sector move lifting Endeavour Mining (West African gold producer). Searches returned no dated same-day news.",
+      "miss_reason": "Outside any active strategy's universe: EDV.L is a FTSE 100 gold miner, a mid/large-cap commodity name, and no strategy's universe includes LSE-listed miners. With no catalyst, a news-reactive bot had nothing to trigger on.",
+      "suggestion": "Add a gold-miner sub-universe (EDV.L, FRES.L, plus ADR/TSX equivalents) to the commodity strategy, gated on a gold-price +1.5% day move, so sector-beta days like this can be traded.",
+      "failed": false
+    },
+    {
+      "ticker": "FRES.L",
+      "move_pct": 5.697,
+      "close": 22.08,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-27 \u2014 likely a sector move in precious-metals miners (silver/gold price strength); no company-specific RNS surfaced in search.",
+      "miss_reason": "Outside any active strategy's universe: FRES.L is a FTSE 100 Mexican silver/gold miner, a UK mid/large-cap commodity name that none of the strategies include. With no news trigger, a sector-beta move would not have fired a news-reactive signal either.",
+      "suggestion": "Add a precious-metals miners basket (FRES.L, AAL.L, plus silver/gold ETFs) to the momentum-trader universe, gated on the gold/silver spot move exceeding about +1.5% on the day, so sector-beta rallies are captured.",
+      "failed": false
+    },
+    {
+      "ticker": "BAYN.DE",
+      "move_pct": 5.502,
+      "close": 52.92,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No same-day (27 Nov) headline found. Likely continued rebound after the 20 Nov final approval of the $7.25B Roundup class settlement and a Berenberg upgrade to Buy (PT \u20ac62), after a dip toward \u20ac50.",
+      "miss_reason": "Outside any active strategy's universe: BAYN.DE is a large-cap German pharma/agrochemical name that no strategy includes. The move was also a litigation-driven rebound with no fresh gap catalyst, so gap/volume filters would not have flagged it pre-open.",
+      "suggestion": "Add large-cap DAX/EURO STOXX 50 names to the mean-reversion universe, with an entry rule on a \u22654% one-day rebound after a \u22658% drawdown from the 20-day high, so the next legal-overhang rebound is caught.",
+      "failed": false
+    },
+    {
+      "ticker": "BGEO.L",
+      "move_pct": 5.226,
+      "close": 120.8,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-27. Searches turned up only routine buyback notices. The ~120.8 close also doesn't match Bank of Georgia's ~11,000p price, so the ticker mapping is unverified.",
+      "miss_reason": "Outside any active strategy's universe. BGEO.L is a FTSE 250 mid-cap Georgia/Armenia bank, and no strategy includes it. With no pre-market news catalyst to trigger a news-reactive entry, a +5% move had nothing to latch onto.",
+      "suggestion": "No actionable change from this one case. If frontier-market banks should be covered, add FTSE 250 financials to the momentum universe with an ADV floor of about \u00a35m, and verify the BGEO.L price mapping first.",
+      "failed": false
+    },
+    {
+      "ticker": "LAND.L",
+      "move_pct": -1.455,
+      "close": 6.8883,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst \u2014 likely technical / sector move. Searches found no LAND.L-specific news for 2026-11-27, so this is probably a mild UK REIT/property drift of -1.46%.",
+      "miss_reason": "Outside any active strategy's universe: LAND.L is a UK large-cap REIT (FTSE 100 property) that no strategy lists. A -1.46% move on no news is also too small to trip a momentum, gap or news-reactive trigger.",
+      "suggestion": "(no actionable change \u2014 a -1.46% no-news drift in a non-universe REIT is within noise; only consider adding a UK REIT basket to the mean-reversion universe if a sector-wide rate-driven move shows up repeatedly)",
+      "failed": false
+    },
+    {
+      "ticker": "SVT.L",
+      "move_pct": -1.09,
+      "close": 32.68,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. The -1.09% move looks like a sector-wide drift in UK regulated water utilities, with no company-specific news for 2026-11-27.",
+      "miss_reason": "Outside any active strategy's universe. SVT.L is a FTSE 100 regulated water utility, a low-beta defensive name. A ~1% drift is too small to pass momentum or gap filters, and there was no catalyst for a news-reactive strategy.",
+      "suggestion": "No actionable change: a -1.09% move in a defensive utility with no catalyst is below any sensible momentum or news trigger (e.g. a |gap| \u2265 3% or volume \u2265 1.5\u00d7 average rule). Adding UK utilities to the universe would only add noise.",
+      "failed": false
+    },
+    {
+      "ticker": "IHG.L",
+      "move_pct": -0.913,
+      "close": 173.55,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst \u2014 likely technical / sector move. Searches found no IHG-specific news dated 2026-11-27, only routine buyback notices and older broker coverage.",
+      "miss_reason": "Outside any active strategy's universe: IHG.L is a FTSE 100 large-cap hotel operator, and no strategy lists it. A -0.91% drift with no catalyst would also fall below typical momentum and gap-down thresholds.",
+      "suggestion": "(no actionable change \u2014 a sub-1% drift with no catalyst is noise; adding UK consumer-discretionary names to the universe would only pay off if a strategy used a \u22652% move filter.)",
+      "failed": false
+    },
+    {
+      "ticker": "CBK.DE",
+      "move_pct": -0.89,
+      "close": 33.4,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive-buzz-fade"
+      ],
+      "catalyst": "No obvious news catalyst. The -0.89% move looks like a small technical or sector move, and the search found no CBK-specific news for 2026-11-27 (only undated UniCredit takeover and buyback coverage).",
+      "miss_reason": "Outside any active strategy's universe. CBK.DE is a German large-cap bank that only news-reactive-buzz-fade trades, and a -0.89% move with no news is too small to trip any momentum, mean-reversion or buzz threshold.",
+      "suggestion": "No actionable change. A sub-1% no-news drift is noise. If we want German banks covered, add CBK.DE to the mean-reversion universe, but only trigger on moves of at least 2%, not on this one.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-27T16:02:23.858847+00:00"
+}
