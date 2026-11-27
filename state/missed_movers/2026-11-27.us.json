@@ -1,0 +1,124 @@
+{
+  "date": "2026-11-27",
+  "region": "us",
+  "universes_checked": [
+    "sp500"
+  ],
+  "n_tickers_checked": 503,
+  "summary": "Held 1 of today's 10 biggest US movers.\n\n\u2022 6 upside misses \u2014 HPQ +12%, CHTR +8%, HONA +6%, AXON +6%, CDW +6%. These cleared the universe screen but no strategy picked them up; the morning brief either filtered them on a catalyst/RSI/earnings rule or had nothing positive to trigger an entry.\n\n\u2022 3 downside moves (LRCX -8%, AMAT -6%, SNDK -5%) are unreachable on a long-only basket \u2014 no mechanism to express a short or pair-trade.\n\n\u2022 Most instructive miss: HPQ (+11.69%) \u2014 No confirmed catalyst found. Searches turned up no HPQ news dated 2026-11-27. The FQ4 results (revenue $16.0B, +9.3%) came out earlier, so this looks like a late reaction or a technical/sector move. Why we passed: Outside any active strategy's universe: HPQ is a mid/large-cap hardware name that no strategy's universe includes. It was also a thin, half-day post-Thanksgiving session with no pre-market news signal, so a news-reactive bot had no trigger either.",
+  "top_movers": [
+    {
+      "ticker": "HPQ",
+      "move_pct": 11.686,
+      "close": 31.205,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst found. Searches turned up no HPQ news dated 2026-11-27. The FQ4 results (revenue $16.0B, +9.3%) came out earlier, so this looks like a late reaction or a technical/sector move.",
+      "miss_reason": "Outside any active strategy's universe: HPQ is a mid/large-cap hardware name that no strategy's universe includes. It was also a thin, half-day post-Thanksgiving session with no pre-market news signal, so a news-reactive bot had no trigger either.",
+      "suggestion": "Add a daily 'unexplained gap' scan that admits any name up \u22658% on \u22652x average volume from the full liquid US universe (e.g. >$10B cap) to a watchlist, even when the name sits outside every strategy's static universe.",
+      "failed": false
+    },
+    {
+      "ticker": "CHTR",
+      "move_pct": 8.493,
+      "close": 147.41,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed catalyst found for 2026-11-27. Search only turned up older SpaceX mobile-partnership and Q2 rallies. Likely a rebound or sector move on the thin post-Thanksgiving half-day session.",
+      "miss_reason": "Outside any active strategy's universe: CHTR is a mid-cap cable/broadband name with a heavily depressed price, which the universe filters apparently excluded. An unexplained, low-liquidity half-day jump would also fail any news-reactive trigger.",
+      "suggestion": "Add a daily 'unmapped mover' scan that admits any name up \u2265+7% on \u22651.5\u00d7 20-day average volume to a watchlist, so strategies can evaluate it next session without widening the base universe.",
+      "failed": false
+    },
+    {
+      "ticker": "HONA",
+      "move_pct": 6.183,
+      "close": 167.6,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found. Searches returned only stale 13F and analyst-target items. This was a thin, half-day session after Thanksgiving, so the move is likely technical or a Honeywell Aerospace spin-off flow effect.",
+      "miss_reason": "Outside any active strategy's universe. HONA is a newly spun-off large-cap aerospace name (Honeywell Aerospace, listed H2 2026) with little price history, so it was probably never added to any strategy's universe. Short-history indicators like RSI and average volume would also be unreliable.",
+      "suggestion": "Add an auto-onboarding rule so new listings and spin-offs with market cap above $10B join the momentum universe once they have 20 trading days of history (e.g. a min_history_days=20 parameter in the universe loader).",
+      "failed": false
+    },
+    {
+      "ticker": "AXON",
+      "move_pct": 5.978,
+      "close": 338.41,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-27, so likely a technical or sector rebound. The stock is far below its ~$886 52-week high, and it was a thin half-day session after Thanksgiving.",
+      "miss_reason": "Outside any active strategy's universe: AXON is a mid/large-cap defense/public-safety tech name that no strategy includes. With no news catalyst, a news-reactive filter had nothing to trigger on, and a +6% half-day move on low volume would not clear momentum volume floors.",
+      "suggestion": "Add a liquid-large-cap 'discovery' bucket (e.g. S&P 500/400 names with a +5% close-to-close move on \u22651.5x 20-day average volume) to the momentum universe. Do not trade it on half-day sessions, where volume is distorted.",
+      "failed": false
+    },
+    {
+      "ticker": "CDW",
+      "move_pct": 5.781,
+      "close": 173.65,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "no obvious news catalyst found for 2026-11-27 \u2014 likely a technical / sector move on the thin post-Thanksgiving half-day session. Searches only surfaced earlier CDW jumps (Nov 4 earnings, June upgrade).",
+      "miss_reason": "Outside any active strategy's universe: CDW is a mid-cap IT solutions/distribution name that no strategy includes. With no identifiable catalyst, a news-reactive bot had nothing to trigger on, and the shortened holiday session gave little time to build a signal.",
+      "suggestion": "No change warranted for this single move; if wanted, add mid-cap tech hardware/IT distributors to the momentum universe with a \u2265+4% gap on \u22651.5\u00d7 average volume filter, and skip half-day sessions.",
+      "failed": false
+    },
+    {
+      "ticker": "EXE",
+      "move_pct": 5.082,
+      "close": 86.22,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No company-specific news found; EXE (Expand Energy, largest US gas producer) likely rose with a natural gas price rally (reports of a ~20-week high). Date of the rally is unverified.",
+      "miss_reason": "Outside any active strategy's universe: EXE is a ~$20B mid/large-cap Appalachian/Haynesville nat-gas E&P, and the energy-sector filter probably does not include it. The move was a commodity-beta move, not a catalyst the bot's signals would flag.",
+      "suggestion": "Add EXE (and peers like EQT, CTRA, AR) to the energy/commodity strategy universe, gated on a nat-gas front-month (NG=F) breakout of +3% or more. That lets the bot express gas strength through equities.",
+      "failed": false
+    },
+    {
+      "ticker": "LRCX",
+      "move_pct": -7.892,
+      "close": 180.68,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "Continued chip-equipment selloff on MATCH Act / China export-curb fears, with AI-trade weakness. LRCX is the most China-exposed name (~35% of revenue). Exact 11/27 attribution is unconfirmed.",
+      "miss_reason": "Outside any active strategy's universe: LRCX is a large-cap semiconductor-equipment name that no strategy includes. The drop was also a multi-day sector/policy slide, and 11/27 was a thin half-day session after Thanksgiving, so momentum and news filters had little to trigger on.",
+      "suggestion": "Add large-cap semi-equipment names (LRCX, AMAT, KLAC) to the mean-reversion universe, with a sector-wide gate that pauses entries while the group is down >5% for two or more days on policy news. Shorting isn't available, so this only avoids losses rather than capturing the move.",
+      "failed": false
+    },
+    {
+      "ticker": "MU",
+      "move_pct": -5.843,
+      "close": 592.99,
+      "in_universe_of": [],
+      "was_traded_by": [
+        "news-reactive-buzz-fade"
+      ],
+      "catalyst": "no obvious news catalyst found for 2026-11-27 \u2014 likely a technical or sector-wide memory/semis move on the thin post-Thanksgiving half-day session. Searches only returned undated or older MU selloff stories.",
+      "miss_reason": "Outside any active strategy's universe (MU is a ~$590 large-cap semiconductor name not in any strategy's list). Only news-reactive-buzz-fade traded it, and a half-day drop with no headline gives it no buzz signal to fade.",
+      "suggestion": "Add large-cap semis (MU, etc.) to the mean-reversion universe with a volume-normalised trigger on a \u2264-5% close-to-close drop, discounting half-day sessions (e.g. 2.0\u00d7 avg volume floor scaled by session length).",
+      "failed": false
+    },
+    {
+      "ticker": "AMAT",
+      "move_pct": -5.748,
+      "close": 305.15,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No obvious news catalyst found for 2026-11-27 (my search returned no AMAT item dated that day). Likely a semiconductor-equipment sector move on the thin post-Thanksgiving half-day session.",
+      "miss_reason": "Outside any active strategy's universe: AMAT is a large-cap semiconductor-equipment name that no strategy lists. A sector-wide, no-news drop on a half-day also gives news-reactive and gap filters nothing to trigger on.",
+      "suggestion": "Add large-cap semiconductor and semi-equipment names (AMAT, LRCX, KLAC) to the mean-reversion universe, with a min-volume floor so thin half-day sessions like the day after Thanksgiving are skipped. Treat a no-news sector drop as a dip-buy candidate only if the long side can take it.",
+      "failed": false
+    },
+    {
+      "ticker": "SNDK",
+      "move_pct": -5.22,
+      "close": 72.355,
+      "in_universe_of": [],
+      "was_traded_by": [],
+      "catalyst": "No confirmed driver found for 11/27. Likely continued AI-hardware/memory-stock selling on a thin post-Thanksgiving half-day, following the Nov 10-13 NAND-share and Nvidia-CEO-exit sell-offs.",
+      "miss_reason": "Outside any active strategy's universe: SNDK is a recently spun-off, very volatile mid/large-cap memory/storage name that no strategy includes. A -5% move in a half-day session also falls below typical gap and volume-spike thresholds.",
+      "suggestion": "Add SNDK, and MU and WDC alongside it, to the momentum/news-reactive universe as a 'memory/NAND' sector basket, and gate it with a volatility-adjusted position size (e.g. ATR-scaled) rather than a flat cap.",
+      "failed": false
+    }
+  ],
+  "generated_at": "2026-11-27T20:32:48.893429+00:00"
+}
