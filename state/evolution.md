@@ -666,3 +666,30 @@
 - **news-reactive-agent-top-n@us** · `keep` · ✅ applied — Keep on the paper bench for more fills. No demotion criteria are met.
 - **mean-reverter-residual-return@us** · `keep` · ✅ applied — On alpaca-paper with no demotion criteria met.
 - **news-reactive-disclosure@us** · `keep` · ✅ applied — This inactive strategy holds Alpaca slot 3 but meets_demotion_criteria is false, so it cannot be demoted this run. Flag for human review: the slot should be freed and refilled with mean-reverter-largecap-gap-reversal@us, the leading candidate.
+
+## Weekly evolution — 2026-11-28
+
+- **mean-reverter-residual-return@us** · `demote` · ✅ applied — Dormant-execution rule: 281 predictions graded but only 2 trades, both losers (-£188, 0% hit). IC 0.092 is below the leader's, so the slot is freed for a better contender.
+  - details: `{"from_tier": "alpaca-paper", "slot_cleared": true, "previous_slot": 2, "slot_kind": "alpaca"}`
+- **mean-reverter-largecap-gap-reversal@us** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 0, "hit_rate": 0.0, "total_pnl_gbp": 0.0, "avg_pnl_pct": 0.0, "max_drawdown_pct": 0.0, "n_predictions_graded": 278, "ic": 0.154, "decile_spread": 4.16}}`
+- **mean-reverter-largecap-gap-reversal** · `tune` · ✅ applied — 0 trades across 938 predictions in both regions means the cost gate of 4.0 is too tight. Loosening it should let the signal engage the market on paper.
+  - details: `{"applied": {"cost_gate_multiplier": 3.0}, "rejected": {}}`
+- **ml-challenger@uk-eu** · `demote` · ⏭️ skipped — Strategy is evolution_frozen (experiment control) — 'demote' refused. (IC 0.005 over 66k predictions with 0 trades, so it holds the T212 slot without earning it. Replaced in the same run.)
+- **mean-reverter-residual-return-weekly@uk-eu** · `promote` · ⏭️ skipped — Does not meet promotion criteria
+  - details: `{"metrics": {"n_trades": 0, "hit_rate": 0.0, "total_pnl_gbp": 0.0, "avg_pnl_pct": 0.0, "max_drawdown_pct": 0.0, "n_predictions_graded": 338, "ic": 0.124, "decile_spread": 2.729}}`
+- **ml-challenger** · `deactivate` · ⏭️ skipped — Strategy is evolution_frozen (experiment control) — 'deactivate' refused. (US sleeve is inverted: IC -0.096 over 49k predictions, 0% hit rate on 45 trades, -£964 P&L, -9.6% drawdown. UK-EU sleeve is signal-free (IC 0.005). Retiring it frees a slot under the active cap.)
+- **insider-cluster-momentum** · `deactivate` · ✅ applied — uk-eu IC is -0.135 (n=381) and the US sleeve has IC 0.023 with a 20% hit rate. Neither region is showing edge, and the slot funds a fresh contender.
+  - details: `{"deactivated_at": "2026-11-28"}`
+- **momentum-trader-news-gated** · `spawn-variant` · ✅ applied — Anchored to the W48 research: raw LLM news signals are strong, but bolting them on as extra features hurts (Yerra) and they work only as selective high-conviction tilts. It breaks the always-on capital deployment axis (cash when no conviction) and the signal-source axis. The slate has no momentum contender with data.
+  - details: `{"variant_id": "momentum-trader-llm-conviction-top3", "addendum_applied": true}`
+- **mean-reverter-largecap-gap-reversal@us** · `mark-tier2-candidate` · ✅ applied — It still leads on IC. Promotion into paper will finally generate fee-net trade evidence.
+  - details: `{"tier2_marked_at": "2026-11-28", "thesis_present": true}`
+- **mean-reverter-residual-return-weekly@uk-eu** · `mark-tier2-candidate` · ✅ applied — It is the best uk-eu contender and the runner-up now that residual-return@us has faded.
+  - details: `{"tier2_marked_at": "2026-11-28", "thesis_present": true}`
+- **mean-reverter-residual-return@us** · `unmark-tier2-candidate` · ✅ applied — Out-competed: 0% hit rate on 2 trades (-£188), IC fell to 0.092, and it was demoted for dormancy.
+- **mean-reverter-residual-return-weekly@us** · `unmark-tier2-candidate` · ✅ applied — IC collapsed to 0.031 on n=99 with a negative decile spread and 0 trades. The earlier thesis has failed.
+- **news-reactive-agent-top-n@us** · `keep` · ✅ applied — Hit rate is 33% on only 6 trades, which is too few for the demotion bar. IC 0.055 is weak, but it holds slot 1 pending more data.
+- **news-reactive-disclosure@us** · `keep` · ✅ applied — It is inactive and holds Alpaca slot 3 but does not meet the demotion flag. Flagging for the human or the runtime backstop to reclaim the slot.
+- **mean-reverter-largecap-gap-reversal@us** · `promote` · ✅ applied — empty-slot backstop: highest-IC shadow US candidate (IC=+0.154, n=278) → Alpaca slot 2
+  - details: `{"target_tier": "alpaca-paper", "alpaca_slot": 2, "enforcement": true, "slot_kind": "alpaca"}`

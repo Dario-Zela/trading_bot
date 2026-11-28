@@ -26,15 +26,14 @@ model_assignment:
   final_select: sonnet
 runs_in:
 - region: us
-  tier: shadow
-  alpaca_slot: null
+  tier: alpaca-paper
+  alpaca_slot: 2
   universe: t212_isa_us
   tier2_candidate: true
-  tier2_marked_at: '2026-11-21'
-  tier2_thesis: "#1: highest IC on the slate (0.203, n=179) with decile spread 7.5,\
-    \ but 0 trades in the window. It leads runner-up residual-return@us (IC 0.123,\
-    \ 43% hit, +\xA3116). It must reach n>=200 and produce actual trades with hit\
-    \ rate >50% to separate."
+  tier2_marked_at: '2026-11-28'
+  tier2_thesis: '#1: highest IC on the slate (0.154, n=278) with decile spread 4.2,
+    now on Alpaca paper. It must produce 10+ real trades with a hit rate above 50%
+    and hold IC above 0.12 to separate.'
 - region: uk-eu
   tier: shadow
   t212_slot: null
@@ -49,6 +48,6 @@ tier2_marked_at: null
 tier2_thesis: ''
 prefilter_mode: python
 prefilter_top_n: 60
-cost_gate_multiplier: 4.0
-last_tune_date: '2026-09-12'
+cost_gate_multiplier: 3.0
+last_tune_date: '2026-11-28'
 prefilter_sort_key: rsi_14_asc

@@ -26,14 +26,12 @@ model_assignment:
   final_select: sonnet
 runs_in:
 - region: us
-  tier: alpaca-paper
-  alpaca_slot: 2
+  tier: shadow
+  alpaca_slot: null
   universe: t212_isa_us
-  tier2_candidate: true
-  tier2_marked_at: '2026-11-21'
-  tier2_thesis: "#2: IC 0.123 (n=323) and the only candidate with real Alpaca fills\
-    \ (7 trades, +\xA3116). Hit rate is 43% and max drawdown -2%. It needs a hit rate\
-    \ above 50% over 15+ trades or it loses the runner-up spot."
+  tier2_candidate: false
+  tier2_marked_at: null
+  tier2_thesis: ''
 - region: uk-eu
   tier: shadow
   t212_slot: null
